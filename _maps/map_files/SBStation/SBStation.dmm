@@ -2415,10 +2415,7 @@
 /area/security/courtroom)
 "afB" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Courtroom";
-	req_access_txt = "0"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -3169,9 +3166,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "ahs" = (
-/obj/machinery/door/airlock/glass{
-	name = "Security Wing"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aht" = (
@@ -3368,9 +3363,7 @@
 /area/hallway/secondary/entry)
 "ahQ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Arrivals Port"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -3645,9 +3638,7 @@
 /area/hallway/secondary/entry)
 "aiv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Arrivals Port"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -5914,9 +5905,7 @@
 /area/crew_quarters/bar)
 "aok" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Diner"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aol" = (
@@ -7096,9 +7085,7 @@
 /area/crew_quarters/bar)
 "arc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Diner"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -7115,9 +7102,7 @@
 /area/hallway/primary/central)
 "arg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "arh" = (
@@ -8579,9 +8564,7 @@
 /area/maintenance/starboard/fore)
 "auC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Chapel"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "auD" = (
@@ -9992,9 +9975,7 @@
 /area/hallway/secondary/exit)
 "axK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Departure Lounge"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -10002,9 +9983,7 @@
 /area/hallway/secondary/exit)
 "axL" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Departure Lounge"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10059,9 +10038,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Dormitories"
-	},
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -17885,9 +17862,7 @@
 /area/hallway/primary/aft)
 "aOT" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Engineering Foyer"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -17895,18 +17870,14 @@
 /area/hallway/primary/aft)
 "aOU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Engineering Foyer"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
 /area/hallway/primary/aft)
 "aOV" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Engineering Foyer"
-	},
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
