@@ -48,6 +48,7 @@
 	faction = list("neutral","silicon","turret")
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -57,7 +58,6 @@
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
-	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body

@@ -96,7 +96,7 @@
 			. = TRUE
 		if("eject")
 			if(holding)
-				holding.loc = get_turf(src)
+				holding.forceMove(drop_location())
 				holding = null
 				. = TRUE
 		if("toggle_filter")

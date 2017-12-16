@@ -78,3 +78,5 @@
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
+
+	var/registered_z

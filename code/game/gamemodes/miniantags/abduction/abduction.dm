@@ -1,19 +1,5 @@
-/datum/objective_team/abductor_team
-	member_name = "abductor" 
-	var/list/objectives = list()
-	var/team_number
-
-/datum/objective_team/abductor_team/is_solo()
-	return FALSE
-
-/datum/objective_team/abductor_team/proc/add_objective(datum/objective/O)
-	O.team = src
-	O.update_explanation_text()
-	objectives += O
-
 /datum/game_mode
 	var/list/datum/mind/abductors = list()
-	var/list/datum/mind/abductees = list()
 
 /datum/game_mode/abduction
 	name = "abduction"
@@ -100,35 +86,6 @@
 					finished = TRUE
 					return ..()
 	return ..()
-
-/datum/game_mode/abduction/declare_completion()
-	for(var/datum/objective_team/abductor_team/team in abductor_teams)
-		var/won = TRUE
-		for(var/datum/objective/O in team.objectives)
-			if(!O.check_completion())
-				won = FALSE
-		if(won)
-			to_chat(world, "<span class='greenannounce'>[team.name] team fulfilled its mission!</span>")
-		else
-			to_chat(world, "<span class='boldannounce'>[team.name] team failed its mission.</span>")
-	..()
-	return TRUE
-
-/datum/game_mode/proc/auto_declare_completion_abduction()
-	var/text = ""
-	if(abductors.len)
-		text += "<br><span class='big'><b>The abductors were:</b></span>"
-		for(var/datum/mind/abductor_mind in abductors)
-			text += printplayer(abductor_mind)
-			text += printobjectives(abductor_mind)
-		text += "<br>"
-		if(abductees.len)
-			text += "<br><span class='big'><b>The abductees were:</b></span>"
-			for(var/datum/mind/abductee_mind in abductees)
-				text += printplayer(abductee_mind)
-				text += printobjectives(abductee_mind)
-	text += "<br>"
-	to_chat(world, text)
 
 // LANDMARKS
 /obj/effect/landmark/abductor

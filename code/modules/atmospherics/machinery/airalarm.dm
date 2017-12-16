@@ -638,7 +638,7 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal)
+	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)

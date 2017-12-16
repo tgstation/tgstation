@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", 
 GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
 /datum/antagonist/devil
 	name = "Devil"
+	roundend_category = "devils"
 	job_rank = ROLE_DEVIL
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_mind_deletion = FALSE
@@ -507,6 +508,35 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
 	.=..()
+
+/datum/antagonist/devil/proc/printdevilinfo()
+	var/list/parts = list()
+	parts += "The devil's true name is: [truename]"
+	parts += "The devil's bans were:"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
+	return parts.Join("<br>")
+
+/datum/antagonist/devil/roundend_report()
+	var/list/parts = list()
+	parts += printplayer(owner)
+	parts += printdevilinfo()
+	parts += printobjectives(owner)
+	return parts.Join("<br>")
+
+/datum/antagonist/devil/roundend_report_footer()
+	//sintouched go here for now as a hack , TODO proper antag datum for these
+	var/list/parts = list()
+	if(SSticker.mode.sintouched.len)
+		parts += "<span class='header'>The sintouched were:</span>"
+		var/list/sintouchedUnique = uniqueList(SSticker.mode.sintouched)
+		for(var/S in sintouchedUnique)
+			var/datum/mind/sintouched_mind = S
+			parts += printplayer(sintouched_mind)
+			parts += printobjectives(sintouched_mind)
+	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.
 /datum/fakeDevil

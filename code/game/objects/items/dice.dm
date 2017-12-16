@@ -73,6 +73,10 @@
 	icon_state = "d4"
 	sides = 4
 
+/obj/item/dice/d4/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, 4)
+
 /obj/item/dice/d6
 	name = "d6"
 
@@ -181,14 +185,6 @@
 							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
-
-/obj/item/dice/d4/Crossed(mob/living/carbon/human/H)
-	if(istype(H) && !H.shoes)
-		if(PIERCEIMMUNE in H.dna.species.species_traits)
-			return 0
-		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
-		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
-		H.Knockdown(60)
 
 /obj/item/dice/update_icon()
 	cut_overlays()

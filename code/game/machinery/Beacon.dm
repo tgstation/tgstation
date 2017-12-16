@@ -14,9 +14,8 @@
 /obj/machinery/bluespace_beacon/Initialize()
 	. = ..()
 	var/turf/T = loc
-	Beacon = new /obj/item/device/radio/beacon
+	Beacon = new(T)
 	Beacon.invisibility = INVISIBILITY_MAXIMUM
-	Beacon.loc = T
 
 	hide(T.intact)
 
@@ -42,13 +41,9 @@
 /obj/machinery/bluespace_beacon/process()
 	if(!Beacon)
 		var/turf/T = loc
-		Beacon = new /obj/item/device/radio/beacon
+		Beacon = new(T)
 		Beacon.invisibility = INVISIBILITY_MAXIMUM
-		Beacon.forceMove(T)
-	if(Beacon)
-		if(Beacon.loc != loc)
-			Beacon.forceMove(loc)
+	else if (Beacon.loc != loc)
+		Beacon.forceMove(loc)
 
 	updateicon()
-
-

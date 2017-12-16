@@ -32,7 +32,7 @@
 	else if(mind) // Let's make this a feature
 		egg.origin = mind
 	for(var/obj/item/organ/I in src)
-		I.loc = egg
+		I.forceMove(egg)
 	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 	egg_lain = 1
