@@ -20,7 +20,16 @@
 /mob/camera/eminence/Move(NewLoc, direct)
 	var/OldLoc = loc
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
-		forceMove(get_turf(NewLoc))
+		var/turf/T = get_turf(NewLoc)
+		if(T.flags_1 & NOJAUNT_1)
+			T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", ignore_mob = src)
+			to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+			playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+			return
+		if(istype(get_area(T), /area/chapel))
+			to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
+			return
+		forceMove(T)
 	Moved(OldLoc, direct)
 	if(GLOB.ratvar_awakens)
 		for(var/turf/T in range(5, src))
