@@ -79,5 +79,6 @@
 
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 0
+//yes these are meant to be strings
+#define DB_MAJOR_VERSION "4"
+#define DB_MINOR_VERSION "0"
