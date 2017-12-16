@@ -277,9 +277,9 @@
 	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/stop()
-	soundloop.stop()
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
@@ -303,6 +303,7 @@
 		if(prob(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/broke()
 	var/datum/effect_system/spark_spread/s = new
@@ -314,6 +315,7 @@
 	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..() || panel_open)
