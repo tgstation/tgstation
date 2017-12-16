@@ -298,7 +298,7 @@ function output(message, flag) {
 
 	var handled = false;
 	var lastmessages = $messages.children('div.entry:last-child');
-	if (lastmessages.length && $last_message)
+	if (opts.messageCombining && lastmessages.length && $last_message)
 	{
 		if($last_message == message.trim())
 		{
