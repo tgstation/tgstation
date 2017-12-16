@@ -48,10 +48,13 @@
 	if(new_volume < reagents.total_volume)
 		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
+	efficiency = 9
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		efficiency = 9 + C.rating
+		efficiency += C.rating
+	max_range = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range = max(3, 1 + M.rating)
+		max_range += M.rating
+	max_range = max(3, max_range)
 
 /obj/machinery/smoke_machine/process()
 	..()
