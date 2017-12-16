@@ -59,9 +59,9 @@ GLOBAL_PROTECT(security_mode)
 			if(query_db_version.NextRow())
 				var/db_major = query_db_version.item[1]
 				var/db_minor = query_db_version.item[2]
-				if(text2num(db_major + db_minor) != text2num(DB_MAJOR_VERSION + DB_MINOR_VERSION))
+				if(text2num(db_major + "." + db_minor) != text2num(DB_MAJOR_VERSION + "." + DB_MINOR_VERSION))
 					var/which = "behind"
-					if(text2num(db_major + db_minor) > text2num(DB_MAJOR_VERSION + DB_MINOR_VERSION))
+					if(text2num(db_major + "." + db_minor) > text2num(DB_MAJOR_VERSION + "." + DB_MINOR_VERSION))
 						which = "ahead of"
 					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
