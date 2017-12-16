@@ -293,7 +293,6 @@
 	icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
