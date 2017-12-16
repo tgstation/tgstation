@@ -661,10 +661,12 @@
 			return
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
 
-/obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
 	if(!..())
 		return
-
+	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+ 	if(!C)
+ 		return
  //Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.
@@ -682,7 +684,7 @@
 			RemoveActions(AI, TRUE)
 			occupant = null
 			AI.forceMove(card)
-			card.AI = AI
+			C.AI = AI
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
@@ -699,7 +701,7 @@
 			ai_enter_mech(AI, interaction)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
-			AI = card.AI
+			AI = C.AI
 			if(!AI)
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
@@ -711,10 +713,10 @@
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
-			AI.control_disabled = 0
-			AI.radio_enabled = 1
+			AI.control_disabled = FALSE
+			AI.radio_enabled = TRUE
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
-			card.AI = null
+			C.AI = null
 			ai_enter_mech(AI, interaction)
 
 //Hack and From Card interactions share some code, so leave that here for both to use.
@@ -1028,14 +1030,14 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 /obj/mecha/proc/use_power(amount)
 	if(get_charge())
 		cell.use(amount)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
 		cell.give(amount)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/mecha/update_remote_sight(mob/living/user)
 	if(occupant_sight_flags)

@@ -115,10 +115,14 @@
 		else
 			add_overlay("ai-fixer-empty")
 
-/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
 	if(!..())
 		return
 	//Downloading AI from card to terminal.
+	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+ 	if(!C)
+ 		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
+ 		return
 	if(interaction == AI_TRANS_FROM_CARD)
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "[src] is offline and cannot take an AI at this time!")
@@ -129,7 +133,7 @@
 		AI.radio_enabled = 0
 		to_chat(AI, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
-		card.AI = null
+		C.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
@@ -137,7 +141,7 @@
 			to_chat(occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 			occupier.forceMove(card)
-			card.AI = occupier
+			C.AI = occupier
 			occupier = null
 			update_icon()
 		else if (active)

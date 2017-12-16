@@ -979,8 +979,11 @@
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.alert = FALSE
 
-/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
-	if(card.AI)
+/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
+	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+ 	if(!C)
+ 		return
+	if(C.AI)
 		to_chat(user, "<span class='warning'>[card] is already occupied!</span>")
 		return
 	if(!occupier)
@@ -1026,7 +1029,7 @@
 	user.visible_message("<span class='notice'>[user] transfers [occupier] to [card]!</span>", "<span class='notice'>Transfer complete! [occupier] is now stored in [card].</span>")
 	to_chat(occupier, "<span class='notice'>Transfer complete! You've been stored in [user]'s [card.name].</span>")
 	occupier.forceMove(card)
-	card.AI = occupier
+	C.AI = occupier
 	occupier.parent.shunted = FALSE
 	occupier.cancel_camera()
 	occupier = null
@@ -1037,7 +1040,7 @@
 	if(terminal)
 		return terminal.surplus()
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)

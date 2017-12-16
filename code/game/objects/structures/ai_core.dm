@@ -253,28 +253,34 @@ That prevents a few funky behaviors.
 //The type of interaction, the player performing the operation, the AI itself, and the card object, if any.
 
 
-/atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
-	if(istype(card))
-		if(card.flush)
-			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
-			return 0
-	return 1
+/atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
+	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+	if(!C)
+		return
+	if(C.wiping)
+		to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
+		return FALSE
+	return TRUE
 
 
-/obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
 	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.
+ 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+ 	if(!C)
+ 		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
+ 		return
 	if(interaction == AI_TRANS_FROM_CARD)
-		AI.control_disabled = 0
-		AI.radio_enabled = 1
+		AI.control_disabled = FALSE
+		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
-		card.AI = null
+		C.AI = null
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		to_chat(user, "There is no AI loaded on this terminal!")
+		to_chat(user, "<span class='notice'>There is no AI loaded on this terminal!</span>")
 
 
 /obj/item/circuitboard/aicore
