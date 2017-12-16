@@ -56,7 +56,7 @@
 	delegate = proctocall
 	if (length(args) > 2)
 		arguments = args.Copy(3)
-	user = usr
+	user = WEAKREF(usr)
 
 /world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
@@ -72,8 +72,12 @@
 		call(thingtocall, proctocall)(arglist(calling_arguments))
 
 /datum/callback/proc/Invoke(...)
-	if(!usr && user)
-		return world.PushUsr(user, src)
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				return world.PushUsr(user, src)
 		
 	if (!object)
 		return
@@ -94,8 +98,12 @@
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
 
-	if(!usr && user)
-		return world.PushUsr(user, src)
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				return world.PushUsr(user, src)
 	
 	if (!object)
 		return
