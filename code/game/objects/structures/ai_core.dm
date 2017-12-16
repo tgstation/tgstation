@@ -267,10 +267,10 @@ That prevents a few funky behaviors.
 	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.
- 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
- 	if(!C)
- 		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
- 		return
+	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
+	if(!C)
+		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
+		return
 	if(interaction == AI_TRANS_FROM_CARD)
 		AI.control_disabled = FALSE
 		AI.radio_enabled = TRUE

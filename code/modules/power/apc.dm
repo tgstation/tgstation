@@ -981,8 +981,8 @@
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/card)
 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
- 	if(!C)
- 		return
+	if(!C)
+		return
 	if(C.AI)
 		to_chat(user, "<span class='warning'>[card] is already occupied!</span>")
 		return

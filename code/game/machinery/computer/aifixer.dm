@@ -120,9 +120,9 @@
 		return
 	//Downloading AI from card to terminal.
 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
- 	if(!C)
- 		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
- 		return
+	if(!C)
+		to_chat(user, "<span class='notice'>[card] isn't an AI storage device!</span>")
+		return
 	if(interaction == AI_TRANS_FROM_CARD)
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "[src] is offline and cannot take an AI at this time!")

@@ -665,8 +665,8 @@
 	if(!..())
 		return
 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
- 	if(!C)
- 		return
+	if(!C)
+		return
  //Transfer from core or card to mech. Proc is called by mech.
 	switch(interaction)
 		if(AI_TRANS_TO_CARD) //Upload AI from mech to AI card.

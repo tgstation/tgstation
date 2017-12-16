@@ -778,8 +778,8 @@
 	if(!..())
 		return
 	var/datum/component/ai_storage/C = card.GetComponent(/datum/component/ai_storage)
- 	if(!C)
- 		return
+	if(!C)
+		return
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!can_be_carded)
 			to_chat(user, "<span class='boldwarning'>Transfer failed.</span>")
