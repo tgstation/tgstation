@@ -16,11 +16,12 @@
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
 			if(P.crew)
-				new_team = P.crew
+				crew = P.crew
+				return
 		if(!new_team)
 			crew = new /datum/objective_team/pirate
 			crew.forge_objectives()
-		return
+			return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	crew = new_team
@@ -104,8 +105,6 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value
 
-
-
 /datum/objective_team/pirate/roundend_report()
 	var/list/parts = list()
 
@@ -127,4 +126,4 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 	else
 		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
 	
-	return parts.Join("<br>")
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

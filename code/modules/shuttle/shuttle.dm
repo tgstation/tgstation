@@ -146,13 +146,13 @@
 	var/y0 = bounds[2]
 	var/x1 = bounds[3]
 	var/y1 = bounds[4]
-	if(x0 <= x1 && !IsInRange(T.x, x0, x1))
+	if(x0 <= x1 && !ISINRANGE(T.x, x0, x1))
 		return FALSE
-	else if(!IsInRange(T.x, x1, x0))
+	else if(!ISINRANGE(T.x, x1, x0))
 		return FALSE
-	if(y0 <= y1 && !IsInRange(T.y, y0, y1))
+	if(y0 <= y1 && !ISINRANGE(T.y, y0, y1))
 		return FALSE
-	else if(!IsInRange(T.y, y1, y0))
+	else if(!ISINRANGE(T.y, y1, y0))
 		return FALSE
 	return TRUE
 
@@ -534,7 +534,7 @@
 		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
 		if ((rotation % 90) != 0)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
-		rotation = SimplifyDegrees(rotation)
+		rotation = SIMPLIFY_DEGREES(rotation)
 
 	if(!movement_direction)
 		movement_direction = turn(preferred_direction, 180)
@@ -888,13 +888,13 @@
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
 		if(initial_engines > 0)
 			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
-		return Clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return CLAMP(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 	if(new_value < initial_engines)
 		var/delta = initial_engines - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
-		return Clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return CLAMP(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 
 
 /obj/docking_port/mobile/proc/in_flight()

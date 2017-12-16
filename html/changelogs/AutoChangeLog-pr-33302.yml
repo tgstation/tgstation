@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "Aliens (and humans with alien organs) will have a prompt
+if they try to create resin structures or lay eggs atop vents or scrubbers."
