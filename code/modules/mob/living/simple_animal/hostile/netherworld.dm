@@ -44,9 +44,9 @@
 
 /mob/living/simple_animal/hostile/netherworld/migo/Life()
 	..()
+	if(stat)
+		return
 	if(prob(10))
-		if(stat)
-			return
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 100, TRUE)
 
