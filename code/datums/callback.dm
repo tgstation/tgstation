@@ -73,7 +73,7 @@
 
 /datum/callback/proc/Invoke(...)
 	if(!usr && user)
-		return PushUsr(user, src)
+		return world.PushUsr(user, src)
 		
 	if (!object)
 		return
@@ -95,7 +95,7 @@
 	set waitfor = FALSE
 
 	if(!usr && user)
-		return PushUsr(user, src)
+		return world.PushUsr(user, src)
 	
 	if (!object)
 		return
