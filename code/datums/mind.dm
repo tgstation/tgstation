@@ -456,20 +456,27 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
-			text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <b>HUMAN</b> | other"
+			if(is_monkey_leader(src))
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <b>HUMAN</b> | other"
 		else if(ismonkey(current))
 			var/found = FALSE
 			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
 				found = TRUE
 				break
 
-			if(found)
-				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			var/isLeader = is_monkey_leader(src)
+
+			if(isLeader)
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else if(found)
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 			else
-				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 
 		else
-			text += "healthy | infected | human | <b>OTHER</b>"
+			text += "healthy | infected | leader | human | <b>OTHER</b>"
 
 		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -1244,11 +1251,17 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
-							D.cure(0)
+							D.cure(FALSE)
+			if("leader")
+				if(check_rights(R_ADMIN, 0))
+					add_monkey_leader(src)
+					log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
+					message_admins("[key_name_admin(usr)] made [key_name_admin(current)] a monkey leader!")
 			if("infected")
-				if (check_rights(R_ADMIN, 0))
+				if(check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
+					add_monkey(src)
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
@@ -1266,6 +1279,7 @@
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
 							stoplag() //because deleting of virus is doing throught spawn(0) //What
+						remove_monkey(src)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
