@@ -42,10 +42,10 @@
 			CB.forceMove(drop_location())
 			CB.SpinAnimation(10, 1)
 			CB.update_icon()
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, CB, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
-		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -229,7 +229,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(src, "gun_dry_fire", 50, 1)
+		playsound(src, "gun_dry_fire", 60, 1)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
