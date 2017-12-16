@@ -130,11 +130,12 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
-			return 1
-	return 0
+/datum/objective_item/steal/functionalai/check_special_completion(obj/C)
+	if(istype(C, /obj/item/device/aicard))
+		for(var/mob/living/silicon/ai/A in C)
+			if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
+				return TRUE
+	return FALSE
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints."
