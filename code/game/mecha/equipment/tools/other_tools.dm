@@ -422,7 +422,7 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	ADD_GAS(/datum/gas/plasma, GM.gases)
+	GM.add_gas(/datum/gas/plasma)
 	if(prob(10))
 		GM.gases[/datum/gas/plasma][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
