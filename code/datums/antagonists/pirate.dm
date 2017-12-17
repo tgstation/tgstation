@@ -40,10 +40,14 @@
 	name = "Pirate Crew"
 
 /datum/antagonist/pirate/apply_innate_effects(mob/living/M)
-	M.gain_trauma(/datum/brain_trauma/mild/pirate_slang, TRUE)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.gain_trauma(/datum/brain_trauma/mild/pirate_slang, TRUE)
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/M)
-	M.cure_trauma_type(/datum/brain_trauma/mild/pirate_slang, TRUE)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.cure_trauma_type(/datum/brain_trauma/mild/pirate_slang, TRUE)
 
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
