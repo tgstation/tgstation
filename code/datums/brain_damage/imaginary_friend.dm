@@ -133,9 +133,14 @@
 	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 
 	var/rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[say_quote(message)]</span></span>"
+	var/dead_rendered = "<span class='game say'><span class='name'>[name] (Imaginary friend of [owner])</span> <span class='message'>[say_quote(message)]</span></span>"
 
 	to_chat(owner, "[rendered]")
 	to_chat(src, "[rendered]")
+
+	for(var/mob/M in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(M, owner)
+		to_chat(M, "[link] [dead_rendered]")
 
 /mob/camera/imaginary_friend/emote(act,m_type=1,message = null)
 	return
