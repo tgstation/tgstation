@@ -91,6 +91,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				possible_names += new type
 	namedatum = pick(possible_names)
 	updatetheme(pickedtheme)
+	
+/mob/living/simple_animal/hostile/guardian/get_spans()
+	if(pickedtheme == tech)
+		. = ..() | SPAN_ROBOT
+	else return
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
 	name = "[namedatum.prefixname] [namedatum.suffixcolour]"
