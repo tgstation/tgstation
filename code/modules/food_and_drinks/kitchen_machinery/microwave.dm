@@ -277,9 +277,9 @@
 	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/stop()
-	soundloop.stop()
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
@@ -293,7 +293,6 @@
 	icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
@@ -303,6 +302,7 @@
 		if(prob(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/broke()
 	var/datum/effect_system/spark_spread/s = new
@@ -314,6 +314,7 @@
 	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..() || panel_open)
