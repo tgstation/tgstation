@@ -126,7 +126,7 @@ Thus, the two variables affect pump operation are set in New():
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -144,7 +144,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if("set_transfer_rate" in signal.data)
 		var/datum/gas_mixture/air1 = AIR1
-		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
+		transfer_rate = CLAMP(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

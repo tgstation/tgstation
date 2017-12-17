@@ -126,7 +126,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target, 0, 1000)
+				target_temperature = CLAMP(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			eject_beaker()
