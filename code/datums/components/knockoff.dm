@@ -32,7 +32,7 @@
 	if(!wearer.dropItemToGround(I))
 		return
 
-	wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer] [I.name]!</span>","<span class='userdanger'>[attacker] knocks off your [I.name]!</span>")
+	wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer]'s [I.name]!</span>","<span class='userdanger'>[attacker] knocks off your [I.name]!</span>")
 
 /datum/component/knockoff/proc/OnEquipped(mob/living/carbon/human/H,slot)
 	if(!istype(H))
@@ -48,3 +48,6 @@
 	if(disarm_redirect)
 		QDEL_NULL(disarm_redirect)
 	
+/datum/component/knockoff/Destroy()
+	QDEL_NULL(disarm_redirect)
+	. = ..()
