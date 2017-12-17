@@ -226,3 +226,40 @@ obj/item/banner/engineering/atmos/mundane
 	crate_name = "doggies crate"
 
 //doggo sprites by Arkblader
+
+/obj/item/gun/ballistic/shotgun/sniper
+	name = "Hunting rifle"
+	desc = "A traditional hunting rifle with 4x scope and a four-shell capacity underneath."
+	icon = 'code/white/pieceofcrap.dmi'
+	icon_state = "tranqshotgun"
+	item_state = "sniper"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 4
+	zoomable = TRUE
+	zoom_amt = 10
+	zoom_out_amt = 13
+	slot_flags = SLOT_BACK
+	mag_type = /obj/item/ammo_box/magazine/internal/shot
+	casing_ejector = FALSE
+	weapon_weight = WEAPON_MEDIUM
+
+/obj/item/ammo_casing/shotgun/dart/sleeping
+	name = "shotgun dart"
+	desc = "A dart for use in shotguns. Filled with tranquilizers."
+	icon_state = "cshell"
+	projectile_type = /obj/item/projectile/bullet/dart
+
+/obj/item/ammo_casing/shotgun/dart/sleeping/Initialize()
+	. = ..()
+	reagents.add_reagent("tirizene", 30)
+
+/obj/item/storage/box/sleeping
+	name = "box of tranquilizer darts"
+	desc = "A box full of darts, filled with tranquilizers."
+	icon = 'code/white/pieceofcrap.dmi'
+	icon_state = "tranqshot"
+	illustration = null
+
+/obj/item/storage/box/sleeping/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/dart/sleeping(src)
