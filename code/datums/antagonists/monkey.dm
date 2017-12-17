@@ -14,7 +14,7 @@
 	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
 	if(!owner.current.HasDisease(D))
 		D.affected_mob = owner
 		owner.current.viruses += D
@@ -60,9 +60,6 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/datum/disease/D = (/datum/disease/transformation/jungle_fever in owner.current.viruses)
-	if(D)
-		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
 	SSticker.mode.ape_leaders += owner
@@ -161,10 +158,13 @@
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
 			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
-	if(LAZYLEN(SSticker.mode.ape_leaders))
+	var/list/leaders = get_antagonists(/datum/antagonist/monkey/leader, TRUE)
+	var/list/monkeys = get_antagonists(/datum/antagonist/monkey, TRUE)
+
+	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_leaders)
-	if(LAZYLEN(SSticker.mode.ape_infectees))
+	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_infectees)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
