@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Microwave sound loops now correctly stop when it breaks or is otherwise interrupted mid-cook."
