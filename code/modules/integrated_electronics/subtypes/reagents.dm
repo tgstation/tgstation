@@ -111,7 +111,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, volume)
+		new_amount = CLAMP(new_amount, 0, volume)
 		transfer_amount = new_amount
 
 // Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
@@ -184,7 +184,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = Clamp(transfer_amount, 0, reagents.total_volume)
+		var/tramount = CLAMP(transfer_amount, 0, reagents.total_volume)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -235,7 +235,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/pump/do_work()
@@ -384,7 +384,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/filter/do_work()
