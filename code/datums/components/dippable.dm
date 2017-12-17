@@ -24,7 +24,7 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 	var/attack_transfer_ratio	//How much of the dipped item's reagents should be applied to whatever is attacked with the dipped item?
 
 /datum/component/dippable/Initialize(capacity_already_defined = FALSE, _capacity = 0, _dip_mix_ratio = 0, _dip_transfer_rate = 0, _dip_transfer_type = DIP_TYPE_STATIC, _transfer_on_attack = FALSE, _attack_transfer_ratio = 0)
-	if(!istype(parent, /obj/item))
+	if(!isitem(parent))
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("Attempted to put dippable component in [parent.type]!")
 	var/obj/item/container = parent
