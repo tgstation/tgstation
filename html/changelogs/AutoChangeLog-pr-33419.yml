@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "A lollipop dispenser in \"dispense lollipops\" mode can push the
-lollipop straight into the targets hand, rather than getting it dirty on
-the floor first."
