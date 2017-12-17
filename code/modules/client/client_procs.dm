@@ -234,7 +234,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 
-	set_macros()
+	if(SSinput.initialized)
+		set_macros()
 
 	chatOutput.start() // Starts the chat
 

@@ -1170,6 +1170,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
+					if(hotkeys)
+						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=default")
+					else
+						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=old_default")
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
