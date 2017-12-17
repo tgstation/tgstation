@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Clockcult power alerts will no longer show outside of the clockcult gamemode (they could be triggered by scarabs.)"
