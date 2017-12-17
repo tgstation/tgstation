@@ -224,7 +224,7 @@
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
 			inputs_used++
-			result = result + I
+			result += I
 
 	if(inputs_used)
 		result = result / inputs_used
