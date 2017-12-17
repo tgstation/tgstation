@@ -65,6 +65,8 @@
 		stored_dna.real_name = real_name
 
 /mob/living/brain/ClickOn(atom/A, params)
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 	..()
 	if(istype(loc, /obj/item/device/mmi))
 		var/obj/item/device/mmi/MMI = loc

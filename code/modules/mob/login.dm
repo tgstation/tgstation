@@ -39,7 +39,6 @@
 
 	update_client_colour()
 	if(client)
-		client.click_intercept = null
 
 		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
 

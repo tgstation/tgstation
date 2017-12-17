@@ -87,6 +87,8 @@
 	to_chat(src, "<i>[speaker] says something, but you can't understand any of it...</i>")
 
 /mob/camera/eminence/ClickOn(atom/A, params)
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		A.examine(src)

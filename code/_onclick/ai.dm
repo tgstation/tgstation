@@ -10,9 +10,8 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_DBLCLICK, A, params))
+		return
 
 	if(control_disabled || incapacitated())
 		return
@@ -27,9 +26,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 
 	if(control_disabled || incapacitated())
 		return
@@ -132,7 +130,7 @@
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(emagged)
 		return
-	
+
 	if(locked)
 		bolt_raise(usr)
 	else
@@ -156,7 +154,7 @@
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
 	if(emagged)
 		return
-	
+
 	if(!emergency)
 		emergency_on(usr)
 	else

@@ -28,6 +28,8 @@
 
 
 /mob/living/carbon/alien/humanoid/hunter/ClickOn(atom/A, params)
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)

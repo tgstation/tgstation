@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/singularity_pull()
 	return
 
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+/obj/effect/proc_holder/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
 		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")
 		caller.ranged_ability.remove_ranged_ability()
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else
 			return
 	user.ranged_ability = src
-	user.client.click_intercept = user.ranged_ability
+	user.click_intercepts |= user.ranged_ability
 	add_mousepointer(user.client)
 	ranged_ability_user = user
 	if(msg)
@@ -85,8 +85,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
+	ranged_ability_user.click_intercepts -= ranged_ability_user.ranged_ability
 	ranged_ability_user.ranged_ability = null
-	ranged_ability_user.client.click_intercept = null
 	remove_mousepointer(ranged_ability_user.client)
 	if(msg)
 		to_chat(ranged_ability_user, msg)

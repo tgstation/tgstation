@@ -7,6 +7,8 @@
 	var/mouseControlObject = null
 
 /client/MouseDown(object, location, control, params)
+	if(SendSignal(COMSIG_CLIENT_MOUSEDOWN, object, location, control, params))
+		return
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -23,10 +25,18 @@
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
+	SendSignal(COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)		//Placement below above block is intentional. We can not have mousedown items held when we're mouse upped.
+
+/mob
+	var/autoclick_override		//badmin memes
 
 /mob/proc/CanMobAutoclick(object, location, params)
+	if(!isnull(autoclick_override))
+		return autoclick_override
 
 /mob/living/carbon/CanMobAutoclick(atom/object, location, params)
+	if(!isnull(autoclick_override))
+		return autoclick_override
 	if(!object.IsAutoclickable())
 		return
 	var/obj/item/h = get_active_held_item()
@@ -34,8 +44,12 @@
 		. = h.CanItemAutoclick(object, location, params)
 
 /mob/proc/canMobMousedown(object, location, params)
+	if(!isnull(autoclick_override))
+		return autoclick_override
 
 /mob/living/carbon/canMobMousedown(atom/object, location, params)
+	if(!isnull(autoclick_override))
+		return autoclick_override
 	var/obj/item/H = get_active_held_item()
 	if(H)
 		. = H.canItemMouseDown(object, location, params)
@@ -76,23 +90,17 @@
 	mouseLocation = location
 	mouseObject = object
 	mouseControlObject = control
-	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/obj/item/I in mob.mousemove_intercept_objects)
-			I.onMouseMove(object, location, control, params)
-
-/obj/item/proc/onMouseMove(object, location, control, params)
-	return
+	SendSignal(COMSIG_CLIENT_MOUSEMOVE, object, location, control, params)
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
 	mouseControlObject = over_control
+	if(SendSignal(COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params))
+		return
 	if(selected_target[1] && over_object && over_object.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)
-		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-
-/obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	return
+		active_mousedown_item.InterceptMouseDrag(src_object, over_object, src_location, over_location, params, mob)

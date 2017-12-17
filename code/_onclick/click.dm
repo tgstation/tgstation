@@ -3,14 +3,14 @@
 	~Sayu
 */
 
-// 1 decisecond click delay (above and beyond mob/next_move)
-//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
-/mob/var/next_click	= 0
+/mob
+	//1 decisecond click delay (above and beyond mob/next_move)
+	//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
+	var/next_click	= 0
 
-// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-/mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
-/mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
-
+	//THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
+	var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
+	var/next_move_modifier = 1 //Value to multiply action/click delays by
 
 //Delays the mob's next click/action by num deciseconds
 // eg: 10-3 = 7 deciseconds of delay
@@ -61,9 +61,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client && client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
@@ -85,7 +84,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(ignore_restraints = 1))
+	if(incapacitated(ignore_restraints = TRUE))
 		return
 
 	face_atom(A)
@@ -238,8 +237,8 @@
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
-	return
-
+	if(client && client.SendSignal(COMSIG_CLIENT_DBLCLICK, A, params))
+		return
 
 /*
 	Translates into attack_hand, etc.
@@ -481,9 +480,12 @@
 /* MouseWheelOn */
 
 /mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
-	return
+	if(client)
+		client.SendSignal(COMSIG_CLIENT_MOUSEWHEEL, A, delta_x, delta_y, params)
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
+	if(client && client.SendSignal(COMSIG_CLIENT_MOUSEWHEEL, A, delta_x, delta_y, params))
+		return
 	var/list/modifier = params2list(params)
 	if(modifier["shift"])
 		var/view = 0

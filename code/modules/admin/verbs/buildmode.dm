@@ -87,13 +87,12 @@
 /datum/buildmode/New(client/c)
 	create_buttons()
 	holder = c
-	holder.click_intercept = src
+	holder.mob.click_intercepts += src
 	holder.show_popup_menus = 0
 	holder.screen += buttons
 
 /datum/buildmode/proc/quit()
 	holder.screen -= buttons
-	holder.click_intercept = null
 	holder.show_popup_menus = 1
 	usr.client.images -= preview
 	preview.Cut()
@@ -102,6 +101,8 @@
 
 /datum/buildmode/Destroy()
 	stored = null
+	if(holder)
+		holder.mob.click_intercepts -= src
 	for(var/button in buttons)
 		qdel(button)
 	return ..()
@@ -234,8 +235,8 @@
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
-		if(istype(M.client.click_intercept, /datum/buildmode))
-			var/datum/buildmode/B = M.client.click_intercept
+		if(locate(/datum/buildmode) in M.click_intercepts)
+			var/datum/buildmode/B = locate(/datum/buildmode) in M.click_intercepts
 			B.quit()
 			log_admin("[key_name(usr)] has left build mode.")
 		else
@@ -244,7 +245,7 @@
 			log_admin("[key_name(usr)] has entered build mode.")
 
 
-/datum/buildmode/proc/InterceptClickOn(user,params,atom/object) //Click Intercept
+/datum/buildmode/InterceptClickOn(user, atom/target, params) //Click Intercept
 	var/list/pa = params2list(params)
 	var/right_click = pa.Find("right")
 	var/left_click = pa.Find("left")

@@ -1250,6 +1250,7 @@
 #include "code\modules\cargo\exports\weapons.dm"
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\asset_cache.dm"
+#include "code\modules\client\click_intercept.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_procs.dm"
