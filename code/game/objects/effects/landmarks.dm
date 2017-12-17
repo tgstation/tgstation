@@ -16,7 +16,7 @@
 
 /obj/effect/landmark/start
 	name = "start"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/mob/roles.dmi'
 	icon_state = "x"
 	anchored = TRUE
 	var/jobspawn_override = FALSE
@@ -43,6 +43,7 @@
 
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
+	icon_state = "assistant"
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
@@ -50,39 +51,51 @@
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
+	icon_state = "janitor"
 
 /obj/effect/landmark/start/cargo_technician
 	name = "Cargo Technician"
+	icon_state = "cargotech"
 
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
+	icon_state = "bartender"
 
 /obj/effect/landmark/start/clown
 	name = "Clown"
+	icon_state = "clown"
 
 /obj/effect/landmark/start/mime
 	name = "Mime"
+	icon_state = "mime"
 
 /obj/effect/landmark/start/quartermaster
 	name = "Quartermaster"
+	icon_state = "qm"
 
 /obj/effect/landmark/start/atmospheric_technician
 	name = "Atmospheric Technician"
+	icon_state = "atmostech"
 
 /obj/effect/landmark/start/cook
 	name = "Cook"
+	icon_state = "cook"
 
 /obj/effect/landmark/start/shaft_miner
 	name = "Shaft Miner"
+	icon_state = "shaftminer"
 
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
+	icon_state = "securityofficer"
 
 /obj/effect/landmark/start/botanist
 	name = "Botanist"
+	icon_state = "botanist"
 
 /obj/effect/landmark/start/head_of_security
 	name = "Head of Security"
+	icon_state = "hos"
 
 /obj/effect/landmark/start/ai
 	name = "AI"
@@ -90,57 +103,74 @@
 
 /obj/effect/landmark/start/captain
 	name = "Captain"
+	icon_state = "captain"
 
 /obj/effect/landmark/start/detective
 	name = "Detective"
+	icon_state = "detective"
 
 /obj/effect/landmark/start/warden
 	name = "Warden"
+	icon_state = "warden"
 
 /obj/effect/landmark/start/chief_engineer
 	name = "Chief Engineer"
+	icon_state = "ce"
 
 /obj/effect/landmark/start/cyborg
 	name = "Cyborg"
 
 /obj/effect/landmark/start/head_of_personnel
 	name = "Head of Personnel"
+	icon_state = "hop"
 
 /obj/effect/landmark/start/librarian
 	name = "Curator"
+	icon_state = "curator"
 
 /obj/effect/landmark/start/lawyer
 	name = "Lawyer"
+	icon_state = "lawyer"
 
 /obj/effect/landmark/start/station_engineer
 	name = "Station Engineer"
+	icon_state = "engineer"
 
 /obj/effect/landmark/start/medical_doctor
 	name = "Medical Doctor"
+	icon_state = "medicaldoctor"
 
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
+	icon_state = "scientist"
 
 /obj/effect/landmark/start/chemist
 	name = "Chemist"
+	icon_state = "chemist"
 
 /obj/effect/landmark/start/roboticist
 	name = "Roboticist"
+	icon_state = "roboticist"
 
 /obj/effect/landmark/start/research_director
 	name = "Research Director"
+	icon_state = "rd"
 
 /obj/effect/landmark/start/geneticist
 	name = "Geneticist"
+	icon_state = "geneticist"
 
 /obj/effect/landmark/start/chief_medical_officer
 	name = "Chief Medical Officer"
+	icon_state = "cmo"
 
 /obj/effect/landmark/start/virologist
 	name = "Virologist"
+	icon_state = "virologist"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
+	icon_state = "chaplain"
 
 //Department Security spawns
 
