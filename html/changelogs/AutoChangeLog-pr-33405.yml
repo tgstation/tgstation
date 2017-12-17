@@ -1,0 +1,10 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "A few new traumas have been added."
+  - balance: "Thresholds to get brain traumas have been lowered, as they currently pretty much only trigger if you intentionally chug impedrezene."
+  - tweak: "Melee head hits deal minor brain damage. Crits still do a significant amount."
+  - tweak: "Nuke Op implants no longer trigger on deathgasp. (They still explode on death)"
+  - tweak: "You'll now receive messages when crossing certain brain damage thresholds."
+  - tweak: "Split Personalities are instructed not to suicide while in control."
+  - tweak: "Godwoken Syndrome now randomly sends Voice of God commands, instead of being controllable."
