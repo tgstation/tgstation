@@ -51,7 +51,7 @@
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
-	var/obj/item/radio/integrated/signal/sradio // AI's signaller
+	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/holoform = FALSE
 	var/canholo = TRUE
@@ -99,9 +99,9 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
-	loc = P
+	forceMove(P)
 	card = P
-	sradio = new(src)
+	signaler = new(src)
 	if(!radio)
 		radio = new /obj/item/device/radio(src)
 
@@ -114,12 +114,14 @@
 
 	. = ..()
 
+	var/datum/action/innate/pai/software/SW = new
 	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
 
 	var/datum/action/language_menu/ALM = new
+	SW.Grant(src)
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
@@ -136,7 +138,7 @@
 /mob/living/silicon/pai/proc/process_hack()
 
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = Clamp(hackprogress + 4, 0, 100)
+		hackprogress = CLAMP(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -199,6 +201,15 @@
 	if(!ispAI(owner))
 		return 0
 	P = owner
+
+/datum/action/innate/pai/software
+	name = "Software Interface"
+	button_icon_state = "pai"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/software/Trigger()
+	..()
+	P.paiInterface()
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
@@ -272,8 +283,8 @@
 
 
 /mob/living/silicon/pai/process()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)
+	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)
 
 /mob/living/silicon/pai/generateStaticOverlay()
 	return

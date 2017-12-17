@@ -8,9 +8,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	var/list/versions = list("time_dilation_current" = 2,
+	var/list/versions = list("antagonists" = 3,
+							"admin_secrets_fun_used" = 2,
+							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
-
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
@@ -44,7 +45,14 @@ SUBSYSTEM_DEF(blackbox)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
-	return FALSE
+	switch(var_name)
+		if("feedback")
+			return FALSE
+		if("sealed")
+			if(var_value)
+				return Seal()
+			return FALSE
+	return ..()
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -73,41 +81,42 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
-		return
+		return FALSE
 	if(IsAdminAdvancedProcCall())
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
+	return TRUE
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(freq)
 	if(sealed)
 		return
 	switch(freq)
-		if(1459)
+		if(FREQ_COMMON)
 			record_feedback("tally", "radio_usage", 1, "common")
-		if(GLOB.SCI_FREQ)
+		if(FREQ_SCIENCE)
 			record_feedback("tally", "radio_usage", 1, "science")
-		if(GLOB.COMM_FREQ)
+		if(FREQ_COMMAND)
 			record_feedback("tally", "radio_usage", 1, "command")
-		if(GLOB.MED_FREQ)
+		if(FREQ_MEDICAL)
 			record_feedback("tally", "radio_usage", 1, "medical")
-		if(GLOB.ENG_FREQ)
+		if(FREQ_ENGINEERING)
 			record_feedback("tally", "radio_usage", 1, "engineering")
-		if(GLOB.SEC_FREQ)
+		if(FREQ_SECURITY)
 			record_feedback("tally", "radio_usage", 1, "security")
-		if(GLOB.SYND_FREQ)
+		if(FREQ_SYNDICATE)
 			record_feedback("tally", "radio_usage", 1, "syndicate")
-		if(GLOB.SERV_FREQ)
+		if(FREQ_SERVICE)
 			record_feedback("tally", "radio_usage", 1, "service")
-		if(GLOB.SUPP_FREQ)
+		if(FREQ_SUPPLY)
 			record_feedback("tally", "radio_usage", 1, "supply")
-		if(GLOB.CENTCOM_FREQ)
+		if(FREQ_CENTCOM)
 			record_feedback("tally", "radio_usage", 1, "centcom")
-		if(GLOB.AIPRIV_FREQ)
+		if(FREQ_AI_PRIVATE)
 			record_feedback("tally", "radio_usage", 1, "ai private")
-		if(GLOB.REDTEAM_FREQ)
+		if(FREQ_CTF_RED)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
-		if(GLOB.BLUETEAM_FREQ)
+		if(FREQ_CTF_BLUE)
 			record_feedback("tally", "radio_usage", 1, "CTF blue team")
 		else
 			record_feedback("tally", "radio_usage", 1, "other")
@@ -210,7 +219,10 @@ Versioning
 			var/pos = length(FV.json["data"]) + 1
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+				if(islist(data[i]))
+					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
+				else
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 

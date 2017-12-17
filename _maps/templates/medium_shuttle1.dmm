@@ -49,7 +49,7 @@
 	name = "Shuttle"
 	})
 "h" = (
-/obj/machinery/door/airlock/glass_external,
+/obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/ruin/powered{
 	name = "Shuttle"
@@ -65,7 +65,7 @@
 	name = "Shuttle"
 	})
 "k" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered{
 	name = "Shuttle"
@@ -89,7 +89,7 @@
 	name = "Shuttle"
 	})
 "o" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/ruin/powered{
 	name = "Shuttle"

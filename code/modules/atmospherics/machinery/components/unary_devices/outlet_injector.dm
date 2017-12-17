@@ -93,19 +93,14 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
-	 )
-
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
@@ -131,7 +126,7 @@
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = AIR1
-		volume_rate = Clamp(number, 0, air_contents.volume)
+		volume_rate = CLAMP(number, 0, air_contents.volume)
 
 	if("status" in signal.data)
 		spawn(2)
@@ -180,7 +175,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()

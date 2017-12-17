@@ -26,6 +26,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	grind_results = list("soymilk" = 0)
 
 // Koibean
 /obj/item/seeds/soya/koi

@@ -21,6 +21,17 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
+	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+
+/obj/item/stack/on_grind()
+	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
+		grind_results[grind_results[i]] *= amount //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+
+/obj/item/stack/grind_requirements()
+	if(is_cyborg)
+		to_chat(usr, "<span class='danger'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		return
+	return TRUE
 
 /obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
 	. = ..()
@@ -37,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = Clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = Clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 

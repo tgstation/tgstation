@@ -133,7 +133,7 @@
 		switch(remove_from)
 			if("head")
 				if(inventory_head)
-					inventory_head.loc = src.loc
+					inventory_head.forceMove(drop_location())
 					inventory_head = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -142,7 +142,7 @@
 					return
 			if("back")
 				if(inventory_back)
-					inventory_back.loc = src.loc
+					inventory_back.forceMove(drop_location())
 					inventory_back = null
 					update_corgi_fluff()
 					regenerate_icons()

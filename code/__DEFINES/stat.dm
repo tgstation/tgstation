@@ -20,6 +20,7 @@
 #define CLUMSY		"clumsy"
 #define DUMB        "dumb"
 #define MONKEYLIKE  "monkeylike" //sets IsAdvancedToolUser to FALSE
+#define PACIFISM 	"pacifism"
 
 // common disability sources
 #define EYE_DAMAGE "eye_damage"

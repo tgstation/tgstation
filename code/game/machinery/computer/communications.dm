@@ -28,7 +28,6 @@
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
 
-	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
 
@@ -228,7 +227,7 @@
 			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
 			if(currmsg)
 				currmsg.answer_callback.Invoke()
-			
+
 			state = STATE_VIEWMESSAGE
 		if("status")
 			state = STATE_STATUSDISPLAY
@@ -464,8 +463,9 @@
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(CONFIG_GET(string/cross_server_address))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
+					var/cross_servers_count = length(CONFIG_GET(keyed_string_list/cross_server))
+					if(cross_servers_count)
+						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
@@ -693,16 +693,12 @@
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-
+	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
 			status_signal.data["msg1"] = data1

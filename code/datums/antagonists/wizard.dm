@@ -5,13 +5,13 @@
 
 /datum/antagonist/wizard
 	name = "Space Wizard"
+	roundend_category = "wizards/witches"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
 	var/hud_version = "wizard"
 	var/datum/objective_team/wizard/wiz_team //Only created if wizard summons apprentices
-	var/list/objectives = list() //this should be base datum antag proc and list, todo make lazy
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
@@ -45,10 +45,12 @@
 
 /datum/objective_team/wizard
 	name = "wizard team"
+	var/datum/antagonist/wizard/master_wizard
 
 /datum/antagonist/wizard/proc/create_wiz_team()
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
+	wiz_team.master_wizard = src
 	update_wiz_icons_added(owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -71,7 +73,7 @@
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = owner
 				objectives += escape_objective
-		
+
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
@@ -103,8 +105,8 @@
 			if (!(locate(/datum/objective/hijack) in owner.objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = owner
-				objectives += hijack_objective	
-	
+				objectives += hijack_objective
+
 	for(var/datum/objective/O in objectives)
 		owner.objectives += O
 
@@ -128,7 +130,7 @@
 	if(H.age < wiz_age)
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
-	
+
 /datum/antagonist/wizard/greet()
 	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
 	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
@@ -208,7 +210,7 @@
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
-			
+
 /datum/antagonist/wizard/apprentice/create_objectives()
 	var/datum/objective/protect/new_objective = new /datum/objective/protect
 	new_objective.owner = owner
@@ -221,6 +223,7 @@
 /datum/antagonist/wizard/apprentice/imposter
 	name = "Wizard Imposter"
 	allow_rename = FALSE
+	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
 	to_chat(owner, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
@@ -266,7 +269,7 @@
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()
-	
+
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball)
@@ -274,7 +277,7 @@
 	var/mob/living/M = owner.current
 	if(!istype(M))
 		return
-	
+
 	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(M)
 	Implant.implant(M)
 
@@ -283,3 +286,45 @@
 	new_objective.owner = owner
 	owner.objectives += new_objective
 	objectives += new_objective
+
+//Solo wizard report
+/datum/antagonist/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += printplayer(owner)
+
+	var/count = 1
+	var/wizardwin = 1
+	for(var/datum/objective/objective in objectives)
+		if(objective.check_completion())
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		else
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			wizardwin = 0
+		count++
+
+	if(wizardwin)
+		parts += "<span class='greentext'>The wizard was successful!</span>"
+	else
+		parts += "<span class='redtext'>The wizard has failed!</span>"
+	
+	if(owner.spell_list.len>0)
+		parts += "<B>[owner.name] used the following spells: </B>"
+		var/list/spell_names = list()
+		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+			spell_names += S.name
+		parts += spell_names.Join(", ")
+	
+	return parts.Join("<br>")
+
+//Wizard with apprentices report
+/datum/objective_team/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += master_wizard.roundend_report()
+	parts += " "
+	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+	parts += printplayerlist(members - master_wizard.owner)
+	
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -41,10 +41,10 @@
 				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
 				brainmob.container = null
-				brainmob.loc = brain
+				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
-			brain.loc = T
+			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
 		else

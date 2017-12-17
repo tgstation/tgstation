@@ -1,3 +1,5 @@
+#define MAX_DENT_DECALS 15
+
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
@@ -52,7 +54,7 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = get_angle_of_incidence(face_angle, P.Angle)
+	var/incidence_s = WRAP(GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle), -90, 90)
 	var/new_angle = face_angle + incidence_s
 	var/new_angle_s = new_angle
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
@@ -297,6 +299,9 @@
 	return FALSE
 
 /turf/closed/wall/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
+	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
+		return
+
 	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
 	decal.pixel_x = x
 	decal.pixel_y = y
@@ -304,3 +309,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
+	
+#undef MAX_DENT_DECALS

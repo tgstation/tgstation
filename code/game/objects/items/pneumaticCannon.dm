@@ -198,8 +198,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = Clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = Clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -216,7 +216,7 @@
 		if(!src.tank)
 			return
 		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
-		src.tank.loc = get_turf(user)
+		src.tank.forceMove(user.drop_location())
 		user.put_in_hands(tank)
 		src.tank = null
 	if(!removing)

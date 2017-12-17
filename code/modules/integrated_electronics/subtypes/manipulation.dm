@@ -93,8 +93,8 @@
 			yo.data = round(yo.data, 1)
 
 		var/turf/T = get_turf(assembly)
-		var/target_x = Clamp(T.x + xo.data, 0, world.maxx)
-		var/target_y = Clamp(T.y + yo.data, 0, world.maxy)
+		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
+		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
 
 		shootAt(locate(target_x, target_y, T.z))
 
@@ -210,7 +210,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = Clamp(detonation_time.data, 1, 12)*10
+			dt = CLAMP(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
@@ -307,7 +307,7 @@
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(AM.Adjacent(acting_object) && isturf(AM.loc))
+			if(check_target(AM, exclude_contents = TRUE))
 				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)
@@ -375,18 +375,13 @@
 	if(max_w_class && (A.w_class > max_w_class))
 		return
 
-	var/atom/movable/acting_object = get_object()
-	if(!(A.Adjacent(acting_object) && isturf(A.loc)) && !(A in acting_object.GetAllContents()))
+	// Is the target inside the assembly or close to it?
+	if(!check_target(A, exclude_components = TRUE))
 		return
 
-	var/turf/T = get_turf(acting_object)
+	var/turf/T = get_turf(get_object())
 	if(!T)
 		return
-
-	// No ejecting assembly components or power cells
-	if(assembly)
-		if((A in assembly.assembly_components) || A == assembly.battery)
-			return
 
 	// If the item is in mob's inventory, try to remove it from there.
 	if(ismob(A.loc))
@@ -394,10 +389,9 @@
 		if(!M.temporarilyRemoveItemFromInventory(A))
 			return
 
-
-	var/x_abs = Clamp(T.x + target_x_rel, 0, world.maxx)
-	var/y_abs = Clamp(T.y + target_y_rel, 0, world.maxy)
-	var/range = round(Clamp(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
+	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
+	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)

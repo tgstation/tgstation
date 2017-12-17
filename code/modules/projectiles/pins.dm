@@ -24,7 +24,7 @@
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
 			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.loc = get_turf(G)
+				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
 				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
 

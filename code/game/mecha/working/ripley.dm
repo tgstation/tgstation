@@ -34,7 +34,7 @@
 	for(var/i=1, i <= hides, i++)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
-		A.forceMove(loc)
+		A.forceMove(drop_location())
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -94,7 +94,7 @@
 /obj/mecha/working/ripley/mining/Initialize()
 	. = ..()
 	if(cell)
-		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
+		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
 		if(prob(15)) //Possible diamond drill... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
@@ -130,7 +130,7 @@
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
 			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.forceMove(loc)
+			O.forceMove(drop_location())
 			src.cargo -= O
 			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
@@ -141,7 +141,7 @@
 		var/obj/O = X
 		if(prob(30/severity))
 			cargo -= O
-			O.forceMove(loc)
+			O.forceMove(drop_location())
 	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
@@ -173,7 +173,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
 		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
-		O.loc = loc
+		O.forceMove(drop_location())
 		cargo -= O
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
