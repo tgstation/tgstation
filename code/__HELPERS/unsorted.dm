@@ -1542,3 +1542,40 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+// RUDE LANGUAGE FOLLOWS
+/proc/piratify(message)
+	var/static/list/replacements = list(
+		"asses" = "booties",
+		"\\bass\\b" = "booty",
+		"asshole" = "barrelstopper",
+		"bitches" = "tarts",
+		"bitch" = "tart",
+		"blowjob" = "harmonica lesson",
+		"clit" = "rosebud",
+		"cock" = "mast",
+		"cocksuck" = "bilgedrink",
+		"cum" = "bilge",
+		"cunt" = "shrew",
+		"dildo" = "tickler",
+		"fag" = "landlubber",
+		"fuck" = "scupper",
+		"muff" = "britches",
+		"penis" = "John Thomas",
+		"pussy" = "kitty",
+		"shit\\b" = "cannon",
+		"shit" = "barnacle",
+		"slut" = "strumpet",
+		"tits" = "bosom",
+		"titty" = "bosom",
+		"twat" = "halibut",
+		"whore" = "flirt",
+		"vaginas" = "danties",
+		"vagina" = "danty"
+	)
+
+	for(var/key in replacements)
+		var/value = replacements[key]
+		message = replacetext(message, regex(key, "i"), value)
+
+	return message
