@@ -222,7 +222,7 @@
 
 	existing_shuttle.jumpToNullSpace()
 
-	preview_shuttle.dock(D)
+	preview_shuttle.initiate_docking(D)
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so
