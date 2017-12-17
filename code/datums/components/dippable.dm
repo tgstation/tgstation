@@ -22,23 +22,19 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 	var/dip_transfer_type	//Is the rate of dip transfer a fraction of the dippable item's capacity or a static quantity of reagent?
 	var/transfer_on_attack	//Should we transfer the dipped item's reagents when attacking someone?
 	var/attack_transfer_ratio	//How much of the dipped item's reagents should be applied to whatever is attacked with the dipped item?
-	var/obj/item/container	//This is to ensure that we can use obj or item-specific procs when referring to the component's parent.
-
 
 /datum/component/dippable/Initialize(capacity_already_defined = FALSE, _capacity = 0, _dip_mix_ratio = 0, _dip_transfer_rate = 0, _dip_transfer_type = DIP_TYPE_STATIC, _transfer_on_attack = FALSE, _attack_transfer_ratio = 0)
 	if(!istype(parent, /obj/item))
-		stack_trace("Attempted to put dippable component in [parent.type]!")
-		qdel(src)
-		return COMPONENT_INCOMPATIBLE
-	container = parent
+		. = COMPONENT_INCOMPATIBLE
+		CRASH("Attempted to put dippable component in [parent.type]!")
+	var/obj/item/container = parent
 	if(!capacity_already_defined)
 		if(!container.reagents)
 			container.reagents = new /datum/reagents(maximum = _capacity)
 		else
 			container.reagents.maximum_volume = _capacity
-	else
-		if(!container.reagents)
-			container.reagents = new /datum/reagents(maximum = _capacity)
+	else if(!container.reagents)
+		container.reagents = new /datum/reagents(maximum = _capacity)
 	dip_mix_ratio = _dip_mix_ratio
 	dip_transfer_rate = _dip_transfer_rate
 	dip_transfer_type = _dip_transfer_type
@@ -64,6 +60,7 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 			return 0
 
 /datum/component/dippable/proc/on_dip(obj/item/reagent_containers/target, mob/user)
+	var/obj/item/container = parent
 	var/datum/reagents/dip = target.reagents
 	var/datum/reagents/dipped = container.reagents
 	if(!target.is_open_container())
@@ -91,6 +88,7 @@ _attack_transfer_ratio: What fraction of the dipped item's reagents should be tr
 
 /datum/component/dippable/proc/on_attack(mob/living/target, mob/living/user)
 	if(transfer_on_attack && target.can_inject())
+		var/obj/item/container = parent
 		var/datum/reagents/dip = container.reagents
 		if(dip.total_volume)
 			var/datum/reagents/reactants = new
