@@ -49,10 +49,6 @@ img.icon {
 		font-weight: 700;
 		line-height: 1;
 		color: #f00;
-		text-align: center;
-		white-space: nowrap;
-		vertical-align: baseline;
-		border-radius: .25em;
 }
 
 a {color: #0000ff;}
