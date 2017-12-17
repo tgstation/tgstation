@@ -13,6 +13,7 @@
 	var/useramount = 30 // Last used amount
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
+	var/base_volume = 100 // actual volume is 100 plus 100 * rating for each matterbin
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
 	amount = setting * 3
@@ -29,9 +30,9 @@
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(base_volume)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += 100 * B.rating
+		reagents.maximum_volume += base_volume * B.rating
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -41,9 +42,9 @@
 	. = ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
-	var/new_volume = 100
+	var/new_volume = base_volume
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += 100 * B.rating
+		new_volume += base_volume * B.rating
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
 		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
