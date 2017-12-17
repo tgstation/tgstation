@@ -297,10 +297,11 @@ function output(message, flag) {
 	}
 
 	var handled = false;
+	var trimmed_message = message.trim()
 	var lastmessages = $messages.children('div.entry:last-child');
 	if (opts.messageCombining && lastmessages.length && $last_message)
 	{
-		if($last_message == message.trim())
+		if($last_message == trimmed_message)
 		{
 			if(lastmessages.children('span.r').length)
 			{
@@ -327,8 +328,8 @@ function output(message, flag) {
 			entry.setAttribute('data-filter', filteredOut);
 		}
 
-		$last_message = message.trim()
-		entry.innerHTML = message.trim();
+		$last_message = trimmed_message;
+		entry.innerHTML = trimmed_message;
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
 		//Actually do the snap
