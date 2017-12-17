@@ -23,10 +23,10 @@
 			whatever spark it once held long extinguished."
 
 /obj/item/device/soulstone/anybody
-	usability = 1
+	name = "mysterious old shard"
+	usability = TRUE
 
 /obj/item/device/soulstone/anybody/chaplain
-	name = "mysterious old shard"
 	reusable = FALSE
 
 /obj/item/device/soulstone/pickup(mob/living/user)
