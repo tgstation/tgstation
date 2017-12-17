@@ -77,27 +77,21 @@ Pipenet stuff; housekeeping
 	parents[i] = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
-	var/i = parents.Find(reference)
-	return airs[i]
+	return airs[parents.Find(reference)]
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(reference)
-		var/i = parents.Find(reference)
-		return list(nodes[i])
-	else
-		return ..()
+		return list(nodes[parents.Find(reference)])
+	return ..()
 
 /obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
-	var/i = nodes.Find(A)
-	parents[i] = reference
+	parents[nodes.Find(A)] = reference
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
-	var/i = nodes.Find(A)
-	return parents[i]
+	return parents[nodes.Find(A)]
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	var/i = parents.Find(Old)
-	parents[i] = New
+	parents[parents.Find(Old)] = New
 
 /obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()

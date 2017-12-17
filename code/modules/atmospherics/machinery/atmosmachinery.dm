@@ -171,8 +171,7 @@ Pipelines + Other Objects -> Pipe network
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	var/i = nodes.Find(reference)
-	nodes[i] = null
+	nodes[nodes.Find(reference)] = null
 	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
