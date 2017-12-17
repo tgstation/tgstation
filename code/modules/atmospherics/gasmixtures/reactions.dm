@@ -181,10 +181,10 @@
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return cached_results[id] ? REACTING : NO_REACTION
-/*
+
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting.
 /datum/gas_reaction/fusion
-	exclude = FALSE
+	exclude = TRUE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
@@ -232,7 +232,7 @@
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 			//Prevents whatever mechanism is causing it to hit negative temperatures.
 		return REACTING
-*/
+
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Nitryl formation"
