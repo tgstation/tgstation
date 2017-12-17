@@ -165,7 +165,7 @@
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!isnull(new_angle))
-		setAngle(NORM_ROT(new_angle))
+		setAngle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
@@ -197,16 +197,12 @@
 	anchored = TRUE
 
 /obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
-	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
-	if((incidence_norm > -90) && (incidence_norm < 90))
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
+	var/norm_inc = WRAP(incidence, -90, 90)
+	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
+	if(ISINRANGE_EX(norm_inc, -90, 90))
 		return FALSE
-	var/new_angle_s = rotation_angle + incidence
-	while(new_angle_s > 180)	// Translate to regular projectile degrees
-		new_angle_s -= 360
-	while(new_angle_s < -180)
-		new_angle_s += 360
-	P.Angle = new_angle_s
+	P.Angle = new_angle
 	return ..()
 
 //DOUBLE
@@ -228,17 +224,12 @@
 	anchored = TRUE
 
 /obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
-	var/incidence = get_angle_of_incidence(rotation_angle, P.Angle)
-	var/incidence_norm = get_angle_of_incidence(rotation_angle, P.Angle, FALSE)
-	var/invert = ((incidence_norm > -90) && (incidence_norm < 90))
-	var/new_angle_s = rotation_angle + incidence
-	if(invert)
-		new_angle_s += 180
-	while(new_angle_s > 180)	// Translate to regular projectile degrees
-		new_angle_s -= 360
-	while(new_angle_s < -180)
-		new_angle_s += 360
-	P.Angle = new_angle_s
+	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, P.Angle)
+	var/norm_inc = WRAP(incidence, -90, 90)
+	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
+	if(ISINRANGE_EX(norm_inc, -90, 90))
+		new_angle += 180
+	P.Angle = new_angle
 	return ..()
 
 //BOX

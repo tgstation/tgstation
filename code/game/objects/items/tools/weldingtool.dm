@@ -51,7 +51,7 @@
 	cut_overlays()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 		add_overlay("[initial(icon_state)][ratio]")
 	update_torch()
 	return

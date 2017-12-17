@@ -93,7 +93,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return FALSE
 
 	var/power = 1000
-	amount = Clamp(amount, 1, 10)
+	amount = CLAMP(amount, 1, 10)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 5)
 	power = max(3000, power)

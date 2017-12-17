@@ -48,7 +48,7 @@
 	if(old_dir == new_dir)
 		return
 	remove()
-	var/rotation = SimplifyDegrees(dir2angle(new_dir)-dir2angle(old_dir))
+	var/rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
 	pic.dir = turn(pic.dir, rotation)
 	apply()
 
