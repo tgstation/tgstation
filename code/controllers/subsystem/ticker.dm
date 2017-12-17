@@ -67,7 +67,58 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
-	login_music = choose_sound("config/sounds/title", trim(file2text("data/last_round_lobby_music.txt")))
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
 
 
 	if(!GLOB.syndicate_code_phrase)
@@ -547,55 +598,16 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+	if(!round_end_sound)
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
 
-	SEND_SOUND(world, choose_sound("config/sounds/roundend"))
+	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
-
-/datum/controller/subsystem/proc/choose_sound(folder, dont_use = "", sound_prob = 1)
-	var/list/sound_list = flist(folder)
-	var/list/sounds = list()
-	var/use_rare_sound = prob(sound_prob)
-
-	var/list/byond_sound_formats = list(
-		"mid"  = TRUE,
-		"midi" = TRUE,
-		"mod"  = TRUE,
-		"it"   = TRUE,
-		"s3m"  = TRUE,
-		"xm"   = TRUE,
-		"oxm"  = TRUE,
-		"wav"  = TRUE,
-		"ogg"  = TRUE,
-		"raw"  = TRUE,
-		"wma"  = TRUE,
-		"aiff" = TRUE
-	)
-
-	for(var/S in sound_list)
-		var/lower = lowertext(S)
-		var/list/L = splittext(lower,"+")
-		switch(L.len)
-			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
-				if(use_rare_sound)
-					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
-						sounds += S
-					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
-						sounds += S
-			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
-				if((use_rare_sound && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
-					sounds += S
-			if(1) //sound.ogg -- common sound
-				sounds += S
-
-	if(dont_use && lentext(dont_use) > 1)
-		sounds -= dont_use
-
-	for(var/S in sounds)
-		var/list/L = splittext(S,".")
-		if(L.len >= 2)
-			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			if(byond_sound_formats[ext])
-				continue
-		sounds -= S
-
-	return pick(sounds)
