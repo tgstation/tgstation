@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			for(var/type in (subtypesof(/datum/guardianname/carp) - namedatum.type))
 				possible_names += new type
 	namedatum = pick(possible_names)
-	updatetheme(pickedtheme)
+	updatetheme(current_theme)
 	
 /mob/living/simple_animal/hostile/guardian/get_spans()
 	. = ..()
