@@ -248,10 +248,10 @@
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			nutrition -= (100 + (80 * M.is_adult))
-			M.add_nutrition(100 + (80 * M.is_adult))
+			nutrition -= (100 + (80 * M.is_adult)) // hippie start - changed from nutrition -= (50 + (40 * M.is_adult))
+			M.add_nutrition(100 + (80 * M.is_adult)) // changed from M.add_nutrition(50 + (40 * M.is_adult))
 		if(health > 0)
-			M.adjustBruteLoss(-20 + (-20 * M.is_adult))
+			M.adjustBruteLoss(-20 + (-20 * M.is_adult)) // Hippie end M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
