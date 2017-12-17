@@ -45,6 +45,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/range = 10 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/datum/guardianname/namedatum = new/datum/guardianname()
+	var/current_theme = "magic"
 	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
@@ -75,11 +76,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/proc/setthemename(pickedtheme) //set the guardian's theme to something cool!
-	if(!pickedtheme)
-		pickedtheme = pick("magic", "tech", "carp")
+/mob/living/simple_animal/hostile/guardian/proc/setthemename() //set the guardian's theme to something cool!
+	current_theme = pick("magic", "tech", "carp")
 	var/list/possible_names = list()
-	switch(pickedtheme)
+	switch(current_theme)
 		if("magic")
 			for(var/type in (subtypesof(/datum/guardianname/magic) - namedatum.type))
 				possible_names += new type
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	
 /mob/living/simple_animal/hostile/guardian/get_spans()
 	. = ..()
-	if(pickedtheme == tech)
+	if(current_theme == "tech")
 		. |= SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme to whatever its datum is; proc for adminfuckery
