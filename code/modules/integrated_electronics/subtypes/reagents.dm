@@ -48,11 +48,6 @@
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
-/obj/item/integrated_circuit/reagent/smoke/interact(mob/user)
-	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
-	push_data()
-	..()
-
 /obj/item/integrated_circuit/reagent/smoke/do_work()
 	if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
 		return
