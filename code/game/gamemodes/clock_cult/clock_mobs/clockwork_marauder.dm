@@ -21,7 +21,7 @@
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	light_range = 2
 	light_power = 1.1
-	playstyle_string = "<b><span class='neovgre'>You are a clockwork marauder,</span> a well-rounded frontline construct of Ratvar. Although you have no \
+	playstyle_string = "<span class='big bold'><span class='neovgre'>You are a clockwork marauder,</span></span><b> a well-rounded frontline construct of Ratvar. Although you have no \
 	unique abilities, you're a fearsome fighter in one-on-one combat, and your shield protects from projectiles!<br><br>Obey the Servants and do as they \
 	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b>"
 	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is more durable.</span>"
