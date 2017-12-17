@@ -321,7 +321,6 @@
 
 /turf/proc/Bless()
 	flags_1 |= NOJAUNT_1
-	add_atom_colour("#DAFFFF", FIXED_COLOUR_PRIORITY)
 
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
