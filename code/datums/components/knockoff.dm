@@ -27,9 +27,12 @@
 		return
 	if(target_zones && !(zone in target_zones))
 		return
-	if(prob(knockoff_chance))
-		if(wearer.dropItemToGround(I))
-			wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer] [I.name]!</span>","<span class='userdanger'>[attacker] knocks off your [I.name]!</span>")
+	if(!prob(knockoff_chance))
+		return
+	if(!wearer.dropItemToGround(I))
+		return
+
+	wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer] [I.name]!</span>","<span class='userdanger'>[attacker] knocks off your [I.name]!</span>")
 
 /datum/component/knockoff/proc/OnEquipped(mob/living/carbon/human/H,slot)
 	if(!istype(H))
