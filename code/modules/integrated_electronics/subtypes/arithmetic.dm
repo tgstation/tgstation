@@ -32,7 +32,7 @@
 	for(var/k in 1 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
-			result = result + I
+			result += I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -58,7 +58,7 @@
 	for(var/k in 2 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
-			result = result - I
+			result -= I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -84,7 +84,7 @@
 	for(var/k in 2 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
-			result = result * I
+			result *= I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -111,7 +111,7 @@
 	for(var/k in 2 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I) && (I != 0))
-			result = result / I
+			result /= I
 
 
 	set_pin_data(IC_OUTPUT, 1, result)
@@ -282,7 +282,7 @@
 	for(var/k in 2 to inputs.len)
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
-			result = sqrt(I)
+			result += sqrt(I)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
