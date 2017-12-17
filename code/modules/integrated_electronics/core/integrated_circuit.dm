@@ -58,6 +58,15 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
 
+/obj/item/integrated_circuit/proc/attackby_react(var/atom/movable/A,mob/user)
+	return
+
+/obj/item/integrated_circuit/proc/sence(var/atom/movable/A,mob/user)
+	return
+
+/obj/item/integrated_circuit/proc/sence_remote(var/atom/movable/A,mob/user)
+	return
+
 /obj/item/integrated_circuit/proc/check_interactivity(mob/user)
 	if(assembly)
 		return assembly.check_interactivity(user)

@@ -706,12 +706,13 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/proc/scan(var/atom/A)
+/obj/item/integrated_circuit/input/sensor/sence(var/atom/A,mob/user)
+	if(!check_then_do_work())
+		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
 		if(istype(A, /obj/item/storage))
 			return FALSE
-
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
 	activate_pin(1)
@@ -729,6 +730,25 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
+/obj/item/integrated_circuit/input/sensor/ranged/sence_remote(var/atom/A,mob/user)
+	if(!user)
+		if(user.client)
+			if(!(A in view(user.client)))
+				return FALSE
+		else
+			if(!(A in view(user)))
+				return FALSE
+	if(!check_then_do_work())
+		return FALSE
+	var/ignore_bags = get_pin_data(IC_INPUT, 1)
+	if(ignore_bags)
+		if(istype(A, /obj/item/storage))
+			return FALSE
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
+	push_data()
+	activate_pin(1)
+	return TRUE
+
 /obj/item/integrated_circuit/input/objscaner
 	name = "scaner"
 	desc = "Scans and obtains a reference for any objects you use on assembly."
@@ -742,7 +762,9 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/input/objscaner/proc/scan(var/atom/A,var/mob/user)
+/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user)
+	if(!check_then_do_work())
+		return FALSE
 	var/pu = get_pin_data(IC_INPUT, 1)
 	if(pu)
 		user.transferItemToLoc(A,drop_location())
