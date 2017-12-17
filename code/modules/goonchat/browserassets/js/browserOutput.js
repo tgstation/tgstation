@@ -312,6 +312,8 @@ function output(message, flag) {
 			{
 				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
 			}
+			if(parseInt(lastmessages.css("font-size")) < 24) //Completely arbitrary max size
+				lastmessages.css("font-size","+=2")
 			opts.messageCount--;
 			handled = true;
 		}
@@ -333,17 +335,15 @@ function output(message, flag) {
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
 		//Actually do the snap
-		if (!filteredOut && atBottom) {
-			$('body,html').scrollTop($messages.outerHeight());
-		}
-
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
 		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
 			highlightTerms(entry);
 		}
 	}
 
-
+	if (!filteredOut && atBottom) {
+		$('body,html').scrollTop($messages.outerHeight());
+	}
 }
 
 function internalOutput(message, flag)
