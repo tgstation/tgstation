@@ -1,13 +1,8 @@
-The enclosed sound folders holds the sound files used as the title music for the game. OGG and WAV are supported.
+The enclosed sounds folder holds the sound files used as the title music for the game. OGG and WAV are supported.
 
 Using unnecessarily huge sounds can cause client side lag and should be avoided.
 
 You may add as many title sounds as you like, if there is more than one a random screen is chosen (see name conventions for specifics).
-
----
-
-roundend/ -- Roundend Sounds
-title/    -- Title Music
 
 ---
 
@@ -42,4 +37,3 @@ Rare title sounds are a just for fun feature where they will only have a 1% chan
 Add the phrase "rare+" to the beginning of the name. Again note there are no spaces.
 
 An example of a rare sound name is "rare+explosion"
-
