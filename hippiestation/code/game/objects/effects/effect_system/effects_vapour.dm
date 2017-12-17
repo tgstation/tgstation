@@ -41,7 +41,7 @@
 			volume += M.volume
 			M.kill_vapour()
 
-	spread_delay = Clamp(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
+	spread_delay = CLAMP(100 / (volume * 0.001), 2, 60) //spread delay is inversely proportional to volume
 	decay_factor = min(volume * 0.00005, 10)//decay is proportional to volume so higher volume means faster spread but also a relatively faster death
 
 

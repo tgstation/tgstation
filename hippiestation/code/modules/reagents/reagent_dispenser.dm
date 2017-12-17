@@ -18,7 +18,7 @@
 		return
 	cut_overlays()
 	if(reagent_icon && reagents.total_volume)
-		reagent_icon.icon_state = "tankfilling[Clamp(round(reagents.total_volume / (tank_volume * 0.2)), 1, 4)]"
+		reagent_icon.icon_state = "tankfilling[CLAMP(round(reagents.total_volume / (tank_volume * 0.2)), 1, 4)]"
 		reagent_icon.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(reagent_icon)
 

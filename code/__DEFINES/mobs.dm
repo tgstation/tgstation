@@ -52,8 +52,8 @@
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 //Brain Damage defines
-#define BRAIN_DAMAGE_MILD 50
-#define BRAIN_DAMAGE_SEVERE 120
+#define BRAIN_DAMAGE_MILD 20
+#define BRAIN_DAMAGE_SEVERE 100
 #define BRAIN_DAMAGE_DEATH 200
 
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild

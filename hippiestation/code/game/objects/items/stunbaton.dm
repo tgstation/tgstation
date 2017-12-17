@@ -70,7 +70,7 @@
 
 /obj/item/melee/baton/stungun/update_icon()
 	..()
-	var/ratio = Ceiling((cell.charge / cell.maxcharge) * charge_sections)
+	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/iconState = "[initial(name)]_charge"
 	var/itemState = null
 	if(!initial(item_state))

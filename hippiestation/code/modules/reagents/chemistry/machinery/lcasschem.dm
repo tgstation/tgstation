@@ -152,7 +152,7 @@
 			return
 		to_chat(user, "<span class='notice'>You add the uranium to the [src].</span>")
 		var/obj/item/stack/sheet/mineral/uranium/U = I
-		material_amt = Clamp(material_amt += U.amount * 1000, 0, 50000)//50 sheets max
+		material_amt = CLAMP(material_amt += U.amount * 1000, 0, 50000)//50 sheets max
 		user.dropItemToGround(I)
 		qdel(I)//it's a var now
 		return
@@ -202,7 +202,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_radioactivity = Clamp(target, 0, 20)
+				target_radioactivity = CLAMP(target, 0, 20)
 		if("eject")
 			on = FALSE
 			eject_beaker()
@@ -305,7 +305,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				intensity = Clamp(target, 0, 30)
+				intensity = CLAMP(target, 0, 30)
 		if("eject")
 			on = FALSE
 			eject_beaker()
