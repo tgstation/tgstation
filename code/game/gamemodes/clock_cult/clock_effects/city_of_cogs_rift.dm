@@ -48,9 +48,9 @@
 	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
 	var/servant_pulled = AM.pulledby && is_servant_of_ratvar(AM.pulledby)
 	if(AM.fingerprintslast)
-		for(var/V in GLOB.player_list)
-			var/mob/M = V
-			if(M.ckey == AM.fingerprintslast && is_servant_of_ratvar(M))
+		for(var/V in SSticker.mode.servants_of_ratvar)
+			var/datum/mind/M = V
+			if(M.current.ckey == AM.fingerprintslast)
 				servant_pulled = TRUE
 	if(is_servant_of_ratvar(AM) || servant_pulled) //please do not push things into spawn
 		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
