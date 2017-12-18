@@ -6,7 +6,6 @@
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	layer = ABOVE_MOB_LAYER
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "This Ancient Stone chest looks and feels sinister."
