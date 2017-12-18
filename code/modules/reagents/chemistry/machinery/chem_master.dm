@@ -215,7 +215,7 @@
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(many))
-					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
+					amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
@@ -251,7 +251,7 @@
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
-				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)

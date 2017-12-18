@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(explosions)
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
 			EX_PREPROCESS_CHECK_TICK

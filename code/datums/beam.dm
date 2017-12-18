@@ -128,11 +128,11 @@
 		//Position the effect so the beam is one continous line
 		var/a
 		if(abs(Pixel_x)>32)
-			a = Pixel_x > 0 ? round(Pixel_x/32) : Ceiling(Pixel_x/32)
+			a = Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
 			X.x += a
 			Pixel_x %= 32
 		if(abs(Pixel_y)>32)
-			a = Pixel_y > 0 ? round(Pixel_y/32) : Ceiling(Pixel_y/32)
+			a = Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
 			X.y += a
 			Pixel_y %= 32
 

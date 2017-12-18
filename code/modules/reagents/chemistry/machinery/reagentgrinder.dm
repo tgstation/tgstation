@@ -294,7 +294,7 @@
 /obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker && beaker.reagents.total_volume)
 		//Recipe to make Butter
-		var/butter_amt = Floor(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF)
+		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
 		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
 			new /obj/item/reagent_containers/food/snacks/butter(drop_location())

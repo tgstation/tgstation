@@ -19,7 +19,7 @@
 
 /obj/item/stack/teeth/human/Initialize()
 	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/human/gold //Special traitor objective maybe?
 	name = "golden teeth"
@@ -42,8 +42,8 @@
 	desc = "I'm Mr. Teethseeks, look at me!"
 
 /obj/item/stack/teeth/generic/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/replacement
 	name = "replacement teeth"
@@ -53,8 +53,8 @@
 	icon_state = "dentals"
 
 /obj/item/stack/teeth/replacement/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/cat
 	name = "tarajan teeth"
@@ -64,8 +64,8 @@
 	icon_state = "teeth_cat"
 
 /obj/item/stack/teeth/cat/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.35, 1, 0.5) //resize the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.35, 1) + 0.5 //resize the teeth
 
 /obj/item/stack/teeth/lizard
 	name = "lizard teeth"
@@ -75,8 +75,8 @@
 	icon_state = "teeth_cat"
 
 /obj/item/stack/teeth/lizard/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.30, 1, 0.5) //resize the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.30, 1) + 0.5 //resize the teeth
 
 /obj/item/stack/teeth/xeno
 	name = "xenomorph teeth"

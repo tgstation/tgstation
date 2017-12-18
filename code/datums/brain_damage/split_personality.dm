@@ -23,7 +23,7 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", null, null, null, 75, stranger_backseat)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/client/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -136,6 +136,7 @@
 /mob/living/split_personality/Login()
 	..()
 	to_chat(src, "<span class='notice'>As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality.</span>")
+	to_chat(src, "<span class='warning'><b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b></span>")
 
 /mob/living/split_personality/say(message)
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
