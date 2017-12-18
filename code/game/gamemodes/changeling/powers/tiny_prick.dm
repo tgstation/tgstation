@@ -129,9 +129,11 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.has_disability(HUSK)) || !target.has_dna())
-		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
+	if(isliving(target))
+		var/mob/living/L = target
+		if((L.has_disability(HUSK)) || !L.has_dna())
+			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
+			return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
