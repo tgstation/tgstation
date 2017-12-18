@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - soundadd: "Added new sounds to guns when reloading."
-  - bugfix: "Cartridges and casings ejected from guns will now make the proper sound!"

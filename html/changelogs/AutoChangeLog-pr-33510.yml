@@ -1,4 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - bugfix: "Now the chem smoke machine uses stock parts for volume and range."
