@@ -60,6 +60,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
+	var/equip_to_hand_delay = 0 //In deciseconds, how long it would take for a person to take a specific item out of their backpack
 	var/breakouttime = 0
 	var/being_removed = FALSE
 	var/list/materials

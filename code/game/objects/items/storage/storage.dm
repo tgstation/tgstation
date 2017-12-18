@@ -25,6 +25,8 @@
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
 	var/rustle_jimmies = TRUE	//Play the rustle sound on insertion
+	var/item_equip_delay = FALSE //If this storage item should delay equipping an item.
+	var/item_equip_delay_time = 0 //How delayed grabbing an item should be, default is 10 deciseconds for backpacks.
 
 
 /obj/item/storage/MouseDrop(atom/over_object)
@@ -380,16 +382,28 @@
 		W.dropped(M)
 	
 
-	if(new_location)
-		W.forceMove(new_location)
-		//Reset the items values
-		W.layer = initial(W.layer)
-		W.plane = initial(W.plane)
-		W.mouse_opacity = initial(W.mouse_opacity)
-		if(W.maptext)
-			W.maptext = ""
-		//We don't want to call this if the item is being destroyed
-		W.on_exit_storage(src)
+	if(new_location) 
+		if(item_equip_delay) && if(istype(new_location, /mob/living) //The item itself should be moving to the person picking it up
+			if(istype(W, /obj/item/melee/baton)) || if(istype(W, /obj/item/gun)) //If pulling out a baton or gun, alert people and delay
+				visible_message("[user] starts to pull a [W] out of the [src].", "<span class='notice'>You start to pull [W] out of the [src]</span>")
+				if(do_after(new_location, item_equip_delay_time , target =  W))
+					W.forceMove(new_location)  //Incoming copypasta
+					W.layer = initial(W.layer)
+					W.plane = initial(W.plane)
+					W.mouse_opacity = initial(W.mouse_opacity)
+					if(W.maptext)
+						W.maptext = ""
+					W.on_exit_storage(src)
+		else
+			W.forceMove(new_location)
+			//Reset the items values
+			W.layer = initial(W.layer)
+			W.plane = initial(W.plane)
+			W.mouse_opacity = initial(W.mouse_opacity)
+			if(W.maptext)
+				W.maptext = ""
+			//We don't want to call this if the item is being destroyed
+			W.on_exit_storage(src)
 
 	else
 		//Being destroyed, just move to nullspace now (so it's not in contents for the icon update)
