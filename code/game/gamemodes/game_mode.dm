@@ -466,3 +466,21 @@
 		SSticker.news_report = STATION_EVACUATED
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
+
+/datum/game_mode/proc/crew_live_count(min_percent_as_num) //return number of survivors OR T/F if argument is set
+	var/players = 0
+	var/survivors = 0
+	for(var/i in GLOB.mob_list)
+		var/mob/Player = i
+		if(Player.mind && !isnewplayer(Player) && !Player.suiciding)
+			players++
+			if(Player.stat != DEAD && !isbrain(Player))
+				survivors++
+
+	if(min_percent_as_num && players)
+		if((survivors / players * 100) >= min_percent_as_num)
+			return TRUE
+		else
+			return FALSE
+	else
+		return survivors

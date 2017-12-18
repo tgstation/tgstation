@@ -507,8 +507,12 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "A skirmish between security forces and Syndicate agents aboard [station_name()] ended with both sides bloodied but intact."
 		if(REVS_WIN)
 			news_message = "Company officials have reassured investors that despite a union led revolt aboard [station_name()] there will be no wage increases for workers."
+		if(REVS_WIN_COSTLY)
+			news_message = "Following a violent outbreak caused by disgruntled employees on [station_name()], rumors have sparked suggesting the company plans on releasing a new budget that involves higher benefits for workers. Truth to this claim has yet to be confirmed."
 		if(REVS_LOSE)
 			news_message = "[station_name()] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
+		if(REVS_LOSE_COSTLY)
+			news_message = "Brutality reports have allegedly emerged after several staff members passed away on [station_name()] following a mutiny attempt. The company denies these claims, saying that they are blown out of proportion and improper use of machinery was the cause of these individuals' deaths. Employees of [station_name()] refused to comment on the situation."
 		if(WIZARD_KILLED)
 			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)

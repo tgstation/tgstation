@@ -173,18 +173,34 @@
 /datum/game_mode/revolution/set_round_result()
 	..()
 	if(finished == 1)
-		SSticker.mode_result = "win - heads killed"
-		SSticker.news_report = REVS_WIN
+		if(crew_live_count(50))
+			SSticker.mode_result = "win - heads killed"
+      		SSticker.news_report = REVS_WIN
+		else
+			SSticker.mode_result = "halfwin - heads killed - too many died"
+			SSticker.news_report = REVS_WIN_COSTLY
 	else if(finished == 2)
-		SSticker.mode_result = "loss - rev heads killed"
-		SSticker.news_report = REVS_LOSE
+		if(crew_live_count(50))
+			SSticker.mode_result = "loss - revheads killed"
+			SSticker.news_report = REVS_LOSE
+		else
+			SSticker.mode_result = "halfwin - revheads killed - too many died"
+      		SSticker.news_report = REVS_LOSE_COSTLY
+	return TRUE
 
 //TODO What should be displayed for revs in non-rev rounds
 /datum/game_mode/revolution/special_report()
 	if(finished == 1)
-		return "<span class='redtext big'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+    	if(crew_live_count(50))
+			return "<FONT size = 3><B>Revolution Major Success</B></FONT></br><span class='redtext'>The heads of staff were killed or exiled! The revolution was a great success!</span>"
+    	else
+			return "<FONT size = 3><B>Revolution Pyrrhic Victory</B></FONT></br><span class='redtext'>The crew successfully defended against the revolution but too many lives were lost in the process.</span>"
+      
 	else if(finished == 2)
-		return "<span class='redtext big'>The heads of staff managed to stop the revolution!</span>"
+    	if(crew_live_count(50))
+			return "<FONT size = 3><B>Revolution Major Failure</B></FONT></br><span class='redtext'>The crew successfully defended against the revolution.</span>"
+		else
+			return "<FONT size = 3><B>Staff Pyrrhic Victory</B></FONT></br><span class='redtext'>The crew successfully defended against the revolution but too many lives were lost in the process.</span>"
 
 /datum/game_mode/revolution/generate_report()
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
