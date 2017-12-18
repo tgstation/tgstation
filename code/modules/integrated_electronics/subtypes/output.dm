@@ -235,13 +235,14 @@
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"
-	desc = "Takes a string as a name and a boolean to determine whether it is on, and uses this to be a camera linked to the research network."
-	extended_desc = "The camera is linked to the Research camera network."
+	desc = "Takes a string as a name, a list as the networks, and a boolean to determine whether it is on, and uses this to be a camera linked to the given camera networks."
+	extended_desc = "The camera can transmit to the following networks; the general security camera network using \"SS13\", the Research Director's telescreen using \"RD\", the entertainment screens using \"thunder\", and the mining outpost network using \"MINE\"."
 	icon_state = "video_camera"
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 10
 	inputs = list(
 		"camera name" = IC_PINTYPE_STRING,
+		"camera networks" = IC_PINTYPE_LIST,
 		"camera active" = IC_PINTYPE_BOOLEAN
 		)
 	inputs_default = list("1" = "video camera circuit")
@@ -255,7 +256,6 @@
 /obj/item/integrated_circuit/output/video_camera/New()
 	..()
 	camera = new(src)
-	camera.network = list("RD")
 	on_data_written()
 
 /obj/item/integrated_circuit/output/video_camera/Destroy()
@@ -274,9 +274,12 @@
 /obj/item/integrated_circuit/output/video_camera/on_data_written()
 	if(camera)
 		var/cam_name = get_pin_data(IC_INPUT, 1)
-		var/cam_active = get_pin_data(IC_INPUT, 2)
+		var/cam_network = get_pin_data(IC_INPUT, 2)
+		var/cam_active = get_pin_data(IC_INPUT, 3)
 		if(!isnull(cam_name))
 			camera.c_tag = cam_name
+		if(!isnull(cam_network))
+			camera.network = cam_network
 		set_camera_status(cam_active)
 
 /obj/item/integrated_circuit/output/video_camera/power_fail()
