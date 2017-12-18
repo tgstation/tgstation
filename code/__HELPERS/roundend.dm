@@ -66,7 +66,6 @@
 			else
 				.["holder"] = outer.name
 
-		if(T)
 		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
