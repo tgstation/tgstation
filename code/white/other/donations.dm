@@ -1,4 +1,4 @@
-var/const/stuff = {"
+#define DONATIONS_STUFF {"
 Hats
 Collectable Pete hat:/obj/item/clothing/head/collectable/petehat:150
 Collectable Xeno hat:/obj/item/clothing/head/collectable/xenom:110
@@ -101,8 +101,8 @@ Lazer Machine:/obj/machinery/party/lasermachine:500
 "}
 
 
-var/list/datum/donator_prize/prizes = list()
-var/list/datum/donator/donators = list()
+GLOBAL_LIST_EMPTY(prizes)
+GLOBAL_LIST_EMPTY(donators)
 
 #define DONATIONS_SPAWN_WINDOW 6000
 // You can spawn donation items for 10 minutes without area limits.
@@ -217,7 +217,7 @@ proc/load_donator(ckey)
 	return 1
 
 proc/build_prizes_list()
-	var/list/strings = splittext ( stuff, "\n" )
+	var/list/strings = splittext ( DONATIONS_STUFF, "\n" )
 	var/cur_cat = "Miscellaneous"
 	for (var/string in strings)
 		if (string) //It's not a delimiter between

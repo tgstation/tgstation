@@ -148,7 +148,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 	return text
 
 
-var/list/rus_unicode_conversion = list(
+GLOBAL_LIST_INIT(rus_unicode_conversion,list(
 	"А" = "0410", "а" = "0430",
 	"Б" = "0411", "б" = "0431",
 	"В" = "0412", "в" = "0432",
@@ -183,9 +183,9 @@ var/list/rus_unicode_conversion = list(
 	"Я" = "042f", "я" = "044f",
 
 	"Ё" = "0401", "ё" = "0451"
-	)
+	))
 
-var/list/rus_unicode_fix = null
+GLOBAL_LIST_INIT(rus_unicode_fix,null)
 
 // Кодирует все русские символы в HTML-коды Unicode, попутно срезая макросы.
 /proc/r_text2unicode(text)
