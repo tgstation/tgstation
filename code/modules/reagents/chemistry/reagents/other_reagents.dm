@@ -1688,3 +1688,21 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+
+/datum/reagent/pax
+	name = "pax"
+	id = "pax"
+	description = "A colorless liquid that suppresses violence on the subjects."
+	color = "#AAAAAA55"
+	taste_description = "water"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/pax/on_mob_add(mob/living/L)
+	if(!istype(L))
+		return
+	L.add_disability(PACIFISM, CHEMICAL_DISABILITY)
+
+/datum/reagent/pax/on_mob_delete(mob/living/L)
+	if(!istype(L))
+		return
+	L.remove_disability(PACIFISM, CHEMICAL_DISABILITY)

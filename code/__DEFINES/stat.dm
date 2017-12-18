@@ -32,6 +32,7 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_DISABILITY "trauma"
+#define CHEMICAL_DISABILITY "chemical"
 
 // bitflags for machine stat variable
 #define BROKEN		1
