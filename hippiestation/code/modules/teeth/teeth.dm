@@ -137,7 +137,7 @@
 				T.use(amt)
 				var/obj/item/stack/teeth/E = new T.type(target, amt)
 				O.teeth_list += E
-				// E.loc = target
+				// E.forceMove(target)
 				T = E
 			user.visible_message("<span class='notice'>[user] inserts [amt] [T] into [target]'s [target_zone]!</span>")
 			return 1
@@ -146,7 +146,7 @@
 			T.use(amt)
 			var/obj/item/stack/teeth/F = new T.type(target, amt)
 			O.teeth_list += F
-			// F.loc = target
+			// F.forceMove(target)
 			T = F
 			user.visible_message("<span class='notice'>[user] inserts [amt] [T] into [target]'s [target_zone]!</span>")
 			return 1
@@ -155,7 +155,7 @@
 			user.visible_message("<span class='notice'>[user] pulls all teeth out of [target]'s [target_zone]!</span>")
 			for(var/obj/item/stack/teeth/F in O.teeth_list)
 				O.teeth_list -= F
-				F.loc = get_turf(target)
+				F.forceMove(get_turf(target))
 			return 1
 		else
 			user.visible_message("<span class='notice'>[user] doesn't find anything in [target]'s [target_zone].</span>")

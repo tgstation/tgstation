@@ -338,7 +338,7 @@
 				jumper.pixel_y = 7
 				jumper.dir=8
 				sleep(1)
-				jumper.loc = T
+				jumper.forceMove(T)
 				jumper.Stun(8)
 				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
 

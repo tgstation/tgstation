@@ -72,7 +72,7 @@
 				else
 					beaker =  W
 					user.dropItemToGround(W)
-					W.loc = src
+					W.forceMove(src)
 					to_chat(user, "You add the beaker to the machine!")
 					updateUsrDialog()
 					cur_reagent = "[R.name]"
@@ -298,7 +298,7 @@
 		if("eject")
 			if(beaker)
 				var/obj/item/reagent_containers/glass/B = beaker
-				B.loc = loc
+				B.forceMove(loc)
 				beaker = null
 				. = TRUE
 			changecolor()

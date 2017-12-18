@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(input)
 // This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/input/proc/setup_default_macro_sets()
 	var/list/static/default_macro_sets
-	
+
 	if(default_macro_sets)
 		macro_sets = default_macro_sets
 		return
@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(input)
 
 	macro_sets = default_macro_sets
 
-// Badmins just wanna have fun ♪
+// Badmins just wanna have fun ?
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
 	var/list/clients = GLOB.clients
 	for(var/i in 1 to clients.len)

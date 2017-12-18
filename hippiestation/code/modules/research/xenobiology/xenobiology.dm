@@ -17,7 +17,7 @@
 		to_chat(user, "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>")
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.loc = src.loc
+	G.forceMove(src.loc)
 	G.key = ghost.key
 	to_chat(G, "You are a human spawned by adminbus.")
 	log_game("[key_name(G)] was made a human via humanrune by [key_name(user)].")
