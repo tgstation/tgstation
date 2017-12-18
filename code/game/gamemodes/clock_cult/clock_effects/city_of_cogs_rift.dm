@@ -46,7 +46,13 @@
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
 	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
-	if(is_servant_of_ratvar(AM))
+	var/servant_pulled = AM.pulledby && is_servant_of_ratvar(AM.pulledby)
+	if(AM.fingerprintslast)
+		for(var/V in GLOB.player_list)
+			var/mob/M = V
+			if(M.ckey == AM.fingerprintslast && is_servant_of_ratvar(M))
+				servant_pulled = TRUE
+	if(is_servant_of_ratvar(AM) || servant_pulled) //please do not push things into spawn
 		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
 	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignored_mob = AM)
 	AM.forceMove(T)
