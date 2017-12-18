@@ -157,7 +157,7 @@
 
 
 /obj/item/reagent_containers/syringe/update_icon()
-	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
+	var/rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay

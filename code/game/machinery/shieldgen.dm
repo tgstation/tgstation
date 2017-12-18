@@ -262,7 +262,7 @@
 	use_stored_power(50)
 
 /obj/machinery/shieldwallgen/proc/use_stored_power(amount)
-	power = Clamp(power - amount, 0, maximum_stored_power)
+	power = CLAMP(power - amount, 0, maximum_stored_power)
 	update_activity()
 
 /obj/machinery/shieldwallgen/proc/update_activity()

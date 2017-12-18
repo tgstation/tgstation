@@ -373,7 +373,7 @@
 	var/rad = get_pin_data(IC_INPUT, 2)
 
 	if(isnum(rad))
-		rad = Clamp(rad, 0, 8)
+		rad = CLAMP(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator_list/do_work()
@@ -426,7 +426,7 @@
 /obj/item/integrated_circuit/input/advanced_locator/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)
 	if(isnum(rad))
-		rad = Clamp(rad, 0, 8)
+		rad = CLAMP(rad, 0, 8)
 		radius = rad
 
 /obj/item/integrated_circuit/input/advanced_locator/do_work()

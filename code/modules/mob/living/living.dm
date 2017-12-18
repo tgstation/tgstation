@@ -803,8 +803,11 @@
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
 /mob/living/proc/can_use_guns(obj/item/G)
-	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return FALSE
+	if(disabilities & PACIFISM)
+		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE
 
@@ -912,7 +915,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -1045,6 +1048,13 @@
 		if (client)
 			if (new_z)
 				SSmobs.clients_by_zlevel[new_z] += src
+				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
+					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
+					if (SA)
+						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+					else
+						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
 			registered_z = new_z
 		else
 			registered_z = null
