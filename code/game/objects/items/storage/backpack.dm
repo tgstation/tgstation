@@ -23,7 +23,8 @@
 	storage_slots = 21
 	resistance_flags = NONE
 	max_integrity = 300
-
+	item_equip_delay = TRUE //By default, backpacks will delay equipping certain items
+	item_equip_delay_time = 10 //One second delay
 /*
  * Backpack Types
  */
