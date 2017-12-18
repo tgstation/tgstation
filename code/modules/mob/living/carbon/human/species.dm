@@ -1154,14 +1154,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.disabilities & PACIFISM)
-		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
-		return FALSE
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
-		return FALSE
+		return 0
 	if(attacker_style && attacker_style.harm_act(user,target))
-		return TRUE
+		return 1
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
@@ -1186,7 +1183,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
 			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return FALSE
+			return 0
 
 		punchouttooth(target,user,affecting,rand(0,9))
 
@@ -1344,11 +1341,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
 						H.adjust_blurriness(10)
-						if(prob(10))
+						if(prob(20))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
-					else
-						if(!I.is_sharp())
-							H.adjustBrainLoss(I.force / 5)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)

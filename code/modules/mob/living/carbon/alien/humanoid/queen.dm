@@ -79,20 +79,16 @@
 	name = "Lay Egg"
 	desc = "Lay an egg to produce huggers to impregnate prey with."
 	plasma_cost = 75
-	check_turf = TRUE
+	check_turf = 1
 	action_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
-		return FALSE
-
-	if(!check_vent_block(user))
-		return FALSE
-
+		to_chat(user, "There's already an egg here.")
+		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
-	return TRUE
+	return 1
 
 //Button to let queen choose her praetorian.
 /obj/effect/proc_holder/alien/royal/queen/promote

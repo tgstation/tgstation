@@ -86,7 +86,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 /datum/export/process()
 	..()
-	cost *= NUM_E**(k_elasticity * (1/30))
+	cost *= GLOB.E**(k_elasticity * (1/30))
 	if(cost > init_cost)
 		cost = init_cost
 
@@ -94,7 +94,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
 	var/amount = get_amount(O, contr, emag)
 	if(k_elasticity!=0)
-		return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+		return round((cost/k_elasticity) * (1 - GLOB.E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
 	else
 		return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
@@ -131,7 +131,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	else
 		total_amount += amount
 
-	cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
 	SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
 
 // Total printout for the cargo console.

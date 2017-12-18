@@ -6,7 +6,7 @@
 	var/datum/callback/callback
 
 /datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list(), datum/callback/_callback)
-	prob2drop = CLAMP(_prob2drop, 0, 100)
+	prob2drop = Clamp(_prob2drop, 0, 100)
 	archdrops = _archdrops
 	callback = _callback
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)

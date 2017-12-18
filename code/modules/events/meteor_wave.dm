@@ -49,7 +49,7 @@
 	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/ai/meteors.ogg')
 
 /datum/round_event/meteor_wave/tick()
-	if(ISMULTIPLE(activeFor, 3))
+	if(IsMultiple(activeFor, 3))
 		spawn_meteors(5, wave_type) //meteor list types defined in gamemode/meteor/meteors.dm
 
 /datum/round_event_control/meteor_wave/threatening

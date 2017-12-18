@@ -227,7 +227,7 @@
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return CLAMP(round(5.5*charge/capacity),0,5)
+	return Clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
@@ -382,7 +382,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = CLAMP(target, 0, input_level_max)
+				input_level = Clamp(target, 0, input_level_max)
 				log_smes(usr.ckey)
 		if("output")
 			var/target = params["target"]
@@ -404,7 +404,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = CLAMP(target, 0, output_level_max)
+				output_level = Clamp(target, 0, output_level_max)
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")

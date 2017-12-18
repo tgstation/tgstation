@@ -182,7 +182,7 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
-	staminaloss = CLAMP(staminaloss + amount, 0, maxHealth*2)
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
 
@@ -195,7 +195,7 @@
 		update_stamina()
 
 /mob/living/carbon/getBrainLoss()
-	. = 0
+	. = BRAIN_DAMAGE_DEATH
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.get_brain_damage()
@@ -204,7 +204,6 @@
 /mob/living/carbon/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
 	if(status_flags & GODMODE)
 		return 0
-	var/prev_brainloss = getBrainLoss()
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)
 		return
@@ -221,13 +220,6 @@
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
 				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
-
-	if(prev_brainloss < 40 && brainloss >= 40)
-		to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-	else if(prev_brainloss < 120 && brainloss >= 120)
-		to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-	else if(prev_brainloss < 180 && brainloss >= 180)
-		to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
 
 /mob/living/carbon/setBrainLoss(amount)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
