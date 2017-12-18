@@ -8,6 +8,11 @@
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
+/datum/round_event_control/blob/canSpawnEvent(players_amt, gamemode)
+	. = ..()
+	if(!SSshuttle.canRecall())
+		return FALSE
+
 /datum/round_event/ghost_role/blob
 	announceWhen	= -1
 	role_name = "blob overmind"
