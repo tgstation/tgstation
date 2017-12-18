@@ -1,4 +1,9 @@
 /datum/antagonist/vampire
+
+	name = "Vampire"
+	roundend_category = "vampires"
+	job_rank = ROLE_VAMPIRE
+	
 	var/usable_blood = 0
 	var/total_blood = 0
 	var/fullpower = FALSE
