@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - tweak: "Hostile mobs on z-levels without living players will now conserve their efforts and simply not run AI routines at all. Also, idling mob routines should be significantly cheaper on non-station Z-levels."
