@@ -943,7 +943,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.has_disability(FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.remove_disability(FAT, OBESITY)
+			H.remove_disability(FAT, list(OBESITY))
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else

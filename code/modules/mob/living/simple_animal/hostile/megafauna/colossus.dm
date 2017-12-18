@@ -729,7 +729,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-		L.remove_disability(MUTE, STASIS_MUTE)
+		L.remove_disability(MUTE, list(STASIS_MUTE))
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)

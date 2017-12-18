@@ -35,7 +35,7 @@
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_disability(MUTE, GENETIC_MUTATION)
+	owner.remove_disability(MUTE, list(GENETIC_MUTATION))
 
 
 /datum/mutation/human/smile

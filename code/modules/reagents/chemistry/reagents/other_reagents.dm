@@ -1697,12 +1697,14 @@
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-/datum/reagent/pax/on_mob_add(mob/living/L)
-	if(!istype(L))
-		return
-	L.add_disability(PACIFISM, CHEMICAL_DISABILITY)
+/datum/reagent/pax/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_disability(PACIFISM, CHEMICAL_DISABILITY)
 
-/datum/reagent/pax/on_mob_delete(mob/living/L)
-	if(!istype(L))
-		return
-	L.remove_disability(PACIFISM, CHEMICAL_DISABILITY)
+/datum/reagent/pax/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_disability(PACIFISM, list(CHEMICAL_DISABILITY))
+	..()
