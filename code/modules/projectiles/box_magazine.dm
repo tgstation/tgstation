@@ -87,7 +87,11 @@
 	if(num_loaded)
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+<<<<<<< HEAD
 			playsound(user, 'hippiestation/sound/weapons/loadbullet.ogg', 60, 1)
+=======
+			playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
+>>>>>>> edd77a5d6de6137e597b2a58e821c34e01ca63a5
 		A.update_icon()
 		update_icon()
 
@@ -98,7 +102,7 @@
 	if(A)
 		user.put_in_hands(A)
 		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
-		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
+		playsound(A, 'sound/weapons/bulletremove.ogg', 60, 1)
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

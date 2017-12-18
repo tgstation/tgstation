@@ -12,17 +12,11 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
-	owner.disabilities |= MUTE
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/severe/mute/on_life()
-	if(!(owner.disabilities & MUTE))
-		on_gain()
+	owner.add_disability(MUTE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.disabilities &= ~MUTE
+	owner.remove_disability(MUTE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -56,17 +50,11 @@
 	lose_text = "<span class='notice'>Your vision returns.</span>"
 
 /datum/brain_trauma/severe/blindness/on_gain()
-	owner.become_blind()
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/severe/blindness/on_life()
-	if(!(owner.disabilities & BLIND))
-		on_gain()
+	owner.become_blind(TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
-	owner.cure_blind()
+	owner.cure_blind(TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/paralysis
@@ -132,7 +120,7 @@
 		stress -= 4
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(owner.disabilities & BLIND)
+	if(owner.has_disability(BLIND))
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -194,11 +182,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	owner.disabilities |= MONKEYLIKE
+	owner.add_disability(MONKEYLIKE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.disabilities &= ~MONKEYLIKE
+	owner.remove_disability(MONKEYLIKE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -209,9 +197,9 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.disabilities |= PACIFISM
+	owner.add_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.disabilities &= ~PACIFISM
+	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()
