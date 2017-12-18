@@ -19,14 +19,21 @@
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
-/obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
+/obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/living/user)
 	if(user && user.mind)
+		if(user.on_fire)
+			to_chat(user, "<span class='warning'>The fire prevents us from reviving!</span>")
+			C.chem_charges += chemical_cost
+			return 0
 		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
+/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
+	if(user.on_fire)
+		to_chat(user, "<span class='warning'>The fire prevents us from reviving!</span>")
+		return
 	if(user.status_flags & FAKEDEATH)
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
