@@ -88,12 +88,9 @@
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
-	if(affected_mob.mind && !is_monkey(affected_mob))
-		add_monkey(affected_mob.mind)
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-		M.ventcrawler = VENTCRAWLER_ALWAYS
-
+	if(!ismonkey(affected_mob))
+		SSticker.mode.add_monkey(affected_mob.mind)
+		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -110,7 +107,7 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
 /datum/disease/transformation/jungle_fever/cure()
-	remove_monkey(affected_mob.mind)
+	SSticker.mode.remove_monkey(affected_mob.mind)
 	..()
 
 

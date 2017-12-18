@@ -56,18 +56,6 @@
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/item/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
-	name = "Link Worlds"
-	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
-	invocation = "WTF"
-	clothes_req = FALSE
-	charge_max = 600
-	cooldown_min = 200
-	summon_type = list(/mob/living/simple_animal/hostile/spawner/nether)
-	summon_amt = 1
-	range = 1
-	cast_sound = 'sound/weapons/marauder.ogg'
-
 /obj/effect/proc_holder/spell/targeted/conjure_item
 	name = "Summon weapon"
 	desc = "A generic spell that should not exist.  This summons an instance of a specific type of item, or if one already exists, un-summons it.  Summons into hand if possible."

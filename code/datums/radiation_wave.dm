@@ -34,7 +34,7 @@
 
 	var/strength
 	if(steps>1)
-		strength = INVERSE_SQUARE(intensity, max(range_modifier*steps, 1), 1)
+		strength = InverseSquareLaw(intensity, max(range_modifier*steps, 1), 1)
 	else
 		strength = intensity
 
@@ -42,7 +42,7 @@
 		qdel(src)
 		return
 
-	radiate(atoms, FLOOR(strength, 1))
+	radiate(atoms, Floor(strength))
 
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 

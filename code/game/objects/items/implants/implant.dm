@@ -14,9 +14,6 @@
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
 	return
 
-/obj/item/implant/proc/on_death(emote, mob/living/carbon/source)
-	return
-
 /obj/item/implant/proc/activate()
 	return
 

@@ -209,7 +209,7 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
+	summon_type = list(/mob/living/simple_animal/hostile/creature)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -289,7 +289,7 @@
 				var/mob/living/M = AM
 				M.Knockdown(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"

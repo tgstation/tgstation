@@ -55,9 +55,9 @@
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
-				return CLAMP((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+				return Clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 		else if(w_class)
-				return CLAMP(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+				return Clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
 				return 0
 
@@ -127,19 +127,14 @@
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored || !isturf(user.loc))
-		return FALSE
+		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
 		return
 
 	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
-		return FALSE
-
-	if(user.disabilities & PACIFISM)
-		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
-		return FALSE
-
+		return 0
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -193,101 +188,83 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(disabilities & PACIFISM)
-		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-		return FALSE
-
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
 				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		return TRUE
+		return 1
 
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
-		return FALSE
+		return 0
 	else
-		if(M.disabilities & PACIFISM)
-			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-			return FALSE
-
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
 		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
 						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		add_logs(M, src, "attacked")
-		return TRUE
+		return 1
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
-		return FALSE
+		return 0
 
 	if (M.a_intent == INTENT_HARM)
-		if(M.disabilities & PACIFISM)
-			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-			return FALSE
-
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return FALSE
+			return 0
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		if (prob(75))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return TRUE
+			return 1
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
 				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
+	return 0
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
 	switch(L.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
-			return FALSE
+			return 0
 
 		else
-			if(L.disabilities & PACIFISM)
-				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return
-
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
 				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
 					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				return TRUE
+				return 1
 			else
 				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
 					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
+	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
 	switch(M.a_intent)
 		if ("help")
 			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-			return FALSE
+			return 0
+
 		if ("grab")
 			grabbedby(M)
-			return FALSE
+			return 0
 		if("harm")
-			if(M.disabilities & PACIFISM)
-				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return FALSE
 			M.do_attack_animation(src)
-			return TRUE
+			return 1
 		if("disarm")
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
+			return 1
 
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

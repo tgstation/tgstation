@@ -3,16 +3,13 @@
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
 	actions_types = list(/datum/action/item_action/explosive_implant)
-	// Explosive implant action is always available.
+	// Explosive implant action is always availible.
 	var/weak = 2
 	var/medium = 0.8
 	var/heavy = 0.4
 	var/delay = 7
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 	var/active = FALSE
-
-/obj/item/implant/explosive/on_mob_death(mob/living/L, gibbed)
-	activate("death")
 
 /obj/item/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -25,6 +22,10 @@
 				<b>Special Features:</b> Explodes<BR>
 				"}
 	return dat
+
+/obj/item/implant/explosive/trigger(emote, mob/source)
+	if(emote == "deathgasp")
+		activate("death")
 
 /obj/item/implant/explosive/activate(cause)
 	if(!cause || !imp_in || active)

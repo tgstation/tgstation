@@ -32,7 +32,7 @@
 	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
 	mid_length = 2
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
-	volume = 15
+	volume = 25
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
