@@ -192,8 +192,8 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 	text = strip_macros(text)
 	text = russian_text2html(text)
 
-	for(var/s in rus_unicode_conversion)
-		text = replacetext(text, s, "&#x[rus_unicode_conversion[s]];")
+	for(var/s in GLOB.rus_unicode_conversion)
+		text = replacetext(text, s, "&#x[GLOB.rus_unicode_conversion[s]];")
 
 	return text
 
@@ -221,19 +221,19 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 
 // Фиксит русский Unicode в сгенерированных json_encode() JSON.
 /proc/r_json_encode(json_data)
-	if(!rus_unicode_fix) // Генерируем табилцу замены
-		rus_unicode_fix = list()
-		for(var/s in rus_unicode_conversion)
+	if(!GLOB.rus_unicode_fix) // Генерируем табилцу замены
+		GLOB.rus_unicode_fix = list()
+		for(var/s in GLOB.rus_unicode_conversion)
 			if(s == "я") // Буква 255 ломается юникодером, с ней разбираемся отдельно.
-				rus_unicode_fix["&#x044f;"] = "\\u[rus_unicode_conversion[s]]"
+				GLOB.rus_unicode_fix["&#x044f;"] = "\\u[GLOB.rus_unicode_conversion[s]]"
 				continue
 
-			rus_unicode_fix[copytext(json_encode(s), 2, -1)] = "\\u[rus_unicode_conversion[s]]"
+			GLOB.rus_unicode_fix[copytext(json_encode(s), 2, -1)] = "\\u[GLOB.rus_unicode_conversion[s]]"
 
 	sanitize_russian_list(json_data)
 	var/json = json_encode(json_data)
 
-	for(var/s in rus_unicode_fix)
-		json = replacetext(json, s, rus_unicode_fix[s])
+	for(var/s in GLOB.rus_unicode_fix)
+		json = replacetext(json, s, GLOB.rus_unicode_fix[s])
 
 	return json
