@@ -10,7 +10,7 @@
 
 /datum/round_event_control/blob/canSpawnEvent(players_amt, gamemode)
 	. = ..()
-	if(!SSshuttle.canRecall())
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall())
 		return FALSE
 
 /datum/round_event/ghost_role/blob
