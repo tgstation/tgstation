@@ -1,4 +1,0 @@
-author: "oranges"
-delete-after: True
-changes: 
-  - tweak: "Dance machine will not play tracks to you if you have instruments turned off"
