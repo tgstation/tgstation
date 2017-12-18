@@ -18,6 +18,8 @@
 	//Antag information
 	gather_antag_data()
 
+	//Nuke disk
+
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
 	var/list/team_ids = list()
