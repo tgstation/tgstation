@@ -1245,6 +1245,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/multiuse_soulstone
+	name = "Multiuse Soulstone"
+	desc = "A more coherent fragment of the legendary treasure known simply as the 'Soul Stone'. This fragment looks like the mysterious old shard that some chaplains own, but can be reused multiple times to make an army of loyal shades."
+	item = /obj/item/device/soulstone/anybody
+	cost = 10
+	restricted_roles = list("Chaplain")
+	surplus = 20 // Could be a useful ie. gibber in a stone
+
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
