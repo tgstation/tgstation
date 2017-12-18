@@ -26,7 +26,6 @@
 	del_on_death = 1
 	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
-	layer = TABLE_LAYER
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
@@ -72,7 +71,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = BELOW_OBJ_LAYER
+	layer = TABLE_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
