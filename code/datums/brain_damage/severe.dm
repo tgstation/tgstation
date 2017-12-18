@@ -197,9 +197,9 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.disabilities |= PACIFISM
+	owner.add_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.disabilities &= ~PACIFISM
+	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()
