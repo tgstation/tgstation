@@ -92,7 +92,7 @@
 		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_volume))
 			return
-		new_volume = CLAMP(new_volume, 0, 100)
+		new_volume = Clamp(new_volume, 0, 100)
 		sound_volume = new_volume
 		to_chat(user, "<span class='notice'>Volume set to [sound_volume]%.</span>")
 	if(href_list["edit_mode"])
@@ -115,7 +115,7 @@
 		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_radius))
 			return
-		new_radius = CLAMP(new_radius, 0, 127)
+		new_radius = Clamp(new_radius, 0, 127)
 		play_radius = new_radius
 		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>")
 	if(href_list["play"])

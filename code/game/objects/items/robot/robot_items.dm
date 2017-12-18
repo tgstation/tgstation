@@ -33,7 +33,7 @@
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
-	name = "hugging module"
+	name = "Hugging Module"
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
@@ -336,10 +336,6 @@
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 
-#define DISPENSE_LOLLIPOP_MODE 1
-#define THROW_LOLLIPOP_MODE 2
-#define THROW_GUMBALL_MODE 3
-
 /obj/item/borg/lollipop
 	name = "lollipop fabricator"
 	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
@@ -347,9 +343,8 @@
 	var/candy = 30
 	var/candymax = 30
 	var/charge_delay = 10
-	var/charging = FALSE
-	var/mode = DISPENSE_LOLLIPOP_MODE
-
+	var/charging = 0
+	var/mode = 1
 	var/firedelay = 0
 	var/hitspeed = 2
 	var/hitdamage = 0
@@ -384,22 +379,10 @@
 		var/obj/O = A
 		if(O.density)
 			return FALSE
-
-	var/obj/item/reagent_containers/food/snacks/lollipop/L = new(T)
-
-	var/into_hands = FALSE
-	if(ismob(A))
-		var/mob/M = A
-		into_hands = M.put_in_hands(L)
-
+	new /obj/item/reagent_containers/food/snacks/lollipop(T)
 	candy--
 	check_amount()
-
-	if(into_hands)
-		user.visible_message("<span class='notice'>[user] dispenses a lollipop into the hands of [A].</span>", "<span class='notice'>You dispense a lollipop into the hands of [A].</span>", "<span class='italics'>You hear a click.</span>")
-	else
-		user.visible_message("<span class='notice'>[user] dispenses a lollipop.</span>", "<span class='notice'>You dispense a lollipop.</span>", "<span class='italics'>You hear a click.</span>")
-
+	to_chat(user, "<span class='notice'>Dispensing lollipop...</span>")
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	return TRUE
 
@@ -444,32 +427,28 @@
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
-		if(DISPENSE_LOLLIPOP_MODE)
+		if(1)
 			if(!proximity)
 				return FALSE
 			dispense(target, user)
-		if(THROW_LOLLIPOP_MODE)
+		if(2)
 			shootL(target, user, click_params)
-		if(THROW_GUMBALL_MODE)
+		if(3)
 			shootG(target, user, click_params)
 	hitdamage = initial(hitdamage)
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)
-		if(DISPENSE_LOLLIPOP_MODE)
-			mode = THROW_LOLLIPOP_MODE
+		if(1)
+			mode++
 			to_chat(user, "<span class='notice'>Module is now throwing lollipops.</span>")
-		if(THROW_LOLLIPOP_MODE)
-			mode = THROW_GUMBALL_MODE
+		if(2)
+			mode++
 			to_chat(user, "<span class='notice'>Module is now blasting gumballs.</span>")
-		if(THROW_GUMBALL_MODE)
-			mode = DISPENSE_LOLLIPOP_MODE
+		if(3)
+			mode = 1
 			to_chat(user, "<span class='notice'>Module is now dispensing lollipops.</span>")
 	..()
-
-#undef DISPENSE_LOLLIPOP_MODE
-#undef THROW_LOLLIPOP_MODE
-#undef THROW_GUMBALL_MODE
 
 /obj/item/ammo_casing/caseless/gumball
 	name = "Gumball"
@@ -637,7 +616,7 @@
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
-	energy = CLAMP(energy - usage, 0, maxenergy)
+	energy = Clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
@@ -647,7 +626,7 @@
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
+			energy = Clamp(energy + energy_recharge, 0, maxenergy)
 			return
 	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
@@ -676,7 +655,7 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray vision"
+	name = "\proper x-ray Vision"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY

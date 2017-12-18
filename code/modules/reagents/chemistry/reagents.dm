@@ -41,7 +41,7 @@
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = Clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)

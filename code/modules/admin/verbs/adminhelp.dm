@@ -605,7 +605,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message["message"] = msg
 	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
 	message["key"] = comms_key
-	message += type
+	message["crossmessage"] = type
 
 	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
 	for(var/I in servers)

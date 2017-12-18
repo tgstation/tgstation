@@ -75,14 +75,14 @@
 		C.AnnouncePR(final_composed)
 
 /datum/world_topic/ahelp_relay
-	keyword = "Ahelp"
+	keyword = "ahelp_relay"
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 
 /datum/world_topic/comms_console
-	keyword = "Comms_Console"
+	keyword = "comms_console"
 	require_comms_key = TRUE
 
 /datum/world_topic/comms_console/Run(list/input)
@@ -91,7 +91,7 @@
 		CM.overrideCooldown()
 
 /datum/world_topic/news_report
-	keyword = "News_Report"
+	keyword = "news_report"
 	require_comms_key = TRUE
 
 /datum/world_topic/news_report/Run(list/input)

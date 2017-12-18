@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -67,8 +67,6 @@ var opts = {
 	'updatedVolume': 0, //The volume level that is sent to the server
 	
 	'defaultMusicVolume': 25,
-
-	'messageCombining': true,
 
 };
 
@@ -296,53 +294,26 @@ function output(message, flag) {
 		opts.messageCount--; //I guess the count should only ever equal the limit
 	}
 
-	var handled = false;
-	var trimmed_message = message.trim()
-	var lastmessages = $messages.children('div.entry:last-child');
-	if (opts.messageCombining && lastmessages.length && $last_message)
-	{
-		if($last_message == trimmed_message)
-		{
-			if(lastmessages.children('span.r').length)
-			{
-				var current_value = parseInt(lastmessages.children('span.r').text())
-				lastmessages.children('span.r').text(current_value+1)
-			}
-			else
-			{
-				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
-			}
-			if(parseInt(lastmessages.css("font-size")) < 24) //Completely arbitrary max size
-				lastmessages.css("font-size","+=2")
-			opts.messageCount--;
-			handled = true;
-		}
+	//Actually append the message
+	var entry = document.createElement('div');
+	entry.className = 'entry';
+
+	if (filteredOut) {
+		entry.className += ' hidden';
+		entry.setAttribute('data-filter', filteredOut);
 	}
 
-	if(!handled)
-	{
-		//Actually append the message
-		var entry = document.createElement('div');
-		entry.className = 'entry';
-
-		if (filteredOut) {
-			entry.className += ' hidden';
-			entry.setAttribute('data-filter', filteredOut);
-		}
-
-		$last_message = trimmed_message;
-		entry.innerHTML = trimmed_message;
-		$messages[0].appendChild(entry);
-		$(entry).find("img.icon").error(iconError);
-		//Actually do the snap
-		//Stuff we can do after the message shows can go here, in the interests of responsiveness
-		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-			highlightTerms(entry);
-		}
-	}
-
+	entry.innerHTML = message.trim();
+	$messages[0].appendChild(entry);
+	$(entry).find("img.icon").error(iconError);
+	//Actually do the snap
 	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
+	}
+
+	//Stuff we can do after the message shows can go here, in the interests of responsiveness
+	if (opts.highlightTerms && opts.highlightTerms.length > 0) {
+		highlightTerms(entry);
 	}
 }
 
@@ -597,7 +568,6 @@ $(function() {
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
-		'smessagecombining': getCookie('messagecombining'),
 	};
 
 	if (savedConfig.sfontSize) {
@@ -636,15 +606,7 @@ $(function() {
 		opts.updatedVolume = newVolume;
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
-	} 
-	if (savedConfig.smessagecombining) {
-		if (savedConfig.smessagecombining == 'false') {
-			opts.messageCombining = false;
-		} else {
-			opts.messageCombining = true;
-		}
-	}
-	else {
+	} else {
 		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
 	}
 
@@ -958,11 +920,6 @@ $(function() {
 			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
 			opts.volumeUpdating = true;
 		}
-	});
-
-	$('#toggleCombine').click(function(e) {
-		opts.messageCombining = !opts.messageCombining;
-		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
 	});
 
 	$('img.icon').error(iconError);

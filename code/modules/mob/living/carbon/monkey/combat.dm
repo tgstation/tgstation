@@ -120,19 +120,16 @@
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
 	if(L == src)
-		return FALSE
-
-	if(disabilities & PACIFISM)
-		return FALSE
+		return 0
 
 	if(enemies[L])
-		return TRUE
+		return 1
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
-		return TRUE
+		return 1
 
-	return FALSE
+	return 0
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	// Don't do any AI if inside another mob (devoured)
