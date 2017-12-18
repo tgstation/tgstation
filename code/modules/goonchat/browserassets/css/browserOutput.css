@@ -38,6 +38,19 @@ img.icon {
 	vertical-align: bottom;
 }
 
+
+.r:before { /* "repeated" badge class for combined messages */
+	content: 'x';
+}
+.r {
+		display: inline;
+		padding: .2em .6em .3em;
+		font-size: 75%;
+		font-weight: 700;
+		line-height: 1;
+		color: #f00;
+}
+
 a {color: #0000ff;}
 a.visited {color: #ff00ff;}
 a:visited {color: #ff00ff;}
