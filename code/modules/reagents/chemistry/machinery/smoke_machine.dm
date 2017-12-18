@@ -1,3 +1,5 @@
+#define REAGENTS_BASE_VOLUME 100 // actual volume is REAGENTS_BASE_VOLUME plus REAGENTS_BASE_VOLUME * rating for each matterbin
+
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
@@ -13,7 +15,6 @@
 	var/useramount = 30 // Last used amount
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
-	var/base_volume = 100 // actual volume is 100 plus 100 * rating for each matterbin
 
 /datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
 	amount = setting * 3
@@ -30,9 +31,9 @@
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
-	create_reagents(base_volume)
+	create_reagents(REAGENTS_BASE_VOLUME)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += base_volume * B.rating
+		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -42,9 +43,9 @@
 	. = ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
-	var/new_volume = base_volume
+	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += base_volume * B.rating
+		new_volume += REAGENTS_BASE_VOLUME * B.rating
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
 		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
@@ -136,3 +137,5 @@
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE
+
+#undef REAGENTS_BASE_VOLUME
