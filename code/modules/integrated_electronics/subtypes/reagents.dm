@@ -351,12 +351,12 @@
 		return FALSE
 	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(istype(I)&&(I.grind_results)&&check_target(I)&&(I.on_grind(src) != -1))
-			reagents.add_reagent_list(I.grind_results)
-			if(I.reagents)
-				I.reagents.trans_to(src, I.reagents.total_volume)
-			qdel(I)
-			activate_pin(2)
-			return TRUE
+		reagents.add_reagent_list(I.grind_results)
+		if(I.reagents)
+			I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
 	activate_pin(3)
 	return FALSE
 
@@ -388,10 +388,10 @@ obj/item/integrated_circuit/reagent/storage/juicer
 		return FALSE
 	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(istype(I)&&check_target(I)&&(I.juice_results)&&(I.on_juice() != -1))
-			reagents.add_reagent_list(I.juice_results)
-			qdel(I)
-			activate_pin(2)
-			return TRUE
+		reagents.add_reagent_list(I.juice_results)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
 	activate_pin(3)
 	return FALSE
 
