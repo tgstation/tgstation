@@ -48,6 +48,10 @@
 /obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
+/obj/item/reagent_containers/attackby(obj/item/I, mob/living/user, params)
+	I.SendSignal(COMSIG_ITEM_ATTACK_REAGENT_CONTAINER, src, user, params)
+	return ..()
+
 /obj/item/reagent_containers/proc/reagentlist(obj/item/reagent_containers/snack) //Attack logs for regents in pills
 	var/data
 	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
