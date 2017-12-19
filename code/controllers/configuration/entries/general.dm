@@ -55,6 +55,8 @@
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
+/datum/config_entry/flag/log_mentor	// log mentor stuff
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_vote_restart	// allow votes to restart
@@ -386,3 +388,7 @@
 
 /datum/config_entry/string/default_view
 	value = "15x15"
+
+/datum/config_entry/flag/mentors_mobname_only
+
+/datum/config_entry/flag/mentors_can_always_follow

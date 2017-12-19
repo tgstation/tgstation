@@ -6,7 +6,8 @@
 #define MUTE_PRAY		4
 #define MUTE_ADMINHELP	8
 #define MUTE_DEADCHAT	16
-#define MUTE_ALL		31
+#define MUTE_MENTORHELP	32
+#define MUTE_ALL		63
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1

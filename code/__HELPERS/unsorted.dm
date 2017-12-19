@@ -1525,3 +1525,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
+//Returns a list of all mentors and admins
+/proc/mentors_and_admins()
+	. = list()
+	for(var/V in GLOB.clients)
+		var/client/C = V
+		var/datum/mentor/M = (C in GLOB.mentors)
+		if(check_rights_for(C, R_ADMIN) || (M && M.active))
+			. += C
