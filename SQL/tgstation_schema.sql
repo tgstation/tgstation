@@ -415,6 +415,17 @@ CREATE TABLE `round` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+
+
+DROP TABLE IF EXISTS `mentor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mentor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ckey` text NOT NULL
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Table structure for table `schema_revision`
 --
