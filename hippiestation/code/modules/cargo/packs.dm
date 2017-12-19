@@ -1,6 +1,6 @@
 /datum/supply_pack/misc/crusade
 	name = "Crusader Armour Pack"
-	cost = 2500
+	cost = 3000
 	contains = list(/obj/item/clothing/head/helmet/knight,
 					/obj/item/clothing/head/helmet/knight/blue,
 					/obj/item/clothing/head/helmet/knight/yellow,
