@@ -1,5 +1,5 @@
 /datum/component/thermite
-	dupe_mode = COMPONENT_DUPE_INSTANCELESS
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/amount
 	var/overlay
 

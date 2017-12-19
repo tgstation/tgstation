@@ -4,7 +4,7 @@
 #define RAD_AMOUNT_EXTREME 1000
 
 /datum/component/radioactive
-	dupe_mode = COMPONENT_DUPE_INSTANCELESS
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/source
 

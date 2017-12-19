@@ -40,7 +40,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
         * `COMPONENT_DUPE_ALLOWED`: The components will be treated as separate, `GetComponent()` will return the first added
         * `COMPONENT_DUPE_UNIQUE`: New component will be deleted, old component will first have `/datum/component/proc/InheritComponent(datum/component/new, TRUE)` on it
-        * `COMPONENT_DUPE_INSTANCELESS`: New component will never exist and instead its initialization arguments will be passed on to the old component.
+        * `COMPONENT_DUPE_UNIQUE_PASSARGS`: New component will never exist and instead its initialization arguments will be passed on to the old component.
 1. `/datum/component/var/dupe_type` (protected, type)
     * Definition of a duplicate component type
         * `null` means exact match on `type` (default)

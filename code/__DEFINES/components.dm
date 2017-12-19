@@ -9,7 +9,7 @@
 #define COMPONENT_DUPE_HIGHLANDER 0		//old component is deleted (default)
 #define COMPONENT_DUPE_ALLOWED 1		//duplicates allowed
 #define COMPONENT_DUPE_UNIQUE 2			//new component is deleted
-#define COMPONENT_DUPE_INSTANCELESS 4	//old component is given the initialization args of the new
+#define COMPONENT_DUPE_UNIQUE_PASSARGS 4	//old component is given the initialization args of the new
 
 // All signals. Format:
 // When the signal is called: (signal arguments)

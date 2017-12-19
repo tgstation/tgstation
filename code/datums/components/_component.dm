@@ -212,7 +212,7 @@
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
 						qdel(old_comp)
-				if(COMPONENT_DUPE_INSTANCELESS)
+				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = args.Copy(2)
 						old_comp.InheritComponent(null, TRUE, arguments)
