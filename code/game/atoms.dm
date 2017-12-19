@@ -199,22 +199,16 @@
 	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(allowmobs = TRUE)
-	if(allowmobs && isliving(src))
-		var/mob/living/L = src
-		return L.can_inject()
-	return reagents ? (container_type & (INJECTABLE | REFILLABLE)) : FALSE
+	return reagents && (container_type & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(allowmobs = TRUE)
-	if(allowmobs && isliving(src))
-		var/mob/living/L = src
-		return L.can_inject()
-	return reagents ? (container_type & (DRAWABLE | DRAINABLE)) : FALSE
+	return reagents && (container_type & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
-	return reagents ? (container_type & REFILLABLE) : FALSE
+	return reagents && (container_type & REFILLABLE)
 
 /atom/proc/is_drainable()
-	return reagents ? (container_type & DRAINABLE) : FALSE
+	return reagents && (container_type & DRAINABLE)
 
 
 /atom/proc/AllowDrop()

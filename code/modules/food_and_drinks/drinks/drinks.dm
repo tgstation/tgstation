@@ -77,7 +77,7 @@
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if (!is_refillable())
-			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
+			to_chat(user, "<span class='warning'>[src]'s tab isn't open!</span>")
 			return
 
 		if(!target.reagents.total_volume)
