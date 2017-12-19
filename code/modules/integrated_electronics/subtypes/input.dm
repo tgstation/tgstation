@@ -706,7 +706,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/sence(var/atom/A,mob/user)
+/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user)
 	if(!check_then_do_work())
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
@@ -730,7 +730,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/ranged/sence_remote(var/atom/A,mob/user)
+/obj/item/integrated_circuit/input/sensor/ranged/sense_remote(var/atom/A,mob/user)
 	if(!user)
 		if(user.client)
 			if(!(A in view(user.client)))
