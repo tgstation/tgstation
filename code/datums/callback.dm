@@ -78,7 +78,7 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
-				return world.PushUsr(user, src)
+				return world.PushUsr(M, src)
 		
 	if (!object)
 		return
@@ -104,7 +104,7 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
-				return world.PushUsr(user, src)
+				return world.PushUsr(M, src)
 	
 	if (!object)
 		return
