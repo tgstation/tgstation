@@ -17,7 +17,7 @@
 	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
 	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 100
 
 	complexity = 20
@@ -66,7 +66,7 @@
 	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 30
 
 	complexity = 20
@@ -145,7 +145,7 @@
 		return
 
 	if(direction_mode == SYRINGE_INJECT)
-		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.total_volume >= AM.reagents.maximum_volume)
+		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.holder_full())
 			activate_pin(3)
 			return
 
@@ -156,12 +156,8 @@
 				return
 
 			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
-
-			add_logs(src, L, "attemped to inject", addition="which had [contained]") //TODO: proper logging (maybe last touched and assembled)
+			var/contained = reagents.log_list()
+			add_logs(src, L, "attemped to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
@@ -169,6 +165,7 @@
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
+				add_logs(src, L, "injected", addition="which had [contained]")
 				L.visible_message("<span class='danger'>[acting_object] injects [L] with its needle!</span>", \
 									"<span class='userdanger'>[acting_object] injects you with its needle!</span>")
 			else
@@ -263,8 +260,7 @@
 			activate_pin(2)
 		return
 
-	// FALSE in those procs makes mobs invalid targets.
-	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
+	if(!source.is_drainable() || !target.is_refillable())
 		return
 
 	source.reagents.trans_to(target, transfer_amount)
@@ -276,7 +272,7 @@
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 60
 
 	complexity = 4
@@ -399,8 +395,7 @@
 	if(!source.reagents || !target.reagents)
 		return
 
-	// FALSE in those procs makes mobs invalid targets.
-	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
+	if(!source.is_drainable() || !target.is_refillable())
 		return
 
 	if(target.reagents.maximum_volume - target.reagents.total_volume <= 0)

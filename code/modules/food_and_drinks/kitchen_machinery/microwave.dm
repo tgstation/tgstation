@@ -81,7 +81,7 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER_1
+				src.container_type = OPENCONTAINER
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -98,7 +98,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
+			src.container_type = OPENCONTAINER
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
@@ -119,7 +119,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
+			src.container_type = OPENCONTAINER
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")

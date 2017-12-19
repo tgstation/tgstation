@@ -13,7 +13,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	flags_1 = NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
