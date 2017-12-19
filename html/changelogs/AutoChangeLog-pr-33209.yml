@@ -1,8 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Abductors can now see if people already have glands! Never worry about abducting the same guy twice again."
-  - rscadd: "Added the Mind Interface Device to the abductor shop for 2 Credits. Only scientists can use it."
-  - rscadd: "The MID has two modes: Transmit and Control."
-  - rscadd: "Transmit will allow you to send a message anytime, anywhere to the mind of a target of your choice, regardless of language barriers. The message will be anonymous, but abductor-like."
-  - rscadd: "Control allows you to give a temporary directive to a target with an implanted gland, that they MUST follow. Duration and amount of uses varies by gland type. When a gland is spent, it will no longer respond to Control signals. The target forgets ever receiving the objective when the duration ends."
