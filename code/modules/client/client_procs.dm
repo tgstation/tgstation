@@ -198,8 +198,7 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
-		vars["fps"] = prefs.clientfps
+	fps = prefs.clientfps
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE

@@ -60,8 +60,6 @@
 		var/pref = C.prefs.parallax
 		if (isnull(pref))
 			pref = PARALLAX_HIGH
-			if (C.byond_version < 511)
-				pref = PARALLAX_DISABLE
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
