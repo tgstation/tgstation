@@ -502,7 +502,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
 	to target temperature, when turned on."
 	icon_state = "heater"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	complexity = 8
 	inputs = list(
 		"target temperature" = IC_PINTYPE_NUMBER,
