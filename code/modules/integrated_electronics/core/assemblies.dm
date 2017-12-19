@@ -275,9 +275,9 @@
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
 		if(proximity)
-			S.sence(target,user)
+			S.sense(target,user)
 		else
-			S.sence_remote(target,user)
+			S.sense_remote(target,user)
 
 	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
