@@ -6629,23 +6629,22 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anv" = (
-/obj/structure/sink{
-	icon_state = "sink";
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "anw" = (
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anx" = (
-/obj/structure/bed,
-/obj/effect/landmark/xeno_spawn,
-/obj/item/bedsheet,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "any" = (
 /obj/machinery/computer/slot_machine{
 	balance = 15;
@@ -7029,12 +7028,22 @@
 	icon_state = "manifold";
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aol" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	icon_state = "intact";
 	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -7045,22 +7054,32 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aon" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
 /obj/item/trash/sosjerky,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "aoo" = (
-/obj/item/electronics/airalarm,
-/obj/item/circuitboard/machine/seed_extractor,
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
 	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "aop" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -7418,8 +7437,10 @@
 /area/maintenance/port/fore)
 "ape" = (
 /obj/effect/decal/cleanable/egg_smudge,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "apf" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -8064,6 +8085,11 @@
 "aqJ" = (
 /obj/structure/bed,
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqK" = (
@@ -8074,12 +8100,18 @@
 /turf/open/space,
 /area/space/nearstation)
 "aqM" = (
-/turf/open/floor/plasteel/airless,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "aqN" = (
 /obj/structure/table,
 /obj/item/stamp,
 /obj/item/poster/random_official,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqO" = (
@@ -9781,9 +9813,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -19518,6 +19547,10 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Port Hallway 2";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aRB" = (
@@ -26039,7 +26072,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/hippie/mime)
+/area/maintenance/port)
 "bhI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26719,14 +26752,6 @@
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/random,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Captain's Desk";
-	departmentType = 5;
-	name = "Captain RC";
-	pixel_x = -30;
-	pixel_y = 0
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bjs" = (
@@ -27419,6 +27444,14 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/machinery/requests_console{
+	announcementConsole = 1;
+	department = "Captain's Desk";
+	departmentType = 5;
+	name = "Captain RC";
+	pixel_x = -30;
+	pixel_y = 0
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bkW" = (
@@ -28283,7 +28316,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -45626,8 +45659,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bXJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "bXK" = (
@@ -49876,7 +49908,7 @@
 	dir = 8;
 	layer = 4;
 	name = "Engine Monitor";
-	network = list("Engine");
+	network = list("Singularity");
 	pixel_x = 30;
 	pixel_y = 0
 	},
@@ -49885,14 +49917,16 @@
 	},
 /area/security/checkpoint/engineering)
 "chk" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Atmospherics APC";
-	pixel_x = -24
-	},
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
+	},
+/obj/machinery/power/apc/highcap/ten_k{
+	areastring = "/area/engine/atmos";
+	dir = 8;
+	name = "Atmospherics APC";
+	pixel_x = -28;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -55424,7 +55458,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Engine Monitor";
-	network = list("Engine");
+	network = list("Singularity");
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/vault,
@@ -55710,12 +55744,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ctB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ctC" = (
@@ -56779,7 +56808,8 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
 	name = "Incinerator Output Pump";
-	on = 1
+	on = 1;
+	target_pressure = 4500
 	},
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
@@ -57060,9 +57090,14 @@
 	dir = 1;
 	layer = 4;
 	name = "Engine Monitor";
-	network = list("Engine");
+	network = list("Singularity");
 	pixel_x = 0;
 	pixel_y = -28
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering Center";
+	dir = 1;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -57837,7 +57872,8 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Center"
+	c_tag = "Particle Accelerator";
+	network = list("SS13","Singularity")
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -59181,7 +59217,7 @@
 /obj/machinery/power/grounding_rod,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity North-West";
-	network = list("Singularity")
+	network = list("Singularity","SS13")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -59202,7 +59238,7 @@
 /obj/machinery/power/grounding_rod,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity North-East";
-	network = list("Singularity")
+	network = list("Singularity","SS13")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -59857,7 +59893,7 @@
 	req_one_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCf" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -59881,7 +59917,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCh" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -59893,7 +59929,7 @@
 	},
 /obj/structure/transit_tube/station,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCi" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -59908,7 +59944,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCj" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -59954,13 +59990,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCp" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCq" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -59968,10 +60004,10 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCr" = (
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCs" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -59982,7 +60018,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCt" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -59998,7 +60034,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity South-West";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Singularity","SS13")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -60036,7 +60072,7 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity South-East";
 	dir = 1;
-	network = list("Singularity")
+	network = list("Singularity","SS13")
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -60062,7 +60098,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60080,7 +60116,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1
@@ -60099,7 +60135,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCH" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60144,7 +60180,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCL" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -60155,7 +60191,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCM" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -60167,7 +60203,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCN" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -60175,7 +60211,7 @@
 	name = "AI MiniSat Access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCO" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -60185,7 +60221,7 @@
 	name = "AI MiniSat Access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCP" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -60200,12 +60236,12 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCQ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -60217,7 +60253,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -60228,7 +60264,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCT" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60245,7 +60281,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCU" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -60265,7 +60301,7 @@
 	pump_direction = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cCV" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -60311,10 +60347,20 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/showcase{
+	density = 0;
+	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+	dir = 1;
+	icon = 'icons/mob/robots.dmi';
+	icon_state = "robot_old";
+	name = "Cyborg Statue";
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60331,7 +60377,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDd" = (
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -60348,19 +60394,19 @@
 	dir = 8
 	},
 /turf/closed/wall,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/aisat)
 "cDg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/aisat)
 "cDh" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/aisat)
 "cDi" = (
 /obj/structure/table,
 /obj/machinery/light/small{
@@ -60576,7 +60622,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDF" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60595,7 +60641,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDG" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -60723,7 +60769,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDR" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -60733,7 +60779,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDS" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
@@ -60745,7 +60791,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cDV" = (
 /obj/structure/rack{
 	dir = 1
@@ -61007,7 +61053,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cEt" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -61514,7 +61560,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFg" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -61536,7 +61582,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFh" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
@@ -61603,14 +61649,14 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFq" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFr" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -61733,7 +61779,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -61747,7 +61793,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
@@ -61832,7 +61878,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFO" = (
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/hallway)
@@ -61882,7 +61928,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cFU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -61929,6 +61975,11 @@
 	pixel_x = -28;
 	pixel_y = -29
 	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24;
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cFY" = (
@@ -61946,9 +61997,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Chamber Observation";
-	req_one_access_txt = "65"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "AI Chamber entrance shutters";
+	name = "AI Chamber entrance shutters"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	locked = 0;
+	name = "AI Chamber";
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -62011,6 +62067,11 @@
 "cGh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat AI Chamber North Door";
+	dir = 2;
+	network = list("MiniSat")
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -62141,6 +62202,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGy" = (
@@ -62153,16 +62219,33 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 0;
+	pixel_y = -24
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
+	},
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat AI Chamber North";
+	dir = 1;
+	network = list("MiniSat")
+	},
+/obj/machinery/power/apc/highcap/five_k{
+	dir = 2;
+	name = "AI Chamber APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -62218,35 +62301,25 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGF" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 2;
-	name = "AI Chamber APC";
-	pixel_y = -24
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = -11;
-	pixel_y = -24
-	},
-/obj/machinery/camera/motion{
-	c_tag = "MiniSat AI Chamber North";
-	dir = 1;
-	network = list("MiniSat")
-	},
-/turf/open/floor/circuit,
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "cGG" = (
-/turf/closed/wall,
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/ai";
+	name = "AI Chamber turret control";
+	pixel_x = 5;
+	pixel_y = 24
+	},
+/obj/machinery/door/window{
+	base_state = "rightsecure";
+	dir = 8;
+	icon_state = "rightsecure";
+	max_integrity = 300;
+	name = "AI Core Door";
+	req_access_txt = "16"
+	},
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGH" = (
 /obj/effect/landmark/start/ai,
@@ -62256,7 +62329,7 @@
 	listening = 1;
 	name = "Common Channel";
 	pixel_x = -27;
-	pixel_y = -9
+	pixel_y = 2
 	},
 /obj/item/device/radio/intercom{
 	anyai = 1;
@@ -62264,7 +62337,7 @@
 	listening = 0;
 	name = "Custom Channel";
 	pixel_x = 0;
-	pixel_y = -31
+	pixel_y = 22
 	},
 /obj/item/device/radio/intercom{
 	anyai = 1;
@@ -62273,19 +62346,23 @@
 	frequency = 1447;
 	name = "Private Channel";
 	pixel_x = 27;
-	pixel_y = -9
-	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -28;
-	pixel_y = -28
-	},
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	pixel_x = 28;
-	pixel_y = -28
+	pixel_y = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/button/door{
+	id = "AI Chamber entrance shutters";
+	name = "AI Chamber entrance shutters control";
+	pixel_x = -23;
+	pixel_y = 23;
+	req_access_txt = "16"
+	},
+/obj/machinery/button/door{
+	id = "AI Core shutters";
+	name = "AI Core shutters control";
+	pixel_x = 24;
+	pixel_y = 22;
+	req_access_txt = "16"
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGI" = (
@@ -62312,7 +62389,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cGK" = (
 /obj/structure/lattice,
 /obj/machinery/camera{
@@ -62352,6 +62429,14 @@
 	pixel_x = 0;
 	pixel_y = -25
 	},
+/obj/machinery/door/window{
+	base_state = "leftsecure";
+	dir = 4;
+	icon_state = "leftsecure";
+	max_integrity = 300;
+	name = "AI Core Door";
+	req_access_txt = "16"
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGM" = (
@@ -62360,42 +62445,40 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
-	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
-	pixel_x = 9;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	pixel_x = 30;
+	pixel_y = -30
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -28;
+	pixel_y = -28
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 24;
+	pixel_y = 24
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGO" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
-	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
-	pixel_x = -9;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGP" = (
 /obj/effect/landmark/tripai,
@@ -62423,6 +62506,14 @@
 	name = "Private Channel";
 	pixel_x = 0;
 	pixel_y = -25
+	},
+/obj/machinery/door/window{
+	base_state = "rightsecure";
+	dir = 8;
+	icon_state = "rightsecure";
+	max_integrity = 300;
+	name = "AI Core Door";
+	req_access_txt = "16"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
@@ -62455,15 +62546,25 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cGS" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/showcase{
+	density = 0;
+	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+	dir = 8;
+	icon = 'icons/mob/robots.dmi';
+	icon_state = "robot_old";
+	name = "Cyborg Statue";
+	pixel_x = 9;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -62480,15 +62581,14 @@
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/ai)
 "cGU" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/turf/open/floor/circuit,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "AI Core shutters";
+	name = "AI core shutters"
+	},
+/turf/open/space/basic,
 /area/ai_monitored/turret_protected/ai)
 "cGV" = (
 /obj/machinery/camera/motion{
@@ -62499,10 +62599,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cGW" = (
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
-	},
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
@@ -62517,22 +62613,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cGY" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cGZ" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
-	},
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/power/terminal,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cHa" = (
@@ -62551,18 +62643,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHc" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/space,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHd" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/space/basic,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHe" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -62570,7 +62662,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHf" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -62582,14 +62674,14 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHg" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHh" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -62609,7 +62701,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHi" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -62628,14 +62720,14 @@
 "cHk" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHm" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -62653,16 +62745,16 @@
 	},
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHo" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHp" = (
 /obj/structure/window/reinforced,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHq" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -62670,7 +62762,7 @@
 	},
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cHr" = (
 /obj/structure/grille,
 /obj/structure/grille,
@@ -63295,7 +63387,7 @@
 /area/engine/engineering)
 "cJA" = (
 /turf/open/floor/plating/airless,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/aisat)
 "cJB" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63305,7 +63397,7 @@
 	name = "AI MiniSat Access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJC" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -63315,7 +63407,7 @@
 	name = "AI MiniSat Access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJD" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63325,20 +63417,20 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/aisat/hallway)
+/area/aisat)
 "cJG" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -63370,7 +63462,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJK" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63384,7 +63476,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63405,7 +63497,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cJM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -63442,9 +63534,6 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "cJR" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -63459,6 +63548,16 @@
 "cJT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/showcase{
+	density = 0;
+	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+	dir = 4;
+	icon = 'icons/mob/robots.dmi';
+	icon_state = "robot_old";
+	name = "Cyborg Statue";
+	pixel_x = -9;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -63526,7 +63625,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "cKb" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -65366,8 +65465,11 @@
 	icon_state = "intact";
 	dir = 9
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -65411,11 +65513,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "cSb" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
 "cSc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -65467,6 +65569,11 @@
 /area/space/nearstation)
 "cSl" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "cSm" = (
@@ -65550,6 +65657,9 @@
 "cSB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -65824,6 +65934,11 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "cTs" = (
@@ -65867,6 +65982,11 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -66970,7 +67090,7 @@
 	req_access_txt = "32"
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice)
+/area/maintenance/port)
 "cWI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -69897,7 +70017,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "deL" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69920,7 +70040,7 @@
 	start_active = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "deN" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -70158,7 +70278,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "dfE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -70169,7 +70289,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
+/area/aisat)
 "dfF" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Ferry";
@@ -70177,6 +70297,1484 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"dfG" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfH" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfL" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfO" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfP" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfQ" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfR" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfS" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfT" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfU" = (
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfV" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfW" = (
+/obj/structure/table/wood,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Worn Out APC";
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfX" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfY" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dfZ" = (
+/obj/machinery/computer/slot_machine,
+/obj/item/coin/diamond,
+/obj/item/coin/iron,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dga" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgb" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dgc" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgd" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dge" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgf" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgg" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgh" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgi" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgj" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgk" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgl" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgm" = (
+/obj/effect/decal/cleanable/flour,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgn" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgo" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgp" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgq" = (
+/obj/structure/closet,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgr" = (
+/obj/structure/table/wood,
+/obj/item/poster/random_official,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgs" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgt" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgu" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/glass/rag,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgv" = (
+/obj/structure/table/wood,
+/obj/item/clothing/mask/bandana/red,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgw" = (
+/obj/structure/table/wood,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgx" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgy" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgz" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgB" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgC" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgD" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgE" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgF" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgG" = (
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgH" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgI" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgJ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgL" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgN" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgP" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgQ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgR" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dgT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dgU" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	icon_state = "intact";
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dgV" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgW" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgX" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgY" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dgZ" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dha" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhb" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhc" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhd" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhe" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhf" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhg" = (
+/mob/living/simple_animal/mouse/brown,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhh" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhi" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhj" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhk" = (
+/mob/living/simple_animal/mouse/white,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhl" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhm" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhn" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dho" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/tile/wood,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhp" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhq" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhr" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhs" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dht" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhu" = (
+/obj/structure/chair,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhv" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhw" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	icon_state = "intact";
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhy" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhz" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhA" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhB" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhC" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhD" = (
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhE" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhF" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhG" = (
+/obj/structure/table/wood/poker,
+/obj/item/coin/iron,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhH" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhI" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhJ" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhK" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhL" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhO" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhP" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhQ" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhR" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhS" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhT" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhU" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhV" = (
+/obj/machinery/monkey_recycler,
+/obj/item/reagent_containers/food/snacks/monkeycube,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"dhW" = (
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhX" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating/airless,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhY" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dhZ" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dia" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dib" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dic" = (
+/obj/structure/mineral_door/wood,
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"did" = (
+/obj/structure/mineral_door/wood,
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"die" = (
+/turf/closed/wall,
+/area/maintenance/fore/secondary{
+	icon_state = "storage"
+	})
+"dif" = (
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dig" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dih" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dii" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dij" = (
+/obj/machinery/atmospherics/pipe/simple,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dik" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dil" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dim" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"din" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dio" = (
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dip" = (
+/obj/machinery/atmospherics/pipe/manifold,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"diq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dir" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dis" = (
+/obj/machinery/atmospherics/pipe/manifold,
+/turf/open/floor/plating,
+/area/maintenance/fore)
+"dit" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/lightsout,
+/turf/open/floor/carpet,
+/area/security/vacantoffice)
+"diu" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - Mix";
+	dir = 8
+	},
+/turf/open/floor/engine/vacuum,
+/area/engine/atmos)
+"div" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - N2O";
+	dir = 8
+	},
+/turf/open/floor/engine/n2o,
+/area/engine/atmos)
+"diw" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - Plasma";
+	dir = 8
+	},
+/turf/open/floor/engine/plasma,
+/area/engine/atmos)
+"dix" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - CO2";
+	dir = 8
+	},
+/turf/open/floor/engine/co2,
+/area/engine/atmos)
+"diy" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - N2";
+	dir = 8
+	},
+/turf/open/floor/engine/n2,
+/area/engine/atmos)
+"diz" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - O2";
+	dir = 8
+	},
+/turf/open/floor/engine/o2,
+/area/engine/atmos)
+"diA" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - Air";
+	dir = 8
+	},
+/turf/open/floor/engine/air,
+/area/engine/atmos)
+"diB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/showcase{
+	density = 0;
+	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+	dir = 1;
+	icon = 'icons/mob/robots.dmi';
+	icon_state = "robot_old";
+	name = "Cyborg Statue";
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 1
+	},
+/area/aisat)
+"diC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/aisat)
+"diD" = (
+/turf/closed/wall,
+/area/aisat)
+"diE" = (
+/turf/closed/wall,
+/area/aisat)
+"diF" = (
+/turf/closed/wall,
+/area/aisat)
+"diG" = (
+/turf/closed/wall,
+/area/aisat)
+"diH" = (
+/turf/closed/wall,
+/area/aisat)
+"diI" = (
+/turf/closed/wall,
+/area/aisat)
+"diJ" = (
+/turf/closed/wall,
+/area/aisat)
+"diK" = (
+/turf/closed/wall,
+/area/aisat)
+"diL" = (
+/turf/closed/wall,
+/area/aisat)
+"diM" = (
+/turf/closed/wall,
+/area/aisat)
+"diN" = (
+/turf/closed/wall,
+/area/aisat)
+"diO" = (
+/turf/closed/wall,
+/area/aisat)
+"diP" = (
+/turf/closed/wall,
+/area/aisat)
+"diQ" = (
+/turf/closed/wall,
+/area/aisat)
+"diR" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diS" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diT" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diU" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diV" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diW" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diX" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diY" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"diZ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dja" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djb" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djc" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djd" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dje" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djf" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djg" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djh" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dji" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djj" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djk" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djl" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djm" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djn" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djo" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djp" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djq" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djr" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djs" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djt" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dju" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djv" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djw" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djx" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djy" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djz" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djA" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djB" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djC" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djD" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djE" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djF" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djG" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djH" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djI" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djJ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djK" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djL" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djM" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djN" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djO" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"djP" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"djQ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djR" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djS" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djT" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djU" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djV" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djW" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djX" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djY" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"djZ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dka" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkb" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkc" = (
+/obj/machinery/door/window{
+	base_state = "leftsecure";
+	dir = 4;
+	icon_state = "leftsecure";
+	max_integrity = 300;
+	name = "AI Core Door";
+	req_access_txt = "16"
+	},
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat AI Chamber Core";
+	dir = 1;
+	network = list("MiniSat")
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dkd" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dke" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkf" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkg" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dkh" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dki" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkj" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkk" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkl" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dkm" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dkn" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dko" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkp" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkq" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkr" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dks" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/closed/wall/r_wall,
+/area/ai_monitored/turret_protected/ai)
+"dkt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/power/smes{
+	charge = 5e+006;
+	dir = 2
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"dku" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkv" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkw" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkx" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dky" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkz" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkA" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkC" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkD" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkE" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkF" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkG" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkH" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkI" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkJ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkK" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkM" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkN" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkO" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkP" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
 
 (1,1,1) = {"
 aaa
@@ -84180,7 +85778,7 @@ cVZ
 cWh
 cWo
 bbZ
-bdK
+dit
 cWo
 cWH
 bhH
@@ -86464,7 +88062,7 @@ ans
 aoi
 apb
 cSg
-apP
+dhv
 apP
 apP
 atB
@@ -86721,7 +88319,7 @@ ant
 aoj
 apc
 apQ
-apd
+dhw
 apd
 asM
 atC
@@ -86978,7 +88576,7 @@ amv
 amv
 amv
 apR
-anw
+dhx
 arJ
 anw
 atD
@@ -87233,7 +88831,7 @@ aaa
 amz
 anu
 aok
-apd
+dgU
 aol
 aqJ
 amz
@@ -87486,14 +89084,14 @@ adT
 aaa
 aqL
 aqL
-aqL
+dgc
 amz
 anu
 cRR
-anw
-amz
-amz
-amz
+dgV
+dhh
+dhy
+dhK
 anw
 amz
 amz
@@ -87743,14 +89341,14 @@ adT
 aqL
 aqL
 aaa
-aaa
-amz
-amz
-aom
-amz
-amz
-aJy
-amz
+dgd
+dgp
+dgB
+dgI
+dgW
+dhi
+dhz
+dhL
 anw
 anw
 anw
@@ -87999,15 +89597,15 @@ ado
 adT
 aaa
 aaQ
-aaa
-aaa
-amz
+dfQ
+dge
+dgq
 anv
 aon
-anw
-alF
-aJy
-alF
+dgX
+dhj
+dhA
+dhM
 anw
 amz
 cSO
@@ -88255,16 +89853,16 @@ aqL
 aaa
 aqL
 aaa
-aaQ
-aqL
-aqL
-amz
-anw
-anw
-anw
-alF
-aqL
-alF
+dfG
+dfR
+dgf
+dgr
+dgC
+dgJ
+dgY
+dhk
+dhB
+dhN
 anw
 amz
 amz
@@ -88512,16 +90110,16 @@ aaQ
 aaQ
 aaQ
 aaQ
-aaQ
-aaa
-aaa
-amz
+dfH
+dfS
+dgg
+dgs
 anx
 aoo
 cSb
-amz
-aJy
-alF
+dhl
+dhC
+dhO
 anw
 amz
 atD
@@ -88769,16 +90367,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-amz
-amz
-amz
-aom
-amz
-aJy
-amz
+dfI
+dfT
+dgh
+dgt
+anx
+dgK
+dgZ
+dhm
+dhD
+dhP
 cSA
 anw
 anw
@@ -89026,19 +90624,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+dfJ
+dfU
+dgi
+dgu
+anx
+dgL
+dha
+dhn
+dhE
+dhQ
 amz
-any
 amz
-cSc
-amz
-aqL
-amz
-amz
-amz
-amz
+anw
 anw
 amz
 axx
@@ -89283,19 +90881,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-amz
-amz
+dfK
+dfV
+dgj
+dgv
+anx
+dgM
+dhb
+dho
+dhF
+dhR
+dhV
 amz
 anw
-amz
-aqL
-aaF
-amz
-atF
-amz
 anw
 awG
 axy
@@ -89540,19 +91138,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alF
+dfL
+dfW
+dgk
+dgw
+dgD
+dgN
 ape
-alF
-aaF
-arK
+dhp
+dhG
+dhS
 amz
 amz
-amz
+anw
 avJ
 avJ
 axy
@@ -89797,21 +91395,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dfM
+dfX
+dgl
+dgx
+dgE
+dgO
+dhc
+dhq
+dhH
+dhT
+dhW
+dib
+aom
 amz
-anw
 amz
-aaF
-aqL
-aqL
-aaF
-amz
-alF
-alF
 axy
 ayW
 amz
@@ -90054,22 +91652,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alF
-amB
-alF
+dfN
+dfY
+dgm
+dgy
+dgF
+dgP
+dhd
+dhr
 aqM
-aqL
-aaF
-aqL
-aqK
-aqK
-aqL
-axz
+aqM
+dhX
+dic
+dig
+dii
+dim
+dip
 ayX
 aAn
 cTC
@@ -90311,23 +91909,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aac
-aaa
-aqL
-alF
-anw
-alF
+dfO
+dfZ
+dgn
+dgz
+dgG
+dgQ
+dhe
+dhs
+dhI
 aqM
-aaF
-aqL
-aqK
-aJy
-aJy
-aqK
-axz
-ayX
+dhY
+did
+dih
+dij
+din
+diq
+dis
 aAo
 cTD
 asO
@@ -90338,7 +91936,7 @@ cUq
 cUA
 cUJ
 aNa
-aOD
+cUX
 aQk
 cVe
 aTa
@@ -90568,22 +92166,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-alF
-alF
-amz
-amz
-anw
-amz
-amz
-amz
-aaF
-aqL
-aqK
-aqL
-aqL
-axz
+dfP
+dga
+dgo
+dgA
+dgH
+dgR
+dhf
+dht
+dhJ
+dhU
+dhZ
+die
+atG
+atG
+atG
+axA
 ayX
 aAo
 cTE
@@ -90825,21 +92423,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-alF
+amz
+dgb
+anw
 amA
 anz
-aop
-anw
-apS
+dgS
+apP
+dhu
 aqN
 amz
-asN
-asN
-asN
-asN
-asN
+dia
+avK
+avK
+dik
+dio
 axA
 ayX
 aAp
@@ -91082,22 +92680,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-alF
+amz
+anw
+anw
 amB
 anw
 aoq
-anw
+dhg
 anw
 cSl
 aom
 cSB
-asO
-auH
-asO
-asO
-axB
+dif
+atG
+dil
+avK
+dir
 cTr
 cTy
 cTF
@@ -91339,12 +92937,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-alF
+amz
+anw
+anw
 amC
 anA
-aop
+dgT
 apf
 apT
 aqO
@@ -91596,9 +93194,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-alF
+amz
+amz
+amz
 alF
 amz
 amz
@@ -102996,7 +104594,7 @@ crb
 bVk
 cta
 ctO
-cuO
+diy
 cuO
 bVj
 ckv
@@ -104024,7 +105622,7 @@ crb
 bVk
 cta
 ctR
-cuQ
+diz
 cuQ
 bVj
 cqI
@@ -105052,7 +106650,7 @@ crf
 cse
 ctc
 ctU
-cuU
+diA
 cuU
 bVj
 aaa
@@ -106314,7 +107912,7 @@ bta
 bJs
 bUc
 bVj
-bWs
+bWt
 bWt
 bWt
 bVj
@@ -106573,19 +108171,19 @@ bUc
 bVj
 bWt
 bXL
-bWt
+diu
 bVj
 cbc
 ccd
-cbc
+div
 bVj
 cfn
 cgs
-cfm
+diw
 bVj
 cjz
 ckF
-cjz
+dix
 bVj
 aqL
 aqL
@@ -107653,11 +109251,11 @@ aaa
 aaa
 aqL
 aqL
-cDT
-cDT
-cDT
-cDT
-cDT
+diV
+diZ
+djb
+djd
+djf
 aqL
 aOf
 aqL
@@ -107909,35 +109507,35 @@ bVk
 bVk
 bVk
 cit
-cDT
-cDT
+diR
+diW
 cEi
 cEt
 cEE
-cDT
-cEZ
-cEZ
-cEZ
-cEZ
+djg
+djj
+djl
+djn
+djp
 aqL
 cJE
 aqL
 aqL
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cFY
-cFY
-cFY
-cFY
-cJO
-cFY
-cFY
-cFY
+djz
+djD
+djF
+djH
+djJ
+djL
+djN
+djR
+djV
+djZ
+dkb
+cJF
+dke
+dkj
+dkq
 aCn
 aCn
 aCn
@@ -108175,27 +109773,27 @@ cER
 cFa
 cFh
 cFs
-cEZ
-cEZ
+djq
+djt
 cJF
-cEZ
-cEZ
-cEZ
+djv
+djx
+djA
 cFO
 cFO
 cFO
 deH
 cGo
-cGo
-cFY
-cFY
+cEZ
+djS
+djW
 cFY
 cFY
 cJO
-cFY
-cFY
-cFY
-cFY
+dkf
+dkk
+dkr
+dkw
 aqL
 aCn
 ddJ
@@ -108423,7 +110021,7 @@ aaa
 aaa
 aaa
 aqL
-cDT
+diS
 cEc
 cEk
 cEu
@@ -108452,8 +110050,8 @@ cJO
 cFY
 cFY
 cFY
-cFY
-cFY
+dkx
+dkH
 aqL
 cCJ
 cHf
@@ -108676,11 +110274,11 @@ cCr
 cCO
 cCW
 cJA
-cDd
-cDd
-cDd
-cDd
-cDT
+diF
+diL
+diN
+diP
+diT
 cDT
 cEl
 cEv
@@ -108700,17 +110298,17 @@ cFY
 cFY
 cFY
 cFY
-cGs
+djO
 cGv
-cGC
 cGs
-cGt
+cGs
+cGs
 cJR
 cGv
-cGs
+dkl
 cFY
-cFY
-cFY
+dky
+dkI
 aqL
 ddJ
 cHe
@@ -108932,8 +110530,8 @@ cAP
 cCE
 cCL
 cCY
-cDd
-cDd
+diD
+diG
 cDm
 cDw
 cDI
@@ -108963,11 +110561,11 @@ cGg
 cGu
 cGM
 cGS
-cGt
-cGt
+dkg
+dkm
 cFY
-cFY
-cFY
+dkz
+dkJ
 aCn
 ddJ
 cHg
@@ -109188,8 +110786,8 @@ cCg
 cCq
 cCF
 cCP
-cCF
-cDd
+diB
+diE
 cDi
 cDn
 cDx
@@ -109216,15 +110814,15 @@ cGk
 cGp
 cGt
 cGx
-cGD
+cFY
+cFY
 cGG
-cGG
-cGT
+cJO
 cGV
 cGY
-cFY
-cFY
-cFY
+dks
+dkA
+dkK
 aCn
 ddJ
 cHg
@@ -109445,7 +111043,7 @@ cCh
 cCr
 cCD
 cCQ
-cCZ
+diC
 cDe
 cDj
 cDo
@@ -109473,15 +111071,15 @@ cGl
 cGq
 cGu
 cGy
-cGE
+cHa
 cGH
 cGN
 cGU
 cGW
 cGZ
-cHa
-cHa
-cHa
+dkt
+dkB
+dkL
 cHc
 cHd
 cHh
@@ -109731,14 +111329,14 @@ cGr
 cGm
 cGz
 cGF
-cGG
-cGG
-cJS
+cFY
+dkc
+cJO
 cGs
 cGt
 cFY
-cFY
-cFY
+dkC
+dkM
 aCn
 ddJ
 cHg
@@ -109994,8 +111592,8 @@ cJT
 cGt
 cGt
 cFY
-cFY
-cFY
+dkD
+dkN
 aCn
 ddJ
 cHg
@@ -110147,7 +111745,7 @@ bmW
 bmS
 bpW
 bmS
-cXD
+bsX
 buG
 bvZ
 bxH
@@ -110218,7 +111816,7 @@ ddJ
 cCL
 cCW
 cDh
-cDd
+diH
 cDr
 cDB
 cDN
@@ -110242,17 +111840,17 @@ cFY
 cFY
 cFY
 cFY
-cGs
+djP
 cGB
-cGC
 cGs
-cGt
+cGs
+cGs
 cJR
 cGB
-cGs
+dkn
 cFY
-cFY
-cFY
+dkE
+dkO
 aqL
 ddJ
 cHe
@@ -110475,7 +112073,7 @@ ddJ
 cCL
 cCW
 aqL
-cDd
+diI
 cDs
 cDC
 cDO
@@ -110508,8 +112106,8 @@ cJO
 cFY
 cFY
 cFY
-cFY
-cFY
+dkF
+dkP
 aqL
 cCJ
 cHf
@@ -110732,7 +112330,7 @@ ddJ
 cCL
 cCW
 aqL
-cDd
+diJ
 cDt
 cDD
 cDP
@@ -110745,27 +112343,27 @@ cEY
 cFa
 cFo
 cFt
-cEZ
-cEZ
+djr
+dju
 cJF
-cEZ
-cEZ
-cEZ
+djw
+djy
+djB
 deH
 cFO
 cFO
 cFO
 cGo
-cGo
-cFY
-cFY
+cEZ
+djT
+djX
 cFY
 cFY
 cJO
-cFY
-cFY
-cFY
-cFY
+dkh
+dko
+dku
+dkG
 aqL
 aCn
 ddJ
@@ -110989,39 +112587,39 @@ ddJ
 cCL
 cCW
 aqL
-cDd
-cDd
-cDd
-cDd
-cEa
-cEa
+diK
+diM
+diO
+diQ
+diU
+diX
 cEr
 cED
 cEQ
-cEa
-cEZ
-cEZ
-cEZ
-cEZ
+djh
+djk
+djm
+djo
+djs
 aqL
 cJE
 aqL
 aqL
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cEZ
-cFY
-cFY
-cFY
-cFY
-cJO
-cFY
-cFY
-cFY
+djC
+djE
+djG
+djI
+djK
+djM
+djQ
+djU
+djY
+dka
+dkd
+cJF
+dki
+dkp
+dkv
 aCn
 aCn
 aCn
@@ -111251,11 +112849,11 @@ aqL
 aqL
 aqL
 aqL
-cEa
-cEa
-cEa
-cEa
-cEa
+diY
+dja
+djc
+dje
+dji
 aqL
 aOf
 aqL
