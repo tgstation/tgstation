@@ -308,6 +308,7 @@
 #include "code\datums\components\chasm.dm"
 #include "code\datums\components\decal.dm"
 #include "code\datums\components\infective.dm"
+#include "code\datums\components\jousting.dm"
 #include "code\datums\components\material_container.dm"
 #include "code\datums\components\ntnet_interface.dm"
 #include "code\datums\components\paintable.dm"
