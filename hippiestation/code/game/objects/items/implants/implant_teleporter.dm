@@ -66,7 +66,7 @@
 				else
 					return 0
 
-	src.loc = target
+	src.forceMove(target)
 	imp_in = target
 	target.implants += src
 	if(activated)

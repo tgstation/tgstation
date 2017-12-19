@@ -179,7 +179,7 @@
 				if(A.real_name)
 					A.real_name = H.real_name
 				H.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
-				H.loc = A
+				H.forceMove(A)
 				if(!SSticker.mode.shadowling_ascended)
 					set_security_level(SEC_LEVEL_DELTA)
 					SSshuttle.emergencyCallTime = 1800

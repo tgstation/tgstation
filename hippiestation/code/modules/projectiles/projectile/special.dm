@@ -25,7 +25,7 @@ obj/item/projectile/rod/proc/Impale(mob/living/carbon/human/H)
 
         if (istype(BP))
             R.add_blood(H)
-            R.loc = H
+            R.forceMove(H)
             BP.embedded_objects += R
             H.update_damage_overlays()
             visible_message("<span class='warning'>The [R] has embedded into [H]'s [BP]!</span>",

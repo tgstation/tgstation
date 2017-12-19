@@ -362,7 +362,7 @@
 	if(QDELETED(V.coat) || !V.coat)
 		V.coat = new /obj/item/clothing/suit/draculacoat(user.loc)
 	else if(get_dist(V.coat, user) > 1 || !(V.coat in user.GetAllContents()))
-		V.coat.loc = user.loc
+		V.coat.forceMove(user.loc)
 	to_chat(user, "<span class='notice'>You summon your dracula coat.</span>")
 
 
@@ -387,12 +387,12 @@
 			to_chat(user, "<span class='warning'>You do not have enough blood to cast this!</span>")
 			return FALSE
 		bat = new /mob/living/simple_animal/hostile/vampire_bat(user.loc)
-		user.loc = bat
+		user.forceMove(bat)
 		bat.controller = user
 		user.status_flags |= GODMODE
 		user.mind.transfer_to(bat)
 	else
-		bat.controller.loc = bat.loc
+		bat.controller.forceMove(bat.loc)
 		bat.controller.status_flags &= ~GODMODE
 		bat.mind.transfer_to(bat.controller)
 		bat.controller = null //just so we don't accidently trigger the death() thing

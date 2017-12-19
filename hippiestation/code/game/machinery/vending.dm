@@ -259,11 +259,11 @@
 		if(!user.dropItemToGround(W))
 			return
 		if(coin)
-			user << "<span class='warning'>There is already [coin] in the [src]!</span>"
+			to_chat(user, "<span class='warning'>There is already [coin] in the [src]!</span>")
 			return
-		W.loc = src
+		W.forceMove(src)
 		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		playsound(src,'hippiestation/sound/misc/insertcoin.ogg',25,1)
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
@@ -412,9 +412,9 @@
 			. = TRUE
 		if("eject")
 			if(!coin)
-				usr << "<span class='notice'>There is no coin in this machine.</span>"
+				to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
 				return
-			coin.loc = loc
+			coin.forceMove(loc)
 			if(!usr.get_active_held_item())
 				usr.put_in_hands(coin)
 			usr << "<span class='notice'>You remove [coin] from [src].</span>"

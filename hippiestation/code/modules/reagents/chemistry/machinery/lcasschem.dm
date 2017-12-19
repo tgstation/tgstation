@@ -13,7 +13,7 @@
 
 /obj/machinery/chem/proc/eject_beaker()
 	if(beaker)
-		beaker.loc = get_turf(src)
+		beaker.forceMove(get_turf(src))
 		beaker.reagents.handle_reactions()
 		beaker.reagents.chem_pressure = 0//pressure, radioactivity and bluespaced activity are tied to the container itself and don't linger outside the machine
 		beaker.reagents.chem_radioactivity = 0
