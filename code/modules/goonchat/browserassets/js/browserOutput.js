@@ -312,7 +312,7 @@ function output(message, flag) {
 			{
 				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
 			}
-			if(parseInt(lastmessages.css("font-size")) < 24) //Completely arbitrary max size
+			if(parseInt(lastmessages.css("font-size")) < 1024) //Completely arbitrary max size
 				lastmessages.css("font-size","+=2")
 			opts.messageCount--;
 			handled = true;
