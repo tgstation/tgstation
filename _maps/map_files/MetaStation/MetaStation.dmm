@@ -51827,6 +51827,15 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/gun/syringe,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -52306,6 +52315,11 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
+/obj/machinery/door/window/eastleft{
+	name = "First-Aid Supplies";
+	req_access_txt = "5";
+	req_one_access_txt = "0"
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
@@ -52340,6 +52354,13 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
+/obj/machinery/door/window/westleft{
+	name = "First-Aid Supplies";
+	req_access_txt = "5"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -52995,6 +53016,10 @@
 	},
 /obj/machinery/light/small,
 /obj/structure/table/glass,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
 	},
@@ -53049,6 +53074,10 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},

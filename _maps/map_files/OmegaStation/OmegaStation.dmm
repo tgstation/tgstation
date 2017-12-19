@@ -26316,6 +26316,12 @@
 	network = list("SS13")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXP" = (
@@ -26794,6 +26800,11 @@
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastleft{
+	name = "First-Aid Supplies";
+	req_access_txt = "5";
+	req_one_access_txt = "0"
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYH" = (
@@ -27188,6 +27199,10 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastright{
+	name = "First-Aid Supplies";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aZD" = (
@@ -27648,6 +27663,10 @@
 	},
 /obj/structure/cable/white,
 /obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bau" = (
