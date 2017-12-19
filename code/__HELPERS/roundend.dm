@@ -72,10 +72,12 @@
 			break
 		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
 		if(!channel.messages.len)
+			file_data["[pos]"]["messages"] = list()
 			continue
 		for(var/datum/newscaster/feed_message/message in channel.messages)
 			file_data["[pos]"]["messages"] |= list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list())
 			if(!message.comments.len)
+				file_data["[pos]"]["messages"]["comments"] = list()
 				continue
 			for(var/datum/newscaster/feed_comment/comment in message.comments)
 				file_data["[pos]"]["messages"]["comments"] = list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]")
