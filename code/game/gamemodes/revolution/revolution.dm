@@ -26,7 +26,7 @@
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
-	var/datum/objective_team/revolution/revolution
+	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 
 ///////////////////////////
