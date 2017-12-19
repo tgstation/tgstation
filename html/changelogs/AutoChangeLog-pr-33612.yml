@@ -1,0 +1,5 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - tweak: "Jungle Fever cannot be cured anymore"
+  - bugfix: "The Monkey Leaders' virus are now un-detectable by health scanners and to the PANDEMIC now."
