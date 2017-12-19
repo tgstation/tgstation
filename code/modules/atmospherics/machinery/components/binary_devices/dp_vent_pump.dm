@@ -49,8 +49,8 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 	air1.volume = 1000
 	air2.volume = 1000
 
@@ -73,8 +73,8 @@ Acts like a normal vent, but has an input AND output.
 
 	if(!on)
 		return
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -99,7 +99,7 @@ Acts like a normal vent, but has an input AND output.
 				loc.assume_air(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent1 = PARENT1
+				var/datum/pipeline/parent1 = parents[1]
 				parent1.update = 1
 
 	else //external -> output
@@ -122,7 +122,7 @@ Acts like a normal vent, but has an input AND output.
 				air2.merge(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent2 = PARENT2
+				var/datum/pipeline/parent2 = parents[2]
 				parent2.update = 1
 
 	//Radio remote control

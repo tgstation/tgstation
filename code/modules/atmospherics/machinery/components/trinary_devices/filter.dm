@@ -50,7 +50,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-	if(on && NODE1 && NODE2 && NODE3 && is_operational())
+	if(on && nodes[1] && nodes[2] && nodes[3] && is_operational())
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 	icon_state = "filter_off[flipped?"_f":""]"
@@ -63,12 +63,12 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
-	if(!on || !(NODE1 && NODE2 && NODE3) || !is_operational())
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
