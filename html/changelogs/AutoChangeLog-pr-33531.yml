@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "You can now joust with spears if you are riding on another mob, whether it's a hapless cyborg or otherwise! Additional damage and stunchance will be added per tile moved!"
