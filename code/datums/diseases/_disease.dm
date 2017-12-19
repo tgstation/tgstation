@@ -60,14 +60,14 @@
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
-		return 0
+		return FALSE
 
 	. = cures.len
 	for(var/C_id in cures)
 		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
-		return 0
+		return FALSE
 
 //Airborne spreading
 /datum/disease/proc/spread(force_spread = 0)
@@ -111,14 +111,17 @@
 
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/disease/proc/Copy()
 	var/datum/disease/D = new type()
 	D.strain_data = strain_data.Copy()
 	return D
+
+/datum/disease/proc/after_add()
+	return
 
 
 /datum/disease/proc/GetDiseaseID()
