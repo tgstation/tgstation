@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/dock()
+/obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
 	. = ..() // Fly/enter transit.
