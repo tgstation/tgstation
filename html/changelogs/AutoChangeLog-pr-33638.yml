@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - balance: "The codespeak manual now has unlimited uses and costs 3 TC."
+  - bugfix: "Nuke ops can now purchase the codespeak manual, as was intended."
