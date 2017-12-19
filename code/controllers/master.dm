@@ -31,6 +31,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Vars for keeping track of tick drift.
 	var/init_timeofday
 	var/init_time
+	
 	var/tickdrift = 0
 
 	var/sleep_delta = 1
