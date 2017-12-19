@@ -58,7 +58,7 @@
 			data["x"] = T.x
 			data["y"] = T.y
 			data["z"] = T.z
-		var/atom/outer = get_atom_on_turf(N)
+		var/atom/outer = get_atom_on_turf(N,/mob/living)
 		if(outer != N)
 			if(isliving(outer))
 				var/mob/living/L = outer
