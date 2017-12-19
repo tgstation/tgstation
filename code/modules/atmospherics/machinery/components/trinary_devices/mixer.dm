@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(on && NODE1 && NODE2 && NODE3 && is_operational())
+	if(on && nodes[1] && nodes[2] && nodes[3] && is_operational())
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 	icon_state = "mixer_off[flipped?"_f":""]"
@@ -46,18 +46,18 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air3 = airs[3]
 	air3.volume = 300
-	AIR3 = air3
+	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
-	if(!on || !(NODE1 && NODE2 && NODE3) && !is_operational())
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) && !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -103,14 +103,14 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		var/datum/pipeline/parent1 = PARENT1
+		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
 
 	if(transfer_moles2)
-		var/datum/pipeline/parent2 = PARENT2
+		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
 
-	var/datum/pipeline/parent3 = PARENT3
+	var/datum/pipeline/parent3 = parents[3]
 	parent3.update = TRUE
 
 	return

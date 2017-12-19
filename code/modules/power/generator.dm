@@ -99,11 +99,11 @@
 		// update icon overlays only if displayed level has changed
 
 		if(hot_air)
-			var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
+			var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
 			hot_circ_air1.merge(hot_air)
 
 		if(cold_air)
-			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
+			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
 			cold_circ_air1.merge(cold_air)
 
 		update_icon()
@@ -134,10 +134,10 @@
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"
 	else if(cold_circ && hot_circ)
-		var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
-		var/datum/gas_mixture/cold_circ_air2 = cold_circ.AIR2
-		var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
-		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
+		var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
+		var/datum/gas_mixture/cold_circ_air2 = cold_circ.airs[2]
+		var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
+		var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
 
 		t += "<div class='statusDisplay'>"
 

@@ -3,29 +3,29 @@
 	for(var/thing in viruses)
 		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 // Hippie Start - mirrored this proc in the hippie _mobProcs.dm to allow for and cap at a maximum of three viruses.
 /mob/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
-		return 0
+		return FALSE
 
 	if(D.GetDiseaseID() in resistances)
-		return 0
+		return FALSE
 
 	if(HasDisease(D))
-		return 0
+		return FALSE
 
 	if(!(type in D.viable_mobtypes))
-		return 0
+		return FALSE
 
-	return 1
-//Hippie end
+	return TRUE
+//Hippie End
 
 /mob/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
-		return 0
+		return FALSE
 	AddDisease(D)
 
 //Hippie Start - mirrored this proc in the hippie _mobProcs.dm to removed the "a new disease kills any old disease infecting the host based on stats
@@ -53,12 +53,13 @@
 			else
 				DD.vars[V] = D.vars[V]
 
+		DD.after_add()
 		DD.affected_mob.med_hud_set_status()
 //Hippie end
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
-		return 0
+		return FALSE
 
 	var/obj/item/clothing/Cl = null
 	var/passed = TRUE

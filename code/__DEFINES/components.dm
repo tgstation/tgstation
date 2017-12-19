@@ -61,6 +61,8 @@
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"				//from base of obj/item/attack_self(): (/mob)
 #define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"				//from base of obj/item/attack_obj(): (/obj, /mob)
+#define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
+#define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (/mob/dropper)
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
@@ -68,7 +70,6 @@
 // /obj/machinery signals
 #define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
 #define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
-
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)

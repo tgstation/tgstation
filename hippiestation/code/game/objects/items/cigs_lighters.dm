@@ -101,7 +101,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
-	container_type = INJECTABLE_1
+	container_type = INJECTABLE
 	var/lit = FALSE
 	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -649,7 +649,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(O, /obj/item/screwdriver))
 		if(!screw)
 			screw = TRUE
-			container_type |= OPENCONTAINER_1
+			container_type |= OPENCONTAINER
 			to_chat(user, "<span class='notice'>You open the cap on the [name].</span>")
 			if(emagged)
 				var/image/I = (image(icon, "vapeopen_high"))
@@ -662,7 +662,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				add_overlay(I, priority=0)
 		else
 			screw = FALSE
-			container_type &= ~OPENCONTAINER_1
+			container_type &= ~OPENCONTAINER
 			to_chat(user, "<span class='notice'>You close the cap on the [name].</span>")
 			cut_overlays()
 

@@ -398,7 +398,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
+		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -413,7 +413,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D) != DOCKING_SUCCESS)
+		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
