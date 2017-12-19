@@ -732,12 +732,13 @@
 
 /obj/item/integrated_circuit/input/sensor/ranged/sense_remote(var/atom/A,mob/user)
 	if(!user)
-		if(user.client)
-			if(!(A in view(user.client)))
-				return FALSE
-		else
-			if(!(A in view(user)))
-				return FALSE
+		return FALSE
+	if(user.client)
+		if(!(A in view(user.client)))
+			return FALSE
+	else
+		if(!(A in view(user)))
+			return FALSE
 	if(!check_then_do_work())
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
