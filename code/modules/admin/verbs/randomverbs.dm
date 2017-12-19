@@ -151,6 +151,9 @@
 		if(MUTE_DEADCHAT)
 			mute_string = "deadchat and DSAY"
 			feedback_string = "Deadchat"
+		if(MUTE_MENTORHELP)
+			mute_string = "mentorhelp"
+			feedback_string = "Mentorhelp"
 		if(MUTE_ALL)
 			mute_string = "everything"
 			feedback_string = "Everything"

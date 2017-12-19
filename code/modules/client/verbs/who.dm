@@ -50,10 +50,19 @@
 			else
 				Lines += "[C.key] ([round(C.avgping, 1)]ms)"
 
+	var/player_number = length(Lines)
+
+	if(length(GLOB.mentors) > 0)
+		Lines += "<b>Mentors:</b>"
+		for(var/client/C in sortList(GLOB.clients))
+			var/mentor = GLOB.mentor_datums[C.ckey]
+			if(mentor)
+				Lines += "<font color='#0033CC'>\t[C.key]</font> - Mentor"
+
 	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 
-	msg += "<b>Total Players: [length(Lines)]</b>"
+	msg += "<b>Total Players: [player_number]</b>"
 	to_chat(src, msg)
 
 /client/verb/adminwho()

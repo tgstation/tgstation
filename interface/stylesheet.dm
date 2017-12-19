@@ -32,6 +32,9 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 
+.mentoradmin			{color: #ffaa00;	font-weight: bold;}
+.mentor					{color: #ffc551;	font-weight: bold;}
+
 .name					{					font-weight: bold;}
 
 .say					{}

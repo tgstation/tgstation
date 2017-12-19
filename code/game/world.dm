@@ -26,6 +26,7 @@ GLOBAL_PROTECT(security_mode)
 
 	load_motd()
 	load_admins()
+	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
