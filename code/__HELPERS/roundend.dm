@@ -62,9 +62,9 @@
 		if(outer != N)
 			if(isliving(outer))
 				var/mob/living/L = outer
-				.["holder"] = L.real_name
+				data["holder"] = L.real_name
 			else
-				.["holder"] = outer.name
+				data["holder"] = outer.name
 
 		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
 
