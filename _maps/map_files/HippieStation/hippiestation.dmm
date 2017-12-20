@@ -32675,6 +32675,7 @@
 "bwa" = (
 /obj/machinery/power/apc{
 	dir = 1;
+	equipment = 2;
 	name = "Genetics APC";
 	pixel_y = 24
 	},
@@ -46712,13 +46713,12 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bZZ" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
+	initialize_directions = 11;
+	layer = 2.35
 	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/engine/atmos)
 "caa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -49956,6 +49956,8 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	areastring = "/area/engine/atmos";
 	dir = 8;
+	environ = 2;
+	equipment = 2;
 	name = "Atmospherics APC";
 	pixel_x = -28;
 	pixel_y = 0
@@ -52617,12 +52619,11 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "cmR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 9
+	dir = 9;
+	layer = 2.35
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/engine/atmos)
 "cmS" = (
 /obj/machinery/power/apc{
@@ -60345,14 +60346,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 0;
-	frequency = 1439;
-	id_tag = null;
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
@@ -71623,16 +71617,22 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
 "diZ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	layer = 2.35
+	},
+/turf/closed/wall/r_wall,
+/area/engine/atmos)
+"dja" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
-"dja" = (
+"djb" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
-"djb" = (
+"djc" = (
 /obj/structure/rack{
 	dir = 8;
 	layer = 2.9
@@ -71641,7 +71641,7 @@
 /obj/item/reagent_containers/pill/mannitol,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"djc" = (
+"djd" = (
 /obj/structure/rack{
 	dir = 8;
 	layer = 2.9
@@ -71649,7 +71649,7 @@
 /obj/item/storage/box/lights,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"djd" = (
+"dje" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/rack{
 	dir = 8;
@@ -71657,46 +71657,52 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dje" = (
+"djf" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - Plasma";
 	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
-"djf" = (
+"djg" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	layer = 2.35
+	},
+/turf/closed/wall/r_wall,
+/area/engine/atmos)
+"djh" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - CO2";
 	dir = 8
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
-"djg" = (
+"dji" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/maintenance/port/aft)
-"djh" = (
+"djj" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - N2";
 	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
-"dji" = (
+"djk" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - O2";
 	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
-"djj" = (
+"djl" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Tank - Air";
 	dir = 8
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
-"djk" = (
+"djm" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
@@ -71706,17 +71712,17 @@
 	},
 /turf/open/space,
 /area/solar/starboard/aft)
-"djl" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/transit_tube/crossing/horizontal,
-/turf/open/space/basic,
-/area/space/nearstation)
-"djm" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/transit_tube/crossing/horizontal,
-/turf/open/space/basic,
-/area/space/nearstation)
 "djn" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/space/basic,
+/area/space/nearstation)
+"djo" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/open/space/basic,
+/area/space/nearstation)
+"djp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
@@ -71727,7 +71733,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
-"djo" = (
+"djq" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -71745,7 +71751,7 @@
 	dir = 1
 	},
 /area/aisat)
-"djp" = (
+"djr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -71756,12 +71762,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/aisat)
-"djq" = (
-/turf/closed/wall,
-/area/aisat)
-"djr" = (
-/turf/closed/wall,
 /area/aisat)
 "djs" = (
 /turf/closed/wall,
@@ -71800,10 +71800,10 @@
 /turf/closed/wall,
 /area/aisat)
 "djE" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/aisat)
 "djF" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/aisat)
 "djG" = (
 /turf/closed/wall/r_wall,
@@ -71947,23 +71947,23 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dkB" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
+/turf/closed/wall/r_wall,
+/area/aisat)
 "dkC" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkD" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"dkD" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
 "dkE" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 "dkF" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
@@ -71995,6 +71995,12 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dkP" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkQ" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkR" = (
 /obj/machinery/door/window{
 	base_state = "leftsecure";
 	dir = 4;
@@ -72010,16 +72016,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"dkQ" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
-"dkR" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
 "dkS" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dkT" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkU" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dkV" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -72027,12 +72033,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"dkU" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
-"dkV" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
 "dkW" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
@@ -72040,19 +72040,11 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dkY" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
+/turf/closed/wall/r_wall,
+/area/aisat)
 "dkZ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
+/turf/closed/wall/r_wall,
+/area/aisat)
 "dla" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -72060,11 +72052,19 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "dlb" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 "dlc" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 "dld" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
@@ -72072,6 +72072,12 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlf" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dlg" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dlh" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -72079,7 +72085,7 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
-"dlg" = (
+"dli" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/smes{
 	charge = 5e+006;
@@ -72091,12 +72097,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"dlh" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
-"dli" = (
-/turf/closed/wall/r_wall,
-/area/aisat)
 "dlj" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
@@ -72113,13 +72113,13 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlp" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlr" = (
@@ -72144,19 +72144,25 @@
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dly" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlz" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlB" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
 "dlC" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dlD" = (
+/turf/closed/wall/r_wall,
+/area/aisat)
+"dlE" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
 
@@ -91085,7 +91091,7 @@ bSy
 diQ
 ccC
 diY
-diZ
+dja
 bJm
 aqL
 bJm
@@ -91093,7 +91099,7 @@ bJm
 bSz
 bSz
 bJm
-djg
+dji
 coi
 coi
 cqw
@@ -91342,7 +91348,7 @@ diP
 diR
 cdz
 cdz
-dja
+djb
 bJm
 bJm
 bJm
@@ -91601,7 +91607,7 @@ cdz
 cdz
 bOC
 bJm
-djc
+djd
 ccJ
 bOC
 bOC
@@ -92113,7 +92119,7 @@ caA
 diU
 bOC
 cZt
-djb
+djc
 bJm
 bOC
 bOC
@@ -93400,7 +93406,7 @@ bOC
 bOC
 cZj
 bOC
-djd
+dje
 bJm
 bSy
 bJm
@@ -104978,7 +104984,7 @@ crb
 bVk
 cta
 ctO
-djh
+djj
 cuO
 bVj
 ckv
@@ -105231,7 +105237,7 @@ cmP
 cjt
 coF
 cpK
-crc
+bST
 csd
 bVj
 bVj
@@ -106006,7 +106012,7 @@ crb
 bVk
 cta
 ctR
-dji
+djk
 cuQ
 bVj
 cqI
@@ -106259,7 +106265,7 @@ cIz
 cbU
 coJ
 bXH
-bTT
+bSM
 aqL
 bVj
 bVj
@@ -107034,7 +107040,7 @@ crf
 cse
 ctc
 ctU
-djj
+djl
 cuU
 bVj
 aaa
@@ -107275,11 +107281,11 @@ bZZ
 bWp
 bXI
 bYS
-bXI
+diZ
 bWp
 bXI
 bYS
-bXI
+djg
 bWp
 bXI
 bYS
@@ -108075,7 +108081,7 @@ aqL
 aOf
 aOf
 aOf
-djl
+djn
 aOf
 aOf
 cKQ
@@ -108563,11 +108569,11 @@ diX
 bVj
 cfn
 cgs
-dje
+djf
 bVj
 cjz
 ckF
-djf
+djh
 bVj
 aqL
 aqL
@@ -109635,11 +109641,11 @@ aaa
 aaa
 aqL
 aqL
-djI
-djM
+djK
 djO
 djQ
 djS
+djU
 aqL
 aOf
 aqL
@@ -109891,35 +109897,35 @@ bVk
 bVk
 bVk
 cit
-djE
-djJ
+djG
+djL
 cEi
 cEt
 cEE
-djT
-djW
+djV
 djY
 dka
 dkc
+dke
 aqL
 cJE
 aqL
 aqL
-dkm
-dkq
+dko
 dks
 dku
 dkw
 dky
 dkA
-dkE
-dkI
-dkM
+dkC
+dkG
+dkK
 dkO
+dkQ
 cJF
-dkR
-dkW
-dld
+dkT
+dkY
+dlf
 aCn
 aCn
 aCn
@@ -110131,7 +110137,7 @@ cKQ
 aaa
 aOf
 aOf
-djm
+djo
 aOf
 aOf
 cKQ
@@ -110157,27 +110163,27 @@ cER
 cFa
 cFh
 cFs
-dkd
-dkg
-cJF
+dkf
 dki
+cJF
 dkk
-dkn
+dkm
+dkp
 cFO
 cFO
 cFO
 deH
 cGo
 cEZ
-dkF
-dkJ
+dkH
+dkL
 cFY
 cFY
 cJO
-dkS
-dkX
-dle
-dlj
+dkU
+dkZ
+dlg
+dll
 aqL
 aCn
 ddJ
@@ -110405,7 +110411,7 @@ aaa
 aaa
 aaa
 aqL
-djF
+djH
 cEc
 cEk
 cEu
@@ -110434,8 +110440,8 @@ cJO
 cFY
 cFY
 cFY
-dlk
-dlu
+dlm
+dlw
 aqL
 cCJ
 cHf
@@ -110658,11 +110664,11 @@ cCr
 cCO
 cCW
 cJA
-djs
-djy
+dju
 djA
 djC
-djG
+djE
+djI
 cDT
 cEl
 cEv
@@ -110682,17 +110688,17 @@ cFY
 cFY
 cFY
 cFY
-dkB
+dkD
 cGv
 cGs
 cGs
 cGs
 cJR
 cGv
-dkY
+dla
 cFY
-dll
-dlv
+dln
+dlx
 aqL
 ddJ
 cHe
@@ -110914,8 +110920,8 @@ cAP
 cCE
 cCL
 cCY
-djq
-djt
+djs
+djv
 cDm
 cDw
 cDI
@@ -110945,11 +110951,11 @@ cGg
 cGu
 cGM
 cGS
-dkT
-dkZ
+dkV
+dlb
 cFY
-dlm
-dlw
+dlo
+dly
 aCn
 ddJ
 cHg
@@ -111170,8 +111176,8 @@ cCg
 cCq
 cCF
 cCP
-djo
-djr
+djq
+djt
 cDi
 cDn
 cDx
@@ -111204,9 +111210,9 @@ cGG
 cJO
 cGV
 cGY
-dlf
-dln
-dlx
+dlh
+dlp
+dlz
 aCn
 ddJ
 cHg
@@ -111425,9 +111431,9 @@ cKQ
 cCb
 cCh
 cCr
-djn
-cCQ
 djp
+cCQ
+djr
 cDe
 cDj
 cDo
@@ -111461,9 +111467,9 @@ cGN
 cGU
 cGW
 cGZ
-dlg
-dlo
-dly
+dli
+dlq
+dlA
 cHc
 cHd
 cHh
@@ -111714,13 +111720,13 @@ cGm
 cGz
 cGF
 cFY
-dkP
+dkR
 cJO
 cGs
 cGt
 cFY
-dlp
-dlz
+dlr
+dlB
 aCn
 ddJ
 cHg
@@ -111976,8 +111982,8 @@ cJT
 cGt
 cGt
 cFY
-dlq
-dlA
+dls
+dlC
 aCn
 ddJ
 cHg
@@ -112200,7 +112206,7 @@ ddJ
 cCL
 cCW
 cDh
-dju
+djw
 cDr
 cDB
 cDN
@@ -112224,17 +112230,17 @@ cFY
 cFY
 cFY
 cFY
-dkC
+dkE
 cGB
 cGs
 cGs
 cGs
 cJR
 cGB
-dla
+dlc
 cFY
-dlr
-dlB
+dlt
+dlD
 aqL
 ddJ
 cHe
@@ -112457,7 +112463,7 @@ ddJ
 cCL
 cCW
 aqL
-djv
+djx
 cDs
 cDC
 cDO
@@ -112490,8 +112496,8 @@ cJO
 cFY
 cFY
 cFY
-dls
-dlC
+dlu
+dlE
 aqL
 cCJ
 cHf
@@ -112714,7 +112720,7 @@ ddJ
 cCL
 cCW
 aqL
-djw
+djy
 cDt
 cDD
 cDP
@@ -112727,27 +112733,27 @@ cEY
 cFa
 cFo
 cFt
-dke
-dkh
-cJF
+dkg
 dkj
+cJF
 dkl
-dko
+dkn
+dkq
 deH
 cFO
 cFO
 cFO
 cGo
 cEZ
-dkG
-dkK
+dkI
+dkM
 cFY
 cFY
 cJO
-dkU
-dlb
-dlh
-dlt
+dkW
+dld
+dlj
+dlv
 aqL
 aCn
 ddJ
@@ -112971,39 +112977,39 @@ ddJ
 cCL
 cCW
 aqL
-djx
 djz
 djB
 djD
-djH
-djK
+djF
+djJ
+djM
 cEr
 cED
 cEQ
-djU
-djX
+djW
 djZ
 dkb
-dkf
+dkd
+dkh
 aqL
 cJE
 aqL
 aqL
-dkp
 dkr
 dkt
 dkv
 dkx
 dkz
-dkD
-dkH
-dkL
+dkB
+dkF
+dkJ
 dkN
-dkQ
+dkP
+dkS
 cJF
-dkV
-dlc
-dli
+dkX
+dle
+dlk
 aCn
 aCn
 aCn
@@ -113233,11 +113239,11 @@ aqL
 aqL
 aqL
 aqL
-djL
 djN
 djP
 djR
-djV
+djT
+djX
 aqL
 aOf
 aqL
@@ -122202,7 +122208,7 @@ cvY
 cwy
 cxg
 cxM
-djk
+djm
 cxM
 czo
 czR
