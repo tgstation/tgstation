@@ -65,10 +65,9 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE, update_type = ANTAG_DATUM_CLOCKCULT)
 	if(!L || !L.mind)
 		return
-	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
 		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)

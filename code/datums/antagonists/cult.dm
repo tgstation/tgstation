@@ -11,6 +11,9 @@
 
 	var/datum/team/cult/cult_team
 
+/datum/antagonist/cult/construct
+	name = "Cultist Construct"
+
 /datum/antagonist/cult/get_team()
 	return cult_team
 
