@@ -176,6 +176,4 @@
 #define ADD_GAS(gas_id, out_list)\
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
-//ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-//Must be used before adding to a gas. May be used before reading from a gas.
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };

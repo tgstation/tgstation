@@ -196,7 +196,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		ADD_GAS(gas_type, air_contents.gases)
+		air_contents.add_gas(gas_type)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
