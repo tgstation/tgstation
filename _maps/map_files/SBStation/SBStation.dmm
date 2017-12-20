@@ -23663,10 +23663,9 @@
 /area/engine/engineering)
 "bca" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/camera/motion{
+/obj/machinery/camera{
 	c_tag = "Satellite - Airlock";
 	dir = 8;
-	name = "motion-sensitive security camera";
 	network = list("SS13","Satellite")
 	},
 /turf/open/space/basic,
@@ -23704,11 +23703,6 @@
 	name = "AI Intercom";
 	pixel_y = -28
 	},
-/obj/machinery/camera{
-	c_tag = "Satellite - Control Center";
-	dir = 1;
-	network = list("SS13","Satellite")
-	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "bce" = (
@@ -23733,6 +23727,11 @@
 	desc = "A warning sign which reads 'HIGH-POWER TURRETS AHEAD'.";
 	name = "\improper HIGH-POWER TURRETS AHEAD";
 	pixel_y = -32
+	},
+/obj/machinery/camera{
+	c_tag = "Satellite - Control Center";
+	dir = 1;
+	network = list("SS13","Satellite")
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
@@ -24020,9 +24019,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/motion{
 	c_tag = "Satellite - AI Access";
 	dir = 4;
+	name = "motion-sensitive security camera";
 	network = list("SS13","Satellite")
 	},
 /turf/open/floor/circuit,
@@ -24108,9 +24108,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bdh" = (
@@ -24151,12 +24148,6 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/machinery/turretid{
-	control_area = /area/ai_monitored/turret_protected/ai;
-	name = "turret control panel 2";
-	pixel_x = -28;
-	tag = "Turret Control 2"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -24183,10 +24174,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bdo" = (
@@ -24212,14 +24199,13 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bds" = (
-/obj/machinery/button/door{
-	id = "aicorewindow";
-	name = "AI Core Shutters";
-	pixel_x = -26;
-	pixel_y = 6;
-	req_access_txt = "16"
+/obj/machinery/turretid{
+	control_area = /area/ai_monitored/turret_protected/ai;
+	name = "turret control panel 2";
+	pixel_x = -28;
+	tag = "Turret Control 2"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bdt" = (
 /obj/effect/landmark/start/ai,
@@ -24256,7 +24242,7 @@
 	name = "AI RC";
 	pixel_x = 30
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bdv" = (
 /obj/structure/table/reinforced,
@@ -24276,9 +24262,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bdx" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/item/clothing/accessory/medal/service_star{
 	name = "Service Star - Hal";
 	commended = 1
@@ -24327,7 +24310,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bdC" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bdD" = (
@@ -25187,6 +25170,70 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"bfv" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"bfw" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"bfx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"bfy" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Satellite Exterior - West";
+	dir = 8;
+	name = "motion-sensitive security camera";
+	network = list("SS13","Satellite")
+	},
+/turf/open/space/basic,
+/area/space)
+"bfz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/camera/motion{
+	c_tag = "Satellite - AI Core";
+	dir = 1;
+	name = "motion-sensitive security camera";
+	network = list("SS13","Satellite")
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"bfA" = (
+/obj/structure/lattice,
+/obj/machinery/camera/motion{
+	c_tag = "Satellite Exterior - East";
+	dir = 4;
+	name = "motion-sensitive security camera";
+	network = list("SS13","Satellite")
+	},
+/turf/open/space/basic,
+/area/space)
+"bfB" = (
+/obj/machinery/camera/motion{
+	c_tag = "Satellite Exterior - South";
+	dir = 2;
+	name = "motion-sensitive security camera";
+	network = list("SS13","Satellite")
+	},
+/turf/open/space/basic,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -50798,7 +50845,7 @@ bcr
 bcr
 bcr
 aaa
-aad
+bfy
 aad
 aaa
 aaa
@@ -51551,7 +51598,7 @@ aaa
 aaa
 aae
 aad
-aXo
+baK
 aXS
 aYC
 aYC
@@ -51567,8 +51614,8 @@ bct
 bcJ
 bcJ
 bcJ
-bcr
-bdr
+bfv
+bfx
 bdx
 bcr
 bcr
@@ -51827,8 +51874,8 @@ bdd
 bdl
 bds
 bdr
-bdz
-bdz
+bcr
+bcr
 aaa
 aae
 aaa
@@ -52065,7 +52112,7 @@ aaa
 aaa
 aae
 aaa
-aXo
+baK
 aXT
 aYC
 aYC
@@ -52084,8 +52131,8 @@ bde
 bdm
 bdt
 bdr
-bdA
-bdD
+bcr
+bcr
 aaa
 aae
 aaa
@@ -52340,10 +52387,10 @@ bcX
 bdf
 bdn
 bdu
-bdr
-bdA
-bdD
-aaa
+bfz
+bcr
+bcr
+bfB
 aae
 aaa
 aaa
@@ -52579,7 +52626,7 @@ aaa
 aaa
 aae
 aad
-aXo
+baK
 aXU
 aYC
 aYC
@@ -52595,11 +52642,11 @@ bcx
 bcN
 bcN
 bcN
-bcr
-bdv
+bfw
 bdy
-bdB
-bdq
+bdr
+bcr
+bcr
 aad
 aae
 aaa
@@ -52852,10 +52899,10 @@ bcy
 bcI
 bcU
 bcI
-bdo
-bdw
-bdw
-bdq
+bcr
+bcr
+bcr
+bcr
 bdC
 aad
 aae
@@ -53109,7 +53156,7 @@ bcx
 bcI
 bcY
 bcI
-bdp
+bcr
 bcr
 bcr
 bcr
@@ -53366,9 +53413,9 @@ bcz
 bcO
 bcO
 bdg
-bdq
+bcr
 aaa
-aad
+bfA
 aad
 aaa
 aaa
