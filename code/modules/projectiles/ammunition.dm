@@ -69,7 +69,37 @@
 	SpinAnimation(10, 1)
 	update_icon()
 	var/turf/T = get_turf(src)
-	if(T && (isfloorturf(T) || isindestructiblefloor(T) || isclosedturf(T)))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/bulletremove.ogg', 60, 1), delay)
-	else if(still_warm && T && (istype(T, /turf/open/water)))
+	if(still_warm && T && (is_type_in_typecache(T, GLOB.bullet_bounce_away_sizzle)))
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), delay)
+	else if(T && (!is_type_in_typecache(T, GLOB.bullet_bounce_away_blacklist)))
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/bulletremove.ogg', 60, 1), delay)
+
+GLOBAL_LIST_INIT(bullet_bounce_away_sizzle, typecacheof(list(
+	/turf/closed/indestructible/rock/snow,
+	/turf/closed/wall/ice,
+	/turf/closed/wall/mineral/snow,
+	/turf/open/floor/grass/snow,
+	/turf/open/floor/holofloor/snow,
+	/turf/open/floor/plating/asteroid/snow,
+	/turf/open/floor/plating/ice,
+	/turf/open/water)))
+
+GLOBAL_LIST_INIT(bullet_bounce_away_blacklist, typecacheof(list(
+	/turf/closed/indestructible/rock/snow,
+	/turf/closed/indestructible/splashscreen,
+	/turf/closed/wall/mineral/snow,
+	/turf/open/chasm,
+	/turf/open/floor/carpet,
+	/turf/open/floor/grass,
+	/turf/open/floor/holofloor/beach,
+	/turf/open/floor/holofloor/carpet,
+	/turf/open/floor/holofloor/grass,
+	/turf/open/floor/holofloor/hyperspace,
+	/turf/open/floor/holofloor/snow,
+	/turf/open/floor/plating/asteroid/snow,
+	/turf/open/floor/plating/beach,
+	/turf/open/indestructible/reebe_void,
+	/turf/open/lava,
+	/turf/open/space,
+	/turf/open/water,
+	/turf/template_noop)))
