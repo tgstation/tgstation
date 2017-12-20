@@ -373,32 +373,9 @@
 	ion = list()
 
 /datum/ai_laws/proc/show_laws(who)
-
-	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
-		for(var/i in devillaws)
-			to_chat(who, "666. [i]")
-
-	if (zeroth)
-		to_chat(who, "0. [zeroth]")
-
-	for (var/index = 1, index <= ion.len, index++)
-		var/law = ion[index]
-		var/num = ionnum()
-		to_chat(who, "[num]. [law]")
-
-	var/number = 1
-	for (var/index = 1, index <= inherent.len, index++)
-		var/law = inherent[index]
-
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
-
-	for (var/index = 1, index <= supplied.len, index++)
-		var/law = supplied[index]
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
+	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
+	for(var/law in printable_laws)
+		to_chat(who,law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)

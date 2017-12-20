@@ -86,7 +86,7 @@
 
 	if(data == 1)
 		for(var/obj/item/device/radio/intercom/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
+			if(R.can_receive(freq, level))
 				radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -97,7 +97,7 @@
 			if(R.subspace_transmission)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
+			if(R.can_receive(freq, level))
 				radios += R
 
 	// --- This space left blank for Syndicate data ---
@@ -110,19 +110,19 @@
 			if(!R.independent)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
+			if(R.can_receive(freq, level))
 				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
+			if(R.can_receive(freq, level))
 				radios += R
 
 		var/freqtext = num2text(freq)
 		for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(FREQ_SYNDICATE, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
+			if(R.can_receive(FREQ_SYNDICATE, list(R.z)) && freqtext in GLOB.reverseradiochannels)
 				radios |= R
 
 	// Get a list of mobs who can hear from the radios we collected.
@@ -149,11 +149,6 @@
 		qdel(virt)
 
 //Use this to test if an obj can communicate with a Telecommunications Network
-
-/atom/proc/test_telecomms()
-	var/datum/signal/signal = telecomms_process()
-	var/turf/position = get_turf(src)
-	return (position.z in signal.data["level"] && signal.data["done"])
 
 /atom/proc/telecomms_process()
 

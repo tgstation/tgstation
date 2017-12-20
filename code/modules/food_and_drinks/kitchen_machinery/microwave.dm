@@ -284,7 +284,7 @@
 
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
 

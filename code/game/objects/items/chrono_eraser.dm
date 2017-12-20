@@ -163,7 +163,7 @@
 
 /obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
-		target.loc = src
+		target.forceMove(src)
 		src.captured = target
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
@@ -198,7 +198,7 @@
 	if(captured)
 		if(tickstokill > initial(tickstokill))
 			for(var/atom/movable/AM in contents)
-				AM.loc = loc
+				AM.forceMove(drop_location())
 			qdel(src)
 		else if(tickstokill <= 0)
 			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
@@ -213,7 +213,7 @@
 		else
 			captured.Unconscious(80)
 			if(captured.loc != src)
-				captured.loc = src
+				captured.forceMove(src)
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))

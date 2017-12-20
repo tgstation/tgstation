@@ -44,6 +44,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/orderhistory = list()
 
+	var/list/hidden_shuttle_turfs = list() //all turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
+	var/list/hidden_shuttle_turf_images = list() //only the images from the above list
+
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
@@ -640,3 +643,39 @@ SUBSYSTEM_DEF(shuttle)
 		var/list/ys = overlap[2]
 		if(xs.len && ys.len)
 			.[port] = overlap
+
+/datum/controller/subsystem/shuttle/proc/update_hidden_docking_ports(list/remove_turfs, list/add_turfs)
+	var/list/remove_images = list()
+	var/list/add_images = list()
+
+	if(remove_turfs)
+		for(var/T in remove_turfs)
+			var/list/L = hidden_shuttle_turfs[T]
+			if(L)
+				remove_images += L[1]
+		hidden_shuttle_turfs -= remove_turfs
+
+	if(add_turfs)
+		for(var/V in add_turfs)
+			var/turf/T = V
+			var/image/I
+			if(remove_images.len)
+				//we can just reuse any images we are about to delete instead of making new ones
+				I = remove_images[1]
+				remove_images.Cut(1, 2)
+				I.loc = T
+			else
+				I = image(loc = T)
+				add_images += I
+			I.appearance = T.appearance
+			I.override = TRUE
+			hidden_shuttle_turfs[T] = list(I, T.type)
+
+	hidden_shuttle_turf_images -= remove_images
+	hidden_shuttle_turf_images += add_images
+
+	for(var/V in GLOB.navigation_computers)
+		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
+		C.update_hidden_docking_ports(remove_images, add_images)
+
+	QDEL_LIST(remove_images)

@@ -307,7 +307,7 @@
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(AM.Adjacent(acting_object) && isturf(AM.loc))
+			if(check_target(AM, exclude_contents = TRUE))
 				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)
@@ -375,25 +375,19 @@
 	if(max_w_class && (A.w_class > max_w_class))
 		return
 
-	var/atom/movable/acting_object = get_object()
-	if(!(A.Adjacent(acting_object) && isturf(A.loc)) && !(A in acting_object.GetAllContents()))
+	// Is the target inside the assembly or close to it?
+	if(!check_target(A, exclude_components = TRUE))
 		return
 
-	var/turf/T = get_turf(acting_object)
+	var/turf/T = get_turf(get_object())
 	if(!T)
 		return
-
-	// No ejecting assembly components or power cells
-	if(assembly)
-		if((A in assembly.assembly_components) || A == assembly.battery)
-			return
 
 	// If the item is in mob's inventory, try to remove it from there.
 	if(ismob(A.loc))
 		var/mob/living/M = A.loc
 		if(!M.temporarilyRemoveItemFromInventory(A))
 			return
-
 
 	var/x_abs = Clamp(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = Clamp(T.y + target_y_rel, 0, world.maxy)

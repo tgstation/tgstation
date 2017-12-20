@@ -55,3 +55,71 @@
 
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
+
+
+/datum/objective_team/brother_team
+	name = "brotherhood"
+	member_name = "blood brother"
+	var/meeting_area
+
+/datum/objective_team/brother_team/is_solo()
+	return FALSE
+
+/datum/objective_team/brother_team/proc/update_name()
+	var/list/last_names = list()
+	for(var/datum/mind/M in members)
+		var/list/split_name = splittext(M.name," ")
+		last_names += split_name[split_name.len]
+
+	name = last_names.Join(" & ")
+
+/datum/objective_team/brother_team/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>The blood brothers of [name] were:</span>"
+	for(var/datum/mind/M in members)
+		parts += printplayer(M)
+	var/win = TRUE
+	var/objective_count = 1
+	for(var/datum/objective/objective in objectives)
+		if(objective.check_completion())
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+		else
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			win = FALSE
+		objective_count++
+	if(win)
+		parts += "<span class='greentext'>The blood brothers were successful!</span>"
+	else
+		parts += "<span class='redtext'>The blood brothers have failed!</span>"
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/objective_team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
+	O.team = src
+	if(needs_target)
+		O.find_target()
+	O.update_explanation_text()
+	objectives += O
+
+/datum/objective_team/brother_team/proc/forge_brother_objectives()
+	objectives = list()
+	var/is_hijacker = prob(10)
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
+		forge_single_objective()
+	if(is_hijacker)
+		if(!locate(/datum/objective/hijack) in objectives)
+			add_objective(new/datum/objective/hijack)
+	else if(!locate(/datum/objective/escape) in objectives)
+		add_objective(new/datum/objective/escape)
+
+/datum/objective_team/brother_team/proc/forge_single_objective()
+	if(prob(50))
+		if(LAZYLEN(active_ais()) && prob(100/GLOB.joined_player_list.len))
+			add_objective(new/datum/objective/destroy, TRUE)
+		else if(prob(30))
+			add_objective(new/datum/objective/maroon, TRUE)
+		else
+			add_objective(new/datum/objective/assassinate, TRUE)
+	else
+		add_objective(new/datum/objective/steal, TRUE)
