@@ -21,7 +21,7 @@
 	volume = 100
 
 	complexity = 20
-	cooldown_per_use = 30 SECONDS
+	cooldown_per_use = 1 SECONDS
 	inputs = list()
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
