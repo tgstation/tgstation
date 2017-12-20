@@ -378,7 +378,7 @@ int main(int argc, const char * argv[]) {
 	ios_base::sync_with_stdio(false);
 	ios::sync_with_stdio(false);
 	bool usestdio = false;
-	if (argc && !strcmp(argv[1], "-s"))
+	if (argc && !strcmp(argv[0], "-s"))
 		usestdio = true;
 	
 	char exit; //Used to stop the program from immediately exiting
