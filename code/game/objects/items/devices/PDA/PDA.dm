@@ -511,8 +511,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U << browse(null, "window=pda")
 					return
 			if("Message")
-				var/obj/item/device/pda/P = locate(href_list["target"])
-				src.create_message(U, P)
+				src.create_message(U, locate(href_list["target"]))
 
 			if("MessageAll")
 				src.send_to_all(U)
@@ -594,49 +593,57 @@ GLOBAL_LIST_EMPTY(PDAs)
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/send_message(mob/living/user = usr,list/obj/item/device/pda/targets)
+/obj/item/device/pda/proc/send_message(mob/living/user, list/obj/item/device/pda/targets)
 	var/message = msg_input(user)
-
 	if(!message || !targets.len)
 		return
-
 	if(last_text && world.time < last_text + 5)
 		return
 
-	var/multiple = targets.len > 1
+	// Send the signal
+	var/list/string_targets = list()
+	for (var/obj/item/device/pda/P in targets)
+		if (P.owner && P.ownjob)  // != src is checked by the UI
+			string_targets += "[P.owner] ([P.ownjob])"
+	for (var/obj/machinery/computer/message_monitor/M in targets)
+		// In case of "Reply" to a message from a console, this will make the
+		// message be logged successfully. If the console is impersonating
+		// someone by matching their name and job, the reply will reach the
+		// impersonated PDA.
+		string_targets += "[M.customsender] ([M.customjob])"
+	if (!string_targets.len)
+		return
 
-	var/datum/data_pda_msg/last_sucessful_msg
-	for(var/obj/item/device/pda/P in targets)
-		if(P == src)
-			continue
-		var/obj/machinery/message_server/MS = null
-		MS = can_send(P)
-		if(MS)
-			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
-			if(msg)
-				last_sucessful_msg = msg
-			if(!multiple)
-				show_to_sender(msg)
-			P.show_recieved_message(msg,src)
-			if(!multiple)
-				show_to_ghosts(user,msg)
-				log_talk(user,"[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [P.name]",LOGPDA)
-		else
-			if(!multiple)
-				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
-				return
+	var/datum/signal/subspace/pda/signal = new(src, list(
+		"name" = "[owner]",
+		"job" = "[ownjob]",
+		"message" = message,
+		"targets" = string_targets
+	))
+	if (photo)
+		signal.data["photo"] = photo
+	signal.send_to_receivers()
+
+	// If it didn't reach, note that fact
+	if (!signal.data["done"])
+		to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
+		return
+
+	var/target_text = signal.format_target()
+	// Log it in our logs
+	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
+	// Show it to ghosts
+	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message()]</span>"
+	for(var/mob/M in GLOB.player_list)
+		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
+	// Log in the talk log
+	log_talk(user, "[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [target_text]", LOGPDA)
+	// Reset the photo
 	photo = null
 
-	if(multiple)
-		show_to_sender(last_sucessful_msg,1)
-		show_to_ghosts(user,last_sucessful_msg,1)
-		log_talk(user,"[user] (PDA: [initial(name)]) sent \"[message]\" to Everyone",LOGPDA)
-
-/obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
-	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
-
-/obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
-	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(source)]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+/obj/item/device/pda/proc/receive_message(datum/signal/subspace/pda/signal)
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -650,59 +657,21 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(source.owner)]'>"
+			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(source)]'>Reply</a>)")
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(icon_alert)
 
-/obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
-	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
-
-/obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
-	if(!P || QDELETED(P) || P.toff)
-		return null
-
-	var/obj/machinery/message_server/useMS = null
-	if(GLOB.message_servers)
-		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
-		//PDAs are now dependant on the Message Server.
-			if(MS.active)
-				useMS = MS
-				break
-
-	var/datum/signal/signal = src.telecomms_process()
-
-	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
-		return null
-
-	var/useTC = 0
-	if(signal)
-		if(signal.data["done"])
-			useTC = 1
-			var/turf/pos = get_turf(P)
-			if(pos.z in signal.data["level"])
-				useTC = 2
-
-	if(useTC == 2)
-		return useMS
-	else
-		return null
-
-
-/obj/item/device/pda/proc/send_to_all(mob/living/U = usr)
+/obj/item/device/pda/proc/send_to_all(mob/living/U)
 	send_message(U,get_viewable_pdas())
 
-/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
+/obj/item/device/pda/proc/create_message(mob/living/U, obj/item/device/pda/P)
 	send_message(U,list(P))
 
 /obj/item/device/pda/AltClick()
