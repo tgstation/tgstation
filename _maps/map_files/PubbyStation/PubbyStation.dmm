@@ -25272,6 +25272,11 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9
 	},
@@ -25740,6 +25745,11 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/o2{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -25748,6 +25758,12 @@
 /obj/structure/table,
 /obj/item/folder/white,
 /obj/item/device/healthanalyzer,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -26649,6 +26665,13 @@
 /obj/item/reagent_containers/food/drinks/britcup{
 	desc = "Kingston's personal cup."
 	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = 0
+	},
+/obj/item/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay/central)
 "bnD" = (
@@ -27111,6 +27134,7 @@
 /obj/structure/table/glass,
 /obj/item/stack/medical/gauze,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay/central)
 "boP" = (
