@@ -71581,11 +71581,11 @@
 /obj/structure/table,
 /obj/item/storage/box/bodybags,
 /obj/item/pen,
-/obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/fire{
+	step_x = 2;
+	step_y = 3
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
@@ -71615,6 +71615,7 @@
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
 	},
@@ -71633,6 +71634,7 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -71670,9 +71672,10 @@
 	pixel_x = 28
 	},
 /obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/fire{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -75606,6 +75609,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/light,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -75679,6 +75687,11 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/central)
 "cXQ" = (
