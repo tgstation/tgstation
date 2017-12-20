@@ -21,7 +21,8 @@ SUBSYSTEM_DEF(research)
 	var/list/errored_datums = list()
 	//----------------------------------------------
 	var/single_server_income = 40.7
-	var/multiserver_calculation = FALSE
+	var/multi_server_multiplier = 2.9
+	var/multiserver_calculation = TRUE
 	var/last_income = 0
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
@@ -47,7 +48,7 @@ SUBSYSTEM_DEF(research)
 	if(multiserver_calculation)
 		var/eff = calculate_server_coefficient()
 		for(var/obj/machinery/rnd/server/miner in servers)
-			bitcoins += (miner.mine() * eff)	//SLAVE AWAY, SLAVE.
+			bitcoins += (miner.mine() * eff * multi_server_income)	//SLAVE AWAY, SLAVE.
 	else
 		for(var/obj/machinery/rnd/server/miner in servers)
 			if(miner.working)
