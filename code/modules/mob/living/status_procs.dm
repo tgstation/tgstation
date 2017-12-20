@@ -150,6 +150,9 @@
 	if(!disabilities[disability])
 		return
 
+	if(!islist(sources))
+		sources = list(sources)
+
 	if(LAZYLEN(sources))
 		for(var/S in sources)
 			if(S in disabilities[disability])
