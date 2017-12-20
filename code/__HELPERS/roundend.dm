@@ -47,7 +47,7 @@
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
 		antag_info["team"] = list()
-		var/datum/objective_team/T = A.get_team()
+		var/datum/team/T = A.get_team()
 		if(T)
 			antag_info["team"]["type"] = T.type
 			antag_info["team"]["name"] = T.name
@@ -87,7 +87,7 @@
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
@@ -331,7 +331,7 @@
 		all_teams |= A.get_team()
 		all_antagonists += A
 
-	for(var/datum/objective_team/T in all_teams)
+	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)

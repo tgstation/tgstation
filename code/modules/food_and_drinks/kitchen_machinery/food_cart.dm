@@ -15,7 +15,7 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
@@ -100,7 +100,7 @@
 					stored_food[sanitize(S.name)]++
 				else
 					stored_food[sanitize(S.name)] = 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		. = ..()
@@ -123,7 +123,7 @@
 					break
 
 	if(href_list["portion"])
-		portion = Clamp(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)

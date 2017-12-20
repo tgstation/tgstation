@@ -66,7 +66,7 @@
 /datum/objective/bloodsucker/embrace/proc/generate_objective()
 	var/list/possible_targets = return_possible_targets()
 
-	target_amount = Clamp(possible_targets.len / 8, 1, 3)
+	target_amount = CLAMP(possible_targets.len / 8, 1, 3)
 	update_explanation_text()
 
 //						EXPLANATION

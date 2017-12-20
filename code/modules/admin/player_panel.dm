@@ -524,7 +524,7 @@
 
 		if(SSticker.mode.brother_teams.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Brothers</B></td><td></td><td></td></tr>"
-			for(var/datum/objective_team/brother_team/team in SSticker.mode.brother_teams)
+			for(var/datum/team/brother_team/team in SSticker.mode.brother_teams)
 				for(var/datum/mind/brother in team.members)
 					var/mob/M = brother.current
 					if(M)

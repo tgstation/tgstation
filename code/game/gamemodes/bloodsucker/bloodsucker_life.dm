@@ -98,7 +98,7 @@
 
 /datum/antagonist/bloodsucker/proc/set_blood_volume(value)
 	// Default normal is 560. Also, humans REGROW blood at 0.1 a tick. Never go lower than BLOOD_VOLUME_BAD
-	owner.current.blood_volume = Clamp(owner.current.blood_volume + value, 0, maxBloodVolume)
+	owner.current.blood_volume = CLAMP(owner.current.blood_volume + value, 0, maxBloodVolume)
 	update_hud()
 
 
