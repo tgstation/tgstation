@@ -172,7 +172,7 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 				to_chat(src, "<span class='danger'>Your skin stretches taut across the reinvigorated fibers of your decaying muscles.</span>")
 
 		//message_admins("DEBUG: [name] Becoming Bloodsucker... SLEEPING 1 SEC, Final should be 15)")
-		sleep(150)
+		sleep(300)
 		turnphase ++
 		// Checks: Not dead anymore? Can't make Bloodsucker? EXIT.
 		if (!can_turn_bloodsucker())//stat != DEAD || !mind || !ckey || !SSticker.mode.can_make_bloodsucker(mind, 1))
@@ -208,10 +208,16 @@ datum/antagonist/bloodsucker/proc/attempt_turn_bloodsucker(mob/living/carbon/tar
 	// NOTE: When turning Ghost (voluntarily or by death), your ghost has the SAME MIND as your body.
 
 	// Remove Vassal...
-	mind.remove_antag_datum(ANTAG_DATUM_VASSAL) //mind.remove_all_antag_datums()
+	//mind.remove_antag_datum(ANTAG_DATUM_VASSAL)
+	mind.remove_all_antag_datums()
+
+	// Remove Previous Objectives
+	for(var/O in mind.objectives)
+		mind.objectives -= O
+		qdel(O)
 
 	// Ready!
-	SSticker.mode.make_bloodsucker(mind, 1)
+	SSticker.mode.make_bloodsucker(mind, vampfather)
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 
 	// It's Happening!

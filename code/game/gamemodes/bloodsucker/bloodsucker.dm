@@ -74,7 +74,7 @@
 		//	to_chat(creator, "<span class='danger'>[bloodsucker] isn't self-aware enough to be raised as a Bloodsucker!</span>")
 		return 0
 	// Current body is invalid
-	if(!ishuman(bloodsucker.current) && !ismonkey(bloodsucker.current))
+	if(!ishuman(bloodsucker.current))// && !ismonkey(bloodsucker.current))
 		if(creator)
 			to_chat(creator, "<span class='danger'>[bloodsucker] isn't evolved enough to be raised as a Bloodsucker!</span>")
 		return 0
@@ -83,6 +83,12 @@
 		if(creator)
 			to_chat(creator, "<span class='danger'>[bloodsucker] is already a Bloodsucker!</span>")
 		return 0
+	// Not High Enough
+	if(creator)
+		var/datum/antagonist/bloodsucker/creator_bloodsucker = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(istype(creator_bloodsucker) && creator_bloodsucker.vamplevel < creator_bloodsucker.levelToTurnReq)
+			to_chat(creator, "<span class='danger'>Your blood is too thin to turn this corpse!</span>")
+			return 0
 	return 1
 
 

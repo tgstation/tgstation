@@ -71,8 +71,9 @@
 			var/obj/structure/closet/coffin/floorCoffin = locate(/obj/structure/closet/coffin) in get_turf(user)
 			if (floorCoffin)
 				user.fall() // user.Resting(10)
+				user.density = 0 // This is dumb, but here we are. fall() doesn't un-dense you, but you'll be fine when you get back up.
 				//floorCoffin.open()
-				floorCoffin.close()
+				floorCoffin.close(user)
 				insideCoffin = istype(user.loc, /obj/structure/closet/coffin)
 
 		// Apply Willing "Death"
@@ -86,11 +87,13 @@
 
 	sleep(50) // 5 seconds...
 	to_chat(user, "<span class='notice'>The lividity of your corpse drains away. Your parched veins pulse...</span>")
+	user.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	sleep(50) // 5 second wait until healing starts.
 
 	// Time to Heal!
 	if (user.blood_volume > 0)
 		to_chat(user, "<span class='warning'>Your vampiric blood sets itself to work repairing your body!</span>")
+		user.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 	// Values
 	var/coffinnotice = 0	// Display Message: Not in Coffin!
 	var/healingnotice = 0	// Display Message: Healing Stopped/Started
@@ -155,6 +158,7 @@
 			continue
 		else if (user.blood_volume > 0 && healingnotice)
 			to_chat(user, "<span class='notice'>Fresh blood enters your system. Your healing accelerates.</span>")
+			user.playsound_local(null, 'sound/effects/singlebeat.ogg', 50, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 			healingnotice = 0
 
 		// Heal: Basic
@@ -168,6 +172,18 @@
 		// Wait til owner comes back...
 		if (!bloodsuckerdatum.owner || !bloodsuckerdatum.owner.key)
 			continue
+
+		// Level Up?
+		if ((world.time > bloodsuckerdatum.nextLevelTick) && insideCoffin)
+			// Not MY Coffin...
+			if (bloodsuckerdatum.coffin != user.loc)
+				var/failmsg = "You are unable to thicken your blood and advance to the next Rank without sleeping in your claimed coffin."
+				if (!bloodsuckerdatum.coffin)
+					failmsg += " Claim a coffin by desecrating one with your blood (in a safe location)."
+				to_chat(user, "<span class='warning'>[failmsg]</span>")
+			else
+				bloodsuckerdatum.LevelUp()
+				continue // In case you took damage during the pause, let's do one more sweep.
 
 		// No damage. Break!
 		to_chat(user, "<span class='notice'>You rise again!</span>")
@@ -189,12 +205,14 @@
 		user.set_blurriness(0)
 		user.set_eye_damage(0)
 		user.cure_nearsighted()
-		user.cure_blind()
 		user.heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 		user.ExtinguishMob()
 		user.update_canmove()
+		user.update_body()
 		//user.revive(1) // A FULL heal. Takes care of all the little things that blood may have missed healing.
+
 		break
+
 
 	// DONE! Wipe fake death.
 	cancel_spell(user)

@@ -19,6 +19,7 @@
 
 	// MUST BE STANDING to use (no floating, not sideways, not grabbed)
 
+
 /obj/effect/proc_holder/spell/bloodsucker/haste/can_target(atom/A)//mob/living/target)
 	if (!..())
 		return 0
@@ -44,19 +45,20 @@
 // ATTEMPT ENTIRE CASTING OF SPELL //
 /obj/effect/proc_holder/spell/bloodsucker/haste/attempt_cast(mob/living/user = usr) // This is done so that Frenzy can try to Feed (usr is EMPTY if called automatically)
 	if (!..())  // DEFAULT
-		return
+		return 0
 	// We attempted to cast and succeeded! Player is now armed and ready to click.
 
 	// No further abilities if not human.
 	if (!ishuman(user))
-		return
+		return 0
+
 
 	// Set Haste Amount
 	//haste_amount = 1
 	//var/mob/living/carbon/human/H = user
 	//H.dna.species.speedmod -= haste_amount
 
-
+	return 1
 
 // APPLY EFFECT //	// USE THIS FOR THE SPELL EFFECT //
 /obj/effect/proc_holder/spell/bloodsucker/haste/cast(list/targets, mob/living/user = usr)
@@ -64,6 +66,12 @@
 
 	var/atom/target = targets[1]
 	//var/datum/antagonist/bloodsucker/bloodsuckerdatum = user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+
+	// Being grabbed!
+	if (user.pulledby && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		to_chat(user, "<span class='warning'>Your feet stay planted as long as [user.pulledby] holds you fast!</span>")
+		cancel_spell(usr)
+		return 0
 
 	// Spend Blood
 	pay_blood_cost()
@@ -90,9 +98,17 @@
 			playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 20, 1, -1)
 			if (rand(0,2) == 0)
 				newtarget.Knockdown(10)
+		// Can't move, Can't Haste!
+		if (user && !user.canmove)
+			// Did I get knocked down?
+			if (user.lying)
+				var/send_dir = get_dir(user, user)
+				new /datum/forced_movement(user, get_ranged_target_turf(user, send_dir, 1), 1, FALSE)
+				user.spin(10)
+			break
 
 	//Knockdown Target!
-	if (isliving(target) && target.Adjacent(user))
+	if (user && user.canmove && isliving(target) && target.Adjacent(user))
 		var/mob/living/M = target
 		//user.pulling = M
 		//user.grab_state = max(owner.current.grab_state,GRAB_AGGRESSIVE)

@@ -16,14 +16,20 @@
 	//list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 	//delete_on_mind_deletion = TRUE
 
-	var/vamptitle						// My Dracula title
+	// NAME
 	var/vampname						// My Dracula name
+	var/vamptitle						// My Dracula title
 	var/vampreputation					// My "Surname" or description of my deeds
 
-	var/list/objectives_given = list()	// For removal if needed.
+	// LEVELING
+	var/vamplevel = 1					// Current level
+	var/nextLevelTick					// When will I be qualified to level up next? Every Level incr
+	var/timeToLevel	= 6000				// Time (seconds) until you get the prompt to level up. 6000 = 10 min.
+	var/levelToTurnReq = 3				// At what level are you able to turn new vamps?
+
 	var/bloodTakenLifetime = 0			// Total blood ever fed from humans.
 	var/vampsMade = 0					// Total bloodsuckers created from victims.
-	//var/list/datum/mind/vassals2 = list()// Vassals under my control. Periodically remove the dead ones.
+	var/list/objectives_given = list()	// For removal if needed.
 	var/list/datum/antagonist/vassal/vassals = list()// Vassals under my control. Periodically remove the dead ones.
 	var/datum/mind/creator				// Who made me? For both Vassals AND Bloodsuckers (though Master Vamps won't have one)
 	var/list/obj/effect/decal/cleanable/blood/vampblood/desecrateBlood = list()	// All the blood I've spilled with Expel Blood to desecrate for an objective.
@@ -31,14 +37,12 @@
 	var/obj/structure/closet/coffin/coffin	// Where I lay my head is home.
 	// Powers
 	var/list/obj/effect/proc_holder/spell/bloodsucker/powers = list()// Purchased powers
-//	var/mob/living/carbon/feedTarget								// Who am I feeding from?
 	//var/humanDisguise												// Am I currently faking as a human?
 	var/poweron_feed = 0				// Am I feeding?
 	var/poweron_humandisguise = 0		// Am I masquerading?
 
 	// Values
-	var/regenLimbCounter				// Regenerating limbs happens over time.
-	var/regenRate = 0.5					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
+	var/regenRate = 0.4					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding.
 	var/badfood	= 0						// When eating human food or drink, keep track of how much we've had so we can purge it at once.
@@ -51,7 +55,8 @@
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 
 	SelectFirstName(owner.current.gender)
-	SelectTitle(owner.current.gender, creator ? 1 : 0) // If I have a creator, then set as Fledgling.
+	SelectTitle(owner.current.gender, creator ? 1 : 0) 		// If I have a creator, then set as Fledgling.
+	SelectReputation(owner.current.gender, creator ? 1 : 0)
 
 	//spawn(20) // Wait two seconds so all starting Bloodsuckers are assigned before creating their objectives. Don't want them targetting each other for Embrace objectives.
 	owner.store_memory("Although you were born a mortal, in un-death you earned the name [ReturnFullName(owner.current, 1)].")
@@ -94,6 +99,7 @@
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you may find yourself at \
 	risk of Frenzy!<span>")
+	to_chat(owner, "<span class='boldannounce'>As an immortal, your power is linked to your age. The older you grow, the more abilities you will have access to.<span>")
 	to_chat(owner, "<span class='boldannounce'>Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.<span>")
 
 	owner.current.playsound_local(null, 'sound/ambience/antag/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -148,21 +154,31 @@
 /datum/antagonist/bloodsucker/proc/SelectTitle(gender=MALE, am_fledgling = 0)
 	// Titles [Master]
 	if (!am_fledgling)
-		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
-							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
-							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible")
 		if (gender == MALE)
 			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
-			if (prob(10)) // Gender override
-				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
 		else
 			vamptitle = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
-			if (prob(10)) // Gender override
-				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 	// Titles [Fledgling]
 	else
 		vamptitle = null
-		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Newly Reisen","Born")//,"Fresh")
+
+/datum/antagonist/bloodsucker/proc/SelectReputation(gender=MALE, am_fledgling = 0)
+	// Reputations [Master]
+	if (!am_fledgling)
+		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
+							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
+							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying")
+		if (gender == MALE)
+			if (prob(10)) // Gender override
+				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
+		else
+			if (prob(10)) // Gender override
+				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
+	// Reputations [Fledgling]
+	else
+		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Newly Reisen","Born","Scavenger")//,"Fresh")
+
+
 
 /datum/antagonist/bloodsucker/proc/AmFledgling()
 	return !vamptitle
@@ -279,15 +295,17 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 	// Blood Counter
 	add_hud()
 
+	// Level
+	nextLevelTick = world.time + timeToLevel
+
 	// Powers
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/feed)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/expelblood)
-	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/humandisguise)
-	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/veil)
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/torpidsleep)
-	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/brawn)
-	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/haste)
-	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/recover)
+	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/veil)
+	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/brawn)
+	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/haste)
+	//BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/recover)
 
 	// Language
 	owner.current.grant_language(/datum/language/vampiric)
@@ -312,13 +330,13 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		var/datum/species/S = H.dna.species
 		// Make Changes
 		S.brutemod *= 0.5
-		S.burnmod += 0.5
+		S.burnmod += 0.2 // 0.5
+		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
 		S.coldmod = 0
-		S.heatmod += 0.5
-		S.stunmod *= 0.5
+		S.stunmod *= 0.75 // 0.5
 		S.punchdamagelow += 2       //lowest possible punch damage   0
 		S.punchdamagehigh += 2      //highest possible punch damage	 9
-		S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
+		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.siemens_coeff *= 0.5 		//base electrocution coefficient  1
 
 		// Traits
@@ -331,21 +349,23 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.species_traits |= RESISTCOLD
 		S.species_traits |= NOCRITDAMAGE // No damage from being in critical condition.
 		S.species_traits |= RESISTPRESSURE
+		S.species_traits |= SPECIES_UNDEAD // Not sure what this does quite yet.
+		S.species_traits |= COLDBLOODED // A Fulpstation original
 
 	// Disabilities
-	owner.current.disabilities = 0
+	owner.current.cure_husk()//owner.current.disabilities = 0	// Can't do this. You get stuck with Husk if you just clear disabilities.
+	owner.current.cure_blind()
 	//owner.current.disabilities |= NOCLONE
 
+	// Soul
+	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
+	owner.isholy = FALSE 		//is this person a chaplain or admin role allowed to use bibles
+
 	// Update Health
-	owner.current.setMaxHealth(150)
+	owner.current.setMaxHealth(125) // 150
 
 	// Other Cool Stuff
-	var/obj/item/organ/eyes/E = owner.current.getorganslot(ORGAN_SLOT_EYES)
-	E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	E.see_in_dark = 8
-	E.flash_protect = -1
-	E.sight_flags |= SEE_TURFS // Taken from augmented_eyesight.dm
-	owner.current.update_sight()
+	vampify_eyes() // in bloodsucker_life.dm
 
 	// Loyalty
 	owner.unconvertable = TRUE
@@ -370,22 +390,13 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	if (ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(H.dna.species.type)
-		/*
-		var/datum/species/S = H.dna.species
-		// Restore Originals
-		S.brutemod = initial(S.brutemod)
-		S.burnmod = initial(S.burnmod)
-		S.coldmod = initial(S.coldmod)
-		S.heatmod = initial(S.heatmod)
-		S.stunmod = initial(S.stunmod)
-		S.punchdamagelow = initial(S.punchdamagelow)
-		S.punchdamagehigh = initial(S.punchdamagehigh)
-		S.punchstunthreshold = initial(S.punchstunthreshold)
-		S.siemens_coeff = initial(S.siemens_coeff)
-		*/
 
 	// Disabilities
 	//owner.current.disabilities = initial(owner.current.disabilities) // Using FULL HEAL gets rid of this anyway, so don't bother. Vamps can be cloned. Who cares.
+
+	// Soul
+	if (owner.soulOwner == owner) // Return soul, if *I* own it.
+		owner.hasSoul = TRUE
 
 	// Update Health
 	owner.current.setMaxHealth(100)
@@ -402,11 +413,74 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	owner.unconvertable = FALSE
 
 
+datum/antagonist/bloodsucker/proc/LevelUp()
+	// Purchase Power Prompt
+	var/list/options = list() // Taken from gasmask.dm, for Clown Masks.
+	for(var/pickedpower in typesof(/obj/effect/proc_holder/spell/bloodsucker))
+		var/obj/effect/proc_holder/spell/bloodsucker/power = pickedpower
+		if (!(locate(power) in powers))
+			var/obj/effect/proc_holder/spell/bloodsucker/temp_power = new power() // Create temporary power (to read its name + description, etc)
+			options[temp_power.name] = power
+			qdel(temp_power)
+	options["\[Not Now\]"] = null
+
+	// Abort?
+	if (options.len > 1)
+		var/choice = input(owner.current, "You have the opportunity to grow more ancient. Select a power to advance your Rank.", "Your Blood Thickens...") in options
+		if (!choice || !options[choice])
+			to_chat(owner.current, "<span class='notice'>You prevent your blood from thickening just yet, but you may try again later.</span>")
+			return
+		var/obj/effect/proc_holder/spell/bloodsucker/P = options[choice]
+		BuyPower(new P)
+
+	// Advance Level + Timer
+	vamplevel ++
+	nextLevelTick = world.time + timeToLevel
+
+	// Advance Stats
+	if (ishuman(owner.current))
+		var/mob/living/carbon/human/H = owner.current
+		var/datum/species/S = H.dna.species
+		S.burnmod += 0.1 			// Slightly more burn damage
+		S.stunmod *= 0.9			// Slightly less stun time.
+		S.punchdamagelow += 1
+		S.punchdamagehigh += 1      // NOTE: This affects the hitting power of Brawn.
+	// More Health
+	owner.current.setMaxHealth(owner.current.maxHealth + 10)
+	// Vamp Stats
+	regenRate += 0.1			// Points of brute healed (starts at 0.4)
+	feedAmount += 5				// Increase how quickly I munch down vics
+	maxBloodVolume += 50		// Increase my max blood
+
+	to_chat(owner.current, "<span class='userdanger'>Your blood thickens as you take another step toward true immortality. You are now a Rank [vamplevel] Bloodsucker!</span>")
+	to_chat(owner.current, "<span class='boldannounce'>Your weakness to Burning has increased. However, your health and healing are better, you Feed more quickly, you store more blood, and you deal more damage than before.</span>")
+
+	// Can Turn Vamps!
+	if (vamplevel == levelToTurnReq)
+		to_chat(owner.current, "<EM><span class='notice'>Your blood is now thick enough to turn corpses into Bloodsuckers!</span></EM>")
+	// New Title?
+	if ((vamplevel == 3) && !vamptitle)
+		SelectTitle(owner.current.gender)
+		to_chat(owner.current, "<EM><span class='notice'>You will also forever be known by the title of \"[vamptitle]\"!</span></EM>")
+	// New Rep?
+	if ((vamplevel == 5) && creator)
+		SelectReputation(owner.current.gender)
+		to_chat(owner.current, "<EM><span class='notice'>You will also forever be reputed as \"[vampreputation]\"!</span></EM>")
+
+	// Play Jingle
+	owner.current.playsound_local(null, 'sound/ambience/ambiruin.ogg', 60, FALSE, pressure_affected = FALSE)
+
+	// New Bane!
+
+
+
+
+
+
 
 /////////////////////////////////////
 
 		// HUD! //
-
 
 /datum/antagonist/bloodsucker/proc/update_bloodsucker_icons_added(mob/living/bloodsucker, icontype="bloodsucker")
 	var/datum/atom_hud/antag/bloodsucker/hud = GLOB.huds[ANTAG_HUD_BLOODSUCKER]// ANTAG_HUD_DEVIL
@@ -418,9 +492,13 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 	hud.leave_hud(bloodsucker)
 	set_antag_hud(bloodsucker, null)
 
+/////////////////////////////////////
 
-// NOTE: Gang members can only see their own kind. Perhaps we can have Vassals do the same thing with their master ONLY, and vice versa?
+///datum/atom_hud
+//	var/hud_icon_file = 'icons/mob/hud.dmi'	// Like clothing (in fulp_items.dm) this is our solution for getting HUDs to pull from a custom file.
+
 /datum/atom_hud/antag/bloodsucker  // from hud.dm in /datums/   Also see data_huds.dm + antag_hud.dm
+	//hud_icon_file = 'icons/Fulpstation/fulphud.dmi'
 	// For Reference:
 	//var/list/atom/hudatoms = list() //list of all atoms which display this hud			AKA Every living person goes into the MEDICAL HUD. They just can't see it.
 	//var/list/mob/hudusers = list() //list with all mobs who can see the hud				AKA anyone who can SEE the hud.

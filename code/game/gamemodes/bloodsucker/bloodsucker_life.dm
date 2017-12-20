@@ -25,6 +25,7 @@
 
 	// Loop forever while I'm still a Bloodsucker.
 	var/healingnotice = 0
+	var/levelnotice_time = 0 // Warn me every few minutes if I have a level-up to do. (One minute is 600 units)
 	while (owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
 
 		// Standard Update
@@ -33,6 +34,16 @@
 		// Basic Regenerate
 		if (!poweron_humandisguise)
 			handle_healing_natural()
+
+		// Time to Level?
+		if (world.time > nextLevelTick && !(owner.current.status_flags & FAKEDEATH)) // No warning if already in Torpor.
+			if (world.time > levelnotice_time)
+				levelnotice_time = world.time + 1500
+				to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
+				//owner.current.playsound_local(null, 'sound/machines/ventcrawl.ogg', 75, 1)
+				owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 60, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+		else if (levelnotice_time > 0)
+			levelnotice_time = 0
 
 		// If not alive...
 		if (owner.current.stat == DEAD || owner.current.status_flags & FAKEDEATH)
@@ -65,7 +76,7 @@
 		// Shift Bloodsucker Temperature to Location's Temp
 		if (!poweron_humandisguise && owner.current)
 			var/turf/userturf = get_turf(owner.current)
-			owner.current.bodytemperature += round((userturf.temperature - owner.current.bodytemperature) / 250, 0.1)   // Constantly blend toward the temperature of the current environment.
+			owner.current.bodytemperature += round((userturf.temperature - owner.current.bodytemperature) / 250, 0.01)   // Constantly blend toward the temperature of the current environment.
 
 		// Wait before next pass
 		sleep(10)
@@ -268,11 +279,11 @@ datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we j
 		ApplyVampiricSpeciesTraits()
 		return 1
 	*/
+	vampify_eyes()
 
 	// Cure Final Disabilities
 	owner.current.cure_blind()
 	owner.current.cure_husk()
-
 
 	// Remove Embedded!
 	var/mob/living/carbon/C = owner.current
@@ -282,6 +293,15 @@ datum/antagonist/bloodsucker/proc/handle_healing_torpid() // Return TRUE if we j
 	return 0
 
 
+
+
+datum/antagonist/bloodsucker/proc/vampify_eyes() // Turn my eyes into cool eyes.
+	var/obj/item/organ/eyes/E = owner.current.getorganslot(ORGAN_SLOT_EYES)
+	E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	E.see_in_dark = 8
+	E.flash_protect = -1
+	E.sight_flags |= SEE_TURFS // Taken from augmented_eyesight.dm
+	owner.current.update_sight()
 
 
 

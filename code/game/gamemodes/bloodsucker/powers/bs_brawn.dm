@@ -114,7 +114,8 @@
 	// Target Type: Mob
 	if (isliving(target))
 		var/mob/living/M = target
-		//target.attack_hand(user)
+		var/mob/living/carbon/user_C = user
+		var/hitStrength = user_C.dna.species.punchdamagehigh * 1.25 + 2
 
 		// Knockback!
 		M.visible_message("<span class='danger'>[user] has knocked [M] down!</span>", \
@@ -122,16 +123,15 @@
 		M.Knockdown(60)
 		if (M.stat <= UNCONSCIOUS)
 			M.Unconscious(40)
-		var/send_dir = get_dir(user, M)
-		new /datum/forced_movement(M, get_ranged_target_turf(M, send_dir, 6), 1, FALSE)
 
 		// Attack!
-		var/mob/living/carbon/user_C = user
 		playsound(get_turf(M), 'sound/weapons/punch4.ogg', 60, 1, -1)
 		user.do_attack_animation(M, ATTACK_EFFECT_SMASH)
-		var/damage = (user_C.dna.species.punchdamagehigh * 1.5) + 5
 		var/obj/item/bodypart/affecting = M.get_bodypart(ran_zone(M.zone_selected))
-		M.apply_damage(damage, BRUTE, affecting)
+		M.apply_damage(hitStrength, BRUTE, affecting)
+		// Knockback
+		var/send_dir = get_dir(user, M)
+		new /datum/forced_movement(M, get_ranged_target_turf(M, send_dir, (hitStrength / 4)), 1, FALSE)
 
 	// Target Type: Door
 	else if (istype(target, /obj/machinery/door))

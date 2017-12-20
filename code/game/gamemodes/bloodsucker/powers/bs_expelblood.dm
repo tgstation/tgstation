@@ -4,7 +4,7 @@
 //obj/effect/proc_holder/spell/targeted/touch/expelblood
 /obj/effect/proc_holder/spell/bloodsucker/expelblood
 	name = "Expel Blood"
-	desc = "Secrete some of your blood as an addictive, healing goo. Feeding it to corpses turns mortals to Bloodsuckers. Enough of it can turn living victims into your slaves!"
+	desc = "Secrete some of your blood as an addictive, healing goo. Enough of it can turn living victims into your willing slaves, and (at a high enough Rank) feeding it to corpses turns mortals to Bloodsuckers."
 	bloodcost = 10
 	amToggleable = TRUE
 	amTargetted = TRUE

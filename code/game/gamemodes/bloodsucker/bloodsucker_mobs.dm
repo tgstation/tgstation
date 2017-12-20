@@ -54,6 +54,20 @@
 
 	returnString += "</span>\]\n"
 	return returnString
+
+
+// Am I "pale" when examined? Bloodsuckers can trick this.
+/mob/living/carbon/proc/ShowAsPaleExamine()
+
+	// Normal Creatures:
+	if(!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+		return blood_volume < BLOOD_VOLUME_SAFE
+
+	// If a Bloodsucker is malnourished, AND if his temperature matches his surroundings (aka he hasn't fed recently and looks COLD)...
+	var/turf/userturf = get_turf(src)
+	return blood_volume < BLOOD_VOLUME_BAD && !(userturf && (bodytemperature <= userturf.temperature + 2))
+
+
 /*
 
 

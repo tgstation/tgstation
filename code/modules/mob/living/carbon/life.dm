@@ -390,6 +390,8 @@
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
+	if (COLDBLOODED in dna.species.species_traits) // FULPSTATION: Bloodsuckers do not change temperatures.
+		return
 	var/body_temperature_difference = 310.15 - bodytemperature
 	switch(bodytemperature)
 		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.

@@ -322,7 +322,7 @@
 
 //						 GENERATE!
 /datum/objective/bloodsucker/heartthief/proc/generate_objective()
-	target_amount = rand(3,5)
+	target_amount = rand(2,3)
 	update_explanation_text()
 	//dangerrating += target_amount * 2
 
