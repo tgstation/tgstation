@@ -149,7 +149,11 @@
 /mob/living/proc/remove_disability(disability, list/sources)
 	if(!disabilities[disability])
 		return
-
+		
+	if (!sources) // FULPSTATION: If you never specified a source, then you must want to remove ALL sources, such as in fully_heal()
+		disabilities -= disability
+		return
+		
 	if(!islist(sources))
 		sources = list(sources)
 
