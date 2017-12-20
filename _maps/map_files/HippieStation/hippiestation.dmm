@@ -60203,6 +60203,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatSW";
+	location = "SatNW"
+	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "cCL" = (
@@ -60257,6 +60261,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatNW";
+	location = "SatEntrance"
+	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
@@ -60278,6 +60286,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/window/eastleft{
 	name = "MiniSat AIrlock Access"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatMain2";
+	location = "SatEntrance2"
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
@@ -60308,6 +60320,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatEntrance2";
+	location = "SatNW"
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
@@ -60652,6 +60668,10 @@
 /obj/machinery/bluespace_beacon,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=AIE";
+	location = "AftH"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -61019,6 +61039,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatEntrance";
+	location = "SatMain"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -61517,6 +61541,10 @@
 	pixel_x = 32;
 	pixel_y = -24;
 	req_access_txt = "65"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatCore";
+	location = "SatMain2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -62158,6 +62186,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatMain";
+	location = "SatCore"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -70325,6 +70357,10 @@
 	brightness = 5;
 	dir = 8
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatSE";
+	location = "SatSW"
+	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "dfE" = (
@@ -70335,6 +70371,10 @@
 /obj/machinery/light/small{
 	brightness = 5;
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=SatNE";
+	location = "SatSE"
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
@@ -100013,13 +100053,13 @@ czD
 cAs
 dbX
 cAU
-aqK
-aqK
-aCn
+cbx
+cbx
+cKQ
+cKQ
 cAU
-aCn
-aqK
-aqK
+cbx
+cbx
 cAU
 ddq
 ddA
@@ -100269,15 +100309,15 @@ czD
 czD
 czD
 dbX
-aCn
+cKQ
 aqK
 aqK
 aCn
-aqL
-aCn
+aqK
+aOf
 aqK
 aqK
-aCn
+cKQ
 cCm
 cCx
 dcv
@@ -100526,15 +100566,15 @@ cxA
 cAa
 czD
 dbX
-aCn
+cKQ
 aqK
 aCn
 aCn
-aqL
-aCn
+aqK
+aOf
 aCn
 aqK
-aCn
+cKQ
 ddq
 ddA
 dbP
@@ -100783,15 +100823,15 @@ czE
 dbH
 czD
 dbX
-aCn
+cKQ
 aCn
 aCn
 cBv
 cBC
 cBK
-aCn
-aCn
-aCn
+aOf
+aOf
+cAU
 ddq
 ddA
 dbP
@@ -101040,15 +101080,15 @@ czF
 cAb
 cAt
 cAH
-cAU
-aqL
-aqL
+cKQ
+aqK
+aqK
 cBw
 cBD
 cBL
-aqL
-aqL
-cAU
+aqK
+aqK
+cKQ
 cCm
 cCx
 ddV
@@ -101297,15 +101337,15 @@ czG
 dbI
 czD
 dbX
-aCn
-aCn
-aCn
+cAU
+aOf
+aOf
 cBx
 cBE
 cBM
 aCn
 aCn
-aCn
+cKQ
 ddq
 ddA
 dbP
@@ -101554,15 +101594,15 @@ cqH
 dbI
 czD
 dbX
+cKQ
+aqK
 aCn
+aOf
 aqK
 aCn
 aCn
-aqL
-aCn
-aCn
 aqK
-aCn
+cKQ
 ddq
 ddA
 dbP
@@ -101811,15 +101851,15 @@ czD
 czD
 czD
 dbX
+cKQ
+aqK
 aCn
+aOf
 aqK
 aCn
 aCn
-aqL
-aCn
-aCn
 aqK
-aCn
+cKQ
 cCm
 cCx
 dcv
@@ -102069,13 +102109,13 @@ czD
 cAs
 dbX
 cAU
-aqK
-aCn
-aCn
+cbx
+cKQ
 cAU
-aCn
-aqK
-aqK
+cKQ
+cKQ
+cbx
+cbx
 cAU
 ddq
 ddA
