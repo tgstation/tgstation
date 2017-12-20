@@ -519,7 +519,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!round_end_sound)
 		round_end_sound_sent = FALSE
-		round_end_sound = file(choose_sound(CONFIG_GET(string/roundend_sound_folder)))
+		round_end_sound = fcopy_rsc(choose_sound(CONFIG_GET(string/roundend_sound_folder)))
 		load_rsc_on_all_clients(round_end_sound)
 		round_end_sound_sent = TRUE
 	if(!delay)
