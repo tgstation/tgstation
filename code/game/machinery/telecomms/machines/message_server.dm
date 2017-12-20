@@ -124,8 +124,8 @@
 		M << browse("<html><head><title>PDA Photo</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=book;size=192x192")
-		onclose(M, "PDA Photo")
+		+ "</body></html>", "window=pdaphoto;size=192x192")
+		onclose(M, "pdaphoto")
 
 
 // Log datums stored by the message server.
@@ -158,8 +158,8 @@
 		M << browse("<html><head><title>PDA Photo</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=book;size=192x192")
-		onclose(M, "PDA Photo")
+		+ "</body></html>", "window=pdaphoto;size=192x192")
+		onclose(M, "pdaphoto")
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified"  // receiving department
