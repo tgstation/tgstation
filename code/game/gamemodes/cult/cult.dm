@@ -90,7 +90,7 @@
 	..()
 
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE, type = ANTAG_DATUM_CULT) //BASE
 	if (!istype(cult_mind))
 		return 0
 

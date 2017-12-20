@@ -10,6 +10,9 @@
 /datum/antagonist/clockcult/silent
 	silent = TRUE
 
+/datum/antagonist/clockcult/drone
+	name = "Cogscarab"
+
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
 	return ..()

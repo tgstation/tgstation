@@ -245,7 +245,7 @@
 	if(U)
 		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))
-		SSticker.mode.add_cultist(S.mind, 0)
+		SSticker.mode.add_cultist(S.mind, 0, type = ANTAG_DATUM_CULT_CONSTRUCT)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
 	icon_state = "soulstone2"
