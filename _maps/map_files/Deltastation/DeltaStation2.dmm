@@ -71583,8 +71583,8 @@
 /obj/item/pen,
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/fire{
-	step_x = 2;
-	step_y = 3
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
@@ -71673,8 +71673,8 @@
 	},
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/fire{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
@@ -75611,8 +75611,8 @@
 /obj/machinery/light,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/o2{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
@@ -75689,8 +75689,8 @@
 /obj/item/pen,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/o2{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/central)

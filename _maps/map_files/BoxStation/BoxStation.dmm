@@ -25133,11 +25133,11 @@
 	pixel_y = 9
 	},
 /obj/item/storage/firstaid/brute{
-	step_x = 0
+	pixel_x = 0
 	},
 /obj/item/storage/firstaid/regular{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -25154,8 +25154,8 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/storage/firstaid/o2,
 /obj/item/storage/firstaid/fire{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -25165,11 +25165,11 @@
 	desc = "Kingston's personal cup."
 	},
 /obj/item/storage/firstaid/fire{
-	step_x = 0
+	pixel_x = 0
 	},
 /obj/item/storage/firstaid/toxin{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -25183,8 +25183,8 @@
 /obj/machinery/cell_charger,
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/o2{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -25797,8 +25797,8 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)

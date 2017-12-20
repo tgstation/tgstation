@@ -24248,16 +24248,16 @@
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
 /obj/item/storage/firstaid/regular{
-	step_x = 5;
-	step_y = 4
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/storage/firstaid/toxin{
-	step_x = 3;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /obj/item/storage/firstaid/fire{
-	step_x = 0;
-	step_y = 0
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
@@ -24285,8 +24285,8 @@
 /obj/item/storage/fancy/donut_box,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/fire{
-	step_x = 4;
-	step_y = 3
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
@@ -25797,8 +25797,8 @@
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/o2{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
@@ -25843,12 +25843,12 @@
 /obj/item/pen,
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/toxin{
-	step_x = 4;
-	step_y = 5
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/storage/firstaid/o2{
-	step_x = 2;
-	step_y = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
