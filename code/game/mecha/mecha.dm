@@ -571,7 +571,7 @@
 		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
 			if(nextsmash < world.time)
 				obstacle.mech_melee_attack(src)
-				if(!obstacle || !obstacle.density)
+				if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
 					step(src,dir)
 				nextsmash = world.time + smashcooldown
 		if(isobj(obstacle))
