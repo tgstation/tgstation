@@ -196,7 +196,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		ADD_GAS(gas_type, air_contents.gases)
+		air_contents.add_gas(gas_type)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -324,13 +324,13 @@
 		valve_open = !valve_open
 		timing = FALSE
 	if(!valve_open)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
-	pump.AIR1 = air_contents
-	pump.AIR2 = holding ? holding.air_contents : T.return_air()
+	pump.airs[1] = air_contents
+	pump.airs[2] = holding ? holding.air_contents : T.return_air()
 	pump.target_pressure = release_pressure
 
 	pump.process_atmos() // Pump gas.

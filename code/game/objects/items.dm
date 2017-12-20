@@ -292,7 +292,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
-
 /obj/item/attack_paw(mob/user)
 	if(!user)
 		return
@@ -406,12 +405,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
+	SendSignal(COMSIG_ITEM_DROPPED, user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
+	SendSignal(COMSIG_ITEM_DROPPED,user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -437,10 +438,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SendSignal(COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.

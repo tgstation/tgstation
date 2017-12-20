@@ -47,7 +47,7 @@
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
 		antag_info["team"] = list()
-		var/datum/objective_team/T = A.get_team()
+		var/datum/team/T = A.get_team()
 		if(T)
 			antag_info["team"]["type"] = T.type
 			antag_info["team"]["name"] = T.name
@@ -331,7 +331,7 @@
 		all_teams |= A.get_team()
 		all_antagonists += A
 
-	for(var/datum/objective_team/T in all_teams)
+	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)

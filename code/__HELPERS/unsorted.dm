@@ -1511,9 +1511,34 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
 
+// Makes a call in the context of a different usr
+// Use sparingly
+/world/proc/PushUsr(mob/M, datum/callback/CB)
+	var/temp = usr
+	usr = M
+	. = CB.Invoke()
+	usr = temp
+  
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
+//datum may be null, but it does need to be a typed var
+#define NAMEOF(datum, X) (list(##datum.##X, #X)[2])
+
+#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
+//dupe code because dm can't handle 3 level deep macros
+#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
+
+/proc/___callbackvarset(list_or_datum, var_name, var_value)
+	if(length(list_or_datum))
+		list_or_datum[var_name] = var_value
+		return
+	var/datum/D = list_or_datum
+	if(IsAdminAdvancedProcCall())
+		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+	else
+		D.vars[var_name] = var_value

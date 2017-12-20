@@ -107,14 +107,14 @@
 		P.destroy_network()
 	while(reference in get_all_connected_nodes())
 		if(reference in nodes)
-			var/I = nodes.Find(reference)
-			NODE_I = null
+			var/i = nodes.Find(reference)
+			nodes[i] = null
 		if(reference in front_nodes)
-			var/I = front_nodes.Find(reference)
-			front_nodes[I] = null
+			var/i = front_nodes.Find(reference)
+			front_nodes[i] = null
 		if(reference in back_nodes)
-			var/I = back_nodes.Find(reference)
-			back_nodes[I] = null
+			var/i = back_nodes.Find(reference)
+			back_nodes[i] = null
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)

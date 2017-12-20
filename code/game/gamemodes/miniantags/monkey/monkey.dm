@@ -22,7 +22,7 @@
 
 	var/players_per_carrier = 30
 
-	var/datum/objective_team/monkey/monkey_team
+	var/datum/team/monkey/monkey_team
 
 
 

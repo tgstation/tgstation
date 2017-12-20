@@ -175,7 +175,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, "gun_dry_fire", 60, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return (OXYLOSS)
 
 

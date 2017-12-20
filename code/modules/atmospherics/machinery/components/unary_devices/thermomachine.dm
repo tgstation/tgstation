@@ -48,9 +48,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
-	if(!on || !NODE1)
+	if(!on || !nodes[1])
 		return
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = heat_capacity + air_heat_capacity
@@ -88,14 +88,14 @@
 	if(!..())
 		return 0
 	SetInitDirections()
-	var/obj/machinery/atmospherics/node = NODE1
+	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.disconnect(src)
-		NODE1 = null
-	nullifyPipenet(PARENT1)
+		nodes[1] = null
+	nullifyPipenet(parents[1])
 
 	atmosinit()
-	node = NODE1
+	node = nodes[1]
 	if(node)
 		node.atmosinit()
 		node.addMember(src)
@@ -123,7 +123,7 @@
 	data["target"] = target_temperature
 	data["initial"] = initial(target_temperature)
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 	data["temperature"] = air1.temperature
 	data["pressure"] = air1.return_pressure()
 	return data

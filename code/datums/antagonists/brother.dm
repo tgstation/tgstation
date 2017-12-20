@@ -2,12 +2,12 @@
 	name = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = "blood brother"
-	var/datum/objective_team/brother_team/team
+	var/datum/team/brother_team/team
 
 /datum/antagonist/brother/New(datum/mind/new_owner)
 	return ..()
 
-/datum/antagonist/brother/create_team(datum/objective_team/brother_team/new_team)
+/datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
 		return
 	if(!istype(new_team))
@@ -57,15 +57,15 @@
 	SSticker.mode.update_brother_icons_added(owner)
 
 
-/datum/objective_team/brother_team
+/datum/team/brother_team
 	name = "brotherhood"
 	member_name = "blood brother"
 	var/meeting_area
 
-/datum/objective_team/brother_team/is_solo()
+/datum/team/brother_team/is_solo()
 	return FALSE
 
-/datum/objective_team/brother_team/proc/update_name()
+/datum/team/brother_team/proc/update_name()
 	var/list/last_names = list()
 	for(var/datum/mind/M in members)
 		var/list/split_name = splittext(M.name," ")
@@ -73,7 +73,7 @@
 
 	name = last_names.Join(" & ")
 
-/datum/objective_team/brother_team/roundend_report()
+/datum/team/brother_team/roundend_report()
 	var/list/parts = list()
 
 	parts += "<span class='header'>The blood brothers of [name] were:</span>"
@@ -95,14 +95,14 @@
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
-/datum/objective_team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
+/datum/team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
 	O.team = src
 	if(needs_target)
 		O.find_target()
 	O.update_explanation_text()
 	objectives += O
 
-/datum/objective_team/brother_team/proc/forge_brother_objectives()
+/datum/team/brother_team/proc/forge_brother_objectives()
 	objectives = list()
 	var/is_hijacker = prob(10)
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
@@ -113,7 +113,7 @@
 	else if(!locate(/datum/objective/escape) in objectives)
 		add_objective(new/datum/objective/escape)
 
-/datum/objective_team/brother_team/proc/forge_single_objective()
+/datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))
 		if(LAZYLEN(active_ais()) && prob(100/GLOB.joined_player_list.len))
 			add_objective(new/datum/objective/destroy, TRUE)

@@ -7,14 +7,14 @@
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
-	var/datum/objective_team/monkey/monkey_team
+	var/datum/team/monkey/monkey_team
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
 	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
 	if(!owner.current.HasDisease(D))
 		D.affected_mob = owner
 		owner.current.viruses += D
@@ -38,13 +38,13 @@
 	if(D)
 		D.cure()
 
-/datum/antagonist/monkey/create_team(datum/objective_team/monkey/new_team)
+/datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/monkey/N in get_antagonists(/datum/antagonist/monkey, TRUE))
 			if(N.monkey_team)
 				monkey_team = N.monkey_team
 				return
-		monkey_team = new /datum/objective_team/monkey
+		monkey_team = new /datum/team/monkey
 		monkey_team.update_objectives()
 		return
 	if(!istype(new_team))
@@ -60,9 +60,6 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/datum/disease/D = (/datum/disease/transformation/jungle_fever in owner.current.viruses)
-	if(D)
-		D.visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
 	SSticker.mode.ape_leaders += owner
@@ -99,45 +96,45 @@
 		return TRUE
 	return FALSE
 
-/datum/objective_team/monkey
+/datum/team/monkey
 	name = "Monkeys"
 
-/datum/objective_team/monkey/proc/update_objectives()
+/datum/team/monkey/proc/update_objectives()
 	objectives = list()
 	var/datum/objective/monkey/O = new /datum/objective/monkey()
 	O.team = src
 	objectives += O
 	return
 
-/datum/objective_team/monkey/proc/infected_monkeys_alive()
+/datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
-/datum/objective_team/monkey/proc/infected_monkeys_escaped()
+/datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
-/datum/objective_team/monkey/proc/infected_humans_escaped()
+/datum/team/monkey/proc/infected_humans_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
-/datum/objective_team/monkey/proc/infected_humans_alive()
+/datum/team/monkey/proc/infected_humans_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
 		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
-/datum/objective_team/monkey/proc/get_result()
+/datum/team/monkey/proc/get_result()
 	if(infected_monkeys_escaped())
 		return MONKEYS_ESCAPED
 	if(infected_monkeys_alive())
@@ -146,7 +143,7 @@
 		return DISEASE_LIVED
 	return MONKEYS_DIED
 
-/datum/objective_team/monkey/roundend_report()
+/datum/team/monkey/roundend_report()
 	var/list/parts = list()
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
@@ -161,10 +158,13 @@
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
 			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
-	if(LAZYLEN(SSticker.mode.ape_leaders))
+	var/list/leaders = get_antagonists(/datum/antagonist/monkey/leader, TRUE)
+	var/list/monkeys = get_antagonists(/datum/antagonist/monkey, TRUE)
+
+	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_leaders)
-	if(LAZYLEN(SSticker.mode.ape_infectees))
+	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_infectees)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
