@@ -23411,16 +23411,6 @@
 /area/medical/medbay/central)
 "bhf" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bhg" = (
@@ -25142,6 +25132,13 @@
 	pixel_x = 1;
 	pixel_y = 9
 	},
+/obj/item/storage/firstaid/brute{
+	step_x = 0
+	},
+/obj/item/storage/firstaid/regular{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "blk" = (
@@ -25155,12 +25152,24 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/fire{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "blm" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/britcup{
 	desc = "Kingston's personal cup."
+	},
+/obj/item/storage/firstaid/fire{
+	step_x = 0
+	},
+/obj/item/storage/firstaid/toxin{
+	step_x = 2;
+	step_y = 2
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -25172,6 +25181,11 @@
 	network = list("SS13")
 	},
 /obj/machinery/cell_charger,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/o2{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "blo" = (
@@ -25781,6 +25795,11 @@
 /area/medical/medbay/central)
 "bmK" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bmL" = (
