@@ -10075,6 +10075,9 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/dropper,
+/obj/item/clothing/neck/stethoscope{
+	desc = "An outdated medical apparatus for listening to the sounds of the human body. It smells faintly of salt."
+	},
 /turf/open/floor/plasteel/vault/side,
 /area/shuttle/syndicate/medical)
 "AD" = (
