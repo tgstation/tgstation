@@ -673,7 +673,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Ammo Box (.357)"
+	name = "Speed Loader (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)

@@ -162,7 +162,7 @@
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)

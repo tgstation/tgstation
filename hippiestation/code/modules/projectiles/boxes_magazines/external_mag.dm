@@ -9,4 +9,4 @@
 
 /obj/item/ammo_box/magazine/g17/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/14)*14]"
+	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(0)/14, 1)*14]"

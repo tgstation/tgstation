@@ -11,7 +11,7 @@
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
 	var/hud_version = "wizard"
-	var/datum/objective_team/wizard/wiz_team //Only created if wizard summons apprentices
+	var/datum/team/wizard/wiz_team //Only created if wizard summons apprentices
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
@@ -33,7 +33,7 @@
 /datum/antagonist/wizard/proc/unregister()
 	SSticker.mode.wizards -= src
 
-/datum/antagonist/wizard/create_team(datum/objective_team/wizard/new_team)
+/datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
 		return
 	if(!istype(new_team))
@@ -43,7 +43,7 @@
 /datum/antagonist/wizard/get_team()
 	return wiz_team
 
-/datum/objective_team/wizard
+/datum/team/wizard
 	name = "wizard team"
 	var/datum/antagonist/wizard/master_wizard
 
@@ -307,18 +307,18 @@
 		parts += "<span class='greentext'>The wizard was successful!</span>"
 	else
 		parts += "<span class='redtext'>The wizard has failed!</span>"
-	
+
 	if(owner.spell_list.len>0)
 		parts += "<B>[owner.name] used the following spells: </B>"
 		var/list/spell_names = list()
 		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 			spell_names += S.name
 		parts += spell_names.Join(", ")
-	
+
 	return parts.Join("<br>")
 
 //Wizard with apprentices report
-/datum/objective_team/wizard/roundend_report()
+/datum/team/wizard/roundend_report()
 	var/list/parts = list()
 
 	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
@@ -326,5 +326,5 @@
 	parts += " "
 	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
 	parts += printplayerlist(members - master_wizard.owner)
-	
+
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -13,7 +13,7 @@
 	D.visible_message("<span class='warning'>[A] pounds [D] on the chest!</span>", \
 				  	"<span class='userdanger'>[A] slams your chest! You can't breathe!</span>")
 	playsound(A, 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.losebreath = Clamp(D.losebreath + 2, 0, 10)
+	D.losebreath = CLAMP(D.losebreath + 2, 0, 10)
 	D.adjustOxyLoss(5)
 	add_logs(A, D, "quickchoked")
 	return TRUE

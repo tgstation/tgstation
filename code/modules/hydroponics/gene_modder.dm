@@ -42,7 +42,7 @@
 
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
-		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
+		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS

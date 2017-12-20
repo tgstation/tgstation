@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return
 
 //Assign default team and creates one for one of a kind team antagonists
-/datum/antagonist/proc/create_team(datum/objective_team/team)
+/datum/antagonist/proc/create_team(datum/team/team)
 	return
 
 //Proc called when the datum is given to a mind.
@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
-	var/datum/objective_team/team = get_team()
+	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
 	qdel(src)
@@ -155,6 +155,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		else
 			already_registered_objectives |= A.objectives
 	objectives = owner.objectives - already_registered_objectives
-		
+
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
