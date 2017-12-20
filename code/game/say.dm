@@ -168,6 +168,41 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/atom/movable/source
 	var/obj/item/device/radio/radio
 
+INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
+/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)
+	. = ..()
+	radio = radio
+	source = M
+	if (istype(M))
+		name = M.GetVoice()
+		verb_say = M.verb_say
+		verb_ask = M.verb_ask
+		verb_exclaim = M.verb_exclaim
+		verb_yell = M.verb_yell
+
+	// The mob's job identity
+	if(ishuman(M))
+		// Humans use their job as seen on the crew manifest. This is so the AI
+		// can know their job even if they don't carry an ID.
+		var/datum/data/record/findjob = find_record("name", name, GLOB.data_core.general)
+		if(findjob)
+			job = findjob.fields["rank"]
+		else
+			job = "Unknown"
+	else if(iscarbon(M))  // Carbon nonhuman
+		job = "No ID"
+	else if(isAI(M))  // AI
+		job = "AI"
+	else if(iscyborg(M))  // Cyborg
+		var/mob/living/silicon/robot/B = M
+		job = "[B.designation] Cyborg"
+	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
+		job = "Personal AI"
+	else if(isobj(M))  // Cold, emotionless machines
+		job = "Machine"
+	else  // Unidentifiable mob
+		job = "Unknown"
+
 /atom/movable/virtualspeaker/GetJob()
 	return job
 
