@@ -17,6 +17,7 @@
 	var/delay = 0								//Delay for energy weapons
 	var/click_cooldown_override = 0				//Override this to make your gun have a faster fire rate, in tenths of a second. 4 is the default gun cooldown.
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
+	var/heavy_metal = TRUE
 
 
 /obj/item/ammo_casing/Initialize()
@@ -58,3 +59,17 @@
 				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
 	else
 		return ..()
+
+/obj/item/ammo_casing/throw_impact(atom/A)
+	if(heavy_metal)
+		bounce_away(FALSE, NONE)
+	. = ..()
+
+/obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, delay = 3)
+	SpinAnimation(10, 1)
+	update_icon()
+	var/turf/T = get_turf(src)
+	if(T && (isfloorturf(T) || isindestructiblefloor(T) || isclosedturf(T)))
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/bulletremove.ogg', 60, 1), delay)
+	else if(still_warm && T && (istype(T, /turf/open/water)))
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), delay)

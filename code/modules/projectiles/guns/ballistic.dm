@@ -31,8 +31,7 @@
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
 			AC.forceMove(drop_location()) //Eject casing onto ground.
-			AC.SpinAnimation(10, 1) //next gen special effects
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, AC, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+			AC.bounce_away(TRUE)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
@@ -125,8 +124,7 @@
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
 		AC.forceMove(drop_location())
-		AC.SpinAnimation(10, 1)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, AC, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+		AC.bounce_away()
 		chambered = null
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
 		playsound(src, "gun_slide_lock", 70, 1)
