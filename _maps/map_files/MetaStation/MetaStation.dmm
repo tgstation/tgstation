@@ -50159,11 +50159,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	step_x = 4;
+	step_y = 4
+	},
 /obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/fire{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -50189,6 +50193,13 @@
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
+	},
+/obj/item/storage/firstaid/toxin{
+	step_x = 0
+	},
+/obj/item/storage/firstaid/o2{
+	step_x = 2;
+	step_y = 2
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -50224,6 +50235,13 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
+/obj/item/storage/firstaid/toxin{
+	step_x = 0
+	},
+/obj/item/storage/firstaid/o2{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -50233,11 +50251,15 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/bruise_pack,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	step_x = 5;
+	step_y = 4
+	},
 /obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/fire{
+	step_x = 2;
+	step_y = 2
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
