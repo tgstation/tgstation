@@ -991,7 +991,7 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		AddComponent(/datum/component/cleaning)
+		LoadComponent(/datum/component/cleaning)
 	else
 		qdel(GetComponent(/datum/component/cleaning))
 

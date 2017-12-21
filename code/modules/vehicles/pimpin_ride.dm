@@ -13,6 +13,9 @@
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
 
+	if(floorbuffer)
+		LoadComponent(/datum/component/cleaning)
+
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
 		qdel(mybag)
@@ -47,7 +50,7 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		AddComponent(/datum/component/cleaning)
+		LoadComponent(/datum/component/cleaning)
 		update_icon()
 	else
 		return ..()
@@ -70,7 +73,3 @@
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE
-
-/obj/vehicle/ridden/janicart/upgraded/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/cleaning)
