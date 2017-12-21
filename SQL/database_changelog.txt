@@ -26,7 +26,7 @@ CREATE TABLE `feedback` (
   `json` json NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM
-
+asdf
 ----------------------------------------------------
 
 28 August 2017, by MrStonedOne
