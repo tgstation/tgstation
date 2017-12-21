@@ -26093,13 +26093,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bnz" = (
-/obj/effect/landmark/start/cargo_technician,
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bnA" = (
@@ -38222,11 +38222,11 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPy" = (
-/obj/effect/landmark/start/scientist,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/chair/comfy/black,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPz" = (
