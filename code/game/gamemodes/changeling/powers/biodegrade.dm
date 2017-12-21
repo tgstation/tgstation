@@ -61,6 +61,7 @@
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/S)
 	if(S && user.wear_suit == S)
 		user.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
+		user.uncuff()
 		new /obj/effect/decal/cleanable/greenglow(S.drop_location())
 		qdel(S)
 
