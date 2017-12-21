@@ -97,3 +97,5 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+
+	visible_message("<b>[user]</b>looks at <b>[src]</b> closely.", "<b>[user]</b> looks at you closely.", , , user)
