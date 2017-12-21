@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - balance: "Floors blessed with holy water prevent servants from warping in and the Eminence from crossing them."
+  - balance: "The Eminence can never enter the Chapel."
