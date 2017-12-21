@@ -9,7 +9,6 @@
 	var/list/chosen_gear
 	var/gear_tab
 	max_save_slots = 6
-	hotkeys = TRUE
 
 /datum/preferences/New(client/C)
 	..()
