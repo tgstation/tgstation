@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/add_to_hud(atom/A)
-	A.hud_list[appearance_key] = theImage
+	LAZYADD(A.hud_list[appearance_key], theImage)
 	. = ..()
 
 /datum/atom_hud/alternate_appearance/basic/remove_from_hud(atom/A)
