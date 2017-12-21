@@ -419,7 +419,7 @@
 	name = "suspicious looking duffel bag"
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
-	item_state = "duffel-syndie"
+	item_state = "duffel-syndieammo"
 	silent = 1
 	slowdown = 0
 
