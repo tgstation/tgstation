@@ -20,7 +20,6 @@
 	force = 15
 	throwforce = 25
 	armour_penetration = 35
-	embed_chance = 0
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
@@ -245,6 +244,11 @@
 	breakouttime = 60
 	knockdown = 20
 
+/obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
+	if(!iscultist(user))
+		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
+		throw_impact(user)
+
 /obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom)
 	if(iscultist(hit_atom))
 		return
@@ -457,7 +461,7 @@
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
 	icon_state = "holyflask"
 	color = "#333333"
-	list_reagents = list("unholywater" = 40)
+	list_reagents = list("unholywater" = 50)
 
 /obj/item/device/shuttle_curse
 	name = "cursed orb"

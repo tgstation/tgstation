@@ -44,6 +44,11 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	. = ..()
 	if(set_keyword)
 		keyword = set_keyword
+	var/chosen = pick("drip1","drip2","drip3","drip4","drip5")
+	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = chosen, loc = src)
+	I.override = TRUE
+	I.color = null
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_test", I)
 
 /obj/effect/rune/examine(mob/user)
 	..()
@@ -80,12 +85,12 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		else
 			to_chat(M, "<span class='warning'>You are unable to invoke the rune!</span>")
 
-/obj/effect/rune/proc/talismanhide() //for talisman of revealing/hiding
+/obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
 	visible_message("<span class='danger'>[src] fades away.</span>")
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100 //To help ghosts distinguish hidden runes
 
-/obj/effect/rune/proc/talismanreveal() //for talisman of revealing/hiding
+/obj/effect/rune/proc/reveal() //for talisman of revealing/hiding
 	invisibility = 0
 	visible_message("<span class='danger'>[src] suddenly appears!</span>")
 	alpha = initial(alpha)
@@ -472,7 +477,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	GLOB.poi_list -= src
 	. = ..()
 
-/obj/effect/rune/narsie/talismanhide() //can't hide this, and you wouldn't want to
+/obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
 
 /obj/effect/rune/narsie/invoke(var/list/invokers)

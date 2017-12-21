@@ -481,6 +481,12 @@
 /obj/machinery/door/airlock/cult/unruned/glass/friendly
 	friendly = TRUE
 
+/obj/machinery/door/airlock/cult/weak
+	name = "brittle cult airlock"
+	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
+	normal_integrity = 180
+	damage_deflection = 5
+
 //Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
 /obj/machinery/door/airlock/clockwork
 	name = "pinion airlock"

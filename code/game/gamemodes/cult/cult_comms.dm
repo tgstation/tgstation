@@ -14,6 +14,7 @@
 
 /datum/action/innate/cult/comm
 	name = "Communion"
+	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
 
 /datum/action/innate/cult/comm/Activate()
@@ -338,8 +339,10 @@
 	return ..()
 
 /datum/action/innate/cult/master/pulse/Destroy()
-	QDEL_NULL(PM)
-	return ..()
+	var/obj/effect/proc_holder/pulse/destroy = PM
+	. = ..()
+	if(destroy && !QDELETED(destroy))
+		QDEL_NULL(destroy)
 
 /datum/action/innate/cult/master/pulse/Activate()
 	PM.toggle(owner) //the important bit
@@ -351,8 +354,9 @@
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()
-	QDEL_NULL(attached_action)
+	attached_action = null
 	return ..()
+
 
 /obj/effect/proc_holder/pulse/proc/toggle(mob/user)
 	if(active)

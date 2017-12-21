@@ -6,6 +6,27 @@
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
 
+/obj/structure/destructible/cult/proc/conceal() //for spells that hide cult presence
+	density = FALSE
+	visible_message("<span class='danger'>[src] fades away.</span>")
+	invisibility = INVISIBILITY_OBSERVER
+	alpha = 100 //To help ghosts distinguish hidden runes
+	light_range = 0
+	light_power = 0
+	update_light()
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/destructible/cult/proc/reveal() //for spells that reveal cult presence
+	density = initial(density)
+	invisibility = 0
+	visible_message("<span class='danger'>[src] suddenly appears!</span>")
+	alpha = initial(alpha)
+	light_range = initial(light_range)
+	light_power = initial(light_power)
+	update_light()
+	START_PROCESSING(SSfastprocess, src)
+
+
 /obj/structure/destructible/cult/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
