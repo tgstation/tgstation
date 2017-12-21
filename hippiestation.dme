@@ -2393,7 +2393,6 @@
 #include "hippiestation\code\_onclick\hud\stamina.dm"
 #include "hippiestation\code\_onclick\hud\vampire.dm"
 #include "hippiestation\code\controllers\configuration.dm"
-#include "hippiestation\code\controllers\subsystem\input.dm"
 #include "hippiestation\code\controllers\subsystem\job.dm"
 #include "hippiestation\code\controllers\subsystem\reagent_states.dm"
 #include "hippiestation\code\controllers\subsystem\throwing.dm"
