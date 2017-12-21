@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "At the end of the round, all players can see who the antagonists
+are."
