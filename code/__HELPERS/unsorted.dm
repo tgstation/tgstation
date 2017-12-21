@@ -1534,10 +1534,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 #define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
 
 /proc/___callbackvarset(list_or_datum, var_name, var_value)
-	if(length(list_or_datum))
+	var/is_glob = list_or_datum == GLOBAL_PROC
+	if(!is_glob && length(list_or_datum))
 		list_or_datum[var_name] = var_value
 		return
-	var/datum/D = list_or_datum
+	var/datum/D = is_glob ? GLOB : list_or_datum
 	if(IsAdminAdvancedProcCall())
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
