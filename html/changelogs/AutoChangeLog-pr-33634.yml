@@ -1,0 +1,7 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer elect two Eminences simultaneously."
+  - bugfix: "The Eminence no longer drifts in space."
+  - tweak: "The Eminence's mass recall now works on unconscious servants."
+  - tweak: "The Eminence's messages now have follow links for observers."
