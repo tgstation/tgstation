@@ -32,7 +32,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
-	var/red_alert_access //if TRUE, this door will always open on red alert
+	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 
 /obj/machinery/door/examine(mob/user)
 	..()
