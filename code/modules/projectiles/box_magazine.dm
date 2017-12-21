@@ -96,9 +96,10 @@
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
-		user.put_in_hands(A)
+		if(!user.put_in_hands(A))
+			A.bounce_away(FALSE, NONE)
+		playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
-		playsound(A, 'sound/weapons/bulletremove.ogg', 60, 1)
 		update_icon()
 
 /obj/item/ammo_box/update_icon()
