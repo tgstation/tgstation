@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		for(var/V in gift_types_list)
 			if(ispath(V) && ispath(V, /obj/item))
 				var/obj/item/I = V
-				if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.flags_1) & ABSTRACT_1))
+				if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.flags_1) & ABSTRACT_1) || (initial(I.flags_1) & DROPDEL_1))
 					gift_types_list -= V
 					GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)
