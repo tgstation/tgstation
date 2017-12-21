@@ -70,6 +70,10 @@
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null
+	if(heated)
+		var/mob/camera/eminence/E = get_eminence()
+		if(E)
+			E.superheated_walls--
 	return ..()
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
