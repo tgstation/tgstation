@@ -46,6 +46,9 @@
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
 
+		client.SendSignal(COMSIG_CLIENT_MOB_SWITCH, client.last_mob, src)
+		client.last_mob = src
+
 	if(!GLOB.individual_log_list[ckey])
 		GLOB.individual_log_list[ckey] = logging
 	else

@@ -12,6 +12,8 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isclient(D) (istype(D, /client))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 

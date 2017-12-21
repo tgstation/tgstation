@@ -306,6 +306,8 @@
 #include "code\datums\components\archaeology.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\chasm.dm"
+#include "code\datums\components\click_intercept.dm"
+#include "code\datums\components\click_reciever.dm"
 #include "code\datums\components\decal.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"

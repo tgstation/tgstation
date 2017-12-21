@@ -66,6 +66,9 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
+/obj/item/proc/InterceptMouseDrag(src_object, over_location, srC_location, over_location, params, mob)
+	return
+
 /obj/item
 	var/canMouseDown = FALSE
 

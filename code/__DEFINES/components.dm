@@ -80,7 +80,7 @@
 #define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"				//From base of client/MouseDown(): (object, location, control, params)
 #define COMSIG_CLIENT_MOUSEUP "client_mouseup"					//From base of client/MouseUp() : (object, location, control, params)
 #define COMSIG_CLIENT_MOUSEMOVE "client_mousemove"				//From base of client/MouseMove(): (object, location, control, params)
-#define COMSIG_CLEINT_MOUSEDRAG "client_mousedrag"				//From base of client/MouseDrag(): (src_object, over_object, src_location, over_location, src_control, over_control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"				//From base of client/MouseDrag(): (src_object, over_object, src_location, over_location, src_control, over_control, params)
 #define COMSIG_CLIENT_MOUSEDROP "client_mousedrop"				//From base of atom/MouseDrop(): (atom/over, src_location, over_location, src_control, over_control, params)
 #define COMSIG_CLIENT_MOUSEWHEEL "client_mousewheel"			//From base of mob/MouseWheel(): (atom/A, delta_x, delta_y, params)
 

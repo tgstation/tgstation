@@ -14,7 +14,7 @@
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 	var/ircreplyamount = 0
-
+	var/datum/buildmode/buildmode
 		/////////
 		//OTHER//
 		/////////
@@ -70,3 +70,5 @@
 	var/list/credits //lazy list of all credit object bound to this client
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
+
+	var/mob/last_mob		//last mob.

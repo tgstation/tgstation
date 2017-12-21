@@ -305,11 +305,9 @@
 		return
 	stop_aiming()
 	if(istype(current_user))
-		LAZYREMOVE(current_user.click_intercepts, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYADD(current_user.click_intercepts, src)
 
 /obj/item/gun/energy/beam_rifle/InterceptMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
