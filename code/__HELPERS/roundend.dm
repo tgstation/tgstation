@@ -70,19 +70,19 @@
 	for(var/V in GLOB.news_network.network_channels)
 		var/datum/newscaster/feed_channel/channel = V
 		if(!istype(channel))
-			stack_trace("Non-channel in newscaster channel list)
+			stack_trace("Non-channel in newscaster channel list")
 			continue
 		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
 		for(var/M in channel.messages)
 			var/datum/newscaster/feed_message/message = M
 			if(!istype(message))
-				stack_trace("Non-message in newscaster channel messages list)
+				stack_trace("Non-message in newscaster channel messages list")
 				continue
 			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list()))
 			for(var/C in message.comments)
 				var/datum/newscaster/feed_comment/comment = C
 				if(!istype(comment))
-					stack_trace("Non-message in newscaster message comments list)
+					stack_trace("Non-message in newscaster message comments list")
 					continue
 				file_data["[pos]"]["messages"]["comments"] += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
 		pos++
