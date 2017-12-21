@@ -1,0 +1,5 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - rscadd: "You can adjust line height in chat settings"
+  - tweak: "Default chat line height is slightly shorter, from 1.4 to 1.2"
