@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscdel: "Integrated circuit smoke circuits now require 10 units of reagents to fire."
