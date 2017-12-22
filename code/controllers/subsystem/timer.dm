@@ -379,6 +379,16 @@ SUBSYSTEM_DEF(timer)
 	next.prev = src
 	prev.next = src
 
+/datum/controller/subsystem/timer/proc/TimerTimeLeft(id)
+	if(!id)
+		CRASH("Bad timer ID!")
+	
+	var/datum/timedevent/T = timer_id_dict[id]
+	if(!T)
+		return 0
+	
+	return world.time - T.timeToRun
+
 /datum/timedevent/Destroy()
 	..()
 	if (flags & TIMER_UNIQUE && hash)
