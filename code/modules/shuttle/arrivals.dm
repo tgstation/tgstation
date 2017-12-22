@@ -8,10 +8,10 @@
 	dir = WEST
 	port_direction = SOUTH
 
+	roundstart_move = "arrivals_stationary"
+
 	callTime = INFINITY
 	ignitionTime = 50
-
-	roundstart_move = TRUE	//force a call to dockRoundstart
 
 	var/sound_played
 	var/damaged	//too damaged to undock?
@@ -22,15 +22,19 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map!")
-		return INITIALIZE_HINT_QDEL
-	SSshuttle.arrivals = src
-
+	if(!timid)
+		register()
+		
 	. = ..()
 
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/register()
+	..()
+	if(SSshuttle.arrivals)
+		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
@@ -53,13 +57,6 @@
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
-
-/obj/docking_port/mobile/arrivals/dockRoundstart()
-	SSshuttle.generate_transit_dock(src)
-	Launch()
-	timer = world.time
-	check()
-	return TRUE
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()

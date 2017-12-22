@@ -6314,7 +6314,8 @@
 	launch_status = 0;
 	name = "monastery shuttle";
 	port_direction = 2;
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -8206,7 +8207,8 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -18486,7 +18488,8 @@
 	height = 15;
 	name = "Pubby emergency shuttle";
 	port_direction = 4;
-	width = 18
+	width = 18;
+	timid = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -18841,7 +18844,8 @@
 	req_access_txt = "31"
 	},
 /obj/docking_port/mobile/supply{
-	dir = 4
+	dir = 4;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 4;
@@ -23504,7 +23508,8 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	width = 7
+	width = 7;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -23969,7 +23974,8 @@
 /obj/docking_port/mobile/arrivals{
 	height = 13;
 	name = "pubby arrivals shuttle";
-	width = 6
+	width = 6;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -29428,7 +29434,8 @@
 	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -44857,7 +44864,8 @@
 	dir = 1;
 	dwidth = 5;
 	height = 11;
-	width = 11
+	width = 11;
+	timid = 0
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,
@@ -46742,7 +46750,8 @@
 	port_direction = 4;
 	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;

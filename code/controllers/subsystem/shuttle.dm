@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	var/obj/machinery/shuttle_manipulator/manipulator
+
 	var/list/mobile = list()
 	var/list/stationary = list()
 	var/list/transit = list()
@@ -88,14 +90,12 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
-	var/obj/machinery/shuttle_manipulator/M
-	for(var/obj/machinery/shuttle_manipulator/m in GLOB.machines)
-		M = m
-		break
+	if(!istype(manipulator))
+		CRASH("No shuttle manipulator found.")
 
 	for(var/d in shuttle_templates_to_load)
 		var/datum/map_template/shuttle/D = d
-		M.action_load(D)
+		manipulator.action_load(D)
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
@@ -559,7 +559,7 @@ SUBSYSTEM_DEF(shuttle)
 		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
-	return TRUE
+	return new_transit_dock
 
 /datum/controller/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)

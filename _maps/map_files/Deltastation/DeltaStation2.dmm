@@ -616,7 +616,8 @@
 /obj/docking_port/mobile/pod{
 	id = "pod1";
 	name = "escape pod 1";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/white,
@@ -632,7 +633,8 @@
 /obj/docking_port/mobile/pod{
 	id = "pod2";
 	name = "escape pod 2";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/white,
@@ -1262,7 +1264,8 @@
 	dwidth = 4;
 	height = 17;
 	name = "delta arrivals shuttle";
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 2;
@@ -3136,7 +3139,8 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/machinery/bluespace_beacon,
 /obj/docking_port/mobile/auxillary_base,
@@ -3381,7 +3385,8 @@
 	port_direction = 8;
 	preferred_direction = 8;
 	roundstart_move = "whiteship_away";
-	width = 32
+	width = 32;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -4003,7 +4008,8 @@
 	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 1;
@@ -14560,7 +14566,8 @@
 /obj/docking_port/mobile/supply{
 	dwidth = 5;
 	roundstart_move = "supply_away";
-	width = 12
+	width = 12;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -25624,7 +25631,8 @@
 	id = "pod3";
 	name = "escape pod 3";
 	port_direction = 2;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -28160,7 +28168,8 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	width = 7
+	width = 7;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -37878,7 +37887,8 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -101374,7 +101384,8 @@
 	name = "Delta emergency shuttle";
 	width = 30;
 	preferred_direction = 2;
-	port_direction = 4
+	port_direction = 4;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dheight = 0;

@@ -251,8 +251,9 @@
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates are timid
-	var/timid = FALSE
+	// All shuttle templates MUST be timid, imports will fail if they're not
+	// Shuttle defined already on the map MUST NOT be timid, or they won't work
+	var/timid = TRUE
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff

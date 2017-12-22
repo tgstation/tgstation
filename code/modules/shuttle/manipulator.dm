@@ -23,6 +23,14 @@
 /obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
+	SSshuttle.manipulator = src
+
+/obj/machinery/shuttle_manipulator/Destroy(force)
+	if(!force)
+		. = QDEL_HINT_LETMELIVE
+	else
+		SSshuttle.manipulator = null
+		. = ..()
 
 /obj/machinery/shuttle_manipulator/update_icon()
 	cut_overlays()
@@ -208,7 +216,6 @@
 
 	if(!D)
 		var/m = "No dock found for preview shuttle, aborting."
-		WARNING(m)
 		throw EXCEPTION(m)
 
 	var/result = preview_shuttle.canDock(D)
@@ -220,7 +227,8 @@
 		WARNING(m)
 		return
 
-	existing_shuttle.jumpToNullSpace()
+	if(existing_shuttle)
+		existing_shuttle.jumpToNullSpace()
 
 	preview_shuttle.initiate_docking(D)
 	. = preview_shuttle

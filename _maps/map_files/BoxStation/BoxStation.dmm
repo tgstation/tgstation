@@ -2153,7 +2153,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle"
+	name = "Box emergency shuttle";
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 4;
@@ -2273,7 +2274,8 @@
 	id = "pod3";
 	name = "escape pod 3";
 	port_direction = 2;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
@@ -5918,7 +5920,8 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -7946,7 +7949,8 @@
 	dir = 4;
 	dwidth = 4;
 	height = 9;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,
@@ -35465,7 +35469,8 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	width = 7
+	width = 7;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -48506,7 +48511,8 @@
 	id = "pod4";
 	name = "escape pod 4";
 	port_direction = 2;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_4)
@@ -48793,7 +48799,8 @@
 	dir = 8;
 	id = "pod2";
 	name = "escape pod 2";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -51567,7 +51574,8 @@
 	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -51588,7 +51596,8 @@
 	dir = 8;
 	id = "pod1";
 	name = "escape pod 1";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -51755,7 +51764,8 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	width = 28
+	width = 28;
+	timid = 0
 	},
 /obj/machinery/door/airlock/titanium{
 	name = "recovery shuttle external airlock"
@@ -52133,7 +52143,8 @@
 	},
 /obj/docking_port/mobile/supply{
 	dwidth = 5;
-	width = 12
+	width = 12;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;

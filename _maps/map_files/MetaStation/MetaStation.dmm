@@ -503,7 +503,8 @@
 /obj/docking_port/mobile/pod{
 	id = "pod2";
 	name = "escape pod 2";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -1576,7 +1577,8 @@
 	id = "pod3";
 	name = "escape pod 3";
 	port_direction = 2;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
@@ -12723,7 +12725,8 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	width = 7
+	width = 7;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -12936,7 +12939,8 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -20816,7 +20820,8 @@
 /obj/docking_port/mobile/pod{
 	id = "pod1";
 	name = "escape pod 1";
-	port_direction = 2
+	port_direction = 2;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -28957,7 +28962,8 @@
 	id = "pod4";
 	name = "escape pod 4";
 	port_direction = 2;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_4)
@@ -50798,7 +50804,8 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	width = 27
+	width = 27;
+	timid = 0
 	},
 /obj/machinery/door/airlock/titanium{
 	name = "recovery shuttle external airlock"
@@ -72820,7 +72827,8 @@
 /obj/docking_port/mobile/supply{
 	dwidth = 5;
 	roundstart_move = "supply_away";
-	width = 12
+	width = 12;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -72971,7 +72979,8 @@
 	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 8;
@@ -73318,7 +73327,8 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
-	width = 9
+	width = 9;
+	timid = 0
 	},
 /obj/machinery/bluespace_beacon,
 /obj/machinery/computer/auxillary_base,
@@ -74686,7 +74696,8 @@
 	dwidth = 5;
 	height = 14;
 	name = "Meta emergency shuttle";
-	width = 25
+	width = 25;
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dheight = 0;
@@ -79087,7 +79098,8 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	width = 7
+	width = 7;
+	timid = 0
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -80695,7 +80707,8 @@
 	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	width = 28
+	width = 28;
+	timid = 0
 	},
 /obj/machinery/door/airlock/titanium{
 	name = "recovery shuttle external airlock"

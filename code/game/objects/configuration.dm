@@ -16,10 +16,9 @@
 
 /obj/configuration/shuttle_loader/Initialize(mapload)
 	. = ..()
-	for(var/id in SSmapping.shuttle_templates)
-		var/datum/map_template/shuttle/D = SSmapping.shuttle_templates[id]
-		if(D.shuttle_id == shuttle_id)
-			SSshuttle.shuttle_templates_to_load += D
+	var/datum/map_template/shuttle/D = SSmapping.shuttle_templates[shuttle_id]
+	if(istype(D))
+		SSshuttle.shuttle_templates_to_load += D
 
 /obj/configuration/shuttle_loader/arrival_box
 	name = "arrival shuttle (Box) loader"
