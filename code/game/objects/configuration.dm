@@ -23,3 +23,7 @@
 /obj/configuration/shuttle_loader/arrival_box
 	name = "arrival shuttle (Box) loader"
 	shuttle_id = "arrival_box"
+
+/obj/configuration/shuttle_loader/emergency_box
+	name = "emergency shuttle (Box) loader"
+	shuttle_id = "emergency_box"
