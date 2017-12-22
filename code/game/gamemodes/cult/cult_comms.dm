@@ -24,7 +24,7 @@
 
 	cultist_commune(usr, input)
 
-/proc/cultist_commune(mob/living/user, message)
+/datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
@@ -34,10 +34,7 @@
 	var/span = "cultitalic"
 	if(user.mind && user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
 		span = "cultlarge"
-		if(ishuman(user))
-			title = "Master"
-		else
-			title = "Lord"
+		title = "Master"
 	else if(!ishuman(user))
 		title = "Construct"
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
@@ -50,6 +47,28 @@
 			to_chat(M, "[link] [my_message]")
 
 	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
+
+/datum/action/innate/cult/comm/spirit
+	name = "Spiritual Communion"
+	desc = "Conveys a message from the spirit realm that all cultists can hear."
+
+/datum/action/innate/cult/comm/spirit/IsAvailable()
+	if(iscultist(owner.mind.current))
+		return TRUE
+
+/datum/action/innate/cult/comm/spirit/cultist_commune(mob/living/user, message)
+	var/my_message
+	if(!message)
+		return
+	my_message = "<span class='cultboldtalic'>The [user.name]: [message]</span>"
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(iscultist(M))
+			to_chat(M, my_message)
+		else if(M in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(M, user)
+			to_chat(M, "[link] [my_message]")
+
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"
@@ -235,8 +254,6 @@
 	..()
 
 /datum/action/innate/cult/master/cultmark/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
-		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
 			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can mark another target!</b></span>")
@@ -279,6 +296,9 @@
 	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 
 	if(target in view(7, get_turf(ranged_ability_user)))
+		if(C.cult_team.blood_target)
+			to_chat(ranged_ability_user, "<span class='cult'>The cult has already designated a target!</span>")
+			return FALSE
 		C.cult_team.blood_target = target
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
@@ -289,7 +309,7 @@
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
-				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				to_chat(B.current, "<span class='cultlarge'><b>[ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
 				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 				B.current.client.images += C.cult_team.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
@@ -307,6 +327,82 @@
 	QDEL_NULL(team.blood_target_image)
 	team.blood_target = null
 
+
+/datum/action/innate/cult/master/cultmark/ghost
+	name = "Mark a Blood Target for the Cult"
+	desc = "Marks a target for the entire cult to track."
+
+/datum/action/innate/cult/master/cultmark/IsAvailable()
+	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+		return TRUE
+	else
+		qdel(src)
+
+/datum/action/innate/cult/ghostmark //Ghost version
+	name = "Blood Mark your Target"
+	desc = "Marks whatever you are orbitting - for the entire cult to track."
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/cooldown = 0
+	var/base_cooldown = 600
+
+/datum/action/innate/cult/ghostmark/IsAvailable()
+	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+		return TRUE
+	else
+		qdel(src)
+
+/datum/action/innate/cult/ghostmark/proc/reset_button()
+	if(owner)
+		name = "Blood Mark your Target"
+		desc = "Marks whatever you are orbitting - for the entire cult to track."
+		button_icon_state = "cult_mark"
+		owner.update_action_buttons_icon()
+		SEND_SOUND(owner, 'sound/magic/enter_blood.ogg')
+		to_chat(owner,"<span class='cultbold'>Your previous mark is gone - you are now ready to create a new blood mark.</span>")
+
+/datum/action/innate/cult/ghostmark/Activate()
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(C.cult_team.blood_target)
+		if(cooldown>world.time)
+			reset_blood_target(C.cult_team)
+			to_chat(owner, "<span class='cultbold'>You have cleared the cult's blood target!</span>")
+			qdel(C.cult_team.blood_target_reset_timer)
+			return
+		else
+			to_chat(owner, "<span class='cultbold'>The cult has already designated a target!</span>")
+			return
+	if(cooldown>world.time)
+		to_chat(owner, "<span class='cultbold'>You aren't ready to place another blood mark yet!</span>")
+		return
+	if(owner.orbiting && owner.orbiting.orbiting)
+		target = owner.orbiting.orbiting
+	else
+		target = get_turf(owner)
+	if(!target)
+		return
+	C.cult_team.blood_target = target
+	var/area/A = get_area(target)
+	cooldown = world.time + base_cooldown
+	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
+	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
+	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
+	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
+	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+	owner.client.images += C.cult_team.blood_target_image
+	for(var/datum/mind/B in SSticker.mode.cult)
+		if(B.current && B.current.stat != DEAD && B.current.client)
+			to_chat(B.current, "<span class='cultlarge'><b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+			B.current.client.images += C.cult_team.blood_target_image
+	to_chat(owner,"<span class='cultbold'>You have marked the [target] for the cult! It will last for [base_cooldown/10] seconds.</span>")
+	name = "Clear the Blood Mark"
+	desc = "Remove the Blood Mark you previously set."
+	button_icon_state = "emp"
+	owner.update_action_buttons_icon()
+	C.cult_team.blood_target_reset_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target,C.cult_team), base_cooldown, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/reset_button), base_cooldown)
 
 
 //////// ELDRITCH PULSE /////////

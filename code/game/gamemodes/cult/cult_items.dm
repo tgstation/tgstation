@@ -21,6 +21,12 @@
 	throwforce = 25
 	armour_penetration = 35
 
+/obj/item/melee/cultblade/dagger/Initialize()
+	..()
+	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
+
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
@@ -106,6 +112,12 @@
 	jaunt = new(src)
 	linked_action = new(src)
 
+/obj/item/twohanded/required/cult_bastard/examine(mob/user)
+	if(contents.len)
+		desc+="<br><b>There are [contents.len] souls trapped within the sword's core.</b>"
+	else
+		desc+="<br>The sword appears to be quite lifeless."
+
 /obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
 	return FALSE
 
@@ -144,7 +156,7 @@
 
 /obj/item/twohanded/required/cult_bastard/IsReflect()
 	if(spinning)
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
 		return TRUE
 	else
 		..()
@@ -163,23 +175,22 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled)
+	if(dash_toggled && !proximity)
 		jaunt.Teleport(user, target)
 		return
-	if(!proximity)
-		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.stat != CONSCIOUS)
-			var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
-			SS.attack(H, user)
-			if(!LAZYLEN(SS.contents))
+	if(proximity)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.stat != CONSCIOUS)
+				var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
+				SS.attack(H, user)
+				if(!LAZYLEN(SS.contents))
+					qdel(SS)
+		if(istype(target, /obj/structure/constructshell) && contents.len)
+			var/obj/item/device/soulstone/SS = contents[1]
+			if(istype(SS))
+				SS.transfer_soul("CONSTRUCT",target,user)
 				qdel(SS)
-	if(istype(target, /obj/structure/constructshell) && contents.len)
-		var/obj/item/device/soulstone/SS = contents[1]
-		if(istype(SS))
-			SS.transfer_soul("CONSTRUCT",target,user)
-			qdel(SS)
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"

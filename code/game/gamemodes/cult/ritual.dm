@@ -20,7 +20,7 @@ This file contains the cult dagger and rune list code
 		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>")
 		to_chat(user, "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>")
 		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
-		to_chat(user, "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>")
+		to_chat(user, "<span class='cult'>Striking a noncultist, however, will tear their flesh.</span>")
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))
@@ -30,7 +30,7 @@ This file contains the cult dagger and rune list code
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
-			return FALSE
+		return FALSE
 	. = ..()
 
 
@@ -186,8 +186,6 @@ This file contains the cult dagger and rune list code
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-
-	//AAAAAAAAAAAAAAAH, i'm rewriting enough for now so TODO: remove this shit
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!summon_objective)
 			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")

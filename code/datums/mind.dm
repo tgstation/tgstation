@@ -328,7 +328,7 @@
 		N.send_to_spawnpoint = FALSE
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
-		
+
 
 	enslaved_to = creator
 
@@ -641,7 +641,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if(iscultist(current))
 			text += "not mindshielded | <a href='?src=[REF(src)];cult=clear'>employee</a> | <b>CULTIST</b>"
-			text += "<br>Give <a href='?src=[REF(src)];cult=tome'>tome</a> | <a href='?src=[REF(src)];cult=amulet'>amulet</a>."
+			text += "<br>Give <a href='?src=[REF(src)];cult=dagger'>Ritual Dagger</a>"
 		else if(is_convertable_to_cult(current))
 			text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=[REF(src)];cult=cultist'>cultist</a>"
 		else
@@ -770,13 +770,13 @@
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
-			
+
 			for(var/datum/antagonist/A in antag_datums)
 				if(objective in A.objectives)
 					target_antag = A
 					objective_pos = A.objectives.Find(objective)
 					break
-			
+
 			if(!target_antag) //Shouldn't happen
 				stack_trace("objective without antagonist found")
 				objective_pos = objectives.Find(objective)
@@ -932,7 +932,7 @@
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
-		
+
 		for(var/datum/antagonist/A in antag_datums)
 			if(objective in A.objectives)
 				A.objectives -= objective
@@ -1018,15 +1018,9 @@
 					SSticker.mode.add_cultist(src, 0)
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("tome")
+			if("dagger")
 				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
-				if (C.equip_cultist(current,1))
-					to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
-
-			if("amulet")
-				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
-				if (C.equip_cultist(current))
-					to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")
+				C.equip_cultist(FALSE)
 
 	else if(href_list["clockcult"])
 		switch(href_list["clockcult"])
