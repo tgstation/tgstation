@@ -273,13 +273,9 @@
 
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
-		if(proximity)
-			S.sense(target,user)
-		else
-			S.sense_remote(target,user)
-
-	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+	for(var/obj/item/integrated_circuit/input/S in assembly_components)
+		if(S.sense(target,user,proximity))
+			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
 /obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
@@ -317,10 +313,8 @@
 		interact(user)
 		return TRUE
 	else
-		if(user.a_intent == INTENT_HELP)
-			for(var/obj/item/integrated_circuit/input/objscaner/S in assembly_components)
-				S.attackby_react(I,user)
-				return TRUE
+		for(var/obj/item/integrated_circuit/input/S in assembly_components)
+			S.attackby_react(I,user,user.a_intent)
 		return ..()
 
 

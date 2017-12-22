@@ -706,7 +706,9 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user)
+/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user,prox)
+	if(!prox)
+		return FALSE
 	if(!check_then_do_work())
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
@@ -730,7 +732,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/ranged/sense_remote(var/atom/A,mob/user)
+/obj/item/integrated_circuit/input/sensor/ranged/sense(var/atom/A,mob/user)
 	if(!user)
 		return FALSE
 	if(user.client)
@@ -763,7 +765,9 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user)
+/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user,intent)
+	if(intent!=INTENT_HELP)
+		return FALSE
 	if(!check_then_do_work())
 		return FALSE
 	var/pu = get_pin_data(IC_INPUT, 1)
