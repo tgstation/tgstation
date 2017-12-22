@@ -7,7 +7,7 @@
 	var/reagent_type
 	foodtype = TOXIC
 	volume = 200
-	container_type = TRANSPARENT_1
+	container_type = TRANSPARENT
 	bitesize = 5
 
 /obj/item/reagent_containers/food/snacks/solid_reagent/Initialize()

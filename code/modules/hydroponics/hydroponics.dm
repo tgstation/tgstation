@@ -712,8 +712,8 @@
 			else if(transfer_amount) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
-			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/reagent_containers/glass/))
+			// Beakers, bottles, buckets, etc.
+			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		if(irrigate && transfer_amount > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
@@ -881,26 +881,26 @@
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
-	nutrilevel = Clamp(nutrilevel + adjustamt, 0, maxnutri)
+	nutrilevel = CLAMP(nutrilevel + adjustamt, 0, maxnutri)
 
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
-	waterlevel = Clamp(waterlevel + adjustamt, 0, maxwater)
+	waterlevel = CLAMP(waterlevel + adjustamt, 0, maxwater)
 
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		plant_health = Clamp(plant_health + adjustamt, 0, myseed.endurance)
+		plant_health = CLAMP(plant_health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
-	toxic = Clamp(toxic + adjustamt, 0, 100)
+	toxic = CLAMP(toxic + adjustamt, 0, 100)
 
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
-	pestlevel = Clamp(pestlevel + adjustamt, 0, 10)
+	pestlevel = CLAMP(pestlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
-	weedlevel = Clamp(weedlevel + adjustamt, 0, 10)
+	weedlevel = CLAMP(weedlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)

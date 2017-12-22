@@ -20,7 +20,7 @@
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
-	
+
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
@@ -28,7 +28,7 @@
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = null
-	
+
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -90,7 +90,7 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+	if((target.has_disability(HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -129,9 +129,11 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
-		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
+	if(isliving(target))
+		var/mob/living/L = target
+		if((L.has_disability(HUSK)) || !L.has_dna())
+			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
+			return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
@@ -207,7 +209,7 @@
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.become_nearsighted()
+	target.become_nearsighted(EYE_DAMAGE)
 	target.blind_eyes(20)
 	target.blur_eyes(40)
 	return TRUE

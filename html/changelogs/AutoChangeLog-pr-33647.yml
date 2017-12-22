@@ -1,0 +1,8 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - refactor: "Telecomms and radio code has been cleaned up."
+  - tweak: "The PDA message server is now a real piece of telecomms machinery."
+  - tweak: "PDA logs now include the job as well as name of the participants."
+  - bugfix: "The Syndicate frequency no longer hears its own messages twice."
+  - bugfix: "Talking directly into a radio which is also hot-miked no longer double-talks."

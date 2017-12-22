@@ -524,7 +524,7 @@
 
 		if(SSticker.mode.brother_teams.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Brothers</B></td><td></td><td></td></tr>"
-			for(var/datum/objective_team/brother_team/team in SSticker.mode.brother_teams)
+			for(var/datum/team/brother_team/team in SSticker.mode.brother_teams)
 				for(var/datum/mind/brother in team.members)
 					var/mob/M = brother.current
 					if(M)
@@ -611,7 +611,7 @@
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		
+
 		var/list/pirates = get_antagonists(/datum/antagonist/pirate)
 		if(pirates.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Pirates</B></td><td></td></tr>"

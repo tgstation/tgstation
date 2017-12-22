@@ -206,7 +206,7 @@
 	if(engines_cooling)
 		return "[.] - Engines cooling."
 
-/obj/docking_port/mobile/pirate/dock(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
+/obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	. = ..()
 	if(. == DOCKING_SUCCESS && new_dock.z != ZLEVEL_TRANSIT)
 		engines_cooling = TRUE

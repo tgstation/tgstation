@@ -142,6 +142,56 @@
         "",
         ";",
         ".h"
+    ],
+
+    "god_foe": [
+        "MORTALS",
+        "HERETICS",
+        "INSECTS",
+	"UNBELIEVERS",
+	"BLASPHEMERS",
+	"PARASITES",
+	"WEAKLINGS",
+	"PEASANTS"
+    ],
+
+    "god_aggressive": [
+        "BEGONE, @pick(god_foe)!",
+        "DIE, @pick(god_foe)!",
+        "BLEED, @pick(god_foe)!",
+	"BURN, @pick(god_foe)!",
+	"ALL WILL FALL BEFORE ME!",
+	"ENDLESS SUFFERING AWAITS YOU, @pick(god_foe).",
+	"DEATH TO @pick(god_foe)!"
+    ],
+
+    "god_neutral": [
+        "STOP",
+	"HALT.",
+        "BE SILENT.",
+        "QUIET",
+	"SEE THE TRUTH BEFORE YOU, MORTALS.",
+	"MORTALS, SAY YOUR NAME",
+	"BEGONE, MORTALS.",
+	"BE HEALED, MORTALS. I AM FEELING MERCIFUL.",
+	"DANCE FOR ME, LITTLE MORTALS.",
+	"YOU. STOP.",
+	"REST, MORTALS, TOMORROW IS A LONG DAY.",
+	"YOU MORTALS MAKE ME SICK.",
+	"HONK..."
+    ],
+
+    "god_unstun": [
+	"GET UP. I HAVE NO TIME TO LOSE.",
+	"GET UP, PRIEST.",
+	"GET UP."
+    ],
+
+    "god_heal": [
+	"YOU WILL LIVE TO SEE ANOTHER DAY.",
+	"YOU SHALL SURVIVE THIS, MY PRIEST.",
+	"BE HEALED, PRIEST.",
+	"YOUR LIFE IS IMPORTANT. KEEP IT."
     ]
 
 }

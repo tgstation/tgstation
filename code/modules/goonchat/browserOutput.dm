@@ -132,7 +132,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
-		adminMusicVolume = Clamp(text2num(volume), 0, 100)
+		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()

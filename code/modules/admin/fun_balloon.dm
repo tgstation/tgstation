@@ -110,7 +110,7 @@
 	anchored = TRUE
 
 /obj/effect/shuttle_build/New()
-	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
+	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
 	qdel(src)
 
 //Arena

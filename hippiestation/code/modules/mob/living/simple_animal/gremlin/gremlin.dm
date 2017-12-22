@@ -98,7 +98,7 @@ var/list/bad_gremlin_items = list()
 	return markov_chain(generate_markov_input(), rand(2,5), rand(100,700)) //The numbers are chosen arbitarily
 
 /mob/living/simple_animal/hostile/gremlin/proc/tamper(obj/M)
-	if(!M.suit_fibers) 
+	if(!M.suit_fibers)
 		M.suit_fibers = list()
 	switch(M.npc_tamper_act(src))
 		if(NPC_TAMPER_ACT_FORGET)
@@ -157,7 +157,7 @@ var/list/bad_gremlin_items = list()
 			target = null
 		if(entry_vent && get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents += temp_vent
 			if(!vents.len)

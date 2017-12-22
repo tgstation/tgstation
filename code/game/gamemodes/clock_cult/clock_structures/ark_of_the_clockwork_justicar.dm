@@ -113,7 +113,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(!M.current.stat)
+		if(M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 		M.current.clear_fullscreen("flash", 5)
