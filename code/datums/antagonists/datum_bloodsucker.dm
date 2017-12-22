@@ -292,11 +292,12 @@
 
 datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 
-	// Blood Counter
-	add_hud()
-
 	// Level
 	nextLevelTick = world.time + timeToLevel
+
+	// Blood/Rank Counter
+	add_hud() 			// (Does Nothing)
+	update_hud(TRUE) 	// Set blood value, current rank
 
 	// Powers
 	BuyPower(new /obj/effect/proc_holder/spell/bloodsucker/feed)
@@ -346,16 +347,15 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 		S.species_traits |= NOBREATH
 		S.species_traits |= DRINKSBLOOD
 		S.species_traits |= VIRUSIMMUNE
-		S.species_traits |= RESISTCOLD
-		S.species_traits |= NOCRITDAMAGE // No damage from being in critical condition.
+		//S.species_traits |= RESISTCOLD	// REMOVED: This was screwing with balancing your temperature. Besides, vamps take no damage already from cold. This lets them be sluggish.
+		S.species_traits |= NOCRITDAMAGE 	// No damage from being in critical condition.
 		S.species_traits |= RESISTPRESSURE
-		S.species_traits |= SPECIES_UNDEAD // Not sure what this does quite yet.
-		S.species_traits |= COLDBLOODED // A Fulpstation original
+		S.species_traits |= SPECIES_UNDEAD 	// Not sure what this does quite yet.
+		S.species_traits |= COLDBLOODED 	// A Fulpstation original
 
 	// Disabilities
 	owner.current.cure_husk()//owner.current.disabilities = 0	// Can't do this. You get stuck with Husk if you just clear disabilities.
 	owner.current.cure_blind()
-	//owner.current.disabilities |= NOCLONE
 
 	// Soul
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
@@ -436,6 +436,7 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 	// Advance Level + Timer
 	vamplevel ++
 	nextLevelTick = world.time + timeToLevel
+	update_hud(TRUE)
 
 	// Advance Stats
 	if (ishuman(owner.current))
@@ -560,56 +561,49 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 	return 0
 
 
-				/////////////////////////////////////
+		/////////////////////////////////////
 
 
-		// BLOOD COUNTER ! //
+		// BLOOD COUNTER & RANK MARKER ! //
+
+#define ui_blood_display "WEST:6,CENTER-1:15"  // 6 pixels to the right, one tile UP from center and 15 pixels down.
+#define ui_vamprank_display "WEST:6,CENTER-0:5"
 
 /datum/hud
 	var/obj/screen/bloodsucker/blood_counter/blood_display
-
+	var/obj/screen/bloodsucker/rank_counter/vamprank_display
 
 /datum/antagonist/bloodsucker/proc/add_hud()
-	return /*
-	// No Hud? Or already have blood display? Get out.
-	if (!owner.current.hud_used || owner.current.hud_used.blood_display)
-		return
-	// Set up the Hud: Create a Blood Display
-	owner.current.hud_used.blood_display = new /obj/screen/bloodsucker/blood_counter
-	owner.current.hud_used.infodisplay += owner.current.hud_used.blood_display
-	// MAYBE we just have to use this: owner.current.hud_used.show_hud()  to get it to display??
-	update_hud()
-	// NOTE: Most every other antag hud is created from the _onclick/hud folder. If this fails, we may want to move this stuff up there.
-	// NOTE: /datum/hud/Destroy() sets all these Huds to NULL again. Keep that in mind.
-	to_chat(owner, "<span class='warning'>DEBUG: add_hud() CREATED HUD: [owner.current.hud_used.blood_display]   </span>")
-	*/
+	return
+
 /datum/antagonist/bloodsucker/proc/remove_hud()
 	// No Hud? Get out.
 	if (!owner.current.hud_used)
 		return
 	owner.current.hud_used.blood_display.invisibility = INVISIBILITY_ABSTRACT
-	/*
-		// No Hud? Or have no blood display? Get out.
-	if (!owner.current.hud_used || !owner.current.hud_used.blood_display)
-		return
-	// Remove
-	owner.current.hud_used.infodisplay -= owner.current.hud_used.blood_display
-	qdel(owner.current.hud_used.blood_display)
-	owner.current.hud_used.blood_display = null
-	*/
+	owner.current.hud_used.vamprank_display.invisibility = INVISIBILITY_ABSTRACT
 
-/datum/antagonist/bloodsucker/proc/update_hud()
+/datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
 	// No Hud? Get out.
-	if (!owner.current.hud_used || !owner.current.hud_used.blood_display)
+	if (!owner.current.hud_used)
 		return
-	// Update Counter
-	owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume)
-
-#define ui_blood_display "WEST:6,CENTER-1:15"
-
+	// Update Blood Counter
+	if (owner.current.hud_used.blood_display)
+		owner.current.hud_used.blood_display.update_counter(owner.current.blood_volume)
+	// Update Rank Counter
+	if (owner.current.hud_used.vamprank_display)
+		owner.current.hud_used.vamprank_display.update_counter(vamplevel)
+		if (updateRank) // Only change icon on special request.
+			owner.current.hud_used.vamprank_display.icon_state = (world.time > nextLevelTick) ? "bloodsucker_rank_up" : "bloodsucker_rank"
 
 /obj/screen/bloodsucker
 	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/bloodsucker/proc/clear()
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/bloodsucker/proc/update_counter(value)
+	invisibility = 0 // Make Visible
 
 /obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
 	icon = 'icons/Fulpstation/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
@@ -617,15 +611,19 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 	icon_state = "blood_display"//"power_display"
 	screen_loc = ui_blood_display
 
-/obj/screen/bloodsucker/blood_counter/proc/update_counter(blood)
-	invisibility = 0 // Make Visible
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(blood,1)]</font></div>"
+/obj/screen/bloodsucker/blood_counter/update_counter(value)
+	..()
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(value,1)]</font></div>"
 
-/obj/screen/bloodsucker/blood_counter/proc/clear()
-	invisibility = INVISIBILITY_ABSTRACT
+/obj/screen/bloodsucker/rank_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
+	icon = 'icons/Fulpstation/fulpicons.dmi'//'icons/mob/screen_gen.dmi'
+	name = "Bloodsucker Rank"
+	icon_state = "bloodsucker_rank" // Upgrade to "bloodsucker_rank_up"
+	screen_loc = ui_vamprank_display
 
-
-
+/obj/screen/bloodsucker/rank_counter/update_counter(value)
+	..()
+	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(value,1)]</font></div>"
 
 
 

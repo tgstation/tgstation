@@ -180,7 +180,7 @@
 				var/failmsg = "You are unable to thicken your blood and advance to the next Rank without sleeping in your claimed coffin."
 				if (!bloodsuckerdatum.coffin)
 					failmsg += " Claim a coffin by desecrating one with your blood (in a safe location)."
-				to_chat(user, "<span class='warning'>[failmsg]</span>")
+				to_chat(user, "<EM><span class='warning'>[failmsg]</span></EM>")
 			else
 				bloodsuckerdatum.LevelUp()
 				continue // In case you took damage during the pause, let's do one more sweep.

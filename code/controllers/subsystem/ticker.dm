@@ -140,6 +140,7 @@ SUBSYSTEM_DEF(ticker)
 			if(CONFIG_GET(flag/irc_announce_new_game))
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
+			ResetExtendedMode()// FULPSTATION: Reset to "secret" if left on "secret extended" or "extended"
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
 			fire()
@@ -612,3 +613,10 @@ SUBSYSTEM_DEF(ticker)
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+
+/datum/controller/subsystem/ticker/proc/ResetExtendedMode() // FULPSTATION: Reset to "secret" if left on "secret extended" or "extended". Called from fire() on
+	if (GLOB.master_mode == "secret_extended" || GLOB.master_mode == "extended")
+		message_admins("Game mode was left on '[GLOB.master_mode]' after startup. Resetting to 'secret'. It is now safe to reselect '[GLOB.master_mode]' for this round." )
+		GLOB.master_mode = "secret"
+		save_mode(GLOB.master_mode) // Normally SSticker.save_mode(), but we're already in here.

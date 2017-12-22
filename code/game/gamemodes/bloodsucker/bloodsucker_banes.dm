@@ -10,7 +10,7 @@
 // SENSITIVE: 	You are slightly blinded by bright lights.
 // DARKFRIEND: 	Your automatic healing is at a crawl when in bright light.
 // TRADITIONAL:	Every five minutes spent outside a coffin lowers your rate of automatic healing.
-// CONSUMED:	Every five minutes spent outside a coffin increases the rate at which you consume blood.
+// CONSUMED:	Every five minutes spent outside a coffin increases the rate at which your blood ticks down.
 // GOURMAND:	Animals and blood bags offer you no nourishment when feeding.
 // DEATHMASK:	You no longer fake having a heartbeat, and always show up as pale when examined.
 // BESTIAL:		When your blood is low, you will twitch involuntarily.

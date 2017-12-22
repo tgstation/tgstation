@@ -33,13 +33,18 @@
 		addiction_stage = 0
 		overdosed = 0
 		return
+
 	M.adjustBruteLoss(-0.25, 0) // All heal values USED TO be multiplied by  * REM, the "REAGENTS_EFFECT_MULTIPLIER" found in reagents.dm. But comes up undefined here.
 	M.adjustToxLoss(-0.1, 0)
 	M.adjustBrainLoss(-0.05,0)
+
+	M.adjustOxyLoss(-0.5, 0) 	// Better respiration.
 	M.adjustStaminaLoss(-0.5,1)
+
+
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.bleed_rate = max(H.bleed_rate - 0.1, 0)
+		H.bleed_rate = max(H.bleed_rate - 0.2, 0)
 	..()
 	. = 1
 
@@ -173,39 +178,6 @@
 */
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-// DRINK BLOOD BAG //
-
-
-/obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
-
-	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0)
-		if (user != M)
-			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>", \
-							  	"<span class='notice'>You put the [src] up to [M]'s mouth.</span>")
-			if (!do_mob(user, M, 50))
-				return
-		else
-			if (!do_mob(user, M, 10))
-				return
-			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>", \
-		  		"<span class='notice'>You take a sip from the [src].</span>")
-
-
-		// Taken from drinks.dm //
-		var/gulp_size = 5
-		var/fraction = min(gulp_size/reagents.total_volume, 1)
-		//checkLiked(fraction, M) // Blood isn't food, sorry.
-		reagents.reaction(M, INGEST, fraction)
-		reagents.trans_to(M, gulp_size)
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-
-	..()
-
-
 
 
 
@@ -236,7 +208,7 @@
 		"tsa","si","tra","te","ele","fa","inz",									// Start: Romanian
 		"nza","est","sti","ra","pral","tsu","ago","esch","chi","kys","praz",	// Start: Custom
 		"froz","etz","tzil",
-		"t'","k'","t'","k'"
+		"t'","k'","t'","k'","th'","tz'"
 		)
 
 	icon_state = "bloodsucker"

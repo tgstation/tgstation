@@ -4,7 +4,7 @@
 //obj/effect/proc_holder/spell/targeted/touch/expelblood
 /obj/effect/proc_holder/spell/bloodsucker/expelblood
 	name = "Expel Blood"
-	desc = "Secrete some of your blood as an addictive, healing goo. Enough of it can turn living victims into your willing slaves, and (at a high enough Rank) feeding it to corpses turns mortals to Bloodsuckers."
+	desc = "Secrete some of your blood as an addictive, healing goo. Enough of it can turn living victims into your willing slaves, and (at Rank 3) feeding it to corpses turns mortals to Bloodsuckers."
 	bloodcost = 10
 	amToggleable = TRUE
 	amTargetted = TRUE
@@ -63,7 +63,8 @@
 		// Timer...
 		if(!do_mob(usr, target, 30))
 			return 0
-		if (bloodsuckerdatum.coffin)
+		// Have claimed coffin? (And it's still registered to me...)
+		if (bloodsuckerdatum.coffin && bloodsuckerdatum.coffin.resident == usr)
 			if (target == bloodsuckerdatum.coffin)
 				to_chat(usr, "<span class='notice'>This [target] is already bound to you.</span>")
 			else

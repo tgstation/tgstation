@@ -219,6 +219,33 @@
 //   BLOOD BAGS! Add ability to drank em
 
 
+/obj/item/reagent_containers/blood/attack(mob/M, mob/user, def_zone)
+
+	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0)
+		if (user != M)
+			user.visible_message("<span class='userdanger'>[user] forces [M] to drink from the [src].</span>", \
+							  	"<span class='notice'>You put the [src] up to [M]'s mouth.</span>")
+			if (!do_mob(user, M, 50))
+				return
+		else
+			if (!do_mob(user, M, 10))
+				return
+			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>", \
+		  		"<span class='notice'>You take a sip from the [src].</span>")
+
+
+		// Taken from drinks.dm //
+		var/gulp_size = 5
+		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		//checkLiked(fraction, M) // Blood isn't food, sorry.
+		reagents.reaction(M, INGEST, fraction)
+		reagents.trans_to(M, gulp_size)
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+
+	..()
+
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +301,7 @@
 /obj/structure/closet/coffin/Destroy()
 	if (resident)
 		to_chat(resident, "<span class='danger'><span class='italics'>You sense that your [src], your sacred place of rest, has been destroyed! You will need to seek another...</span></span>")
+		resident = null // Remove resident. Because this object isnt removed from the game immediately (GC?) we need to give them a way to see they don't have a home anymore.
 	return ..()
 
 /obj/structure/closet/coffin/can_open(mob/living/user)

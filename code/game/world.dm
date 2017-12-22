@@ -198,9 +198,6 @@ GLOBAL_PROTECT(security_mode)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
-		features += GLOB.master_mode
-
 	if (!GLOB.enter_allowed)
 		features += "closed"
 
@@ -229,6 +226,12 @@ GLOBAL_PROTECT(security_mode)
 	s += "</a>"
 	s += ")"
 
+	// Fulp Description
+	if(GLOB.master_mode)
+		s += "<br>Mode: \[<b>" + (GLOB.master_mode == "secret_extended" ? "secret" : GLOB.master_mode) + "\]</b>" // FULPSTATION: What's the point in making it secret if it's going to just say the actual mode?
+
+	s += "<br>Light RP, New Antagonists"
+
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
 		if (M.client)
@@ -239,7 +242,7 @@ GLOBAL_PROTECT(security_mode)
 	else if (n > 0)
 		features += "~[n] player"
 
-	if (!host && hostedby)
+	if (hostedby) // (!host && hostedby) // FULPSTATION: Host wasn't showing.
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)

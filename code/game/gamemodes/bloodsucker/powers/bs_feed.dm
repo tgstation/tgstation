@@ -92,6 +92,7 @@
 	var/warning_target_inhuman = 0
 	var/warning_target_dead = 0
 	var/warning_full = 0
+	var/warning_target_bloodvol = 99999
 	//var/warning_bloodremain = 100
 	bloodsuckerdatum.poweron_feed = TRUE
 	while (bloodsuckerdatum && target && active)
@@ -145,8 +146,15 @@
 		if (!warning_full && user.blood_volume >= bloodsuckerdatum.maxBloodVolume)
 			to_chat(user, "<span class='notice'>You are full. Any further blood you take will be wasted.</span>")
 			warning_full = 1
-		// Blood Remaining?
-		//if (warning_bloodremain > target.blood_volume / (BLOOD_VOLUME_NORMAL / 100)) // Get percentage of blood
+		// Blood Remaining? (Carbons/Humans only)
+		if (iscarbon(target) && !target.AmBloodsucker(1))
+			if (target.blood_volume <= BLOOD_VOLUME_BAD && warning_target_bloodvol > BLOOD_VOLUME_BAD)
+				to_chat(user, "<span class='warning'>Your victim's blood volume is fatally low!</span>")
+			else if (target.blood_volume <= BLOOD_VOLUME_OKAY && warning_target_bloodvol > BLOOD_VOLUME_OKAY)
+				to_chat(user, "<span class='warning'>Your victim's blood volume is dangerously low.</span>")
+			else if (target.blood_volume <= BLOOD_VOLUME_SAFE && warning_target_bloodvol > BLOOD_VOLUME_SAFE)
+				to_chat(user, "<span class='notice'>Your victim's blood is at an unsafe level.</span>")
+			warning_target_bloodvol = target.blood_volume // If we had a warning to give, it's been given by now.
 
 
 		// END WHILE

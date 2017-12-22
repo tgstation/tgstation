@@ -40,10 +40,16 @@
 			if (world.time > levelnotice_time)
 				levelnotice_time = world.time + 1500
 				to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
+				update_hud(TRUE)
 				//owner.current.playsound_local(null, 'sound/machines/ventcrawl.ogg', 75, 1)
 				owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 60, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		else if (levelnotice_time > 0)
 			levelnotice_time = 0
+
+		// Shift Bloodsucker Temperature to Location's Temp 	// MOVED TO natural_bodytemperature_stabilization() in /living/life.dm
+		//if (!poweron_humandisguise && owner.current)
+		//	var/turf/userturf = get_turf(owner.current)
+		//	owner.current.bodytemperature += round((userturf.temperature - owner.current.bodytemperature) / 250, 0.01)   // Constantly blend toward the temperature of the current environment.
 
 		// If not alive...
 		if (owner.current.stat == DEAD || owner.current.status_flags & FAKEDEATH)
@@ -72,11 +78,6 @@
 		// Deduct Blood  (NOT if feeding, and NOT if in a closed coffin)
 		if (!poweron_feed && !istype(owner.current.loc, /obj/structure/closet/coffin))
 			set_blood_volume (-0.15) // (-0.3) // Default normal is 560. Also, humans REGROW blood at 0.1 a tick. Never go lower than BLOOD_VOLUME_BAD
-
-		// Shift Bloodsucker Temperature to Location's Temp
-		if (!poweron_humandisguise && owner.current)
-			var/turf/userturf = get_turf(owner.current)
-			owner.current.bodytemperature += round((userturf.temperature - owner.current.bodytemperature) / 250, 0.01)   // Constantly blend toward the temperature of the current environment.
 
 		// Wait before next pass
 		sleep(10)

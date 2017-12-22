@@ -78,11 +78,15 @@
 		if(creator)
 			to_chat(creator, "<span class='danger'>[bloodsucker] isn't evolved enough to be raised as a Bloodsucker!</span>")
 		return 0
+	// Already a Non-Human Antag
+	if(bloodsucker.has_antag_datum(ANTAG_DATUM_ABDUCTOR) || bloodsucker.has_antag_datum(ANTAG_DATUM_DEVIL) || bloodsucker.has_antag_datum(/datum/antagonist/changeling))
+		return 0
 	// Already a vamp
 	if(bloodsucker.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		if(creator)
 			to_chat(creator, "<span class='danger'>[bloodsucker] is already a Bloodsucker!</span>")
 		return 0
+
 	// Not High Enough
 	if(creator)
 		var/datum/antagonist/bloodsucker/creator_bloodsucker = creator.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

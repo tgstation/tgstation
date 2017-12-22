@@ -30,7 +30,7 @@
 	var/prev_undershirt
 	var/prev_socks
 
-	var/prev_disabilities
+	//var/prev_disabilities // REMOVED: Disability revamp broke this. Don't worry about this anyway. If you're husked, then go heal.
 	var/prev_disfigured
 	var/list/prev_features	// For lizards and such
 
@@ -69,7 +69,7 @@
 	prev_undershirt = H.undershirt
 	prev_socks = H.socks
 	//prev_eye_color
-	prev_disabilities = H.disabilities
+	//prev_disabilities = H.disabilities
 	prev_disfigured = H.status_flags & DISFIGURED // I was disfigured!
 	prev_features = H.dna.features
 
@@ -84,7 +84,7 @@
 	H.undershirt = random_undershirt(H.gender)
 	H.socks = random_socks(H.gender)
 	//H.eye_color = random_eye_color()
-	H.disabilities = 0 // Disable HUSK, CLUMSY, etc.
+	//H.disabilities = 0 // Disable HUSK, CLUMSY, etc.
 	H.status_flags &= ~DISFIGURED
 	H.dna.features = random_features()
 
@@ -143,7 +143,7 @@
 	H.undershirt = prev_undershirt
 	H.socks = prev_socks
 
-	H.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
+	//H.disabilities = prev_disabilities // Restore HUSK, CLUMSY, etc.
 	if (prev_disfigured)
 		H.status_flags |= DISFIGURED	// Restore "Unknown" disfigurement
 	H.dna.features = prev_features
