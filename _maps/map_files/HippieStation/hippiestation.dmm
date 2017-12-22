@@ -48399,7 +48399,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cdR" = (
-/obj/structure/table,
+/obj/machinery/computer/telecomms/remote_control,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
