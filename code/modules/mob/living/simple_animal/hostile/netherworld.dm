@@ -20,7 +20,7 @@
 
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"
-	desc = "A pinkish, fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae."
+	desc = "A fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae."
 	speak_emote = list("screams", "clicks", "chitters", "barks", "moans", "growls", "meows", "reverberates", "roars", "squeaks", "rattles", "exclaims", "yells", "remarks", "mumbles", "jabbers", "stutters", "seethes")
 	icon_state = "mi-go"
 	icon_living = "mi-go"
@@ -28,8 +28,8 @@
 	attacktext = "lacerates"
 	speed = -0.5
 	var/static/list/migo_sounds
-	deathmessage = "wails as its form turns into a pulpy mush."
 	death_sound = 'sound/voice/hiss6.ogg'
+	movement_type = FLYING
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize()
 	. = ..()
@@ -49,20 +49,6 @@
 	if(prob(10))
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 100, TRUE)
-
-/mob/living/simple_animal/hostile/netherworld/blankbody
-	name = "blank body"
-	desc = "This looks human enough, but its flesh has an ashy texture, and it's face is featureless save an eerie smile."
-	icon_state = "blank-body"
-	icon_living = "blank-body"
-	icon_dead = "blank-dead"
-	gold_core_spawnable = NO_SPAWN
-	health = 100
-	maxHealth = 100
-	melee_damage_lower = 5
-	melee_damage_upper = 10
-	attacktext = "punches"
-	deathmessage = "falls apart into a fine dust."
 
 /mob/living/simple_animal/hostile/spawner/nether
 	name = "netherworld link"
@@ -95,9 +81,6 @@
 			M.adjustBruteLoss(60)
 			new /obj/effect/gibspawner/human(get_turf(M))
 			if(M.stat == DEAD)
-				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
-				blank = new(loc)
-				blank.name = "[M]"
-				blank.desc = "It's [M], but their flesh has an ashy texture, and their face is featureless save an eerie smile."
-				src.visible_message("<span class='warning'>[M] reemerges from the link!</span>")
+				src.visible_message("<span class='warning'>[src] violently spews out what's left of [M]!</span>")
+				new /obj/effect/decal/remains/human(src)
 				qdel(M)
