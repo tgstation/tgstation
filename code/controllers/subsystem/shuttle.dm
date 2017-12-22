@@ -75,8 +75,10 @@ SUBSYSTEM_DEF(shuttle)
 	initial_load()
 
 	initial_move()
+
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
+#endif
 
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -86,7 +88,6 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-#endif
 	..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
