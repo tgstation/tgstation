@@ -58,11 +58,11 @@
 		return
 	if(!user.ckey)
 		return
-	if(user.ckey in ckeys_that_took)
+	if(ckeys_that_took[user.ckey])
 		to_chat(user, "<span class='warning'>You already took your gift.</span>")
 		return
 	to_chat(user, "<span class='warning'>After a bit of rummaging, you locate a gift with your name on it!</span>")
-	ckeys_that_took += user.ckey
+	ckeys_that_took[user.ckey] = TRUE
 	var/obj/item/a_gift/anything/A = new
 	user.put_in_hands(A)
 
