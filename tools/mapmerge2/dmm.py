@@ -10,14 +10,15 @@ ENCODING = 'utf-8'
 Coordinate = namedtuple('Coordinate', ['x', 'y', 'z'])
 
 class DMM:
-    __slots__ = ['key_length', 'dictionary', 'size', 'grid', 'header']
+    __slots__ = ['key_length', 'size', 'dictionary', 'grid', 'header', 'low_start']
 
     def __init__(self, key_length, size):
         self.key_length = key_length
-        self.dictionary = bidict.bidict()
         self.size = size
+        self.dictionary = bidict.bidict()
         self.grid = {}
         self.header = None
+        self.low_start = 0
 
     @staticmethod
     def from_file(fname):
@@ -40,6 +41,19 @@ class DMM:
             f.flush()
             return bio.getvalue()
 
+    def generate_new_key(self):
+        # find the lowest key not yet in the dictionary
+        key = self.low_start
+        while key in self.dictionary:
+            key += 1
+        self.low_start = key
+
+        # increase the key length if necessary
+        if key >= BASE ** self.key_length:
+            self.key_length += 1
+
+        return key
+
     @property
     def coords_zyx(self):
         for z in range(1, self.size.z + 1):
@@ -58,47 +72,19 @@ class DMM:
                 yield (y, x)
 
 # ----------
-# dictionary helpers
-
-# rewrites dictionary into an ordered dictionary with no unused keys
-def trim_dictionary(unclean_map):
-    trimmed_dict = bidict.bidict()
-    adjusted_grid = dict()
-    key_length = unclean_map.key_length
-    key = base52[0] * key_length
-    old_to_new = dict()
-    used_keys = set(unclean_map.grid.values())
-
-    for old_key, tile in unclean_map.dictionary.items():
-        if old_key in used_keys:
-            old_to_new[old_key] = key
-            trimmed_dict[key] = tile
-            key = key_after(key)
-
-    for coord, old_key in unclean_map.grid.items():
-        adjusted_grid[coord] = old_to_new[old_key]
-
-    data = DMM(unclean_map.key_length, unclean_map.size)
-    data.dictionary = trimmed_dict
-    data.grid = adjusted_grid
-    return data
-
-# ----------
 # key handling
 
 # Base 52 a-z A-Z dictionary for fast conversion
 BASE = 52
 base52 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 base52_r = {x: i for i, x in enumerate(base52)}
+assert len(base52) == BASE and len(base52_r) == BASE
 
 def key_to_num(key):
     num = 0
     for ch in key:
         num = BASE * num + base52_r[ch]
     return num
-
-def item_key_to_num(item):
-    return key_to_num(item[0])
 
 def num_to_key(num, key_length):
     if num >= BASE ** key_length:
@@ -111,22 +97,6 @@ def num_to_key(num, key_length):
 
     assert len(result) <= key_length
     return base52[0] * (key_length - len(result)) + result
-
-def key_after(key):
-    return num_to_key(key_to_num(key) + 1, len(key))
-
-def generate_new_key(dictionary):
-    last_key = max(dictionary.keys(), key=key_to_num)
-    try:
-        # take the next key up
-        return key_after(last_key)
-    except KeyTooLarge:
-        # as a fallback if we hit ZZZ, try to find an unused key
-        for i in range(0, BASE ** len(last_key)):
-            key = num_to_key(i, len(last_key))
-            if key not in dictionary:
-                return key
-        raise KeyTooLarge(f"key_length={len(last_key)} exhausted")
 
 class KeyTooLarge(Exception):
     pass
@@ -182,8 +152,8 @@ def save_tgm(dmm, output):
         output.write(f"{dmm.header}\n")
 
     # write dictionary in tgm format
-    for key, value in sorted(dmm.dictionary.items(), key=item_key_to_num):
-        output.write(f'"{key}" = (\n')
+    for key, value in sorted(dmm.dictionary.items()):
+        output.write(f'"{num_to_key(key, dmm.key_length)}" = (\n')
         for idx, thing in enumerate(value):
             in_quote_block = False
             in_varedit_block = False
@@ -219,7 +189,7 @@ def save_tgm(dmm, output):
         for x in range(1, max_x + 1):
             output.write(f"({x},{1},{z}) = {{\"\n")
             for y in range(1, max_y + 1):
-                output.write(f"{dmm.grid[x, y, z]}\n")
+                output.write(f"{num_to_key(dmm.grid[x, y, z], dmm.key_length)}\n")
             output.write("\"}\n")
 
 # ----------
@@ -230,8 +200,8 @@ def save_dmm(dmm, output):
         output.write(f"{dmm.header}\n")
 
     # writes a tile dictionary the same way Dreammaker does
-    for key, value in sorted(dmm.dictionary.items(), key=item_key_to_num):
-        output.write(f'"{key}" = ({",".join(value)})\n')
+    for key, value in sorted(dmm.dictionary.items()):
+        output.write(f'"{num_to_key(key, dmm.key_length)}" = ({",".join(value)})\n')
 
     output.write("\n")
 
@@ -243,7 +213,7 @@ def save_dmm(dmm, output):
         for y in range(1, max_y + 1):
             for x in range(1, max_x + 1):
                 try:
-                    output.write(dmm.grid[x, y, z])
+                    output.write(num_to_key(dmm.grid[x, y, z], dmm.key_length))
                 except KeyError:
                     print(f"Key error: ({x}, {y}, {z})")
             output.write("\n")
@@ -266,9 +236,11 @@ def _parse(map_raw_text):
 
     dictionary = bidict.bidict()
     duplicate_keys = {}
-    curr_key = ""
+    curr_key_len = 0
+    curr_key = 0
     curr_datum = ""
     curr_data = list()
+    low_start = 0
 
     in_map_block = False
     in_coord_block = False
@@ -369,9 +341,13 @@ def _parse(map_raw_text):
                 except bidict.ValueDuplicationError:
                     # if the map has duplicate values, eliminate them now
                     duplicate_keys[curr_key] = dictionary.inv[curr_data]
+                else:
+                    if curr_key == low_start:
+                        low_start += 1
                 curr_data = list()
                 curr_datum = ""
-                curr_key = ""
+                curr_key = 0
+                curr_key_len = 0
                 in_data_block = False
                 after_data_block = True
 
@@ -382,11 +358,12 @@ def _parse(map_raw_text):
             if char == "\"":
                 in_key_block = False
                 if key_length == 0:
-                    key_length = len(curr_key)
+                    key_length = curr_key_len
                 else:
-                    assert key_length == len(curr_key)
+                    assert key_length == curr_key_len
             else:
-                curr_key = curr_key + char
+                curr_key = BASE * curr_key + base52_r[char]
+                curr_key_len += 1
 
         # else we're looking for a key block, a data block or the map block
         elif char == "\"":
@@ -397,7 +374,8 @@ def _parse(map_raw_text):
             if after_data_block:
                 in_coord_block = True
                 after_data_block = False
-                curr_key = ""
+                curr_key = 0
+                curr_key_len = 0
                 break
             else:
                 in_data_block = True
@@ -435,7 +413,6 @@ def _parse(map_raw_text):
                 curr_num = curr_num + char
 
         elif in_map_string:
-
             if char == "\"":
                 in_map_string = False
                 adjust_y = True
@@ -453,14 +430,16 @@ def _parse(map_raw_text):
                 iter_x = 0
 
             else:
-                curr_key = curr_key + char
-                if len(curr_key) == key_length:
+                curr_key = BASE * curr_key + base52_r[char]
+                curr_key_len += 1
+                if curr_key_len == key_length:
                     iter_x += 1
                     if iter_x > 1:
                         curr_x += 1
 
                     grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
-                    curr_key = ""
+                    curr_key = 0
+                    curr_key_len = 0
 
         # else look for coordinate block or a map string
         elif char == "(":
@@ -474,4 +453,5 @@ def _parse(map_raw_text):
     data = DMM(key_length, Coordinate(maxx, maxy, maxz))
     data.dictionary = dictionary
     data.grid = grid
+    data.low_start = low_start
     return data

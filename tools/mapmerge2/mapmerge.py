@@ -2,6 +2,7 @@
 import frontend
 import shutil
 from dmm import *
+from collections import defaultdict
 
 def merge_map(new_map, old_map, delete_unused=False):
     if new_map.key_length != old_map.key_length:
@@ -59,16 +60,15 @@ def merge_map(new_map, old_map, delete_unused=False):
 
         # all other options ruled out, a brand new key is generated for the brand new tile
         else:
-            fresh_key = generate_new_key(merged.dictionary)
+            fresh_key = merged.generate_new_key()
             merged.dictionary[fresh_key] = new_tile
             select_key(fresh_key)
 
-    # step two: clean the dictionary if it has too many unused keys
-    if len(unused_keys) > min(1600, len(merged.dictionary) * 0.5) or delete_unused:
-        print("Notice: Trimming the dictionary.")
-        merged = trim_dictionary(merged)
-        print(f"Notice: Trimmed out {len(unused_keys)} unused dictionary keys.")
-        merged.header = f"//Model dictionary trimmed on: {datetime.utcnow().strftime('%d-%m-%Y %H:%M (UTC)')}"
+    # step two: delete unused keys
+    if unused_keys:
+        print(f"Notice: Trimming {len(unused_keys)} unused dictionary keys.")
+        for key in unused_keys:
+            del merged.dictionary[key]
 
     # sanity check: that the merged map equals the new map
     for z, y, x in new_map.coords_zyx:
