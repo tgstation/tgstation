@@ -100,7 +100,7 @@
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot."
 	credit_cost = 10000
-	
+
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
@@ -277,3 +277,11 @@
 	description = "The CentCom Raven Battlecruiser is currently docked at the CentCom ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The CentCom Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range CentCom Medical Bay."
 	admin_notes = "The long way home"
 	credit_cost = 12500
+
+/datum/map_template/shuttle/arrival
+	port_id = "arrival"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/arrival/box
+	suffix = "box"
+	name = "arrival shuttle (Box)"

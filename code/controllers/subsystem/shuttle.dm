@@ -17,6 +17,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
 
+	// special map objects add templates to this list, which are loaded and docked when
+	// the subsystem is initialized
+	var/list/shuttle_templates_to_load = list()
+
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/arrivals/arrivals
@@ -55,15 +59,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
-	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
-	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
-	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-
 	ordernum = rand(1, 9000)
 
 	for(var/pack in subtypesof(/datum/supply_pack))
@@ -74,11 +69,34 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!transit_turfs.len)
 		setup_transit_zone()
+
+	initial_load()
+
 	initial_move()
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
+
+	if(!arrivals)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+	if(!supply)
+		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 #endif
 	..()
+
+/datum/controller/subsystem/shuttle/proc/initial_load()
+	var/obj/machinery/shuttle_manipulator/M
+	for(var/obj/machinery/shuttle_manipulator/m in GLOB.machines)
+		M = m
+		break
+
+	for(var/d in shuttle_templates_to_load)
+		var/datum/map_template/shuttle/D = d
+		M.action_load(D)
+		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone
