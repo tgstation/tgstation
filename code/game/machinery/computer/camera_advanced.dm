@@ -85,13 +85,13 @@
 		var/camera_location
 		var/turf/myturf = get_turf(src)
 		if(eyeobj.use_static)
-			if(GLOB.cameranet.checkTurfVis(myturf))
+			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
 				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 					if(!C.can_use() || z_lock.len && !(C.z in z_lock))
 						continue
-					var/list/network_overlap = C.network & networks
+					var/list/network_overlap = networks & C.network
 					if(network_overlap.len)
 						camera_location = get_turf(C)
 						break
