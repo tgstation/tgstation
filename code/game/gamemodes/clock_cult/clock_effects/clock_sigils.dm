@@ -296,7 +296,8 @@
 				for(var/obj/item/W in L)
 					if(!L.dropItemToGround(W))
 						qdel(W)
-				L.dust()
+				L.spawn_dust()
+				qdel(L)
 			else
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
 					vitality_drained = L.adjustToxLoss(1)
