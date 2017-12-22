@@ -44,7 +44,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/manipulate_organs,
 	/client/proc/start_line_profiling,
 	/client/proc/stop_line_profiling,
-	/client/proc/show_line_profiling
+	/client/proc/show_line_profiling,
+	/client/proc/create_mapping_job_icons
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -264,3 +265,31 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+
+//This generates the icon states for job starting location landmarks.
+/client/proc/create_mapping_job_icons()
+	set name = "Generate job landmarks icons"
+	set category = "Mapping"
+	var/icon/final = icon()
+	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
+	D.setDir(SOUTH)
+	for(var/job in subtypesof(/datum/job))
+		var/datum/job/JB = new job
+		switch(JB.title)
+			if("AI")
+				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
+			if("Cyborg")
+				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+			else
+				for(var/obj/item/I in D)
+					qdel(I)
+				randomize_human(D)
+				JB.equip(D, TRUE, FALSE)
+				COMPILE_OVERLAYS(D)
+				var/icon/I = icon(getFlatIcon(D), frame = 1)
+				final.Insert(I, JB.title)
+	qdel(D)
+	//Also add the x
+	for(var/x_number in 1 to 4)
+		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+	fcopy(final, "icons/mob/landmarks.dmi")

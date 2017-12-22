@@ -40,9 +40,7 @@
 		CB = magazine.get_round(0)
 		if(CB)
 			CB.forceMove(drop_location())
-			CB.SpinAnimation(10, 1)
-			CB.update_icon()
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, CB, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
