@@ -110,3 +110,4 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	. = ..()
 	if(cyclelinkeddir)
 		cyclelinkeddir = angle2dir(rotation+dir2angle(cyclelinkeddir))
+		cyclelinkairlock()
