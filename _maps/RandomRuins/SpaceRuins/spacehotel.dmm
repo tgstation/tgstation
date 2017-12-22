@@ -3447,7 +3447,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/security)
 "jq" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Hotel Security Checkpoint";
 	req_access_txt = "203"
 	},
@@ -4201,7 +4201,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lF" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Hotel Security Checkpoint";
 	req_access_txt = "203"
 	},

@@ -9622,7 +9622,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zk" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
