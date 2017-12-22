@@ -1,4 +1,5 @@
 /datum/component/cleaning
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 /datum/component/cleaning/Initialize()
 	if(!ismovableatom(parent))
