@@ -46,16 +46,18 @@
 	icon_state = "pine_[rand(1, 3)]"
 	. = ..()
 
-/obj/structure/flora/tree/pine/xmas
+/obj/structure/flora/tree/xmas
 	name = "xmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
-	var/gifts_under_tree = FALSE
+	icon = 'icons/obj/flora/pinetrees.dmi'
+
+/obj/structure/flora/tree/xmas/presents
+	desc = "A wondrous decorated Christmas tree. There are presents underneath!"
+	icon_state = "pinepresents"
 	var/list/ckeys_that_took = list()
 
-/obj/structure/flora/tree/pine/xmas/attack_hand(mob/living/user)
-	if(!gifts_under_tree)
-		return
+/obj/structure/flora/tree/xmas/presents/attack_hand(mob/living/user)
 	if(!user.ckey)
 		return
 	if(ckeys_that_took[user.ckey])
@@ -65,10 +67,6 @@
 	ckeys_that_took[user.ckey] = TRUE
 	var/obj/item/a_gift/anything/A = new
 	user.put_in_hands(A)
-
-/obj/structure/flora/tree/pine/xmas/Initialize()
-	. = ..()
-	icon_state = "pine_c"
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
