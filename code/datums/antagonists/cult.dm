@@ -9,19 +9,19 @@
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 
-	var/datum/objective_team/cult/cult_team
+	var/datum/team/cult/cult_team
 
 /datum/antagonist/cult/get_team()
 	return cult_team
 
-/datum/antagonist/cult/create_team(datum/objective_team/cult/new_team)
+/datum/antagonist/cult/create_team(datum/team/cult/new_team)
 	if(!new_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(H.cult_team)
 				cult_team = H.cult_team
 				return
-		cult_team = new /datum/objective_team/cult
+		cult_team = new /datum/team/cult
 		cult_team.setup_objectives()
 		return
 	if(!istype(new_team))
@@ -59,7 +59,7 @@
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
-	
+
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
@@ -183,28 +183,28 @@
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
-/datum/objective_team/cult
+/datum/team/cult
 	name = "Cult"
 
 	var/blood_target
 	var/image/blood_target_image
 	var/blood_target_reset_timer
-	
+
 	var/cult_vote_called = FALSE
 	var/cult_mastered = FALSE
 	var/reckoning_complete = FALSE
 
 
-/datum/objective_team/cult/proc/setup_objectives()
+/datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
 	var/list/target_candidates = list()
 	var/datum/objective/sacrifice/sac_objective = new
 	sac_objective.team = src
-	
+
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
-	
+
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
@@ -214,7 +214,7 @@
 	if(LAZYLEN(target_candidates))
 		sac_objective.target = pick(target_candidates)
 		sac_objective.update_explanation_text()
-		
+
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
 		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
@@ -235,7 +235,7 @@
 	summon_objective.team = src
 	objectives += summon_objective
 
-/datum/objective/sacrifice	
+/datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image
 
@@ -268,13 +268,13 @@
 /datum/objective/eldergod/check_completion()
 	return summoned || completed
 
-/datum/objective_team/cult/proc/check_cult_victory()
+/datum/team/cult/proc/check_cult_victory()
 	for(var/datum/objective/O in objectives)
 		if(!O.check_completion())
 			return FALSE
 	return TRUE
 
-/datum/objective_team/cult/roundend_report()
+/datum/team/cult/roundend_report()
 	var/list/parts = list()
 
 	if(check_cult_victory())
@@ -291,9 +291,9 @@
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 			count++
-	
+
 	if(members.len)
 		parts += "<span class='header'>The cultists were:</span>"
 		parts += printplayerlist(members)
-	
+
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

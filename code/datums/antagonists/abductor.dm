@@ -2,7 +2,7 @@
 	name = "Abductor"
 	roundend_category = "abductors"
 	job_rank = ROLE_ABDUCTOR
-	var/datum/objective_team/abductor_team/team
+	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
 	var/landmark_type
@@ -20,7 +20,7 @@
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 
-/datum/antagonist/abductor/create_team(datum/objective_team/abductor_team/new_team)
+/datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
 		return
 	if(!istype(new_team))
@@ -73,20 +73,20 @@
 	A.scientist = TRUE
 
 
-/datum/objective_team/abductor_team
-	member_name = "abductor" 
+/datum/team/abductor_team
+	member_name = "abductor"
 	var/team_number
 	var/list/datum/mind/abductees = list()
 
-/datum/objective_team/abductor_team/is_solo()
+/datum/team/abductor_team/is_solo()
 	return FALSE
 
-/datum/objective_team/abductor_team/proc/add_objective(datum/objective/O)
+/datum/team/abductor_team/proc/add_objective(datum/objective/O)
 	O.team = src
 	O.update_explanation_text()
 	objectives += O
 
-/datum/objective_team/abductor_team/roundend_report()
+/datum/team/abductor_team/roundend_report()
 	var/list/result = list()
 
 	var/won = TRUE
@@ -127,7 +127,7 @@
 	var/datum/objective/abductee/O = new objtype()
 	objectives += O
 	owner.objectives += objectives
-	
+
 /datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
 	SSticker.mode.update_abductor_icons_added(mob_override ? mob_override.mind : owner)
 

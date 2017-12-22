@@ -115,7 +115,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.disabilities & MUTE) || H.silent)
+					if((H.has_disability(MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue

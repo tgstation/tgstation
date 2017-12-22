@@ -1,6 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - code_imp: "Changed roundend sounds and lobby music to use one proc for choosing sounds"
-  - server: "You can now easily host roundstart sounds without changing the code!"
-  - config: "RIP in shit round_start_sounds.txt"

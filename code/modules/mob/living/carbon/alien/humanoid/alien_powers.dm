@@ -59,6 +59,14 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	return 1
 
+/obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
+	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
+	if(atmos_thing)
+		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
+		if(rusure != "No")
+			return FALSE
+	return TRUE
+
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds."
@@ -243,7 +251,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Secrete Resin"
 	desc = "Secrete tough malleable resin."
 	plasma_cost = 55
-	check_turf = 1
+	check_turf = TRUE
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
@@ -254,18 +262,22 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
-		return 0
+		return FALSE
+
+	if(!check_vent_block(user))
+		return FALSE
+
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
 	if(!choice)
-		return 0
+		return FALSE
 	if (!cost_check(check_turf,user))
-		return 0
+		return FALSE
 	to_chat(user, "<span class='notice'>You shape a [choice].</span>")
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
 	new choice(user.loc)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"

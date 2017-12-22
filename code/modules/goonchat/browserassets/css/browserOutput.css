@@ -13,7 +13,7 @@ body {
 	background: #fff;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
-    line-height: 1.4;
+    line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	word-wrap: break-word;
@@ -36,6 +36,19 @@ img.icon {
 	min-height: 16px;
 	width: auto;
 	vertical-align: bottom;
+}
+
+
+.r:before { /* "repeated" badge class for combined messages */
+	content: 'x';
+}
+.r {
+		display: inline;
+		padding: .2em .6em .3em;
+		font-size: 75%;
+		font-weight: 700;
+		line-height: 1;
+		color: #f00;
 }
 
 a {color: #0000ff;}
@@ -375,6 +388,7 @@ h1.alert, h2.alert		{color: #000000;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 16px;}
 .abductor				{color: #800080; font-style: italic;}
+.mind_control				{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
