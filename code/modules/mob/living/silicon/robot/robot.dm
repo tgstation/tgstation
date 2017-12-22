@@ -786,6 +786,9 @@
 /mob/living/silicon/robot/modules/security
 	set_module = /obj/item/robot_module/security
 
+/mob/living/silicon/robot/modules/clown
+	set_module = /obj/item/robot_module/clown
+
 /mob/living/silicon/robot/modules/peacekeeper
 	set_module = /obj/item/robot_module/peacekeeper
 

@@ -125,14 +125,14 @@
 	loadedWeightClass += I.w_class
 	return TRUE
 
-/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
+/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))
 		return
 	Fire(user, target)
 
-/obj/item/pneumatic_cannon/proc/Fire(mob/living/carbon/human/user, var/atom/target)
+/obj/item/pneumatic_cannon/proc/Fire(mob/living/user, var/atom/target)
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
@@ -147,9 +147,10 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.has_disability(CLUMSY) && prob(75) && clumsyCheck)
-		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.dropItemToGround(src, TRUE)
+	if(user.has_disability(CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='warning'>[C] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		C.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
 		else
@@ -163,9 +164,10 @@
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	fire_items(T, user)
-	if(pressureSetting >= 3 && user)
-		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		user.Knockdown(60)
+	if(pressureSetting >= 3 && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		C.Knockdown(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -271,3 +273,10 @@
 	selfcharge = TRUE
 	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
 	maxWeightClass = 60	//20 pies.
+
+/obj/item/pneumatic_cannon/pie/selfcharge/cyborg
+	name = "low velocity pie cannon"
+	automatic = FALSE
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	maxWeightClass = 6		//2 pies
+	charge_ticks = 2		//4 second/pie

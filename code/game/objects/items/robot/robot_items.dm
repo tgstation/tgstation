@@ -355,6 +355,9 @@
 	var/hitdamage = 0
 	var/emaggedhitdamage = 3
 
+/obj/item/borg/lollipop/clown
+	emaggedhitdamage = 0
+
 /obj/item/borg/lollipop/equipped()
 	check_amount()
 
