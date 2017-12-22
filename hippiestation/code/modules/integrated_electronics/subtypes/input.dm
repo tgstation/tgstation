@@ -1,12 +1,14 @@
-//Separated incerceptor and sender
-//security=computer with CE access to allow/disallow it
-
-//Interceptor (probs better put in input than manip)
+//Interceptor
 //Intercepts a telecomms signal, aka a radio message (;halp getting griff)
 //Inputs:
-//Pass (Boolean): Decides if the signal will be silently intercepted
-//					(true) or also blocked from being sent on the radio (false)
-
+//On (Boolean): If on, the circuit intercepts radio signals. Otherwise it does not. This doesn't affect no pass!
+//No pass (Boolean): Decides if the signal will be silently intercepted
+//					(false) or also blocked from being sent on the radio (true)
+//Outputs:
+//Source: name of the mob
+//Job: job of the mob
+//content: the actual message
+//spans: a list of spans, there's not much info about this but stuff like robots will have "robot" span
 /obj/item/integrated_circuit/input/tcomm_interceptor
 	name = "telecommunication interceptor"
 	desc = "This circuit allows for telecomms signals \

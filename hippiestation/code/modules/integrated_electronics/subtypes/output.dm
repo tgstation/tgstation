@@ -1,3 +1,8 @@
+//Text to radio
+//Outputs a simple string into radio (good to couple with the interceptor)
+//Input:
+//Text: the actual string to output
+//Frequency: what channel to output in. This is a STRING, not a number, due to how comms work. It has to be the frequency without the dot, aka for common you need to put "1459"
 /obj/item/integrated_circuit/output/text_to_radio
 	name = "text-to-radio circuit"
 	desc = "Takes any string as an input and will make the device output it in the radio with the frequency chosen as input."
