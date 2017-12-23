@@ -28,6 +28,18 @@
 	name = "Box emergency shuttle loader"
 	shuttle_id = "emergency_box"
 
+/obj/configuration/shuttle_loader/cargo/box
+	name = "Box cargo ferry loader"
+	shuttle_id = "cargo_box"
+
+/obj/configuration/shuttle_loader/mining/box
+	name = "Box mining shuttle loader"
+	shuttle_id = "mining_box"
+
+/obj/configuration/shuttle_loader/labour/box
+	name = "Box labour shuttle loader"
+	shuttle_id = "labour_box"
+
 /obj/configuration/shuttle_loader/ferry/fancy
 	name = "fancy transport ferry loader"
 	shuttle_id = "ferry_fancy"

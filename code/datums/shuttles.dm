@@ -294,3 +294,27 @@
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/
+	port_id = "cargo"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/cargo/box
+	suffix = "box"
+	name = "cargo ferry (Box)"
+
+/datum/map_template/shuttle/mining
+	port_id = "mining"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/mining/box
+	port_id = "box"
+	name = "mining shuttle (Box)"
+
+/datum/map_template/shuttle/labour
+	port_id = "labour"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/labour/box
+	port_id = "box"
+	name = "labour shuttle (Box)"

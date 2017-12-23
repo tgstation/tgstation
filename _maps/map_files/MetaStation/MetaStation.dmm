@@ -79098,8 +79098,7 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	width = 7;
-	timid = 0
+	width = 7
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)

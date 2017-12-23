@@ -5430,8 +5430,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "amI" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/obj/configuration/shuttle_loader/labour/box,
+/turf/open/space/basic,
+/area/space)
 "amJ" = (
 /obj/machinery/mineral/labor_claim_console{
 	machinedir = 1;
@@ -5902,20 +5903,6 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "anO" = (
-/obj/machinery/door/airlock/titanium{
-	id_tag = "prisonshuttle";
-	name = "Labor Shuttle Airlock"
-	},
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp";
-	name = "labor camp shuttle";
-	port_direction = 4;
-	width = 9;
-	timid = 0
-	},
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
@@ -5924,8 +5911,8 @@
 	name = "fore bay 1";
 	width = 9
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/turf/open/space/basic,
+/area/space)
 "anP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -35451,20 +35438,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bJc" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "mining shuttle";
-	port_direction = 4;
-	width = 7;
-	timid = 0
-	},
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 3;
@@ -35473,8 +35446,8 @@
 	name = "mining shuttle bay";
 	width = 7
 	},
-/turf/open/floor/plating,
-/area/shuttle/mining)
+/turf/open/space/basic,
+/area/space)
 "bJd" = (
 /obj/machinery/door/airlock/mining/glass{
 	cyclelinkeddir = 8;
@@ -51940,8 +51913,9 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyB" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
+/obj/configuration/shuttle_loader/cargo/box,
+/turf/open/space/basic,
+/area/space)
 "cyC" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -52092,15 +52066,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "cyT" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
-	},
-/obj/docking_port/mobile/supply{
-	dwidth = 5;
-	width = 12;
-	timid = 0
-	},
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 5;
@@ -52109,8 +52074,8 @@
 	name = "Cargo Bay";
 	width = 12
 	},
-/turf/open/floor/plating,
-/area/shuttle/supply)
+/turf/open/space/basic,
+/area/space)
 "cyU" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -55642,8 +55607,9 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTo" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/mining)
+/obj/configuration/shuttle_loader/mining/box,
+/turf/open/space/basic,
+/area/space)
 "cTx" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -73518,17 +73484,17 @@ bea
 bfq
 bji
 bkF
-cys
-cys
-cys
-cys
-cys
-cys
-cys
-cys
-cys
-cys
-cys
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -73775,18 +73741,18 @@ bdZ
 bhO
 bjh
 bkE
-cys
-cyB
-cyB
-cyB
-cyB
-cMb
-cyB
-cyB
-cyB
-czf
-cys
-czs
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74032,18 +73998,18 @@ aXQ
 bhQ
 bjj
 bkF
-cys
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-czp
-czt
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74289,18 +74255,18 @@ aZt
 bhQ
 bjj
 bkF
-cys
-cLX
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-czp
-czt
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74546,18 +74512,18 @@ bgr
 bhQ
 bjj
 bkF
-cys
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-cyB
-czp
-czt
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -74803,18 +74769,18 @@ bfa
 bhQ
 bjk
 bkE
-cys
-cyB
-cyB
-cyB
-cyB
-cyS
-cyB
-cyB
-cyB
-czf
-cys
-czu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -75060,17 +75026,17 @@ bgs
 bhQ
 bjk
 bkF
-cys
-cys
-cys
-cyN
-cyQ
-cys
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cyT
-cyZ
-cys
-cys
-cys
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -77130,13 +77096,13 @@ aaa
 aaa
 aaa
 aaa
-cTg
-cTg
-cTi
-cTg
-cTi
-cTg
-cTg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 bCq
 bPS
@@ -77387,13 +77353,13 @@ aaa
 aaa
 aaa
 aaa
-cTg
-bGg
-cTo
-cMl
-bHx
-cTx
-cTg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 bLv
 bPR
@@ -77644,13 +77610,13 @@ bxx
 bxu
 bxu
 bDi
-cTi
-bGh
-bHx
+aaa
+aaa
+aaa
 cTo
-bHx
-bLt
-bMF
+aaa
+aaa
+aaa
 aaa
 bCq
 bPS
@@ -77901,13 +77867,13 @@ bzP
 bAS
 bxu
 aaa
-cTg
-bGg
-cTo
-cTo
-bHx
-bLs
-cTg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 bLv
 bPT
@@ -78158,13 +78124,13 @@ bzR
 byd
 bxx
 aaa
-cTg
-cTg
-cTi
+aaa
+aaa
+aaa
 bJc
-cTi
-cTg
-cTg
+aaa
+aaa
+aaa
 aaa
 bCq
 bPV
@@ -79639,15 +79605,15 @@ aaa
 aaa
 aaa
 aaa
-akD
-akD
-ajX
-akD
-akD
-ajX
-akD
-akD
-akD
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79896,15 +79862,15 @@ aaa
 aaa
 aaa
 aaa
-ajX
-akC
-alj
-alY
-amI
-amI
-anM
-aop
-aoY
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -80153,15 +80119,15 @@ aaa
 aaa
 aaa
 aaa
-ajX
-akF
-alm
-akD
-cLI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 amI
-amI
-aop
-aoY
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -80410,15 +80376,15 @@ aaa
 aaa
 aaa
 aaa
-ajX
-akE
-all
-alZ
-amJ
-anr
-amI
-aop
-aoY
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 arP
@@ -80667,15 +80633,15 @@ aaa
 aaa
 aaa
 aaa
-akD
-akD
-alo
-akD
-akD
-akD
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 anO
-akD
-akD
+aaa
+aaa
 aaa
 aaa
 arP
