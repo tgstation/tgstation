@@ -76,6 +76,9 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
+/area/shuttle/escape/backup
+	name = "Backup Emergency Shuttle"
+
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
 	noteleport = TRUE
