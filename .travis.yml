@@ -11,7 +11,6 @@ env:
     - DM_MAPFILE="loadallmaps"
     matrix:
     - BUILD_TESTING=true
-    - BUILD_TESTING=false
 
 cache:
   directories:
