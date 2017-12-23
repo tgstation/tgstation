@@ -149,8 +149,6 @@
 
 		if(href_list["make"])
 
-			var/turf/T = loc
-
 			/////////////////
 			//href protection
 			being_built = stored_research.isDesignResearchedID(href_list["make"])
@@ -175,33 +173,9 @@
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
 				if(is_stack)
-					spawn(32*coeff)
-						use_power(power)
-						var/list/materials_used = list(MAT_METAL=metal_cost*multiplier, MAT_GLASS=glass_cost*multiplier)
-						materials.use_amount(materials_used)
-
-						var/obj/item/stack/N = new being_built.build_path(T, multiplier)
-						N.update_icon()
-						N.autolathe_crafted(src)
-
-						for(var/obj/item/stack/S in T.contents - N)
-							if(istype(S, N.merge_type))
-								N.merge(S)
-						busy = FALSE
-						updateUsrDialog()
-
+					addtimer(CALLBACK(src, .proc/make_stack, power, metal_cost, glass_cost, multiplier, coeff), 32*coeff)
 				else
-					spawn(32*coeff*multiplier)
-						use_power(power)
-						var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
-						materials.use_amount(materials_used)
-						for(var/i=1, i<=multiplier, i++)
-							var/obj/item/new_item = new being_built.build_path(T)
-							for(var/mat in materials_used)
-								new_item.materials[mat] = materials_used[mat] / multiplier
-							new_item.autolathe_crafted(src)
-						busy = FALSE
-						updateUsrDialog()
+					addtimer(CALLBACK(src, .proc/make_nonstack, power, metal_cost, glass_cost, multiplier, coeff), 32*coeff*multiplier)
 
 		if(href_list["search"])
 			matching_designs.Cut()
@@ -217,6 +191,38 @@
 	updateUsrDialog()
 
 	return
+
+
+/obj/machinery/autolathe/proc/make_stack(power, metal_cost, glass_cost, multiplier, coeff)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	var/turf/T = loc
+	use_power(power)
+	var/list/materials_used = list(MAT_METAL=metal_cost*multiplier, MAT_GLASS=glass_cost*multiplier)
+	materials.use_amount(materials_used)
+
+	var/obj/item/stack/N = new being_built.build_path(T, multiplier)
+	N.update_icon()
+	N.autolathe_crafted(src)
+
+	for(var/obj/item/stack/S in T.contents - N)
+		if(istype(S, N.merge_type))
+			N.merge(S)
+	busy = FALSE
+	updateDialog()
+
+/obj/machinery/autolathe/proc/make_nonstack(power, metal_cost, glass_cost, multiplier, coeff)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	var/turf/T = loc
+	use_power(power)
+	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
+	materials.use_amount(materials_used)
+	for(var/i=1, i<=multiplier, i++)
+		var/obj/item/new_item = new being_built.build_path(T)
+		for(var/mat in materials_used)
+			new_item.materials[mat] = materials_used[mat] / multiplier
+		new_item.autolathe_crafted(src)
+	busy = FALSE
+	updateDialog()
 
 /obj/machinery/autolathe/RefreshParts()
 	var/T = 0
