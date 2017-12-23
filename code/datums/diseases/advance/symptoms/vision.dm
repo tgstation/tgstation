@@ -61,7 +61,7 @@ Bonus
 					M.become_nearsighted(EYE_DAMAGE)
 				if(prob(eyes.eye_damage - 10 + 1))
 					if(!remove_eyes)
-						if(!M.has_disability(BLIND))
+						if(!M.has_disability(DISABILITY_BLIND))
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
 						M.become_blind(EYE_DAMAGE)
 					else
@@ -112,14 +112,14 @@ Bonus
 		return
 	switch(A.stage)
 		if(4, 5) //basically oculine
-			if(M.has_disability(BLIND, EYE_DAMAGE))
+			if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
 				if(prob(20))
 					to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 
-				else if(M.has_disability(NEARSIGHT, EYE_DAMAGE))
+				else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
 					to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(10)

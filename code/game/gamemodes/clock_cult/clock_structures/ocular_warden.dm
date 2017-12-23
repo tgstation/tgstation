@@ -110,7 +110,7 @@
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
-		if(is_servant_of_ratvar(L) || (L.has_disability(BLIND)) || L.null_rod_check())
+		if(is_servant_of_ratvar(L) || (L.has_disability(DISABILITY_BLIND)) || L.null_rod_check())
 			continue
 		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue

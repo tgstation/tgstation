@@ -70,7 +70,7 @@
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
-	if(has_disability(DUMB))
+	if(has_disability(DISABILITY_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
