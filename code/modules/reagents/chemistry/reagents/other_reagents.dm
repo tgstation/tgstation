@@ -1694,9 +1694,9 @@
 	id = "toiletwater"
 	description = "Filthy water scoured from a nasty toilet bowl. Absolutely disgusting."
 	color = "#757547"
-	taste_message = "puke"
+	taste_description = "puke"
 
 /datum/reagent/toiletwater/reaction_mob(mob/living/M, method=TOUCH, volume) //For shenanigans
 	if(prob(10) && iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.vomit(rand(1, 7.5), stun = FALSE)
+		C.vomit(rand(0.5, 7.5), stun = FALSE)
