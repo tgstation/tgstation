@@ -14,7 +14,7 @@
 "n" = (/obj/machinery/mineral/labor_claim_console{machinedir = 1; pixel_x = 30},/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
 "o" = (/obj/structure/chair{dir = 8},/obj/machinery/flasher{id = "gulagshuttleflasher"; pixel_x = 25},/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
 "p" = (/obj/structure/closet/crate,/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
-"q" = (/obj/machinery/door/airlock/titanium{id_tag = "prisonshuttle"; name = "Labor Shuttle Airlock"},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 5; id = "laborcamp"; name = "labor camp shuttle"; port_direction = 4; timid = 1; width = 9},/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
+"q" = (/obj/machinery/door/airlock/titanium{id_tag = "prisonshuttle"; name = "Labor Shuttle Airlock"},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 5; id = "laborcamp"; name = "labor camp shuttle"; port_direction = 4; timid = 1; width = 9; roundstart_move = "laborcamp_home"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
 "r" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1; layer = 2.9},/turf/open/floor/plating/airless,/area/shuttle/labor)
 "s" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/labor)
 

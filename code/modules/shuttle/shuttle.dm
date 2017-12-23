@@ -476,6 +476,9 @@
 		pod.check()
 
 /obj/docking_port/mobile/proc/findRoundstartDock()
+	if(!roundstart_move)
+		CRASH("`roundstart_move` of [src] is null.")
+
 	return SSshuttle.getDock(roundstart_move)
 
 /obj/docking_port/mobile/proc/dockRoundstart()

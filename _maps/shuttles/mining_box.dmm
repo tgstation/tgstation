@@ -5,7 +5,7 @@
 "e" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/mining)
 "f" = (/obj/structure/chair{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/shuttle/mining)
 "g" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/mining)
-"h" = (/obj/machinery/door/airlock/titanium{name = "Mining Shuttle Airlock"; req_access_txt = "0"},/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "mining"; name = "mining shuttle"; port_direction = 4; timid = 1; width = 7},/turf/open/floor/plating,/area/shuttle/mining)
+"h" = (/obj/machinery/door/airlock/titanium{name = "Mining Shuttle Airlock"; req_access_txt = "0"},/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "mining"; name = "mining shuttle"; port_direction = 4; timid = 1; width = 7; roundstart_move = "mining_home"},/turf/open/floor/plating,/area/shuttle/mining)
 "i" = (/obj/structure/closet/crate,/turf/open/floor/mineral/titanium/blue,/area/shuttle/mining)
 "j" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating,/area/shuttle/mining)
 "k" = (/obj/structure/ore_box,/turf/open/floor/mineral/titanium/blue,/area/shuttle/mining)

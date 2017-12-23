@@ -19,6 +19,8 @@
 	var/datum/map_template/shuttle/D = SSmapping.shuttle_templates[shuttle_id]
 	if(istype(D))
 		SSshuttle.shuttle_templates_to_load += D
+	else
+		CRASH("[src] failed loading template with id `[shuttle_id]`")
 
 /obj/configuration/shuttle_loader/arrival/box
 	name = "Box arrival shuttle loader"

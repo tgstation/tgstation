@@ -44,6 +44,24 @@
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"
 
+/datum/map_template/shuttle/labour
+	port_id = "labour"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/mining
+	port_id = "mining"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/cargo
+	port_id = "cargo"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/arrival
+	port_id = "arrival"
+	can_be_bought = FALSE
+
+
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/airless
@@ -287,34 +305,18 @@
 	admin_notes = "The long way home"
 	credit_cost = 12500
 
-/datum/map_template/shuttle/arrival
-	port_id = "arrival"
-	can_be_bought = FALSE
-
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
-
-/datum/map_template/shuttle/cargo/
-	port_id = "cargo"
-	can_be_bought = FALSE
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "cargo ferry (Box)"
 
-/datum/map_template/shuttle/mining
-	port_id = "mining"
-	can_be_bought = FALSE
-
 /datum/map_template/shuttle/mining/box
-	port_id = "box"
+	suffix = "box"
 	name = "mining shuttle (Box)"
 
-/datum/map_template/shuttle/labour
-	port_id = "labour"
-	can_be_bought = FALSE
-
 /datum/map_template/shuttle/labour/box
-	port_id = "box"
+	suffix = "box"
 	name = "labour shuttle (Box)"
