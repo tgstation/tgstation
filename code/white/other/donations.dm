@@ -1,4 +1,4 @@
-var/const/stuff = {"
+#define DONATIONS_STUFF {"
 Hats
 Collectable Pete hat:/obj/item/clothing/head/collectable/petehat:150
 Collectable Xeno hat:/obj/item/clothing/head/collectable/xenom:110
@@ -101,8 +101,8 @@ Lazer Machine:/obj/machinery/party/lasermachine:500
 "}
 
 
-var/list/datum/donator_prize/prizes = list()
-var/list/datum/donator/donators = list()
+GLOBAL_LIST_EMPTY(prizes)
+GLOBAL_LIST_EMPTY(donators)
 
 #define DONATIONS_SPAWN_WINDOW 6000
 // You can spawn donation items for 10 minutes without area limits.
@@ -119,7 +119,7 @@ var/list/datum/donator/donators = list()
 	ownerkey = ckey
 	src.money = money
 	maxmoney = money
-	donators[ckey] = src
+	GLOB.donators[ckey] = src
 
 /datum/donator/proc/show()
 	var/dat = "<title>Donations panel</title>"
@@ -127,12 +127,12 @@ var/list/datum/donator/donators = list()
 	dat += "You can spawn [allowed_num_items ? allowed_num_items : "no"] more items.<br><br>"
 
 	if (allowed_num_items)
-		if (!prizes.len)
+		if (!GLOB.prizes.len)
 			build_prizes_list()
 
 		var/cur_cat = "None"
 
-		for(var/p in prizes)
+		for(var/p in GLOB.prizes)
 			var/datum/donator_prize/prize = p
 
 			if (cur_cat != prize.category)
@@ -217,7 +217,7 @@ proc/load_donator(ckey)
 	return 1
 
 proc/build_prizes_list()
-	var/list/strings = splittext ( stuff, "\n" )
+	var/list/strings = splittext ( DONATIONS_STUFF, "\n" )
 	var/cur_cat = "Miscellaneous"
 	for (var/string in strings)
 		if (string) //It's not a delimiter between
@@ -228,7 +228,7 @@ proc/build_prizes_list()
 				prize.path_to = text2path(item_info[2])
 				prize.cost = text2num(item_info[3])
 				prize.category = cur_cat
-				prizes += prize
+				GLOB.prizes += prize
 			else
 				cur_cat = item_info[1]
 
@@ -242,10 +242,10 @@ proc/build_prizes_list()
 		to_chat(src,"<span class='warning'>Please wait until game is set up!</span>")
 		return
 
-	if (!donators[ckey]) //It doesn't exist yet
+	if (!GLOB.donators[ckey]) //It doesn't exist yet
 		load_donator(ckey)
 
-	var/datum/donator/D = donators[ckey]
+	var/datum/donator/D = GLOB.donators[ckey]
 	if(D)
 		D.show()
 	else
