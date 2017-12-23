@@ -4,14 +4,14 @@
 /area/space)
 "aab" = (
 /obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
+	dheight = 1;
+	dir = 8;
+	dwidth = 12;
+	height = 17;
 	id = "syndicate_nw";
 	name = "northwest of station";
 	turf_type = /turf/open/space;
-	width = 18
+	width = 23
 	},
 /turf/open/space/basic,
 /area/space)
@@ -24176,24 +24176,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"bdo" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
-"bdp" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
-"bdq" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
 "bdr" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/circuit,
@@ -24244,22 +24226,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"bdv" = (
-/obj/structure/table/reinforced,
-/obj/machinery/camera/motion{
-	c_tag = "Satellite - AI Chamber";
-	dir = 2;
-	name = "motion-sensitive security camera";
-	network = list("SS13","Satellite")
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
-"bdw" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
 "bdx" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/accessory/medal/service_star{
@@ -24275,57 +24241,9 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
-"bdz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aicorewindow";
-	name = "AI Core Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai)
-"bdA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aicorewindow";
-	name = "AI Core Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai)
-"bdB" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
 "bdC" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
-"bdD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aicorewindow";
-	name = "AI Core Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
 "bdE" = (
 /obj/effect/landmark/carpspawn,
@@ -24740,14 +24658,14 @@
 /area/tcommsat/server)
 "bez" = (
 /obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
+	dheight = 1;
+	dir = 8;
+	dwidth = 12;
+	height = 17;
 	id = "syndicate_se";
 	name = "southeast of station";
 	turf_type = /turf/open/space;
-	width = 18
+	width = 23
 	},
 /turf/open/space/basic,
 /area/space)
