@@ -1,5 +1,3 @@
-#define IC_SMOKE_REAGENTS_MINIMUM_UNITS 10
-
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
@@ -9,6 +7,8 @@
 	. = ..()
 	if(volume)
 		create_reagents(volume)
+
+
 
 /obj/item/integrated_circuit/reagent/smoke
 	name = "smoke generator"
@@ -44,8 +44,6 @@
 	push_data()
 
 /obj/item/integrated_circuit/reagent/smoke/do_work()
-	if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
-		return
 	var/location = get_turf(src)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
@@ -56,8 +54,10 @@
 			notified = TRUE
 		S.start()
 
-	reagents.clear_reagents()
+	if(reagents)
+		reagents.clear_reagents()
 	activate_pin(2)
+
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
