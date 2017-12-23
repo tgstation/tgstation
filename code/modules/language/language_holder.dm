@@ -120,6 +120,7 @@
 
 /datum/language_holder/slime
 	languages = list(/datum/language/common, /datum/language/slime)
+	only_speaks_language = /datum/language/slime
 
 /datum/language_holder/lightbringer
 	// TODO change to a lightbringer specific sign language
