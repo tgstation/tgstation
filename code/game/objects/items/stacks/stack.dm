@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = Clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = Clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -109,7 +109,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = "Amount Left: [amount]<br>"
+	var/t1 = "Amount Left: [get_amount()]<br>"
 	for(var/i in 1 to length(recipe_list))
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -161,8 +161,8 @@
 	if (href_list["sublist"] && !href_list["make"])
 		interact(usr, text2num(href_list["sublist"]))
 	if (href_list["make"])
-		if (get_amount() < 1)
-			qdel(src) //Never should happen
+		if (get_amount() < 1 && !is_cyborg)
+			qdel(src)
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])

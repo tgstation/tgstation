@@ -17,7 +17,7 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/list/pre_nukeops = list()
 
-	var/datum/objective_team/nuclear/nuke_team
+	var/datum/team/nuclear/nuke_team
 
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)

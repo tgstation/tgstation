@@ -225,7 +225,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

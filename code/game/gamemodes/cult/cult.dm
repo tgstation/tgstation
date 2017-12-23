@@ -6,13 +6,13 @@
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
-/datum/objective_team/cult/proc/is_sacrifice_target(datum/mind/mind)
+/datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
 		if(mind == sac_objective.target)
 			return TRUE
 	return FALSE
- 
-/proc/is_convertable_to_cult(mob/living/M,datum/objective_team/cult/specific_cult)
+
+/proc/is_convertable_to_cult(mob/living/M,datum/team/cult/specific_cult)
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
@@ -54,7 +54,7 @@
 
 	var/list/cultists_to_cult = list() //the cultists we'll convert
 
-	var/datum/objective_team/cult/main_cult
+	var/datum/team/cult/main_cult
 
 
 /datum/game_mode/cult/pre_setup()
@@ -96,7 +96,7 @@
 
 	var/datum/antagonist/cult/new_cultist = new(cult_mind)
 	new_cultist.give_equipment = equip
-	
+
 	if(cult_mind.add_antag_datum(new_cultist))
 		if(stun)
 			cult_mind.current.Unconscious(100)

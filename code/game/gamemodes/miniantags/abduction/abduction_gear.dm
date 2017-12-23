@@ -2,6 +2,8 @@
 #define VEST_COMBAT 2
 #define GIZMO_SCAN 1
 #define GIZMO_MARK 2
+#define MIND_DEVICE_MESSAGE 1
+#define MIND_DEVICE_CONTROL 2
 
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
@@ -277,6 +279,84 @@
 			r.listening = 0
 			if(!istype(I, /obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
+
+/obj/item/device/abductor/mind_device
+	name = "mental interface device"
+	desc = "A dual-mode tool for directly communicating with sentient brains. It can be used to send a direct message to a target, \
+			or to send a command to a test subject with a charged gland."
+	icon_state = "mind_device_message"
+	item_state = "silencer"
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
+	var/mode = MIND_DEVICE_MESSAGE
+
+/obj/item/device/abductor/mind_device/attack_self(mob/user)
+	if(!ScientistCheck(user))
+		return
+
+	if(mode == MIND_DEVICE_MESSAGE)
+		mode = MIND_DEVICE_CONTROL
+		icon_state = "mind_device_control"
+	else
+		mode = MIND_DEVICE_MESSAGE
+		icon_state = "mind_device_message"
+	to_chat(user, "<span class='notice'>You switch the device to [mode==MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE</span>")
+
+/obj/item/device/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
+	if(!ScientistCheck(user))
+		return
+
+	switch(mode)
+		if(MIND_DEVICE_CONTROL)
+			mind_control(target, user)
+		if(MIND_DEVICE_MESSAGE)
+			mind_message(target, user)
+
+/obj/item/device/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/obj/item/organ/heart/gland/G = C.getorganslot("heart")
+		if(!istype(G))
+			to_chat(user, "<span class='warning'>Your target does not have an experimental gland!</span>")
+			return
+		if(!G.mind_control_uses)
+			to_chat(user, "<span class='warning'>Your target's gland is spent!</span>")
+			return
+		if(G.active_mind_control)
+			to_chat(user, "<span class='warning'>Your target is already under a mind-controlling influence!</span>")
+			return
+
+		var/command = stripped_input(user, "Enter the command for your target to follow.\
+											Uses Left: [G.mind_control_uses], Duration: [G.mind_control_duration / 10] seconds","Enter command")
+
+		if(!command)
+			return
+
+		if(QDELETED(user) || user.get_active_held_item() != src || loc != user)
+			return
+
+		if(QDELETED(G))
+			return
+
+		G.mind_control(command, user)
+		to_chat(user, "<span class='notice'>You send the command to your target.</span>")
+
+/obj/item/device/abductor/mind_device/proc/mind_message(atom/target, mob/living/user)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			to_chat(user, "<span class='warning'>Your target is dead!</span>")
+			return
+		var/message = stripped_input(user, "Write a message to send to your target's brain.","Enter message")
+		if(!message)
+			return
+		if(QDELETED(L) || L.stat == DEAD)
+			return
+
+		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
+		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
+		log_talk(user,"[key_name(user)] sent an abductor mind message to [L]/[L.ckey]: '[message]'", LOGSAY)
+
 
 /obj/item/device/firing_pin/abductor
 	name = "alien firing pin"

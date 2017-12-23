@@ -1094,16 +1094,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
-	item = /obj/item/codespeak_manual
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/device_tools/codespeak_manual_deluxe
-	name = "Deluxe Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear)
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited used."
+	item = /obj/item/codespeak_manual/unlimited
+	cost = 3
 
 // Implants
 /datum/uplink_item/implants

@@ -115,6 +115,8 @@ Credit where due:
 	
 	var/datum/objective_team/clockcult/main_clockcult
 
+	var/datum/team/clockcult/main_clockcult
+
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs

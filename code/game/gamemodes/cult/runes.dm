@@ -115,7 +115,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.disabilities & MUTE) || H.silent)
+					if((H.has_disability(MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -140,7 +140,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
 		if(invoke_damage)
 			L.apply_damage(invoke_damage, BRUTE)
-			to_chat(L, "<span class='cultitalic'>[src] saps your strength!</span>")
+			to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
@@ -201,12 +201,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/item/paper/talisman/talisman_type
 	var/list/possible_talismans = list()
 	if(!papers_on_rune.len)
-		to_chat(user, "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>")
+		to_chat(user, "<span class='cult italic'>There must be a blank paper on top of [src]!</span>")
 		fail_invoke()
 		log_game("Talisman Creation rune failed - no blank papers on rune")
 		return
 	if(rune_in_use)
-		to_chat(user, "<span class='cultitalic'>[src] can only support one ritual at a time!</span>")
+		to_chat(user, "<span class='cult italic'>[src] can only support one ritual at a time!</span>")
 		fail_invoke()
 		log_game("Talisman Creation rune failed - already in use")
 		return
@@ -222,7 +222,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	papers_on_rune = checkpapers()
 	if(!papers_on_rune.len)
-		to_chat(user, "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>")
+		to_chat(user, "<span class='cult italic'>There must be a blank paper on top of [src]!</span>")
 		fail_invoke()
 		log_game("Talisman Creation rune failed - no blank papers on rune")
 		return
@@ -278,7 +278,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	if(user.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
 		log_game("Teleport rune failed - user in away mission")
 		fail_invoke()
 		return
@@ -394,9 +394,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/tome(get_turf(src))
 	convertee.mind.special_role = "Cultist"
-	to_chat(convertee, "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cultitalic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
+	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>")
 	return 1
 
@@ -412,7 +412,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
-			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
+			to_chat(M, "<span class='cult italic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
@@ -537,7 +537,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(iscultist(M) && (M.stat == DEAD || !M.client || M.client.is_afk()))
 			potential_revive_mobs |= M
 	if(!potential_revive_mobs.len)
-		to_chat(user, "<span class='cultitalic'>There are no dead cultists on the rune!</span>")
+		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
 		log_game("Raise Dead rune failed - no cultists to revive")
 		fail_invoke()
 		rune_in_use = FALSE
@@ -588,13 +588,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return FALSE
 	if(!(target_mob in T.contents))
-		to_chat(user, "<span class='cultitalic'>The cultist to revive has been moved!</span>")
+		to_chat(user, "<span class='cult italic'>The cultist to revive has been moved!</span>")
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target moved")
 		return FALSE
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
 	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
-		to_chat(user, "<span class='cultitalic'>The corpse to revive has no spirit!</span>")
+		to_chat(user, "<span class='cult italic'>The corpse to revive has no spirit!</span>")
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
 		return FALSE
@@ -661,16 +661,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/spirit/examine(mob/user)
 	..()
 	if(affecting)
-		to_chat(user, "<span class='cultitalic'>A translucent field encases [affecting] above the rune!</span>")
+		to_chat(user, "<span class='cult italic'>A translucent field encases [affecting] above the rune!</span>")
 
 /obj/effect/rune/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
-		to_chat(user, "<span class='cultitalic'>[src] cannot support more than one body!</span>")
+		to_chat(user, "<span class='cult italic'>[src] cannot support more than one body!</span>")
 		log_game("Spirit Sight rune failed - more than one user")
 		return list()
 	var/turf/T = get_turf(src)
 	if(!(user in T))
-		to_chat(user, "<span class='cultitalic'>You must be standing on top of [src]!</span>")
+		to_chat(user, "<span class='cult italic'>You must be standing on top of [src]!</span>")
 		log_game("Spirit Sight rune failed - user not standing on rune")
 		return list()
 	return ..()
@@ -700,11 +700,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(affecting.stat == UNCONSCIOUS)
 			if(prob(1))
 				var/mob/dead/observer/G = affecting.get_ghost()
-				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")
+				to_chat(G, "<span class='cult italic'>You feel the link between you and your body weakening... you must hurry!</span>")
 		else if(affecting.stat == DEAD)
 			affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
 			var/mob/dead/observer/G = affecting.get_ghost()
-			to_chat(G, "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
+			to_chat(G, "<span class='cult italic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
 			break
 		sleep(1)
 	affecting = null
@@ -728,7 +728,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/wall/examine(mob/user)
 	..()
 	if(density)
-		to_chat(user, "<span class='cultitalic'>There is a barely perceptible shimmering of the air above [src].</span>")
+		to_chat(user, "<span class='cult italic'>There is a barely perceptible shimmering of the air above [src].</span>")
 
 /obj/effect/rune/wall/Destroy()
 	density = FALSE
@@ -750,7 +750,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		spread_density()
 	var/carbon_user = iscarbon(user)
 	user.visible_message("<span class='warning'>[user] [carbon_user ? "places [user.p_their()] hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
-						 "<span class='cultitalic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
+						 "<span class='cult italic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(carbon_user)
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
@@ -812,27 +812,27 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
 	if(!cultist_to_summon)
-		to_chat(user, "<span class='cultitalic'>You require a summoning target!</span>")
+		to_chat(user, "<span class='cult italic'>You require a summoning target!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
 		return
 	if(cultist_to_summon.stat == DEAD)
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] has died!</span>")
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] has died!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target died")
 		return
 	if(!iscultist(cultist_to_summon))
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target was deconverted")
 		return
 	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>")
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return
 	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
-									  "<span class='cultitalic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
+									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")
 	cultist_to_summon.forceMove(get_turf(src))
@@ -920,17 +920,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
-		to_chat(user, "<span class='cultitalic'>You must be standing on [src]!</span>")
+		to_chat(user, "<span class='cult italic'>You must be standing on [src]!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
 	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
-		to_chat(user, "<span class='cultitalic'>Ghosts can't summon more ghosts!</span>")
+		to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user is a ghost")
 		return list()
 	if(ghosts >= ghost_limit)
-		to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
+		to_chat(user, "<span class='cult italic'>You are sustaining too many ghosts to summon more!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - too many summoned ghosts")
 		return list()
@@ -939,7 +939,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 			ghosts_on_rune += O
 	if(!ghosts_on_rune.len)
-		to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")
+		to_chat(user, "<span class='cult italic'>There are no spirits near [src]!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - no nearby ghosts")
 		return list()
@@ -961,13 +961,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	ghosts++
 	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
 	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
-	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
+	to_chat(user, "<span class='cult italic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
 	var/obj/structure/emergency_shield/invoker/N = new(T)
 
 	new_human.key = ghost_to_spawn.key
 	SSticker.mode.add_cultist(new_human.mind, 0)
-	to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
+	to_chat(new_human, "<span class='cult italic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
 
 	while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
 		if(user.stat || new_human.InCritical())

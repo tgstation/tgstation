@@ -44,6 +44,8 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
+	if(GLOB.round_id)
+		to_chat(src, "<b>Round ID:</b> [GLOB.round_id]")
 	if(GLOB.revdata.originmastercommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
 		var/prefix = ""

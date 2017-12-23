@@ -217,7 +217,7 @@
 		C = owner
 		no_update = 0
 
-	if(C.disabilities & HUSK)
+	if(C.has_disability(HUSK))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
