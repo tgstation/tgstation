@@ -139,7 +139,7 @@
 	var/hearers = get_hearers_in_view(7, audio_source)
 	if (can_speak)
 		var/list/local_with = list()
-		for (var/mob/living/L in hearers)
+		for (var/mob/L in hearers)
 			if (L.client && L != src && get_dist(audio_source, L) <= speak_range)
 				local_with += L.ckey
 		for (var/obj/machinery/holopad/H in hearers)
@@ -281,6 +281,8 @@
 	var/obj/machinery/holopad/T = current
 	if (istype(T) && T.masters[src])
 		return T
+	if (istype(loc, /obj/item/device/aicard))
+		return loc
 	return src
 
 // ----------------------------------------------------------------------------
