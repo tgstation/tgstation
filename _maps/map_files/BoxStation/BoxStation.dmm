@@ -2149,10 +2149,15 @@
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "afa" = (
-/obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle";
-	timid = 0
-	},
+/obj/docking_port/stationary{
+       dir = 4;
+       dwidth = 12;
+       height = 18;
+       id = "emergency_home";
+       name = "BoxStation emergency evac bay";
+       turf_type = /turf/open/space;
+       width = 32
+       },
 /turf/open/space/basic,
 /area/space)
 "afb" = (
