@@ -104,7 +104,7 @@
 
 	// Mob-level speaking and hearing
 	var/can_speak = (can_speak() && (stat == CONSCIOUS || stat == SOFT_CRIT)) || 0
-	var/can_hear = can_hear() || 0
+	var/can_hear = (can_hear() && (stat == CONSCIOUS || stat == SOFT_CRIT)) || 0
 	if (hullrot_cache["can_speak"] != can_speak || hullrot_cache["can_hear"] != can_hear)
 		hullrot_cache["can_speak"] = can_speak
 		hullrot_cache["can_hear"] = can_hear
