@@ -16,15 +16,29 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
+	var/confirm = TRUE
 	var/spawn_type = /obj/singularity/wizard
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
-	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+
+	// if TRUE, ignores checking for mobs on loc before spawning
+	var/spawn_fast = FALSE
 
 /obj/item/veilrender/attack_self(mob/user)
+	var/turf/T = get_turf(src)
+
 	if(charges > 0)
-		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		if(confirm)
+			var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Activate [src]?", "Proceed", "Abort")
+
+			if(safety != "Proceed" || QDELETED(src) || QDELETED(user) || !in_range(src, user))
+				return
+
+		message_admins("[ADMIN_LOOKUPFLW(user)] has used \a [src] at [ADMIN_COORDJMP(T)]")
+		log_game("[key_name(user)] has used \a [src] at [COORD(T)].")
+
+		new /obj/effect/rend(T, spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
@@ -79,6 +93,7 @@
 	spawn_amt = 20
 	activate_descriptor = "hunger"
 	rend_desc = "Reverberates with the sound of ten thousand moos."
+	confirm = FALSE
 
 /obj/item/veilrender/honkrender
 	name = "honk render"
@@ -88,6 +103,7 @@
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
+	confirm = TRUE
 
 ////TEAR IN REALITY
 
