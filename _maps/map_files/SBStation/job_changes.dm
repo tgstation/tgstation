@@ -19,3 +19,8 @@ MAP_REMOVE_JOB(warden)
 	..()
 	MAP_JOB_CHECK
 	spawn_positions = 1
+
+/datum/job/lawyer/New()
+	..()
+	MAP_JOB_CHECK
+	spawn_positions = 1
