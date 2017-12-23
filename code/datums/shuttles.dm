@@ -5,6 +5,10 @@
 	var/port_id
 	var/shuttle_id
 
+	// If counter is non-0, it's incremented and added to the shuttle_id when
+	// the template is imported. Used for pods eg, pod1, pod2, pod3
+	var/counter = 0
+
 	var/description
 	var/prerequisites
 	var/admin_notes
@@ -240,13 +244,18 @@
 	Fulfilling needs you didn't even know you had. We've got EVERYTHING, and something else!"
 	admin_notes = "Currently larger than ferry docking port on Box, will not hit anything, but must be force docked. Trader and ERT bodyguards are not included."
 
+/datum/map_template/shuttle/ferry/fancy
+	suffix = "fancy"
+	name = "fancy transport ferry"
+	description = "At some point, someone upgraded the ferry to have fancier flooring... and less seats."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "NT Medical Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "NT Recovery White-ship"
+	name = "NT Recovery Whiteship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"

@@ -20,10 +20,22 @@
 	if(istype(D))
 		SSshuttle.shuttle_templates_to_load += D
 
-/obj/configuration/shuttle_loader/arrival_box
-	name = "arrival shuttle (Box) loader"
+/obj/configuration/shuttle_loader/arrival/box
+	name = "Box arrival shuttle loader"
 	shuttle_id = "arrival_box"
 
-/obj/configuration/shuttle_loader/emergency_box
-	name = "emergency shuttle (Box) loader"
+/obj/configuration/shuttle_loader/emergency/box
+	name = "Box emergency shuttle loader"
 	shuttle_id = "emergency_box"
+
+/obj/configuration/shuttle_loader/ferry/fancy
+	name = "fancy transport ferry loader"
+	shuttle_id = "ferry_fancy"
+
+/obj/configuration/shuttle_loader/whiteship/box
+	name = "NT Medical Ship loader"
+	shuttle_id = "whiteship_box"
+
+/obj/configuration/shuttle_loader/whiteship/meta
+	name = "NT Recovery Whiteship loader"
+	shuttle_id = "whiteship_meta"
