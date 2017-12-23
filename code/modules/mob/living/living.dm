@@ -1064,7 +1064,7 @@
 	var/mob/living/user = usr
 	if(!istype(over) || !istype(user))
 		return
-	if(!over.Adjacent(src) || !over.canUseTopic(src) || !user.canUseTopic(over))
+	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
 		return
 	if(can_be_held)
 		mob_try_pickup(over)
