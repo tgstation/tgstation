@@ -1688,3 +1688,15 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+
+/datum/reagent/toiletwater
+	name = "Toilet Water"
+	id = "toiletwater"
+	description = "Filthy water scoured from a nasty toilet bowl. Absolutely disgusting."
+	color = "#757547"
+	taste_message = "puke"
+
+/datum/reagent/toiletwater/reaction_mob(mob/living/M, method=TOUCH, volume) //For shenanigans
+	if(prob(10) && iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.vomit(rand(1, 7.5), stun = FALSE)
