@@ -112,8 +112,6 @@ Credit where due:
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
-	
-	var/datum/objective_team/clockcult/main_clockcult
 
 	var/datum/team/clockcult/main_clockcult
 

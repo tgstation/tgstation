@@ -1,6 +1,9 @@
+#define ATOM_THROW_DELAY 5
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_throw
 	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
