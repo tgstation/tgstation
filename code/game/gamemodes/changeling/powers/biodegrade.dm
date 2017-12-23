@@ -55,6 +55,7 @@
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
 	if(O && user.handcuffed == O)
 		user.visible_message("<span class='warning'>[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop.</span>")
+		user.uncuff()
 		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 
