@@ -16,7 +16,7 @@
 	..()
 
 /datum/brain_trauma/severe/mute/on_lose()
-	owner.remove_disability(MUTE, list(TRAUMA_DISABILITY))
+	owner.remove_disability(MUTE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -186,7 +186,7 @@
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	owner.remove_disability(MONKEYLIKE, list(TRAUMA_DISABILITY))
+	owner.remove_disability(MONKEYLIKE, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -201,5 +201,5 @@
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_disability(PACIFISM, list(TRAUMA_DISABILITY))
+	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()

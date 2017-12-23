@@ -943,7 +943,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.has_disability(FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.remove_disability(FAT, list(OBESITY))
+			H.remove_disability(FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
@@ -1214,7 +1214,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		
+
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)

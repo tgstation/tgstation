@@ -1706,5 +1706,5 @@
 /datum/reagent/pax/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
-		L.remove_disability(PACIFISM, list(CHEMICAL_DISABILITY))
+		L.remove_disability(PACIFISM, CHEMICAL_DISABILITY)
 	..()

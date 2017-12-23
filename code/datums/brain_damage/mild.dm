@@ -54,7 +54,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.remove_disability(DUMB, list(TRAUMA_DISABILITY))
+	owner.remove_disability(DUMB, TRAUMA_DISABILITY)
 	owner.derpspeech = 0
 	..()
 

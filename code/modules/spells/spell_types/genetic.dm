@@ -31,4 +31,4 @@
 		for(var/A in mutations)
 			target.dna.remove_mutation(A)
 		for(var/A in disabilities)
-			target.remove_disability(A, list(GENETICS_SPELL))
+			target.remove_disability(A, GENETICS_SPELL)
