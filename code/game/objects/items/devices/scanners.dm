@@ -197,7 +197,7 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_disability(BLIND))
+				if(C.has_disability(DISABILITY_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
 				if(C.has_disability(NEARSIGHT))

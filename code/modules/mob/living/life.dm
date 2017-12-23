@@ -123,7 +123,7 @@
 /mob/living/proc/handle_disabilities()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_disability(BLIND)))
+		if(!stat && !(has_disability(DISABILITY_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")

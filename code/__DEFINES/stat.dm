@@ -10,7 +10,7 @@
 
 //mob disabilities stat
 
-#define BLIND 		"blind"
+#define DISABILITY_BLIND 		"blind"
 #define MUTE		"mute"
 #define DEAF		"deaf"
 #define NEARSIGHT	"nearsighted"
