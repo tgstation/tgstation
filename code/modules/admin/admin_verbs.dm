@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/pump_random_event,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
-	/datum/admins/proc/create_or_modify_area
+	/datum/admins/proc/create_or_modify_area,
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))

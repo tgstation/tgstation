@@ -13,7 +13,7 @@
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
-	container_type = TRANSPARENT_1
+	container_type = TRANSPARENT
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -107,11 +107,8 @@
 				update_icon()
 
 		if(SYRINGE_INJECT)
-			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
+			// Always log attemped injections for admins
+			var/contained = reagents.log_list()
 			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
@@ -157,7 +154,7 @@
 
 
 /obj/item/reagent_containers/syringe/update_icon()
-	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
+	var/rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay

@@ -41,7 +41,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.disabilities & BLIND))
+		if(!(H.has_disability(BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)

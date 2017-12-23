@@ -37,7 +37,7 @@
 			eject()
 		else
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
-			ASSERT_GAS(/datum/gas/tritium,loaded_tank.air_contents)
+			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
 

@@ -1,6 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/brothers = list()
-	var/list/datum/objective_team/brother_team/brother_teams = list()
+	var/list/datum/team/brother_team/brother_teams = list()
 
 /datum/game_mode/traitor/bros
 	name = "traitor+brothers"
@@ -13,7 +13,7 @@
 	<span class='danger'>Blood Brothers</span>: Accomplish your objectives.\n\
 	<span class='notice'>Crew</span>: Do not let the traitors or brothers succeed!"
 
-	var/list/datum/objective_team/brother_team/pre_brother_teams = list()
+	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
 	traitors_required = FALSE //Only teams are possible
@@ -36,7 +36,7 @@
 	for(var/j = 1 to num_teams)
 		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies)
 			break
-		var/datum/objective_team/brother_team/team = new
+		var/datum/team/brother_team/team = new
 		var/team_size = prob(10) ? min(3, possible_brothers.len) : 2
 		for(var/k = 1 to team_size)
 			var/datum/mind/bro = pick(possible_brothers)
@@ -49,7 +49,7 @@
 	return ..()
 
 /datum/game_mode/traitor/bros/post_setup()
-	for(var/datum/objective_team/brother_team/team in pre_brother_teams)
+	for(var/datum/team/brother_team/team in pre_brother_teams)
 		team.meeting_area = pick(meeting_areas)
 		meeting_areas -= team.meeting_area
 		team.forge_brother_objectives()

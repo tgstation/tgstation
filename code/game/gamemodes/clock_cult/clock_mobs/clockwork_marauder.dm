@@ -1,13 +1,13 @@
 #define MARAUDER_SLOWDOWN_PERCENTAGE 0.40 //Below this percentage of health, marauders will become slower
-#define MARAUDER_SHIELD_REGEN_TIME 100 //In deciseconds, how long it takes for shields to regenerate after breaking
+#define MARAUDER_SHIELD_REGEN_TIME 200 //In deciseconds, how long it takes for shields to regenerate after breaking
 
 //Clockwork marauder: A well-rounded frontline construct. Only one can exist for every two human servants.
 /mob/living/simple_animal/hostile/clockwork/marauder
 	name = "clockwork marauder"
 	desc = "The stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
-	health = 150
-	maxHealth = 150
+	health = 120
+	maxHealth = 120
 	force_threshold = 8
 	speed = 0
 	obj_damage = 40
@@ -21,7 +21,7 @@
 	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
 	light_range = 2
 	light_power = 1.1
-	playstyle_string = "<b><span class='neovgre'>You are a clockwork marauder,</span> a well-rounded frontline construct of Ratvar. Although you have no \
+	playstyle_string = "<span class='big bold'><span class='neovgre'>You are a clockwork marauder,</span></span><b> a well-rounded frontline construct of Ratvar. Although you have no \
 	unique abilities, you're a fearsome fighter in one-on-one combat, and your shield protects from projectiles!<br><br>Obey the Servants and do as they \
 	tell you. Your primary goal is to defend the Ark from destruction; they are your allies in this, and should be protected from harm.</b>"
 	empower_string = "<span class='neovgre'>The Anima Bulwark's power flows through you! Your weapon will strike harder, your armor is sturdier, and your shield is more durable.</span>"
@@ -39,10 +39,11 @@
 		speed = initial(speed) + 1 //Yes, this slows them down
 	else
 		speed = initial(speed)
-	if(shield_health != max_shield_health && world.time >= shield_health_regen)
-		to_chat(src, "<span class='neovgre'>Your shield has recovered. <b>[max_shield_health]</b> blocks remaining!</span>")
+	if(shield_health < max_shield_health && world.time >= shield_health_regen)
+		shield_health_regen = world.time + MARAUDER_SHIELD_REGEN_TIME
+		to_chat(src, "<span class='neovgre'>Your shield has recovered, <b>[shield_health]</b> blocks remaining!</span>")
 		playsound_local(src, "shatter", 75, TRUE, frequency = -1)
-		shield_health = max_shield_health
+		shield_health++
 
 /mob/living/simple_animal/hostile/clockwork/marauder/update_values()
 	if(GLOB.ratvar_awakens) //Massive attack damage bonuses and health increase, because Ratvar

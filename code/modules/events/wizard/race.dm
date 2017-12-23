@@ -12,7 +12,7 @@
 
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = new speciestype()
-		if(!S.dangerous_existence)
+		if(!S.dangerous_existence && !S.blacklisted)
 			all_species += speciestype
 
 	var/datum/species/new_species = pick(all_species)

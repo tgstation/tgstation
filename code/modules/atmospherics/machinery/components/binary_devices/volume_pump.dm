@@ -48,8 +48,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on || !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -126,7 +126,7 @@ Thus, the two variables affect pump operation are set in New():
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -143,8 +143,8 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = AIR1
-		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
+		var/datum/gas_mixture/air1 = airs[1]
+		transfer_rate = CLAMP(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

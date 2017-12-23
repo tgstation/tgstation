@@ -184,7 +184,7 @@
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting.
 /datum/gas_reaction/fusion
-	exclude = FALSE
+	exclude = TRUE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"

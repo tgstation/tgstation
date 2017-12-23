@@ -345,6 +345,19 @@
 /datum/action/item_action/change
 	name = "Change"
 
+/datum/action/item_action/nano_picket_sign
+	name = "Retext Nano Picket Sign"
+	var/obj/item/picket_sign/S
+
+/datum/action/item_action/nano_picket_sign/New(Target)
+	..()
+	if(istype(Target, /obj/item/picket_sign))
+		S = Target
+
+/datum/action/item_action/nano_picket_sign/Trigger()
+	if(istype(S))
+		S.retext(owner)
+
 /datum/action/item_action/adjust
 
 /datum/action/item_action/adjust/New(Target)

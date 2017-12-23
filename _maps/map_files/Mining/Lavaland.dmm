@@ -108,6 +108,7 @@
 /obj/item/pickaxe,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
@@ -116,6 +117,7 @@
 /obj/item/device/flashlight,
 /obj/item/pickaxe,
 /obj/item/clothing/glasses/meson,
+/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
