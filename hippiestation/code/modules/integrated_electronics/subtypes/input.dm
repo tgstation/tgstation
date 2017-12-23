@@ -33,7 +33,7 @@
 	activators = list(
 		"on intercept" = IC_PINTYPE_PULSE_OUT
 		)
-	power_draw_idle = 200
+	power_draw_idle = 0
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/obj/machinery/telecomms/receiver/circuit/receiver
 
@@ -45,11 +45,10 @@
 /obj/item/integrated_circuit/input/tcomm_interceptor/Destroy()
 	qdel(receiver)
 	GLOB.ic_jammers -= src
-	set_pin_data(IC_INPUT, 2, 0)
 	..()
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/receive_signal(datum/signal/signal)
-	if(signal.transmission_method == TRANSMISSION_SUBSPACE)
+	if((signal.transmission_method == TRANSMISSION_SUBSPACE) && get_pin_data(IC_INPUT, 1))
 		set_pin_data(IC_OUTPUT, 1, signal.data["name"])
 		set_pin_data(IC_OUTPUT, 2, signal.data["job"])
 		set_pin_data(IC_OUTPUT, 3, signal.data["message"])
@@ -60,32 +59,22 @@
 /obj/item/integrated_circuit/input/tcomm_interceptor/on_data_written()
 	if(get_pin_data(IC_INPUT, 2))
 		GLOB.ic_jammers |= src
+		if(get_pin_data(IC_INPUT, 1))
+			power_draw_idle = 200
+		else
+			power_draw_idle = 100
 	else
 		GLOB.ic_jammers -= src
+		if(get_pin_data(IC_INPUT, 1))
+			power_draw_idle = 100
+		else
+			power_draw_idle = 0
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/power_fail()
-	GLOB.ic_jammers -= src
+	set_pin_data(IC_INPUT, 1, 0)
 	set_pin_data(IC_INPUT, 2, 0)
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/disconnect_all()
-	GLOB.ic_jammers -= src
+	set_pin_data(IC_INPUT, 1, 0)
 	set_pin_data(IC_INPUT, 2, 0)
-	..()
-
-//makeshift receiver used for the circuit up here, so that we don't
-//have to edit radio.dm and other shit
-/obj/machinery/telecomms/receiver/circuit
-	idle_power_usage = 0
-	var/obj/item/integrated_circuit/input/tcomm_interceptor/holder
-
-/obj/machinery/telecomms/receiver/circuit/receive_signal(datum/signal/signal)
-	if(!holder.get_pin_data(IC_INPUT, 1))
-		return
-	if(!signal)
-		return
-	holder.receive_signal(signal)
-
-/obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-	if(GLOB.ic_jammers.len && GLOB.remote_control)
-		signal.data["reject"] = TRUE
 	..()

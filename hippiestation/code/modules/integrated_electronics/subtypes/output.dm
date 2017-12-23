@@ -20,9 +20,11 @@
 /obj/item/integrated_circuit/output/text_to_radio/Initialize()
 	..()
 	radio = new(src)
+	GLOB.ic_speakers += src
 
 /obj/item/integrated_circuit/output/text_to_radio/Destroy()
 	qdel(radio)
+	GLOB.ic_speakers -= src
 	..()
 
 /obj/item/integrated_circuit/output/text_to_radio/do_work()
