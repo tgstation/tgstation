@@ -8329,15 +8329,6 @@
 /obj/structure/closet/coffin,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
-"atW" = (
-/obj/structure/closet/coffin,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/structure/closet/coffin,
-/turf/open/floor/plasteel/dark,
-/area/chapel/main)
 "atX" = (
 /obj/machinery/camera{
 	c_tag = "Chapel - South";
@@ -24176,6 +24167,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
+"bdo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/xmastree,
+/turf/open/floor/carpet,
+/area/chapel/main)
 "bdr" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/circuit,
@@ -48137,7 +48135,7 @@ akd
 akd
 asN
 akN
-atW
+atV
 akd
 arD
 arD
@@ -50448,7 +50446,7 @@ alA
 alA
 bfp
 alA
-asO
+bdo
 alA
 atX
 auD
