@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
-					shake_camera(M, 50, orig_max_distance - dist)
+					shake_camera(M, 25, orig_max_distance - dist)
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
 					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
