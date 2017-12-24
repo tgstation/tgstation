@@ -25,8 +25,8 @@
 	integrity_failure = 100
 	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
-	var/active = TRUE		//No sales pitches if off!
-	var/vend_ready = TRUE	//Are we ready to vend?? Is it time??
+	var/active = 1		//No sales pitches if off!
+	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
 	// To be filled out at compile time
 	var/list/products	= list()	//For each, use the following pattern:
@@ -227,15 +227,15 @@
 	if(!allowed(user) && !emagged && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
-		return FALSE
+		return 0
 	req_access_txt = "0"
-	return TRUE
+	return 1
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
 		to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 /obj/machinery/vending/snack/proc/food_load(obj/item/reagent_containers/food/snacks/S)
 	if(dish_quants[S.name])
@@ -350,6 +350,180 @@
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/vending/attack_hand(mob/user)
+	var/dat = ""
+	if(panel_open && !isAI(user))
+		return wires.interact(user)
+	else
+		if(stat & (BROKEN|NOPOWER))
+			return
+
+		dat += "<h3>Select an item</h3>"
+		dat += "<div class='statusDisplay'>"
+		if(product_records.len == 0)
+			dat += "<font color = 'red'>No product loaded!</font>"
+		else
+			var/list/display_records = product_records
+			if(extended_inventory)
+				display_records = product_records + hidden_records
+			if(coin || bill)
+				display_records = product_records + coin_records
+			if((coin || bill) && extended_inventory)
+				display_records = product_records + hidden_records + coin_records
+			dat += "<ul>"
+			for (var/datum/data/vending_product/R in display_records)
+				dat += "<li>"
+				if(R.amount > 0)
+					dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+				else
+					dat += "<span class='linkOff'>Sold out</span> "
+				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
+				dat += " <b>[R.amount]</b>"
+				dat += "</li>"
+			dat += "</ul>"
+		dat += "</div>"
+		if(premium.len > 0)
+			dat += "<b>Change Return:</b> "
+			if (coin || bill)
+				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
+			else
+				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+		if(istype(src, /obj/machinery/vending/snack))
+			dat += "<h3>Chef's Food Selection</h3>"
+			dat += "<div class='statusDisplay'>"
+			for (var/O in dish_quants)
+				if(dish_quants[O] > 0)
+					var/N = dish_quants[O]
+					dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+					dat += "<B>[capitalize(O)]: [N]</B><br>"
+			dat += "</div>"
+	user.set_machine(src)
+	if(seconds_electrified && !(stat & NOPOWER))
+		if(shock(user, 100))
+			return
+
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+
+/obj/machinery/vending/Topic(href, href_list)
+	if(..())
+		return
+
+	if(href_list["remove_coin"])
+		if(!(coin || bill))
+			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
+			return
+		if(coin)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(coin)
+			else
+				coin.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+			coin = null
+		if(bill)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(bill)
+			else
+				bill.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
+
+
+	usr.set_machine(src)
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+			return
+		vend_ready = 0
+		use_power(5)
+
+		dish_quants[N] = max(dish_quants[N] - 1, 0)
+		for(var/obj/O in contents)
+			if(O.name == N)
+				O.forceMove(drop_location())
+				break
+		vend_ready = 1
+		updateUsrDialog()
+		return
+
+	if((href_list["vend"]) && (vend_ready))
+		if(panel_open)
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
+			return
+
+		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
+			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
+			flick(icon_deny,src)
+			return
+
+		vend_ready = 0 //One thing at a time!!
+
+		var/datum/data/vending_product/R = locate(href_list["vend"])
+		if(!R || !istype(R) || !R.product_path)
+			vend_ready = 1
+			return
+
+		if(R in hidden_records)
+			if(!extended_inventory)
+				vend_ready = 1
+				return
+		else if(R in coin_records)
+			if(!(coin || bill))
+				to_chat(usr, "<span class='warning'>You need to insert money to get this item!</span>")
+				vend_ready = 1
+				return
+			if(coin && coin.string_attached)
+				if(prob(50))
+					if(usr.put_in_hands(coin))
+						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
+						coin = null
+					else
+						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
+						QDEL_NULL(coin)
+				else
+					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
+					QDEL_NULL(coin)
+			else
+				QDEL_NULL(coin)
+				QDEL_NULL(bill)
+
+		else if (!(R in product_records))
+			vend_ready = 1
+			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			return
+
+		if (R.amount <= 0)
+			to_chat(usr, "<span class='warning'>Sold out.</span>")
+			vend_ready = 1
+			return
+		else
+			R.amount--
+
+		if(((last_reply + 200) <= world.time) && vend_reply)
+			speak(vend_reply)
+			last_reply = world.time
+
+		use_power(5)
+		if(icon_vend) //Show the vending animation if needed
+			flick(icon_vend,src)
+		new R.product_path(get_turf(src))
+		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+		vend_ready = 1
+		return
+
+		updateUsrDialog()
+		return
+
+	else if(href_list["togglevoice"] && panel_open)
+		shut_up = !shut_up
+
+	updateUsrDialog()
+
+
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
 		return
@@ -430,96 +604,6 @@
 		return TRUE
 	else
 		return FALSE
-
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "vending", name, 350, 475, master_ui, state)
-		ui.open()
-
-/obj/machinery/vending/ui_data()
-	var/list/data = list()
-	var/list/listed_products = list()
-	var/list/display_records = product_records
-	if(extended_inventory)
-		display_records += hidden_records
-	if(coin)
-		display_records += coin_records
-	for(var/key = 1 to display_records.len)
-		var/datum/data/vending_product/I = display_records[key]
-		listed_products.Add(list(list(
-			"key" = key,
-			"name" = I.product_name,
-			"color" = I.display_color,
-			"amount" = I.amount)))
-	data["products"] = listed_products
-	if(!isnull(coin))
-		data["coin"] = coin.name
-	data["coinslot"] = premium.len
-	data["canvend"] = vend_ready
-
-	return data
-
-/obj/machinery/vending/ui_act(action, params)
-	if(..())
-		return
-	if(!vend_ready)
-		return
-	switch(action)
-		if("vend")
-			if(!allowed(usr) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-				to_chat(usr, "<span class='warning'>Access denied.</span>")
-				flick(icon_deny,src)
-				return
-			vend_ready = FALSE
-			addtimer(VARSET_CALLBACK(src, vend_ready, TRUE), 10)
-			var/key = text2num(params["key"])
-			var/datum/data/vending_product/R = product_records[key]
-			if(R in hidden_records)
-				if(!extended_inventory)
-					return
-			else if(R in coin_records)
-				if(!coin)
-					to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
-					return
-				if(coin.string_attached)
-					if(prob(50))
-						if(usr.put_in_hands(coin))
-							to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-							coin = null
-						else
-							to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-							QDEL_NULL(coin)
-					else
-						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-						QDEL_NULL(coin)
-				else
-					QDEL_NULL(coin)
-			else if (!(R in product_records))
-				return
-
-
-
-			if (R.amount <= 0)
-				to_chat(usr, "<span class='warning'>Sold out.</span>")
-				return
-			R.amount--
-			if(((last_reply + 200) <= world.time) && vend_reply)
-				speak(vend_reply)
-				last_reply = world.time
-			use_power(5)
-			if(icon_vend) //Show the vending animation if needed
-				flick(icon_vend,src)
-			new R.product_path(drop_location())
-			return TRUE
-		if("eject")
-			if(!coin)
-				to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
-				return
-			usr.put_in_hands(coin)
-			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-			coin = null
 
 /*
  * Vending machine types
