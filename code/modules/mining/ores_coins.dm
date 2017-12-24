@@ -223,6 +223,11 @@
 		return
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+			if(istype(I, /obj/item/device/mining_scanner))
+				var/obj/item/device/mining_scanner/S = I
+				if(!S.can_defuse)
+					to_chat(user, "<span class='boldwarning'>[S] does not have the necessary frequencies for disarming gibtonite!</span>")
+					return
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
