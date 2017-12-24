@@ -2,6 +2,7 @@
 /datum/antagonist/clockcult
 	name = "Clock Cultist"
 	roundend_category = "clock cultists"
+	panel_category = "clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	var/datum/action/innate/hierophant/hierophant_network = new()
 	var/datum/team/clockcult/clock_team
@@ -184,6 +185,43 @@
 		to_chat(owner.current, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 	. = ..()
 
+/datum/antagonist/clockcult/antag_panel_section(datum/mind/mind, mob/current)
+	if(!iscarbon(current) && !issilicon(current))
+		return FALSE
+	var/text = "clockwork cult"
+	if(SSticker.mode.config_tag == "clockwork cult")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(is_servant_of_ratvar(current))
+		text += "not mindshielded | <a href='?src=[REF(mind)];clockcult=clear'>employee</a> | <b>SERVANT</b>"
+		text += "<br><a href='?src=[REF(mind)];clockcult=slab'>Equip</a>"
+	else if(is_eligible_servant(current))
+		text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=[REF(mind)];clockcult=servant'>servant</a>"
+	else
+		text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Ratvar</i>"
+
+	if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/clockcult/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			remove_servant_of_ratvar(current, TRUE)
+			message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
+			log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
+		if("servant")
+			if(!is_servant_of_ratvar(current))
+				add_servant_of_ratvar(current, TRUE)
+				message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
+				log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+		if("slab")
+			if(!SSticker.mode.equip_servant(current))
+				to_chat(usr, "<span class='warning'>Failed to outfit [current]!</span>")
+			else
+				to_chat(usr, "<span class='notice'>Successfully gave [current] servant equipment!</span>")
 
 /datum/team/clockcult
 	name = "Clockcult"

@@ -61,7 +61,7 @@
 	if(SSticker.mode.config_tag == "traitorbro")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if(src in get_antagonists(/datum/antagonist/brother))
+	if(mind in get_antagonists(/datum/antagonist/brother))
 		text += "<b>Brother</b> | <a href='?src=[REF(mind)];brother=clear'>no</a>"
 
 	if(current && current.client && (ROLE_BROTHER in current.client.prefs.be_special))

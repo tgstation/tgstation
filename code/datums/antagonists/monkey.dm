@@ -7,6 +7,7 @@
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
+	panel_category = "monkey"
 	var/datum/team/monkey/monkey_team
 
 /datum/antagonist/monkey/on_gain()
@@ -115,7 +116,57 @@
 	return text
 
 /datum/antagonist/monkey/antag_panel_href(href, datum/mind/mind, mob/current)
-	return
+	var/mob/living/L = current
+	if (L.notransform)
+		return
+	switch(href)
+		if("healthy")
+			if (check_rights(R_ADMIN))
+				var/mob/living/carbon/human/H = current
+				var/mob/living/carbon/monkey/M = current
+				if (istype(H))
+					log_admin("[key_name(usr)] attempting to monkeyize [key_name(current)]")
+					message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(current)]</span>")
+					mind = null
+					M = H.monkeyize()
+					mind = M.mind
+				else if (istype(M) && length(M.viruses))
+					for(var/thing in M.viruses)
+						var/datum/disease/D = thing
+						D.cure(FALSE)
+		if("leader")
+			if(check_rights(R_ADMIN, 0))
+				add_monkey_leader(mind)
+				log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
+				message_admins("[key_name_admin(usr)] made [key_name_admin(current)] a monkey leader!")
+		if("infected")
+			if(check_rights(R_ADMIN, 0))
+				var/mob/living/carbon/human/H = current
+				var/mob/living/carbon/monkey/M = current
+				add_monkey(mind)
+				if (istype(H))
+					log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
+					message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
+					mind = null
+					M = H.monkeyize()
+					mind = M.mind
+					current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
+				else if (istype(M))
+					current.ForceContractDisease(new /datum/disease/transformation/jungle_fever)
+		if("human")
+			if (check_rights(R_ADMIN, 0))
+				var/mob/living/carbon/human/H = current
+				var/mob/living/carbon/monkey/M = current
+				if (istype(M))
+					for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
+						JF.cure(0)
+						stoplag() //because deleting of virus is doing throught spawn(0) //What
+					remove_monkey(src)
+					log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
+					message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
+					H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+					if(H)
+						mind = H.mind
 
 /datum/objective/monkey
 	explanation_text = "Ensure that infected monkeys escape on the emergency shuttle!"

@@ -4,6 +4,7 @@
 /datum/antagonist/rev
 	name = "Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
+	panel_category = "revolution"
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
@@ -330,4 +331,54 @@
 	return text
 
 /datum/antagonist/rev/antag_panel_href(href, datum/mind/mind, mob/current)
-	return
+	switch(href)
+		if("clear")
+			mind.remove_rev()
+			message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
+			log_admin("[key_name(usr)] has de-rev'ed [current].")
+		if("rev")
+			if(mind.has_antag_datum(/datum/antagonist/rev/head))
+				var/datum/antagonist/rev/head/head = mind.has_antag_datum(/datum/antagonist/rev/head)
+				head.demote()
+			else if(!mind.has_antag_datum(/datum/antagonist/rev))
+				mind.add_antag_datum(/datum/antagonist/rev)
+				mind.special_role = "Revolutionary"
+				message_admins("[key_name_admin(usr)] has rev'ed [current].")
+				log_admin("[key_name(usr)] has rev'ed [current].")
+			else
+				return
+		if("headrev")
+			if(mind.has_antag_datum(/datum/antagonist/rev))
+				var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
+				rev.promote()
+			else if(!mind.has_antag_datum(/datum/antagonist/rev/head))
+				//what about the team here.
+				var/datum/antagonist/rev/head/new_head = new /datum/antagonist/rev/head(src)
+				new_head.give_flash = TRUE
+				new_head.give_hud = TRUE
+				new_head.remove_clumsy = TRUE
+				mind.add_antag_datum(new_head)
+				to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+			else
+				return
+			mind.special_role = "Head Revolutionary"
+			message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
+			log_admin("[key_name(usr)] has head-rev'ed [current].")
+		if("flash")
+			var/datum/antagonist/rev/head/head = mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!head.equip_rev())
+				to_chat(usr, "<span class='danger'>Spawning flash failed!</span>")
+		if("takeflash")
+			var/list/L = current.get_contents()
+			var/obj/item/device/assembly/flash/flash = locate() in L
+			if (!flash)
+				to_chat(usr, "<span class='danger'>Deleting flash failed!</span>")
+			qdel(flash)
+		if("repairflash")
+			var/list/L = current.get_contents()
+			var/obj/item/device/assembly/flash/flash = locate() in L
+			if (!flash)
+				to_chat(usr, "<span class='danger'>Repairing flash failed!</span>")
+			else
+				flash.crit_fail = FALSE
+				flash.update_icon()

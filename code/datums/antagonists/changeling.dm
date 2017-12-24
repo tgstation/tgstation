@@ -37,14 +37,18 @@
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
+	var/stuff_generated = FALSE
+
 	// wip stuff
 	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
 
 
 /datum/antagonist/changeling/New()
 	. = ..()
-	generate_name()
-	create_actions()
+	if(owner && !stuff_generated) //avoid runtiming when creating an ownerless datum
+		generate_name()
+		create_actions()
+		stuff_generated = TRUE
 
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
@@ -76,6 +80,10 @@
 			forge_team_objectives()
 		forge_objectives()
 	remove_clownmut()
+	if(owner && !stuff_generated) //avoid runtiming when creating an ownerless datum
+		generate_name()
+		create_actions()
+		stuff_generated = TRUE
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()

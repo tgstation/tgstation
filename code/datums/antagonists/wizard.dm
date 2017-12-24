@@ -6,6 +6,7 @@
 /datum/antagonist/wizard
 	name = "Space Wizard"
 	roundend_category = "wizards/witches"
+	panel_category = "wizard"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
@@ -273,7 +274,18 @@
 	return text
 
 /datum/antagonist/wizard/antag_panel_href(href, datum/mind/mind, mob/current)
-	return
+	switch(href)
+		if("clear")
+			mind.remove_wizard()
+			log_admin("[key_name(usr)] has de-wizard'ed [current].")
+		if("wizard")
+			if(!mind.has_antag_datum(/datum/antagonist/wizard))
+				mind.special_role = "Wizard"
+				mind.add_antag_datum(/datum/antagonist/wizard)
+				message_admins("[key_name_admin(usr)] has wizard'ed [current].")
+				log_admin("[key_name(usr)] has wizard'ed [current].")
+		if("lair")
+			current.forceMove(pick(GLOB.wizardstart))
 
 
 /datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)

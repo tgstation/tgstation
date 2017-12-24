@@ -347,7 +347,7 @@
 	if (findtext(SSticker.mode.config_tag, "traitor"))
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	if (src in get_antagonists(/datum/antagonist/traitor))
+	if(mind in get_antagonists(/datum/antagonist/traitor))
 		text += "<b>TRAITOR</b> | <a href='?src=[REF(mind)];traitor=clear'>loyal</a>"
 		if (objectives.len==0)
 			text += "<br>Objectives are empty! <a href='?src=[REF(mind)];traitor=autoobjectives'>Randomize</a>!"

@@ -1,6 +1,7 @@
 /datum/antagonist/abductor
 	name = "Abductor"
 	roundend_category = "abductors"
+	panel_category = "abductor"
 	job_rank = ROLE_ABDUCTOR
 	var/datum/team/abductor_team/team
 	var/sub_role
@@ -104,6 +105,41 @@
 		result += printobjectives(abductor_mind)
 
 	return result.Join("<br>")
+
+/datum/antagonist/abductor/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "abductor"
+	if(SSticker.mode.config_tag == "abductor")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in get_antagonists(/datum/antagonist/abductor))
+		text += "<b>Abductor</b> | <a href='?src=[REF(mind)];abductor=clear'>human</a>"
+		text += " | <a href='?src=[REF(mind)];common=undress'>undress</a> | <a href='?src=[REF(mind)];abductor=equip'>equip</a>"
+
+	if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+
+	return text
+
+/datum/antagonist/abductor/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			to_chat(usr, "Not implemented yet. Sorry!")
+			//SSticker.mode.update_abductor_icons_removed(src)
+		if("equip")
+			if(!ishuman(current))
+				to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+				return
+			var/mob/living/carbon/human/H = current
+			var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
+			if(gear)
+				if(gear=="Agent")
+					H.equipOutfit(/datum/outfit/abductor/agent)
+				else
+					H.equipOutfit(/datum/outfit/abductor/scientist)
 
 
 /datum/antagonist/abductee
