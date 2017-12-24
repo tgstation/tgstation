@@ -1,4 +1,4 @@
-// These pins can only contain integer numbers between 1 and IC_MAX_LIST_LENGTH. Null is not allowed.
+// These pins can only contain integer numbers between 0 and IC_MAX_LIST_LENGTH. Null is allowed.
 /datum/integrated_io/index
 	name = "index pin"
 	data = 1
@@ -11,10 +11,10 @@
 
 /datum/integrated_io/index/write_data_to_pin(new_data)
 	if(isnull(new_data))
-		new_data = 1
+		new_data = 0
 
 	if(isnum(new_data))
-		data = CLAMP(round(new_data), 1, IC_MAX_LIST_LENGTH)
+		data = CLAMP(round(new_data), 0, IC_MAX_LIST_LENGTH)
 		holder.on_data_written()
 
 /datum/integrated_io/index/display_pin_type()
