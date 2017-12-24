@@ -93,7 +93,7 @@
 			to_chat(M, message)
 
 /mob/camera/eminence/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(z == ZLEVEL_CITYOFCOGS || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything
+	if(is_reebe(z) || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything
 		to_chat(src, message)
 		return
 	to_chat(src, "<i>[speaker] says something, but you can't understand any of it...</i>")
@@ -263,7 +263,7 @@
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()
-	if(owner.z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(owner.z))
 		owner.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)

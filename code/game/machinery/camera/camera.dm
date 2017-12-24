@@ -53,7 +53,7 @@
 		LAZYADD(myarea.cameras, src)
 	proximity_monitor = new(src, 1)
 
-	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
+	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
