@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist
 	var/name = "Antagonist"
 	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/panel_category = "none"								//Section in traitor panel. HREF NAME SHOULD ALSO BE THIS!!!!
 	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
 	var/datum/mind/owner						//Mind that owns this datum
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
@@ -129,6 +130,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Displayed at the end of roundend_category section
 /datum/antagonist/proc/roundend_report_footer()
+	return
+
+/datum/antagonist/proc/antag_panel_section(datum/mind/mind, mob/current)
 	return
 
 //Should probably be on ticker or job ss ?

@@ -53,6 +53,22 @@
 	owner.announce_objectives()
 	give_meeting_area()
 
+/datum/antagonist/brother/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current) && !ismonkey(current))
+		return FALSE
+	var/text = "brother"
+	if(SSticker.mode.config_tag == "traitorbro")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in get_antagonists(/datum/antagonist/brother))
+		text += "<b>Brother</b> | <a href='?src=[REF(src)];brother=clear'>no</a>"
+
+	if(current && current.client && (ROLE_BROTHER in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
 
