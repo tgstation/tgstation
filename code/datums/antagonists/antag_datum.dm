@@ -135,6 +135,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/antag_panel_section(datum/mind/mind, mob/current)
 	return
 
+/datum/antagonist/proc/antag_panel_href(href, datum/mind/mind, mob/current)
+	return
+
 //Should probably be on ticker or job ss ?
 /proc/get_antagonists(antag_type,specific = FALSE)
 	. = list()

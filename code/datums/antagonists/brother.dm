@@ -1,6 +1,7 @@
 /datum/antagonist/brother
 	name = "Brother"
 	job_rank = ROLE_BROTHER
+	panel_category = "brother"
 	var/special_role = "blood brother"
 	var/datum/team/brother_team/team
 
@@ -61,13 +62,20 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(src in get_antagonists(/datum/antagonist/brother))
-		text += "<b>Brother</b> | <a href='?src=[REF(src)];brother=clear'>no</a>"
+		text += "<b>Brother</b> | <a href='?src=[REF(mind)];brother=clear'>no</a>"
 
 	if(current && current.client && (ROLE_BROTHER in current.client.prefs.be_special))
 		text += " | Enabled in Prefs"
 	else
 		text += " | Disabled in Prefs"
 	return text
+
+/datum/antagonist/brother/antag_panel_href(href, datum/mind/mind, mob/current)
+	if(href == "clear")
+		mind.remove_brother()
+		log_admin("[key_name(usr)] has de-brother'ed [current].")
+		SSticker.mode.update_brother_icons_removed(mind)
+
 
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)

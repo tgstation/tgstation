@@ -359,3 +359,27 @@
 	else
 		text += " | Disabled in Prefs"
 	return text
+
+/datum/antagonist/traitor/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			to_chat(current, "<span class='userdanger'>You have been brainwashed!</span>")
+			mind.remove_traitor()
+			message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
+			log_admin("[key_name(usr)] has de-traitor'ed [current].")
+			SSticker.mode.update_traitor_icons_removed(mind)
+		if("traitor")
+			if(!(src in get_antagonists(/datum/antagonist/traitor)))
+				message_admins("[key_name_admin(usr)] has traitor'ed [current].")
+				log_admin("[key_name(usr)] has traitor'ed [current].")
+				mind.make_Traitor()
+		if("autoobjectives")
+			var/datum/antagonist/traitor/traitordatum = mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+			if(!traitordatum)
+				message_admins("[key_name_admin(usr)] has traitor'ed [current] as part of autoobjectives.")
+				log_admin("[key_name(usr)] has traitor'ed [current] as part of autoobjectives.")
+				mind.make_Traitor()
+			else
+				log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
+				traitordatum.forge_traitor_objectives()
+				to_chat(usr, "<span class='notice'>The objectives for traitor [mind.key] have been generated. You can edit them and anounce manually.</span>")
