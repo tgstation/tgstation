@@ -25,7 +25,7 @@
 
 //Ocular Warden: Creates an ocular warden, which defends a small area near it.
 /datum/clockwork_scripture/create_object/ocular_warden
-	descname = "Structure, Turret"
+	descname = "Structure, Defensive Turret"
 	name = "Ocular Warden"
 	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	invocations = list("Guardians of Engine...", "...judge those who would harm us!")
@@ -49,6 +49,31 @@
 		return FALSE
 	return ..()
 
+//Archon Projector: creates a turret which will shoot projectiles at any non-cultists it can see
+/datum/clockwork_scripture/create_object/archon_projector
+	descname = "Structure, Offensive Turret"
+	name = "Archon Projector"
+	desc = "Forms an automatic long-range turret which will automatically shoot nearby unrestrained non-Servants that it can see."
+	invocations = list("Warriors of Engine...", "...destroy those who will stop us!")
+	channel_time = 100
+	power_cost = 525
+	object_path = /obj/structure/destructible/clockwork/archon_projector
+	creator_message = "<span class='brass'>You form an archon projector, which will automatically attack nearby unrestrained non-Servants that it can see.</span>"
+	observer_message = "<span class='warning'>A brass turret takes shape, before whirring and deploying it's gun!</span>"
+	usage_tip = "While powerful, it's projectiles will not discriminate who they hit, in addition, they will weaken if they pass through glass!"
+	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
+	space_allowed = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates an Archon Projector, which will automatically shoot nearby unrestrained non-Servants that it can see."
+
+/datum/clockwork_scripture/create_object/archon_projector/check_special_requirements()
+	for(var/obj/structure/destructible/clockwork/archon_projector/W in range(ARCHON_TURRET_EXCLUSION_RANGE, invoker))
+		to_chat(invoker, "<span class='neovgre'>You sense another archon projector too near this location. Placing another this close would likely result in them accidentaly shooting each other.</span>" )
+		return FALSE
+	return ..()
 
 //Vitality Matrix: Creates a sigil which will drain health from nonservants and can use that health to heal or even revive servants.
 /datum/clockwork_scripture/create_object/vitality_matrix
