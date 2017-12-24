@@ -320,3 +320,32 @@
 	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/nukeop/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "nuclear"
+	if(SSticker.mode.config_tag=="nuclear")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/nukeop/N = mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(N)
+		text += "<b>OPERATIVE</b> | <a mind='?src=[REF(mind)];nuclear=clear'>nanotrasen</a>"
+		text += "<br><a href='?src=[REF(src)];nuclear=lair'>To shuttle</a>, <a href='?src=[REF(mind)];common=undress'>undress</a>, <a href='?src=[REF(mind)];nuclear=dressup'>dress up</a>."
+		var/code
+		for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
+			if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
+				code = bombue.r_code
+				break
+		if (code)
+			text += " Code is [code]. <a href='?src=[REF(mind)];nuclear=tellcode'>tell the code.</a>"
+	else
+		text += "<a href='?src=[REF(mind)];nuclear=nuclear'>operative</a> | <b>NANOTRASEN</b>"
+	if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/nukeop/antag_panel_href(href, datum/mind/mind, mob/current)
+	return

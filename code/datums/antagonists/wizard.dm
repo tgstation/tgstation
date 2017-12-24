@@ -252,6 +252,30 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
+
+/datum/antagonist/wizard/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "wizard"
+	if(SSticker.mode.config_tag=="wizard")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if (mind.has_antag_datum(/datum/antagonist/wizard))
+		text += "<b>YES</b> | <a href='?src=[REF(mind)];wizard=clear'>no</a>"
+		text += "<br><a href='?src=[REF(mind)];wizard=lair'>To lair</a>, <a href='?src=[REF(mind)];common=undress'>undress</a>"
+	else
+		text += "<a href='?src=[REF(mind)];wizard=wizard'>yes</a> | <b>NO</b>"
+
+	if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/wizard/antag_panel_href(href, datum/mind/mind, mob/current)
+	return
+
+
 /datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz)

@@ -81,6 +81,42 @@
 	to_chat(owner, "<b>You can use :k to talk to fellow monkeys!</b>")
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
 
+
+/datum/antagonist/monkey/antag_panel_section(datum/mind/mind, mob/current)
+	var/text = "monkey"
+	if (SSticker.mode.config_tag == "monkey")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(ishuman(current))
+		if(is_monkey_leader(mind))
+			text += "<a href='?src=[REF(mind)];monkey=healthy'>healthy</a> | <a href='?src=[REF(mind)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(mind)];monkey=human'>human</a> | other"
+		else
+			text += "<a href='?src=[REF(mind)];monkey=healthy'>healthy</a> | <a href='?src=[REF(mind)];monkey=infected'>infected</a> | <a href='?src=[REF(mind)];monkey=leader'>leader</a> | <b>HUMAN</b> | other"
+	else if(ismonkey(current))
+		var/found = FALSE
+		for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
+			found = TRUE
+			break
+
+		var/isLeader = is_monkey_leader(mind)
+		if(isLeader)
+			text += "<a href='?src=[REF(mind)];monkey=healthy'>healthy</a> | <a href='?src=[REF(mind)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(mind)];monkey=human'>human</a> | other"
+		else if(found)
+			text += "<a href='?src=[REF(mind)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(mind)];monkey=leader'>leader</a> | <a href='?src=[REF(mind)];monkey=human'>human</a> | other"
+		else
+			text += "<b>HEALTHY</b> | <a href='?src=[REF(mind)];monkey=infected'>infected</a> | <a href='?src=[REF(mind)];monkey=leader'>leader</a> | <a href='?src=[REF(mind)];monkey=human'>human</a> | other"
+	else
+		text += "healthy | infected | leader | human | <b>OTHER</b>"
+
+	if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/monkey/antag_panel_href(href, datum/mind/mind, mob/current)
+	return
+
 /datum/objective/monkey
 	explanation_text = "Ensure that infected monkeys escape on the emergency shuttle!"
 	martyr_compatible = TRUE

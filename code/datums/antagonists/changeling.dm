@@ -434,7 +434,7 @@
 	if (SSticker.mode.config_tag=="changeling" || SSticker.mode.config_tag=="traitorchan")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 	if(C)
 		text += "<b>[C.name]</b> | <a href='?src=[REF(mind)];changeling=clear'>No</a>"
 		if (mind.objectives.len < 1)
@@ -467,7 +467,7 @@
 			var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 			if(C)
 				C.forge_objectives()
-			to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
+			to_chat(usr, "<span class='notice'>The objectives for changeling [mind.key] have been generated. You can edit them and anounce manually.</span>")
 		if("initialdna")
 			var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
 			if( !ling || !ling.stored_profiles.len || !iscarbon(current))
