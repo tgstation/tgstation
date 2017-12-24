@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Detection of language needs to be before inherent channels, because
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
-  
+
 	var/datum/saymode/SM = SSradio.saymodes[talk_key]
 	if(SM && !SM.handle_message(src, message, language))
 		return
@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(has_disability(MUTE))
+	if(has_disability(DISABILITY_MUTE))
 		return 0
 
 	if(is_muzzled())

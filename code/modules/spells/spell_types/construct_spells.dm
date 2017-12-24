@@ -216,7 +216,7 @@
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
 	if(isliving(target))
 		var/mob/living/L = target
-		L.cure_blind(BLIND, "abyssal_gaze")
+		L.cure_blind(DISABILITY_BLIND, "abyssal_gaze")
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"

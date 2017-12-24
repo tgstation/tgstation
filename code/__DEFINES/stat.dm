@@ -10,17 +10,17 @@
 
 //mob disabilities stat
 
-#define BLIND 		"blind"
-#define MUTE		"mute"
-#define DEAF		"deaf"
-#define NEARSIGHT	"nearsighted"
-#define FAT			"fat"
-#define HUSK		"husk"
-#define NOCLONE		"noclone"
-#define CLUMSY		"clumsy"
-#define DUMB        "dumb"
-#define MONKEYLIKE  "monkeylike" //sets IsAdvancedToolUser to FALSE
-#define PACIFISM 	"pacifism"
+#define DISABILITY_BLIND 		"blind"
+#define DISABILITY_MUTE			"mute"
+#define DISABILITY_DEAF			"deaf"
+#define DISABILITY_NEARSIGHT	"nearsighted"
+#define DISABILITY_FAT			"fat"
+#define DISABILITY_HUSK			"husk"
+#define DISABILITY_NOCLONE		"noclone"
+#define DISABILITY_CLUMSY		"clumsy"
+#define DISABILITY_DUMB			"dumb"
+#define DISABILITY_MONKEYLIKE	"monkeylike" //sets IsAdvancedToolUser to FALSE
+#define DISABILITY_PACIFISM		"pacifism"
 
 // common disability sources
 #define EYE_DAMAGE "eye_damage"
