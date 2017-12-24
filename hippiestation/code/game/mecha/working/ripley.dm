@@ -7,16 +7,8 @@
 
 /obj/mecha/working/ripley/mining_roundstart/Initialize()
 	. = ..()
-	if(prob(15)) // Maybe get a diamond drill one every few rounds.
-		var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
-		D.attach(src)
-	else
-		var/obj/item/mecha_parts/mecha_equipment/drill/D = new
-		D.attach(src)
-
-	if(prob(30)) //Or perhaps a free plasma cutter!
-		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
-		P.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/drill/D = new
+	D.attach(src)
 
 	cargo.Add(new /obj/structure/ore_box(src)) //Starts with its own nice little ore box.
 
