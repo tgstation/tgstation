@@ -8,13 +8,14 @@
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
 	var/server_id = 0
-	var/base_mining_income = 2
+	var/base_mining_income = 80
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 5
-	var/temp_tolerance_low = 0
-	var/temp_tolerance_high = T20C
-	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
+	var/part_bonus = 1 //value that point income is multiplied by, don't bother changing
+	var/part_value = 0.333 //the increase in part_bonus per tier of parts ABOVE stock parts, 2 with maximum parts
+	var/temp_tolerance = 2.7 //kelvin, minimum temperature is 2.7
+	var/temp_penalty_coefficient = 0.5 //Changes the penalty for high temperatures, 0.5 at 73k is about 2600 points/minute
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/rnd/server/Initialize()
@@ -30,9 +31,10 @@
 
 /obj/machinery/rnd/server/RefreshParts()
 	var/tot_rating = 0
-	for(var/obj/item/stock_parts/SP in src)
+	for(var/obj/item/stock_parts/SP in component_parts)
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
+	part_bonus = 1 + max(((tot_rating-1)*part_value), 0)
 
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(stat & EMPED)
@@ -52,8 +54,8 @@
 
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_low), 0) / temp_penalty_coefficient
-	. = max(. - penalty, 0)
+	var/penalty = max((get_env_temp() - temp_tolerance), 0) * temp_penalty_coefficient
+	. = max(. - penalty, 0) * part_bonus
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/datum/gas_mixture/environment = loc.return_air()
