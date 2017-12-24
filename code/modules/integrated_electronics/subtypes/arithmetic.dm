@@ -55,13 +55,10 @@
 		return
 	var/result = A.data
 
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
-		if(I == A)
-			continue
-		I.pull_data()
-		if(isnum(I.data))
-			result = result - I.data
+	for(var/k in 2 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(isnum(I))
+			result -= I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -84,13 +81,10 @@
 	if(!isnum(A.data))
 		return
 	var/result = A.data
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
-		if(I == A)
-			continue
-		I.pull_data()
-		if(isnum(I.data))
-			result = result * I.data
+	for(var/k in 2 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(isnum(I))
+			result *= I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -112,6 +106,12 @@
 	if(!isnum(A.data))
 		return
 	var/result = A.data
+
+
+	for(var/k in 2 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(isnum(I) && (I != 0))
+			result /= I
 
 
 	set_pin_data(IC_OUTPUT, 1, result)
@@ -224,7 +224,7 @@
 		var/I = get_pin_data(IC_INPUT, k)
 		if(isnum(I))
 			inputs_used++
-			result = result + I.data
+			result += I
 
 	if(inputs_used)
 		result = result / inputs_used
@@ -279,11 +279,10 @@
 
 /obj/item/integrated_circuit/arithmetic/square_root/do_work()
 	var/result = 0
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
-		I.pull_data()
-		if(isnum(I.data))
-			result = sqrt(I.data)
+	for(var/k in 2 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(isnum(I))
+			result += sqrt(I)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()

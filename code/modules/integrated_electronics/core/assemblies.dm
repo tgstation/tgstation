@@ -31,8 +31,6 @@
 	.=..()
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
-	if (!armor)
-		armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
@@ -401,7 +399,8 @@
 
 	return acting_object.drop_location()
 
-
+/obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
+  name = "type-a electronic assembly"
 
 /obj/item/device/electronic_assembly/calc
 	name = "type-b electronic assembly"
