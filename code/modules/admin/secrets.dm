@@ -68,6 +68,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=masscleanbot'>Mass Cleanbot</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -564,6 +565,14 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+		if("masscleanbot")
+			if(!check_rights(R_FUN))
+				return
+			message_admins("[key_name_admin(usr)] has activated MASS CLEANBOT!")
+			log_admin("[key_name(usr)] has activated MASS CLEANBOT!")
+			for(var/mob/M in GLOB.player_list)
+				M.verbs += /mob/proc/cleanbot
+				to_chat(M, "<span class='big bold danger'>You can now become a cleanbot.</span>")
 
 	if(E)
 		E.processing = FALSE

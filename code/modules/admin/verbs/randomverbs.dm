@@ -1303,3 +1303,15 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/mob/proc/cleanbot()
+	set category = "Cleanbot"
+	set name = "Cleanbot."
+	to_chat(src, "<span class='notice'>You are now a cleanbot.</span>")
+	var/mob/living/simple_animal/bot/cleanbot/new_cleanbot = new(get_turf(src))
+	new_cleanbot.allow_pai = FALSE
+	new_cleanbot.name = real_name
+	new_cleanbot.language_holder = new /datum/language_holder/universal()
+	new_cleanbot.faction = list(faction.Copy(), "cleanbot", "meme")
+	mind.transfer_to(new_cleanbot)
+	dust()
