@@ -1,6 +1,19 @@
 /obj/item/restraints
 	breakouttime = 600
 
+/obj/item/restraints/Destroy()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.handcuffed == src)
+			M.handcuffed = null
+			M.update_handcuffed()
+			if(M.buckled && M.buckled.buckle_requires_restraints)
+				M.buckled.unbuckle_mob(M)
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.update_inv_legcuffed()
+	return ..()
+
 //Handcuffs
 
 /obj/item/restraints/handcuffs
