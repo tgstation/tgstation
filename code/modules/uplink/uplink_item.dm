@@ -1293,6 +1293,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
+	
+/datum/uplink_item/role_restricted/homerunbat
+	name = "Homerun Baseball Bat"
+	item = /obj/item/melee/baseball_bat/homerun
+	desc = "A hefty wooden baseball bat, modified in the interior with Syndicate weight-shifting technology. Activate in-hand to gather strength; once charged, attacking with the bat will deal lethal damage as weight as shifted to the front of the blow mid-swing, causing the arc to accelerate to near-supersonic speeds."
+	cost = 20
+	restricted_roles = list("Assistant")
+	surplus = 0
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
