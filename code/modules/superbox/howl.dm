@@ -1,8 +1,8 @@
 // Definitions for Howl so they don't have to be repeated.
 
 /obj/structure/bed/dogbed/howl
-	desc = "Howls's bed! Looks comfy."
-	name = "Howls's bed"
+	desc = "Howl's bed! Looks comfy."
+	name = "Howl's bed"
 	anchored = TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Howl
