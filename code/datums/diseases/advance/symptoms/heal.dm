@@ -74,7 +74,7 @@
 			if(istype(T, /turf/open/space))
 				return power * nearspace_penalty
 
-/datum/symptom/heal/starlight/Heal(mob/living/M, datum/disease/advance/A, actual_power)
+/datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
