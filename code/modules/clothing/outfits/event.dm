@@ -28,4 +28,10 @@
 	var/obj/item/a_gift/gift = new(H)
 	while(bag.can_be_inserted(gift, 1))
 		bag.handle_item_insertion(gift, 1)
-		gift = new(H)
+		if(prob(50))
+			gift = new /obj/item/a_gift(H)
+		else
+			gift = new /obj/item/a_gift/anything(H)
+
+	// Remove the last gift that doesn't fit.
+	qdel(gift)
