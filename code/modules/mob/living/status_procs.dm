@@ -183,14 +183,14 @@
 /////////////////////////////////// DISABILITY PROCS ////////////////////////////////////
 
 /mob/living/proc/cure_blind(list/sources)
-	remove_disability(BLIND, sources)
-	if(!has_disability(BLIND))
+	remove_disability(DISABILITY_BLIND, sources)
+	if(!has_disability(DISABILITY_BLIND))
 		adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
-	if(!has_disability(BLIND))
+	if(!has_disability(DISABILITY_BLIND))
 		blind_eyes(1)
-	add_disability(BLIND, source)
+	add_disability(DISABILITY_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(list/sources)
 	remove_disability(NEARSIGHT, sources)
