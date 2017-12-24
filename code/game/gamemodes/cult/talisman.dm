@@ -10,7 +10,6 @@
 	button.screen_loc = "6:-29,4:-2"
 	button.moved = "6:-29,4:-2"
 
-
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
 		qdel(X)
@@ -31,7 +30,7 @@
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
-	for(var/obj/effect/rune/imbue/R in range(1, owner))
+	for(var/obj/effect/rune/empower/R in range(1, owner))
 		rune = TRUE
 		break
 	if(rune)

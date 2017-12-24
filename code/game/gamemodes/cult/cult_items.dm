@@ -20,12 +20,15 @@
 	force = 15
 	throwforce = 25
 	armour_penetration = 35
+	actions_types = list(/datum/action/item_action/cult_dagger)
 
 /obj/item/melee/cultblade/dagger/Initialize()
 	..()
 	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
+
+/datum/action/innate
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"

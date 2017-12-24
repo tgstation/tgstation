@@ -82,7 +82,7 @@
 	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
-	charge_max = 3000
+	charge_max = 2400
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
@@ -95,28 +95,61 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
-	charge_max = 4000
+	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/device/soulstone/anybody)
 
-
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
-	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
-
-	school = "transmutation"
-	charge_max = 300
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune
+	name = "Summon Rune"
+	desc = "This spell draws a rune from the void, as though it had been there all along..."
+	school = "conjuration"
+	charge_max = 3000
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/obj/effect/forcefield/cult)
-	summon_lifespan = 200
+	cast_sound = 'sound/magic/enter_blood.ogg'
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "telerune"
+	action_background_icon_state = "bg_demon"
+	summon_type = list(/obj/effect/rune)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/cast(list/targets,mob/user = usr)
+	if(do_after(user, 60, target = user))
+		..()
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/teleport
+	name = "Summon Teleport Rune"
+	summon_type = list(/obj/effect/rune/teleport)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/revive
+	name = "Summon Revive Rune"
+	action_icon_state = "revive"
+	summon_type = list(/obj/effect/rune/raise_dead)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/wall
+	name = "Summon Barrier Rune"
+	action_icon_state = "barrier"
+	summon_type = list(/obj/effect/rune/wall)
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/barrier/post_summon(atom/summoned_object, mob/user)
+	var/obj/effect/rune/wall/W = summoned_object
+	W.spread_density()
+
+/obj/effect/proc_holder/spell/targeted/forcewall/cult
+	name = "Shield"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
+	school = "transmutation"
+	charge_max = 400
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	wall_type = /obj/effect/forcefield/cult
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultforcewall"
 	action_background_icon_state = "bg_demon"
+
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
@@ -278,3 +311,27 @@
 	charge_max = 800
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
+
+
+/obj/effect/proc_holder/spell/dumbfire/juggernaut
+	name = "Gauntlet Echo"
+	desc = "Channels energy into your gauntlet - firing its essence forward in a slow-moving but devastating blow."
+	proj_icon_state = "cursehand0"
+	proj_name = "Shadowfist"
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
+	proj_lifespan = 15
+	proj_step_delay = 7
+	charge_max = 350
+	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "cultfist"
+	action_background_icon_state = "bg_demon"
+	sound = 'sound/weapons/resonator_blast.ogg'
+	proj_trigger_range = 0
+	ignore_factions = list("cult")
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
+	name = "Gauntlet Echo"
+	amt_dam_brute = 30
+	amt_knockdown = 50
+	sound = 'sound/weapons/punch3.ogg'

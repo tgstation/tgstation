@@ -110,7 +110,8 @@
 	if(!cult_team.cult_mastered)
 		vote.Grant(current)
 	communion.Grant(current)
-	magic.Grant(current)
+	if(ishuman(current))
+		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)

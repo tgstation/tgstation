@@ -60,7 +60,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		SEND_SOUND(user,'sound/items/sheath.ogg')
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 10, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
@@ -190,61 +190,20 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return B
 	return 0
 
-//Rite of Binding: A paper on top of the rune to a talisman.
-/obj/effect/rune/imbue
-	cultist_name = "Create Talisman"
-	cultist_desc = "transforms paper into powerful magic talismans."
+/obj/effect/rune/empower
+	cultist_name = "Empowerment"
+	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
 	color = RUNE_COLOR_TALISMAN
+	construct_invoke = FALSE
 
-/obj/effect/rune/imbue/invoke(var/list/invokers)
+/obj/effect/rune/empower/invoke(var/list/invokers)
+	. = ..()
 	var/mob/living/user = invokers[1] //the first invoker is always the user
-	var/list/papers_on_rune = checkpapers()
-	var/entered_talisman_name
-	var/obj/item/paper/talisman/talisman_type
-	var/list/possible_talismans = list()
-	if(!papers_on_rune.len)
-		to_chat(user, "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>")
-		fail_invoke()
-		log_game("Talisman Creation rune failed - no blank papers on rune")
-		return
-	if(rune_in_use)
-		to_chat(user, "<span class='cultitalic'>[src] can only support one ritual at a time!</span>")
-		fail_invoke()
-		log_game("Talisman Creation rune failed - already in use")
-		return
+	for(var/datum/action/innate/cult/blood_magic/BM in user.actions)
+		BM.Activate()
 
-	for(var/I in subtypesof(/obj/item/paper/talisman) - /obj/item/paper/talisman/supply - /obj/item/paper/talisman/supply/weak - /obj/item/paper/talisman/summon_tome)
-		var/obj/item/paper/talisman/J = I
-		var/talisman_cult_name = initial(J.cultist_name)
-		if(talisman_cult_name)
-			possible_talismans[talisman_cult_name] = J //This is to allow the menu to let cultists select talismans by name
-	entered_talisman_name = input(user, "Choose a talisman to imbue.", "Talisman Choices") as null|anything in possible_talismans
-	talisman_type = possible_talismans[entered_talisman_name]
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || rune_in_use || !talisman_type)
-		return
-	papers_on_rune = checkpapers()
-	if(!papers_on_rune.len)
-		to_chat(user, "<span class='cultitalic'>There must be a blank paper on top of [src]!</span>")
-		fail_invoke()
-		log_game("Talisman Creation rune failed - no blank papers on rune")
-		return
-	var/obj/item/paper/paper_to_imbue = papers_on_rune[1]
-	..()
-	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
-	rune_in_use = TRUE
-	if(do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
-		new talisman_type(get_turf(src))
-		visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
-		qdel(paper_to_imbue)
-	rune_in_use = FALSE
-
-/obj/effect/rune/imbue/proc/checkpapers()
-	. = list()
-	for(var/obj/item/paper/P in get_turf(src))
-		if(!P.info && !istype(P, /obj/item/paper/talisman))
-			. |= P
 
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
@@ -616,43 +575,33 @@ structure_check() searches for nearby cultist structures required for the invoca
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
 
 
-//Rite of Disruption: Emits an EMP blast.
 /obj/effect/rune/emp
-	cultist_name = "Electromagnetic Disruption"
+	cultist_name = "Apocalypse"
 	cultist_desc = "emits a large electromagnetic pulse, increasing in size for each cultist invoking it, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
 	allow_excess_invokers = TRUE
 	color = RUNE_COLOR_EMP
+	req_cultists = 5
 
 /obj/effect/rune/emp/invoke(var/list/invokers)
 	var/turf/E = get_turf(src)
 	..()
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
-	switch(invokers.len)
-		if(1 to 2)
-			playsound(E, 'sound/items/welder2.ogg', 25, 1)
-			for(var/M in invokers)
-				to_chat(M, "<span class='warning'>You feel a minute vibration pass through you...</span>")
-		if(3 to 6)
-			playsound(E, 'sound/magic/disable_tech.ogg', 50, 1)
-			for(var/M in invokers)
-				to_chat(M, "<span class='danger'>Your hair stands on end as a shockwave emanates from the rune!</span>")
-		if(7 to INFINITY)
-			playsound(E, 'sound/magic/disable_tech.ogg', 100, 1)
-			for(var/M in invokers)
-				var/mob/living/L = M
-				to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")
-				L.Knockdown(40)
+	playsound(E, 'sound/magic/disable_tech.ogg', 100, 1)
+	for(var/M in invokers)
+		var/mob/living/L = M
+		to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")
+		L.Knockdown(40)
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
-	cultist_name = "Form Barrier"
+	cultist_name = "Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
-	icon_state = "1"
+	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/datum/timedevent/density_timer
@@ -664,8 +613,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/wall/examine(mob/user)
 	..()
-	if(density)
-		to_chat(user, "<span class='cultitalic'>The air above this rune has hardened into a barrier that will last [DisplayTimeText(density_timer.timeToRun - world.time)].</span>")
+	if(density && iscultist(user))
+		var/datum/timedevent/TMR = active_timers[1]
+		if(TMR)
+			to_chat(user, "<span class='cultitalic'>The air above this rune has hardened into a barrier that will last [DisplayTimeText(TMR.timeToRun - world.time)].</span>")
 
 /obj/effect/rune/wall/Destroy()
 	density = FALSE
@@ -736,7 +687,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "N'ath reth sh'yro eth d'rekkathnor!"
 	req_cultists = 2
 	invoke_damage = 10
-	icon_state = "5"
+	icon_state = "3"
 	color = RUNE_COLOR_SUMMON
 
 /obj/effect/rune/summon/invoke(var/list/invokers)
@@ -841,10 +792,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
-	cultist_name = "Spirit World"
-	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
+	cultist_name = "Spirits"
+	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
-	icon_state = "6"
+	icon_state = "7"
 	invoke_damage = 10
 	construct_invoke = FALSE
 	color = RUNE_COLOR_DARKRED

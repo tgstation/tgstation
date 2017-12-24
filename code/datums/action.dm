@@ -441,7 +441,25 @@
 	name = "Use [target.name]"
 	button.name = name
 
+/datum/action/item_action/cult_dagger
+	name = "Draw Blood Rune"
+	desc = "Use the ritual dagger to create a powerful blood rune"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "draw"
+	buttontooltipstyle = "cult"
+	background_icon_state = "bg_demon"
 
+/datum/action/item_action/cult_dagger/Grant(mob/M)
+	if(iscultist(M))
+		..()
+		button.screen_loc = "6:157,4:-2"
+		button.moved = "6:157,4:-2"
+	else
+		Remove(owner)
+
+/datum/action/item_action/cult_dagger/Trigger()
+	var/obj/item/I = target
+	I.attack_self(owner)
 
 
 //Preset for spells
