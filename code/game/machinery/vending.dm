@@ -441,7 +441,7 @@
 /obj/machinery/vending/ui_data()
 	var/list/data = list()
 	var/list/listed_products = list()
-	var/list/display_records = product_records
+	var/list/display_records = product_records.Copy()
 	if(extended_inventory)
 		display_records += hidden_records
 	if(coin)
