@@ -255,16 +255,13 @@
 		note = null
 		update_icon()
 
-/obj/machinery/door/airlock/proc/unzap() //for addtimer
-	justzap = FALSE
-
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(isElectrified())
 			if(!justzap)
 				if(shock(user, 100))
 					justzap = TRUE
-					addtimer(CALLBACK(src, .proc/unzap), 10)
+					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
 					return
 			else
 				return
@@ -684,7 +681,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_disability(DUMB)) && Adjacent(user))
+		if((H.has_disability(DISABILITY_DUMB)) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \

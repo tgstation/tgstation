@@ -58,7 +58,7 @@
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
-	if(user.has_disability(PACIFISM))
+	if(user.has_disability(DISABILITY_PACIFISM))
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
