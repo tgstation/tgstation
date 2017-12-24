@@ -297,7 +297,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE // Battery has enough.
 	return FALSE // Not enough power.
 
-/obj/item/integrated_circuit/proc/check_then_do_work(var/ignore_power = FALSE)
+/obj/item/integrated_circuit/proc/check_then_do_work(ord,var/ignore_power = FALSE)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
 		return FALSE
 	if(power_draw_per_use && !ignore_power)
@@ -305,10 +305,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			power_fail()
 			return FALSE
 	next_use = world.time + cooldown_per_use
-	do_work()
+	do_work(ord)
 	return TRUE
 
-/obj/item/integrated_circuit/proc/do_work()
+/obj/item/integrated_circuit/proc/do_work(ord)
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()

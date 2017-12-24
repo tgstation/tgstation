@@ -9,6 +9,11 @@
 	. = ..()
 	if(volume)
 		create_reagents(volume)
+		push_vol()
+
+/obj/item/integrated_circuit/reagent/proc/push_vol()
+	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
+	push_data()
 
 /obj/item/integrated_circuit/reagent/smoke
 	name = "smoke generator"
@@ -29,40 +34,39 @@
 		)
 	activators = list(
 		"create smoke" = IC_PINTYPE_PULSE_IN,
-		"on smoked" = IC_PINTYPE_PULSE_OUT
+		"on smoked" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/interact(mob/user)
-	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
-	push_data()
-	..()
-
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
 	if(changetype == ADD_REAGENT)
 		notified = FALSE
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
-/obj/item/integrated_circuit/reagent/smoke/do_work()
-	if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
-		return
-	var/location = get_turf(src)
-	var/datum/effect_system/smoke_spread/chem/S = new
-	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	if(S)
-		S.set_up(reagents, smoke_radius, location, notified)
-		if(!notified)
-			notified = TRUE
-		S.start()
-
-	reagents.clear_reagents()
-	activate_pin(2)
+/obj/item/integrated_circuit/reagent/smoke/do_work(ord)
+	switch(ord)
+		if(1)
+			if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
+				return
+			var/location = get_turf(src)
+			var/datum/effect_system/smoke_spread/chem/S = new
+			S.attach(location)
+			playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+			if(S)
+				S.set_up(reagents, smoke_radius, location, notified)
+				if(!notified)
+					notified = TRUE
+				S.start()
+			reagents.clear_reagents()
+			activate_pin(2)
+		if(3)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
@@ -90,7 +94,9 @@
 	activators = list(
 		"inject" = IC_PINTYPE_PULSE_IN,
 		"on injected" = IC_PINTYPE_PULSE_OUT,
-		"on fail" = IC_PINTYPE_PULSE_OUT
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+
 		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 15
@@ -98,15 +104,8 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/injector/interact(mob/user)
-	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
-	push_data()
-	..()
-
-
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
 /obj/item/integrated_circuit/reagent/injector/on_data_written()
 	var/new_amount = get_pin_data(IC_INPUT, 2)
@@ -132,7 +131,15 @@
 	temp_reagents.clear_reagents()
 	qdel(temp_reagents)
 
-/obj/item/integrated_circuit/reagent/injector/do_work()
+/obj/item/integrated_circuit/reagent/injector/do_work(ord)
+	switch(ord)
+		if(1)
+			inject()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/injector/proc/inject()
 	set waitfor = FALSE // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/atom/movable/acting_object = get_object()
@@ -286,18 +293,16 @@
 		"volume used" = IC_PINTYPE_NUMBER,
 		"self reference" = IC_PINTYPE_REF
 		)
-	activators = list()
+	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
-/obj/item/integrated_circuit/reagent/storage/interact(mob/user)
+/obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
-	..()
 
 /obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
@@ -311,6 +316,7 @@
 /obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
 	. = ..()
 	reagents.set_reacting(FALSE)
+
 
 /obj/item/integrated_circuit/reagent/storage/big
 	name = "big reagent storage"
@@ -338,14 +344,24 @@
 	activators = list(
 		"grind" = IC_PINTYPE_PULSE_IN,
 		"on grind" = IC_PINTYPE_PULSE_OUT,
-		"on fail" = IC_PINTYPE_PULSE_OUT
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	volume = 100
 	power_draw_per_use = 150
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/grinder/do_work()
+
+/obj/item/integrated_circuit/reagent/storage/grinder/do_work(ord)
+	switch(ord)
+		if(1)
+			grind()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/grinder/proc/grind()
 	if(reagents.total_volume >= reagents.maximum_volume)
 		activate_pin(3)
 		return FALSE
@@ -375,14 +391,23 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	activators = list(
 		"juice" = IC_PINTYPE_PULSE_IN,
 		"on juice" = IC_PINTYPE_PULSE_OUT,
-		"on fail" = IC_PINTYPE_PULSE_OUT
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	volume = 100
 	power_draw_per_use = 150
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/juicer/do_work()
+/obj/item/integrated_circuit/reagent/storage/juicer/do_work(ord)
+	switch(ord)
+		if(1)
+			juice()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/juicer/proc/juice()
 	if(reagents.total_volume >= reagents.maximum_volume)
 		activate_pin(3)
 		return FALSE
@@ -410,17 +435,22 @@ obj/item/integrated_circuit/reagent/storage/juicer
 		"list of reagents" = IC_PINTYPE_LIST
 		)
 	activators = list(
-		"scan" = IC_PINTYPE_PULSE_IN
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/scan/do_work()
-	var/cont[0]
-	for(var/datum/reagent/RE in reagents.reagent_list)
-		cont += RE.id
-	set_pin_data(IC_OUTPUT, 3, cont)
-	push_data()
-
+/obj/item/integrated_circuit/reagent/storage/scan/do_work(ord)
+	switch(ord)
+		if(1)
+			var/cont[0]
+			for(var/datum/reagent/RE in reagents.reagent_list)
+				cont += RE.id
+			set_pin_data(IC_OUTPUT, 3, cont)
+			push_data()
+		if(2)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
 
 /obj/item/integrated_circuit/reagent/filter
 	name = "reagent filter"
