@@ -91,17 +91,6 @@
 		return wear_id.GetID()
 
 
-/mob/living/carbon/human/abiotic(full_body = 0)
-	var/abiotic_hands = FALSE
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			abiotic_hands = TRUE
-			break
-	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
-		return TRUE
-	return abiotic_hands
-
-
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(has_disability(MONKEYLIKE))
 		return FALSE

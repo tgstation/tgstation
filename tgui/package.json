@@ -22,7 +22,7 @@
     "es3ify": "0.2.1",
     "fg-loadcss": "1.0.0-0",
     "fontfaceobserver": "1.6.3",
-    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp": "github:gulpjs/gulp#6d71a65",
     "gulp-bytediff": "1.0.0",
     "gulp-cssnano": "2.1.2",
     "gulp-if": "2.0.0",

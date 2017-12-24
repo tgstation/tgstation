@@ -109,7 +109,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = "Amount Left: [amount]<br>"
+	var/t1 = "Amount Left: [get_amount()]<br>"
 	for(var/i in 1 to length(recipe_list))
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -161,8 +161,8 @@
 	if (href_list["sublist"] && !href_list["make"])
 		interact(usr, text2num(href_list["sublist"]))
 	if (href_list["make"])
-		if (get_amount() < 1)
-			qdel(src) //Never should happen
+		if (get_amount() < 1 && !is_cyborg)
+			qdel(src)
 
 		var/list/recipes_list = recipes
 		if (href_list["sublist"])

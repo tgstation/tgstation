@@ -56,8 +56,8 @@
 	shuttlePortName = "custom location"
 	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1)
 	view_range = 13
-	x_offset = -4
-	y_offset = -2
+	x_offset = -7
+	y_offset = -1
 	see_hidden = TRUE
 
 #undef SYNDICATE_CHALLENGE_TIMER

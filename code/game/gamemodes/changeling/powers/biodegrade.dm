@@ -55,12 +55,14 @@
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
 	if(O && user.handcuffed == O)
 		user.visible_message("<span class='warning'>[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop.</span>")
+		user.uncuff()
 		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/S)
 	if(S && user.wear_suit == S)
 		user.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
+		user.uncuff()
 		new /obj/effect/decal/cleanable/greenglow(S.drop_location())
 		qdel(S)
 

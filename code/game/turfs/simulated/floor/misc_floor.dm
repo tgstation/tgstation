@@ -146,6 +146,9 @@
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
+/turf/open/floor/clockwork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
+	return
+
 /turf/open/floor/clockwork/Initialize()
 	. = ..()
 	if(uses_overlay)
