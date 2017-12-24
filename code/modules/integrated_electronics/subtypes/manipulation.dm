@@ -351,7 +351,7 @@
 
 /obj/item/integrated_circuit/manipulation/claw
 	name = "pulling claw"
-	desc = "A circuit which can pull things.."
+	desc = "Circuit which can pull things.."
 	icon_state = "pull_claw"
 	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release.1 for pull. 2 for gressive grab."
 	w_class = WEIGHT_CLASS_SMALL
