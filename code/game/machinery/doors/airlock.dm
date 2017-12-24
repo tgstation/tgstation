@@ -255,16 +255,13 @@
 		note = null
 		update_icon()
 
-/obj/machinery/door/airlock/proc/unzap() //for addtimer
-	justzap = FALSE
-
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(isElectrified())
 			if(!justzap)
 				if(shock(user, 100))
 					justzap = TRUE
-					addtimer(CALLBACK(src, .proc/unzap), 10)
+					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
 					return
 			else
 				return
