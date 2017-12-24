@@ -330,6 +330,45 @@ Contains:
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
 
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserkerGree
+	name = "infiltrator's hardsuit"
+	desc = "Mumbling can be heard from the hardsuit, driving the user psychopathic."
+	icon_state = "hardsuit-beserkerGree"
+	item_state = "hardsuit-beserkerGree"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerGree
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerGree
+	name = "infiltrator's helmet"
+	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	icon_state = "hardsuit0-beserkerGree"
+	item_state = "hardsuit0-beserkerGree"
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserkerBla
+	name = "backstabber's hardsuit"
+	desc = "Whispers resonate from the hardsuit, driving the user paranoid."
+	icon_state = "hardsuit-beserkerBla"
+	item_state = "hardsuit-beserkerBla"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerBla
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerBla
+	name = "backstabber's helmet"
+	desc = "Peering into the eyes of the helmet is enough to seal damnation."
+	icon_state = "hardsuit0-beserkerBla"
+	item_state = "hardsuit0-beserkerBla"
+
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserkerGrey
+	name = "destroyer's hardsuit"
+	desc = "Murmurs reverberate from the hardsuit, driving the user crazy."
+	icon_state = "hardsuit-beserkerGrey"
+	item_state = "hardsuit-beserkerGrey"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerGrey
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserkerGrey
+	name = "destroyer's helmet"
+	desc = "Peering into the visor of the helmet is enough to seal damnation."
+	icon_state = "hardsuit0-beserkerGrey"
+	item_state = "hardsuit0-beserkerGrey"
+
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
