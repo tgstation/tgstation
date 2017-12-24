@@ -136,7 +136,7 @@
 			return
 
 		jetpack.turn_off()
-		jetpack.loc = get_turf(src)
+		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 
@@ -654,7 +654,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
-		current_charges = Clamp((current_charges + recharge_rate), 0, max_charges)
+		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
 		playsound(loc, 'sound/magic/charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)

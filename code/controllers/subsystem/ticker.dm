@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	init_order = INIT_ORDER_TICKER
 
-	priority = 200
+	priority = FIRE_PRIORITY_TICKER
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
@@ -597,6 +597,7 @@ SUBSYSTEM_DEF(ticker)
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
+	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',

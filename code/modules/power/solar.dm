@@ -378,14 +378,14 @@
 		if("direction")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				currentdir = Clamp((360 + adjust + currentdir) % 360, 0, 359)
+				currentdir = CLAMP((360 + adjust + currentdir) % 360, 0, 359)
 				targetdir = currentdir
 				set_panels(currentdir)
 				. = TRUE
 		if("rate")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				trackrate = Clamp(trackrate + adjust, -7200, 7200)
+				trackrate = CLAMP(trackrate + adjust, -7200, 7200)
 				if(trackrate)
 					nexttime = world.time + 36000 / abs(trackrate)
 				. = TRUE
@@ -419,7 +419,7 @@
 				new /obj/item/shard( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.forceMove(drop_location())
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -430,7 +430,7 @@
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.forceMove(drop_location())
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"

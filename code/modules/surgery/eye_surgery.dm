@@ -23,9 +23,9 @@
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully fixes [target]'s eyes!", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
-	target.cure_blind()
+	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
-	target.cure_nearsighted()
+	target.cure_nearsighted(list(EYE_DAMAGE))
 	target.blur_eyes(35)	//this will fix itself slowly.
 	target.set_eye_damage(0)
 	return TRUE

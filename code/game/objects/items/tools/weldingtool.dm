@@ -51,7 +51,7 @@
 	cut_overlays()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 		add_overlay("[initial(icon_state)][ratio]")
 	update_torch()
 	return
@@ -120,7 +120,7 @@
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!status && istype(O, /obj/item/reagent_containers) && O.is_open_container())
+	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
@@ -241,7 +241,7 @@
 		container_type = NONE
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER_1
+		container_type = OPENCONTAINER
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)

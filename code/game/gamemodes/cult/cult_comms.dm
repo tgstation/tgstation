@@ -31,7 +31,7 @@
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
-	var/span = "cultitalic"
+	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
 		span = "cultlarge"
 		title = "Master"
@@ -117,7 +117,7 @@
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	pollCultists(owner,C.cult_team)
 
-/proc/pollCultists(var/mob/living/Nominee,datum/objective_team/cult/team) //Cult Master Poll
+/proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
 		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
@@ -318,7 +318,7 @@
 		return TRUE
 	return FALSE
 
-/proc/reset_blood_target(datum/objective_team/cult/team)
+/proc/reset_blood_target(datum/team/cult/team)
 	for(var/datum/mind/B in team.members)
 		if(B.current && B.current.stat != DEAD && B.current.client)
 			if(team.blood_target)

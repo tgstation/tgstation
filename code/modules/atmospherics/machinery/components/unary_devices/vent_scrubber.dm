@@ -77,7 +77,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!NODE1 || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational())
 		icon_state = "scrub_off"
 		return
 
@@ -98,16 +98,12 @@
 	if(!radio_connection)
 		return FALSE
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
 		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
 
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VS",
@@ -117,7 +113,7 @@
 		"widenet" = widenet,
 		"filter_types" = f_types,
 		"sigtype" = "status"
-	)
+	))
 
 	var/area/A = get_area(src)
 	if(!A.air_scrub_names[id_tag])
@@ -142,7 +138,7 @@
 	..()
 	if(welded || !is_operational())
 		return FALSE
-	if(!NODE1 || !on)
+	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
 	scrub(loc)
@@ -156,7 +152,7 @@
 		return FALSE
 
 	var/datum/gas_mixture/environment = tile.return_air()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	var/list/env_gases = environment.gases
 
 	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE)
@@ -179,7 +175,7 @@
 			filtered_out.temperature = removed.temperature
 
 			for(var/gas in filter_types & removed_gases)
-				ADD_GAS(gas, filtered_gases)
+				filtered_out.add_gas(gas)
 				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
 				removed_gases[gas][MOLES] = 0
 

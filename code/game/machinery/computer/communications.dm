@@ -135,7 +135,8 @@
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
-				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -463,8 +464,9 @@
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(CONFIG_GET(string/cross_server_address))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
+					var/cross_servers_count = length(CONFIG_GET(keyed_string_list/cross_server))
+					if(cross_servers_count)
+						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
@@ -697,11 +699,7 @@
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = TRANSMISSION_RADIO
-	status_signal.data["command"] = command
-
+	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
 			status_signal.data["msg1"] = data1

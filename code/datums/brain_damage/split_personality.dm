@@ -23,10 +23,12 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", null, null, null, 75, stranger_backseat)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/client/C = pick(candidates)
 		stranger_backseat.key = C.key
+		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
+		message_admins("[key_name_admin(stranger_backseat)] became [key_name_admin(owner)]'s split personality.")
 	else
 		qdel(src)
 
@@ -59,7 +61,7 @@
 		current_backseat = owner_backseat
 		free_backseat = stranger_backseat
 
-	log_game("[current_backseat]/([current_backseat.ckey]) assumed control of [owner]/([owner.ckey] due to [src]. (Original owner: [current_controller == OWNER ? owner.ckey : current_backseat.ckey])")
+	log_game("[key_name(current_backseat)] assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.ckey : current_backseat.ckey])")
 	to_chat(owner, "<span class='userdanger'>You feel your control being taken away... your other personality is in charge now!</span>")
 	to_chat(current_backseat, "<span class='userdanger'>You manage to take control of your body!</span>")
 
@@ -134,6 +136,7 @@
 /mob/living/split_personality/Login()
 	..()
 	to_chat(src, "<span class='notice'>As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality.</span>")
+	to_chat(src, "<span class='warning'><b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b></span>")
 
 /mob/living/split_personality/say(message)
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
@@ -189,7 +192,7 @@
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.disabilities & DEAF || owner == speaker)
+	if(owner.has_disability(DEAF) || owner == speaker)
 		return message
 	if(findtext(message, codeword))
 		message = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")

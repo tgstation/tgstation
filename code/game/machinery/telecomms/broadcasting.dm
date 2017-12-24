@@ -53,132 +53,141 @@
 
 **/
 
+// Subtype of /datum/signal with additional processing information.
+/datum/signal/subspace
+	transmission_method = TRANSMISSION_SUBSPACE
+	var/server_type = /obj/machinery/telecomms/server
+	var/datum/signal/subspace/original
+	var/list/levels
 
-/proc/Broadcast_Message(var/atom/movable/AM,
-						var/vmask, var/obj/item/device/radio/radio,
-						var/message, var/name, var/job, var/realname,
-						var/data, var/compression, var/list/level, var/freq, var/list/spans,
-						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell, var/datum/language/language)
+/datum/signal/subspace/New(data)
+	src.data = data || list()
 
+/datum/signal/subspace/proc/copy()
+	var/datum/signal/subspace/copy = new
+	copy.original = src
+	copy.source = source
+	copy.levels = levels
+	copy.frequency = frequency
+	copy.server_type = server_type
+	copy.transmission_method = transmission_method
+	copy.data = data.Copy()
+	return copy
+
+/datum/signal/subspace/proc/mark_done()
+	var/datum/signal/subspace/current = src
+	while (current)
+		current.data["done"] = TRUE
+		current = current.original
+
+/datum/signal/subspace/proc/send_to_receivers()
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
+		R.receive_signal(src)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		R.receive_signal(src)
+
+/datum/signal/subspace/proc/broadcast()
 	set waitfor = FALSE
 
-	message = copytext(message, 1, MAX_BROADCAST_LEN)
+// Vocal transmissions (i.e. using saycode).
+// Despite "subspace" in the name, these transmissions can also be RADIO
+// (intercoms and SBRs) or SUPERSPACE (CentCom).
+/datum/signal/subspace/vocal
+	var/atom/movable/virtualspeaker/virt
+	var/datum/language/language
 
+/datum/signal/subspace/vocal/New(
+	obj/source,  // the originating radio
+	frequency,  // the frequency the signal is taking place on
+	atom/movable/virtualspeaker/speaker,  // representation of the method's speaker
+	datum/language/language,  // the langauge of the message
+	message,  // the text content of the message
+	spans  // the list of spans applied to the message
+)
+	src.source = source
+	src.frequency = frequency
+	src.language = language
+	virt = speaker
+	var/datum/language/lang_instance = GLOB.language_datum_instances[language]
+	data = list(
+		"name" = speaker.name,
+		"job" = speaker.job,
+		"message" = message,
+		"compression" = rand(35, 65),
+		"language" = lang_instance.name,
+		"spans" = spans
+	)
+	var/turf/T = get_turf(source)
+	levels = list(T.z)
+
+/datum/signal/subspace/vocal/copy()
+	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)
+	copy.original = src
+	copy.data = data.Copy()
+	copy.levels = levels
+	return copy
+
+// This is the meat function for making radios hear vocal transmissions.
+/datum/signal/subspace/vocal/broadcast()
+	set waitfor = FALSE
+
+	// Perform final composition steps on the message.
+	var/message = copytext(data["message"], 1, MAX_BROADCAST_LEN)
 	if(!message)
 		return
-
-	var/list/radios = list()
-
-	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
-	virt.name = name
-	virt.job = job
-	virt.source = AM
-	virt.radio = radio
-	virt.verb_say = verb_say
-	virt.verb_ask = verb_ask
-	virt.verb_exclaim = verb_exclaim
-	virt.verb_yell = verb_yell
-
+	var/compression = data["compression"]
 	if(compression > 0)
 		message = Gibberish(message, compression + 40)
 
-	// --- Broadcast only to intercom devices ---
+	// Assemble the list of radios
+	var/list/radios = list()
+	switch (transmission_method)
+		if (TRANSMISSION_SUBSPACE)
+			// Reaches any radios on the levels
+			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+				if(R.can_receive(frequency, levels))
+					radios += R
 
-	if(data == 1)
-		for(var/obj/item/device/radio/intercom/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
+			// Syndicate radios can hear all well-known radio channels
+			if (num2text(frequency) in GLOB.reverseradiochannels)
+				for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
+					if(R.can_receive(FREQ_SYNDICATE, list(R.z)))
+						radios |= R
 
-	// --- Broadcast only to intercoms and station-bounced radios ---
+		if (TRANSMISSION_RADIO)
+			// Only radios not currently in subspace mode
+			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+				if(!R.subspace_transmission && R.can_receive(frequency, levels))
+					radios += R
 
-	else if(data == 2)
+		if (TRANSMISSION_SUPERSPACE)
+			// Only radios which are independent
+			for(var/obj/item/device/radio/R in GLOB.all_radios["[frequency]"])
+				if(R.independent && R.can_receive(frequency, levels))
+					radios += R
 
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
-			if(R.subspace_transmission)
-				continue
+	// From the list of radios, find all mobs who can hear those.
+	var/list/receive = get_mobs_in_radio_ranges(radios)
 
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-	// --- This space left blank for Syndicate data ---
-
-	// --- CentCom radio, yo. ---
-
-	else if(data == 5)
-
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
-			if(!R.independent)
-				continue
-
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-	// --- Broadcast to ALL radio devices ---
-
-	else
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
-				radios += R
-
-		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(FREQ_SYNDICATE, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
-				radios |= R
-
-	// Get a list of mobs who can hear from the radios we collected.
-	var/list/receive = get_mobs_in_radio_ranges(radios) //this includes all hearers.
-
-	for(var/mob/R in receive) //Filter receiver list.
-		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+	// Cut out mobs with clients who are admins and have radio chatter disabled.
+	for(var/mob/R in receive)
+		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO))
 			receive -= R
 
-	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+	// Add observers who have ghost radio enabled.
+	for(var/mob/dead/observer/M in GLOB.player_list)
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, language, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
+	// Render the message and have everybody hear it.
+	// Always call this on the virtualspeaker to avoid issues.
+	var/spans = data["spans"]
+	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, language, message, freq, spans)
+		hearer.Hear(rendered, virt, language, message, frequency, spans)
 
+	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
-		// --- This following recording is intended for research and feedback in the use of department radio channels ---
-		SSblackbox.LogBroadcast(freq)
+		SSblackbox.LogBroadcast(frequency)
 
-	sleep(50)
-	if(!QDELETED(virt)) //It could happen to YOU
-		qdel(virt)
-
-//Use this to test if an obj can communicate with a Telecommunications Network
-
-/atom/proc/test_telecomms()
-	var/datum/signal/signal = telecomms_process()
-	var/turf/position = get_turf(src)
-	return (position.z in signal.data["level"] && signal.data["done"])
-
-/atom/proc/telecomms_process()
-
-	// First, we want to generate a new radio signal
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_SUBSPACE
-	var/turf/pos = get_turf(src)
-
-	// --- Finally, tag the actual signal with the appropriate values ---
-	signal.data = list(
-		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
-		"message" = "TEST",
-		"compression" = rand(45, 50), // If the signal is compressed, compress our message too.
-		"traffic" = 0, // dictates the total traffic sum that the signal went through
-		"type" = 4, // determines what type of radio input it is: test broadcast
-		"reject" = 0,
-		"done" = 0,
-		"level" = pos.z // The level it is being broadcasted at.
-	)
-	signal.frequency = FREQ_COMMON
-
-  //#### Sending the signal to all subspace receivers ####//
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		R.receive_signal(signal)
-
-	sleep(rand(10,25))
-
-	return signal
+	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted

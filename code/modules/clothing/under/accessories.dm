@@ -15,11 +15,11 @@
 		if(U.pockets) // storage items conflict
 			return FALSE
 
-		pockets.loc = U
+		pockets.forceMove(U)
 		U.pockets = pockets
 
 	U.attached_accessory = src
-	loc = U
+	forceMove(U)
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
@@ -39,7 +39,7 @@
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(pockets && pockets == U.pockets)
-		pockets.loc = src
+		pockets.forceMove(src)
 		U.pockets = null
 
 	for(var/armor_type in armor)

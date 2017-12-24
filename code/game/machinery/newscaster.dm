@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/creationTime
 	var/authorCensor
 	var/bodyCensor
+	var/photo_file
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -97,6 +98,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/scannedUser
 	var/isAdminMsg
 	var/icon/img
+	var/photo_file
 
 /datum/newscaster/feed_network
 	var/list/datum/newscaster/feed_channel/network_channels = list()
@@ -126,6 +128,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(photo)
 		newMsg.img = photo.img
 		newMsg.caption = photo.scribble
+		newMsg.photo_file = save_photo(photo.img)
 	for(var/datum/newscaster/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
@@ -143,6 +146,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	wanted_issue.isAdminMsg = adminMsg
 	if(photo)
 		wanted_issue.img = photo.img
+		wanted_issue.photo_file = save_photo(photo.img)
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()
@@ -157,7 +161,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		NEWSCASTER.update_icon()
 
-
+/datum/newscaster/feed_network/proc/save_photo(icon/photo)
+	var/photo_file = copytext(md5("\icon[photo]"), 1, 6)
+	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
+		var/icon/p = icon(photo, frame = 1)
+		fcopy(p, "[GLOB.log_directory]/photos/[photo_file].png")
+	return photo_file
 
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
@@ -780,7 +789,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)
 		if(!photo.sillynewscastervar)
-			photo.loc = loc
+			photo.forceMove(drop_location())
 			if(!issilicon(user))
 				user.put_in_inactive_hand(photo)
 		else
@@ -856,7 +865,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
 		if(GLOB.news_network.wanted_issue.img)
 			NEWSPAPER.wantedPhoto = GLOB.news_network.wanted_issue.img
-	NEWSPAPER.loc = get_turf(src)
+	NEWSPAPER.forceMove(drop_location())
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 

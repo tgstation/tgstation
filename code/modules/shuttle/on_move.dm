@@ -91,14 +91,22 @@ All ShuttleMove procs go here
 			return
 
 	loc = newT
+
 	return TRUE
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+
+	var/turf/newT = get_turf(src)
+	if (newT.z != oldT.z)
+		onTransitZ(oldT.z, newT.z)
+
 	if(light)
 		update_light()
 	if(rotation)
 		shuttleRotate(rotation)
+
+
 
 	update_parallax_contents()
 
@@ -166,10 +174,6 @@ All ShuttleMove procs go here
 	. = ..()
 	GLOB.cameranet.addCamera(src)
 
-/obj/machinery/telecomms/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	listening_level = z // Update listening Z, just in case you have telecomm relay on a shuttle
-
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
 	recharging_turf = get_step(loc, dir)
@@ -203,9 +207,9 @@ All ShuttleMove procs go here
 /obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/missing_nodes = FALSE
-	for(DEVICE_TYPE_LOOP)
-		if(src.nodes[I])
-			var/obj/machinery/atmospherics/node = src.nodes[I]
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			var/obj/machinery/atmospherics/node = nodes[i]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
 				if(node in get_step(src, D))
@@ -213,9 +217,9 @@ All ShuttleMove procs go here
 					break
 
 			if(!connected)
-				nullifyNode(I)
+				nullifyNode(i)
 
-		if(!src.nodes[I])
+		if(!nodes[i])
 			missing_nodes = TRUE
 
 	if(missing_nodes)
@@ -328,9 +332,6 @@ All ShuttleMove procs go here
 /************************************Misc move procs************************************/
 
 /atom/movable/lighting_object/onShuttleMove()
-	return FALSE
-
-/atom/movable/light/onShuttleMove()
 	return FALSE
 
 /obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)

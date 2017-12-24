@@ -69,7 +69,7 @@
 	if(powered) //so it doesn't show charge if it's unpowered
 		if(cell)
 			var/ratio = cell.charge / cell.maxcharge
-			ratio = Ceiling(ratio*4) * 25
+			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
@@ -302,7 +302,7 @@
 	..()
 	if(check_defib_exists(mainunit, src) && req_defib)
 		defib = mainunit
-		loc = defib
+		forceMove(defib)
 		busy = FALSE
 		update_icon()
 
@@ -328,7 +328,7 @@
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 		defib.on = 0
-		loc = defib
+		forceMove(defib)
 		defib.update_icon()
 	return unwield(user)
 
@@ -393,7 +393,7 @@
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/human/H)
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	return	(!H.suiciding && !(H.disabilities & NOCLONE) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
+	return	(!H.suiciding && !(H.has_disability(NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 	if(isliving(H.pulledby))		//CLEAR!
@@ -514,7 +514,7 @@
 				shock_touching(30, H)
 				var/failed
 
-				if (H.suiciding || (H.disabilities & NOCLONE))
+				if (H.suiciding || (H.has_disability(NOCLONE)))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"

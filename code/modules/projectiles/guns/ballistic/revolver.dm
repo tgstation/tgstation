@@ -39,13 +39,11 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		if(CB)
-			CB.loc = get_turf(src.loc)
-			CB.SpinAnimation(10, 1)
-			CB.update_icon()
+			CB.forceMove(drop_location())
+			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
-		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -229,7 +227,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
@@ -289,7 +287,7 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
-		CB.loc = get_turf(src.loc)
+		CB.forceMove(drop_location())
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
@@ -351,7 +349,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.disabilities & CLUMSY) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((user.has_disability(CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
 	if(process_fire(user, user, 0, zone_override = "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

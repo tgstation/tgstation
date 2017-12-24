@@ -108,7 +108,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		else
 			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
 
-	loc = T
+	forceMove(T)
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
@@ -287,10 +287,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/oldloc = loc
 
 	if(NewLoc)
-		loc = NewLoc
+		forceMove(NewLoc)
 		update_parallax_contents()
 	else
-		loc = get_turf(src) //Get out of closets and such as a ghost
+		forceMove(get_turf(src))  //Get out of closets and such as a ghost
 		if((direct & NORTH) && y < world.maxy)
 			y++
 		else if((direct & SOUTH) && y > 1)
@@ -370,7 +370,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
-	usr.loc = pick(L)
+	usr.forceMove(pick(L))
 	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
@@ -444,7 +444,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
+				A.forceMove(T)
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
@@ -461,7 +461,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(Clamp(new_view, 7, max_view))
+			client.change_view(CLAMP(new_view, 7, max_view))
 	else
 		client.change_view(CONFIG_GET(string/default_view))
 
@@ -470,7 +470,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.change_view(Clamp(client.view + input, 7, max_view))
+		client.rescale_view(input, 7, max_view)
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"

@@ -207,7 +207,7 @@
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
 	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
 		return
-	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
+	var/giving_power = min(FLOOR(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(adjust_clockwork_power(-giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
@@ -275,7 +275,6 @@
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return
-	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
@@ -355,5 +354,4 @@
 	if(sigil_active)
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)

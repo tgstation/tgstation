@@ -31,7 +31,7 @@
 	..()
 	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -86,7 +86,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Construct Shells","Flask of Unholy Water")
 	var/list/pickedtype = list()
@@ -103,7 +103,8 @@
 		for(var/N in pickedtype)
 			new N(get_turf(src))
 			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
-
+		var/obj/item/N = new pickedtype(get_turf(src))
+		to_chat(user, "<span class='cult italic'>You kneel before the altar and your faith is rewarded with an [N]!</span>")
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
@@ -121,7 +122,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar'sien Bolas")
 	if(user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
@@ -137,7 +138,7 @@
 				pickedtype += /obj/item/twohanded/required/cult_bastard
 			else
 				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
-				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
+				to_chat(user, "<span class='cult italic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
 		if("Nar'sien Bolas")
@@ -149,6 +150,7 @@
 		for(var/N in pickedtype)
 			new N(get_turf(src))
 			to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
+
 
 
 /obj/structure/destructible/cult/pylon
@@ -242,7 +244,7 @@
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
 	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
 	var/list/pickedtype = list()

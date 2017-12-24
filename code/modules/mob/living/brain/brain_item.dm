@@ -27,7 +27,7 @@
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
-		loc = C
+		forceMove(C)
 		C.update_hair()
 		return
 
@@ -79,8 +79,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.disabilities & NOCLONE)
-			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
+		if(L.has_disability(NOCLONE))
+			brainmob.disabilities[NOCLONE] = L.disabilities[NOCLONE]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -154,7 +154,7 @@
 	var/adjusted_amount
 	if(amount >= 0 && maximum)
 		var/brainloss = get_brain_damage()
-		var/new_brainloss = Clamp(brainloss + amount, 0, maximum)
+		var/new_brainloss = CLAMP(brainloss + amount, 0, maximum)
 		if(brainloss > new_brainloss) //brainloss is over the cap already
 			return 0
 		adjusted_amount = new_brainloss - brainloss

@@ -30,8 +30,8 @@
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
-			AC.forceMove(get_turf(src)) //Eject casing onto ground.
-			AC.SpinAnimation(10, 1) //next gen special effects
+			AC.forceMove(drop_location()) //Eject casing onto ground.
+			AC.bounce_away(TRUE)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
@@ -58,7 +58,13 @@
 			if(user.transferItemToLoc(AM, src))
 				magazine = AM
 				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
-				chamber_round()
+				if(magazine.ammo_count())
+					playsound(src, "gun_insert_full_magazine", 70, 1)
+					if(!chambered)
+						chamber_round()
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/gun_chamber_round.ogg', 100, 1), 3)
+				else
+					playsound(src, "gun_insert_empty_magazine", 70, 1)
 				A.update_icon()
 				update_icon()
 				return 1
@@ -107,16 +113,21 @@
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		magazine.update_icon()
+		if(magazine.ammo_count())
+			playsound(src, "sound/weapons/gun_magazine_remove_full.ogg", 70, 1)
+		else
+			playsound(src, "gun_remove_empty_magazine", 70, 1)
 		magazine = null
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
-		AC.loc = get_turf(src)
-		AC.SpinAnimation(10, 1)
+		AC.forceMove(drop_location())
+		AC.bounce_away()
 		chambered = null
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
+		playsound(src, "gun_slide_lock", 70, 1)
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
@@ -162,7 +173,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
@@ -218,4 +229,3 @@
 	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-

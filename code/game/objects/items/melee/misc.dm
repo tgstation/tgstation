@@ -99,7 +99,7 @@
 		return ..()
 
 	add_fingerprint(user)
-	if((CLUMSY in user.disabilities) && prob(50))
+	if((user.has_disability(CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))
@@ -220,7 +220,7 @@
 		return
 	if(!isturf(src.loc))
 		var/atom/target = src.loc
-		loc = target.loc
+		forceMove(target.loc)
 		consume_everything(target)
 	else
 		var/turf/T = get_turf(src)

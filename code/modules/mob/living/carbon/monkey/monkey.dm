@@ -11,7 +11,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
-	unique_name = 1
+	unique_name = TRUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
@@ -62,7 +62,7 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-		
+
 	var/static/config_monkey_delay
 	if(isnull(config_monkey_delay))
 		config_monkey_delay = CONFIG_GET(number/monkey_delay)
@@ -89,13 +89,15 @@
 
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	return 0
+	if(mind && is_monkey(mind))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)

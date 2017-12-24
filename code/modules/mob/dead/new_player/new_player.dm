@@ -21,9 +21,9 @@
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
+		forceMove(pick(GLOB.newplayer_start))
 	else
-		loc = locate(1,1,1)
+		forceMove(locate(1,1,1))
 
 	ComponentInitialize()
 
@@ -165,7 +165,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid) && IsInteger(pollid))
+		if(isnum(pollid) && ISINTEGER(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -203,7 +203,7 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating) || !IsInteger(rating))
+							if(!isnum(rating) || !ISINTEGER(rating))
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
@@ -262,7 +262,7 @@
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
-		observer.loc = O.loc
+		observer.forceMove(O.loc)
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")

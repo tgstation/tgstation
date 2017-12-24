@@ -387,7 +387,7 @@
 	display_name = "Cybernetic Organs"
 	description = "We have the technology to rebuild him."
 	prereq_ids = list("adv_biotech", "cyborg")
-	design_ids = list("cybernetic_heart", "cybernetic_liver", "cybernetic_liver_u")
+	design_ids = list("cybernetic_heart", "cybernetic_liver", "cybernetic_liver_u", "cybernetic_lungs")
 	research_cost = 2500
 	export_price = 10000
 

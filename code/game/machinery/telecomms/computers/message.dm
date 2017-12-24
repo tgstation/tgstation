@@ -1,16 +1,16 @@
+/*
+	The monitoring computer for the messaging server.
+	Lets you read PDA and request console messages.
+*/
 
-// Allows you to monitor messages that passes the server.
-
-
-
-
+// The monitor itself.
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
-	desc = "Used to Monitor the crew's messages, that are sent via PDA. Can also be used to view Request Console messages."
+	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	//Server linked to.
-	var/obj/machinery/message_server/linkedServer = null
+	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	//Messages - Saves me time if I want to change something.
@@ -42,27 +42,30 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(emagged)
 		return
-	if(!isnull(src.linkedServer))
+	if(!isnull(linkedServer))
 		emagged = TRUE
 		screen = 2
 		spark_system.set_up(5, 0, src)
 		src.spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new/obj/item/paper/monitorkey
-		MK.loc = src.loc
+		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
-		var/time = 100 * length(src.linkedServer.decryptkey)
+		var/time = 100 * length(linkedServer.decryptkey)
 		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 		message = rebootmsg
 	else
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/Initialize()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/message_monitor/LateInitialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
-		if(GLOB.message_servers && GLOB.message_servers.len > 0)
-			linkedServer = GLOB.message_servers[1]
+		for(var/obj/machinery/telecomms/message_server/S in GLOB.telecomms_list)
+			linkedServer = S
+			break
 
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
@@ -74,10 +77,10 @@
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
+		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[src.linkedServer && src.linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
 	else
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.active ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
+		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
 	if(hacking || emagged)
 		screen = 2
@@ -120,7 +123,7 @@
 		//Message Logs
 		if(1)
 			var/index = 0
-			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</center><hr>"
+			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
 			for(var/datum/data_pda_msg/pda in src.linkedServer.pda_msgs)
 				index++
@@ -204,7 +207,7 @@
 				var/id_auth = "Unauthenticated"					 - 15%
 				var/priority = "Normal"							 - 10%
 			*/
-			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</center><hr>"
+			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += {"<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sending Dep.</th><th width='15%'>Receiving Dep.</th>
 			<th width='300px' word-wrap: break-word>Message</th><th width='15%'>Stamp</th><th width='15%'>ID Auth.</th><th width='15%'>Priority.</th></tr>"}
 			for(var/datum/data_rc_msg/rc in src.linkedServer.rc_msgs)
@@ -266,14 +269,18 @@
 		//Turn the server on/off.
 		if (href_list["active"])
 			if(auth)
-				linkedServer.active = !linkedServer.active
+				linkedServer.toggled = !linkedServer.toggled
 		//Find a server
 		if (href_list["find"])
-			if(GLOB.message_servers && GLOB.message_servers.len > 1)
-				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in GLOB.message_servers
+			var/list/message_servers = list()
+			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
+				message_servers += M
+
+			if(message_servers.len > 1)
+				linkedServer = input(usr, "Please select a server.", "Select a server.", null) as null|anything in message_servers
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
-			else if(GLOB.message_servers && GLOB.message_servers.len > 0)
-				linkedServer = GLOB.message_servers[1]
+			else if(message_servers.len > 0)
+				linkedServer = message_servers[1]
 				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
 			else
 				message = noserver
@@ -370,7 +377,7 @@
 
 					//Select Your Name
 					if("Sender")
-						customsender 	= stripped_input(usr, "Please enter the sender's name.")
+						customsender = stripped_input(usr, "Please enter the sender's name.") || customsender
 
 					//Select Receiver
 					if("Recepient")
@@ -383,15 +390,14 @@
 
 					//Enter custom job
 					if("RecJob")
-						customjob	 	= stripped_input(usr, "Please enter the sender's job.")
+						customjob = stripped_input(usr, "Please enter the sender's job.") || customjob
 
 					//Enter message
 					if("Message")
-						custommessage	= stripped_input(usr, "Please enter your message.")
+						custommessage = stripped_input(usr, "Please enter your message.") || custommessage
 
 					//Send message
 					if("Send")
-
 						if(isnull(customsender) || customsender == "")
 							customsender = "UNKNOWN"
 
@@ -403,38 +409,15 @@
 							message = "<span class='notice'>NOTICE: No message entered!</span>"
 							return src.attack_hand(usr)
 
-						var/obj/item/device/pda/PDARec = null
-						for (var/obj/item/device/pda/P in get_viewable_pdas())
-							if(P.owner == customsender)
-								PDARec = P
-						//Sender isn't faking as someone who exists
-						if(isnull(PDARec))
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=[REF(customrecepient)];choice=Message;target=[REF(src)]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
-							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
-								if( customrecepient.loc && ishuman(customrecepient.loc) )
-									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "[icon2html(customrecepient, viewers(H))] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(src)]'>Reply</a>)")
-								log_talk(usr,"[key_name(usr)] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
-								customrecepient.cut_overlays()
-								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
-						//Sender is faking as someone who exists
-						else
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
-							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=[REF(customrecepient)];choice=Message;target=[REF(PDARec)]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
-							if (!customrecepient.silent)
-								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
-								customrecepient.audible_message("[icon2html(customrecepient, viewers(customrecepient))] *[customrecepient.ttone]*", null, 3)
-								if( customrecepient.loc && ishuman(customrecepient.loc) )
-									var/mob/living/carbon/human/H = customrecepient.loc
-									to_chat(H, "[icon2html(customrecepient, H)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=[REF(customrecepient)];choice=Message;skiprefresh=1;target=[REF(PDARec)]'>Reply</a>)")
-								log_talk(usr,"[key_name(usr)] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]",LOGPDA)
-								customrecepient.cut_overlays()
-								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
-						//Finally..
-						ResetMessage()
+						var/datum/signal/subspace/pda/signal = new(src, list(
+							"name" = "[customsender]",
+							"job" = "[customjob]",
+							"message" = custommessage,
+							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
+						))
+						// this will log the signal and transmit it to the target
+						linkedServer.receive_information(signal, null)
+
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["viewr"])
@@ -451,20 +434,23 @@
 
 
 /obj/item/paper/monitorkey
-	//..()
 	name = "monitor decryption key"
-	var/obj/machinery/message_server/server = null
 
-/obj/item/paper/monitorkey/Initialize()
+/obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
 	..()
-	return INITIALIZE_HINT_LATELOAD
+	if (server)
+		print(server)
+		return INITIALIZE_HINT_NORMAL
+	else
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
+	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+	info_links = info
+	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()
-	if(GLOB.message_servers)
-		for(var/obj/machinery/message_server/server in GLOB.message_servers)
-			if(!isnull(server))
-				if(!isnull(server.decryptkey))
-					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-					info_links = info
-					add_overlay("paper_words")
-					break
+	for (var/obj/machinery/telecomms/message_server/server in GLOB.telecomms_list)
+		if (server.decryptkey)
+			print(server)
+			break

@@ -202,7 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(user.disabilities & DUMB)
+	if(user.has_disability(DUMB))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0
@@ -302,11 +302,11 @@
 			if(istype(worn, /obj/item/device/pda))
 				var/obj/item/device/pda/PDA = worn
 				PDA.id = id
-				id.loc = worn
+				id.forceMove(worn)
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
-				id.loc = worn
+				id.forceMove(worn)
 				worn.update_icon()
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
 	ion.announceEvent = -1

@@ -10,19 +10,19 @@
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 
-	var/datum/objective_team/cult/cult_team
+	var/datum/team/cult/cult_team
 
 /datum/antagonist/cult/get_team()
 	return cult_team
 
-/datum/antagonist/cult/create_team(datum/objective_team/cult/new_team)
+/datum/antagonist/cult/create_team(datum/team/cult/new_team)
 	if(!new_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
 			if(H.cult_team)
 				cult_team = H.cult_team
 				return
-		cult_team = new /datum/objective_team/cult
+		cult_team = new /datum/team/cult
 		cult_team.setup_objectives()
 		return
 	if(!istype(new_team))
@@ -133,7 +133,7 @@
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='big'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", ignored_mob = owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", ignored_mob = owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
@@ -185,7 +185,7 @@
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
 
-/datum/objective_team/cult
+/datum/team/cult
 	name = "Cult"
 
 	var/blood_target
@@ -197,7 +197,7 @@
 	var/reckoning_complete = FALSE
 
 
-/datum/objective_team/cult/proc/setup_objectives()
+/datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
 	var/list/target_candidates = list()
 	var/datum/objective/sacrifice/sac_objective = new
@@ -270,13 +270,13 @@
 /datum/objective/eldergod/check_completion()
 	return summoned || completed
 
-/datum/objective_team/cult/proc/check_cult_victory()
+/datum/team/cult/proc/check_cult_victory()
 	for(var/datum/objective/O in objectives)
 		if(!O.check_completion())
 			return FALSE
 	return TRUE
 
-/datum/objective_team/cult/roundend_report()
+/datum/team/cult/roundend_report()
 	var/list/parts = list()
 
 	if(check_cult_victory())

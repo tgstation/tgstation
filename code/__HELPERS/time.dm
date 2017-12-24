@@ -60,7 +60,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(!second)
 		return "0 seconds"
 	if(second >= 60)
-		minute = round_down(second/60)
+		minute = FLOOR(second/60, 1)
 		second = round(second - (minute*60), 0.1)
 		second_rounded = TRUE
 	if(second)	//check if we still have seconds remaining to format, or if everything went into minute.
@@ -91,7 +91,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(!minute)
 		return "[second]"
 	if(minute >= 60)
-		hour = round_down(minute/60,1)
+		hour = FLOOR(minute/60, 1)
 		minute = (minute - (hour*60))
 	if(minute) //alot simpler from here since you don't have to worry about fractions
 		if(minute != 1)
@@ -114,7 +114,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(!hour)
 		return "[minute][second]"
 	if(hour >= 24)
-		day = round_down(hour/24,1)
+		day = FLOOR(hour/24, 1)
 		hour = (hour - (day*24))
 	if(hour)
 		if(hour != 1)

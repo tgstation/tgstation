@@ -32,7 +32,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!NODE1 || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational())
 		icon_state = "inje_off"
 		return
 
@@ -53,7 +53,7 @@
 	if(!on || !is_operational())
 		return
 
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -70,7 +70,7 @@
 	if(on || injecting || !is_operational())
 		return
 
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	injecting = 1
 
@@ -93,19 +93,14 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
-	 )
-
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
@@ -130,8 +125,8 @@
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
-		var/datum/gas_mixture/air_contents = AIR1
-		volume_rate = Clamp(number, 0, air_contents.volume)
+		var/datum/gas_mixture/air_contents = airs[1]
+		volume_rate = CLAMP(number, 0, air_contents.volume)
 
 	if("status" in signal.data)
 		spawn(2)
@@ -180,7 +175,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()

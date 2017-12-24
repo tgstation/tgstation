@@ -47,7 +47,7 @@
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
 		antag_info["team"] = list()
-		var/datum/objective_team/T = A.get_team()
+		var/datum/team/T = A.get_team()
 		if(T)
 			antag_info["team"]["type"] = T.type
 			antag_info["team"]["name"] = T.name
@@ -63,11 +63,38 @@
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
+/datum/controller/subsystem/ticker/proc/gather_newscaster()
+	var/json_file = file("[GLOB.log_directory]/newscaster.json")
+	var/list/file_data = list()
+	var/pos = 1
+	for(var/V in GLOB.news_network.network_channels)
+		var/datum/newscaster/feed_channel/channel = V
+		if(!istype(channel))
+			stack_trace("Non-channel in newscaster channel list")
+			continue
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
+		for(var/M in channel.messages)
+			var/datum/newscaster/feed_message/message = M
+			if(!istype(message))
+				stack_trace("Non-message in newscaster channel messages list")
+				continue
+			var/list/comment_data = list()
+			for(var/C in message.comments)
+				var/datum/newscaster/feed_comment/comment = C
+				if(!istype(comment))
+					stack_trace("Non-message in newscaster message comments list")
+					continue
+				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
+			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
+		pos++
+	if(GLOB.news_network.wanted_issue.active)
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
@@ -82,12 +109,20 @@
 
 	CHECK_TICK
 
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in GLOB.huds)
+		for(var/m in GLOB.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
+
+	CHECK_TICK
+
 	//Set news report and mode result
 	mode.set_round_result()
-	
+
 	send2irc("Server", "Round just ended.")
-	
-	if(CONFIG_GET(string/cross_server_address))
+
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		send_news_report()
 
 	CHECK_TICK
@@ -142,15 +177,15 @@
 	parts += mode.special_report()
 
 	CHECK_TICK
-	
+
 	//AI laws
 	parts += law_report()
-	
+
 	CHECK_TICK
 
 	//Antagonists
 	parts += antag_report()
-	
+
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -202,7 +237,7 @@
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)
 	var/list/report_parts = list()
-	
+
 	report_parts += personal_report(C)
 	report_parts += common_report
 
@@ -212,7 +247,7 @@
 	roundend_report.set_content(report_parts.Join())
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-	
+
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C)
@@ -311,7 +346,7 @@
 		all_teams |= A.get_team()
 		all_antagonists += A
 
-	for(var/datum/objective_team/T in all_teams)
+	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)
@@ -336,7 +371,7 @@
 			previous_category = A
 		result += A.roundend_report()
 		result += "<br><br>"
-	
+
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()

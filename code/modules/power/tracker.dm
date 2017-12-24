@@ -47,7 +47,7 @@
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
 		S.anchored = TRUE
-	S.loc = src
+	S.forceMove(src)
 	update_icon()
 
 //updates the tracker icon and the facing angle for the control computer
