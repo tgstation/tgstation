@@ -61,7 +61,7 @@
 		new_angle_s -= 360
 	while(new_angle_s < -180)
 		new_angle_s += 360
-	P.Angle = new_angle_s
+	P.setAngle(new_angle_s)
 	return TRUE
 
 /turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)

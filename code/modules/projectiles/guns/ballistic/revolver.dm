@@ -40,9 +40,7 @@
 		CB = magazine.get_round(0)
 		if(CB)
 			CB.forceMove(drop_location())
-			CB.SpinAnimation(10, 1)
-			CB.update_icon()
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, CB, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
@@ -351,7 +349,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.has_disability(CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((user.has_disability(DISABILITY_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
 	if(process_fire(user, user, 0, zone_override = "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

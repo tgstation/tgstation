@@ -27,6 +27,6 @@
 		push_data()
 		return // Can't see the target.
 
-	set_pin_data(IC_OUTPUT, 1, get_dir(get_turf(src), get_turf(A)))
+	set_pin_data(IC_OUTPUT, 1, get_dir(get_turf(src), get_step_towards2(get_turf(src),A)))
 	push_data()
 	activate_pin(2)

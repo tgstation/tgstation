@@ -115,7 +115,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.has_disability(MUTE)) || H.silent)
+					if((H.has_disability(DISABILITY_MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -407,8 +407,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/datum/antagonist/cult/C = first_invoker.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C)
 		return
-	
-	
+
+
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)

@@ -524,7 +524,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			var/list/otherwise = M.GetAllContents()
 			for(var/obj/item/disk/tech_disk/TD in otherwise)
 				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target
+	return checking.researched_nodes.len >= target_amount
 
 /datum/objective/capture
 

@@ -538,7 +538,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate/vault)
 "bs" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

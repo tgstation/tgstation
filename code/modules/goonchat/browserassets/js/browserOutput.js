@@ -593,6 +593,7 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
+		'slineHeight': getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
@@ -603,6 +604,10 @@ $(function() {
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	}
+	if (savedConfig.slineHeight) {
+		$("body").css('line-height', savedConfig.slineHeight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -841,6 +846,28 @@ $(function() {
 		$messages.css({'font-size': fontSize});
 		setCookie('fontsize', fontSize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+	});
+
+	$('#decreaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar -= 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+	});
+
+	$('#increaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar += 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
 	});
 
 	$('#togglePing').click(function(e) {
