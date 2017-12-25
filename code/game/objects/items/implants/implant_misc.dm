@@ -77,3 +77,37 @@
 		if (!healthstring)
 			healthstring = "ERROR"
 		return healthstring
+
+/obj/item/implant/radio
+	name = "internal radio implant"
+	desc = "Are you there God? It's me, Syndicate Comms Agent."
+	activated = TRUE
+	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/syndicate
+
+/obj/item/implant/radio/activate()
+	. = radio.interact(usr)
+
+/obj/item/implant/radio/Initialize(mapload)
+	. = ..()
+
+	radio = new(src)
+	// almost like an internal headset, but without the
+	// "must be in ears to hear" restriction.
+	radio.name = "internal radio"
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.keyslot = new radio_key
+	radio.recalculateChannels()
+
+
+/obj/item/implant/radio/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Internal Radio Implant<BR>
+				<b>Life:</b> 24 hours<BR>
+				<b>Implant Details:</b> Allows user to use an internal radio, useful if user expects equipment loss, or cannot equip conventional radios."}
+	return dat
+
+/obj/item/implanter/radio
+	name = "implanter (internal radio)"
+	imp_type = /obj/item/implant/radio
