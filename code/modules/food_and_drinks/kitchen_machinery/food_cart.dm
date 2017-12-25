@@ -15,7 +15,7 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
@@ -37,25 +37,25 @@
 	var/dat
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
-	dat += "Portion: <a href='?src=\ref[src];portion=1'>[portion]</a><br>"
+	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=\ref[src];disposeI=[R.id]'>Purge</a>"
+		dat += "<a href='?src=[REF(src)];disposeI=[R.id]'>Purge</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=\ref[src];pour=[R.id]'>Pour in a glass</a>"
-		dat += "<a href='?src=\ref[src];mix=[R.id]'>Add to the mixer</a><br>"
+			dat += "<a href='?src=[REF(src)];pour=[R.id]'>Pour in a glass</a>"
+		dat += "<a href='?src=[REF(src)];mix=[R.id]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=\ref[src];transfer=[R.id]'>Transfer back</a>"
+		dat += "<a href='?src=[REF(src)];transfer=[R.id]'>Transfer back</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=\ref[src];m_pour=[R.id]'>Pour in a glass</a>"
+			dat += "<a href='?src=[REF(src)];m_pour=[R.id]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
 		if(stored_food[V] > 0)
-			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=\ref[src];dispense=[V]'>Dispense</a><br>"
-	dat += "</div><br><a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
+			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=[REF(src)];dispense=[V]'>Dispense</a><br>"
+	dat += "</div><br><a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "foodcart","Food Cart", 500, 350, src)
 	popup.set_content(dat)
@@ -100,7 +100,7 @@
 					stored_food[sanitize(S.name)]++
 				else
 					stored_food[sanitize(S.name)] = 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		. = ..()
@@ -119,11 +119,11 @@
 		else
 			for(var/obj/O in contents)
 				if(sanitize(O.name) == href_list["dispense"])
-					O.loc = src.loc
+					O.forceMove(drop_location())
 					break
 
 	if(href_list["portion"])
-		portion = Clamp(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)

@@ -1,10 +1,10 @@
 #define COOLDOWN_TIME 10
 
 /obj/machinery/door/airlock
-	doorClose = 'sound/machines/airlock.ogg' 
+	doorClose = 'sound/machines/airlock.ogg'
 	doorDeni = 'hippiestation/sound/machine/denied.ogg'
 	var/request_cooldown = 0 //To prevent spamming requests for the AI to open
-	 
+
 /obj/machinery/door/airlock/clown
 	doorClose = 'sound/items/bikehorn.ogg'
 
@@ -28,6 +28,6 @@
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		if(!AI.client)
 			continue
-		to_chat(AI, "<span class='info'><a href='?src=\ref[AI];track=[html_encode(user.name)]'><span class='name'>[user.name] ([user.GetJob()])</span></a> is requesting you to open [src]<a href='?src=\ref[AI];remotedoor=\ref[src]'>(Open)</a></span>")
+		to_chat(AI, "<span class='info'><a href='?src=[REF(AI)];track=[html_encode(user.name)]'><span class='name'>[user.name] ([user.GetJob()])</span></a> is requesting you to open [src]<a href='?src=[REF(AI)];remotedoor=[REF(src)]'>(Open)</a></span>")
 	request_cooldown = world.time + (COOLDOWN_TIME * 10)
 	to_chat(user, "<span class='info'>Request sent.</span>")

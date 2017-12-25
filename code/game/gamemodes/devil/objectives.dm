@@ -44,8 +44,6 @@
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
 			contractName = "for knowledge"
-		//if(CONTRACT_UNWILLING)	//Makes round unfun.
-		//	contractName = "against their will"
 	update_explanation_text()
 
 /datum/objective/devil/soulquality/update_explanation_text()

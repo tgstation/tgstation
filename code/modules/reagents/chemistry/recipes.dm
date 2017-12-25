@@ -29,15 +29,15 @@
 			for (var/T in typesof(/mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = T
 				switch(initial(SA.gold_core_spawnable))
-					if(1)
+					if(HOSTILE_SPAWN)
 						chemical_mob_spawn_meancritters += T
-					if(2)
+					if(FRIENDLY_SPAWN)
 						chemical_mob_spawn_nicecritters += T
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
 		var/message = "A [reaction_name] reaction has occurred in [my_area.name] [ADMIN_COORDJMP(T)]"
-		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
+		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
 		if(M)

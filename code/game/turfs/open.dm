@@ -177,11 +177,6 @@
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
-
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in src)
-	if(hotspot && !isspaceturf(src))
-		air.temperature = max(min(air.temperature-2000,air.temperature/2),0)
-		qdel(hotspot)
 	return 1
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
@@ -202,11 +197,20 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
+			// Hippie Start - custom sounds for slipping
+			var/slip_sound = 'sound/misc/slip.ogg'
 			if(prob(95))
-				playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+				if (O)
+					if (istype(O, /obj))
+						var/obj/Obj = O
+						if (Obj)
+							LAZYINITLIST(Obj.alternate_slip_sounds)
+							if (LAZYLEN(Obj.alternate_slip_sounds))
+								slip_sound = pick(Obj.alternate_slip_sounds)
 			else
-				playsound(C.loc, 'hippiestation/sound/misc/oof.ogg', 50, 1, -3)
-
+				slip_sound = 'hippiestation/sound/misc/oof.ogg'
+			playsound(C.loc, (slip_sound), 50, 1, -3)
+			// Hippie End
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
@@ -283,17 +287,12 @@
 		else
 			qdel(GetComponent(/datum/component/slippery))
 			return
-	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery, NONE, CALLBACK(src, .proc/AfterSlip))
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 
-/turf/open/ComponentActivated(datum/component/C)
-	..()
-	var/datum/component/slippery/S = C
-	if(!istype(S))
-		return
+/turf/open/proc/AfterSlip(mob/living/L)
 	if(wet == TURF_WET_LUBE)
-		var/mob/living/L = S.slip_victim
 		L.confused = max(L.confused, 8)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
@@ -363,3 +362,11 @@
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
+
+/turf/open/rad_act(pulse_strength)
+	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
+		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
+		air.assert_gas(/datum/gas/pluoxium)
+		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
+		air.garbage_collect()

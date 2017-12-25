@@ -164,7 +164,6 @@ The console is located at computer/gulag_teleporter.dm
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
-	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
 							/obj/item/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/scanning_module,

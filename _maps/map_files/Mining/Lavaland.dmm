@@ -77,7 +77,6 @@
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
 "ao" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "ap" = (
@@ -107,9 +106,7 @@
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "au" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
 /obj/item/device/flashlight,
@@ -117,9 +114,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/device/flashlight,
 /obj/item/pickaxe,
@@ -201,6 +196,7 @@
 /area/mine/laborcamp)
 "aI" = (
 /obj/machinery/door/airlock{
+	cyclelinkeddir = 4;
 	name = "Labor Camp External Access"
 	},
 /turf/open/floor/plasteel,
@@ -225,9 +221,10 @@
 /area/mine/laborcamp)
 "aM" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aN" = (
 /obj/effect/turf_decal/delivery,
@@ -290,6 +287,7 @@
 /area/lavaland/surface/outdoors/explored)
 "aY" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
 	},
@@ -363,9 +361,10 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bk" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bl" = (
 /obj/machinery/conveyor{
@@ -452,6 +451,7 @@
 /area/mine/eva)
 "bx" = (
 /obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
 	},
@@ -662,6 +662,7 @@
 /area/mine/eva)
 "bX" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Mining External Airlock";
 	opacity = 0;
@@ -747,6 +748,7 @@
 /area/mine/laborcamp)
 "cj" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Mining Shuttle Airlock";
 	opacity = 0;
@@ -1028,9 +1030,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dc" = (
 /obj/structure/closet/crate,
@@ -1072,7 +1075,7 @@
 	pixel_x = 1;
 	pixel_y = 25
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "di" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -1085,7 +1088,7 @@
 /area/mine/maintenance)
 "dj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dk" = (
 /obj/machinery/airalarm{
@@ -1163,12 +1166,14 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "du" = (
-/turf/open/floor/plasteel/loadingarea,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "dw" = (
 /obj/machinery/light/small{
@@ -1191,7 +1196,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/mine/maintenance)
 "dz" = (
 /obj/machinery/light_switch{
@@ -1757,10 +1762,8 @@
 /area/mine/living_quarters)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Break Room";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Break Room"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -1797,9 +1800,10 @@
 	},
 /area/mine/production)
 "eW" = (
-/turf/open/floor/plasteel/loadingarea{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/mine/production)
 "eX" = (
 /obj/machinery/conveyor{
@@ -3316,6 +3320,49 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"WA" = (
+/obj/machinery/door/airlock{
+	cyclelinkeddir = 8;
+	name = "Labor Camp External Access"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WB" = (
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WC" = (
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WD" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	glass = 1;
+	name = "Mining External Airlock";
+	opacity = 0;
+	req_access_txt = "54"
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"WE" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	glass = 1;
+	name = "Mining Shuttle Airlock";
+	opacity = 0;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/mine/production)
 
 (1,1,1) = {"
 aa
@@ -8414,11 +8461,11 @@ aH
 az
 aQ
 aq
-aY
+WB
 aq
 bi
 aq
-bx
+WC
 aq
 bZ
 bZ
@@ -11237,7 +11284,7 @@ an
 an
 aD
 aq
-aI
+WA
 aq
 aT
 aD
@@ -17929,7 +17976,7 @@ aj
 aj
 br
 br
-cj
+WE
 br
 br
 ab
@@ -21269,7 +21316,7 @@ aj
 ab
 bf
 bg
-bX
+WD
 bg
 bf
 ai

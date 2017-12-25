@@ -6,7 +6,7 @@
 		return FALSE
 	if(method==VAPOR)
 		if(M.reagents)
-			var/modifier = Clamp((1 - touch_protection), 0, 1)
+			var/modifier = CLAMP((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
@@ -77,7 +77,7 @@
 	if(istype(M))
 		M.name = "Aussie Cant"
 		M.real_name = "Aussie Cant"
-		M.adjustBrainLoss(60)//hahah
+		M.adjustBrainLoss(min(M.getBrainLoss() + 60, 60))
 	..()
 
 /datum/reagent/toxin/emote
@@ -90,7 +90,7 @@
 /datum/reagent/toxin/emote/on_mob_life(mob/living/M)
 	if(prob(25))
 		M.emote(pick("fart","flap","aflap","airguitar","blink","shrug","cough","sneeze","shake","twitch", "scream"))
-		M.hallucination += 1
+		M.Jitter(2)
 	..()
 
 /datum/reagent/toxin/carbonf
@@ -99,7 +99,7 @@
 	description = "A fairly nasty chemical used to produce potent medicines"
 	color = "#A300B3"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-	toxpwr = 3
+	toxpwr = 2
 
 /datum/reagent/toxin/radgoop
 	name = "Radioactive waste"
@@ -208,6 +208,7 @@
 	description = "A family friendly lethal nerve agent, handle with care!"
 	color = "#FFFFFF"
 	toxpwr = 0
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/sarin/on_mob_life(mob/living/M)
 	M.Jitter(50)
@@ -215,7 +216,7 @@
 	if(current_cycle % 10 == 0)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			pick(C.vomit(20), C.vomit(20,1))
+			pick(C.vomit(20, stun = FALSE), C.vomit(20,1, stun = FALSE))
 
 	switch(current_cycle)
 		if(1 to 12)
@@ -315,6 +316,7 @@
 	description = "A toxic and unstable chemical known for causing respiratory failure and sudden explosions"
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/sazide/on_mob_life(mob/living/M)
 	if(prob(20))
@@ -322,21 +324,21 @@
 	switch(current_cycle)
 		if(1 to 5)
 			M.adjustOxyLoss(2)
-		if(5 to 25)
+		if(5 to 30)
 			M.drowsyness++
 			M.losebreath++
 			if(prob(33))
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
-					C.applyLiverDamage(3)
-		if(25 to INFINITY)
+					C.applyLiverDamage(5)
+		if(30 to INFINITY)
 			M.Sleeping(40,0)
 			M.adjust_eye_damage(1)
 			M.losebreath++
 			if(prob(33))
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
-					C.applyLiverDamage(5)
+					C.applyLiverDamage(15)//liver damage does fuck all but oh well
 	..()
 
 /datum/reagent/toxin/bleach
@@ -419,4 +421,34 @@
 	if(prob(chance))
 		M.emote("scream")
 		. = 1
+	..()
+
+/datum/reagent/impedrezene/on_mob_life(mob/living/M)
+	M.jitteriness = max(M.jitteriness-5,0)
+	if(prob(80))
+		M.adjustBrainLoss(4*REM)
+	if(prob(50))
+		M.drowsyness = max(M.drowsyness, 3)
+	if(prob(10))
+		M.emote("drool")
+	if(prob(1))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.add_disability(CLUMSY, CHEMISTRY_BULLSHIT)
+
+	..()
+
+/datum/reagent/toxin/vomit
+	name = "Vomit"
+	id = "vomit"
+	description = "Chunky."
+	reagent_state = LIQUID
+	color = "#f4f442" // rgb(244, 244, 66)
+	toxpwr = 0.5
+	taste_description = "absolutely disgusting"
+	taste_mult = 10
+
+/datum/reagent/toxin/vomit/on_mob_life(mob/living/carbon/M)
+	if(prob(10) && istype(M))
+		M.vomit(10)
 	..()

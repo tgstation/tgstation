@@ -1,2 +1,3 @@
+// nah
 /datum/design/a357
-	build_type = null //rip infinite ammo
+	materials = list(MAT_METAL = 60000)

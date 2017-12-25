@@ -141,7 +141,7 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.disabilities & FAT)
+	if(M.has_disability(FAT))
 		M.gib()
 	return ..()
 
@@ -455,13 +455,12 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
-	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
+	M.adjustBrainLoss(3*REM, 150)
+	. = 1
+	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
-		. = 1
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
-		. = 1
 	..()
 
 /datum/reagent/toxin/cyanide
@@ -851,9 +850,9 @@
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
 	if(M.confused < 6)
-		M.confused = Clamp(M.confused + 3, 0, 5)
+		M.confused = CLAMP(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
-		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
+		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		to_chat(M, "You feel confused and disorientated.")
 	..()

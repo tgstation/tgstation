@@ -34,7 +34,6 @@
 	icon_state = "bluebutt"
 	item_state = "bluebutt"
 	status = ORGAN_ROBOTIC
-	origin_tech = "bluespace=5;biotech=4"
 	max_combined_w_class = 12
 	max_w_class = 3
 	storage_slots = 4

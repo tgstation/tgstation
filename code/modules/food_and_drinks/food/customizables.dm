@@ -276,8 +276,8 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "wishsoup"
 
-/obj/item/reagent_containers/food/snacks/customizable/soup/New()
-	..()
+/obj/item/reagent_containers/food/snacks/customizable/soup/Initialize()
+	. = ..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 
@@ -291,7 +291,7 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -313,7 +313,7 @@
 		. = ..()
 	return
 
-/obj/item/reagent_containers/glass/bowl/on_reagent_change()
+/obj/item/reagent_containers/glass/bowl/on_reagent_change(changetype)
 	..()
 	update_icon()
 

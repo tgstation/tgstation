@@ -26,11 +26,6 @@ map metastation
 	#voteweight 0.5
 endmap
 
-map delturd
-	minplayers 25
-	#voteweight 0.5
-endmap
-
 map pubbystation
 endmap
 
@@ -43,5 +38,4 @@ map deltastation
 endmap
 
 map runtimestation
-	disabled
 endmap

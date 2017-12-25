@@ -7,7 +7,6 @@
 	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	force_on = 60 //I'VE GONE COMPLETELY INSANE! HA HA HA HA!
 	w_class = WEIGHT_CLASS_HUGE
-	origin_tech = "materials=5;engineering=4;combat=4;syndicate=4"
 	attack_verb = list("sawed", "shred", "rended", "gutted", "eviscerated")
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	block_chance = 50
@@ -104,9 +103,7 @@
 		if(Wall.hardness <= 10)// Rwalls have hardness 10, this can be adjusted to make certain walls resistant to burning
 			to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
 		else if(burnwall)
-			Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
-			Wall.overlays = list()
-			Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+			Wall.AddComponent(/datum/component/thermite, 50)
 			to_chat(user, "<span class='danger'>The wall has been marked, strike it once more to ignite the flames!</span>")
 			burnwall = FALSE
 			addtimer(CALLBACK(src, .proc/rekindle), FAXE_BURNWALL_TIME)

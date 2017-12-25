@@ -4,7 +4,8 @@
 // Threatscale is a multiplier for the 'threat' of the grenade. If you're increasing the affected range drastically, you might want to improve this.
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
-
+// hippie start: Mirrored this function in <hippiestation\code\modules\reagents\chem_splash.dm> for <reducing the duplication of solid and turchchems by refactoring chem splash code to use a particle_effect holder atom akin to smoke>
+/*
 /proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
@@ -74,5 +75,5 @@
 
 	qdel(splash_holder)
 	return 1
-
-
+*/
+// hippie end

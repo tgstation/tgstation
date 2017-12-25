@@ -13,10 +13,10 @@
 
 	var/obj/item/device/transfer_valve/bomb
 
-/obj/item/gun/blastcannon/New()
+/obj/item/gun/blastcannon/Initialize()
+	. = ..()
 	if(!pin)
 		pin = new
-	return ..()
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)

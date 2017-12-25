@@ -35,9 +35,6 @@
 	var/num_modifier = 0
 	var/list/datum/mind/pre_vamps = list()
 
-/datum/game_mode/vampire/declare_completion()
-	..()
-
 /datum/game_mode/vampire/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -97,19 +94,19 @@
 				for(var/datum/objective/objective in vamp.objectives)
 					if(objective.check_completion())
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-						SSblackbox.add_details("vampire_objective","[objective.type]|SUCCESS")
+						SSblackbox.record_feedback("tally", "vampire_objective", 1, "[objective.type]|SUCCESS")
 					else
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-						SSblackbox.add_details("vampire_objective","[objective.type]|FAIL")
+						SSblackbox.record_feedback("tally", "vampire_objective", 1, "[objective.type]|FAIL")
 						vampwin = 0
 					count++
 
 			if(vampwin)
 				text += "<br><font color='green'><b>The vampire was successful!</b></font>"
-				SSblackbox.add_details("vampire_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "vampire_success", 1, "SUCCESS")
 			else
 				text += "<br><span class='boldannounce'>The vampire has failed.</span>"
-				SSblackbox.add_details("vampire_success","FAIL")
+				SSblackbox.record_feedback("tally", "vampire_success", 1, "FAIL")
 			text += "<br>"
 
 		to_chat(world, text)

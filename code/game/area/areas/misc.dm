@@ -5,6 +5,7 @@
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
 	requires_power = FALSE
+	ambientsounds = SPOOKY
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -32,6 +33,7 @@
 /area/prison
 	name = "Prison Station"
 	icon_state = "brig"
+	ambientsounds = HIGHSEC
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
@@ -73,7 +75,7 @@
 /area/prison/morgue
 	name = "Prison Morgue"
 	icon_state = "morgue"
-	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
+	ambientsounds = SPOOKY
 
 /area/prison/medical_research
 	name = "Prison Genetic Research"
@@ -99,7 +101,7 @@
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
-	
+
 /area/prison/execution_room
 	name = "Prisoner Education Chamber"
 	icon_state = "execution_room"

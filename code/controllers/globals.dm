@@ -40,18 +40,18 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	stat("Globals:", statclick.update("Edit"))
 
 /datum/controller/global_vars/can_vv_get(var_name)
-	if(var_name in gvars_datum_protected_varlist)
+	if(gvars_datum_protected_varlist[var_name])
 		return FALSE
 	return ..()
 
 /datum/controller/global_vars/vv_edit_var(var_name, var_value)
-	if((var_name in gvars_datum_protected_varlist))
+	if(gvars_datum_protected_varlist[var_name])
 		return FALSE
 	return ..()
 
 /datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
-	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist")
+	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist" = TRUE)
 	var/list/global_procs = typesof(/datum/controller/global_vars/proc)
 	var/expected_len = vars.len - gvars_datum_in_built_vars.len
 	if(global_procs.len != expected_len)

@@ -15,5 +15,5 @@
 	attack_sound = 'sound/weapons/resonator_blast.ogg'
 	blacklisted = 1
 	use_skintones = 0
-	species_traits = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
+	species_traits = list(SPECIES_ORGANIC,RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0

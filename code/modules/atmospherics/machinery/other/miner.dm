@@ -132,7 +132,7 @@
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
-	ASSERT_GAS(spawn_id, merger)
+	merger.assert_gas(spawn_id)
 	merger.gases[spawn_id][MOLES] = (spawn_mol)
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
@@ -172,21 +172,6 @@
 	name = "\improper BZ Gas Miner"
 	overlay_color = "#FAFF00"
 	spawn_id = /datum/gas/bz
-
-/obj/machinery/atmospherics/miner/freon
-	name = "\improper Freon Gas Miner"
-	overlay_color = "#00FFE5"
-	spawn_id = /datum/gas/freon
-
-/obj/machinery/atmospherics/miner/volatile_fuel
-	name = "\improper Volatile Fuel Gas Miner"
-	overlay_color = "#564040"
-	spawn_id = /datum/gas/volatile_fuel
-
-/obj/machinery/atmospherics/miner/agent_b
-	name = "\improper Agent B Gas Miner"
-	overlay_color = "#E81E24"
-	spawn_id = /datum/gas/oxygen_agent_b
 
 /obj/machinery/atmospherics/miner/water_vapor
 	name = "\improper Water Vapor Gas Miner"

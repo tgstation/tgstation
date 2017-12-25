@@ -133,9 +133,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 	for(var/datum/AI_Module/large/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
 	if(temp)
 		dat += "[temp]"
@@ -375,7 +375,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /obj/machinery/doomsday_device/proc/detonate()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
@@ -679,7 +680,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
-	if(!eyeobj || !isturf(loc) || !canUseTopic() || !action)
+	if(!eyeobj || !isturf(loc) || incapacitated() || !action)
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))
@@ -731,6 +732,33 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 			apc.overload++
 	to_chat(owner, "<span class='notice'>Overcurrent applied to the powernet.</span>")
 	owner.playsound_local(owner, "sparks", 50, 0)
+
+
+//Disable Emergency Lights
+/datum/AI_Module/small/emergency_lights
+	module_name = "Disable Emergency Lights"
+	mod_pick_name = "disable_emergency_lights"
+	description = "Cuts emergency lights across the entire station. If power is lost to light fixtures, they will not attempt to fall back on emergency power reserves."
+	cost = 10
+	one_purchase = TRUE
+	power_type = /datum/action/innate/ai/emergency_lights
+	unlock_text = "<span class='notice'>You hook into the powernet and locate the connections between light fixtures and their fallbacks.</span>"
+	unlock_sound = "sparks"
+
+/datum/action/innate/ai/emergency_lights
+	name = "Disable Emergency Lights"
+	desc = "Disables all emergency lighting. Note that emergency lights can be restored through reboot at an APC."
+	button_icon_state = "emergency_lights"
+	uses = 1
+
+/datum/action/innate/ai/emergency_lights/Activate()
+	for(var/obj/machinery/light/L in GLOB.machines)
+		if(L.z in GLOB.station_z_levels)
+			L.no_emergency = TRUE
+			INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+		CHECK_TICK
+	to_chat(owner, "<span class='notice'>Emergency light connections severed.</span>")
+	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
 
 
 //Reactivate Camera Network: Reactivates up to 30 cameras across the station.

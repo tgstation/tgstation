@@ -19,7 +19,7 @@
 	GLOB.poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 	if(overmind)
 		update_icon()
 	point_rate = new_rate

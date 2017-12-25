@@ -28,6 +28,7 @@
 	response_harm   = "squashes"
 	maxHealth = 10
 	health = 10
+	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
@@ -36,7 +37,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1 //have to find those plant trays!
 
 	//Spaceborn beings don't get hurt by space
@@ -51,11 +52,6 @@
 	var/icon_base = "bee"
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
-
-
-/mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
-	return 1
-
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()

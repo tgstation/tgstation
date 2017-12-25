@@ -32,22 +32,57 @@
 	w_class = 2
 	icon = 'hippiestation/icons/obj/garrote.dmi'
 	icon_state = "garrote"
-	item_color = ""
+	item_color = "red"
+	color = "#ff0000"
 	var/garroting = FALSE
 	var/next_garrote = 0
 
-/obj/item/garrote/Initialize()
-	..()
+/obj/item/garrote/Initialize(mapload, param_color)
+	.=..()
+
+	var/list/cable_colors = GLOB.cable_colors
+	item_color = param_color || item_color || pick(cable_colors)
+	if(cable_colors[item_color])
+		item_color = cable_colors[item_color]
 	update_icon()
+
+/obj/item/garrote/update_icon()
+    icon_state = "garrote[garroting ? "_w" : ""]"
+
+/obj/item/garrote/red
+	item_color = "red"
+	color = "#ff0000"
+
+/obj/item/garrote/yellow
+	color = "#ffff00"
+
+/obj/item/garrote/blue
+	item_color = "blue"
+	color = "#1919c8"
+
+/obj/item/garrote/green
+	item_color = "green"
+	color = "#00aa00"
+
+/obj/item/garrote/pink
+	item_color = "pink"
+	color = "#ff3ccd"
+
+/obj/item/garrote/orange
+	item_color = "orange"
+	color = "#ff8000"
+
+/obj/item/garrote/cyan
+	item_color = "cyan"
+	color = "#00ffff"
+
+/obj/item/garrote/white
+	item_color = "white"
 
 /obj/item/garrote/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/garrote/update_icon()
-	if (!item_color)
-		item_color = pick("red", "yellow", "blue", "green")
-	icon_state = "garrote[garroting ? "_w" : ""][item_color ? "_[item_color]" : ""]"
 
 /obj/item/garrote/proc/start_garroting(mob/user)
 	var/mob/living/M = user.pulling
@@ -62,7 +97,7 @@
 		"<span class='danger'>[user] has grabbed \the [user.pulling] with \the [src]!</span>",\
 		"<span class='danger'>You grab \the [user.pulling] with \the [src]!</span>",\
 		"You hear some struggling and muffled cries of surprise")
-			
+
 /obj/item/garrote/proc/stop_garroting()
 	garroting = FALSE
 	STOP_PROCESSING(SSobj, src)

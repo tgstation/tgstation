@@ -28,7 +28,7 @@
 		watereffect = new /obj/effect/overlay/water(src)
 
 /obj/effect/overlay/water
-	name = "Water"
+	name = "water"
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "overlay"
 	density = 0
@@ -84,7 +84,7 @@
 	return ..()
 
 /turf/open/pool/Initialize()
-	..()
+	. = ..()
 	watereffect = new /obj/effect/overlay/water(src)
 
 /turf/open/pool/ex_act(severity, target)
@@ -285,7 +285,7 @@
 	dir = 4
 
 /obj/structure/pool/Rboard/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && O.pass_flags & PASSGLASS)
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		return FALSE
@@ -338,7 +338,7 @@
 				jumper.pixel_y = 7
 				jumper.dir=8
 				sleep(1)
-				jumper.loc = T
+				jumper.forceMove(T)
 				jumper.Stun(8)
 				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
 

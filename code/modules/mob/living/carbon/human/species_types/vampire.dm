@@ -2,7 +2,7 @@
 	name = "vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
+	species_traits = list(SPECIES_UNDEAD,EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	exotic_bloodtype = "U"
@@ -24,9 +24,8 @@
 	to_chat(C, "[info_text]")
 	C.skin_tone = "albino"
 	C.update_body(0)
-	if(C.mind)
-		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-		C.mind.AddSpell(B)
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
+	C.AddSpell(B)
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -45,7 +44,7 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 1.5
+	C.blood_volume -= 0.75
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
@@ -95,8 +94,8 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = Clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = Clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
 
@@ -123,8 +122,4 @@
 	invocation = "Squeak!"
 	charge_max = 50
 	cooldown_min = 50
-
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
-	current_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
-	current_casters = list()
-	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)

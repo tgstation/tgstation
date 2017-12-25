@@ -37,7 +37,7 @@
 		GLOB._preloader.load(src)
 
 	var/do_initialize = SSatoms.initialized
-	if(do_initialize > INITIALIZATION_INSSATOMS)
+	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
@@ -57,9 +57,7 @@
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
 // /turf/open/space/Initialize
-// /mob/dead/new_player/Initialize
 
-//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/Initialize(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -99,7 +97,6 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
-	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
 
@@ -197,27 +194,22 @@
 	set waitfor = FALSE
 	return
 
-// Convenience proc to see if a container is open for chemistry handling
-// returns true if open
-// false if closed
+// Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER_1
-
-/atom/proc/is_transparent()
-	return container_type & TRANSPARENT_1
+	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(allowmobs = TRUE)
-	if(isliving(src) && allowmobs)
-		var/mob/living/L = src
-		return L.can_inject()
-	if(container_type & OPENCONTAINER_1)
-		return TRUE
-	return container_type & INJECTABLE_1
+	return reagents && (container_type & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(allowmobs = TRUE)
-	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
-		return TRUE
-	return container_type & DRAWABLE_1
+	return reagents && (container_type & (DRAWABLE | DRAINABLE))
+
+/atom/proc/is_refillable()
+	return reagents && (container_type & REFILLABLE)
+
+/atom/proc/is_drainable()
+	return reagents && (container_type & DRAINABLE)
+
 
 /atom/proc/AllowDrop()
 	return FALSE
@@ -244,32 +236,6 @@
 	else if(src in container)
 		return 1
 
-/*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
- * Recursevly searches all atom contens (including contents contents and so on).
- *
- * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
- *
- * RETURNS: list of found atoms
- */
-
-/atom/proc/search_contents_for(path,list/filter_path=null)
-	var/list/found = list()
-	for(var/atom/A in src)
-		if(istype(A, path))
-			found += A
-		if(filter_path)
-			var/pass = 0
-			for(var/type in filter_path)
-				pass |= istype(A, type)
-			if(!pass)
-				continue
-		if(A.contents.len)
-			found += A.search_contents_for(path,filter_path)
-	return found
-
-
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
@@ -284,22 +250,27 @@
 
 	if(desc)
 		to_chat(user, desc)
-	// *****RM
-	//to_chat(user, "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]")
 
-	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
-		if(reagents.reagent_list.len)
-			if(user.can_see_reagents()) //Show each individual reagent
-				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "[R.volume] units of [R.name]")
-			else //Otherwise, just show the total volume
-				var/total_volume = 0
-				for(var/datum/reagent/R in reagents.reagent_list)
-					total_volume += R.volume
-				to_chat(user, "[total_volume] units of various reagents")
-		else
-			to_chat(user, "Nothing.")
+	if(reagents)
+		if(container_type & TRANSPARENT)
+			to_chat(user, "It contains:")
+			if(reagents.reagent_list.len)
+				if(user.can_see_reagents()) //Show each individual reagent
+					for(var/datum/reagent/R in reagents.reagent_list)
+						to_chat(user, "[R.volume] units of [R.name]")
+				else //Otherwise, just show the total volume
+					var/total_volume = 0
+					for(var/datum/reagent/R in reagents.reagent_list)
+						total_volume += R.volume
+					to_chat(user, "[total_volume] units of various reagents")
+			else
+				to_chat(user, "Nothing.")
+		else if(container_type & AMOUNT_VISIBLE)
+			if(reagents.total_volume)
+				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+			else
+				to_chat(user, "<span class='danger'>It's empty.</span>")
+
 	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove(mob/user)
@@ -335,7 +306,7 @@
 GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/blood_splatter_index()
-	return "\ref[initial(icon)]-[initial(icon_state)]"
+	return "[REF(initial(icon))]-[initial(icon_state)]"
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
@@ -450,22 +421,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/wash_cream()
 	return 1
 
-/atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
-		return
-	var/cur_x = null
-	var/cur_y = null
-	var/list/y_arr = null
-	for(cur_x=1,cur_x<=GLOB.global_map.len,cur_x++)
-		y_arr = GLOB.global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
-		if(cur_y)
-			break
-	if(cur_x && cur_y)
-		return list("x"=cur_x,"y"=cur_y)
-	else
-		return 0
-
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))
 		return 1
@@ -549,6 +504,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
+	SendSignal(COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -631,9 +587,9 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	var/turf/curturf = get_turf(src)
 	if (curturf)
 		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
-	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=\ref[src]"
-	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=\ref[src]"
-	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=\ref[src]"
+	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
+	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
+	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
 
 /atom/proc/drop_location()
 	var/atom/L = loc
@@ -645,4 +601,21 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /atom/proc/return_temperature()
+	return
+
+// Default tool behaviors proc
+
+/atom/proc/crowbar_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wrench_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return

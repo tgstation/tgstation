@@ -5,6 +5,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
+	force = 1
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
@@ -20,10 +21,11 @@
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == "head")
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
-
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]</span>", "you hear a banhammer banning someone")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+	if(user.a_intent != INTENT_HELP)
+		return ..(M, user)
 
 /obj/item/sord
 	name = "\improper SORD"
@@ -287,7 +289,6 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
@@ -396,7 +397,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!</span>")
 	return (OXYLOSS)
 
 /obj/item/mounted_chainsaw
@@ -453,7 +454,6 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
@@ -472,7 +472,7 @@
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	new /obj/vehicle/ridden/scooter/skateboard(get_turf(user))
 	qdel(src)
 
 /obj/item/melee/baseball_bat
@@ -591,7 +591,7 @@
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
 	item_state = "nothing"
-	force = 1
+	force = 0
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("slapped")

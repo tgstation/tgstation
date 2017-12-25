@@ -246,6 +246,11 @@
 	duration = 8
 	randomdir = 0
 
+/obj/effect/temp_visual/bluespace_fissure
+	name = "bluespace fissure"
+	icon_state = "bluestream_fade"
+	duration = 9
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
@@ -312,14 +317,10 @@
 	icon_state = "impact_bullet"
 	duration = 5
 
-/obj/effect/temp_visual/impact_effect/Initialize(mapload, atom/target, obj/item/projectile/P)
-	if(target == P.original)
-		pixel_x = target.pixel_x + P.p_x - 16
-		pixel_y = target.pixel_y + P.p_y - 16
-	else
-		pixel_x = target.pixel_x + rand(2, -2)
-		pixel_y = target.pixel_y + rand(2, -2)
-	. = ..()
+/obj/effect/temp_visual/impact_effect/Initialize(mapload, x, y)
+	pixel_x = x
+	pixel_y = y
+	return ..()
 
 /obj/effect/temp_visual/impact_effect/red_laser
 	icon_state = "impact_laser"

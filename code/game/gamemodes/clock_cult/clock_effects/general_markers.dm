@@ -11,6 +11,12 @@
 	animate(src, alpha = 0, time = 10)
 	QDEL_IN(src, 10)
 
+/obj/effect/clockwork/general_marker/singularity_act()
+	return
+
+/obj/effect/clockwork/general_marker/singularity_pull()
+	return
+
 /obj/effect/clockwork/general_marker/inathneq
 	name = "Inath-neq, the Resonant Cogwheel"
 	desc = "A humanoid form blazing with blue fire. It radiates an aura of kindness and caring."

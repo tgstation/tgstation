@@ -89,7 +89,7 @@
 	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)

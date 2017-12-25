@@ -3,16 +3,15 @@
 	desc = "Nezbere's most powerful creation, a mighty war machine of unmatched power said to have ended wars in a single night."
 	icon = 'hippiestation/icons/mecha/neovgre.dmi'
 	icon_state = "neovgre"
-	max_integrity = 600 //This is THE ratvarian superweaon, its deployment is an investment
-	armor = list(melee = 80, bullet = 70, laser = 25, energy = 25, bomb = 60, bio = 100, rad = 100, fire = 100, acid = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
+	max_integrity = 800 //This is THE ratvarian superweaon, its deployment is an investment
+	armor = list(melee = 50, bullet = 40, laser = 25, energy = 25, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100) //Its similar to the clockwork armour albeit with a few buffs becuase RATVARIAN SUPERWEAPON!!
 	force = 50 //SMASHY SMASHY!!
-	deflect_chance = 40
+	deflect_chance = 20
 	internal_damage_threshold = 0
 	step_in = 3
 	pixel_x = -16
 	layer = ABOVE_MOB_LAYER
 	var/breach_time = 100 //ten seconds till all goes to shit
-	var/regen_amount = 5 //Healing per tick
 	var/recharge_rate = 100
 	wreckage = /obj/structure/mecha_wreckage/durand/neovgre
 
@@ -57,10 +56,9 @@
 /obj/mecha/neovgre/container_resist(mob/living/user)
 	to_chat(user, "<span class='brass'>Neovgre requires a lifetime commitment friend, no backing out now!</span>")
 	return
-
 /obj/mecha/neovgre/process()
 	..()
-	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hople to stop the superweapon
+	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hope to stop the superweapon
 		cell.charge = INFINITY
 		max_integrity = INFINITY
 		obj_integrity = max_integrity
@@ -72,15 +70,6 @@
 				cell.charge += delta
 				adjust_clockwork_power(-delta)
 			CHECK_TICK
-	if(obj_integrity < max_integrity)
-		var/turf/T = get_turf(src)
-		if(istype(T, /turf/open/floor/clockwork))
-			regen_amount = 15
-		else
-			regen_amount = 5
-		var/regen_total = min(regen_amount, max_integrity - obj_integrity)
-		obj_integrity += regen_total
-		CHECK_TICK
 
 /obj/mecha/neovgre/Initialize()
 	.=..()

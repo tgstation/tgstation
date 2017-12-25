@@ -22,7 +22,7 @@
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambispace.ogg')
+	ambientsounds = SPACE
 	blob_allowed = FALSE
 
 /////////////

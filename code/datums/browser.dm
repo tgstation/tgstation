@@ -132,13 +132,13 @@
 
 	var/output =  {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
-		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=\ref[src];button=1">[Button1]</a>"}
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=[REF(src)];button=2">[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=3">[Button3]</a>"}
+		output += {"<a style="font-size:large;float:right" href="?src=[REF(src)];button=3">[Button3]</a>"}
 
 	output += {"</div>"}
 
@@ -220,18 +220,6 @@
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
 /mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
-	/*
-	var/icon/I
-	if (dir >= 0)
-		I = new /icon(icon, icon_state, dir)
-	else
-		I = new /icon(icon, icon_state)
-		setDir("default")
-
-	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
-	src << browse_rsc(I, filename)
-	return filename
-	*/
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
@@ -253,7 +241,7 @@
 		return
 	var/param = "null"
 	if(ref)
-		param = "\ref[ref]"
+		param = "[REF(ref)]"
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 

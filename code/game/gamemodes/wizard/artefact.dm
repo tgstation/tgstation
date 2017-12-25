@@ -33,7 +33,7 @@
 /obj/effect/rend
 	name = "tear in the fabric of reality"
 	desc = "You should run now."
-	icon = 'icons/obj/biomass.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
@@ -65,6 +65,12 @@
 		return
 	else
 		return ..()
+
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
 
 /obj/item/veilrender/vealrender
 	name = "veal render"
@@ -131,7 +137,6 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
@@ -208,7 +213,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
-	var/obj/item/link = null
+	var/obj/item/linked_item = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	max_integrity = 10
@@ -232,10 +237,10 @@
 		cooldown = world.time +cooldown_time
 		return
 
-	if(!link)
+	if(!linked_item)
 		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
 			if (user.transferItemToLoc(I,src))
-				link = I
+				linked_item = I
 				to_chat(user, "You attach [I] to the doll.")
 				update_targets()
 
@@ -250,11 +255,11 @@
 		return
 
 	if(user.zone_selected == "chest")
-		if(link)
+		if(linked_item)
 			target = null
-			link.loc = get_turf(src)
-			to_chat(user, "<span class='notice'>You remove the [link] from the doll.</span>")
-			link = null
+			linked_item.forceMove(drop_location())
+			to_chat(user, "<span class='notice'>You remove the [linked_item] from the doll.</span>")
+			linked_item = null
 			update_targets()
 			return
 
@@ -286,10 +291,10 @@
 
 /obj/item/voodoo/proc/update_targets()
 	possible = list()
-	if(!link)
+	if(!linked_item)
 		return
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(md5(H.dna.uni_identity) in link.fingerprints)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		if(md5(H.dna.uni_identity) in linked_item.fingerprints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
@@ -300,13 +305,17 @@
 		var/area/A = get_area(src)
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
+/obj/item/voodoo/suicide_act(mob/living/carbon/user)
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.gib()
+    return(BRUTELOSS)
+
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
-
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/heart/cursed/wizard

@@ -55,7 +55,14 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'hippiestation/sound/voice/burp.ogg', 50, 1, -1)
+		LAZYINITLIST(user.burp_sounds)
+
+		var/burp_noise
+
+		if (LAZYLEN(user.burp_sounds))
+			burp_noise = pick(user.burp_sounds)
+			playsound(user, burp_noise, 50, 1, -1)
+
 	. = ..()
 
 /datum/emote/living/cough/run_emote(mob/living/user, params)

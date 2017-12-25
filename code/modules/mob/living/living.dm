@@ -17,7 +17,8 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction += "\ref[src]"
+	faction += "[REF(src)]"
+	GLOB.mob_living_list += src
 
 
 /mob/living/prepare_huds()
@@ -40,7 +41,6 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
@@ -49,6 +49,7 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+	GLOB.mob_living_list -= src
 
 	return ..()
 
@@ -107,7 +108,8 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobCollide(mob/M)
-
+	//Even if we don't push/swap places, we "touched" them, so spread fire
+	spreadFire(M)
 	//Also diseases
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
@@ -122,29 +124,6 @@
 	if(now_pushing)
 		return TRUE
 
-	//TODO FOR LATER PRS: Make passing tables an automatic thing for flying and passable objects be determined better to prevent huge amounts of flags being set when mobs fly.
-	if((movement_type) ^ (M.movement_type))	//Fly past each other.
-		now_pushing = TRUE
-		var/old = pass_flags & PASSMOB
-		var/old_p = pulling? (pulling.pass_flags & PASSMOB) : NONE
-		var/atom/movable/cached = pulling
-		pass_flags |= PASSMOB
-		var/obj/item/I = cached
-		if(cached && (isliving(cached) || (istype(I) && (I.w_class < WEIGHT_CLASS_BULKY))))
-			var/mob/living/l = cached
-			if(l.mob_size <= mob_size)
-				cached.pass_flags |= PASSMOB
-		Move(get_turf(M))
-		if(!old)
-			pass_flags &= ~PASSMOB
-		if(cached && !old_p)
-			cached.pass_flags &= ~PASSMOB
-		cached = null
-		now_pushing = FALSE
-		return TRUE
-
-	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
 
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
@@ -267,6 +246,10 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
+	//hippie start
+	if(!canSuccumb())
+		return
+	//hippie end
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -366,8 +349,15 @@
 			return 1
 	return 0
 
+// Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject()
-	return 1
+	return TRUE
+
+/mob/living/is_injectable(allowmobs = TRUE)
+	return (allowmobs && reagents && can_inject())
+
+/mob/living/is_drawable(allowmobs = TRUE)
+	return (allowmobs && reagents && can_inject())
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
@@ -392,7 +382,7 @@
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
@@ -429,7 +419,6 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	disabilities = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -495,7 +484,6 @@
 		s_active.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -503,21 +491,21 @@
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
-	var/static/config_run_delay
-	var/static/config_walk_delay
+	var/static/datum/config_entry/number/run_delay/config_run_delay
+	var/static/datum/config_entry/number/walk_delay/config_walk_delay
 	if(isnull(config_run_delay))
 		config_run_delay = CONFIG_GET(number/run_delay)
 		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config_run_delay
+		. += config_run_delay.value_cache
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config_run_delay
+				. += config_run_delay.value_cache
 			if(MOVE_INTENT_WALK)
-				. += config_walk_delay
+				. += config_walk_delay.value_cache
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -821,8 +809,11 @@
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
 /mob/living/proc/can_use_guns(obj/item/G)
-	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return FALSE
+	if(has_disability(PACIFISM))
+		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE
 
@@ -930,7 +921,7 @@
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
@@ -966,11 +957,6 @@
 						"[C] leaps out of [src]'s way!")]</span>")
 	C.Knockdown(40)
 
-/mob/living/post_buckle_mob(mob/living/M)
-	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.handle_vehicle_layer()
-
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)
 		return
@@ -998,12 +984,16 @@
 		lying = 0
 	if(buckled)
 		lying = 90*buckle_lying
+	// Hippie Start
+	else if (pinned_to)
+		lying = 0
+	// Hippie End
 	else if(!lying)
 		if(resting)
 			fall()
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || pinned_to || buckled || (!has_legs && !ignore_legs && !has_arms)) // Hippie - Added check for person being pinned
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -1033,3 +1023,48 @@
 /mob/living/proc/add_abilities_to_panel()
 	for(var/obj/effect/proc_holder/A in abilities)
 		statpanel("[A.panel]",A.get_panel_text(),A)
+
+/mob/living/lingcheck()
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			if(changeling.changeling_speak)
+				return LINGHIVE_LING
+			return LINGHIVE_OUTSIDER
+	if(mind && mind.linglink)
+		return LINGHIVE_LINK
+	return LINGHIVE_NONE
+
+/mob/living/forceMove(atom/destination)
+	stop_pulling()
+	if(buckled)
+		buckled.unbuckle_mob(src, force = TRUE)
+	if(has_buckled_mobs())
+		unbuckle_all_mobs(force = TRUE)
+	. = ..()
+	if(.)
+		if(client)
+			reset_perspective(destination)
+		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+
+/mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
+	if (registered_z != new_z)
+		if (registered_z)
+			SSmobs.clients_by_zlevel[registered_z] -= src
+		if (client)
+			if (new_z)
+				SSmobs.clients_by_zlevel[new_z] += src
+				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
+					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
+					if (SA)
+						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+					else
+						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
+			registered_z = new_z
+		else
+			registered_z = null
+
+/mob/living/onTransitZ(old_z,new_z)
+	..()
+	update_z(new_z)

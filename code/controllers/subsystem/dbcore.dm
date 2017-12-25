@@ -186,7 +186,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
-		to_chat(usr, "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>")
+		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
 	Close()

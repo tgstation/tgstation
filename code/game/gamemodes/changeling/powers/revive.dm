@@ -25,11 +25,13 @@
 		user.regenerate_limbs(0, list("head"))
 	user.regenerate_organs()
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
-	user.mind.changeling.purchasedpowers -= src
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.purchasedpowers -= src
 	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
 	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))
-		user.mind.changeling.purchasedpowers -= src
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.purchasedpowers -= src
 		return 0
 	. = ..()

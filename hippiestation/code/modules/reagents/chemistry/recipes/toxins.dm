@@ -20,15 +20,15 @@
 /datum/chemical_reaction/carbonf
 	name = "Carbonic Fluoride"
 	id = "carbonf"
-	results = list("carbonf" = 3)
-	required_reagents = list("ethanol" = 4, "fluorine" = 1)
+	results = list("carbonf" = 4)
+	required_reagents = list("ethanol" = 4, "fluorine" = 2)
 	required_temp = 320
 
 /datum/chemical_reaction/aus
 	name = "Ausium"
 	id = "aus"
-	results = list("aus" = 5)
-	required_reagents = list("space_drugs" = 5, "ethanol" = 3,"lithium" = 2)
+	results = list("aus" = 6)
+	required_reagents = list("space_drugs" = 4, "ethanol" = 2, "lithium" = 2)
 	required_temp = 430
 	centrifuge_recipe = TRUE
 
@@ -42,8 +42,8 @@
 /datum/chemical_reaction/alco
 	name = "Superhol"
 	id = "alco"
-	results = list("alco" = 5, "ethanol" = 5)
-	required_reagents = list("impalco" = 4, "ethanol" = 3 , "isopropyl" = 3)
+	results = list("alco" = 6, "ethanol" = 6)
+	required_reagents = list("impalco" = 3, "ethanol" = 3 , "isopropyl" = 3)
 	centrifuge_recipe = TRUE
 
 /datum/chemical_reaction/emote
@@ -57,7 +57,7 @@
 /datum/chemical_reaction/over_reactible/bear
 	name = "Bearium"
 	id = "bear"
-	results = list("bear" = 3, "radgoop" = 2)
+	results = list("bear" = 4, "radgoop" = 2)
 	required_reagents = list("liquid_life" = 2, "volt" = 3,"ephedrine" = 1)
 	required_temp = 460
 	bluespace_recipe = TRUE
@@ -68,7 +68,7 @@
 /datum/chemical_reaction/methphos
 	name = "Methylphosphonyl difluoride"
 	id = "methphos"
-	results = list("methphos" = 2)
+	results = list("methphos" = 4)
 	required_reagents = list("hydrogen" = 3, "carbon" = 1, "phosphorus" = 1 , "oxygen" = 1, "fluorine" = 2)
 	pressure_required = 26
 
@@ -89,19 +89,19 @@
 /datum/chemical_reaction/over_reactible/sarin
 	name = "Sarin"
 	id = "sarin"
-	results = list("sarin" = 2)
+	results = list("sarin" = 3)
 	can_overheat = TRUE
 	can_overpressure = TRUE//hehehe quickest way to get killed as a lunatic chemist
 	overheat_threshold = 450
 	overpressure_threshold = 100
 	centrifuge_recipe = TRUE
 	pressure_required = 95
-	required_reagents = list("sarinb" = 5)
+	required_reagents = list("sarinb" = 6)
 
 /datum/chemical_reaction/tabun_pa
 	name = "Dimethlymine"
 	id = "tabuna"
-	results = list("tabuna" = 3, "oxygen" = 2)
+	results = list("tabuna" = 4, "oxygen" = 2)
 	required_reagents = list("sodium" = 1,"water" = 3 ,"carbon" = 2, "nitrogen" = 1)
 	required_temp = 420
 
@@ -114,8 +114,8 @@
 /datum/chemical_reaction/tabun_pc
 	name = "Noxious mixture"
 	id = "tabunc"
-	results = list("tabunc" = 1)
-	required_reagents = list("tabunb" = 2,"tabuna" = 1)
+	results = list("tabunc" = 2)
+	required_reagents = list("tabunb" = 2,"tabuna" = 2)
 
 /datum/chemical_reaction/tabun
 	name = "Tabun"
@@ -131,12 +131,13 @@
 	required_temp = 170
 	pressure_required = 45
 	required_reagents = list("sugar" = 3,"isopropyl" = 1,"sodiumchloride" = 1)
-	
+
 /datum/chemical_reaction/gluco
 	name = "Glucosaryll"
 	id = "gluco"
 	results = list("gluco" = 1)
 	required_temp = 120
+	is_cold_recipe = TRUE
 	pressure_required = 85
 	required_reagents = list("impgluco" = 2,"cryogenic_fluid" = 1)
 	centrifuge_recipe = TRUE

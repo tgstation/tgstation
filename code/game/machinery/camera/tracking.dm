@@ -48,26 +48,22 @@
 	if(usr.stat == DEAD)
 		return list()
 
-	for(var/mob/living/M in GLOB.mob_list)
-		if(!M.can_track(usr))
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
+		if(!L.can_track(usr))
 			continue
 
-		// Human check
-		var/human = 0
-		if(ishuman(M))
-			human = 1
-
-		var/name = M.name
+		var/name = L.name
 		while(name in track.names)
 			track.namecounts[name]++
 			name = text("[] ([])", name, track.namecounts[name])
 		track.names.Add(name)
 		track.namecounts[name] = 1
 
-		if(human)
-			track.humans[name] = M
+		if(ishuman(L))
+			track.humans[name] = L
 		else
-			track.others[name] = M
+			track.others[name] = L
 
 	var/list/targets = sortList(track.humans) + sortList(track.others)
 

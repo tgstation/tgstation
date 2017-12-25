@@ -16,6 +16,9 @@
 		handle_blood()
 
 	if(stat != DEAD)
+		handle_brain_damage()
+
+	if(stat != DEAD)
 		handle_liver()
 
 	if(stat == DEAD)
@@ -175,7 +178,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
-		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjustToxLoss(CLAMP(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
@@ -198,6 +201,16 @@
 			hallucination += 20
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5//Removed at 2 per tick so this will slowly build up
+	//TRITIUM
+	if(breath_gases[/datum/gas/tritium])
+		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
+		radiation += tritium_partialpressure/10
+	//NITRYL
+	if (breath_gases[/datum/gas/nitryl])
+		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
+		adjustFireLoss(nitryl_partialpressure/4)
+
+
 
 	breath.garbage_collect()
 
@@ -238,15 +251,17 @@
 		if(prob(D.infectivity))
 			D.spread()
 
-		if(stat != DEAD)
+		if(stat != DEAD && !D.process_dead)
 			D.stage_act()
 
+//todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -425,3 +440,20 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
+
+////////////////
+//BRAIN DAMAGE//
+////////////////
+
+/mob/living/carbon/proc/handle_brain_damage()
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
+		BT.on_life()
+
+	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
+		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
+		death()
+		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+		if(B)
+			B.damaged_brain = TRUE

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=3"
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
@@ -29,7 +28,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = null
+	moveToNullspace()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -66,7 +65,6 @@
 	S.desc = desc
 	S.icon = icon
 	S.icon_state = icon_state
-	S.origin_tech = origin_tech
 	S.w_class = w_class
 
 	return S
@@ -173,3 +171,9 @@
 			ears = new
 
 		ears.Insert(src)
+
+	if(!getorganslot(ORGAN_SLOT_TAIL))
+		var/obj/item/organ/tail/tail
+		if(dna && dna.species && dna.species.mutanttail)
+			tail = new dna.species.mutanttail
+			tail.Insert(src)

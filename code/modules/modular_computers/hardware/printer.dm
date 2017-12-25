@@ -2,7 +2,6 @@
 	name = "printer"
 	desc = "Computer-integrated printer with paper recycling module."
 	power_usage = 100
-	origin_tech = "programming=2;engineering=2"
 	icon_state = "printer"
 	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT

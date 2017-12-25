@@ -11,7 +11,7 @@
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!C.mind || !C.mind.changeling)
+			if(!C.mind || !C.mind.has_antag_datum(/datum/antagonist/changeling))
 				C.adjustEarDamage(0, 30)
 				C.confused += 25
 				C.Jitter(50)

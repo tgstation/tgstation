@@ -57,10 +57,10 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				SSblackbox.add_details("wizard_spell_improved", "[name]|[aspell.level]")
+				SSblackbox.record_feedback("tally", "wizard_spell_improved", 1, "[name]|[aspell.level]")
 				return 1
 	//No same spell found - just learn it
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
@@ -105,6 +105,10 @@
 /datum/spellbook_entry/fireball
 	name = "Fireball"
 	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
+
+/datum/spellbook_entry/fist
+	name = "Fist"
+	spell_type = /obj/effect/proc_holder/spell/aimed/fist
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -285,7 +289,7 @@ F
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	new item_path(get_turf(user))
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -299,6 +303,13 @@ F
 
 /obj/item/spellbook/oneuse/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
+
+/datum/spellbook_entry/item/voice
+	name = "Voice Of God"
+	desc = "Carefully harvested from Lavaland Colossi, these cords allow you to issue commands to those near you. Will not work on deaf people. Will drop upon resurrecting as a lich."
+	item_path = /obj/item/device/autosurgeon/colossus
+	category = "Assistance"
+	cost = 1 //They have to stay and write during combat, the cords were designed for non-antag miner use.
 
 /datum/spellbook_entry/item/bookofdarkness
 	name = "Book of Darkness"
@@ -507,7 +518,7 @@ F
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
@@ -524,7 +535,7 @@ F
 	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_guns))
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(0, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -541,7 +552,7 @@ F
 	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_magic))
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -559,7 +570,7 @@ F
 	return (SSticker.mode.name != "ragin' mages" && !CONFIG_GET(flag/no_summon_events))
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	SSblackbox.add_details("wizard_spell_learned", name)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -695,7 +706,7 @@ F
 	var/list/cat_dat = list()
 	for(var/category in categories)
 		cat_dat[category] = "<hr>"
-		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=\ref[src];page=[category]'>[category]</a></li>"
+		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=[REF(src)];page=[category]'>[category]</a></li>"
 
 	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
 	dat += "</ul>"
@@ -706,11 +717,11 @@ F
 		E = entries[i]
 		spell_info += E.GetInfo()
 		if(E.CanBuy(user,src))
-			spell_info+= "<a href='byond://?src=\ref[src];buy=[i]'>[E.buy_word]</A><br>"
+			spell_info+= "<a href='byond://?src=[REF(src)];buy=[i]'>[E.buy_word]</A><br>"
 		else
 			spell_info+= "<span>Can't [E.buy_word]</span><br>"
 		if(E.CanRefund(user,src))
-			spell_info+= "<a href='byond://?src=\ref[src];refund=[i]'>Refund</A><br>"
+			spell_info+= "<a href='byond://?src=[REF(src)];refund=[i]'>Refund</A><br>"
 		spell_info += "<hr>"
 		if(cat_dat[E.category])
 			cat_dat[E.category] += spell_info

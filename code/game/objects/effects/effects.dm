@@ -56,3 +56,9 @@
 
 /obj/effect/abstract/singularity_act()
 	return
+
+/obj/effect/dummy/singularity_pull()
+	return
+
+/obj/effect/dummy/singularity_act()
+	return

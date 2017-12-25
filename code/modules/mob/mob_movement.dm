@@ -1,10 +1,10 @@
 #define SW_LIGHT_FACTOR 2.75
 
 /mob/CanPass(atom/movable/mover, turf/target)
+	if((mover.pass_flags & PASSMOB))
+		return TRUE
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
-		return TRUE
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover))
@@ -109,11 +109,12 @@
 				return
 			mob.control_object.setDir(direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
+			mob.control_object.forceMove(get_step(mob.control_object,direct))
 	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
+
 /client/Move(n, direct)
 	if(world.time < move_delay)
 		return FALSE
@@ -131,15 +132,13 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
-	if(moving)
-		return FALSE
 	if(mob.force_moving)
 		return FALSE
-	if(isliving(mob))
-		var/mob/living/L = mob
-		if(L.incorporeal_move)	//Move though walls
-			Process_Incorpmove(direct)
-			return FALSE
+
+	var/mob/living/L = mob  //Already checked for isliving earlier
+	if(L.incorporeal_move)	//Move though walls
+		Process_Incorpmove(direct)
+		return FALSE
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
@@ -163,19 +162,9 @@
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
 
-
-	var/delay = mob.movement_delay()
-
-	if(Can_ShadowWalk(mob))
-		if(Process_ShadowWalk(direct))
-			moving = FALSE
-			return TRUE
-		else
-			delay = delay*SW_LIGHT_FACTOR
-
 	//We are now going to move
-	moving = 1
-	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+	var/delay = mob.movement_delay()
+	if(old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
 	else
 		move_delay = delay + world.time
@@ -192,8 +181,7 @@
 	else
 		. = ..()
 
-	moving = 0
-	if(mob && .)
+	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
@@ -201,7 +189,9 @@
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
 
-	return .
+	var/atom/movable/P = mob.pulling
+	if(P && !ismob(P) && P.density)
+		mob.dir = turn(mob.dir, 180)
 
 /mob/Moved(oldLoc, dir, Forced = FALSE)
 	. = ..()
@@ -308,7 +298,7 @@
 ///For moving in space
 ///return TRUE for movement 0 for none
 /mob/Process_Spacemove(movement_dir = 0)
-	if(..())
+	if(spacewalk || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

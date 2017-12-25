@@ -100,13 +100,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	switch(event)
 		if("Red Alert")
 			set_security_level(SEC_LEVEL_RED)
-			SSblackbox.inc("alert_keycard_auth_red",)
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
-			SSblackbox.inc("alert_keycard_auth_maint")
 		if("Bluespace Artillery Unlock")
 			toggle_bluespace_artillery()
-			SSblackbox.inc("alert_keycard_auth_bsa")
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
@@ -116,6 +113,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 			D.update_icon(0)
 	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
 	GLOB.emergency_access = TRUE
+	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "enabled"))
 
 /proc/revoke_maint_all_access()
 	for(var/area/maintenance/A in world)
@@ -124,7 +122,9 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE
+	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("emergency maintenance access", "disabled"))
 
 /proc/toggle_bluespace_artillery()
 	GLOB.bsa_unlock = !GLOB.bsa_unlock
 	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
+	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("bluespace artillery", GLOB.bsa_unlock? "unlocked" : "locked"))

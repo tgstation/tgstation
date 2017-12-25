@@ -19,7 +19,7 @@
 
 /obj/item/stack/teeth/human/Initialize()
 	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/human/gold //Special traitor objective maybe?
 	name = "golden teeth"
@@ -42,8 +42,8 @@
 	desc = "I'm Mr. Teethseeks, look at me!"
 
 /obj/item/stack/teeth/generic/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/replacement
 	name = "replacement teeth"
@@ -53,8 +53,8 @@
 	icon_state = "dentals"
 
 /obj/item/stack/teeth/replacement/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.25, 1, 0.5) //Half-size the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.25, 1) + 0.5 //Half-size the teeth
 
 /obj/item/stack/teeth/cat
 	name = "tarajan teeth"
@@ -64,8 +64,8 @@
 	icon_state = "teeth_cat"
 
 /obj/item/stack/teeth/cat/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.35, 1, 0.5) //resize the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.35, 1) + 0.5 //resize the teeth
 
 /obj/item/stack/teeth/lizard
 	name = "lizard teeth"
@@ -75,8 +75,8 @@
 	icon_state = "teeth_cat"
 
 /obj/item/stack/teeth/lizard/Initialize()
-	..()
-	transform *= TransformUsingVariable(0.30, 1, 0.5) //resize the teeth
+	. = ..()
+	transform *= TRANSFORM_USING_VARIABLE(0.30, 1) + 0.5 //resize the teeth
 
 /obj/item/stack/teeth/xeno
 	name = "xenomorph teeth"
@@ -137,7 +137,7 @@
 				T.use(amt)
 				var/obj/item/stack/teeth/E = new T.type(target, amt)
 				O.teeth_list += E
-				// E.loc = target
+				// E.forceMove(target)
 				T = E
 			user.visible_message("<span class='notice'>[user] inserts [amt] [T] into [target]'s [target_zone]!</span>")
 			return 1
@@ -146,7 +146,7 @@
 			T.use(amt)
 			var/obj/item/stack/teeth/F = new T.type(target, amt)
 			O.teeth_list += F
-			// F.loc = target
+			// F.forceMove(target)
 			T = F
 			user.visible_message("<span class='notice'>[user] inserts [amt] [T] into [target]'s [target_zone]!</span>")
 			return 1
@@ -155,7 +155,7 @@
 			user.visible_message("<span class='notice'>[user] pulls all teeth out of [target]'s [target_zone]!</span>")
 			for(var/obj/item/stack/teeth/F in O.teeth_list)
 				O.teeth_list -= F
-				F.loc = get_turf(target)
+				F.forceMove(get_turf(target))
 			return 1
 		else
 			user.visible_message("<span class='notice'>[user] doesn't find anything in [target]'s [target_zone].</span>")

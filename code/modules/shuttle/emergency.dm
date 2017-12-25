@@ -144,8 +144,8 @@
 
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) \
-	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[user]'>FLW</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(user)]'>?</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(user)]'>FLW</A>) \
 	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		[COORD(src)] [time] seconds before launch.")
@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
+				if(initiate_docking(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
@@ -474,7 +474,7 @@
 			turfs -= T
 			T = pick(turfs)
 		else
-			src.loc = T
+			forceMove(T)
 			break
 
 //Pod suits/pickaxes

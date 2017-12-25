@@ -12,3 +12,19 @@
 			if(mind && hud_used.combo_object && hud_used.combo_object.cooldown < world.time)
 				hud_used.combo_object.update_icon()
 				mind.martial_art.streak = ""
+
+/mob/living/carbon/human/handle_embedded_objects()
+	..()
+
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		for(var/obj/item/I in BP.embedded_objects)
+			if (I.loc != src)
+				BP.embedded_objects -= I
+
+				if (I.pinned)
+					do_pindown(pinned_to, 0)
+					pinned_to = null
+					anchored = FALSE
+					update_canmove()
+					I.pinned = null

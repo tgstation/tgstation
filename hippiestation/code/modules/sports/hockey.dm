@@ -46,7 +46,7 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the stick!</span>")
 			return
-		packstick.loc = user
+		packstick.forceMove(user)
 	else
 		remove_stick()
 	return

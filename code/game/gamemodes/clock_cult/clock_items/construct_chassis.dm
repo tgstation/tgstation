@@ -86,12 +86,13 @@
 
 /obj/item/clockwork/construct_chassis/cogscarab/Initialize()
 	. = ..()
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+	if(GLOB.servants_active)
 		infinite_resources = FALSE //For any that are somehow spawned in late
 
 /obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
 	if(infinite_resources)
-		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar //During rounds where they can't interact with the station, let them experiment with builds
+		//During rounds where they can't interact with the station, let them experiment with builds
+		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar
 
 /obj/item/clockwork/construct_chassis/cogscarab/post_spawn(mob/living/construct)
 	if(infinite_resources) //Allow them to build stuff and recite scripture

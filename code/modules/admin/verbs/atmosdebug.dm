@@ -4,7 +4,7 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	SSblackbox.add_details("admin_verb","Check Plumbing") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Plumbing") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for (var/obj/machinery/atmospherics/plumbing in GLOB.machines)
@@ -13,12 +13,12 @@
 
 	//Manifolds
 	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
-		if (!pipe.NODE1 || !pipe.NODE2 || !pipe.NODE3)
+		if (!pipe.nodes[1] || !pipe.nodes[2] || !pipe.nodes[3])
 			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
 
 	//Pipes
 	for (var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
-		if (!pipe.NODE1 || !pipe.NODE2)
+		if (!pipe.nodes[1] || !pipe.nodes[2])
 			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
 
 /client/proc/powerdebug()
@@ -27,7 +27,7 @@
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	SSblackbox.add_details("admin_verb","Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	for (var/datum/powernet/PN in GLOB.powernets)
 		if (!PN.nodes || !PN.nodes.len)

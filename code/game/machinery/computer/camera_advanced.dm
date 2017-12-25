@@ -43,6 +43,7 @@
 	for(var/V in actions)
 		var/datum/action/A = V
 		A.Remove(user)
+	actions.Cut()
 	if(user.client)
 		user.reset_perspective(null)
 		eyeobj.RemoveImages()
@@ -62,6 +63,7 @@
 		current_user.unset_machine()
 	if(eyeobj)
 		qdel(eyeobj)
+	QDEL_LIST(actions)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
@@ -152,7 +154,10 @@
 		if(!isturf(eye_user.loc))
 			return
 		T = get_turf(T)
-		loc = T
+		if (T)
+			forceMove(T)
+		else
+			moveToNullspace()
 		if(use_static)
 			GLOB.cameranet.visibility(src)
 		if(visible_icon)
@@ -281,7 +286,7 @@
 /datum/action/innate/servant_warp/Activate()
 	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target) || warping)
 		return
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //No leaving unless there's servants from the get-go
+	if(!GLOB.servants_active) //No leaving unless there's servants from the get-go
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
@@ -295,9 +300,12 @@
 	else if(isspaceturf(T))
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
 		return
+	else if(T.flags_1 & NOJAUNT_1)
+		to_chat(user, "<span class='sevtug_small'>This tile is blessed by holy water and deflects the warp.</span>")
+		return
 	var/area/AR = get_area(T)
-	if(istype(AR, /area/ai_monitored))
-		to_chat(user, "<span class='sevtug_small'>The structure there is too dense for [src] to pierce. (This is normal in high-security areas.)</span>")
+	if(!AR.clockwork_warp_allowed)
+		to_chat(user, "<span class='sevtug_small'>[AR.clockwork_warp_fail]</span>")
 		return
 	if(alert(user, "Are you sure you want to warp to [AR]?", target.name, "Warp", "Cancel") == "Cancel" || QDELETED(R) || !user.canUseTopic(R))
 		return

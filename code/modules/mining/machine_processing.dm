@@ -10,7 +10,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()
@@ -18,7 +18,7 @@
 	if (machine)
 		machine.CONSOLE = src
 	else
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
@@ -69,17 +69,17 @@
 	var/on = FALSE
 	var/selected_material = MAT_METAL
 	var/selected_alloy = null
-	var/datum/research/files
+	var/datum/techweb/stored_research
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), INFINITY)
-	files = new /datum/research/smelter(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
-	QDEL_NULL(files)
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
@@ -106,28 +106,28 @@
 		if (selected_material == mat_id)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=\ref[CONSOLE];material=[mat_id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"
 	dat += "<b>Smelt Alloys</b><br>"
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		dat += "<span class=\"res_name\">[D.name] "
 		if (selected_alloy == D.id)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=\ref[CONSOLE];alloy=[D.id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];alloy=[D.id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"
 	//On or off
 	dat += "Machine is currently "
 	if (on)
-		dat += "<A href='?src=\ref[CONSOLE];set_on=off'>On</A> "
+		dat += "<A href='?src=[REF(CONSOLE)];set_on=off'>On</A> "
 	else
-		dat += "<A href='?src=\ref[CONSOLE];set_on=on'>Off</A> "
+		dat += "<A href='?src=[REF(CONSOLE)];set_on=on'>Off</A> "
 
 	return dat
 
@@ -156,7 +156,7 @@
 
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy()
-	var/datum/design/alloy = files.FindDesignByID(selected_alloy) //check if it's a valid design
+	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
 	if(!alloy)
 		on = FALSE
 		return
@@ -174,7 +174,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = SMELT_AMOUNT
 
@@ -185,7 +185,7 @@
 		var/datum/material/smelter_mat  = materials.materials[mat_id]
 
 		if(!M || !smelter_mat)
-			return 0
+			return FALSE
 
 		build_amount = min(build_amount, round(smelter_mat.amount / M))
 

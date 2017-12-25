@@ -539,7 +539,7 @@
 	screen_loc = ui_healthdoll
 
 /obj/screen/splash
-	icon = 'config/title_screens/images/blank.png'
+	icon = 'icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER

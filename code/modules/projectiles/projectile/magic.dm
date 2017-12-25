@@ -284,6 +284,8 @@
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
+	M.transfer_observers_to(new_mob)
+
 	qdel(M)
 	return new_mob
 
@@ -307,7 +309,7 @@
 				var/mob/living/simple_animal/hostile/statue/S = new(P.loc, owner)
 				S.name = "statue of [L.name]"
 				if(owner)
-					S.faction = list("\ref[owner]")
+					S.faction = list("[REF(owner)]")
 				S.icon = P.icon
 				S.icon_state = P.icon_state
 				S.copy_overlays(P, TRUE)
@@ -317,7 +319,7 @@
 					L.mind.transfer_to(S)
 					if(owner)
 						to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [owner], your creator.</span>")
-				P.loc = S
+				P.forceMove(S)
 				return
 		else
 			var/obj/O = src

@@ -1,7 +1,6 @@
 /obj/item/implant/mindslave
 	name = "mindslave implant"
 	desc = "Now YOU too can have your very own mindslave! Pop this implant into anybody and they'll obey any command you give for around 15 to 20 minutes."
-	origin_tech = "materials=2;biotech=4;programming=4"
 	activated = 0
 	var/permanent = FALSE
 	var/time = 10200 // 1020 seconds aka 17 mins

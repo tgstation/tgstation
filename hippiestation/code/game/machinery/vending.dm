@@ -81,7 +81,6 @@
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
-	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/vending_refill/boozeomat = 3)
 
@@ -183,7 +182,7 @@
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(refill.charges[charge_type] == 0)
 				break
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
 			if(restock > refill.charges[charge_type])
 				restock = refill.charges[charge_type]
 			machine_content.amount += restock
@@ -260,11 +259,11 @@
 		if(!user.dropItemToGround(W))
 			return
 		if(coin)
-			user << "<span class='warning'>There is already [coin] in the [src]!</span>"
+			to_chat(user, "<span class='warning'>There is already [coin] in the [src]!</span>")
 			return
-		W.loc = src
+		W.forceMove(src)
 		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		playsound(src,'hippiestation/sound/misc/insertcoin.ogg',25,1)
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
@@ -413,9 +412,9 @@
 			. = TRUE
 		if("eject")
 			if(!coin)
-				usr << "<span class='notice'>There is no coin in this machine.</span>"
+				to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
 				return
-			coin.loc = loc
+			coin.forceMove(loc)
 			if(!usr.get_active_held_item())
 				usr.put_in_hands(coin)
 			usr << "<span class='notice'>You remove [coin] from [src].</span>"
@@ -529,3 +528,16 @@
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
+
+/obj/machinery/vending/games
+	name = "\improper Good Clean Fun"
+	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
+	product_ads = "Escape to a fantasy world!;Fuel your gambling addiction!;Ruin your friendships!;Roll for initative!;Elves and dwarves!;Paranoid computers!;Totally not satanic!;Fun times forever!"
+	icon_state = "games"
+	products = list(
+		/obj/item/toy/cards/deck = 5,
+		/obj/item/storage/pill_bottle/dice = 10,
+		/obj/item/toy/cards/deck/cas = 3,
+		/obj/item/toy/cards/deck/cas/black = 3)
+	contraband = list(/obj/item/dice/fudge = 9)
+	refill_canister = /obj/item/vending_refill/games

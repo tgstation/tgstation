@@ -43,10 +43,27 @@
 				return
 			Remove(owner)
 		owner = M
+
+		//button id generation
+		var/counter = 0
+		var/bitfield = 0
+		for(var/datum/action/A in M.actions)
+			if(A.name == name && A.button.id)
+				counter += 1
+				bitfield |= A.button.id
+		bitfield = ~bitfield
+		var/bitflag = 1
+		for(var/i in 1 to (counter + 1))
+			if(bitfield & bitflag)
+				button.id = bitflag
+				break
+			bitflag *= 2
+
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked
+			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -60,6 +77,7 @@
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
+	button.id = null
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -152,14 +170,15 @@
 		..(current_button)
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		current_button.appearance_cache = I.appearance
 		var/old_layer = I.layer
 		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
 		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.overlays = list(I)
+		current_button.cut_overlays()
+		current_button.add_overlay(I)
 		I.layer = old_layer
 		I.plane = old_plane
+		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"

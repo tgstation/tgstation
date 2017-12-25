@@ -144,10 +144,14 @@
 	else
 		if(new_thing_type)
 			if(fabrication_values["dir_in_new"])
-				new new_thing_type(get_turf(target), fabrication_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
+				var/atom/A =  new new_thing_type(get_turf(target), fabrication_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
+				if(fabrication_values["transfer_name"])
+					A.name = target.name
 			else
 				var/atom/A = new new_thing_type(get_turf(target))
 				A.setDir(fabrication_values["spawn_dir"])
+				if(fabrication_values["transfer_name"])
+					A.name = target.name
 		if(!fabrication_values["no_target_deletion"]) //for some cases where fabrication_vals() modifies the object but doesn't want it deleted
 			qdel(target)
 	adjust_clockwork_power(-fabrication_values["power_cost"])

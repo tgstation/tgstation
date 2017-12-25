@@ -61,10 +61,10 @@
 		else
 			dat += "<span class='good'>AI functional</span>"
 		if (!src.active)
-			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
+			dat += {"<br><br><A href='byond://?src=[REF(src)];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+	dat += {"<br><A href='?src=[REF(user)];mach_close=computer'>Close</A>"}
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

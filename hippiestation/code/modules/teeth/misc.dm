@@ -11,13 +11,13 @@
 	if(istype(U))
 		U.teeth_list.Cut() //Clear out their mouth of teeth if they had any
 		var/obj/item/stack/teeth/T = new dna.species.teeth_type
-		T.loc = U
+		T.forceMove(U)
 		U.max_teeth = T.max_amount //Set max teeth for the head based on teeth spawntype
 		T.amount = T.max_amount
 		U.teeth_list += T
 
 /obj/item/bodypart/head/proc/knock_out_teeth(throw_dir, num=32) //Won't support knocking teeth out of a dismembered head or anything like that yet.
-	num = Clamp(num, 1, 32)
+	num = CLAMP(num, 1, 32)
 	var/done = 0
 	if(teeth_list && teeth_list.len) //We still have teeth
 		var/stacks = rand(1,3)

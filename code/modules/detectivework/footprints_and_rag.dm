@@ -13,11 +13,11 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	flags_1 = NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
-	spillable = 0
+	spillable = FALSE
 
 /obj/item/reagent_containers/glass/rag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

@@ -75,18 +75,22 @@
 	if(C.preserved)
 		return ..() * 2
 	return ..()
-	
-// Kitty Organs.
-	
-/datum/export/organ/cat/ears
+
+// Mutant race organs.
+/datum/export/organ/mutant/cat_ears
 	cost = 1000
-	unit_name = "cat ears"
+	unit_name = "cat ears pair"
 	export_types = list(/obj/item/organ/ears/cat)
-	
-/datum/export/organ/cat/tail
+
+/datum/export/organ/mutant/cat_tail
 	cost = 1000
 	unit_name = "cat tail"
 	export_types = list(/obj/item/organ/tail/cat)
+
+/datum/export/organ/mutant/lizard_tail
+	cost = 200
+	unit_name = "lizard tail"
+	export_types = list(/obj/item/organ/tail/lizard)
 
 // Human organs.
 

@@ -262,7 +262,7 @@
 	use_stored_power(50)
 
 /obj/machinery/shieldwallgen/proc/use_stored_power(amount)
-	power = Clamp(power - amount, 0, maximum_stored_power)
+	power = CLAMP(power - amount, 0, maximum_stored_power)
 	update_activity()
 
 /obj/machinery/shieldwallgen/proc/update_activity()
@@ -450,7 +450,7 @@
 			gen_secondary.use_stored_power(drain_amount*0.5)
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/item/projectile))

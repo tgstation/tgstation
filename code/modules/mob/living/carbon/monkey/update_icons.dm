@@ -19,7 +19,7 @@
 	if(!HD) //Decapitated
 		return
 
-	if(disabilities & HUSK)
+	if(has_disability(HUSK))
 		return
 
 	var/hair_hidden = 0

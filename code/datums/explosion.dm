@@ -1,5 +1,6 @@
 #define EXPLOSION_THROW_SPEED 4
-#define REEBE_HUGBOX_COEFFICIENT 0.5
+#define CITYOFCOGS_CAP_MULTIPLIER 0.5
+#define MINING_CAP_MULTIPLIER 3
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
@@ -53,21 +54,21 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
-
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
-		//Clamp all values to MAX_EXPLOSION_RANGE
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE, flame_range)
-		
-	if(!ignorecap && epicenter.z == ZLEVEL_CITYOFCOGS)
-		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * REEBE_HUGBOX_COEFFICIENT, devastation_range)
-		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * REEBE_HUGBOX_COEFFICIENT, heavy_impact_range)
-		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * REEBE_HUGBOX_COEFFICIENT, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * REEBE_HUGBOX_COEFFICIENT, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * REEBE_HUGBOX_COEFFICIENT, flame_range)
+	
+	//Zlevel specific bomb cap multiplier
+	var/cap_multiplier = 1
+	switch(epicenter.z)
+		if(ZLEVEL_CITYOFCOGS)
+			cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
+		if(ZLEVEL_MINING)
+			cap_multiplier = MINING_CAP_MULTIPLIER
+	
+	if(!ignorecap)
+		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
+		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
+		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
+		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
+		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -84,9 +85,16 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
+	var/area/epi_area = get_area(epicenter)
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [epi_area] [ADMIN_COORDJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+	
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+	var/z0 = epicenter.z
+	
+	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flash" = flash_range, "flame" = flame_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = epi_area.type))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
@@ -97,10 +105,6 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/far_dist = 0
 	far_dist += heavy_impact_range * 5
 	far_dist += devastation_range * 20
-
-	var/x0 = epicenter.x
-	var/y0 = epicenter.y
-	var/z0 = epicenter.z
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
@@ -117,7 +121,7 @@ GLOBAL_LIST_EMPTY(explosions)
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
 			EX_PREPROCESS_CHECK_TICK
@@ -406,4 +410,5 @@ GLOBAL_LIST_EMPTY(explosions)
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
 
-#undef REEBE_HUGBOX_COEFFICIENT
+#undef CITYOFCOGS_CAP_MULTIPLIER
+#undef MINING_CAP_MULTIPLIER

@@ -300,6 +300,10 @@
 /obj/item/clockwork/component/vanguard_cogwheel/onyx_prism,
 /turf/open/indestructible/reebe_void,
 /area/reebe)
+"bj" = (
+/obj/structure/destructible/clockwork/eminence_spire,
+/turf/open/floor/clockwork/reebe,
+/area/reebe/city_of_cogs)
 
 (1,1,1) = {"
 aa
@@ -31739,7 +31743,7 @@ aj
 aj
 ai
 aj
-aj
+az
 aj
 ai
 aj
@@ -31996,7 +32000,7 @@ aj
 aj
 ap
 aj
-az
+aj
 aj
 ap
 aj
@@ -32253,7 +32257,7 @@ aj
 aj
 ai
 aj
-aj
+bj
 aj
 ai
 aj

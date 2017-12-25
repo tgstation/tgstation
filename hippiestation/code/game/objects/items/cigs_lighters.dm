@@ -22,7 +22,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = FALSE
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1"
 	heat = 1000
 
 /obj/item/match/process()
@@ -102,7 +101,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
-	container_type = INJECTABLE_1
+	container_type = INJECTABLE
 	var/lit = FALSE
 	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -126,6 +125,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
+	AddComponent(/datum/component/knockoff,90,list("mouth"),list(slot_wear_mask))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -650,7 +650,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(istype(O, /obj/item/screwdriver))
 		if(!screw)
 			screw = TRUE
-			container_type |= OPENCONTAINER_1
+			container_type |= OPENCONTAINER
 			to_chat(user, "<span class='notice'>You open the cap on the [name].</span>")
 			if(emagged)
 				var/image/I = (image(icon, "vapeopen_high"))
@@ -663,7 +663,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				add_overlay(I, priority=0)
 		else
 			screw = FALSE
-			container_type &= ~OPENCONTAINER_1
+			container_type &= ~OPENCONTAINER
 			to_chat(user, "<span class='notice'>You close the cap on the [name].</span>")
 			cut_overlays()
 

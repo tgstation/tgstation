@@ -29,7 +29,7 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
+		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/trinary/filter/New()
 	..()
@@ -50,7 +50,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-	if(on && NODE1 && NODE2 && NODE3 && is_operational())
+	if(on && nodes[1] && nodes[2] && nodes[3] && is_operational())
 		icon_state = "filter_on[flipped?"_f":""]"
 		return
 	icon_state = "filter_off[flipped?"_f":""]"
@@ -63,12 +63,12 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
-	if(!on || !(NODE1 && NODE2 && NODE3) || !is_operational())
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -103,7 +103,7 @@
 			var/datum/gas_mixture/filtered_out = new
 
 			filtered_out.temperature = removed.temperature
-			ASSERT_GAS(filter_type, filtered_out)
+			filtered_out.add_gas(filter_type)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
 			removed.gases[filter_type][MOLES] = 0
@@ -124,7 +124,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 475, 155, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 195, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
@@ -133,13 +133,11 @@
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 
-	if(filter_type) //ui code is garbage and this is needed for it to work grr
-		if(ispath(filter_type))	//we need to send the gas ID. if it's a path, get it from the metainfo list...
-			data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID]
-		else //...otherwise, it's already in the form we need.
-			data["filter_type"] = filter_type
-	else
-		data["filter_type"] = "none"
+	data["filter_types"] = list()
+	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
+	for(var/path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[path]
+		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(filter_type))))
 
 	return data
 
@@ -164,12 +162,12 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"
-			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
+			var/gas = gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]

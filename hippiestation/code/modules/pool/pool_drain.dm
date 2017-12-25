@@ -1,5 +1,5 @@
 /obj/machinery/drain
-	name = "Drain"
+	name = "drain"
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "drain"
 	desc = "This removes things that clog the pool."
@@ -26,7 +26,7 @@
 			for(var/obj/item/absorb in range(0,src))
 				if(absorb.w_class == 1)
 					for(var/obj/machinery/poolfilter/filter in range(srange,src))
-						absorb.loc = filter
+						absorb.forceMove(filter)
 	if(active)
 		if(status) //if filling up, get back to normal position
 			if(timer > 0)
@@ -67,7 +67,7 @@
 					for(var/i in list(1,2,4,8,4,2,1)) //swirl!
 						whirlm.dir = i
 						sleep(1)
-					if(whirlm.loc == src.loc)
+					if(whirlm.forceMove(src.loc))
 						if(whirlm.health <= -50) //If very damaged, gib.
 							whirlm.gib()
 						if(whirlm.stat != CONSCIOUS || whirlm.lying) // If
@@ -146,4 +146,4 @@
 /obj/machinery/poolfilter/attack_hand(mob/user)
 	to_chat(user, "You search the filter.")
 	for(var/obj/O in contents)
-		O.loc = src.loc
+		O.forceMove(src.loc)

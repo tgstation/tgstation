@@ -9,7 +9,6 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
 
 	var/reusable = TRUE
@@ -142,7 +141,8 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(is_sacrifice_target(T.mind))
+			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(C && C.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -211,7 +211,7 @@
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
-		newstruct.faction |= "\ref[stoner]"
+		newstruct.faction |= "[REF(stoner)]"
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
@@ -243,7 +243,7 @@
 	S.key = T.key
 	S.language_holder = U.language_holder.copy(S)
 	if(U)
-		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
+		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()

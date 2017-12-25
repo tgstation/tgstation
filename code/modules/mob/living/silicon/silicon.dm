@@ -33,7 +33,7 @@
 
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
+	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
 
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
@@ -42,8 +42,8 @@
 /mob/living/silicon/Initialize()
 	. = ..()
 	GLOB.silicon_mobs += src
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 
@@ -110,7 +110,7 @@
 				if(alarm_types_show["Camera"])
 					msg += "CAMERA: [alarm_types_show["Camera"]] alarms detected. - "
 
-				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
+				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 				to_chat(src, msg)
 
 			if(alarms_to_clear.len < 3)
@@ -135,7 +135,7 @@
 				if(alarm_types_show["Camera"])
 					msg += "CAMERA: [alarm_types_clear["Camera"]] alarms cleared. - "
 
-				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
+				msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 				to_chat(src, msg)
 
 
@@ -253,12 +253,12 @@
 		for(var/index = 1, index <= src.laws.devillaws.len, index++)
 			if (!src.devillawcheck[index])
 				src.devillawcheck[index] = "No"
-			list += {"<A href='byond://?src=\ref[src];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawdevil=[index]'>[src.devillawcheck[index]] 666:</A> [src.laws.devillaws[index]]<BR>"}
 
 	if (src.laws.zeroth)
 		if (!src.lawcheck[1])
 			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
 		var/law = src.laws.ion[index]
@@ -266,7 +266,7 @@
 		if (length(law) > 0)
 			if (!src.ioncheck[index])
 				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
 			src.ioncheck.len += 1
 
 	var/number = 1
@@ -278,7 +278,7 @@
 
 			if (!src.lawcheck[number+1])
 				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
 	for (var/index = 1, index <= src.laws.supplied.len, index++)
@@ -287,9 +287,9 @@
 			src.lawcheck.len += 1
 			if (!src.lawcheck[number+1])
 				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
-	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
+	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
 	usr << browse(list, "window=laws")
 

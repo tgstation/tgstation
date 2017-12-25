@@ -8,6 +8,7 @@
 	var/list/gear_categories
 	var/list/chosen_gear
 	var/gear_tab
+	max_save_slots = 6
 
 /datum/preferences/New(client/C)
 	..()

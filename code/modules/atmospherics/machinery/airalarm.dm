@@ -5,10 +5,10 @@
 	var/max2
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	src.min2 = min2
-	src.min1 = min1
-	src.max1 = max1
-	src.max2 = max2
+	if(min2) src.min2 = min2
+	if(min1) src.min1 = min1
+	if(max1) src.max1 = max1
+	if(max2) src.max2 = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
 	if(max2 != -1 && val >= max2)
@@ -20,6 +20,18 @@
 	if(min1 != -1 && val <= min1)
 		return 1
 	return 0
+
+/datum/tlv/no_checks
+	min2 = -1
+	min1 = -1
+	max1 = -1
+	max2 = -1
+
+/datum/tlv/dangerous
+	min2 = -1
+	min1 = -1
+	max1 = 0.2
+	max2 = 0.5
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -68,8 +80,8 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/frequency = 1439
-	var/alarm_frequency = 1437
+	var/frequency = FREQ_ATMOS_CONTROL
+	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.
@@ -78,25 +90,33 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/bz				= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, 0.2, 0.5)
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/nitryl			= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
 	TLV = list(
-		"pressure"					= new/datum/tlv(-1, -1, -1, -1),
-		"temperature"				= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/oxygen			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/bz				= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, -1, -1),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, -1, -1)
+		"pressure"					= new/datum/tlv/no_checks,
+		"temperature"				= new/datum/tlv/no_checks,
+		/datum/gas/oxygen			= new/datum/tlv/no_checks,
+		/datum/gas/nitrogen			= new/datum/tlv/no_checks,
+		/datum/gas/carbon_dioxide	= new/datum/tlv/no_checks,
+		/datum/gas/plasma			= new/datum/tlv/no_checks,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
+		/datum/gas/bz				= new/datum/tlv/no_checks,
+		/datum/gas/hypernoblium		= new/datum/tlv/no_checks,
+		/datum/gas/water_vapor		= new/datum/tlv/no_checks,
+		/datum/gas/tritium			= new/datum/tlv/no_checks,
+		/datum/gas/stimulum			= new/datum/tlv/no_checks,
+		/datum/gas/nitryl			= new/datum/tlv/no_checks,
+		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -106,11 +126,15 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000), // Partial pressure, kpa
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
-		/datum/gas/plasma			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/nitrous_oxide	= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		/datum/gas/bz				= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/freon			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		/datum/gas/water_vapor		= new/datum/tlv(-1, -1, 0.2, 0.5)
+		/datum/gas/plasma			= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous, // Partial pressure, kpa
+		/datum/gas/bz				= new/datum/tlv/dangerous,
+		/datum/gas/hypernoblium		= new/datum/tlv/dangerous,
+		/datum/gas/water_vapor		= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+		/datum/gas/stimulum			= new/datum/tlv/dangerous,
+		/datum/gas/nitryl			= new/datum/tlv/dangerous,
+		/datum/gas/pluoxium			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/engine
@@ -253,12 +277,7 @@
 					"power"					= info["power"],
 					"scrubbing"				= info["scrubbing"],
 					"widenet"				= info["widenet"],
-					"filter_co2"			= info["filter_co2"],
-					"filter_toxins"			= info["filter_toxins"],
-					"filter_n2o"			= info["filter_n2o"],
-					"filter_bz"				= info["filter_bz"],
-					"filter_freon"			= info["filter_freon"],
-					"filter_water_vapor"	= info["filter_water_vapor"]
+					"filter_types"			= info["filter_types"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -314,8 +333,8 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub","water_vapor_scrub", "widenet", "scrubbing")
-			send_signal(device_id, list("[action]" = text2num(params["val"])))
+		if("power", "toggle_filter", "widenet", "scrubbing")
+			send_signal(device_id, list("[action]" = params["val"]))
 			. = TRUE
 		if("excheck")
 			send_signal(device_id, list("checks" = text2num(params["val"])^1))
@@ -337,6 +356,9 @@
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
+			if(text2path(env))
+				env = text2path(env)
+
 			var/name = params["var"]
 			var/datum/tlv/tlv = TLV[env]
 			if(isnull(tlv))
@@ -405,21 +427,16 @@
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_TO_AIRALARM)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = command
+	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
-
-	radio_connection.post_signal(src, signal, GLOB.RADIO_FROM_AIRALARM)
+	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return 1
 
@@ -433,8 +450,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
-					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
+					"rare_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
@@ -452,8 +468,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 1,
 					"n2o_scrub" = 1,
-					"bz_scrub"	= 1,
-					"freon_scrub"= 1,
+					"rare_scrub"= 1,
 					"water_vapor_scrub"= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
@@ -484,8 +499,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
-					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
+					"rare_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
@@ -613,12 +627,10 @@
 
 	var/area/A = get_area(src)
 
-	var/datum/signal/alert_signal = new
-	alert_signal.source = src
-	alert_signal.transmission_method = 1
-	alert_signal.data["zone"] = A.name
-	alert_signal.data["type"] = "Atmospheric"
-
+	var/datum/signal/alert_signal = new(list(
+		"zone" = A.name,
+		"type" = "Atmospheric"
+	))
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)
@@ -626,7 +638,7 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal,null,-1)
+	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)
@@ -658,15 +670,7 @@
 				update_icon()
 				return
 			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
-				if(stat & (NOPOWER|BROKEN))
-					to_chat(user, "<span class='warning'>It does nothing!</span>")
-				else
-					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
-						locked = !locked
-						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
-					else
-						to_chat(user, "<span class='danger'>Access denied.</span>")
-				return
+				togglelock(user)
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
 				return
@@ -731,6 +735,25 @@
 				return
 
 	return ..()
+
+/obj/machinery/airalarm/AltClick(mob/user)
+	..()
+	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		togglelock(user)
+
+/obj/machinery/airalarm/proc/togglelock(mob/living/user)
+	if(stat & (NOPOWER|BROKEN))
+		to_chat(user, "<span class='warning'>It does nothing!</span>")
+	else
+		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
+		else
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+	return
 
 /obj/machinery/airalarm/power_change()
 	..()

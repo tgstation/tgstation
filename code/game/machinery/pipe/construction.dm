@@ -20,12 +20,12 @@ Buildable meters
 	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
-	var/RPD_type //TEMP: kill this once RPDs get a rewrite pls
+	var/RPD_type
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
 /obj/item/pipe/binary
-	RPD_type = PIPE_BINARY
+	RPD_type = PIPE_STRAIGHT
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
 /obj/item/pipe/trinary
@@ -34,7 +34,7 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/quaternary
-	RPD_type = PIPE_QUAD
+	RPD_type = PIPE_ONEDIR
 
 /obj/item/pipe/examine(mob/user)
 	..()
@@ -69,9 +69,9 @@ Buildable meters
 	return ..()
 
 /obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
-	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type)
+	var/obj/machinery/atmospherics/fakeA = pipe_type
 
-	if(fakeA.pipe_flags & PIPING_ALL_LAYER)
+	if(initial(fakeA.pipe_flags) & PIPING_ALL_LAYER)
 		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 
@@ -80,9 +80,9 @@ Buildable meters
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()
-	var/obj/machinery/atmospherics/A = get_pipe_cache(pipe_type)
-	name = "[A.name] fitting"
-	icon_state = A.pipe_state
+	var/obj/machinery/atmospherics/fakeA = pipe_type
+	name = "[initial(fakeA.name)] fitting"
+	icon_state = initial(fakeA.pipe_state)
 
 // rotate the pipe item clockwise
 
@@ -147,17 +147,6 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/proc/get_pipe_cache(type, direction)
-	var/static/list/obj/machinery/atmospherics/check_cache
-	if(!islist(check_cache))
-		check_cache = list()
-	if(!check_cache[type])
-		check_cache[type] = list()
-	if(!check_cache[type]["[direction]"])
-		check_cache[type]["[direction]"] = new type(null, null, direction)
-
-	return check_cache[type]["[direction]"]
-
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
 	if (!istype(W, /obj/item/wrench))
 		return ..()
@@ -167,15 +156,15 @@ Buildable meters
 
 	fixdir()
 
-	var/obj/machinery/atmospherics/fakeA = get_pipe_cache(pipe_type, dir)
-
+	var/obj/machinery/atmospherics/fakeA = pipe_type
+	var/flags = initial(fakeA.pipe_flags)
 	for(var/obj/machinery/atmospherics/M in loc)
-		if((M.pipe_flags & fakeA.pipe_flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+		if((M.pipe_flags & flags & PIPING_ONE_PER_TURF))	//Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			return TRUE
-		if((M.piping_layer != piping_layer) && !((M.pipe_flags | fakeA.pipe_flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
+		if((M.piping_layer != piping_layer) && !((M.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
 			continue
-		if(M.GetInitDirections() & fakeA.GetInitDirections())	// matches at least one direction on either type of pipe
+		if(M.GetInitDirections() & SSair.get_init_dirs(pipe_type, dir))	// matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			return TRUE
 	// no conflicts found

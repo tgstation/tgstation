@@ -1,0 +1,1 @@
+GLOBAL_VAR_INIT(nasheed_playing, FALSE)

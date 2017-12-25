@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/list/areas_in_z = list()
+
 	var/loading_ruins = FALSE
 
 /datum/controller/subsystem/mapping/PreInit()
@@ -60,6 +62,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
+	generate_station_area_list()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -124,7 +127,7 @@ SUBSYSTEM_DEF(mapping)
 		query_round_map_name.Execute()
 
 	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
+		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
 
 	CreateSpace(ZLEVEL_SPACEMAX)
 
@@ -136,6 +139,19 @@ SUBSYSTEM_DEF(mapping)
 		msg += ". Yell at your server host!"
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
+
+GLOBAL_LIST_EMPTY(the_station_areas)
+
+/datum/controller/subsystem/mapping/proc/generate_station_area_list()
+	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
+	for(var/area/A in world)
+		var/turf/picked = safepick(get_area_turfs(A.type))
+		if(picked && (picked.z in GLOB.station_z_levels))
+			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
+				GLOB.the_station_areas.Add(A.type)
+
+	if(!GLOB.the_station_areas.len)
+		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	var/players = GLOB.clients.len

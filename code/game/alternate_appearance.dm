@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
-
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 
@@ -30,10 +29,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	appearance_key = key
 
 /datum/atom_hud/alternate_appearance/Destroy()
-	for(var/v in hudusers)
-		remove_hud_from(v)
-	for(var/v in hudatoms)
-		remove_from_hud(v)
 	GLOB.active_alternate_appearances -= src
 	return ..()
 

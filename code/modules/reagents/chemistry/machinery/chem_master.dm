@@ -13,7 +13,7 @@
 	var/obj/item/reagent_containers/beaker = null
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
-	var/condi = 0
+	var/condi = FALSE
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
@@ -22,6 +22,11 @@
 	create_reagents(100)
 	add_overlay("waitlight")
 	. = ..()
+
+/obj/machinery/chem_master/Destroy()
+	QDEL_NULL(beaker)
+	QDEL_NULL(bottle)
+	return ..()
 
 /obj/machinery/chem_master/RefreshParts()
 	reagents.maximum_volume = 0
@@ -44,10 +49,22 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		icon_state = "mixer0"
+		update_icon()
 	else if(A == bottle)
 		bottle = null
 
+/obj/machinery/chem_master/update_icon()
+	if(beaker)
+		icon_state = "mixer1"
+	else
+		icon_state = "mixer0"
+
+/obj/machinery/chem_master/proc/eject_beaker()
+	if(beaker)
+		beaker.forceMove(drop_location())
+		adjust_item_drop_location(beaker)
+		beaker = null
+		update_icon()
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
@@ -61,13 +78,6 @@
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
-		if(beaker)
-			beaker.loc = src.loc
-			beaker = null
-			reagents.clear_reagents()
-		if(bottle)
-			bottle.loc = src.loc
-			bottle = null
 		return
 
 	else if(exchange_parts(user, I))
@@ -78,7 +88,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
@@ -92,7 +102,7 @@
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 		src.updateUsrDialog()
-		icon_state = "mixer1"
+		update_icon()
 
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
@@ -107,6 +117,13 @@
 	else
 		return ..()
 
+/obj/machinery/chem_master/on_deconstruction()
+	eject_beaker()
+	if(bottle)
+		bottle.forceMove(drop_location())
+		adjust_item_drop_location(bottle)
+		bottle = null
+	return ..()
 
 /obj/machinery/chem_master/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -152,16 +169,13 @@
 		return
 	switch(action)
 		if("eject")
-			if(beaker)
-				beaker.loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				icon_state = "mixer0"
-				. = TRUE
+			eject_beaker()
+			. = TRUE
 
 		if("ejectp")
 			if(bottle)
-				bottle.loc = src.loc
+				bottle.forceMove(drop_location())
+				adjust_item_drop_location(bottle)
 				bottle = null
 				. = TRUE
 
@@ -201,7 +215,7 @@
 				var/amount = 1
 				var/vol_each = min(reagents.total_volume, 50)
 				if(text2num(many))
-					amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
+					amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
 					if(!amount)
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
@@ -214,16 +228,15 @@
 					if(bottle && bottle.contents.len < bottle.storage_slots)
 						P = new/obj/item/reagent_containers/pill(bottle)
 					else
-						P = new/obj/item/reagent_containers/pill(src.loc)
+						P = new/obj/item/reagent_containers/pill(drop_location())
 					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(src.loc)
+				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
 				P.originalname = name
 				P.name = trim("[name] pack")
@@ -238,7 +251,7 @@
 			var/amount = 1
 			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
-				amount = Clamp(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
+				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
 				if(!amount)
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
@@ -248,10 +261,9 @@
 			var/obj/item/reagent_containers/pill/P
 
 			for(var/i = 0; i < amount; i++)
-				P = new/obj/item/reagent_containers/pill/patch(src.loc)
+				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
+				adjust_item_drop_location(P)
 				reagents.trans_to(P,vol_each)
 			. = TRUE
 
@@ -264,7 +276,7 @@
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
 					return
-				var/obj/item/reagent_containers/food/condiment/P = new(src.loc)
+				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
 				P.name = trim("[name] bottle")
 				reagents.trans_to(P, P.volume)
@@ -280,15 +292,15 @@
 
 				var/obj/item/reagent_containers/glass/bottle/P
 				for(var/i = 0; i < amount_full; i++)
-					P = new/obj/item/reagent_containers/glass/bottle(src.loc)
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
+					adjust_item_drop_location(P)
 					reagents.trans_to(P, 30)
 
 				if(vol_part)
-					P = new/obj/item/reagent_containers/glass/bottle(src.loc)
+					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
+					adjust_item_drop_location(P)
 					reagents.trans_to(P, vol_part)
 			. = TRUE
 
@@ -328,7 +340,35 @@
 		return 0
 
 
+/obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters
+	if (AM == beaker)
+		AM.pixel_x = -8
+		AM.pixel_y = 8
+		return null
+	else if (AM == bottle)
+		if (length(bottle.contents))
+			AM.pixel_x = -13
+		else
+			AM.pixel_x = -7
+		AM.pixel_y = -8
+		return null
+	else
+		var/md5 = md5(AM.name)
+		for (var/i in 1 to 32)
+			#if DM_VERSION >= 513
+			#warning 512 is definitely stable now, remove the old code
+			#endif
+
+			#if DM_VERSION >= 512
+			. += hex2num(md5[i])
+			#else
+			. += hex2num(copytext(md5,i,i+1))
+			#endif
+		. = . % 9
+		AM.pixel_x = ((.%3)*6)
+		AM.pixel_y = -8 + (round( . / 3)*8)
+
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
-	condi = 1
+	condi = TRUE

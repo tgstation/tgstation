@@ -8,6 +8,7 @@
 	icon_living = "shade"
 	maxHealth = 50
 	health = 50
+	spacewalk = TRUE
 	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
@@ -39,9 +40,6 @@
 	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
 		return 0
 	return ..()
-
-/mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
-	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M))

@@ -32,18 +32,18 @@
 	faction = list("faithless")
 
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return TRUE //copypasta from carp code
 
 /mob/living/simple_animal/ascendant_shadowling/get_spans()
 	return ..() | list(SPAN_REALLYBIG, SPAN_YELL) //MAKES THEM SHOUT WHEN THEY TALK
 
 /mob/living/simple_animal/ascendant_shadowling/ex_act(severity)
-	return 0 //You think an ascendant can be hurt by bombs? HA
+	return FALSE //You think an ascendant can be hurt by bombs? HA
 
 /mob/living/simple_animal/ascendant_shadowling/singularity_act(args)
 	to_chat(src, "<span class='shadowling>NO NO NO AAAAAAAAAAAAAAAAAAA-</span>")
 	to_chat(world, "<span class='shadowling'><b>\"<font size=6>NO!</font> <font size=5>I will</font> <font size=4>not be.... destroyed</font> <font size=3>by a....</font> <font size=2>AAAAAAA-</font>\"</span>")
 	for(var/mob/M in GLOB.mob_list)
 		to_chat(M, "<span class='notice'><i><b>You feel a woosh as newly released energy temporarily distorts space itself...</b></i></span>")
-		M.playsound_local(get_turf(src), 'sound/hallucinations/wail.ogg', 150, 1, pressure_affected = FALSE)
+		SEND_SOUND(M, sound('sound/hallucinations/wail.ogg'))
 	. = ..(args)

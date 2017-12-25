@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/z_original = ZLEVEL_STATION_PRIMARY
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
-
+	var/timerid = null
 	var/list/meteordrop = list(/obj/item/ore/iron)
 	var/dropamt = 2
 
@@ -117,6 +117,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 			get_hit()
 
 /obj/effect/meteor/Destroy()
+	if (timerid)
+		deltimer(timerid)
 	GLOB.meteor_list -= src
 	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
@@ -127,7 +129,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
-	QDEL_IN(src, lifetime)
+	timerid = QDEL_IN(src, lifetime)
 	chase_target(target)
 
 /obj/effect/meteor/Collide(atom/A)

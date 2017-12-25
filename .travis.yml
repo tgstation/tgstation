@@ -1,9 +1,12 @@
 language: generic
 sudo: false
+branches:
+  except:
+  - ___TGS3TempBranch
 env:
     global:
     - BYOND_MAJOR="511"
-    - BYOND_MINOR="1380"
+    - BYOND_MINOR="1385"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
     - BUILD_TESTING=false
@@ -36,7 +39,7 @@ before_script:
   - tools/travis/before_build_byond.sh
 
 script:
-  - tools/travis/check_filedirs.sh tgstation.dme
+  - tools/travis/check_filedirs.sh hippiestation.dme
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
 

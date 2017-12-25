@@ -29,3 +29,21 @@
 		visible_message("<span class='greenannounce'>[user] has scored a critical hit on [M]!</span>")
 		playsound(src, 'sound/arcade/mana.ogg', 50, 1)
 	..()
+
+/obj/item/banhammer/syndicate
+	desc = "A banhammer. Upon closer inspection, it appears to have a red tag around its handle."
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
+	icon_state = "toyhammertagged"
+	throwforce = 20
+	force = 20
+	armour_penetration = 100 //Target will be downed in 5 hits before they knew what happened."
+
+/obj/item/banhammer/syndicate/attack(mob/M, mob/user)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(prob(0.1) && H.can_heartattack() && !H.undergoing_cardiac_arrest())
+			H.set_heartattack(TRUE)
+			if(H.stat == CONSCIOUS)
+				H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
+			

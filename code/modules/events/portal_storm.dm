@@ -37,7 +37,7 @@
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
-	storm = 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
 
 	station_areas = get_areas_in_z(ZLEVEL_STATION_PRIMARY)
@@ -64,9 +64,9 @@
 			T = safepick(get_area_turfs(pick(station_areas)))
 		hostiles_spawn += T
 
-	next_boss_spawn = startWhen + Ceiling(2 * number_of_hostiles / number_of_bosses)
+	next_boss_spawn = startWhen + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
 
-/datum/round_event/portal_storm/announce()
+/datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
 	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
 	sleep(80)
@@ -117,14 +117,14 @@
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)
 		return 0
-	return IsMultiple(activeFor, 2)
+	return ISMULTIPLE(activeFor, 2)
 
 /datum/round_event/portal_storm/proc/spawn_boss()
 	if(!boss_types || !boss_types.len)
 		return 0
 
 	if(activeFor == next_boss_spawn)
-		next_boss_spawn += Ceiling(number_of_hostiles / number_of_bosses)
+		next_boss_spawn += CEILING(number_of_hostiles / number_of_bosses, 1)
 		return 1
 
 /datum/round_event/portal_storm/proc/time_to_end()

@@ -120,7 +120,7 @@
 		..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
@@ -139,7 +139,7 @@
 	return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
 		return 0
@@ -283,11 +283,10 @@
 		return
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
-		var/turf/T = loc
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/i in debris)
 				var/obj/item/I = i
-				I.loc = T
+				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
@@ -380,7 +379,7 @@
 			return
 
 		var/ratio = obj_integrity / max_integrity
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 
 		if(smooth)
 			queue_smooth(src)

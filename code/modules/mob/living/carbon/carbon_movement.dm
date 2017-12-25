@@ -56,8 +56,6 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
-		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
-			bodytemperature += 2
 
 /mob/living/carbon/Moved(oldLoc, Dir)
 	. = ..()

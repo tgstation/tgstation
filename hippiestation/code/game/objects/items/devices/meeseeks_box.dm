@@ -9,7 +9,6 @@
 	desc = "A blue box with a button on top. Press the button to call upon a Mr. Meeseeks."
 	icon = 'hippiestation/icons/obj/device.dmi'
 	icon_state = "meeseeks_box"
-	origin_tech = "programming=2;materials=3;bluespace=4"
 	var/request = "Nothing"
 	var/next_summon
 	var/summoned = FALSE
@@ -38,9 +37,10 @@
 					to_chat(user, "<span class='warning'>Mr. Meeseeks is not close enough to be dismissed!</span>")
 		return
 	else if(summoned) //Meeseeks was destroyed
-		to_chat(user, "<span class='warning'>[src] explodes!</span>")
-		explosion(get_turf(src), null, null, 1, 2)
-		qdel(src)
+		to_chat(user, "<span class='warning'>[src] failed to create a Mr. Meeseeks. Try again later!</span>")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		masters = null
+		summoned = FALSE
 	else if(summoning)
 		to_chat(user, "<span class='warning'>[src] is trying to summon a Mr. Meeseeks. Be patient, Meeseeks don't grow on trees.</span>")
 	else if(next_summon < world.time)
@@ -68,6 +68,8 @@
 			if(!request)
 				to_chat(user, "<span class='warning'>Mr. Meeseeks didn't get a request!</span>")
 				destroy_meeseeks(meeseeks, SM)
+				meeseeks = null
+				masters = null
 				return
 			playsound(loc, 'hippiestation/sound/voice/cando.ogg', 40)
 			message_admins("[key_name_admin(user)] has summoned a Mr. Meeseeks([key_name_admin(meeseeks)]) with the request: [request]")
@@ -91,5 +93,6 @@
 		to_chat(user, "<span class='warning'>[src] is silent. Try again in a few minutes.</span>")
 
 /obj/item/device/meeseeks_box/Destroy()
-	destroy_meeseeks(meeseeks, meeseeks.dna.species)
-	. = ..()
+	if(meeseeks)
+		destroy_meeseeks(meeseeks, meeseeks.dna.species)
+	return ..()

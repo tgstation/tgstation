@@ -73,9 +73,9 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-/obj/item/projectile/New()
+/obj/item/projectile/Initialize()
+	. = ..()
 	permutated = list()
-	return ..()
 
 /obj/item/projectile/proc/Range()
 	range--
@@ -101,21 +101,32 @@
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
+
+	var/hitx
+	var/hity
+	if(target == original)
+		hitx = target.pixel_x + p_x - 16
+		hity = target.pixel_y + p_y - 16
+	else
+		hitx = target.pixel_x + rand(-8, 8)
+		hity = target.pixel_y + rand(-8, 8)
+
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
-		var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "bullet_hole", TURF_DECAL_LAYER)
-		if(target == original)
-			decal.pixel_x = target.pixel_x + p_x - 16
-			decal.pixel_y = target.pixel_y + p_y - 16
-		else
-			decal.pixel_x = target.pixel_x + rand(2, -2)
-			decal.pixel_y = target.pixel_y + rand(2, -2)
-		W.add_damage_decal(decal)
+		if(impact_effect_type)
+			new impact_effect_type(target_loca, hitx, hity)
+
+		W.add_dent(WALL_DENT_SHOT, hitx, hity)
+
+		return 0
+
 	if(!isliving(target))
 		if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			new impact_effect_type(target_loca, hitx, hity)
 		return 0
+
 	var/mob/living/L = target
+
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
@@ -128,7 +139,7 @@
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			new impact_effect_type(target_loca, hitx, hity)
 
 		var/organ_hit_text = ""
 		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
@@ -157,7 +168,7 @@
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
-		return Clamp((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
+		return CLAMP((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then clamp the value between 30 and 100
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
@@ -166,6 +177,7 @@
 		ricochets++
 		if(A.handle_ricochet(src))
 			ignore_source_check = TRUE
+			range = initial(range)
 			return FALSE
 	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
@@ -176,7 +188,7 @@
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
-		var/volume = Clamp(vol_by_damage() + 20, 0, 100)
+		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
@@ -247,7 +259,7 @@
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
-	var/required_moves = speed > 0? Floor(elapsed_time_deciseconds / speed) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
+	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
 	if(required_moves == MOVES_HITSCAN)
 		required_moves = SSprojectiles.global_max_tick_moves
 	else
@@ -255,7 +267,7 @@
 			var/overrun = required_moves - SSprojectiles.global_max_tick_moves
 			required_moves = SSprojectiles.global_max_tick_moves
 			time_offset += overrun * speed
-		time_offset += Modulus(elapsed_time_deciseconds, speed)
+		time_offset += MODULUS(elapsed_time_deciseconds, speed)
 
 	for(var/i in 1 to required_moves)
 		pixel_move(required_moves)
@@ -275,7 +287,7 @@
 		setAngle(Angle + ((rand() - 0.5) * spread))
 	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
 		var/turf/starting = get_turf(src)
-		var/turf/target = locate(Clamp(starting + xo, 1, world.maxx), Clamp(starting + yo, 1, world.maxy), starting.z)
+		var/turf/target = locate(CLAMP(starting + xo, 1, world.maxx), CLAMP(starting + yo, 1, world.maxy), starting.z)
 		setAngle(Get_Angle(src, target))
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -325,7 +337,6 @@
 	step_towards(src, locate(new_x, new_y, z))
 	pixel_x = old_pixel_x
 	pixel_y = old_pixel_y
-	//var/animation_time = ((SSprojectiles.flags & SS_TICKER? (SSprojectiles.wait * world.tick_lag) : SSprojectiles.wait) / moves)
 	animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = 1, flags = ANIMATION_END_NOW)
 	old_pixel_x = pixel_x_offset
 	old_pixel_y = pixel_y_offset
@@ -348,8 +359,9 @@
 	forceMove(get_turf(source))
 	starting = get_turf(source)
 	original = target
-	yo = targloc.y - curloc.y
-	xo = targloc.x - curloc.x
+	if(targloc || !params)
+		yo = targloc.y - curloc.y
+		xo = targloc.x - curloc.x
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
@@ -385,16 +397,18 @@
 		var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+		var/list/screenview = getviewsize(user.client.view)
+		var/screenviewX = screenview[1] * world.icon_size
+		var/screenviewY = screenview[2] * world.icon_size
 
-		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
-		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
-		angle = Atan2(y - oy, x - ox)
+		var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
+		var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+		angle = ATAN2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && (AM.density || AM == original) && !checkpass(PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()

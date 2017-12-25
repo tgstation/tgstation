@@ -60,8 +60,6 @@
 		var/pref = C.prefs.parallax
 		if (isnull(pref))
 			pref = PARALLAX_HIGH
-			if (C.byond_version < 511)
-				pref = PARALLAX_DISABLE
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
@@ -255,11 +253,13 @@
 /obj/screen/parallax_layer/proc/update_o(view)
 	if (!view)
 		view = world.view
-
-	var/count = Ceiling(view/(480/world.icon_size))+1
+	
+	var/list/viewscales = getviewsize(view)
+	var/countx = CEILING((viewscales[1]/2)/(480/world.icon_size), 1)+1
+	var/county = CEILING((viewscales[2]/2)/(480/world.icon_size), 1)+1
 	var/list/new_overlays = new
-	for(var/x in -count to count)
-		for(var/y in -count to count)
+	for(var/x in -countx to countx)
+		for(var/y in -county to county)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)

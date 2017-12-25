@@ -55,3 +55,18 @@
 	visible_message("<span class='danger'>[src]'s body glows green, the glow dissipating only to leave behind a cluwne formerly known as [src]!</span>", \
 					"<span class='danger'>Your brain feels like it's being torn apart, and after a short while, you notice that you've become a cluwne!</span>")
 	flash_act()
+
+/datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
+	if(prob(10) && owner.stat == CONSCIOUS)
+		owner.Stun(100)
+		switch(rand(1, 3))
+			if(1)
+				owner.emote("twitch")
+			if(2 to 3)
+				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+		var/x_offset_old = owner.pixel_x
+		var/y_offset_old = owner.pixel_y
+		var/x_offset = owner.pixel_x + rand(-2,2)
+		var/y_offset = owner.pixel_y + rand(-1,1)
+		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)

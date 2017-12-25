@@ -2,7 +2,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -19,6 +19,11 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/human/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		H.endTailWag()
+	. = ..()
+
 /datum/species/human/space_move(mob/living/carbon/human/H)
 	var/obj/item/device/flightpack/F = H.get_flightpack()
 	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
@@ -28,6 +33,5 @@ datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	if(H.dna.features["ears"] == "Cat")
 		mutantears = /obj/item/organ/ears/cat
 	if(H.dna.features["tail_human"] == "Cat")
-		var/tail = /obj/item/organ/tail/cat
-		mutant_organs += tail
+		mutanttail = /obj/item/organ/tail/cat
 	..()

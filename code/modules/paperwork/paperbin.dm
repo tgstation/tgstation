@@ -22,7 +22,7 @@
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
 	if(P && !bin_pen)
-		P.loc = src
+		P.forceMove(src)
 		bin_pen = P
 		update_icon()
 
@@ -69,7 +69,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
-		P.loc = user.loc
+		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 		bin_pen = null
@@ -90,7 +90,7 @@
 					P.rigged = 1
 					P.updateinfolinks()
 
-		P.loc = user.loc
+		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else

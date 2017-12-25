@@ -43,7 +43,6 @@
 
 /obj/machinery/disposal/trapdoor/Initialize(loc,var/obj/structure/disposalconstruct/make_from)
 	. = ..()
-	stored.ptype = DISP_END_CHUTE
 	trunk = locate() in loc
 	if(trunk)
 		trunk.linked = src
@@ -99,7 +98,7 @@
 			var/turf/open/floor/T = get_turf(src)
 			var/M = "fall inside"
 			var/U = "falls inside"
-			if(user.disabilities & CLUMSY)
+			if(user.has_disability(CLUMSY))
 				chance = 80
 				M = "accidentally do a backward flip, falling inside"
 				U = "accidentally does a backward flip, falling inside"

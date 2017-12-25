@@ -137,9 +137,15 @@ Contains:
 	item_state = "pirate"
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	flags_1 = STOPSPRESSUREDMAGE_1
+	flags_inv = HIDEHAIR
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
+
+/obj/item/clothing/head/helmet/space/pirate/bandana
+	name = "pirate bandana"
+	icon_state = "bandana"
+	item_state = "bandana"
 
 /obj/item/clothing/suit/space/pirate
 	name = "pirate coat"

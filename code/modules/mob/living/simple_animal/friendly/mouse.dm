@@ -22,7 +22,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
 
 /mob/living/simple_animal/mouse/Initialize()
@@ -98,7 +98,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
@@ -109,3 +109,7 @@
 	eatverb = "devours"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
+	grind_results = list("blood" = 20, "liquidgibs" = 5)
+
+/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+	reagents.clear_reagents()

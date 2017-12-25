@@ -1,5 +1,5 @@
 /datum/admins/proc/create_panel_helper(template)
-	var/final_html = replacetext(template, "/* ref src */", "\ref[src];[HrefToken()]")
+	var/final_html = replacetext(template, "/* ref src */", "[REF(src)];[HrefToken()]")
 	final_html = replacetext(final_html,"/* hreftokenfield */","[HrefTokenFormField()]")
 	return final_html
 
@@ -25,6 +25,7 @@
 	if (!html_form)
 		var/objectjs = jointext(typesof(path), ";")
 		html_form = file2text('html/create_object.html')
+		html_form = replacetext(html_form, "Create Object", "Create [path]")
 		html_form = replacetext(html_form, "null /* object types */", "\"[objectjs]\"")
 		create_object_forms[path] = html_form
 

@@ -9,7 +9,6 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/implant/imp = null
 	var/imp_type
@@ -18,11 +17,9 @@
 /obj/item/implantcase/update_icon()
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
-		origin_tech = imp.origin_tech
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"
-		origin_tech = initial(origin_tech)
 		reagents = null
 
 
@@ -42,7 +39,7 @@
 		if(I.imp)
 			if(imp || I.imp.imp_in)
 				return
-			I.imp.loc = src
+			I.imp.forceMove(src)
 			imp = I.imp
 			I.imp = null
 			update_icon()
@@ -51,7 +48,7 @@
 			if(imp)
 				if(I.imp)
 					return
-				imp.loc = I
+				imp.forceMove(I)
 				I.imp = imp
 				imp = null
 				update_icon()

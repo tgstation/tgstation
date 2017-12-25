@@ -71,7 +71,7 @@
 	if(key)
 		if(include_link)
 			if(CONFIG_GET(flag/mentors_mobname_only))
-				. += "<a href='?mentor_msg=\ref[M]'>"
+				. += "<a href='?mentor_msg=[REF(M)]'>"
 			else
 				. += "<a href='?mentor_msg=[ckey]'>"
 
@@ -95,6 +95,6 @@
 		. += "*no key*"
 
 	if(include_follow)
-		. += " (<a href='?mentor_follow=\ref[M]'>F</a>)"
+		. += " (<a href='?mentor_follow=[REF(M)]'>F</a>)"
 
 	return .

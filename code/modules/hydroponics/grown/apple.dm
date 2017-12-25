@@ -15,6 +15,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/apple/gold)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	juice_results = list("applejuice" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
@@ -56,4 +57,3 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	filling_color = "#FFD700"
-	origin_tech = "biotech=4;materials=5"

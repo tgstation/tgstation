@@ -90,7 +90,7 @@
 	if(amount_temp < 2)
 		to_chat(user, "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>")
 		return TRUE
-	if(IsOdd(amount_temp))
+	if(ISODD(amount_temp))
 		amount_temp--
 		no_delete = TRUE
 		use(amount_temp)
@@ -132,7 +132,7 @@
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir)
+	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir, "transfer_name" = TRUE)
 
 /obj/machinery/door/airlock/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
@@ -188,7 +188,7 @@
 
 //Windoor conversion
 /obj/machinery/door/window/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE)
+	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE, "transfer_name" = TRUE)
 
 /obj/machinery/door/window/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
@@ -239,7 +239,7 @@
 		if(!do_after(user, repair_values["healing_for_cycle"] * fabricator.speed_multiplier, target = src, \
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
-		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
+		obj_integrity = CLAMP(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
 		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 

@@ -10,5 +10,7 @@ then
     phpenv global 5.6
     php -l tools/WebhookProcessor/github_webhook_processor.php;
     php -l tools/TGUICompiler.php;
+    echo "Checking for JSON errors";
+    find . -name "*.json" -not -path "./tgui/node_modules/*" | xargs -0 python3 ./tools/json_verifier.py;
     python tools/ss13_genchangelog.py html/changelog.html html/changelogs;
 fi;

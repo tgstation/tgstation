@@ -41,18 +41,18 @@
 
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
-		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
+		dat += "<a href='byond://?src=[REF(src)];remove=1'>Remove Paper</a><BR>"
 		if(toner)
-			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
+			dat += "<a href='byond://?src=[REF(src)];copy=1'>Copy</a><BR>"
 			dat += "Printing: [copies] copies."
-			dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
-			dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
+			dat += "<a href='byond://?src=[REF(src)];min=1'>-</a> "
+			dat += "<a href='byond://?src=[REF(src)];add=1'>+</a><BR><BR>"
 			if(photocopy)
-				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
+				dat += "Printing in <a href='byond://?src=[REF(src)];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
 	if(isAI(user))
-		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
+		dat += "<a href='byond://?src=[REF(src)];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
@@ -247,10 +247,10 @@
 
 /obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
 	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-		O.loc = user.loc
+		O.forceMove(user.loc)
 		user.put_in_hands(O)
 	else
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
@@ -338,16 +338,16 @@
 		else
 			user.visible_message("<span class='warning'>[user] puts [target] onto the photocopier!</span>", "<span class='notice'>You put [target] onto the photocopier.</span>")
 
-		target.loc = get_turf(src)
+		target.forceMove(drop_location())
 		ass = target
 
 		if(photocopy)
-			photocopy.loc = src.loc
+			photocopy.forceMove(drop_location())
 			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
 			photocopy = null
 
 		else if(copy)
-			copy.loc = src.loc
+			copy.forceMove(drop_location())
 			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
 	updateUsrDialog()
@@ -391,5 +391,6 @@
 /obj/item/device/toner
 	name = "toner cartridge"
 	icon_state = "tonercartridge"
+	grind_results = list("iodine" = 40, "iron" = 10)
 	var/charges = 5
 	var/max_charges = 5

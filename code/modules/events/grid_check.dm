@@ -8,7 +8,7 @@
 	announceWhen	= 1
 	startWhen = 1
 
-/datum/round_event/grid_check/announce()
+/datum/round_event/grid_check/announce(fake)
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 
 

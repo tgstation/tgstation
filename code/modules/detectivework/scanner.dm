@@ -14,7 +14,6 @@
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
-	origin_tech = "engineering=4;biotech=2;programming=5"
 	var/range = 8
 	var/view_check = TRUE
 
@@ -168,7 +167,7 @@
 			to_chat(M, msg)
 		log += "&nbsp;&nbsp;[msg]"
 	else
-		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
+		CRASH("[src] [REF(src)] is adding a log when it was never put in scanning mode!")
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")

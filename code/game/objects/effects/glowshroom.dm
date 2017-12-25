@@ -58,9 +58,12 @@
 	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
 	obj_integrity = myseed.endurance
 	max_integrity = myseed.endurance
-	if(myseed.get_gene(/datum/plant_gene/trait/glow))
-		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
+		myseed.genes -= G
+		G = new G
+		myseed.genes += G
+	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)

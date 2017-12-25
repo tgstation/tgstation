@@ -13,8 +13,7 @@
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
 		return
-	src.add_fingerprint(usr)
-
+	add_fingerprint(usr)
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
@@ -26,13 +25,13 @@
 			if(!M.check_dock(S))
 				continue
 			destination_found = 1
-			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
+			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"
 		if(!destination_found)
 			dat += "<B>Shuttle Locked</B><br>"
 			if(admin_controlled)
 				dat += "Authorized personnel only<br>"
-				dat += "<A href='?src=\ref[src];request=1]'>Request Authorization</A><br>"
-	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
+				dat += "<A href='?src=[REF(src)];request=1]'>Request Authorization</A><br>"
+	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
 	popup.set_content("<center>[dat]</center>")

@@ -1,3 +1,12 @@
+/datum/species/skeleton
+	attack_sound = 'hippiestation/sound/effects/skeletonhit.ogg'
+
+/datum/species/skeleton/check_roundstart_eligible()
+	return FALSE
+
+/datum/species/skeleton/playable/check_roundstart_eligible()
+	return TRUE
+
 /datum/species/skeleton/playable
 	name = "Spooky Scary Skeleton"
 	id = "spookyskeleton"

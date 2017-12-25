@@ -94,7 +94,13 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
-
+/datum/map_template/shuttle/emergency/discoinferno
+	suffix = "discoinferno"
+	name = "Disco Inferno"
+	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
+	admin_notes = "Flaming hot."
+	credit_cost = 10000
+	
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
@@ -149,7 +155,7 @@
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = 1000
-	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
+	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
