@@ -370,3 +370,10 @@
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")
+
+/mob/camera/blob/verb/toggle_cuddles()
+	set category = "Blob"
+	set name = "Toggle Cuddle Sense"
+	set desc = "Toggle your ability to sense cuddles."
+	acceptLove = !acceptLove
+	to_chat(src, "<span class='warning'>You can [acceptLove ? "no longer sense" : "now sense"] loving cuddles.</span>")

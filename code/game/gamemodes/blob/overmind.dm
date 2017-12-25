@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/max_count = 0 //The biggest it got before death
 	var/blobwincount = 400
 	var/victory_in_progress = FALSE
+	var/acceptLove = FALSE
 
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
 	validate_location()
