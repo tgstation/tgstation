@@ -132,10 +132,13 @@
 		switch(outcome)
 			if(1 to 9)
 				var/turf/here = get_turf(src)
+				var/newtype = /turf/closed/wall
 				for(var/turf/closed/T in range(2, src))
-					here.ChangeTurf(T.type)
-					return INITIALIZE_HINT_QDEL
-				here.ChangeTurf(/turf/closed/wall)
+					newtype = T.type
+					break
+				here.ChangeTurf(newtype)
+				qdel(src)
+				return
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
