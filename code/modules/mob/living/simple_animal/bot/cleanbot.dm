@@ -183,7 +183,8 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/deadcockroach,
-		/obj/effect/decal/remains
+		/obj/effect/decal/remains,
+		/obj/item/clothing/head/kitty
 		)
 
 	if(blood)
