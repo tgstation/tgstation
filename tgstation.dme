@@ -1645,6 +1645,7 @@
 #include "code\modules\mining\lavaland\necropolis_chests.dm"
 #include "code\modules\mining\lavaland\ruins\gym.dm"
 #include "code\modules\mob\death.dm"
+#include "code\modules\mob\emote.dm"
 #include "code\modules\mob\inventory.dm"
 #include "code\modules\mob\login.dm"
 #include "code\modules\mob\logout.dm"

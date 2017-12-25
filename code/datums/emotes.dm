@@ -16,8 +16,9 @@
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
-	var/list/mob_type_allowed_typecache //Types that are allowed to use that emote
+	var/list/mob_type_allowed_typecache = list(/mob) //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
+	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
 
@@ -26,6 +27,7 @@
 		emote_list[key_third_person] = src
 	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
+	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
 /datum/emote/proc/run_emote(mob/user, params, type_override)
 	. = TRUE
@@ -37,9 +39,10 @@
 
 	msg = replace_pronoun(user, msg)
 
-	var/mob/living/L = user
-	for(var/obj/item/implant/I in L.implants)
-		I.trigger(key, L)
+	if(isliving(user))
+		var/mob/living/L = user
+		for(var/obj/item/implant/I in L.implants)
+			I.trigger(key, L)
 
 	if(!msg)
 		return
@@ -97,7 +100,7 @@
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
-	if(status_check)
+	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
 			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
