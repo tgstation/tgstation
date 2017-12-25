@@ -84,9 +84,12 @@
 	activated = TRUE
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/syndicate
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/activate()
-	. = radio.interact(usr)
+	// needs to be GLOB.deep_inventory_state otherwise it won't open
+	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
 
 /obj/item/implant/radio/Initialize(mapload)
 	. = ..()
