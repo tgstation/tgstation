@@ -2,7 +2,7 @@
 	name = "whetstone"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sharpener"
-	desc = "A block that makes things sharp."
+	desc = "A block for sharpening blades."
 	force = 5
 	var/used = 0
 	var/increment = 4
