@@ -221,6 +221,7 @@
 	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
+	var/do_disarm = alt_disarm || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool)
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner))
 			var/obj/item/device/mining_scanner/S = I
@@ -228,7 +229,6 @@
 				to_chat(user, "<span class='boldwarning'>[S] does not have the necessary frequencies for disarming gibtonite!</span>")
 				return
 			do_disarm = TRUE
-	var/do_disarm = alt_disarm || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool)
 	if(do_disarm)
 		primed = FALSE
 		if(det_timer)
