@@ -221,7 +221,7 @@
 	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
-	var/do_disarm = alt_disarm || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool)
+	var/do_disarm = istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool)
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner))
 			var/obj/item/device/mining_scanner/S = I
