@@ -146,7 +146,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aB" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -288,7 +288,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "aY" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
@@ -452,7 +452,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
 "bx" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
@@ -472,7 +472,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bA" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Labor Camp Backroom";
 	req_access_txt = "2"
 	},
@@ -559,7 +559,7 @@
 /turf/open/floor/plasteel/purple/corner,
 /area/mine/eva)
 "bL" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Labor Camp Monitoring";
 	req_access_txt = "2"
 	},
@@ -619,7 +619,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA";
 	req_access_txt = "54"
 	},
@@ -1373,7 +1373,7 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dR" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -1513,7 +1513,7 @@
 /turf/open/floor/plasteel/purple/corner,
 /area/mine/living_quarters)
 "el" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
@@ -1616,7 +1616,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
@@ -1649,7 +1649,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
@@ -1691,7 +1691,7 @@
 	},
 /area/mine/production)
 "eF" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
@@ -3330,7 +3330,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WB" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 8;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
@@ -3338,7 +3338,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WC" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 8;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"

@@ -990,6 +990,7 @@
 #include "code\game\objects\structures\displaycase.dm"
 #include "code\game\objects\structures\divine.dm"
 #include "code\game\objects\structures\door_assembly.dm"
+#include "code\game\objects\structures\door_assembly_types.dm"
 #include "code\game\objects\structures\dresser.dm"
 #include "code\game\objects\structures\electricchair.dm"
 #include "code\game\objects\structures\extinguisher.dm"
