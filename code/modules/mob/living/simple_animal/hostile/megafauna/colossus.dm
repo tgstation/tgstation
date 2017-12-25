@@ -115,7 +115,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(!using_voice) //to prevent infinite loops when voice of god calls say()
 		using_voice = TRUE
-		playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 50, 1, 5)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 50, 1, 5)
 		voice_of_god(message, src, list("colossus","yell"), 1, FALSE, FALSE, language)
 	else
 		using_voice = FALSE
