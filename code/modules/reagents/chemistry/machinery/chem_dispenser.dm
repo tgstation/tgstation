@@ -217,7 +217,7 @@
 	if(beaker && beaker.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
-	cell.emp_act()
+	cell.emp_act(severity)
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
