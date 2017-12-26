@@ -60,7 +60,7 @@
 		var/obj/mecha/M = target
 		to_chat(M.occupant, "<span class='neovgre_large'><i>\"TARGET ACQUIRED.\"</i></span>")
 
-/obj/structure/destructible/clockwork/turret/proc/target_range()
+/obj/structure/destructible/clockwork/turret/archon_projector/target_range()
 	return view(6, src)
 
 /obj/item/projectile/archon_energy
