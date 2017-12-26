@@ -465,7 +465,7 @@
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
-		if(T0.type != T0.baseturf)
+		if(T0.type != T0.baseturfs)
 			ripple_turfs += T1
 
 	return ripple_turfs

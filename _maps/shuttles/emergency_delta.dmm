@@ -353,7 +353,6 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/shuttle/escape)
