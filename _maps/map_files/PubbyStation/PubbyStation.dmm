@@ -34430,6 +34430,10 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -34444,6 +34448,10 @@
 /obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
+	},
+/obj/machinery/door/window/southleft{
+	name = "First-Aid Supplies";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -34460,6 +34468,10 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/machinery/door/window/southright{
+	name = "First-Aid Supplies";
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -34475,6 +34487,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
