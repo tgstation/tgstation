@@ -89,3 +89,11 @@
 /obj/configuration/shuttle_loader/emergency/omega
 	name = "Omega emergency shuttle loader"
 	shuttle_id = "emergency_omega"
+
+/obj/configuration/shuttle_loader/whiteship/pubby
+	name = "Pubby whiteship loader"
+	shuttle_id = "whiteship_pubby"
+
+/obj/configuration/shuttle_loader/emergency/pubby
+	name = "Pubby emergency shuttle loader"
+	shuttle_id = "emergency_pubby"
