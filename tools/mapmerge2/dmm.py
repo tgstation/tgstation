@@ -2,6 +2,7 @@
 
 import io
 import bidict
+import random
 from collections import namedtuple
 
 TGM_HEADER = "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
@@ -10,7 +11,7 @@ ENCODING = 'utf-8'
 Coordinate = namedtuple('Coordinate', ['x', 'y', 'z'])
 
 class DMM:
-    __slots__ = ['key_length', 'size', 'dictionary', 'grid', 'header', 'low_start']
+    __slots__ = ['key_length', 'size', 'dictionary', 'grid', 'header']
 
     def __init__(self, key_length, size):
         self.key_length = key_length
@@ -18,7 +19,6 @@ class DMM:
         self.dictionary = bidict.bidict()
         self.grid = {}
         self.header = None
-        self.low_start = 0
 
     @staticmethod
     def from_file(fname):
@@ -42,17 +42,24 @@ class DMM:
             return bio.getvalue()
 
     def generate_new_key(self):
-        # find the lowest key not yet in the dictionary
-        key = self.low_start
-        while key in self.dictionary:
-            key += 1
-        self.low_start = key
-
-        # increase the key length if necessary
-        if key >= BASE ** self.key_length:
+        # ensure that free keys exist by increasing the key length if necessary
+        free_keys = (BASE ** self.key_length) - len(self.dictionary)
+        while free_keys <= 0:
             self.key_length += 1
+            free_keys = (BASE ** self.key_length) - len(self.dictionary)
 
-        return key
+        # choose one of the free keys at random
+        key = 0
+        while free_keys:
+            if key not in self.dictionary:
+                # this construction is used to avoid needing to construct the
+                # full set in order to random.choice() from it
+                if random.random() < 1 / free_keys:
+                    return key
+                free_keys -= 1
+            key += 1
+
+        raise RuntimeError("ran out of keys, this shouldn't happen")
 
     @property
     def coords_zyx(self):
@@ -240,7 +247,6 @@ def _parse(map_raw_text):
     curr_key = 0
     curr_datum = ""
     curr_data = list()
-    low_start = 0
 
     in_map_block = False
     in_coord_block = False
@@ -341,9 +347,6 @@ def _parse(map_raw_text):
                 except bidict.ValueDuplicationError:
                     # if the map has duplicate values, eliminate them now
                     duplicate_keys[curr_key] = dictionary.inv[curr_data]
-                else:
-                    if curr_key == low_start:
-                        low_start += 1
                 curr_data = list()
                 curr_datum = ""
                 curr_key = 0
@@ -453,5 +456,4 @@ def _parse(map_raw_text):
     data = DMM(key_length, Coordinate(maxx, maxy, maxz))
     data.dictionary = dictionary
     data.grid = grid
-    data.low_start = low_start
     return data
