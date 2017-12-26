@@ -706,13 +706,14 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
-		count++
-		I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
-		doors += I
-		if(target.client)
-			target.client.images |= I
-			target.playsound_local(get_turf(A), 'sound/machines/boltsdown.ogg',30,0,3)
-		sleep(rand(6,12))
+		if(A.density)
+			count++
+			I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
+			doors += I
+			if(target.client)
+				target.client.images |= I
+				target.playsound_local(get_turf(A), 'sound/machines/boltsdown.ogg',30,0,3)
+			sleep(rand(6,12))
 	sleep(100)
 	for(var/image/B in doors)
 		if(target.client)
