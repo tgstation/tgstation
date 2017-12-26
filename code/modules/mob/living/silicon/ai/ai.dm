@@ -430,11 +430,10 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
-
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
+	if(QDELETED(C))
 		return FALSE
 
 	if(!src.eyeobj)
