@@ -15,6 +15,7 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
+	record_feedback("amount", "random_seed", Master.random_seed)
 	. = ..()
 
 //poll population

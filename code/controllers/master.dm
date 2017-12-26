@@ -53,6 +53,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
 	var/static/restart_count = 0
+	
+	var/static/random_seed
 
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
@@ -60,6 +62,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
+	
+	if(!random_seed)
+		random_seed = rand(1, 1e9)
+		rand_seed(random_seed)
+	
 	var/list/_subsystems = list()
 	subsystems = _subsystems
 	if (Master != src)
