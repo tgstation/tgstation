@@ -195,8 +195,10 @@
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
+		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
 		traumas += new trauma_type(arglist(list(src, permanent) + arguments))
 	else
+		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
 		traumas += trauma
 		trauma.permanent = permanent
 
@@ -209,6 +211,7 @@
 			possible_traumas += BT
 
 	var/trauma_type = pick(possible_traumas)
+	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
 	traumas += new trauma_type(src, permanent)
 
 //Cure a random trauma of a certain subtype
