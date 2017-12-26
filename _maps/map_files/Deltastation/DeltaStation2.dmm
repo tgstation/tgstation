@@ -14521,23 +14521,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aFl" = (
-/obj/docking_port/mobile/supply{
-	dwidth = 5;
-	roundstart_move = "supply_away";
-	width = 12;
-	timid = 0
-	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 5;
-	height = 7;
-	id = "supply_home";
-	name = "Cargo Bay";
-	width = 12
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
 "aFm" = (
 /turf/closed/wall/r_wall,
 /area/security/prison)
