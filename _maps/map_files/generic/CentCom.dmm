@@ -3253,11 +3253,11 @@
 "jC" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 5;
+	dwidth = 8;
 	height = 7;
 	id = "supply_away";
 	name = "CentCom";
-	width = 12
+	width = 20
 	},
 /turf/open/space,
 /area/space)
