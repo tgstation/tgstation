@@ -172,7 +172,7 @@
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
-				var/time = is_stack ? 32*coeff : 32*coeff*multiplier
+				var/time = is_stack ? 32 : 32*coeff*multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
 
 		if(href_list["search"])
@@ -194,7 +194,7 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/turf/T = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_METAL=metal_cost*multiplier, MAT_GLASS=glass_cost*multiplier)
+	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
 	materials.use_amount(materials_used)
 
 	if(is_stack)
