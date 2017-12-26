@@ -67,6 +67,12 @@
 	spawn_positions = 3
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS)
+	
+/datum/job/chemist/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
 
 //Engineering
 
