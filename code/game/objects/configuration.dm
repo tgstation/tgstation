@@ -84,4 +84,8 @@
 
 /obj/configuration/shuttle_loader/emergency/meta
 	name = "Metastation emergency shuttle loader"
-	shuttle_id = "delta"
+	shuttle_id = "emergency_meta"
+
+/obj/configuration/shuttle_loader/emergency/omega
+	name = "Omega emergency shuttle loader"
+	shuttle_id = "emergency_omega"
