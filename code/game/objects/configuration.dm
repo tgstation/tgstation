@@ -81,3 +81,7 @@
 /obj/configuration/shuttle_loader/whiteship/delta
 	name = "Delta whiteship loader"
 	shuttle_id = "whiteship_delta"
+
+/obj/configuration/shuttle_loader/emergency/meta
+	name = "Metastation emergency shuttle loader"
+	shuttle_id = "delta"
