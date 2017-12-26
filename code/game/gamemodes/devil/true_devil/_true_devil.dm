@@ -11,67 +11,66 @@
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
-	ventcrawler = 0
-	density = 0
+	ventcrawler = VENTCRAWLER_NONE
+	density = TRUE
 	pass_flags =  0
-	var/ascended = 0
+	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	languages_spoken = ALL //The devil speaks all languages meme
-	languages_understood = ALL //The devil speaks all languages meme
+	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
+					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
 
-/mob/living/carbon/true_devil/New()
-	internal_organs += new /obj/item/organ/brain/
-	internal_organs += new /obj/item/organ/tongue
-	for(var/X in internal_organs)
-		var/obj/item/organ/I = X
-		I.Insert(src)
+/mob/living/carbon/true_devil/Initialize()
+	create_bodyparts() //initialize bodyparts
+	create_internal_organs()
+	grant_all_languages(omnitongue=TRUE)
 	..()
 
+/mob/living/carbon/true_devil/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/ears/invincible //Prevents hearing loss from poorly aimed fireballs.
+	..()
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
-	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
-	ascended = 1
+	maxHealth = 500 // not an IMPOSSIBLE amount, but still near impossible.
+	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"
 
 /mob/living/carbon/true_devil/proc/set_name()
-	name = mind.devilinfo.truename
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	name = devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
 	..()
-	mind.announceDevilLaws()
-
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devilinfo.greet()
+	mind.announce_objectives()
 
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
 	..(gibbed)
-	drop_l_hand()
-	drop_r_hand()
-	spawn (0)
-		mind.devilinfo.beginResurrectionCheck(src)
+	drop_all_held_items()
+	INVOKE_ASYNC(mind.has_antag_datum(ANTAG_DATUM_DEVIL), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <b>[src]</b>!\n"
 
 	//Left hand items
-	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
-		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
-
-	//Right hand items
-	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
-		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+	for(var/obj/item/I in held_items)
+		if(!(I.flags_1 & ABSTRACT_1))
+			if(I.blood_DNA)
+				msg += "<span class='warning'>It is holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+			else
+				msg += "It is holding [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -81,15 +80,20 @@
 	if(stat == DEAD)
 		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside of it's gaping wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside of it's wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	user << msg
-
+	to_chat(user, msg)
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
+
+/mob/living/carbon/true_devil/resist_buckle()
+	if(buckled)
+		buckled.user_unbuckle_mob(src,src)
+		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated())
@@ -98,13 +102,19 @@
 		return 0
 	return 1
 
-/mob/living/carbon/true_devil/assess_threat()
+/mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-/mob/living/carbon/true_devil/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.
+
+/mob/living/carbon/true_devil/soundbang_act()
+	return 0
+
+/mob/living/carbon/true_devil/get_ear_protection()
+	return 2
 
 
 /mob/living/carbon/true_devil/attacked_by(obj/item/I, mob/living/user, def_zone)
@@ -123,14 +133,8 @@
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
-	A.attack_hand(src)
-
-/mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
@@ -146,9 +150,8 @@
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
-		S << S.playstyle_string
-		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
-		return
+		to_chat(S, S.playstyle_string)
+		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 	else
 		return ..()
 
@@ -172,14 +175,14 @@
 			if ("disarm")
 				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
-						Paralyse(2)
+						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
 						if (prob(25))
-							drop_item()
+							dropItemToGround(get_active_held_item())
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [src]!</span>")
@@ -207,3 +210,13 @@
 			b_loss *=2
 		adjustBruteLoss(b_loss)
 	return ..()
+
+
+/mob/living/carbon/true_devil/update_body() //we don't use the bodyparts layer for devils.
+	return
+
+/mob/living/carbon/true_devil/update_body_parts()
+	return
+
+/mob/living/carbon/true_devil/update_damage_overlays() //devils don't have damage overlays.
+	return

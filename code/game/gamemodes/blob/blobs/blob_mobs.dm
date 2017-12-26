@@ -14,61 +14,57 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	unique_name = 1
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	var/mob/camera/blob/overmind = null
-	var/obj/effect/blob/factory/factory = null
+	var/obj/structure/blob/factory/factory = null
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
-		color = overmind.blob_reagent_datum.color
+		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
 	else
-		color = initial(color)
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
 
-/mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
-	adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+	if(exposed_temperature)
+		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
+	else
+		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target, height = 0)
-	if(istype(mover, /obj/effect/blob))
+/mob/living/simple_animal/hostile/blob/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /obj/structure/blob))
 		return 1
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
-	for(var/obj/effect/blob/B in range(1, src))
+	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
-
-/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		blob_chat(message)
-		return ITALICS | REDUCE_RANGE
-	else
-		..()
 
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			M << rendered
+			to_chat(M, rendered)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 
 ////////////////
 // BLOB SPORE //
@@ -79,29 +75,31 @@
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
-	health = 40
-	maxHealth = 40
+	health = 30
+	maxHealth = 30
 	verb_say = "psychically pulses"
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"
 	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
+	obj_damage = 20
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	flying = 1
+	movement_type = FLYING
 	del_on_death = 1
 	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
-	var/list/human_overlays = list()
+	var/mob/living/carbon/human/oldguy
 	var/is_zombie = 0
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/blob/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -125,15 +123,15 @@
 	desc = "A shambling corpse animated by the blob."
 	melee_damage_lower += 8
 	melee_damage_upper += 11
-	flying = 0
+	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
-	icon_state = "zombie_s"
+	icon_state = "zombie"
 	H.hair_style = null
 	H.update_hair()
-	human_overlays = H.overlays
-	update_icons()
 	H.forceMove(src)
+	oldguy = H
+	update_icons()
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -162,26 +160,28 @@
 	if(factory)
 		factory.spores -= src
 	factory = null
-	if(contents)
-		for(var/mob/M in contents)
-			M.loc = src.loc
+	if(oldguy)
+		oldguy.forceMove(get_turf(src))
+		oldguy = null
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
-	..()
+	if(overmind)
+		add_atom_colour(overmind.blob_reagent_datum.complementary_color, FIXED_COLOUR_PRIORITY)
+	else
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
-		cut_overlays()
-		overlays = human_overlays
-		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
+		copy_overlays(oldguy, TRUE)
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.color
+			blob_head_overlay.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
-		add_overlay(I)
+		add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
-	health = 20
-	maxHealth = 20
+	health = 15
+	maxHealth = 15
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
@@ -199,9 +199,9 @@
 	health = 200
 	maxHealth = 200
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	next_move_modifier = 1.5 //slow-ass attack speed, 3 times higher than how fast the blob can attack
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	obj_damage = 60
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
@@ -209,55 +209,68 @@
 	verb_exclaim = "roars"
 	verb_yell = "bellows"
 	force_threshold = 10
-	pressure_resistance = 40
+	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/New()
-	..()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		verbs -= /mob/living/verb/pulled
+	else
+		pass_flags &= ~PASSBLOB
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		var/list/blobs_in_area = range(2, src)
 		if(independent)
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
-		if(!(locate(/obj/effect/blob) in range(2, src)))
+		if(!(locate(/obj/structure/blob) in blobs_in_area))
 			damagesources++
 		if(!factory)
 			damagesources++
+		else
+			if(locate(/obj/structure/blob/core) in blobs_in_area)
+				adjustHealth(-maxHealth*0.1)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
+			if(locate(/obj/structure/blob/node) in blobs_in_area)
+				adjustHealth(-maxHealth*0.05)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+				if(overmind)
+					H.color = overmind.blob_reagent_datum.complementary_color
+				else
+					H.color = "#000000"
 		if(damagesources)
 			for(var/i in 1 to damagesources)
-				adjustHealth(maxHealth*0.025) //take 2.5% maxhealth as damage when not near the blob or if the naut has no factory, 5% if both
-			var/list/viewing = list()
-			for(var/mob/M in viewers(src))
-				if(M.client)
-					viewing += M.client
+				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
 				I.color = overmind.blob_reagent_datum.complementary_color
-			flick_overlay(I, viewing, 8)
+			flick_overlay_view(I, src, 8)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount)
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
 	if(hud_used)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
-	if(isliving(target))
-		if(overmind)
-			var/mob/living/L = target
-			var/mob_protection = L.get_permeability_protection()
-			overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
-	if(target)
-		..()
+	. = ..()
+	if(. && isliving(target) && overmind)
+		var/mob/living/L = target
+		var/mob_protection = L.get_permeability_protection()
+		overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
@@ -274,9 +287,9 @@
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
-		factory.maxhealth = initial(factory.maxhealth)
+		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN

@@ -7,41 +7,35 @@
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
-	density = 1
-	anchored = 1
-	use_power = 0
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
-	machinetype = 6
-	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
 
-/obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
+/obj/machinery/telecomms/allinone/Initialize()
+	..()
+	if (intercept)
+		freq_listening = list(FREQ_SYNDICATE)
 
-	if(!on) // has to be on to receive messages
+/obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/signal)
+	if(!istype(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)  // receives on subspace only
+		return
+	if(!on || !is_freq_listening(signal))  // has to be on to receive messages
+		return
+	if (!intercept && !(z in signal.levels) && !(0 in signal.levels))  // has to be syndicate or on the right level
 		return
 
-	if(is_freq_listening(signal)) // detect subspace signals
+	// Decompress the signal and mark it done
+	if (intercept)
+		signal.levels += 0  // Signal is broadcast to agents anywhere
 
-		signal.data["done"] = 1 // mark the signal as being broadcasted
-		signal.data["compression"] = 0
-
-		// Search for the original signal and mark it as done as well
-		var/datum/signal/original = signal.data["original"]
-		if(original)
-			original.data["done"] = 1
-
-		if(signal.data["slow"] > 0)
-			sleep(signal.data["slow"]) // simulate the network lag if necessary
-
-		/* ###### Broadcast a message using signal.data ###### */
-		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
-			Broadcast_Message(signal.data["mob"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
+	signal.data["compression"] = 0
+	signal.mark_done()
+	if(signal.data["slow"] > 0)
+		sleep(signal.data["slow"]) // simulate the network lag if necessary
+	signal.broadcast()
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
-
 	if(istype(P, /obj/item/device/multitool))
 		attack_hand(user)

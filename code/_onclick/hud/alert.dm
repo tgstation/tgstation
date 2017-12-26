@@ -3,7 +3,7 @@
 //PUBLIC -  call these wherever you want
 
 
-/mob/proc/throw_alert(category, type, severity, obj/new_master)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
@@ -11,58 +11,74 @@
  severity is an optional number that will be placed at the end of the icon_state for this alert
  For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
  new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
- Clicks are forwarded to master */
+ Clicks are forwarded to master
+ Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
+ */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
-	var/obj/screen/alert/alert
+	var/obj/screen/alert/thealert
 	if(alerts[category])
-		alert = alerts[category]
-		if(new_master && new_master != alert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [alert.master]")
+		thealert = alerts[category]
+		if(thealert.override_alerts)
+			return 0
+		if(new_master && new_master != thealert.master)
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+
 			clear_alert(category)
 			return .()
-		else if(alert.type != type)
+		else if(thealert.type != type)
 			clear_alert(category)
 			return .()
-		else if(!severity || severity == alert.severity)
-			if(alert.timeout)
+		else if(!severity || severity == thealert.severity)
+			if(thealert.timeout)
 				clear_alert(category)
 				return .()
 			else //no need to update
 				return 0
 	else
-		alert = PoolOrNew(type)
+		thealert = new type()
+		thealert.override_alerts = override
+		if(override)
+			thealert.timeout = null
+	thealert.mob_viewer = src
 
 	if(new_master)
 		var/old_layer = new_master.layer
+		var/old_plane = new_master.plane
 		new_master.layer = FLOAT_LAYER
-		alert.overlays += new_master
+		new_master.plane = FLOAT_PLANE
+		thealert.add_overlay(new_master)
 		new_master.layer = old_layer
-		alert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		alert.master = new_master
+		new_master.plane = old_plane
+		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
+		thealert.master = new_master
 	else
-		alert.icon_state = "[initial(alert.icon_state)][severity]"
-		alert.severity = severity
+		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
+		thealert.severity = severity
 
-	alerts[category] = alert
+	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	alert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+	thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
+	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
-	if(alert.timeout)
-		spawn(alert.timeout)
-			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
-				clear_alert(category)
-		alert.timeout = world.time + alert.timeout - world.tick_lag
-	return alert
+	if(thealert.timeout)
+		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
+		thealert.timeout = world.time + thealert.timeout - world.tick_lag
+	return thealert
+
+/mob/proc/alert_timeout(obj/screen/alert/alert, category)
+	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+		clear_alert(category)
 
 // Proc to clear an existing alert.
-/mob/proc/clear_alert(category)
+/mob/proc/clear_alert(category, clear_override = FALSE)
 	var/obj/screen/alert/alert = alerts[category]
 	if(!alert)
+		return 0
+	if(alert.override_alerts && !clear_override)
 		return 0
 
 	alerts -= category
@@ -76,10 +92,12 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
+	var/override_alerts = FALSE //If it is overriding other alerts of the same type
+	var/mob/mob_viewer //the mob viewing this alert
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
@@ -91,16 +109,25 @@
 
 
 //Gas alerts
-/obj/screen/alert/oxy
+/obj/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
-	desc = "You're not getting enough oxygen. Find some good air before you pass out! \
-The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = "oxy"
+	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
+	icon_state = "not_enough_oxy"
 
 /obj/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_oxy"
+
+/obj/screen/alert/not_enough_nitro
+	name = "Choking (No N2)"
+	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
+	icon_state = "not_enough_nitro"
+
+/obj/screen/alert/too_much_nitro
+	name = "Choking (N2)"
+	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_nitro"
 
 /obj/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
@@ -117,11 +144,10 @@ The box in your backpack has an oxygen tank and breath mask in it."
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
 	icon_state = "not_enough_tox"
 
-/obj/screen/alert/tox_in_air
+/obj/screen/alert/too_much_tox
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
-The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "tox_in_air"
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
 //End gas alerts
 
 
@@ -139,6 +165,21 @@ The box in your backpack has an oxygen tank and gas mask in it."
 	name = "Starving"
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
+
+/obj/screen/alert/gross
+	name = "Grossed out."
+	desc = "That was kind of gross..."
+	icon_state = "gross"
+
+/obj/screen/alert/verygross
+	name = "Very grossed out."
+	desc = "You're not feeling very well..."
+	icon_state = "gross2"
+
+/obj/screen/alert/disgusted
+	name = "DISGUSTED"
+	desc = "ABSOLUTELY DISGUSTIN'"
+	icon_state = "gross3"
 
 /obj/screen/alert/hot
 	name = "Too Hot"
@@ -179,18 +220,13 @@ or something covering your eyes."
 /obj/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
-If you're feeling frisky, click yourself in help intent to pull the object out."
+If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
 	icon_state = "embeddedobject"
 
 /obj/screen/alert/embeddedobject/Click()
 	if(isliving(usr))
 		var/mob/living/carbon/human/M = usr
 		return M.help_shake_act(M)
-
-/obj/screen/alert/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
-	icon_state = "asleep"
 
 /obj/screen/alert/weightless
 	name = "Weightless"
@@ -206,9 +242,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "fire"
 
 /obj/screen/alert/fire/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.canmove)
+		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 
 //ALIENS
@@ -240,13 +279,150 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
+// BLOODCULT
+
+/obj/screen/alert/bloodsense
+	name = "Blood Sense"
+	desc = "Allows you to sense blood that is manipulated by dark magicks."
+	icon_state = "cult_sense"
+	alerttooltipstyle = "cult"
+	var/static/image/narnar
+	var/angle = 0
+	var/mob/living/simple_animal/hostile/construct/Cviewer = null
+
+/obj/screen/alert/bloodsense/Initialize()
+	. = ..()
+	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	START_PROCESSING(SSprocessing, src)
+
+/obj/screen/alert/bloodsense/Destroy()
+	Cviewer = null
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/screen/alert/bloodsense/process()
+	var/atom/blood_target
+
+	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!antag)
+		return
+	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+
+	if(antag.cult_team.blood_target)
+		if(!get_turf(antag.cult_team.blood_target))
+			antag.cult_team.blood_target = null
+		else
+			blood_target = antag.cult_team.blood_target
+	if(Cviewer && Cviewer.seeking && Cviewer.master)
+		blood_target = Cviewer.master
+		desc = "Your blood sense is leading you to [Cviewer.master]"
+	if(!blood_target)
+		if(sac_objective && !sac_objective.check_completion())
+			if(icon_state == "runed_sense0")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense0"
+			desc = "Nar-Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
+			add_overlay(sac_objective.sac_image)
+		else
+			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+			if(!summon_objective)
+				return
+			if(icon_state == "runed_sense1")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense1"
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
+			add_overlay(narnar)
+		return
+	var/turf/P = get_turf(blood_target)
+	var/turf/Q = get_turf(mob_viewer)
+	var/area/A = get_area(P)
+	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+		icon_state = "runed_sense2"
+		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
+		return
+	desc = "You are currently tracking [blood_target] in [A.name]."
+	var/target_angle = Get_Angle(Q, P)
+	var/target_dist = get_dist(P, Q)
+	cut_overlays()
+	switch(target_dist)
+		if(0 to 1)
+			icon_state = "runed_sense2"
+		if(2 to 8)
+			icon_state = "arrow8"
+		if(9 to 15)
+			icon_state = "arrow7"
+		if(16 to 22)
+			icon_state = "arrow6"
+		if(23 to 29)
+			icon_state = "arrow5"
+		if(30 to 36)
+			icon_state = "arrow4"
+		if(37 to 43)
+			icon_state = "arrow3"
+		if(44 to 50)
+			icon_state = "arrow2"
+		if(51 to 57)
+			icon_state = "arrow1"
+		if(58 to 64)
+			icon_state = "arrow0"
+		if(65 to 400)
+			icon_state = "arrow"
+	var/difference = target_angle - angle
+	angle = target_angle
+	if(!difference)
+		return
+	var/matrix/final = matrix(transform)
+	final.Turn(difference)
+	animate(src, transform = final, time = 5, loop = 0)
+
+
+
 // CLOCKCULT
-/obj/screen/alert/nocache
-	name = "No Tinkerer's Cache"
-	desc = "In order to share components and unlock higher tier \
-		scripture, a tinkerer's cache must be constructed somewhere \
-		in the world. Try to place it somewhere accessible, yet hidden."
-	icon_state = "nocache"
+/obj/screen/alert/clockwork
+	alerttooltipstyle = "clockcult"
+
+/obj/screen/alert/clockwork/infodump
+	name = "Global Records"
+	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
+	icon_state = "clockinfo"
+
+/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+	if(GLOB.ratvar_awakens)
+		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
+	else
+		var/servants = 0
+		var/list/textlist = list()
+		for(var/mob/living/L in GLOB.alive_mob_list)
+			if(is_servant_of_ratvar(L))
+				servants++
+		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
+		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
+		for(var/i in SSticker.scripture_states)
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G)
+			var/time_info = G.get_arrival_time(FALSE)
+			var/time_name
+			if(G.seconds_until_activation)
+				time_name = "until the Ark activates"
+			else if(G.grace_period)
+				time_name = "of grace period remaining"
+			else if(G.progress_in_seconds)
+				time_name = "until the Ark finishes summoning"
+			if(time_info)
+				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
+		textlist += "<b>[DisplayPower(get_clockwork_power())]</b> power available for use."
+		desc = textlist.Join()
+	..()
 
 //GUARDIANS
 
@@ -315,8 +491,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -339,7 +517,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -352,17 +531,20 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)
 		if(NOTIFY_JUMP)
 			var/turf/T = get_turf(target)
 			if(T && isturf(T))
-				G.loc = T
+				G.forceMove(T)
 		if(NOTIFY_ORBIT)
 			G.ManualFollow(target)
 
@@ -371,6 +553,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/restrained/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
+	icon_state = "buckled"
 
 /obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -381,9 +564,21 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
 
 /obj/screen/alert/restrained/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if((L.canmove) && (L.last_special <= world.time))
+		return L.resist_restraints()
+
+/obj/screen/alert/restrained/buckled/Click()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.last_special <= world.time)
+		return L.resist_buckle()
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
@@ -425,14 +620,14 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		usr << "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>"
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	..()
+	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""
-	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

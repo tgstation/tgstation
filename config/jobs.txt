@@ -22,7 +22,7 @@ Janitor=2,1
 
 Clown=1,1
 Mime=1,1
-Librarian=1,1
+Curator=1,1
 Lawyer=2,2
 
 Chaplain=1,1

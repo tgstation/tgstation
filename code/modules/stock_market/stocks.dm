@@ -90,7 +90,7 @@
 /datum/stock/proc/frc(amt)
 	var/shares = available_shares + outside_shareholders * average_shares
 	var/fr = amt / 100 / shares * fluctuational_coefficient * fluctuation_rate * max(-(current_trend / 100), 1)
-	if (fr < 0 && speculation < 0 || fr > 0 && speculation > 0)
+	if ((fr < 0 && speculation < 0) || (fr > 0 && speculation > 0))
 		fr *= max(abs(speculation) / 5, 1)
 	else
 		fr /= max(abs(speculation) / 5, 1)
@@ -139,8 +139,11 @@
 			speculation += rand(-400, 0) / 1000 * speculation
 			if (prob(1) && prob(5)) // pop that bubble
 				speculation += rand(-4000, 0) / 1000 * speculation
-
-	current_value += (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	var/fucking_stock_spikes = current_value + 500
+	var/piece_of_shit_fuck = current_value - 500
+	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
+	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
+		current_value += i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
 
@@ -187,10 +190,10 @@
 		if (world.time > borrow.grace_expires)
 			modifyAccount(borrow.borrower, -max(current_value * borrow.share_debt, 0), 1)
 			borrows -= borrow
-			if (borrow.borrower in FrozenAccounts)
-				FrozenAccounts[borrow.borrower] -= borrow
-				if (length(FrozenAccounts[borrow.borrower]) == 0)
-					FrozenAccounts -= borrow.borrower
+			if (borrow.borrower in GLOB.FrozenAccounts)
+				GLOB.FrozenAccounts[borrow.borrower] -= borrow
+				if (length(GLOB.FrozenAccounts[borrow.borrower]) == 0)
+					GLOB.FrozenAccounts -= borrow.borrower
 			qdel(borrow)
 		else if (world.time > borrow.lease_expires)
 			if (borrow.borrower in shareholders)
@@ -198,10 +201,10 @@
 				if (amt > borrow.share_debt)
 					shareholders[borrow.borrower] -= borrow.share_debt
 					borrows -= borrow
-					if (borrow.borrower in FrozenAccounts)
-						FrozenAccounts[borrow.borrower] -= borrow
-					if (length(FrozenAccounts[borrow.borrower]) == 0)
-						FrozenAccounts -= borrow.borrower
+					if (borrow.borrower in GLOB.FrozenAccounts)
+						GLOB.FrozenAccounts[borrow.borrower] -= borrow
+					if (length(GLOB.FrozenAccounts[borrow.borrower]) == 0)
+						GLOB.FrozenAccounts -= borrow.borrower
 					qdel(borrow)
 				else
 					shareholders -= borrow.borrower
@@ -226,9 +229,9 @@
 /datum/stock/proc/generateBrokers()
 	if (borrow_brokers.len > 2)
 		return
-	if (!stockExchange.stockBrokers.len)
-		stockExchange.generateBrokers()
-	var/broker = pick(stockExchange.stockBrokers)
+	if (!GLOB.stockExchange.stockBrokers.len)
+		GLOB.stockExchange.generateBrokers()
+	var/broker = pick(GLOB.stockExchange.stockBrokers)
 	var/datum/borrow/B = new
 	B.broker = broker
 	B.stock = src
@@ -245,7 +248,7 @@
 		if (by < 0 && SSshuttle.points + by < 0 && !force)
 			return 0
 		SSshuttle.points += by
-		stockExchange.balanceLog(whose, by)
+		GLOB.stockExchange.balanceLog(whose, by)
 		return 1
 	return 0
 
@@ -268,10 +271,10 @@
 	borrows += B
 	B.borrower = who
 	B.grace_expires = B.lease_expires + B.grace_time
-	if (!(who in FrozenAccounts))
-		FrozenAccounts[who] = list(B)
+	if (!(who in GLOB.FrozenAccounts))
+		GLOB.FrozenAccounts[who] = list(B)
 	else
-		FrozenAccounts[who] += B
+		GLOB.FrozenAccounts[who] += B
 	return 1
 
 /datum/stock/proc/buyShares(var/who, var/howmany)

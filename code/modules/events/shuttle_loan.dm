@@ -3,10 +3,11 @@
 #define SPIDER_GIFT 3
 #define DEPARTMENT_RESUPPLY 4
 #define ANTIDOTE_NEEDED 5
+#define PIZZA_DELIVERY 6
 
 
 /datum/round_event_control/shuttle_loan
-	name = "Shuttle loan"
+	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
 	earliest_start = 4000
@@ -19,27 +20,29 @@
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
-/datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
+/datum/round_event/shuttle_loan/setup()
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
-/datum/round_event/shuttle_loan/announce()
+/datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
-			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","Centcom Counter Intelligence")
+			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
 		if(RUSKY_PARTY)
-			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
+			priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 		if(SPIDER_GIFT)
-			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
+			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
-			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
+			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
-			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
+			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
+		if (PIZZA_DELIVERY)
+			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "CentCom Spacepizza Division")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
+	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
 	dispatched = 1
 	SSshuttle.points += bonus_points
@@ -60,6 +63,8 @@
 			SSshuttle.centcom_message += "Department resupply incoming."
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
+		if(PIZZA_DELIVERY)
+			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -74,10 +79,13 @@
 		SSshuttle.shuttle_loan = null
 
 		var/list/empty_shuttle_turfs = list()
-		for(var/turf/open/floor/T in SSshuttle.supply.areaInstance)
-			if(T.density || T.contents.len)
-				continue
-			empty_shuttle_turfs += T
+		var/list/area/shuttle/shuttle_areas = SSshuttle.supply.shuttle_areas
+		for(var/place in shuttle_areas)
+			var/area/shuttle/shuttle_area = place
+			for(var/turf/open/floor/T in shuttle_area)
+				if(is_blocked_turf(T))
+					continue
+				empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)
 			return
 
@@ -100,11 +108,11 @@
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 
 			if(SPIDER_GIFT)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
@@ -124,27 +132,23 @@
 
 				for(var/i in 1 to 5)
 					T = pick_n_take(empty_shuttle_turfs)
-					new /obj/effect/spider/stickyweb(T)
+					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
+				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/syringe)
+						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
-						shuttle_spawns.Add(/obj/item/weapon/shard)
+						shuttle_spawns.Add(/obj/item/shard)
 					T = pick_n_take(empty_shuttle_turfs)
-					var/obj/effect/decal/cleanable/blood/b = new(T)
-					var/datum/disease/D = new virus_type()
-					D.longevity = 1000
-					b.viruses += D
-					D.holder = b
+					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
@@ -165,6 +169,16 @@
 				for(var/i in 1 to 5)
 					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
+			if(PIZZA_DELIVERY)
+				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
+				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
+				shuttle_spawns.Add(/obj/item/pizzabox/meat)
+				shuttle_spawns.Add(/obj/item/pizzabox/meat)
+				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
+				if(prob(10))
+					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
+				else
+					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -181,3 +195,4 @@
 #undef SPIDER_GIFT
 #undef DEPARTMENT_RESUPPLY
 #undef ANTIDOTE_NEEDED
+#undef PIZZA_DELIVERY

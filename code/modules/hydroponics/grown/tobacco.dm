@@ -5,18 +5,17 @@
 	icon_state = "seed-tobacco"
 	species = "tobacco"
 	plantname = "Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	product = /obj/item/reagent_containers/food/snacks/grown/tobacco
 	lifespan = 20
 	maturation = 5
 	production = 5
-	oneharvest = 1
 	yield = 10
 	growthstages = 3
 	icon_dead = "tobacco-dead"
 	mutatelist = list(/obj/item/seeds/tobacco/space)
 	reagents_add = list("nicotine" = 0.03, "nutriment" = 0.03)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+/obj/item/reagent_containers/food/snacks/grown/tobacco
 	seed = /obj/item/seeds/tobacco
 	name = "tobacco leaves"
 	desc = "Dry them out to make some smokes."
@@ -30,12 +29,12 @@
 	icon_state = "seed-stobacco"
 	species = "stobacco"
 	plantname = "Space Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space
+	product = /obj/item/reagent_containers/food/snacks/grown/tobacco/space
 	mutatelist = list()
 	reagents_add = list("salbutamol" = 0.05, "nicotine" = 0.08, "nutriment" = 0.03)
 	rarity = 20
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/space
+/obj/item/reagent_containers/food/snacks/grown/tobacco/space
 	seed = /obj/item/seeds/tobacco/space
 	name = "space tobacco leaves"
 	desc = "Dry them out to make some space-smokes."

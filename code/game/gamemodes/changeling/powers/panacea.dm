@@ -8,22 +8,31 @@
 
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
-	user << "<span class='notice'>We begin cleansing impurities from our form.</span>"
+	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
 
-	var/obj/item/organ/body_egg/egg = user.getorgan(/obj/item/organ/body_egg)
-	if(egg)
-		egg.Remove(user)
+	var/list/bad_organs = list(
+		user.getorgan(/obj/item/organ/body_egg),
+		user.getorgan(/obj/item/organ/zombie_infection))
+
+	for(var/o in bad_organs)
+		var/obj/item/organ/O = o
+		if(!istype(O))
+			continue
+
+		O.Remove(user)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.vomit(0)
-		egg.loc = get_turf(user)
+			C.vomit(0, toxic = TRUE)
+		O.forceMove(get_turf(user))
 
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("pen_acid", 20)
 	user.reagents.add_reagent("antihol", 10)
 	user.reagents.add_reagent("mannitol", 25)
 
-	for(var/datum/disease/D in user.viruses)
+	for(var/thing in user.viruses)
+		var/datum/disease/D = thing
+		if(D.severity == VIRUS_SEVERITY_POSITIVE)
+			continue
 		D.cure()
-	feedback_add_details("changeling_powers","AP")
-	return 1
+	return TRUE

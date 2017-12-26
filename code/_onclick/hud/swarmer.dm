@@ -26,7 +26,7 @@
 /obj/screen/swarmer/Replicate
 	icon_state = "ui_replicate"
 	name = "Replicate (Costs 50 Resources)"
-	desc = "Creates a another of our kind."
+	desc = "Creates another of our kind."
 
 /obj/screen/swarmer/Replicate/Click()
 	if(isswarmer(usr))
@@ -68,11 +68,11 @@
 	var/obj/screen/using
 
 	using = new /obj/screen/swarmer/FabricateTrap()
-	using.screen_loc = ui_rhand
+	using.screen_loc = ui_hand_position(2)
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Barricade()
-	using.screen_loc = ui_lhand
+	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Replicate()

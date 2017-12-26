@@ -2,6 +2,8 @@
 	name = "magic casing"
 	desc = "I didn't even know magic needed ammo..."
 	projectile_type = /obj/item/projectile/magic
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
+	heavy_metal = FALSE
 
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/item/projectile/magic/change
@@ -22,13 +24,18 @@
 	projectile_type = /obj/item/projectile/magic/door
 
 /obj/item/ammo_casing/magic/fireball
-	projectile_type = /obj/item/projectile/magic/fireball
+	projectile_type = /obj/item/projectile/magic/aoe/fireball
 
 /obj/item/ammo_casing/magic/chaos
 	projectile_type = /obj/item/projectile/magic
 
+/obj/item/ammo_casing/magic/spellblade
+	projectile_type = /obj/item/projectile/magic/spellblade
+
+/obj/item/ammo_casing/magic/arcane_barrage
+	projectile_type = /obj/item/projectile/magic/arcane_barrage
+
 /obj/item/ammo_casing/magic/chaos/newshot()
-	projectile_type = pick(typesof(/obj/item/projectile/magic))
 	..()
 
 /obj/item/ammo_casing/magic/honk
@@ -37,10 +44,50 @@
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
-	projectile_type = null
+	projectile_type = /obj/item/projectile/bullet/dart/syringe
+	firing_effect_type = null
+
+/obj/item/ammo_casing/syringegun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	if(!BB)
+		return
+	if(istype(loc, /obj/item/gun/syringe))
+		var/obj/item/gun/syringe/SG = loc
+		if(!SG.syringes.len)
+			return
+
+		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
+
+		S.reagents.trans_to(BB, S.reagents.total_volume)
+		BB.name = S.name
+		var/obj/item/projectile/bullet/dart/D = BB
+		D.piercing = S.proj_piercing
+		SG.syringes.Remove(S)
+		qdel(S)
+	..()
+
+/obj/item/ammo_casing/dnainjector
+	name = "rigged syringe gun spring"
+	desc = "A high-power spring that throws DNA injectors."
+	projectile_type = /obj/item/projectile/bullet/dnainjector
+	firing_effect_type = null
+
+/obj/item/ammo_casing/dnainjector/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	if(!BB)
+		return
+	if(istype(loc, /obj/item/gun/syringe/dna))
+		var/obj/item/gun/syringe/dna/SG = loc
+		if(!SG.syringes.len)
+			return
+
+		var/obj/item/dnainjector/S = popleft(SG.syringes)
+		var/obj/item/projectile/bullet/dnainjector/D = BB
+		S.forceMove(D)
+		D.injector = S
+	..()
 
 /obj/item/ammo_casing/energy/c3dbullet
-	projectile_type = /obj/item/projectile/bullet/midbullet3
+	projectile_type = /obj/item/projectile/bullet/c3d
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect

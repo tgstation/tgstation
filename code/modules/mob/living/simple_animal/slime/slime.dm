@@ -1,20 +1,13 @@
-var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
-	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
-	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
-	"cerulean", "sepia", "black", "pyrite")
-
-
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
+	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	languages_spoken = SLIME | HUMAN
-	languages_understood = SLIME | HUMAN
-	faction = list("slime")
+	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
@@ -23,8 +16,9 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	speak_emote = list("telepathically chirps")
+	speak_emote = list("blorbles")
 	bubble_icon = "slime"
+	initial_language_holder = /datum/language_holder/slime
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
@@ -37,14 +31,14 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 	see_in_dark = 8
 
-	verb_say = "telepathically chirps"
-	verb_ask = "telepathically asks"
-	verb_exclaim = "telepathically cries"
-	verb_yell = "telephatically cries"
+	verb_say = "blorbles"
+	verb_ask = "inquisitively blorbles"
+	verb_exclaim = "loudly blorbles"
+	verb_yell = "loudly blorbles"
 
-	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
+	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
@@ -77,7 +71,12 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
+	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"cerulean", "sepia", "black", "pyrite")
+
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 
@@ -93,7 +92,13 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
-	..()
+	. = ..()
+
+/mob/living/simple_animal/slime/Destroy()
+	for (var/A in actions)
+		var/datum/action/AC = A
+		AC.Remove(src)
+	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -119,7 +124,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
+			add_overlay("aslime-[mood]")
 	else
 		icon_state = icon_dead
 	..()
@@ -147,9 +152,12 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		. *= 2
 
-	. += config.slime_delay
+	var/static/config_slime_delay
+	if(isnull(config_slime_delay))
+		config_slime_delay = CONFIG_GET(number/slime_delay)
+	. += config_slime_delay
 
-/mob/living/simple_animal/slime/ObjBump(obj/O)
+/mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)
 		var/probab = 10
 		switch(powerlevel)
@@ -194,9 +202,10 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount)
-	..(-abs(amount)) // Heals them
-	return
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced)
+		amount = -abs(amount)
+	return ..() //Heals them
 
 /mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -220,7 +229,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			Feedon(Food)
 	..()
 
-/mob/living/simple_animal/slime/unEquip(obj/item/W)
+/mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
@@ -246,7 +255,8 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		attacked += 10
 
 
@@ -258,14 +268,16 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..()) //successful larva bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
-	if(user.a_intent == "harm")
-		adjustBruteLoss(15)
+/mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
+		return ..()
+
 
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
+		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
 			if(prob(60))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off!</span>")
@@ -278,7 +290,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				discipline_slime(M)
 
 		else
-			M.do_attack_animation(src)
 			if(prob(30))
 				visible_message("<span class='warning'>[M] attempts to wrestle \the [name] off of [buckled]!</span>")
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -290,9 +301,9 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == "help")
+			if(M.a_intent == INTENT_HELP)
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M, src))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -305,16 +316,16 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == "help")
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, src))
+				if(S.next_step(user))
 					return 1
-	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
+	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]
 		else
 			Friends[user] = 1
-		user << "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>"
+		to_chat(user, "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>")
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return
@@ -323,7 +334,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		if(prob(25))
 			user.do_attack_animation(src)
 			user.changeNext_move(CLICK_CD_MELEE)
-			user << "<span class='danger'>[W] passes right through [src]!</span>"
+			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -345,7 +356,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 
 /mob/living/simple_animal/slime/examine(mob/user)
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive.</span>\n"
 	else
@@ -373,7 +384,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
 
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
@@ -392,11 +403,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(buckled)
 		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
-	spawn(0)
-		SStun = 1
-		sleep(rand(20,60))
-		SStun = 0
-
+	SStun = world.time + rand(20,60)
 	spawn(0)
 		canmove = 0
 		if(user)
@@ -419,5 +426,5 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..())
 		return 3
 
-/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
-	. = ..(loc, pick(slime_colours), prob(50))
+/mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
+	. = ..(mapload, pick(slime_colours), prob(50))

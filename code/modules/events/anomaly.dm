@@ -24,20 +24,10 @@
 	if(!turf_test.len)
 		setup(safety_loop)
 
-/datum/round_event/anomaly/announce()
+/datum/round_event/anomaly/announce(fake)
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
-
-/datum/round_event/anomaly/tick()
-	if(!newAnomaly)
-		kill()
-		return
-	newAnomaly.anomalyEffect()
-
-/datum/round_event/anomaly/end()
-	if(newAnomaly)//Kill the anomaly if it still exists at the end.
-		qdel(newAnomaly)

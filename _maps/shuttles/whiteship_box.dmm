@@ -1,94 +1,79 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/abandoned)
 "ac" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ad" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Medical Ship";
+	port_direction = 8;
+	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	port_angle = 180;
-	width = 35;
-	timid = 1
+	timid = 1;
+	width = 35
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "af" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
-	dir = 4
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ah" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ai" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aj" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ak" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/item/screwdriver,
+/obj/structure/light_construct{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "am" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -97,44 +82,35 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ap" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f15"
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/abandoned)
 "aq" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "ar" = (
 /obj/machinery/computer/pod{
+	dir = 8;
 	id = "oldship_gun"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "as" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "at" = (
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "au" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f13"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "av" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/medical,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aw" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ax" = (
@@ -153,201 +129,260 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "az" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aB" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
-	dir = 4
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f17"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aD" = (
-/obj/machinery/door/airlock/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aE" = (
-/obj/item/weapon/stock_parts/cell{
+/obj/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aF" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f14"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aH" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f11"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aJ" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aK" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/window,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "aO" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "aP" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/laser/retro,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/item/gun/energy/laser/retro,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aR" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/machinery/computer/shuttle/white_ship,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/structure/table,
-/obj/item/weapon/tank/internals/oxygen,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aW" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/abandoned)
 "aY" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "aZ" = (
 /obj/machinery/door/window/northright,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/shuttle/purple,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "ba" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bb" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f18"
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
 	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bc" = (
 /obj/item/device/multitool,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bd" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "be" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f16"
-	},
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (
-/obj/item/weapon/scalpel,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/item/scalpel,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bg" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bh" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bi" = (
+/obj/structure/light_construct/small,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"bj" = (
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bk" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bl" = (
+/obj/structure/light_construct{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bm" = (
+/obj/structure/light_construct{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bn" = (
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bo" = (
+/obj/structure/light_construct{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bp" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bq" = (
+/obj/structure/light_construct/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"br" = (
+/obj/structure/light_construct,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bs" = (
+/obj/structure/light_construct{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"bt" = (
+/obj/structure/light_construct/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"bu" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	view_range = 18
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"
@@ -359,11 +394,11 @@ aa
 aa
 aa
 aa
-ab
-aq
-af
-aq
+aC
+aC
 aW
+aC
+aC
 aa
 aa
 aa
@@ -383,11 +418,11 @@ aa
 aa
 aa
 aa
-aA
-au
+aC
+aX
 aj
-aF
-ah
+aX
+aC
 aa
 aa
 aa
@@ -407,11 +442,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 aa
 aa
@@ -431,11 +466,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 aa
 aa
@@ -455,11 +490,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 aa
 aa
@@ -479,11 +514,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
-aj
-ae
+bk
+aC
 aa
 aa
 aa
@@ -503,11 +538,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 aa
 aa
@@ -527,11 +562,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 aa
 aa
@@ -551,11 +586,11 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
 aj
 aU
-ae
+aC
 aa
 aa
 aa
@@ -575,11 +610,11 @@ aa
 aa
 aa
 aa
-aA
-aI
+aC
+aX
 aj
-az
-ah
+aX
+aC
 aa
 aa
 aa
@@ -599,11 +634,11 @@ aa
 aa
 aa
 aa
-ac
-aq
-af
-aq
-aX
+aC
+aC
+aW
+aC
+aC
 aa
 aa
 aa
@@ -624,9 +659,9 @@ aa
 aa
 aa
 aa
-ae
+aC
 aj
-ae
+aC
 aa
 aa
 aa
@@ -647,11 +682,11 @@ aa
 aa
 aa
 aa
-ab
-aq
-af
-aq
+aC
+aC
 aW
+aC
+aC
 aa
 aa
 aa
@@ -670,13 +705,13 @@ aa
 aa
 aa
 aa
-ab
-aq
-au
+aC
+aC
+aX
 aj
-aF
-aq
-aW
+aX
+aC
+aC
 aa
 aa
 aa
@@ -687,85 +722,85 @@ aa
 aa
 "}
 (15,1,1) = {"
-ab
+aC
 ag
 an
 an
 an
 aB
 aa
-aA
-au
+aC
+aX
 aj
 aj
 aj
-aF
-ah
+aX
+aC
 aa
 ag
 an
 an
 an
 aB
-aW
+aC
 aa
 "}
 (16,1,1) = {"
-ac
-ah
+aC
+aC
 ao
 ao
 ao
-ae
-ab
-ah
+aC
+aC
+aC
+bl
 aj
 aj
 aj
-aj
-aj
-aA
-aW
-ae
+bk
+aC
+aC
+aC
 ao
 ao
 ao
-aA
-aX
+aC
+aC
 aa
 "}
 (17,1,1) = {"
 aa
-ac
+aC
 ap
 at
 at
+ap
 aC
-aq
-au
-aj
-aj
-aj
-aj
-aj
-aF
-aq
-bb
-at
-at
-be
 aX
+aj
+aj
+aj
+aj
+aj
+aX
+aC
+ap
+at
+at
+ap
+aC
 aa
 aa
 "}
 (18,1,1) = {"
 aa
 aa
-ac
+aC
 ap
 at
-at
-ae
+bi
+aC
 aj
 aj
 aj
@@ -773,11 +808,11 @@ aj
 aj
 aj
 ba
-ae
+aC
+bt
 at
-at
-be
-aX
+ap
+aC
 aa
 aa
 aa
@@ -786,21 +821,21 @@ aa
 aa
 aa
 aa
-ac
-as
+aC
+aC
 aD
-ai
-am
-am
-aM
-aR
-aM
-am
-am
-ai
+aC
+aC
+aC
+aL
+be
+aL
+aC
+aC
+aC
 aD
-as
-aX
+aC
+aC
 aa
 aa
 aa
@@ -810,8 +845,8 @@ aa
 aa
 aa
 aa
-ab
-ah
+aC
+aC
 aj
 aj
 aj
@@ -823,8 +858,8 @@ aj
 aj
 aj
 aj
-aA
-aW
+aC
+aC
 aa
 aa
 aa
@@ -833,72 +868,72 @@ aa
 (21,1,1) = {"
 aa
 aa
-ab
-aq
-au
+aC
+aC
+aX
 aE
 aj
 aj
 aj
 aj
+bm
 aj
 aj
 aj
 aj
 aj
-aj
-aA
-aq
-aW
+aC
+aC
+aC
 aa
 aa
 aa
 "}
 (22,1,1) = {"
 aa
-ab
-aq
-au
+aC
+aC
+aX
 aj
 aj
 aj
 aj
-az
-am
-am
-am
-am
-aI
+aC
+aC
+aC
+aC
+aC
+aC
 aj
 aj
-aA
-ai
-aq
-aW
+aC
+aC
+aC
+aC
 aa
 aa
 "}
 (23,1,1) = {"
-ab
-ai
-ai
-am
-am
-as
-aI
+aC
+aC
+aC
+aC
+aC
+aC
+aX
 aj
-ae
+aC
 aN
 aj
+bq
+aj
+aW
 aj
 aj
-af
+aW
 aj
-aj
-af
-aj
-aF
-ah
+aX
+aC
 aa
 aa
 "}
@@ -908,84 +943,84 @@ aj
 aj
 av
 av
-aF
-ah
-aj
-ae
+aX
+aC
+bk
+aC
 aO
 aj
 aV
 aY
-ae
+aC
+bl
 aj
-aj
-ae
+aC
 aj
 bg
-aA
-aW
+aC
+aC
 aa
 "}
 (25,1,1) = {"
-ae
+aC
 aj
 aj
 aj
 aj
 aG
-ae
+aC
 aj
-af
+aW
 aj
-aj
+bn
 aj
 aZ
-ae
+aC
 aj
 aj
-ae
+aC
 aj
 aj
-aF
-ah
+aX
+aC
 aa
 "}
 (26,1,1) = {"
-ae
+aC
 ak
 aj
 aj
 aj
 aj
-ae
+aC
 aj
-aF
-am
-am
-am
-am
-au
+aC
+aC
+aC
+aC
+aC
+aC
 aj
 aE
 aL
 bf
 aj
 aj
-ae
+aC
 aa
 "}
 (27,1,1) = {"
-ae
+aC
 al
 aj
 aj
 aj
 aj
-af
+aW
 aj
 aj
 aj
-aj
+bo
 aj
 aj
 aj
@@ -995,18 +1030,18 @@ aL
 aj
 aj
 bh
-ae
+aC
 aa
 "}
 (28,1,1) = {"
-ae
+aC
 aj
 aj
 aj
 aj
 aj
-aA
-aI
+aC
+aX
 aj
 aj
 aj
@@ -1019,64 +1054,64 @@ aL
 aj
 aj
 aj
-ae
+aC
 aa
 "}
 (29,1,1) = {"
-ae
+aC
 aj
 aj
 aj
 aj
-az
-aq
-ai
-am
+aX
+aC
+aC
+aC
 aL
-aR
+be
 aL
-am
-am
-am
-am
-ah
+aC
+aC
+aC
+aC
+aC
 aj
 aj
 aj
-ae
+aC
 aa
 "}
 (30,1,1) = {"
-ae
+aC
 aj
 aj
 aj
-az
-aq
-au
-aj
-aj
-aj
-aj
-aj
-aj
-aP
-aP
-aP
-ae
-aj
-aj
-az
 aX
+aC
+aX
+aj
+aj
+aj
+aj
+aj
+aj
+aP
+aP
+aP
+aC
+aj
+aj
+aX
+aC
 aa
 "}
 (31,1,1) = {"
-af
+aW
 aj
 ar
 aj
-aq
-au
+aC
+aX
 aj
 aj
 aj
@@ -1087,20 +1122,20 @@ aj
 aj
 aj
 aj
-aF
-aI
-aH
-ae
+aX
+aX
+bb
+aC
 aa
 aa
 "}
 (32,1,1) = {"
-ac
-am
-as
+aC
+aC
+aC
 aw
-ae
-aH
+aC
+bj
 aJ
 aj
 aj
@@ -1112,19 +1147,19 @@ aj
 aj
 bd
 aH
-aA
-as
-aX
+aC
+aC
+aC
 aa
 aa
 "}
 (33,1,1) = {"
 aa
 aa
-ae
+aC
 ax
-ah
-aH
+aC
+bu
 aJ
 aj
 aj
@@ -1135,9 +1170,9 @@ aj
 aj
 aj
 aj
-az
-aq
 aX
+aC
+aC
 aa
 aa
 aa
@@ -1145,10 +1180,10 @@ aa
 (34,1,1) = {"
 aa
 aa
-ac
+aC
 ay
-aA
-aI
+aC
+aX
 aK
 aj
 aj
@@ -1158,9 +1193,9 @@ aP
 aj
 aj
 aj
-az
-aq
 aX
+aC
+aC
 aa
 aa
 aa
@@ -1171,9 +1206,9 @@ aa
 aa
 aa
 aa
-ac
-ai
-am
+aC
+aC
+aC
 aL
 aL
 aL
@@ -1181,9 +1216,9 @@ aL
 aL
 aL
 aL
-am
-ai
-aX
+aC
+aC
+aC
 aa
 aa
 aa

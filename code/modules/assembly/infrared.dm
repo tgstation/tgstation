@@ -3,10 +3,9 @@
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
-	origin_tech = "magnets=2;materials=2"
 
-	var/on = 0
-	var/visible = 0
+	var/on = FALSE
+	var/visible = FALSE
 	var/obj/effect/beam/i_beam/first = null
 	var/obj/effect/beam/i_beam/last = null
 
@@ -35,7 +34,7 @@
 	if(secured)
 		START_PROCESSING(SSobj, src)
 	else
-		on = 0
+		on = FALSE
 		if(first)
 			qdel(first)
 		STOP_PROCESSING(SSobj, src)
@@ -67,12 +66,12 @@
 	if(T)
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
-		I.density = 1
+		I.density = TRUE
 		I.setDir(dir)
 		first = I
 		step(I, I.dir)
 		if(first)
-			I.density = 0
+			I.density = FALSE
 			I.vis_spread(visible)
 			I.limit = 8
 			I.process()
@@ -84,32 +83,29 @@
 
 /obj/item/device/assembly/infra/Move()
 	var/t = dir
-	..()
+	. = ..()
 	setDir(t)
 	qdel(first)
-	return
 
 /obj/item/device/assembly/infra/holder_movement()
 	if(!holder)
 		return 0
-//	setDir(holder.dir)
 	qdel(first)
 	return 1
 
 /obj/item/device/assembly/infra/proc/trigger_beam()
-	if((!secured)||(!on)||(cooldown > 0))
-		return 0
+	if(!secured || !on || next_activate > world.time)
+		return FALSE
 	pulse(0)
-	audible_message("\icon[src] *beep* *beep*", null, 3)
-	cooldown = 2
-	addtimer(src, "process_cooldown", 10)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
+	next_activate =  world.time + 30
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))
 		user.set_machine(src)
-		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
-		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]<BR>\n</TT>"
+		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
+		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
 		user << browse(dat, "window=infra")
 		onclose(user, "infra")
 		return
@@ -141,13 +137,12 @@
 	if(usr.incapacitated())
 		return
 
-	setDir(turn(dir, 90))
-	return
+	setDir(turn(dir, -90))
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -166,9 +161,9 @@
 	var/obj/effect/beam/i_beam/previous = null
 	var/obj/item/device/assembly/infra/master = null
 	var/limit = null
-	var/visible = 0
+	var/visible = FALSE
 	var/left = null
-	anchored = 1
+	anchored = TRUE
 
 
 /obj/effect/beam/i_beam/proc/hit()
@@ -200,23 +195,23 @@
 	if(!next && (limit > 0))
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
-		I.density = 1
+		I.density = TRUE
 		I.setDir(dir)
 		I.previous = src
 		next = I
 		step(I, I.dir)
 		if(next)
-			I.density = 0
+			I.density = FALSE
 			I.vis_spread(visible)
 			I.limit = limit - 1
 			master.last = I
 			I.process()
 
-/obj/effect/beam/i_beam/Bump()
+/obj/effect/beam/i_beam/Collide()
 	qdel(src)
 	return
 
-/obj/effect/beam/i_beam/Bumped()
+/obj/effect/beam/i_beam/CollidedWith(atom/movable/AM)
 	hit()
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)

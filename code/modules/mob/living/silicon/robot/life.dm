@@ -6,6 +6,7 @@
 		return
 
 	..()
+	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
@@ -22,7 +23,7 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = Clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		var/amt = CLAMP((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
@@ -37,8 +38,8 @@
 	update_cell_hud_icon()
 
 	if(syndicate)
-		if(ticker.mode.name == "traitor")
-			for(var/datum/mind/tra in ticker.mode.traitors)
+		if(SSticker.mode.name == "traitor")
+			for(var/datum/mind/tra in SSticker.mode.traitors)
 				if(tra.current)
 					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor") //no traitor sprite in that dmi!
 					src.client.images += I
@@ -48,7 +49,8 @@
 		if(mind)
 			if(!mind.special_role)
 				mind.special_role = "traitor"
-				ticker.mode.traitors += mind
+				SSticker.mode.traitors += mind
+				mind.add_antag_datum(/datum/antagonist/auto_custom) // ????
 
 
 /mob/living/silicon/robot/update_health_hud()
@@ -102,13 +104,11 @@
 	return
 
 /mob/living/silicon/robot/update_fire()
-	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "Generic_mob_burning")
 	if(on_fire)
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
-
-/mob/living/silicon/robot/fire_act()
-	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
-		IgniteMob()
+		add_overlay(fire_overlay)
+	else
+		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_canmove()
 	if(stat || buckled || lockcharge)

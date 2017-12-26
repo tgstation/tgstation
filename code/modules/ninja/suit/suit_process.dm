@@ -20,5 +20,3 @@
 			cancel_stealth()
 
 		sleep(10)//Checks every second.
-
-

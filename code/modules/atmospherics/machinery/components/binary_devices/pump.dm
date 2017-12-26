@@ -17,27 +17,29 @@ Thus, the two variables affect pump operation are set in New():
 	name = "gas pump"
 	desc = "A pump that moves gas by pressure."
 
-	can_unwrench = 1
+	can_unwrench = TRUE
 
-	var/on = 0
+	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "pump"
+
 /obj/machinery/atmospherics/components/binary/pump/on
-	on = 1
+	on = TRUE
 
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	if(radio_connection)
 		radio_connection = null
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
-	if(stat & NOPOWER)
+	if(!is_operational())
 		icon_state = "pump_off"
 		return
 
@@ -45,19 +47,17 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 //	..()
-	if(stat & (NOPOWER|BROKEN))
-		return 0
-	if(!on)
-		return 0
+	if(!on || !is_operational())
+		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/output_starting_pressure = air2.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
 		//No need to pump gas if target is already reached!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
@@ -70,8 +70,6 @@ Thus, the two variables affect pump operation are set in New():
 
 		update_parents()
 
-	return 1
-
 //Radio remote control
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -81,26 +79,19 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
 		"sigtype" = "status"
-	)
-
+	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	return 1
-
-/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_pump", name, 335, 115, master_ui, state)
@@ -119,7 +110,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -134,8 +125,8 @@ Thus, the two variables affect pump operation are set in New():
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -145,7 +136,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	var/old_on = on //for logging
 
@@ -156,10 +147,10 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -167,16 +158,13 @@ Thus, the two variables affect pump operation are set in New():
 
 	broadcast_status()
 	update_icon()
-	return
 
 /obj/machinery/atmospherics/components/binary/pump/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
-	if(..())
-		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
-		else
-			return 1
-
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE

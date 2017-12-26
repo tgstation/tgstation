@@ -51,15 +51,21 @@
 		.wraith .wrap {border-color: #492136;}
 		.wraith .content {border-color: #331726; background-color: #471962;}
 
-		.cult .wrap {border-color: #610002;}
-		.cult .content {color: #0F0B0C; border-color: #A10000; background-color: #4A363B;}
+		.cult .wrap {border-color: #292222;}
+		.cult .content {color: #FF0000; border-color: #4C4343; background-color: #3C3434;}
+
+		.clockcult .wrap {border-color: #170800;}
+		.clockcult .content {color: #B18B25; border-color: #000000; background-color: #5F380E;}
 
 		.pod .wrap {border-color: #052401;}
 		.pod .content {border-color: #326D29; background-color: #569F4B;}
 
 		.colo-pod .wrap {border-color: #256fb9;}
 		.colo-pod .content {border-color: #000000; background-color: #000000;}
-		
+
+		.hisgrace .wrap {border-color: #7C1414;}
+		.hisgrace .content {color: #15D512; border-color: #9D1414; background-color: #861414;}
+	
 		/* TG: Themes */
 		/* ScreenUI */
 		.midnight .wrap {border-color: #2B2B33;}
@@ -76,6 +82,9 @@
 
 		.operative .wrap {border-color: #1E0101;}
 		.operative .content {color: #FFFFFF; border-color: #750000; background-color: #350000;}
+
+		.clockwork .wrap {border-color: #170800;}
+		.clockwork .content {color: #B18B25; border-color: #000000; background-color: #5F380E;}
 		
 
 	</style>
@@ -90,7 +99,8 @@
 			'tileSize': 32,
 			'control': '',
 			'params': {},
-			'clientView': 0,
+			'client_view_w': 0,
+			'client_view_h': 0,
 			'text': '',
 			'theme': '',
 			'padding': 2,
@@ -112,7 +122,7 @@
 				//Get the real icon size according to the client view
 				var mapWidth 		= map['view-size'].x,
 					mapHeight 		= map['view-size'].y,
-					tilesShown 		= (tooltip.clientView * 2) + 1,
+					tilesShown 		= tooltip.client_view_w
 					realIconSize 	= mapWidth / tilesShown,
 					resizeRatio		= realIconSize / tooltip.tileSize,
 					//Calculate letterboxing offsets	
@@ -221,10 +231,11 @@
 					tooltip.hide();
 				});
 			},
-			update: function(params, clientView, text, theme, special) {
+			update: function(params, client_vw , clien_vh , text, theme, special) {
 				//Assign our global object
 				tooltip.params = $.parseJSON(params);
-				tooltip.clientView = parseInt(clientView);
+				tooltip.client_view_w = parseInt(client_vw);
+				tooltip.client_view_h = parseInt(clien_vh);
 				tooltip.text = text;
 				tooltip.theme = theme;
 				tooltip.special = special;

@@ -1,19 +1,9 @@
 /mob/living/carbon/monkey/gib_animation()
-	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-m"))
+	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-m")
 
 /mob/living/carbon/monkey/dust_animation()
-	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-m"))
+	new /obj/effect/temp_visual/dust_animation(loc, "dust-m")
 
 /mob/living/carbon/monkey/death(gibbed)
-	if(stat == DEAD)
-		return
-
-	stat = DEAD
-
-	if(!gibbed)
-		emote("deathgasp")
-
-	if(ticker && ticker.mode)
-		ticker.mode.check_win()
-
-	return ..(gibbed)
+	walk(src,0) // Stops dead monkeys from fleeing their attacker or climbing out from inside His Grace
+	. = ..()

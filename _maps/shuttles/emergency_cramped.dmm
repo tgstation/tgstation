@@ -1,45 +1,46 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "e" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "f" = (
-/obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/book/manual/random,
+/obj/item/storage/firstaid/regular,
+/obj/item/book/manual/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
@@ -47,16 +48,14 @@
 /obj/item/device/gps{
 	gpstag = "STV5"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -87,14 +86,16 @@
 	lootcount = 8;
 	name = "8maintenance loot spawner"
 	},
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/closet/crate/secure/loot,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/door/airlock/shuttle{
+/obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -102,7 +103,11 @@
 "r" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/spawner/lootdrop/armory_contraband,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair{
@@ -121,64 +126,38 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "u" = (
-/turf/open/space,
-/area/space)
-"v" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"v" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "w" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
-/area/shuttle/escape)
-"x" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/escape)
-"y" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
-/area/shuttle/escape)
-"z" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
-/area/shuttle/escape)
-"A" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
-/area/shuttle/escape)
-"B" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (WEST)";
-	icon_state = "wall3";
-	dir = 8
-	},
+/obj/structure/closet/crate/secure/weapon,
+/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
-w
+a
 c
 a
 k
-z
+a
 b
 b
 b
-A
+a
 q
 a
 q
-B
-u
+a
+a
 "}
 (2,1,1) = {"
 b
@@ -194,7 +173,7 @@ l
 s
 l
 t
-v
+u
 "}
 (3,1,1) = {"
 b
@@ -210,37 +189,37 @@ l
 l
 l
 t
-v
+u
 "}
 (4,1,1) = {"
 b
 f
 i
-m
+v
 o
 o
 o
 p
 p
 r
-r
+w
 m
 t
-v
+u
 "}
 (5,1,1) = {"
-x
-y
+a
+a
 j
-y
-y
+a
+a
 b
 b
 b
-y
-y
-y
-A
-B
-u
+a
+a
+a
+a
+a
+a
 "}

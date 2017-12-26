@@ -1,9 +1,8 @@
 /obj/item/device/assembly/igniter
 	name = "igniter"
-	desc = "A small electronic device able to ignite combustable substances."
+	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	origin_tech = "magnets=1"
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	heat = 1000
 

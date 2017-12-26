@@ -3,10 +3,10 @@
 	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
-	density = 1
-	anchored = 1
-	state_open = 1
-	var/busy = 0
+	density = TRUE
+	anchored = TRUE
+	state_open = TRUE
+	var/busy = FALSE
 	var/bloody_mess = 0
 	var/has_corgi = 0
 	var/obj/item/color_source
@@ -14,7 +14,7 @@
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click it to start a wash cycle.</span>"
+	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
@@ -24,17 +24,17 @@
 		return
 
 	if(state_open)
-		user << "<span class='notice'>Close the door first</span>"
+		to_chat(user, "<span class='notice'>Close the door first</span>")
 		return
 
 	if(bloody_mess)
-		user << "<span class='warning'>[src] must be cleaned up first.</span>"
+		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
 		return
 
 	if(has_corgi)
 		bloody_mess = 1
 
-	busy = 1
+	busy = TRUE
 	update_icon()
 	sleep(200)
 	wash_cycle()
@@ -52,7 +52,7 @@
 		AM.clean_blood()
 		AM.machine_wash(src)
 
-	busy = 0
+	busy = FALSE
 	if(color_source)
 		qdel(color_source)
 		color_source = null
@@ -69,14 +69,14 @@
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(loc)
+	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(loc)
 	qdel(src)
 
-/obj/item/weapon/paper/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/paper/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
-		if(istype(WM.color_source,/obj/item/toy/crayon))
+		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
-			color = CR.paint_color
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -129,7 +129,7 @@
 	if(chained)
 		chained = 0
 		slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/restraints/handcuffs(loc)
+		new /obj/item/restraints/handcuffs(loc)
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color
 		for(var/T in typesof(/obj/item/clothing/shoes/sneakers))
@@ -141,11 +141,11 @@
 				desc = "The colors are a bit dodgy."
 				break
 
-/obj/item/weapon/bedsheet/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/bedsheet/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color
-		for(var/T in typesof(/obj/item/weapon/bedsheet))
-			var/obj/item/weapon/bedsheet/B = T
+		for(var/T in typesof(/obj/item/bedsheet))
+			var/obj/item/bedsheet/B = T
 			if(wash_color == initial(B.item_color))
 				icon_state = initial(B.icon_state)
 				item_color = wash_color
@@ -169,7 +169,7 @@
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)
 
-/obj/machinery/washing_machine/container_resist(mob/user)
+/obj/machinery/washing_machine/container_resist(mob/living/user)
 	if(!busy)
 		add_fingerprint(user)
 		open_machine()
@@ -186,34 +186,33 @@
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
 	if(panel_open)
-		add_overlay(image(icon, icon_state = "wm_panel"))
+		add_overlay("wm_panel")
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
 
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != INTENT_HARM)
 
 		if (!state_open)
-			user << "<span class='warning'>Open the door first!</span>"
+			to_chat(user, "<span class='warning'>Open the door first!</span>")
 			return 1
 
 		if(bloody_mess)
-			user << "<span class='warning'>[src] must be cleaned up first.</span>"
+			to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
 			return 1
 
 		if(contents.len >= max_wash_capacity)
-			user << "<span class='warning'>The washing machine is full!</span>"
+			to_chat(user, "<span class='warning'>The washing machine is full!</span>")
 			return 1
 
-		if(!user.unEquip(W))
-			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W,/obj/item/toy/crayon) || istype(W,/obj/item/weapon/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp))
 			color_source = W
-		W.loc = src
 		update_icon()
 
 	else
@@ -221,10 +220,10 @@
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	if(busy)
-		user << "<span class='warning'>[src] is busy.</span>"
+		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return
@@ -238,12 +237,15 @@
 	if(!state_open)
 		open_machine()
 	else
-		state_open = 0 //close the door
+		state_open = FALSE //close the door
 		update_icon()
 
+/obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
-	density = 1 //because machinery/open_machine() sets it to 0
+	density = TRUE //because machinery/open_machine() sets it to 0
 	color_source = null
 	has_corgi = 0

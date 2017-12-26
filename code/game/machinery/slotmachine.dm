@@ -17,11 +17,11 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
-	anchored = 1
-	density = 1
-	use_power = 1
+	anchored = TRUE
+	density = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
+	circuit = /obj/item/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -31,8 +31,10 @@
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
-/obj/machinery/computer/slot_machine/New()
-	..()
+	light_color = LIGHT_COLOR_BROWN
+
+/obj/machinery/computer/slot_machine/Initialize()
+	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
@@ -44,10 +46,9 @@
 
 	toggle_reel_spin(0)
 
-	for(var/cointype in typesof(/obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = new cointype(src)
-		coinvalues["[cointype]"] = C.value
-		qdel(C)
+	for(var/cointype in typesof(/obj/item/coin))
+		var/obj/item/coin/C = cointype
+		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
@@ -79,33 +80,33 @@
 	update_icon()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = I
+	if(istype(I, /obj/item/coin))
+		var/obj/item/coin/C = I
 		if(prob(2))
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(C, drop_location()))
 				return
-			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
-			user << "<span class='warning'>[src] spits your coin back out!</span>"
+			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(C))
 				return
-			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
+			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
 			balance += C.value
 			qdel(C)
 	else
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(!emagged)
-		emagged = 1
-		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(4, 0, src.loc)
-		spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
+	if(emagged)
+		return
+	emagged = TRUE
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(4, 0, src.loc)
+	spark_system.start()
+	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
 	. = ..() //Sanity checks.
@@ -133,11 +134,11 @@
 		<B>Credit Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
-		<A href='?src=\ref[src];spin=1'>Play!</A><BR>
+		<A href='?src=[REF(src)];spin=1'>Play!</A><BR>
 		<BR>
 		[reeltext]
 		<BR>
-		<font size='1'><A href='?src=\ref[src];refund=1'>Refund balance</A><BR>"}
+		<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"}
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
@@ -162,7 +163,7 @@
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = 1
+		emagged = TRUE
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
@@ -204,14 +205,14 @@
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(stat & NOPOWER)
-		user << "<span class='warning'>The slot machine has no power!</span>"
+		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
 	if(stat & BROKEN)
-		user << "<span class='warning'>The slot machine is broken!</span>"
+		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
 	if(working)
-		user << "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>"
+		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")
 		return 0
 	if(balance < SPIN_PRICE)
-		user << "<span class='warning'>Insufficient money to play!</span>"
+		to_chat(user, "<span class='warning'>Insufficient money to play!</span>")
 		return 0
 	return 1
 
@@ -239,8 +240,8 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(subtypesof(/obj/item/weapon/coin))
-			var/obj/item/weapon/coin/C = new cointype(loc)
+			var/cointype = pick(subtypesof(/obj/item/coin))
+			var/obj/item/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 
 	else if(linelength == 5)
@@ -252,12 +253,12 @@
 		give_money(SMALL_PRIZE)
 
 	else if(linelength == 3)
-		user << "<span class='notice'>You win three free games!</span>"
+		to_chat(user, "<span class='notice'>You win three free games!</span>")
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
-		user << "<span class='warning'>No luck!</span>"
+		to_chat(user, "<span class='warning'>No luck!</span>")
 
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
@@ -285,7 +286,7 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = emagged ? /obj/item/weapon/coin/iron : /obj/item/weapon/coin/silver
+	var/cointype = emagged ? /obj/item/coin/iron : /obj/item/coin/silver
 
 	if(!emagged)
 		amount = dispense(amount, cointype, null, 0)
@@ -297,12 +298,12 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
-		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
+		var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
 		if(throwit && target)
 			C.throw_at(target, 3, 10)

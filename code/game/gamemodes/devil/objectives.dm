@@ -1,31 +1,36 @@
 /datum/objective/devil
-	dangerrating = 5
 
 /datum/objective/devil/soulquantity
 	explanation_text = "You shouldn't see this text.  Error:DEVIL1"
-	var/quantity = 4
+	target_amount = 4
 
 /datum/objective/devil/soulquantity/New()
-	quantity = pick(6,8)
-	explanation_text = "Purchase, and retain control over at least [quantity] souls."
+	target_amount = pick(6,7,8)
+	update_explanation_text()
+
+/datum/objective/devil/soulquantity/update_explanation_text()
+	explanation_text = "Purchase, and retain control over at least [target_amount] souls."
 
 /datum/objective/devil/soulquantity/check_completion()
 	var/count = 0
-	for(var/S in owner.devilinfo.soulsOwned)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls) //Just a sanity check.
 		var/datum/mind/L = S
-		if(L.soulOwner != L)
+		if(L.soulOwner == owner)
 			count++
-	return count >= quantity
+	return count >= target_amount
+
+
 
 /datum/objective/devil/soulquality
 	explanation_text = "You shouldn't see this text.  Error:DEVIL2"
 	var/contractType
-	var/quantity
+	var/contractName
 
 /datum/objective/devil/soulquality/New()
 	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
-	var/contractName
-	quantity = pick(1,2)
+	target_amount = pick(1,2)
 	switch(contractType)
 		if(CONTRACT_POWER)
 			contractName = "for power"
@@ -39,24 +44,70 @@
 			contractName = "of revival"
 		if(CONTRACT_KNOWLEDGE)
 			contractName = "for knowledge"
-		//if(CONTRACT_UNWILLING)	//Makes round unfun.
-		//	contractName = "against their will"
-	explanation_text = "Have mortals sign at least [quantity] contracts [contractName]"
+	update_explanation_text()
+
+/datum/objective/devil/soulquality/update_explanation_text()
+	explanation_text = "Have mortals sign at least [target_amount] contracts [contractName]"
 
 /datum/objective/devil/soulquality/check_completion()
 	var/count = 0
-	for(var/S in owner.devilinfo.soulsOwned)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls)
 		var/datum/mind/L = S
-		if(L.soulOwner != L && L.damnation_type == contractType)
+		if(!L.owns_soul() && L.damnation_type == contractType)
 			count++
-	return count>=quantity
+	return count>=target_amount
+
+
 
 /datum/objective/devil/sintouch
-	var/quantity
+	explanation_text = "You shouldn't see this text.  Error:DEVIL3"
 
 /datum/objective/devil/sintouch/New()
-	quantity = pick(4,5)
-	explanation_text = "Ensure at least [quantity] mortals are sintouched."
+	target_amount = pick(4,5)
+	explanation_text = "Ensure at least [target_amount] mortals are sintouched."
 
 /datum/objective/devil/sintouch/check_completion()
-	return quantity>=ticker.mode.sintouched.len
+	return target_amount>=SSticker.mode.sintouched.len
+
+
+
+/datum/objective/devil/buy_target
+	explanation_text = "You shouldn't see this text.  Error:DEVIL4"
+
+/datum/objective/devil/buy_target/update_explanation_text()
+	if(target)
+		explanation_text = "Purchase and retain the soul of [target.name], the [target.assigned_role]."
+	else
+		explanation_text = "Free objective."
+
+/datum/objective/devil/buy_target/check_completion()
+	return target.soulOwner == owner
+
+
+/datum/objective/devil/outsell
+	explanation_text = "You shouldn't see this text.  Error:DEVIL5"
+
+/datum/objective/devil/outsell/New()
+
+/datum/objective/devil/outsell/update_explanation_text()
+	var/datum/antagonist/devil/opponent = target.has_antag_datum(ANTAG_DATUM_DEVIL)
+	explanation_text = "Purchase and retain control over more souls than [opponent.truename], known to mortals as [target.name], the [target.assigned_role]."
+
+/datum/objective/devil/outsell/check_completion()
+	var/selfcount = 0
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/list/souls = devilDatum.soulsOwned
+	for(var/S in souls)
+		var/datum/mind/L = S
+		if(L.soulOwner == owner)
+			selfcount++
+	var/targetcount = 0
+	devilDatum = target.has_antag_datum(ANTAG_DATUM_DEVIL)
+	souls = devilDatum.soulsOwned
+	for(var/S in souls)
+		var/datum/mind/L = S
+		if(L.soulOwner == target)
+			targetcount++
+	return selfcount > targetcount

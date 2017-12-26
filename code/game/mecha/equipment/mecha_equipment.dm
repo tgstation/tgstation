@@ -6,7 +6,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	origin_tech = "materials=2;engineering=2"
+	max_integrity = 300
 	var/equip_cooldown = 0 // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
@@ -24,7 +24,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",get_equip_info())
 		return 1
 	return
 
@@ -34,12 +34,9 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>The [src] is destroyed!</span>")
+		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
-		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
-			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
-		else
-			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
+		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
 	return ..()
 
@@ -48,12 +45,13 @@
 		log_message("Critical failure",1)
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
-	if(!chassis) return
+	if(!chassis)
+		return
 	var/txt = "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;"
 	if(chassis.selected == src)
 		txt += "<b>[src.name]</b>"
 	else if(selectable)
-		txt += "<a href='?src=\ref[chassis];select_equip=\ref[src]'>[src.name]</a>"
+		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[src.name]</a>"
 	else
 		txt += "[src.name]"
 
@@ -85,7 +83,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
 	set_ready_state(0)
 	chassis.use_power(energy_drain)
-	addtimer(src, "set_ready_state", equip_cooldown, FALSE, 1)
+	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
 	if(!chassis)
@@ -106,7 +104,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
-	src.loc = M
+	forceMove(M)
 	M.log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src
@@ -133,12 +131,12 @@
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
 	if(chassis)
-		chassis.occupant_message("\icon[src] [message]")
+		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/log_message(message)

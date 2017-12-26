@@ -1,37 +1,47 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
-	density = 0
+	density = FALSE
 	layer = SIGN_LAYER
+	max_integrity = 100
+	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	var/buildable_sign = 1 //unwrenchable and modifiable
+
+/obj/structure/sign/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION) // Since this is on a wall if it becomes irradiated it will smuggle the radiation past the wall
 
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"
 	icon_state = "backing"
 
-/obj/structure/sign/ex_act(severity, target)
-	qdel(src)
-
-/obj/structure/sign/blob_act(obj/effect/blob/B)
-	qdel(src)
-	return
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
 /obj/structure/sign/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(istype(O, /obj/item/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		if(!do_after(user, 30/O.toolspeed, target = src))
+		playsound(src, O.usesound, 50, 1)
+		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
 		var/obj/item/sign_backing/SB = new (get_turf(user))
 		SB.icon_state = icon_state
 		SB.sign_path = type
 		qdel(src)
-	else if(istype(O, /obj/item/weapon/pen))
+	else if(istype(O, /obj/item/pen) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -87,18 +97,17 @@
 	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	w_class = 3
-	burn_state = FLAMMABLE
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FLAMMABLE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach a blank sign to [T].</span>")
-		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+							 "<span class='notice'>You attach the sign to [T].</span>")
+		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
 		new sign_path(T)
-		user.drop_item()
 		qdel(src)
 	else
 		return ..()
@@ -106,18 +115,25 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
+	max_integrity = 500
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
 
 /obj/structure/sign/map/left/dream
 	icon_state = "map-left-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
 /obj/structure/sign/map/right/dream
 	icon_state = "map-right-DS"
+	desc = "A framed picture of the station.\nClockwise from the top, you see Engineering(<b>yellow</b>), Arrivals(<b>blue and white</b>), Atmospherics(<b>yellow</b>), Security(<b>red</b>), \
+	Cargo(<b>brown</b>), Science(<b>purple</b>), Escape(<b>red and white</b>), and Medbay(<b>blue</b>).\nIn the center of the station, you see the Bridge(<b>dark blue</b>).\n\
+	Around those, you see Hallways/Entrances(<b>light grey</b>), Public Areas(<b>grey</b>), and Maintenance(<b>dark grey</b>)."
 
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"
@@ -126,49 +142,49 @@
 
 /obj/structure/sign/biohazard
 	name = "\improper BIOHAZARD"
-	desc = "A warning sign which reads 'BIOHAZARD'"
+	desc = "A warning sign which reads 'BIOHAZARD'."
 	icon_state = "bio"
 
 /obj/structure/sign/electricshock
 	name = "\improper HIGH VOLTAGE"
-	desc = "A warning sign which reads 'HIGH VOLTAGE'"
+	desc = "A warning sign which reads 'HIGH VOLTAGE'."
 	icon_state = "shock"
 
 /obj/structure/sign/examroom
 	name = "\improper EXAM ROOM"
-	desc = "A guidance sign which reads 'EXAM ROOM'"
+	desc = "A guidance sign which reads 'EXAM ROOM'."
 	icon_state = "examroom"
 
 /obj/structure/sign/vacuum
 	name = "\improper HARD VACUUM AHEAD"
-	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
+	desc = "A warning sign which reads 'HARD VACUUM AHEAD'."
 	icon_state = "space"
 
 /obj/structure/sign/deathsposal
 	name = "\improper DISPOSAL: LEADS TO SPACE"
-	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'"
+	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
 
 /obj/structure/sign/pods
 	name = "\improper ESCAPE PODS"
-	desc = "A warning sign which reads 'ESCAPE PODS'"
+	desc = "A warning sign which reads 'ESCAPE PODS'."
 	icon_state = "pods"
 
 /obj/structure/sign/fire
 	name = "\improper DANGER: FIRE"
-	desc = "A warning sign which reads 'DANGER: FIRE'"
+	desc = "A warning sign which reads 'DANGER: FIRE'."
 	icon_state = "fire"
 
 
 /obj/structure/sign/nosmoking_1
 	name = "\improper NO SMOKING"
-	desc = "A warning sign which reads 'NO SMOKING'"
+	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking"
 
 
 /obj/structure/sign/nosmoking_2
 	name = "\improper NO SMOKING"
-	desc = "A warning sign which reads 'NO SMOKING'"
+	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking2"
 
 /obj/structure/sign/radiation
@@ -191,25 +207,43 @@
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
 	icon_state = "goldenplaque"
 
+/obj/structure/sign/goldenplaque/captain
+	name = "The Most Robust Captain Award for Robustness"
+
 /obj/structure/sign/kiddieplaque
 	name = "AI developers plaque"
-	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\""
+	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be retarded. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
+
+/obj/structure/sign/kiddieplaque/badger
+	name = "Remembrance Plaque"
+	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom."
+
+/obj/structure/sign/kiddieplaque/library
+	name = "Library Rules Sign"
+	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside."
+
+/obj/structure/sign/kiddieplaque/perfect_man
+	name = "\improper 'Perfect Man' sign"
+	desc = "A guide to the exhibit, explaining how recent developments in mindshield implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee."
+
+/obj/structure/sign/kiddieplaque/perfect_drone
+	name = "\improper 'Perfect Drone' sign"
+	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today."
 
 /obj/structure/sign/atmosplaque
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 	icon_state = "atmosplaque"
 
-/obj/structure/sign/maltesefalcon	//The sign is 64x32, so it needs two tiles. ;3
-	name = "The Maltese Falcon"
-	desc = "The Maltese Falcon, Space Bar and Grill."
+/obj/structure/sign/atmosplaque/thunderdome
+	name = "Thunderdome Plaque"
+	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands."
 
-/obj/structure/sign/maltesefalcon/left
-	icon_state = "maltesefalcon-left"
-
-/obj/structure/sign/maltesefalcon/right
-	icon_state = "maltesefalcon-right"
+/obj/structure/sign/nanotrasen
+	name = "\improper Nanotrasen Logo"
+	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
 
 /obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
 	name = "\improper SCIENCE"
@@ -228,8 +262,54 @@
 
 /obj/structure/sign/xenobio
 	name = "\improper XENOBIOLOGY"
-	desc = "A sign labelling an area as a place where xenobiological entites are researched."
+	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
+
+/obj/structure/sign/evac
+	name = "\improper EVACUATION"
+	desc = "A sign labelling an area where evacuation procedures take place."
+	icon_state = "evac"
+
+/obj/structure/sign/custodian
+	name = "\improper CUSTODIAN"
+	desc = "A sign labelling an area where the custodian works."
+	icon_state = "custodian"
+
+/obj/structure/sign/engineering
+	name = "\improper ENGINEERING"
+	desc = "A sign labelling an area where engineers work."
+	icon_state = "engine"
+
+/obj/structure/sign/cargo
+	name = "\improper CARGO"
+	desc = "A sign labelling an area where cargo ships dock."
+	icon_state = "cargo"
+
+/obj/structure/sign/security
+	name = "\improper SECURITY"
+	desc = "A sign labelling an area where the law is law."
+	icon_state = "security"
+
+/obj/structure/sign/holy
+	name = "\improper HOLY"
+	desc = "A sign labelling a religious area."
+	icon_state = "holy"
+
+/obj/structure/sign/restroom
+	name = "\improper RESTROOM"
+	desc = "A sign labelling a restroom."
+	icon_state = "restroom"
+
+/obj/structure/sign/xeno_warning_mining
+	name = "DANGEROUS ALIEN LIFE"
+	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "xeno_warning"
+
+/obj/structure/sign/enginesafety
+	name = "\improper ENGINEERING SAFETY"
+	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
+	icon_state = "safety"
 
 /obj/structure/sign/directions/science
 	name = "science department"
@@ -255,3 +335,18 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+/obj/structure/sign/directions/supply
+	name = "cargo bay"
+	desc = "A direction sign, pointing out which way the Cargo Bay is."
+	icon_state = "direction_supply"
+
+/obj/structure/sign/directions/command
+	name = "command department"
+	desc = "A direction sign, pointing out which way the Command department is."
+	icon_state = "direction_bridge"
+
+/obj/structure/sign/logo
+	name = "nanotrasen logo"
+	desc = "The Nanotrasen corporate logo."
+	icon_state = "nanotrasen_sign1"

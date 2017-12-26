@@ -3,17 +3,20 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/act_intent()
-	using.icon = ui_style
-	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
-	static_inventory += using
-	action_intent = using
+	action_intent = new /obj/screen/act_intent()
+	action_intent.icon = ui_style
+	action_intent.icon_state = mymob.a_intent
+	action_intent.screen_loc = ui_acti
+	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
+	static_inventory += using
+
+	using = new/obj/screen/language_menu
+	using.icon = ui_style
 	static_inventory += using
 
 	using = new /obj/screen/drop()
@@ -21,32 +24,18 @@
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
-	inv_box = new /obj/screen/inventory/hand()
-	inv_box.name = "right hand"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r"
-	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
-	static_inventory += inv_box
-
-	inv_box = new /obj/screen/inventory/hand()
-	inv_box.name = "left hand"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l"
-	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
-	static_inventory += inv_box
+	build_hand_slots(ui_style)
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1_m"	//extra wide!
-	using.screen_loc = ui_swaphand1
+	using.screen_loc = ui_swaphand_position(owner,1)
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand2
+	using.screen_loc = ui_swaphand_position(owner,2)
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -56,6 +45,15 @@
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
 	inv_box.slot_id = slot_wear_mask
+	static_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
+	inv_box.name = "neck"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "neck"
+//	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_monkey_neck
+	inv_box.slot_id = slot_neck
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -71,8 +69,7 @@
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
-	inv_box.icon_full = "template_small"
-	inv_box.screen_loc = ui_back
+	inv_box.screen_loc = ui_monkey_back
 	inv_box.slot_id = slot_back
 	static_inventory += inv_box
 
@@ -118,18 +115,21 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/monkey/persistant_inventory_update()
+/datum/hud/monkey/persistent_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/carbon/monkey/M = mymob
 
 	if(hud_shown)
 		if(M.back)
-			M.back.screen_loc = ui_back
+			M.back.screen_loc = ui_monkey_back
 			M.client.screen += M.back
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask
 			M.client.screen += M.wear_mask
+		if(M.wear_neck)
+			M.wear_neck.screen_loc = ui_monkey_neck
+			M.client.screen += M.wear_neck
 		if(M.head)
 			M.head.screen_loc = ui_monkey_head
 			M.client.screen += M.head
@@ -142,17 +142,13 @@
 			M.head.screen_loc = null
 
 	if(hud_version != HUD_STYLE_NOHUD)
-		if(M.r_hand)
-			M.r_hand.screen_loc = ui_rhand
-			M.client.screen += M.r_hand
-		if(M.l_hand)
-			M.l_hand.screen_loc = ui_lhand
-			M.client.screen += M.l_hand
+		for(var/obj/item/I in M.held_items)
+			I.screen_loc = ui_hand_position(M.get_held_index_of_item(I))
+			M.client.screen += I
 	else
-		if(M.r_hand)
-			M.r_hand.screen_loc = null
-		if(M.l_hand)
-			M.l_hand.screen_loc = null
+		for(var/obj/item/I in M.held_items)
+			I.screen_loc = null
+			M.client.screen -= I
 
 /mob/living/carbon/monkey/create_mob_hud()
 	if(client && !hud_used)

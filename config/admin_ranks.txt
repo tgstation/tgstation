@@ -11,13 +11,15 @@
 ##############################################################################################################
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!
 
-# KEYWORDS:
+# Follow the format below when documenting new keywords so the server tools may parse it
+
+# BEGIN_KEYWORDS
 # +ADMIN = general admin tools, verbs etc
 # +FUN = events, other event-orientated actions. Access to the fun secrets in the secrets panel.
 # +BAN = the ability to ban, jobban and fullban
 # +STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins
 # +POSSESS = the ability to possess objects
-# +REJUV (or +REJUVINATE) = the ability to heal, respawn, modify damage and use godmode
+# +POLL (or +POLL) = the ability to create in game server polls (requires DB)
 # +BUILD (or +BUILDMODE) = the ability to use buildmode
 # +SERVER = higher-risk admin verbs and abilities, such as those which affect the server configuration.
 # +DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
@@ -25,16 +27,19 @@
 # +RIGHTS (or +PERMISSIONS) = allows you to promote and/or demote people.
 # +SOUND (or +SOUNDS) = allows you to upload and play sounds
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
+# +AUTOLOGIN = admin gains powers upon connect. This defaults to on, you can use -AUTOLOGIN to make a role require using the readmin verb to gain powers. (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit.)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
+# END_KEYWORDS
 
-Admin Observer
+Admin Observer	= -AUTOLOGIN
 Moderator		= +ADMIN
 Admin Candidate	= +@
-Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
-Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
+Trial Admin		= +@ +SPAWN +VAREDIT +BAN
+Badmin			= +@ +POSSESS +POLL +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
 Game Master		= +EVERYTHING
+Lazy Master 	= +EVERYTHING -AUTOLOGIN
 
 Host			= +EVERYTHING
 
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL -AUTOLOGIN

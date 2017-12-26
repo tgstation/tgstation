@@ -6,7 +6,7 @@
 //reshape_face
 /datum/surgery_step/reshape_face
 	name = "reshape face"
-	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 50, /obj/item/weapon/wirecutters = 35)
+	implements = list(/obj/item/scalpel = 100, /obj/item/kitchen/knife = 50, /obj/item/wirecutters = 35)
 	time = 64
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -20,7 +20,7 @@
 		var/oldname = target.real_name
 		target.real_name = target.dna.species.random_name(target.gender,1)
 		var/newname = target.real_name	//something about how the code handles names required that I use this instead of target.real_name
-		user.visible_message("[user] alters [oldname]'s appearance completely, they are now [newname]!", "<span class='notice'>You alter [oldname]'s appearance completely, they are now [newname].</span>")
+		user.visible_message("[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!", "<span class='notice'>You alter [oldname]'s appearance completely, [target.p_they()] is now [newname].</span>")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_ID()

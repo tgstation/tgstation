@@ -25,11 +25,11 @@
 	proj_trail_icon_state = "magicmd"
 
 	action_icon_state = "magicm"
-	sound = "sound/magic/MAGIC_MISSILE.ogg"
+	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_weakened = 3
-	sound = "sound/magic/MM_Hit.ogg"
+	amt_knockdown = 60
+	sound = 'sound/magic/mm_hit.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -42,14 +42,13 @@
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
-	centcom_cancast = 0
 
 	mutations = list(LASEREYES, HULK)
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
 	action_icon_state = "mutate"
-	sound = "sound/magic/Mutate.ogg"
+	sound = 'sound/magic/mutate.ogg'
 
 
 /obj/effect/proc_holder/spell/targeted/smoke
@@ -70,6 +69,24 @@
 
 	action_icon_state = "smoke"
 
+
+/obj/effect/proc_holder/spell/targeted/smoke/lesser //Chaplain smoke book
+	name = "Smoke"
+	desc = "This spell spawns a small cloud of choking smoke at your location."
+
+	school = "conjuration"
+	charge_max = 360
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = -1
+	include_user = 1
+
+	smoke_spread = 1
+	smoke_amt = 2
+
+	action_icon_state = "smoke"
+
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
@@ -83,7 +100,7 @@
 
 	emp_heavy = 6
 	emp_light = 10
-	sound = "sound/magic/Disable_Tech.ogg"
+	sound = 'sound/magic/disable_tech.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
@@ -105,11 +122,9 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcom_cancast = 0 //prevent people from getting to centcom
-
 	action_icon_state = "blink"
-	sound1="sound/magic/blink.ogg"
-	sound2="sound/magic/blink.ogg"
+	sound1 = 'sound/magic/blink.ogg'
+	sound2 = 'sound/magic/blink.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
 	name = "quickstep"
@@ -133,27 +148,8 @@
 
 	smoke_spread = 1
 	smoke_amt = 2
-	sound1="sound/magic/Teleport_diss.ogg"
-	sound2="sound/magic/Teleport_app.ogg"
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
-	name = "Forcewall"
-	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
-
-	school = "transmutation"
-	charge_max = 100
-	clothes_req = 0
-	invocation = "TARCOL MINTI ZHERI"
-	invocation_type = "whisper"
-	range = 0
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	summon_type = list("/obj/effect/forcefield")
-	summon_lifespan = 300
-
-	action_icon_state = "shield"
-	cast_sound = "sound/magic/ForceWall.ogg"
-
+	sound1 = 'sound/magic/teleport_diss.ogg'
+	sound2 = 'sound/magic/teleport_app.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
@@ -181,12 +177,12 @@
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
-	cast_sound = "sound/magic/Summon_Karp.ogg"
+	cast_sound = 'sound/magic/summon_karp.ogg'
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades"
+	desc = "This spell conjures a construct which may be controlled by Shades."
 
 	school = "conjuration"
 	charge_max = 600
@@ -198,12 +194,12 @@
 	summon_type = list(/obj/structure/constructshell)
 
 	action_icon_state = "artificer"
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
+	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
+	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -213,8 +209,8 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list(/mob/living/simple_animal/hostile/creature)
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
+	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
+	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -243,74 +239,12 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
-	sound="sound/magic/Blind.ogg"
+	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	mutations = list(BLINDMUT)
 	duration = 300
-	sound="sound/magic/Blind.ogg"
-
-/obj/effect/proc_holder/spell/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
-
-	school = "evocation"
-	charge_max = 60
-	clothes_req = 0
-	invocation = "ONI SOMA"
-	invocation_type = "shout"
-	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
-	var/fireball_type = /obj/item/projectile/magic/fireball
-	action_icon_state = "fireball0"
-	sound = "sound/magic/Fireball.ogg"
-
-	active = FALSE
-
-
-/obj/effect/proc_holder/spell/fireball/Click()
-	var/mob/living/user = usr
-	if(!istype(user) || !can_cast(user))
-		return
-
-	var/msg
-	if(active)
-		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
-		remove_ranged_ability(user, msg)
-	else
-		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
-		add_ranged_ability(user, msg)
-
-/obj/effect/proc_holder/spell/fireball/update_icon()
-	action.button_icon_state = "fireball[active]"
-	action.UpdateButtonIcon()
-
-/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
-	if(..())
-		return
-
-	if(!cast_check(0, user))
-		remove_ranged_ability(user)
-		return
-
-	var/list/targets = list(target)
-	perform(targets,user = user)
-
-/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
-	var/target = targets[1] //There is only ever one target for fireball
-	var/turf/T = user.loc
-	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(U) || !isturf(T))
-		return 0
-
-	var/obj/item/projectile/magic/fireball/FB = new fireball_type(user.loc)
-	FB.current = get_turf(user)
-	FB.preparePixelProjectile(target, get_turf(target), user)
-	FB.fire()
-	user.newtonian_move(get_dir(U, T))
-
-	return 1
-
+	sound = 'sound/magic/blind.ogg'
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
@@ -321,13 +255,13 @@
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
-	sound = 'sound/magic/Repulse.ogg'
+	sound = 'sound/magic/repulse.ogg'
 	var/maxthrow = 5
-	var/sparkle_path = /obj/effect/overlay/temp/sparkle
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -336,42 +270,97 @@
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
-	for(var/atom/movable/AM in thrownatoms)
-		if(AM == user || AM.anchored) continue
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
 
-		// created sparkles will disappear on their own
-		PoolOrNew(sparkle_path, AM)
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
-			if(istype(AM, /mob/living))
+			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Weaken(5)
+				M.Knockdown(100)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
-			if(istype(AM, /mob/living))
+			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Weaken(2)
-				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
-			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+				M.Knockdown(stun_amt)
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
+			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
-	sound = 'sound/magic/Tail_swing.ogg'
+	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = 0
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	sparkle_path = /obj/effect/overlay/temp/sparkle/tailsweep
+	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
+	..(targets, user, 60)
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame
+	name = "Sacred Flame"
+	desc = "Makes everyone around you more flammable, and lights yourself on fire."
+	charge_max = 60
+	clothes_req = 0
+	invocation = "FI'RAN DADISKO"
+	invocation_type = "shout"
+	max_targets = 0
+	range = 6
+	include_user = 1
+	selection_type = "view"
+	action_icon_state = "sacredflame"
+	sound = 'sound/magic/fireball.ogg'
+
+/obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
+	for(var/mob/living/L in targets)
+		L.adjust_fire_stacks(20)
+	if(isliving(user))
+		var/mob/living/U = user
+		U.IgniteMob()
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	name = "Thrown Lightning"
+	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
+	clothes_req = 1
+	item_type = /obj/item/spellpacket/lightningbolt
+	charge_max = 10
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
+	for(var/mob/living/carbon/C in targets)
+		C.throw_mode_on()
+
+/obj/item/spellpacket/lightningbolt
+	name = "\improper Lightning bolt Spell Packet"
+	desc = "Some birdseed wrapped in cloth that somehow crackles with electricity."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "snappop"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+	if(!..())
+		if(isliving(hit_atom))
+			var/mob/living/M = hit_atom
+			M.electrocute_act(80, src, illusion = 1)
+		qdel(src)
+
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+	. = ..()
+	if(ishuman(thrower))
+		var/mob/living/carbon/human/H = thrower
+		H.say("LIGHTNINGBOLT!!")

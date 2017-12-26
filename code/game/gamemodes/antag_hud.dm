@@ -1,9 +1,9 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
-	var/self_visible = 1
+	var/self_visible = TRUE
 
 /datum/atom_hud/antag/hidden
-	self_visible = 0
+	self_visible = FALSE
 
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	//sees_hud should be set to 0 if the mob does not get to see it's own hud type.
@@ -29,7 +29,7 @@
 
 //GAME_MODE PROCS
 //called to set a mob's antag icon state
-/datum/game_mode/proc/set_antag_hud(mob/M, new_icon_state)
+/proc/set_antag_hud(mob/M, new_icon_state)
 	if(!istype(M))
 		CRASH("set_antag_hud(): [M] ([M.type]) is not a mob!")
 	var/image/holder = M.hud_list[ANTAG_HUD]
@@ -41,17 +41,13 @@
 
 //MIND PROCS
 //these are called by mind.transfer_to()
-/datum/mind/proc/transfer_antag_huds(var/datum/atom_hud/antag/newhud)
-	leave_all_huds()
-	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
+/datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
+	leave_all_antag_huds()
+	set_antag_hud(current, antag_hud_icon_state)
 	if(newhud)
 		newhud.join_hud(current)
 
-/datum/mind/proc/leave_all_huds()
-	for(var/datum/atom_hud/antag/hud in huds)
-		if(current in hud.hudusers)
+/datum/mind/proc/leave_all_antag_huds()
+	for(var/datum/atom_hud/antag/hud in GLOB.huds)
+		if(hud.hudusers[current])
 			hud.leave_hud(current)
-
-	for(var/datum/atom_hud/data/hud in huds)
-		if(current in hud.hudusers)
-			hud.remove_hud_from(current)

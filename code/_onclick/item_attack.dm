@@ -1,39 +1,74 @@
 
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if(!tool_check(user, target) && pre_attackby(target, user, params))
+		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+		var/resolved = target.attackby(src, user, params)
+		if(!resolved && target && !QDELETED(src))
+			afterattack(target, user, 1, params) // 1: clicking something Adjacent
+
+
+//Checks if the item can work as a tool, calling the appropriate tool behavior on the target
+/obj/item/proc/tool_check(mob/user, atom/target)
+	switch(tool_behaviour)
+		if(TOOL_NONE)
+			return FALSE
+		if(TOOL_CROWBAR)
+			return target.crowbar_act(user, src)
+		if(TOOL_MULTITOOL)
+			return target.multitool_act(user, src)
+		if(TOOL_SCREWDRIVER)
+			return target.screwdriver_act(user, src)
+		if(TOOL_WRENCH)
+			return target.wrench_act(user, src)
+		if(TOOL_WIRECUTTER)
+			return target.wirecutter_act(user, src)
+
+
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
-	return
+	SendSignal(COMSIG_ITEM_ATTACK_SELF, user)
+	interact(user)
+
+/obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
+	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return
+	if(SendSignal(COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+		return TRUE
+	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
+	return ..() || (can_be_hit && I.attack_obj(src, user))
 
-/mob/living/attackby(obj/item/I, mob/user, params)
+/mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
+			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
 				harvest(user)
 			return 1
 	return I.attack(src, user)
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(flags & NOBLUDGEON)
+	SendSignal(COMSIG_ITEM_ATTACK, M, user)
+	if(flags_1 & NOBLUDGEON_1)
+		return
+	if(user.has_disability(DISABILITY_PACIFISM))
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 
+	user.do_attack_animation(M)
 	M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
@@ -42,35 +77,40 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & NOBLUDGEON)
+	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
+	if(flags_1 & NOBLUDGEON_1)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
-
-
 
 /atom/movable/proc/attacked_by()
 	return
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+		//only witnesses close by and the victim see a hit message.
+	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
-	if(user != src)
-		user.do_attack_animation(src)
-	if(send_item_attack_message(I, user))
-		if(apply_damage(I.force, I.damtype))
-			if(I.damtype == BRUTE)
-				if(prob(33))
-					I.add_mob_blood(src)
-					var/turf/location = get_turf(src)
-					add_splatter_floor(location)
-					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-						user.add_mob_blood(src)
-	return TRUE
+	send_item_attack_message(I, user)
+	if(I.force)
+		apply_damage(I.force, I.damtype)
+		if(I.damtype == BRUTE)
+			if(prob(33))
+				I.add_mob_blood(src)
+				var/turf/location = get_turf(src)
+				add_splatter_floor(location)
+				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+					user.add_mob_blood(src)
+		return TRUE //successful attack
 
+/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
+	if(I.force < force_threshold || I.damtype == STAMINA)
+		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
+	else
+		return ..()
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -81,33 +121,22 @@
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
 		if(force)
-			return Clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+			return CLAMP((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 		else
-			return Clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"
 	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"
 	else if(!I.force)
-		return 0
+		return
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-
 	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
 	if(user in viewers(src, null))
 		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+	visible_message("<span class='danger'>[attack_message]</span>",\
+		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return 1
-
-/mob/living/simple_animal/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
-	if(!I.force)
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
-						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
-	else if(I.force < force_threshold || I.damtype == STAMINA)
-		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
-					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
-	else
-		return ..()

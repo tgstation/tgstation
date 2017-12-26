@@ -1,25 +1,29 @@
 /obj/machinery/atmospherics/components/trinary/mixer
 	icon_state = "mixer_off"
-	density = 0
+	density = FALSE
 
 	name = "gas mixer"
-	can_unwrench = 1
+	can_unwrench = TRUE
+	desc = "Very useful for mixing gasses."
 
-	var/on = 0
+	var/on = FALSE
 
 	var/target_pressure = ONE_ATMOSPHERE
 	var/node1_concentration = 0.5
 	var/node2_concentration = 0.5
 
+	construction_type = /obj/item/pipe/trinary/flippable
+	pipe_state = "mixer"
+
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
-	flipped = 1
+	flipped = TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinals)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)
@@ -29,42 +33,37 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)
+	if(on && nodes[1] && nodes[2] && nodes[3] && is_operational())
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
-
 	icon_state = "mixer_off[flipped?"_f":""]"
 
 /obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
 	..()
-	if(stat & NOPOWER)
-		on = 0
-	if(old_stat != stat)
+	if(stat != old_stat)
 		update_icon()
 
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air3 = airs[3]
 	air3.volume = 300
-	AIR3 = air3
+	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
-	if(!on)
-		return 0
-	if(!(NODE1 && NODE2 && NODE3))
-		return 0
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) && !is_operational())
+		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
-	var/datum/gas_mixture/air3 = AIR3
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
 	if(output_starting_pressure >= target_pressure)
 		//No need to mix if target is already full!
-		return 1
+		return
 
 	//Calculate necessary moles to transfer using PV=nRT
 
@@ -104,20 +103,20 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
-		var/datum/pipeline/parent1 = PARENT1
+		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
 
 	if(transfer_moles2)
-		var/datum/pipeline/parent2 = PARENT2
+		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
 
-	var/datum/pipeline/parent3 = PARENT3
+	var/datum/pipeline/parent3 = parents[3]
 	parent3.update = TRUE
 
-	return TRUE
+	return
 
-/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_mixer", name, 370, 165, master_ui, state)
@@ -138,7 +137,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -153,18 +152,25 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])
 			node1_concentration = max(0, min(1, node1_concentration + value))
 			node2_concentration = max(0, min(1, node2_concentration - value))
-			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
+			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
 			node2_concentration = max(0, min(1, node2_concentration + value))
 			node1_concentration = max(0, min(1, node1_concentration - value))
-			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
+			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
+
+
+/obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
+	. = ..()
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE

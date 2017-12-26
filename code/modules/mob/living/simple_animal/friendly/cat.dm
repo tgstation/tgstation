@@ -9,12 +9,12 @@
 	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows", "mews")
-	emote_see = list("shakes its head", "shivers")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("shakes its head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	minbodytemp = 200
@@ -22,21 +22,21 @@
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/pet/cat/New()
-	..()
+/mob/living/simple_animal/pet/cat/Initialize()
+	. = ..()
 	verbs += /mob/living/proc/lay_down
 
 /mob/living/simple_animal/pet/cat/update_canmove()
 	..()
-	if(client)
+	if(client && stat != DEAD)
 		if (resting)
 			icon_state = "[icon_living]_rest"
 		else
@@ -56,6 +56,7 @@
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
+	gender = FEMALE
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
@@ -66,8 +67,7 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	gender = NEUTER
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -79,51 +79,68 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
-	gold_core_spawnable = 0
-	var/list/family = list()
+	gold_core_spawnable = NO_SPAWN
+	var/list/family = list()//var restored from savefile, has count of each child type
+	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 
-/mob/living/simple_animal/pet/cat/Runtime/New()
+/mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
 		icon_dead = "original_dead"
 	Read_Memory()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
+	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
+		memory_saved = TRUE
 	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/make_babies()
+	var/mob/baby = ..()
+	if(baby)
+		children += baby
+		return baby
 
 /mob/living/simple_animal/pet/cat/Runtime/death()
 	if(!memory_saved)
-		Write_Memory(1)
+		Write_Memory(TRUE)
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	S["family"] 			>> family
-
+	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+		S["family"] >> family
+		fdel("data/npc_saves/Runtime.sav")
+	else
+		var/json_file = file("data/npc_saves/Runtime.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = json_decode(file2text(json_file))
+		family = json["family"]
 	if(isnull(family))
 		family = list()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	var/json_file = file("data/npc_saves/Runtime.json")
+	var/list/file_data = list()
 	family = list()
 	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
 			if(C.type in family)
 				family[C.type] += 1
 			else
 				family[C.type] = 1
-	S["family"]				<< family
-	memory_saved = 1
+	file_data["family"] = family
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
 	cats_deployed = 1
@@ -134,7 +151,8 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
-	gold_core_spawnable = 0
+	gender = MALE
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
@@ -207,7 +225,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)
@@ -221,9 +239,10 @@
 	icon_dead = "cak_dead"
 	health = 50
 	maxHealth = 50
+	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
-	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
@@ -235,12 +254,12 @@
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)
-	src << "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	to_chat(src, "<span class='big bold'>You are a cak!</span><b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
-	free cake to the station!</b>"
+	free cake to the station!</b>")
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
 	if(new_name)
-		src << "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>"
+		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life()
@@ -249,7 +268,7 @@
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
 			D.icon_state = "donut2"
@@ -259,6 +278,6 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
-	if(L.a_intent == "harm" && L.reagents && !stat)
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)

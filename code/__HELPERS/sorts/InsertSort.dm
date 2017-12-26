@@ -8,9 +8,9 @@
 		if(toIndex <= 0)
 			toIndex += L.len + 1
 
-		sortInstance.L = L
-		sortInstance.cmp = cmp
-		sortInstance.associative = associative
+		GLOB.sortInstance.L = L
+		GLOB.sortInstance.cmp = cmp
+		GLOB.sortInstance.associative = associative
 
-		sortInstance.binarySort(fromIndex, toIndex, fromIndex)
+		GLOB.sortInstance.binarySort(fromIndex, toIndex, fromIndex)
 	return L

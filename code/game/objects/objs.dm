@@ -1,26 +1,49 @@
 /obj
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
-	var/crit_fail = 0
-	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
+	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
-	var/damtype = "brute"
+	var/damtype = BRUTE
 	var/force = 0
 
-	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
-	var/burntime = 10 //How long it takes to burn to ashes, in seconds
-	var/burn_world_time //What world time the object will burn up completely
-	var/being_shocked = 0
+	var/list/armor
+	var/obj_integrity	//defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior
+
+	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	var/can_be_hit = TRUE //can this be bludgeoned by items?
+
+	var/acid_level = 0 //how much acid is on that obj
+
+	var/being_shocked = FALSE
 
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
-/obj/New()
+	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
+	var/unique_rename = FALSE // can you customize the description/name of the thing?
+	var/current_skin //Has the item been reskinned?
+	var/list/unique_reskin //List of options to reskin.
+	var/dangerous_possession = FALSE	//Admin possession yes/no
+
+/obj/vv_edit_var(vname, vval)
+	switch(vname)
+		if("dangerous_possession")
+			return FALSE
+		if("control_object")
+			var/obj/O = vval
+			if(istype(O) && O.dangerous_possession)
+				return FALSE
 	..()
 
+/obj/Initialize()
+	. = ..()
+	if (!armor)
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	if(obj_integrity == null)
+		obj_integrity = max_integrity
 	if(on_blueprints && isturf(loc))
 		var/turf/T = loc
 		if(force_blueprints)
@@ -28,11 +51,17 @@
 		else
 			T.add_blueprints_preround(src)
 
-/obj/Destroy()
-	if(!istype(src, /obj/machinery))
+/obj/Destroy(force=FALSE)
+	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
-	return ..()
+	. = ..()
+
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+	..()
+	if(flags_2 & FROZEN_2)
+		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
+		qdel(src)
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -73,7 +102,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
+		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
@@ -110,7 +139,7 @@
 		return
 	..()
 
-/obj/proc/container_resist()
+/obj/proc/container_resist(mob/living/user)
 	return
 
 /obj/proc/update_icon()
@@ -137,85 +166,65 @@
 	if(istype(M) && M.client && M.machine == src)
 		src.attack_self(M)
 
-
-/obj/proc/alter_health()
-	return 1
-
 /obj/proc/hide(h)
 	return
 
-/obj/ex_act(severity, target)
-	if(severity == 1 || target == src)
-		qdel(src)
-	else if(severity == 2)
-		if(prob(50))
-			qdel(src)
-	if(!qdeleted(src))
-		..()
-
-//If a mob logouts/logins in side of an object you can use this proc
-/obj/proc/on_log()
-	..()
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
-
-/obj/singularity_act()
-	ex_act(1)
-	if(src && !qdeleted(src))
-		qdel(src)
-	return 2
-
 /obj/singularity_pull(S, current_size)
+	..()
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
-
-/obj/proc/Deconstruct()
-	qdel(src)
 
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	var/turf/T = get_turf(src)
-	return T.storage_contents_dump_act(src_object, user)
+/obj/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+	return
 
-/obj/fire_act(global_overlay=1)
-	if(!burn_state)
-		burn_state = ON_FIRE
-		SSobj.burning += src
-		burn_world_time = world.time + burntime*rand(10,20)
-		if(global_overlay)
-			add_overlay(fire_overlay)
-		return 1
-
-/obj/proc/burn()
-	empty_object_contents(1, src.loc)
-	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
-	A.desc = "Looks like this used to be a [name] some time ago."
-	SSobj.burning -= src
-	qdel(src)
-
-/obj/proc/extinguish()
-	if(burn_state == ON_FIRE)
-		burn_state = FLAMMABLE
-		overlays -= fire_overlay
-		SSobj.burning -= src
-
-/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
-	for(var/obj/item/Item in contents) //Empty out the contents
-		Item.loc = new_loc
-		if(burn)
-			Item.fire_act() //Set them on fire, too
-
-/obj/proc/tesla_act(var/power)
-	being_shocked = 1
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
-	addtimer(src, "reset_shocked", 10)
-
-/obj/proc/reset_shocked()
-	being_shocked = 0
+/obj/get_dumping_location(obj/item/storage/source,mob/user)
+	return get_turf(src)
 
 /obj/proc/CanAStarPass()
 	. = !density
+
+/obj/proc/check_uplink_validity()
+	return 1
+
+/obj/proc/on_mob_move(dir, mob, oldLoc, forced)
+	return
+
+/obj/proc/on_mob_turn(dir, mob)
+	return
+
+/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
+	return
+
+/obj/vv_get_dropdown()
+	. = ..()
+	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
+	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
+
+/obj/examine(mob/user)
+	..()
+	if(unique_rename)
+		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+	if(unique_reskin && !current_skin)
+		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
+
+/obj/AltClick(mob/user)
+	. = ..()
+	if(unique_reskin && !current_skin && in_range(user,src))
+		if(user.incapacitated())
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return
+		reskin_obj(user)
+
+/obj/proc/reskin_obj(mob/M)
+	if(!LAZYLEN(unique_reskin))
+		return
+	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
+	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(!unique_reskin[choice])
+			return
+		current_skin = choice
+		icon_state = unique_reskin[choice]
+		to_chat(M, "[src] is now skinned as '[choice].'")

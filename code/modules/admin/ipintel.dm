@@ -14,18 +14,18 @@
 	. = FALSE
 	if (intel < 0)
 		return
-	if (intel <= config.ipintel_rating_bad)
-		if (world.realtime < cacherealtime+(config.ipintel_save_good*60*60*10))
+	if (intel <= CONFIG_GET(number/ipintel_rating_bad))
+		if (world.realtime < cacherealtime + (CONFIG_GET(number/ipintel_save_good) * 60 * 60 * 10))
 			return TRUE
 	else
-		if (world.realtime < cacherealtime+(config.ipintel_save_bad*60*60*10))
+		if (world.realtime < cacherealtime + (CONFIG_GET(number/ipintel_save_bad) * 60 * 60 * 10))
 			return TRUE
 
 /proc/get_ip_intel(ip, bypasscache = FALSE, updatecache = TRUE)
 	var/datum/ipintel/res = new()
 	res.ip = ip
 	. = res
-	if (!ip || !config.ipintel_email || !SSipintel.enabled)
+	if (!ip || !CONFIG_GET(string/ipintel_email) || !SSipintel.enabled)
 		return
 	if (!bypasscache)
 		var/datum/ipintel/cachedintel = SSipintel.cache[ip]
@@ -33,38 +33,39 @@
 			cachedintel.cache = TRUE
 			return cachedintel
 
-		if (establish_db_connection())
-			var/DBQuery/query = dbcon.NewQuery({"
+		if(SSdbcore.Connect())
+			var/rating_bad = CONFIG_GET(number/ipintel_rating_bad)
+			var/datum/DBQuery/query_get_ip_intel = SSdbcore.NewQuery({"
 				SELECT date, intel, TIMESTAMPDIFF(MINUTE,date,NOW())
 				FROM [format_table_name("ipintel")]
 				WHERE
 					ip = INET_ATON('[ip]')
 					AND ((
-							intel < [config.ipintel_rating_bad]
+							intel < [rating_bad]
 							AND
-							date + INTERVAL [config.ipintel_save_good] HOUR > NOW()
+							date + INTERVAL [CONFIG_GET(number/ipintel_save_good)] HOUR > NOW()
 						) OR (
-							intel >= [config.ipintel_rating_bad]
+							intel >= [rating_bad]
 							AND
-							date + INTERVAL [config.ipintel_save_bad] HOUR > NOW()
+							date + INTERVAL [CONFIG_GET(number/ipintel_save_bad)] HOUR > NOW()
 					))
 				"})
-			query.Execute()
-			if (query.NextRow())
+			if(!query_get_ip_intel.Execute())
+				return
+			if (query_get_ip_intel.NextRow())
 				res.cache = TRUE
-				res.cachedate = query.item[1]
-				res.intel = query.item[2]
-				res.cacheminutesago = query.item[3]
-				res.cacherealtime = world.realtime - (query.item[3]*10*60)
+				res.cachedate = query_get_ip_intel.item[1]
+				res.intel = text2num(query_get_ip_intel.item[2])
+				res.cacheminutesago = text2num(query_get_ip_intel.item[3])
+				res.cacherealtime = world.realtime - (text2num(query_get_ip_intel.item[3])*10*60)
 				SSipintel.cache[ip] = res
 				return
 	res.intel = ip_intel_query(ip)
 	if (updatecache && res.intel >= 0)
 		SSipintel.cache[ip] = res
-		if (establish_db_connection())
-			var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
-			query.Execute()
-	return
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_add_ip_intel = SSdbcore.NewQuery("INSERT INTO [format_table_name("ipintel")] (ip, intel) VALUES (INET_ATON('[ip]'), [res.intel]) ON DUPLICATE KEY UPDATE intel = VALUES(intel), date = NOW()")
+			query_add_ip_intel.Execute()
 
 
 
@@ -77,7 +78,7 @@
 	if (!SSipintel.enabled)
 		return
 
-	var/list/http[] = world.Export("http://[config.ipintel_domain]/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json&flags=f")
+	var/list/http[] = world.Export("http://[CONFIG_GET(string/ipintel_domain)]/check.php?ip=[ip]&contact=[CONFIG_GET(string/ipintel_email)]&format=json&flags=f")
 
 	if (http)
 		var/status = text2num(http["STATUS"])

@@ -12,6 +12,12 @@
 	var/name = "Reagent"
 	var/id = "reagent"
 	var/description = ""
+	var/taste_description = "metaphorical salt"
+	var/taste_mult = 1 //how this taste compares to others. Higher values means it is more noticable
+	var/glass_name = "glass of ...what?" // use for specialty drinks.
+	var/glass_desc = "You can't really tell what this is."
+	var/glass_icon_state = null // Otherwise just sets the icon to a normal glass with the mixture of the reagents in the glass.
+	var/shot_glass_icon_state = null
 	var/datum/reagents/holder = null
 	var/reagent_state = LIQUID
 	var/list/data
@@ -35,7 +41,7 @@
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = Clamp((1 - touch_protection), 0, 1)
+			var/modifier = CLAMP((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
@@ -50,6 +56,10 @@
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	return
+
+// Called when this reagent is first added to a mob
+/datum/reagent/proc/on_mob_add(mob/M)
 	return
 
 // Called when this reagent is removed while inside a mob
@@ -70,10 +80,6 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-// Called every time reagent containers process.
-/datum/reagent/proc/on_tick(data)
-	return
-
 // Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return
@@ -83,27 +89,27 @@
 	return
 
 /datum/reagent/proc/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
+	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	if(prob(30))
-		M << "<span class='notice'>You feel like some [name] right about now.</span>"
+		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
 	if(prob(30))
-		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
+		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
 	if(prob(30))
-		M << "<span class='danger'>You have an intense craving for [name].</span>"
+		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
 	if(prob(30))
-		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
+		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
 
 /proc/pretty_string_from_reagent_list(var/list/reagent_list)

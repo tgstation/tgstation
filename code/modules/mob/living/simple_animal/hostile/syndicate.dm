@@ -12,6 +12,7 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -22,7 +23,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stat_attack = 1
+	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	maxHealth = 100
 	health = 100
@@ -31,7 +32,7 @@
 	melee_damage_upper = 10
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
@@ -54,16 +55,16 @@
 	status_flags = 0
 	maxHealth = 170
 	health = 170
+	spacewalk = TRUE
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	if(prob(50))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.adjustHealth(Proj.damage)
+		return ..()
 	else
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-	return 0
+		return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
@@ -75,21 +76,13 @@
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
-	loot = list()
-
-/mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return 1
-
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicatemeleestormtrooper"
 	icon_living = "syndicatemeleestormtrooper"
 	name = "Syndicate Stormtrooper"
 	maxHealth = 340
 	health = 340
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/melee/energy/sword/saber/red,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Guns////////////
 
@@ -100,8 +93,8 @@
 	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
-	casingtype = /obj/item/ammo_casing/c45nostamina
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	casingtype = /obj/item/ammo_casing/c45/nostamina
+	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
@@ -111,13 +104,8 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	spacewalk = TRUE
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
-	loot = list()
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicaterangedstormtrooper"
@@ -125,18 +113,17 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 200
 	health = 200
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Misc////////////
 
 /mob/living/simple_animal/hostile/syndicate/civilian
 	minimum_distance = 10
 	retreat_distance = 10
-	environment_smash = 0
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
 	..()
@@ -150,19 +137,22 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	health = 15
-	maxHealth = 15
+	health = 25
+	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
+	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"

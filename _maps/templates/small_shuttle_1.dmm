@@ -1,90 +1,63 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f6";
-	icon_state = "swall_f6"
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/space)
 "c" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/space)
 "d" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f10";
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "e" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall3";
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "f" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "g" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "h" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall13";
-	icon_state = "swall13"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "i" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall8";
-	icon_state = "swall8"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "j" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "k" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall4";
-	icon_state = "swall4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "l" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "m" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "n" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/space)
 "o" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f5";
-	icon_state = "swall_f5"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/space)
 "q" = (
@@ -92,17 +65,11 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/space)
 "s" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f9";
-	icon_state = "swall_f9"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 
 (1,1,1) = {"
@@ -116,13 +83,13 @@ j
 j
 e
 e
-o
+b
 "}
 (2,1,1) = {"
 b
 e
 e
-h
+e
 l
 l
 f
@@ -135,7 +102,7 @@ p
 c
 f
 f
-i
+e
 f
 f
 f
@@ -161,7 +128,7 @@ q
 c
 f
 f
-k
+e
 f
 f
 f
@@ -171,10 +138,10 @@ n
 q
 "}
 (6,1,1) = {"
-d
+b
 e
 e
-h
+e
 m
 m
 f
@@ -187,12 +154,12 @@ r
 a
 a
 a
-d
+b
 e
 e
 j
 j
 e
 e
-s
+b
 "}

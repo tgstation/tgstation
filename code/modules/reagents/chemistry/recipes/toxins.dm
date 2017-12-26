@@ -2,111 +2,108 @@
 /datum/chemical_reaction/formaldehyde
 	name = "formaldehyde"
 	id = "Formaldehyde"
-	result = "formaldehyde"
+	results = list("formaldehyde" = 3)
 	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
-	result_amount = 3
 	required_temp = 420
 
 /datum/chemical_reaction/neurotoxin2
 	name = "neurotoxin2"
 	id = "neurotoxin2"
-	result = "neurotoxin2"
+	results = list("neurotoxin2" = 1)
 	required_reagents = list("space_drugs" = 1)
-	result_amount = 1
 	required_temp = 674
 
 /datum/chemical_reaction/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	result = "cyanide"
+	results = list("cyanide" = 3)
 	required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1)
-	result_amount = 3
 	required_temp = 380
 
 /datum/chemical_reaction/itching_powder
 	name = "Itching Powder"
 	id = "itching_powder"
-	result = "itching_powder"
+	results = list("itching_powder" = 3)
 	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
 	id = "facid"
-	result = "facid"
+	results = list("facid" = 4)
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
-	result_amount = 4
 	required_temp = 380
 
 /datum/chemical_reaction/sulfonal
 	name = "sulfonal"
 	id = "sulfonal"
-	result = "sulfonal"
+	results = list("sulfonal" = 3)
 	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
 	id = "lipolicide"
-	result = "lipolicide"
+	results = list("lipolicide" = 3)
 	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
-	result = "mutagen"
+	results = list("mutagen" = 3)
 	required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
 	id = "lexorin"
-	result = "lexorin"
+	results = list("lexorin" = 3)
 	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
-	result = "chloralhydrate"
+	results = list("chloralhydrate" = 1)
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
-	result_amount = 1
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
 	name = "Mute toxin"
 	id = "mutetoxin"
-	result = "mutetoxin"
+	results = list("mutetoxin" = 2)
 	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
-	result_amount = 2
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
-	result = "zombiepowder"
+	results = list("zombiepowder" = 2)
 	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
-	result_amount = 2
 
 /datum/chemical_reaction/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
-	result = "mindbreaker"
+	results = list("mindbreaker" = 5)
 	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
-	result_amount = 5
-
-/datum/chemical_reaction/teslium
-	name = "Teslium"
-	id = "teslium"
-	result = "teslium"
-	required_reagents = list("plasma" = 1, "silver" = 1, "blackpowder" = 1)
-	result_amount = 3
-	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
-	required_temp = 400
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
 	id = "Heparin"
-	result = "heparin"
+	results = list("heparin" = 4)
 	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
-	result_amount = 4
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
+
+/datum/chemical_reaction/rotatium
+	name = "Rotatium"
+	id = "Rotatium"
+	results = list("rotatium" = 3)
+	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
+	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
+
+/datum/chemical_reaction/skewium
+	name = "Skewium"
+	id = "Skewium"
+	results = list("skewium" = 5)
+	required_reagents = list("rotatium" = 2, "plasma" = 2, "sacid" = 1)
+	mix_message = "<span class='danger'>Wow! it turns out if you mix rotatium with some plasma and sulphuric acid, it gets even worse!</span>"
+
+/datum/chemical_reaction/anacea
+	name = "Anacea"
+	id = "anacea"
+	results = list("anacea" = 3)
+	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)

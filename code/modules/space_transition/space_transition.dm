@@ -1,12 +1,6 @@
 //This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
 
-#define Z_LEVEL_NORTH 		"1"
-#define Z_LEVEL_SOUTH 		"2"
-#define Z_LEVEL_EAST 		"4"
-#define Z_LEVEL_WEST 		"8"
-
-
-var/list/z_levels_list = list()
+GLOBAL_LIST_EMPTY(z_levels_list)
 
 /datum/space_level
 	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"
@@ -20,34 +14,34 @@ var/list/z_levels_list = list()
 	linked = transition_type
 	if(linked == SELFLOOPING)
 		neigbours = list()
-		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
+		var/list/L = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
 		for(var/A in L)
 			neigbours[A] = src
 
 /datum/space_level/proc/set_neigbours(list/L)
-	for(var/datum/point/P in L)
+	for(var/datum/space_transition_point/P in L)
 		if(P.x == xi)
 			if(P.y == yi+1)
-				neigbours[Z_LEVEL_NORTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_SOUTH] = src
+				neigbours[TEXT_NORTH] = P.spl
+				P.spl.neigbours[TEXT_SOUTH] = src
 			else if(P.y == yi-1)
-				neigbours[Z_LEVEL_SOUTH] = P.spl
-				P.spl.neigbours[Z_LEVEL_NORTH] = src
+				neigbours[TEXT_SOUTH] = P.spl
+				P.spl.neigbours[TEXT_NORTH] = src
 		else if(P.y == yi)
 			if(P.x == xi+1)
-				neigbours[Z_LEVEL_EAST] = P.spl
-				P.spl.neigbours[Z_LEVEL_WEST] = src
+				neigbours[TEXT_EAST] = P.spl
+				P.spl.neigbours[TEXT_WEST] = src
 			else if(P.x == xi-1)
-				neigbours[Z_LEVEL_WEST] = P.spl
-				P.spl.neigbours[Z_LEVEL_EAST] = src
+				neigbours[TEXT_WEST] = P.spl
+				P.spl.neigbours[TEXT_EAST] = src
 
-/datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
+/datum/space_transition_point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
 	var/list/neigbours = list()
 	var/x
 	var/y
 	var/datum/space_level/spl
 
-/datum/point/New(nx, ny, list/point_grid)
+/datum/space_transition_point/New(nx, ny, list/point_grid)
 	if(!point_grid)
 		qdel(src)
 		return
@@ -61,7 +55,7 @@ var/list/z_levels_list = list()
 		return
 	point_grid[x][y] = src
 
-/datum/point/proc/set_neigbours(list/grid)
+/datum/space_transition_point/proc/set_neigbours(list/grid)
 	var/max_X = grid.len
 	var/list/max_Y = grid[1]
 	max_Y = max_Y.len
@@ -78,26 +72,27 @@ var/list/z_levels_list = list()
 /proc/setup_map_transitions() //listamania
 	var/list/SLS = list()
 	var/datum/space_level/D
-	var/conf_set_len = map_transition_config.len
+	var/list/cached_transitions = SSmapping.config.transition_config
+	var/conf_set_len = cached_transitions.len
 	var/k = 1
-	for(var/A in map_transition_config)
-		D = new(map_transition_config[A])
+	for(var/A in cached_transitions)
+		D = new(cached_transitions[A])
 		D.name = A
 		D.z_value = k
 		if(D.linked != CROSSLINKED)
-			z_levels_list["[D.z_value]"] = D
+			GLOB.z_levels_list["[D.z_value]"] = D
 		else
 			SLS.Add(D)
 		k++
 	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
 	var/list/grid = list()
-	var/datum/point/P
+	var/datum/space_transition_point/P
 	for(var/i = 1, i<=conf_set_len*2+1, i++)
 		for(var/j = 1, j<=conf_set_len*2+1, j++)
-			P = new/datum/point(i,j, point_grid)
+			P = new/datum/space_transition_point(i,j, point_grid)
 			point_grid[i][j] = P
 			grid.Add(P)
-	for(var/datum/point/pnt in grid)
+	for(var/datum/space_transition_point/pnt in grid)
 		pnt.set_neigbours(point_grid)
 	P = point_grid[conf_set_len+1][conf_set_len+1]
 	var/list/possible_points = list()
@@ -115,8 +110,8 @@ var/list/z_levels_list = list()
 		P = pick(possible_points)
 		grid["[D.z_value]"] = D
 
-	for(var/A in z_levels_list)
-		grid[A] = z_levels_list[A]
+	for(var/A in GLOB.z_levels_list)
+		grid[A] = GLOB.z_levels_list[A]
 
 	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
 	//Its either this or madness with lotsa math
@@ -156,9 +151,4 @@ var/list/z_levels_list = list()
 				//S.maptext = "[zdestination]" // for debugging
 
 	for(var/A in grid)
-		z_levels_list[A] = grid[A]
-
-#undef Z_LEVEL_NORTH
-#undef Z_LEVEL_SOUTH
-#undef Z_LEVEL_EAST
-#undef Z_LEVEL_WEST
+		GLOB.z_levels_list[A] = grid[A]

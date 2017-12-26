@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/pirate
 	name = "Pirate"
 	desc = "Does what he wants cause a pirate is free."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
@@ -12,8 +13,10 @@
 	speed = 0
 	maxHealth = 100
 	health = 100
+	spacewalk = TRUE
 
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"
@@ -23,7 +26,7 @@
 	unsuitable_atmos_damage = 15
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate,
-			/obj/item/weapon/melee/energy/sword/pirate)
+			/obj/item/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
 
@@ -39,7 +42,7 @@
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
-			/obj/item/weapon/gun/energy/laser)
+			/obj/item/gun/energy/laser)
 
 /mob/living/simple_animal/hostile/pirate/space
 	name = "Space Pirate"
@@ -48,7 +51,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	deathmessage = "'s suit can't take anymore damage and rips apart!"
 
 /mob/living/simple_animal/hostile/pirate/space/ranged
 	name = "Space Pirate Gunner"
@@ -61,7 +63,5 @@
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
-			/obj/item/weapon/gun/energy/laser)
+			/obj/item/gun/energy/laser)
 
-/mob/living/simple_animal/hostile/pirate/space/Process_Spacemove(movement_dir = 0)
-	return 1

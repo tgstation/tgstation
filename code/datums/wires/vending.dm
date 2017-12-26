@@ -1,9 +1,10 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
+	proper_name = "Vending Unit"
 
 /datum/wires/vending/New(atom/holder)
 	wires = list(
-		WIRE_THROW, WIRE_ELECTRIFY, WIRE_SPEAKER,
+		WIRE_THROW, WIRE_SHOCK, WIRE_SPEAKER,
 		WIRE_CONTRABAND, WIRE_IDSCAN
 	)
 	add_duds(1)
@@ -11,7 +12,7 @@
 
 /datum/wires/vending/interactable(mob/user)
 	var/obj/machinery/vending/V = holder
-	if(!istype(user, /mob/living/silicon) && V.seconds_electrified && V.shock(user, 100))
+	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
 		return FALSE
 	if(V.panel_open)
 		return TRUE
@@ -33,7 +34,7 @@
 			V.shoot_inventory = !V.shoot_inventory
 		if(WIRE_CONTRABAND)
 			V.extended_inventory = !V.extended_inventory
-		if(WIRE_ELECTRIFY)
+		if(WIRE_SHOCK)
 			V.seconds_electrified = 30
 		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
@@ -47,7 +48,7 @@
 			V.shoot_inventory = !mend
 		if(WIRE_CONTRABAND)
 			V.extended_inventory = FALSE
-		if(WIRE_ELECTRIFY)
+		if(WIRE_SHOCK)
 			if(mend)
 				V.seconds_electrified = FALSE
 			else

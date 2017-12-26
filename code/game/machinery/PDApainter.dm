@@ -3,11 +3,11 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
-	var/health = 100
+	max_integrity = 200
 
 
 /obj/machinery/pdapainter/update_icon()
@@ -27,12 +27,16 @@
 
 	return
 
-/obj/machinery/pdapainter/New()
-	..()
-	var/blocked = list(/obj/item/device/pda/ai/pai, /obj/item/device/pda/ai, /obj/item/device/pda/heads,
-						/obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+/obj/machinery/pdapainter/Initialize()
+	. = ..()
+	var/list/blocked = list(
+		/obj/item/device/pda/ai/pai,
+		/obj/item/device/pda/ai,
+		/obj/item/device/pda/heads,
+		/obj/item/device/pda/clear,
+		/obj/item/device/pda/syndicate)
 
-	for(var/P in typesof(/obj/item/device/pda)-blocked)
+	for(var/P in typesof(/obj/item/device/pda) - blocked)
 		var/obj/item/device/pda/D = new P
 
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
@@ -40,6 +44,23 @@
 
 		src.colorlist += D
 
+/obj/machinery/pdapainter/Destroy()
+	QDEL_NULL(storedpda)
+	return ..()
+
+/obj/machinery/pdapainter/on_deconstruction()
+	if(storedpda)
+		storedpda.forceMove(loc)
+		storedpda = null
+
+/obj/machinery/pdapainter/contents_explosion(severity, target)
+	if(storedpda)
+		storedpda.ex_act(severity, target)
+
+/obj/machinery/pdapainter/handle_atom_del(atom/A)
+	if(A == storedpda)
+		storedpda = null
+		update_icon()
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
 	if(default_unfasten_wrench(user, O))
@@ -48,55 +69,38 @@
 
 	else if(istype(O, /obj/item/device/pda))
 		if(storedpda)
-			user << "<span class='warning'>There is already a PDA inside!</span>"
+			to_chat(user, "<span class='warning'>There is already a PDA inside!</span>")
 			return
-		else
-			var/obj/item/device/pda/P = user.get_active_hand()
-			if(istype(P))
-				if(!user.drop_item())
-					return
-				storedpda = P
-				P.loc = src
-				P.add_fingerprint(user)
-				update_icon()
+		else if(!user.transferItemToLoc(O, src))
+			return
+		storedpda = O
+		O.add_fingerprint(user)
+		update_icon()
 
-	else if(istype(O, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
-		var/obj/item/weapon/weldingtool/WT = O
+	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weldingtool/WT = O
 		if(stat & BROKEN)
 			if(WT.remove_fuel(0,user))
 				user.visible_message("[user] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-				if(do_after(user,40/WT.toolspeed, 1, target = src))
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user,40*WT.toolspeed, 1, target = src))
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
-					user << "<span class='notice'>You repair [src].</span>"
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					stat &= ~BROKEN
-					health = initial(health)
+					obj_integrity = max_integrity
 					update_icon()
 		else
-			user << "<span class='notice'>[src] does not need repairs.</span>"
+			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
 		return ..()
 
-/obj/machinery/pdapainter/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-	if(!(stat & BROKEN))
-		health -= damage
-		if(health <= 0)
+/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(!(stat & BROKEN))
 			stat |= BROKEN
 			update_icon()
 
@@ -118,7 +122,7 @@
 			ejectpda()
 
 		else
-			user << "<span class='notice'>\The [src] is empty.</span>"
+			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()
@@ -130,11 +134,11 @@
 		return
 
 	if(storedpda)
-		storedpda.loc = get_turf(src.loc)
+		storedpda.forceMove(drop_location())
 		storedpda = null
 		update_icon()
 	else
-		usr << "<span class='notice'>The [src] is empty.</span>"
+		to_chat(usr, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/power_change()
