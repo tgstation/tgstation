@@ -1,25 +1,20 @@
 //this is an example of a possible round-start event
-/datum/round_event_control/presents
-	name = "Presents under Trees (Christmas)"
+/datum/round_event_control/christmas
+	name = "Christmas"
 	holidayID = CHRISTMAS
-	typepath = /datum/round_event/presents
+	typepath = /datum/round_event/christmas
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0
 
-/datum/round_event/presents/start()
-	for(var/obj/structure/flora/tree/pine/xmas/xmas in world)
-		if(!(xmas.z in GLOB.station_z_levels))
-			continue
-		xmas.icon_state = "pinepresents"
-		xmas.gifts_under_tree = TRUE
+/datum/round_event/christmas/start()
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
-/datum/round_event/presents/announce(fake)
-	priority_announce("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
+/datum/round_event/christmas/announce(fake)
+	priority_announce("Ho Ho Ho, Merry Xmas! Enjoy your presents under the tree!", "Unknown Transmission")
 
 
 /obj/item/toy/xmas_cracker
@@ -65,17 +60,23 @@
 
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
-	var/tree = /obj/structure/flora/tree/pine/xmas
 
 /obj/effect/landmark/xmastree/Initialize(mapload)
-	..()
-	if(FESTIVE_SEASON in SSevents.holidays)
-		new tree(get_turf(src))
+	. = ..()
+	if(CHRISTMAS in SSevents.holidays)
+		new /obj/structure/flora/tree/xmas/presents(get_turf(src))
+	else if(FESTIVE_SEASON in SSevents.holidays)
+		new /obj/structure/flora/tree/xmas(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/xmastree/rdrod
+/obj/effect/landmark/rdrod
 	name = "festivus pole spawner"
-	tree = /obj/structure/festivus
+
+/obj/effect/landmark/rdrod/Initialize(mapload)
+	. = ..()
+	if(FESTIVE_SEASON in SSevents.holidays)
+		new /obj/structure/festivus(get_turf(src))
+	return INITIALIZE_HINT_QDEL
 
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"

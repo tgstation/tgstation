@@ -59588,7 +59588,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/effect/landmark/xmastree/rdrod,
+/obj/effect/landmark/rdrod,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
