@@ -204,7 +204,7 @@
 /area/shuttle/supply)
 "B" = (
 /turf/open/space/basic,
-/turf/template_noop,
+/turf/open/space,
 /area/space)
 "C" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,

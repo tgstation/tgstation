@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/template_noop,
+/turf/open/space,
 /area/template_noop)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion/left{
@@ -18,7 +18,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ae" = (
-/turf/template_noop,
+/turf/open/space,
 /area/template_noop)
 "af" = (
 /turf/closed/wall/r_wall,

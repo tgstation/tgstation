@@ -215,7 +215,7 @@
 		D = preview_shuttle.findRoundstartDock()
 
 	if(!D)
-		var/m = "No dock found for preview shuttle, aborting."
+		var/m = "No dock found for preview shuttle ([preview_template.name]), aborting."
 		throw EXCEPTION(m)
 
 	var/result = preview_shuttle.canDock(D)

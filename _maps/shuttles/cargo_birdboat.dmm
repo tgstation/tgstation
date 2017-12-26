@@ -155,7 +155,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "w" = (
-/turf/template_noop,
+/turf/open/space,
 /area/template_noop)
 "x" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,

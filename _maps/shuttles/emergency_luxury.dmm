@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/template_noop,
+/turf/open/space,
 /area/template_noop)
 "ab" = (
 /turf/closed/indestructible/riveted/uranium,
