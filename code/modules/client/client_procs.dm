@@ -75,7 +75,7 @@
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
