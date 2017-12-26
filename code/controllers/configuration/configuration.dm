@@ -183,7 +183,7 @@ GLOBAL_PROTECT(config_dir)
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
-				if(M.probability)
+				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
 				else
 					mode_false_report_weight[M.config_tag] = 1
