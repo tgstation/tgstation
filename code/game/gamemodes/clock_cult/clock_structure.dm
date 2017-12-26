@@ -215,3 +215,86 @@
 
 /obj/structure/destructible/clockwork/powered/proc/use_power(amount) //we've made sure we had power, so now we use it
 	return adjust_clockwork_power(-amount)
+
+
+
+/obj/structure/destructible/clockwork/turret
+	name = "Some clockwork turret?"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/target_range = 3
+	var/atom/movable/target
+	var/losetarget_message = " settles and seems almost disappointed."
+
+/obj/structure/destructible/clockwork/turret/Initialize()
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/structure/destructible/clockwork/turret/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/structure/destructible/clockwork/turret/process()
+	if(!anchored)
+		lose_target()
+		return
+	var/list/validtargets = acquire_nearby_targets()
+	if(target)
+		if(!(target in validtargets))
+			lose_target()
+		else
+			attack_target()
+	if(!target)
+		if(LAZYLEN(validtargets))
+			target = pick(validtargets)
+			alert_target()
+		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
+			idle()
+
+/obj/structure/destructible/clockwork/turret/proc/alert_target()
+	return
+
+/obj/structure/destructible/clockwork/turret/proc/attack_target()
+	return
+
+/obj/structure/destructible/clockwork/turret/proc/idle()
+	return
+
+/obj/structure/destructible/clockwork/turret/proc/target_range()
+	return viewers(target_range, src)
+
+/obj/structure/destructible/clockwork/turret/proc/acquire_nearby_targets()
+	. = list()
+	for(var/mob/living/L in target_range()) //Doesn't attack the blind
+		if(is_servant_of_ratvar(L) || (L.has_disability(DISABILITY_BLIND)) || L.null_rod_check())
+			continue
+		if(L.stat || L.restrained() || L.buckled || L.lying)
+			continue
+		if(ishostile(L))
+			var/mob/living/simple_animal/hostile/H = L
+			if(("ratvar" in H.faction) || (!H.mind && "neutral" in H.faction))
+				continue
+			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
+				continue
+		else if(isrevenant(L))
+			var/mob/living/simple_animal/revenant/R = L
+			if(R.stasis) //Don't target any revenants that are respawning
+				continue
+		else if(!L.mind)
+			continue
+		. += L
+	var/list/viewcache = list()
+	for(var/N in GLOB.mechas_list)
+		var/obj/mecha/M = N
+		if(get_dist(M, src) <= target_range && M.occupant && !is_servant_of_ratvar(M.occupant))
+			if(!length(viewcache))
+				for (var/obj/Z in view(target_range, src))
+					viewcache += Z
+			if (M in viewcache)
+				. += M
+
+/obj/structure/destructible/clockwork/turret/proc/lose_target()
+	if(!target)
+		return FALSE
+	target = null
+	visible_message("<span class='warning'>[src][losetarget_message]</span>")
+	return FALSE

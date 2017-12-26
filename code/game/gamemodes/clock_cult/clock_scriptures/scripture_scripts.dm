@@ -31,7 +31,7 @@
 	invocations = list("Guardians of Engine...", "...judge those who would harm us!")
 	channel_time = 100
 	power_cost = 250
-	object_path = /obj/structure/destructible/clockwork/ocular_warden
+	object_path = /obj/structure/destructible/clockwork/turret/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
 	usage_tip = "Although powerful, the warden is very fragile and should optimally be placed behind barricades."
@@ -44,7 +44,7 @@
 	quickbind_desc = "Creates an Ocular Warden, which will automatically attack nearby unrestrained non-Servants that can see it."
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
-	for(var/obj/structure/destructible/clockwork/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
+	for(var/obj/structure/destructible/clockwork/turret/ocular_warden/W in range(OCULAR_WARDEN_EXCLUSION_RANGE, invoker))
 		to_chat(invoker, "<span class='neovgre'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" )
 		return FALSE
 	return ..()
@@ -57,7 +57,7 @@
 	invocations = list("Warriors of Engine...", "...destroy those who will stop us!")
 	channel_time = 100
 	power_cost = 525
-	object_path = /obj/structure/destructible/clockwork/archon_projector
+	object_path = /obj/structure/destructible/clockwork/turret/archon_projector
 	creator_message = "<span class='brass'>You form an archon projector, which will automatically attack nearby unrestrained non-Servants that it can see.</span>"
 	observer_message = "<span class='warning'>A brass turret takes shape, before whirring and deploying it's gun!</span>"
 	usage_tip = "While powerful, it's projectiles will not discriminate who they hit, in addition, they will weaken if they pass through glass!"
@@ -70,7 +70,7 @@
 	quickbind_desc = "Creates an Archon Projector, which will automatically shoot nearby unrestrained non-Servants that it can see."
 
 /datum/clockwork_scripture/create_object/archon_projector/check_special_requirements()
-	for(var/obj/structure/destructible/clockwork/archon_projector/W in range(ARCHON_TURRET_EXCLUSION_RANGE, invoker))
+	for(var/obj/structure/destructible/clockwork/turret/archon_projector/W in range(ARCHON_TURRET_EXCLUSION_RANGE, invoker))
 		to_chat(invoker, "<span class='neovgre'>You sense another archon projector too near this location. Placing another this close would likely result in them accidentaly shooting each other.</span>" )
 		return FALSE
 	return ..()
