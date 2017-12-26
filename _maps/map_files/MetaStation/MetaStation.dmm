@@ -74760,7 +74760,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cYO" = (
-/obj/configuration/shuttle_loader/emergency/delta,
+/obj/configuration/shuttle_loader/emergency/meta,
 /turf/open/space/basic,
 /area/space)
 "cYP" = (
