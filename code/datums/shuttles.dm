@@ -60,6 +60,10 @@
 	port_id = "arrival"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/infiltrator
+	port_id = "infiltrator"
+	can_be_bought = FALSE
+
 
 
 // Shuttles start here:
@@ -283,6 +287,11 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/delta
+	suffix = "delta"
+	name = "Unnamed NT Vessel"
+	admin_notes = "The Delta whiteship doesn't have a name, apparently."
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -320,3 +329,23 @@
 /datum/map_template/shuttle/labour/box
 	suffix = "box"
 	name = "labour shuttle (Box)"
+
+/datum/map_template/shuttle/infiltrator/basic
+	suffix = "basic"
+	name = "basic syndicate infiltrator"
+
+/datum/map_template/shuttle/cargo/delta
+	suffix = "delta"
+	name = "cargo ferry (Delta)"
+
+/datum/map_template/shuttle/mining/delta
+	suffix = "delta"
+	name = "mining shuttle (Delta)"
+
+/datum/map_template/shuttle/labour/delta
+	suffix = "delta"
+	name = "labour shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/delta
+	suffix = "delta"
+	name = "arrival shuttle (Delta)"

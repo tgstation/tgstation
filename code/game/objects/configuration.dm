@@ -53,3 +53,31 @@
 /obj/configuration/shuttle_loader/whiteship/meta
 	name = "NT Recovery Whiteship loader"
 	shuttle_id = "whiteship_meta"
+
+/obj/configuration/shuttle_loader/infiltrator/basic
+	name = "basic syndicate infiltrator loader"
+	shuttle_id = "infiltrator_basic"
+
+/obj/configuration/shuttle_loader/emergency/delta
+	name = "Delta emergency shuttle loader"
+	shuttle_id = "emergency_delta"
+
+/obj/configuration/shuttle_loader/cargo/delta
+	name = "Delta cargo ferry loader"
+	shuttle_id = "cargo_delta"
+
+/obj/configuration/shuttle_loader/mining/delta
+	name = "Delta mining shuttle loader"
+	shuttle_id = "mining_delta"
+
+/obj/configuration/shuttle_loader/labour/delta
+	name = "Delta labour shuttle loader"
+	shuttle_id = "labour_delta"
+
+/obj/configuration/shuttle_loader/arrival/delta
+	name = "Delta arrival shuttle loader"
+	shuttle_id = "arrival_delta"
+
+/obj/configuration/shuttle_loader/whiteship/delta
+	name = "Delta whiteship loader"
+	shuttle_id = "whiteship_delta"
