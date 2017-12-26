@@ -12,3 +12,6 @@
 #define is_transit_level(z) ((z) == ZLEVEL_TRANSIT)
 
 #define is_away_level(z) ((z) > ZLEVEL_SPACEMAX)
+
+// If true, the singularity cannot strip away asteroid turf on this Z
+#define is_planet_level(z) (GLOB.z_is_planet["z"])
