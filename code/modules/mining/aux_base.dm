@@ -1,9 +1,10 @@
 ///Mining Base////
 
+#define ZONE_SET	0
 #define BAD_ZLEVEL	1
 #define BAD_AREA	2
 #define BAD_COORDS	3
-#define ZONE_SET	4
+#define BAD_TURF	4
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
@@ -134,21 +135,31 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
 /obj/machinery/computer/auxillary_base/proc/set_landing_zone(turf/T, mob/user, var/no_restrictions)
-
 	var/obj/docking_port/mobile/auxillary_base/base_dock = locate(/obj/docking_port/mobile/auxillary_base) in SSshuttle.mobile
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
 		return
 	if(!no_restrictions)
+		var/static/list/disallowed_turf_types = typecacheof(list(
+			/turf/open/lava,
+			/turf/closed/indestructible,
+			/turf/open/indestructible,
+			))
+
 		if(T.z != ZLEVEL_MINING)
 			return BAD_ZLEVEL
-		var/colony_radius = max(base_dock.width, base_dock.height)*0.5
-		if(T.x - colony_radius < 1 || T.x + colony_radius >= world.maxx || T.y - colony_radius < 1 || T.y + colony_radius >= world.maxx)
-			return BAD_COORDS //Avoid dropping the base too close to map boundaries, as it results in parts of it being left in space
 
-		var/list/area_counter = get_areas_in_range(colony_radius, T)
-		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
-			return BAD_AREA
+		var/colony_radius = CEILING(max(base_dock.width, base_dock.height)*0.5, 1)
+		var/list/colony_turfs = block(locate(T.x - colony_radius, T.y - colony_radius, T.z), locate(T.x + colony_radius, T.y + colony_radius, T.z))
+		for(var/i in 1 to colony_turfs.len)
+			CHECK_TICK
+			var/turf/place = colony_turfs[i]
+			if(!place)
+				return BAD_COORDS
+			if(!istype(place.loc, /area/lavaland/surface))
+				return BAD_AREA
+			if(disallowed_turf_types[place.type])
+				return BAD_TURF
 
 
 	var/area/A = get_area(T)
@@ -208,14 +219,16 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	switch(AB.set_landing_zone(T, user, no_restrictions))
+		if(ZONE_SET)
+			qdel(src)
 		if(BAD_ZLEVEL)
 			to_chat(user, "<span class='warning'>This uplink can only be used in a designed mining zone.</span>")
 		if(BAD_AREA)
 			to_chat(user, "<span class='warning'>Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one.</span>")
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
-		if(ZONE_SET)
-			qdel(src)
+		if(BAD_TURF)
+			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base.</span>")
 
 /obj/item/device/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
@@ -348,7 +361,8 @@ obj/docking_port/stationary/public_mining_dock
 /obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
 	return attack_hand(user) //So borgies can help
 
+#undef ZONE_SET
 #undef BAD_ZLEVEL
 #undef BAD_AREA
 #undef BAD_COORDS
-#undef ZONE_SET
+#undef BAD_TURF
