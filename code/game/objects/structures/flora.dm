@@ -66,9 +66,10 @@
 	var/obj/item/a_gift/anything/A = new
 	user.put_in_hands(A)
 
-/obj/structure/flora/tree/pine/xmas/Initialize()
-	. = ..()
-	icon_state = "pine_c"
+/obj/structure/flora/tree/pine/xmas/presents
+	gifts_under_tree = TRUE
+	icon_state = "pinepresents"
+	desc = "A wondrous decorated Christmas tree. It has presents!"
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'

@@ -11,8 +11,10 @@
 	for(var/obj/structure/flora/tree/pine/xmas/xmas in world)
 		if(!(xmas.z in GLOB.station_z_levels))
 			continue
-		xmas.icon_state = "pinepresents"
-		xmas.gifts_under_tree = TRUE
+
+		new /obj/structure/flora/tree/pine/xmas/presents(get_turf(xmas))
+		qdel(xmas)
+
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
