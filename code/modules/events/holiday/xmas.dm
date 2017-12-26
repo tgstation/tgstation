@@ -12,7 +12,7 @@
 		if(!(xmas.z in GLOB.station_z_levels))
 			continue
 
-		new /obj/structure/flora/tree/pine/xmas/presents(get_turf(xmas))
+		new /obj/structure/flora/tree/pine/xmas/presents(xmas.loc)
 		qdel(xmas)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
