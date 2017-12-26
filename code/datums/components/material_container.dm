@@ -69,6 +69,15 @@
 		return
 	user_insert(I, user)
 
+
+/datum/component/material_container/proc/InsertChecks()
+	if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
+		return FALSE
+	var/datum/callback/pc = precondition
+	if(pc && !pc.Invoke())
+		return FALSE
+	return TRUE
+
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
 	set waitfor = FALSE
 	var/requested_amount
@@ -76,10 +85,10 @@
 	if(ispath(Itype, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
-		if(isnull(requested_amount) || (requested_amount <= 0))
+		if(isnull(requested_amount) || (requested_amount <= 0) || !InsertChecks())
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
-			return
+	else if(!do_after(user, 10, TRUE, parent, extra_checks = CALLBACK(src, .proc/InsertChecks))
+		return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
