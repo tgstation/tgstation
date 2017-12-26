@@ -3,15 +3,18 @@
 	desc = "It appears to be a large, brass turret. Looks dangerous."
 	clockwork_desc = "A turret which will automatically aim and shoot at any heretics. Projectiles will weaken if they go through glass."
 	icon_state = "turret_base"
-	break_message = "The turret collapses into several shards of brass."
+	break_message = "The turret whirrs worringly, before letting out a final cry as it collapses into shards of brass."
 	max_integrity = 75
 	construction_value = 25
 	losetarget_message = " whirrs, before it's gun settles."
-	target_range = 6
+	target_range = 7
 	var/list/idle_messages = list("'s gun whirrs idly", " clicks as it tries to find a target")
 	var/gun_dir = SOUTH
 	var/last_fire = 0
 
+/obj/structure/destructible/clockwork/turret/archon_projector/Initialize()
+	. = ..()
+	update_icon()
 
 /obj/structure/destructible/clockwork/turret/archon_projector/update_icon()
 	. = ..()
@@ -81,6 +84,6 @@
 
 /obj/item/projectile/archon_energy/Crossed(atom/movable/AM)
 	. = ..()
-	if(istype(AM, /obj/structure/window))
+	if(istype(AM, /obj/structure/window) && !GLOB.ratvar_awakens)
 		damage *= 0.75
 		jitter *= 1.75 //it loses damage due to the particles vibrating more when they pass through a window, and it transfers the jitter-iness to the target
