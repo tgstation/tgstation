@@ -119,7 +119,7 @@
 		return
 
 	if(!my_port)
-		my_port = new /obj/docking_port/stationary()
+		my_port = new()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
