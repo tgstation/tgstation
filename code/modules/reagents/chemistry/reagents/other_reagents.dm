@@ -1701,10 +1701,10 @@
 	..()
 	if(isliving(M))
 		var/mob/living/L = M
-		L.add_disability(PACIFISM, CHEMICAL_DISABILITY)
+		L.add_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
 
 /datum/reagent/pax/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
-		L.remove_disability(PACIFISM, CHEMICAL_DISABILITY)
+		L.remove_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
 	..()
