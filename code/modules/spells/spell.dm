@@ -13,7 +13,7 @@
 	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
-	var/base_action = /datum/action/spell_action/action
+	var/base_action = /datum/action/spell_action
 
 /obj/effect/proc_holder/Initialize()
 	. = ..()
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	pass_flags = PASSTABLE
 	density = FALSE
 	opacity = 0
-	base_action = /datum/action/spell_action/spell/action
+	base_action = /datum/action/spell_action/spell
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
