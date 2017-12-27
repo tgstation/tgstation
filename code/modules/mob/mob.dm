@@ -30,6 +30,7 @@
 		GLOB.dead_mob_list += src
 	else
 		GLOB.alive_mob_list += src
+	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
