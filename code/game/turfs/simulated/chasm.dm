@@ -2,7 +2,7 @@
 /turf/open/chasm
 	name = "chasm"
 	desc = "Watch your step."
-	baseturfs = /turf/open/chasm
+	baseturf = /turf/open/chasm
 	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/chasms.dmi'
 	icon_state = "smooth"
@@ -55,7 +55,7 @@
 				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				// Create a floor, which has this chasm underneath it
-				PlaceOnTop(/turf/open/floor/plating)
+				ChangeTurf(/turf/open/floor/plating, type)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
@@ -67,7 +67,7 @@
 
 // Naive "down" which just subtracts a z-level
 /turf/open/chasm/straight_down
-	baseturfs = /turf/open/chasm/straight_down
+	baseturf = /turf/open/chasm/straight_down
 
 /turf/open/chasm/straight_down/Initialize()
 	. = ..()
@@ -78,7 +78,7 @@
 /turf/open/chasm/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturf = /turf/open/chasm/lavaland
 	light_range = 1.9 //slightly less range than lava
 	light_power = 0.65 //less bright, too
 	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
@@ -89,7 +89,7 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/jungle
+	baseturf = /turf/open/chasm/jungle
 
 /turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -97,7 +97,7 @@
 	return TRUE
 
 /turf/open/chasm/jungle/straight_down
-	baseturfs = /turf/open/chasm/jungle/straight_down
+	baseturf = /turf/open/chasm/jungle/straight_down
 
 /turf/open/chasm/jungle/straight_down/Initialize(mapload)
 	. = ..()

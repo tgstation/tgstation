@@ -4,7 +4,7 @@
 	name = "lava"
 	icon_state = "lava"
 	gender = PLURAL //"That's some lava."
-	baseturfs = /turf/open/lava //lava all the way down
+	baseturf = /turf/open/lava //lava all the way down
 	slowdown = 2
 
 	light_range = 2
@@ -128,7 +128,7 @@
 
 /turf/open/lava/smooth
 	name = "lava"
-	baseturfs = /turf/open/lava/smooth
+	baseturf = /turf/open/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
@@ -137,7 +137,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturf = /turf/open/chasm/lavaland
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

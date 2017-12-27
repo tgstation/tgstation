@@ -37,7 +37,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
-	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
+	baseturf = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
@@ -91,24 +91,24 @@
 	name = "sand"
 	desc = "Surf's up."
 	icon_state = "sand"
-	baseturfs = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/open/floor/plating/beach/sand
 
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
 	icon_state = "sandwater_t"
-	baseturfs = /turf/open/floor/plating/beach/coastline_t
+	baseturf = /turf/open/floor/plating/beach/coastline_t
 
 /turf/open/floor/plating/beach/coastline_b
 	name = "coastline"
 	icon_state = "sandwater_b"
-	baseturfs = /turf/open/floor/plating/beach/coastline_b
+	baseturf = /turf/open/floor/plating/beach/coastline_b
 
 /turf/open/floor/plating/beach/water
 	name = "water"
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
-	baseturfs = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open/floor/plating/beach/water
 
 
 /turf/open/floor/plating/ironsand
@@ -129,7 +129,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "ice"
 	temperature = 180
-	baseturfs = /turf/open/floor/plating/ice
+	baseturf = /turf/open/floor/plating/ice
 	slowdown = 1
 	wet = TURF_WET_PERMAFROST
 	attachment_holes = FALSE

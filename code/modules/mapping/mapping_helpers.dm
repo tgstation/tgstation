@@ -13,14 +13,10 @@
 	. = ..()
 	var/area/thearea = get_area(src)
 	for(var/turf/T in get_area_turfs(thearea, z))
-		if(T.baseturfs != T.type) //Don't break indestructible walls and the like
-			T.baseturfs = baseturf
+		if(T.baseturf != T.type) //Don't break indestructible walls and the like
+			T.baseturf = baseturf
 	return INITIALIZE_HINT_QDEL
 
-
-/obj/effect/baseturf_helper/space
-	name = "space baseturf editor"
-	baseturf = /turf/open/space
 
 /obj/effect/baseturf_helper/asteroid
 	name = "asteroid baseturf editor"
