@@ -527,7 +527,7 @@
 							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
-								F.ScrapeAway()
+								F.ChangeTurf(F.baseturf)
 							say("Something slams into the floor around [src], exposing it to space!")
 							if(hull)
 								sleep(10)

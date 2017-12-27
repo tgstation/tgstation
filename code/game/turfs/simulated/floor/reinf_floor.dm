@@ -48,14 +48,14 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		ScrapeAway()
+		src.ChangeTurf(src.baseturf)
 		return
 	switch(severity)
 		if(1)
 			if(prob(80))
 				ReplaceWithLattice()
 			else if(prob(50))
-				ScrapeAway()
+				ChangeTurf(src.baseturf)
 			else
 				make_plating(1)
 		if(2)
@@ -122,7 +122,7 @@
 	be_removed()
 	return ..()
 
-/turf/open/floor/engine/cult/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/engine/cult/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(path != type)
 		be_removed()
 	return ..()

@@ -10,6 +10,7 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "ad" = (
 /turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -35,6 +36,7 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "ah" = (
 /turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -75,12 +77,14 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ao" = (
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ap" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -93,12 +97,14 @@
 "ar" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "as" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -118,6 +124,7 @@
 /obj/item/clothing/mask/gas/clown_hat,
 /obj/item/organ/heart/demon,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -127,20 +134,25 @@
 	name = "shock rune"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aw" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ax" = (
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
-/turf/closed/wall/mineral/cult,
+/turf/closed/wall/mineral/cult{
+	baseturf = /turf/open/lava/smooth
+	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ay" = (
 /obj/structure/destructible/cult/tome,
@@ -150,12 +162,14 @@
 	},
 /obj/item/coin/antagtoken,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "az" = (
 /obj/structure/constructshell,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -163,12 +177,14 @@
 /obj/structure/girder/cult,
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aB" = (
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -176,12 +192,14 @@
 /obj/structure/bed,
 /obj/item/bedsheet/cult,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aD" = (
 /obj/item/stack/sheet/runed_metal,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -195,6 +213,7 @@
 	name = "an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -206,29 +225,37 @@
 	name = "weak forcefield"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aG" = (
 /obj/item/ectoplasm,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aH" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aI" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aJ" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aK" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -237,6 +264,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -247,6 +275,7 @@
 	id = "minedeep"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -264,6 +293,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -275,6 +305,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -287,12 +318,14 @@
 "aR" = (
 /obj/effect/forcefield/cult,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aS" = (
 /obj/structure/girder/cult,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -318,6 +351,7 @@
 "aV" = (
 /obj/effect/forcefield/cult,
 /turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -327,6 +361,7 @@
 "aW" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -336,6 +371,7 @@
 	id_target = "minedeepup"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -354,6 +390,7 @@
 	name = "flame rune"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -361,6 +398,7 @@
 /obj/structure/destructible/cult/talisman,
 /obj/item/plasma_fist_scroll,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -380,7 +418,9 @@
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
-/turf/closed/wall/mineral/cult,
+/turf/closed/wall/mineral/cult{
+	baseturf = /turf/open/lava/smooth
+	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "be" = (
 /mob/living/simple_animal/hostile/spawner/mining/goliath,
@@ -391,6 +431,7 @@
 "bf" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -411,6 +452,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -419,6 +461,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -427,6 +470,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -435,6 +479,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -443,6 +488,7 @@
 	calibrated = 0
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -451,6 +497,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -466,12 +513,14 @@
 	dir = 10
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bq" = (
 /obj/machinery/gateway,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -480,6 +529,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -515,6 +565,7 @@
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/spawner/skeleton,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -535,6 +586,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -543,6 +595,7 @@
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -554,12 +607,14 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "bC" = (
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "bD" = (
 /mob/living/simple_animal/hostile/skeleton,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -567,6 +622,7 @@
 /obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
@@ -578,6 +634,7 @@
 	name = "rusty ladder"
 	},
 /turf/open/floor/engine/cult{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
@@ -613,6 +670,7 @@
 /area/awaymission/caves/BMP_asteroid)
 "bM" = (
 /turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -624,6 +682,7 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bO" = (
 /turf/open/lava/smooth{
+	baseturf = /turf/open/lava/smooth;
 	desc = "Looks hot.";
 	luminosity = 5;
 	name = "lava";
@@ -644,19 +703,25 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bQ" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bR" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bS" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bT" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -666,6 +731,7 @@
 	id_target = "minedeepup"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -692,6 +758,7 @@
 "bY" = (
 /mob/living/simple_animal/hostile/skeleton,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -707,6 +774,7 @@
 "ca" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -748,19 +816,25 @@
 	id = "mineintro"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cf" = (
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cg" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/research)
 "ch" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/research)
 "ci" = (
 /obj/item/shard,
@@ -785,6 +859,7 @@
 "cl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -793,6 +868,7 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cn" = (
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -803,12 +879,14 @@
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/omega,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cp" = (
 /obj/structure/table,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -820,12 +898,14 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cr" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cs" = (
 /obj/item/shard,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -834,29 +914,34 @@
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cu" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cv" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cw" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cx" = (
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -875,6 +960,7 @@
 "cA" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -884,6 +970,7 @@
 	},
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -892,12 +979,14 @@
 /obj/item/restraints/handcuffs/cable,
 /obj/item/restraints/handcuffs/cable,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cD" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -908,12 +997,14 @@
 	},
 /obj/item/stack/rods,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -928,11 +1019,13 @@
 "cH" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cI" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -946,7 +1039,9 @@
 	desc = "A warning sign which reads 'HOLY SHIT NIGGA WHAT ARE YOU DOING'.";
 	name = "\improper HOLY SHIT NIGGA WHAT ARE YOU DOING"
 	},
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cL" = (
 /mob/living/simple_animal/hostile/spawner/mining/basilisk,
@@ -959,6 +1054,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -966,6 +1062,7 @@
 /obj/machinery/door/window/eastleft,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -975,12 +1072,14 @@
 	},
 /obj/machinery/door/window/eastleft,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cP" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1000,6 +1099,7 @@
 "cR" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1010,6 +1110,7 @@
 	icon_state = "right"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1021,6 +1122,7 @@
 	icon_state = "right"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1036,6 +1138,7 @@
 "cV" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1044,6 +1147,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1051,12 +1155,14 @@
 /obj/structure/table,
 /obj/item/melee/baton,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "cY" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1066,6 +1172,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1080,6 +1187,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/crap,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1099,12 +1207,14 @@
 "dd" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
 "de" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1116,6 +1226,7 @@
 /obj/item/grenade/syndieminibomb/concussion,
 /obj/item/grenade/syndieminibomb/concussion,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/research)
@@ -1125,19 +1236,24 @@
 	id_target = "mineintroup"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dh" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "di" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/caves/magma,
 /obj/item/pen,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dj" = (
 /obj/structure/ladder/unbreakable{
@@ -1145,46 +1261,64 @@
 	height = 2;
 	id = "minedeep"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dk" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dl" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dm" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dn" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "do" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dp" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dq" = (
 /obj/machinery/light/small/built{
 	dir = 4
 	},
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dr" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ds" = (
 /obj/structure/closet/secure_closet/personal,
@@ -1196,137 +1330,193 @@
 	pixel_x = 5;
 	throwforce = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dt" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "du" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dv" = (
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dw" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dx" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/sord,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dy" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dz" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dA" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/gun/energy/kinetic_accelerator,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dB" = (
 /obj/structure/dresser,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dC" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dD" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dE" = (
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dF" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dG" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dH" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/landmark/awaystart,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dI" = (
 /obj/machinery/door/airlock{
 	name = "Dorm"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dJ" = (
 /obj/item/stack/rods,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dK" = (
 /obj/structure/girder,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dL" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dM" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dN" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dO" = (
 /mob/living/simple_animal/hostile/retaliate/bat{
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dP" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dQ" = (
 /obj/machinery/door/airlock/mining{
 	name = "Dorm Access"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dR" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dS" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dT" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dU" = (
 /obj/structure/closet/crate/miningcar{
@@ -1343,39 +1533,51 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dW" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "dX" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "dY" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/landmark/awaystart,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "dZ" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "ea" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "eb" = (
 /obj/machinery/light/small/built{
 	dir = 8
 	},
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
 "ec" = (
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
@@ -1383,12 +1585,14 @@
 /obj/structure/bed,
 /obj/effect/landmark/awaystart,
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
 "ee" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
@@ -1400,22 +1604,30 @@
 /area/awaymission/caves/BMP_asteroid)
 "eg" = (
 /obj/effect/decal/cleanable/robot_debris/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eh" = (
 /obj/structure/table,
 /obj/item/device/radio,
 /obj/item/device/radio,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ei" = (
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ej" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ek" = (
 /obj/structure/window{
@@ -1423,33 +1635,41 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/mining_drone,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "el" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/gun/energy/laser/captain/scattershot,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/northblock)
 "em" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
 "en" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
 "eo" = (
 /obj/item/stack/rods,
 /turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
 "ep" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
@@ -1457,11 +1677,15 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "er" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "es" = (
 /obj/structure/window{
@@ -1470,11 +1694,14 @@
 	},
 /obj/structure/window,
 /mob/living/simple_animal/hostile/mining_drone,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "et" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/northblock)
@@ -1485,24 +1712,32 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "ev" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ew" = (
 /obj/structure/table,
 /obj/item/device/mining_scanner,
 /obj/item/device/mining_scanner,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ex" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ey" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ez" = (
 /obj/machinery/light/small/built{
@@ -1512,16 +1747,22 @@
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eA" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/caves/work_notice,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eB" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eC" = (
 /obj/structure/table,
@@ -1530,47 +1771,67 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eD" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/item/survivalcapsule,
 /obj/item/extinguisher/mini,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eE" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eF" = (
-/turf/closed/wall,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eG" = (
-/turf/closed/wall/rust,
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eH" = (
 /obj/machinery/vending/sustenance,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eI" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/switchblade,
 /obj/item/switchblade,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eJ" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eK" = (
 /obj/structure/table,
 /obj/item/gun/energy/kinetic_accelerator,
 /obj/item/gun/energy/kinetic_accelerator,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eL" = (
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eM" = (
 /obj/machinery/light/small{
@@ -1579,15 +1840,21 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/multitool,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eN" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eO" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eP" = (
 /obj/structure/table,
@@ -1607,7 +1874,9 @@
 	pixel_x = 5;
 	throwforce = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eQ" = (
 /obj/machinery/mineral/mint,
@@ -1617,7 +1886,9 @@
 /area/awaymission/caves/BMP_asteroid)
 "eR" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eS" = (
 /obj/machinery/light/small/built,
@@ -1625,21 +1896,29 @@
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
 	name = "rusted suit storage unit"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eT" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "eU" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eV" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eW" = (
 /obj/structure/barricade/wooden,
@@ -1648,17 +1927,23 @@
 "eX" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eY" = (
 /obj/structure/table,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "eZ" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "fa" = (
 /obj/structure/noticeboard{
@@ -1666,7 +1951,9 @@
 	},
 /obj/item/paper/fluff/awaymissions/caves/shipment_notice,
 /obj/item/paper/fluff/awaymissions/caves/saftey_notice,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "fb" = (
 /mob/living/simple_animal/hostile/spawner/mining/hivelord,
@@ -1718,11 +2005,15 @@
 /area/awaymission/caves/BMP_asteroid)
 "fh" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "fi" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "fj" = (
 /obj/effect/mob_spawn/human/skeleton/alive{
@@ -1745,7 +2036,9 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "fm" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/listeningpost)
 "fn" = (
 /obj/structure/closet/crate{
@@ -1782,7 +2075,9 @@
 "fq" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fr" = (
 /obj/machinery/light/small/built{
@@ -1790,25 +2085,33 @@
 	},
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fs" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "ft" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/fire,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fu" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/brute,
 /obj/item/reagent_containers/blood/OPlus,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fv" = (
 /obj/structure/glowshroom/single,
@@ -1828,31 +2131,40 @@
 	id_target = "mineintrodown"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fy" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fz" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fA" = (
 /obj/structure/bed,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fB" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fC" = (
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fD" = (
 /obj/structure/spider/stickyweb,
@@ -1860,7 +2172,9 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fE" = (
 /obj/machinery/light/small,
@@ -1883,7 +2197,9 @@
 /area/awaymission/caves/BMP_asteroid)
 "fH" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fI" = (
 /obj/structure/sign/bluecross{
@@ -1895,33 +2211,44 @@
 /area/awaymission/caves/BMP_asteroid)
 "fJ" = (
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fK" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fL" = (
 /obj/structure/sign/examroom{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fN" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fO" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -1949,11 +2276,15 @@
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/blood/OPlus,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fT" = (
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fU" = (
 /obj/effect/landmark/awaystart,
@@ -1964,6 +2295,7 @@
 /area/awaymission/caves/BMP_asteroid)
 "fV" = (
 /turf/open/floor/plasteel/elevatorshaft{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	name = "elevator flooring";
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1971,6 +2303,7 @@
 "fW" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -1996,10 +2329,13 @@
 "fY" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "fZ" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2010,16 +2346,20 @@
 	id = "mineintro"
 	},
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gb" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gc" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2043,18 +2383,22 @@
 "gf" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gg" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gh" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2062,6 +2406,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2069,7 +2414,9 @@
 /obj/machinery/door/airlock/mining{
 	name = "Kitchen"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gk" = (
 /obj/effect/landmark/awaystart,
@@ -2079,11 +2426,15 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "gl" = (
 /obj/item/trash/plate,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gm" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gn" = (
 /obj/item/grown/log,
@@ -2094,23 +2445,29 @@
 "go" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gp" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating{
+	baseturf = /turf/open/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gq" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gr" = (
 /obj/structure/table,
 /obj/item/kitchen/fork,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gs" = (
 /obj/item/device/assembly/igniter,
@@ -2121,47 +2478,63 @@
 "gt" = (
 /obj/structure/table_frame,
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gu" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gv" = (
 /obj/structure/table_frame,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gw" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gx" = (
 /obj/structure/table,
 /obj/item/kitchen/fork,
 /obj/item/trash/plate,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gy" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gz" = (
 /obj/machinery/door/airlock/external{
 	name = "Mess Hall"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gA" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gB" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2180,6 +2553,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2188,6 +2562,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/glasses/material,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2199,26 +2574,34 @@
 /obj/structure/table,
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 /obj/item/paper/fluff/awaymissions/caves/mech_notice,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gI" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gJ" = (
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gK" = (
 /obj/structure/girder,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gL" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gM" = (
 /obj/structure/mecha_wreckage/ripley,
@@ -2227,18 +2610,21 @@
 "gN" = (
 /obj/structure/holohoop,
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gP" = (
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2269,13 +2655,16 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt
+	},
 /area/awaymission/caves/BMP_asteroid)
 "gU" = (
 /obj/structure/holohoop{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark{
+	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
@@ -2292,31 +2681,6 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/closed/indestructible/rock,
 /area/space/nearstation)
-"gX" = (
-/obj/effect/baseturf_helper/lava,
-/turf/closed/mineral/volcanic,
-/area/awaymission/caves/BMP_asteroid/level_three)
-"gY" = (
-/obj/effect/baseturf_helper/lava,
-/turf/open/lava/smooth{
-	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"gZ" = (
-/obj/effect/baseturf_helper/lava,
-/turf/closed/mineral/volcanic,
-/area/awaymission/caves/BMP_asteroid/level_two)
-"ha" = (
-/obj/effect/baseturf_helper/lava,
-/turf/closed/mineral/volcanic,
-/area/awaymission/caves/BMP_asteroid)
-"hb" = (
-/obj/effect/baseturf_helper/asteroid/basalt,
-/turf/closed/wall,
-/area/awaymission/caves/northblock)
 
 (1,1,1) = {"
 aa
@@ -4125,7 +4489,7 @@ aa
 aa
 aa
 aa
-gX
+ac
 ac
 ac
 ac
@@ -4283,7 +4647,7 @@ aa
 aa
 aa
 aa
-ha
+bL
 bL
 bL
 bL
@@ -5329,7 +5693,7 @@ bL
 bL
 bL
 bL
-hb
+dt
 dt
 dt
 du
@@ -46787,7 +47151,7 @@ aa
 aa
 aa
 aa
-gY
+ad
 ad
 ad
 ad
@@ -52084,7 +52448,7 @@ aa
 aa
 aa
 aa
-gZ
+bK
 bK
 bK
 bK

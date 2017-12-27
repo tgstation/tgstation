@@ -85,7 +85,7 @@
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	T.PlaceOnTop(walltype)
+	T.ChangeTurf(walltype)
 	if(delete)
 		qdel(src)
 	return T
