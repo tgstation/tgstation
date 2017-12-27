@@ -11,6 +11,10 @@
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
+	var/can_defuse = TRUE
+
+/obj/item/device/mining_scanner/nogibtonite
+	can_defuse = FALSE
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)

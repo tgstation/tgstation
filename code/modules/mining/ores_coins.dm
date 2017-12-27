@@ -221,15 +221,22 @@
 	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
+	var/do_disarm = istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool)
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
-			primed = FALSE
-			if(det_timer)
-				deltimer(det_timer)
-			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
-			icon_state = "Gibtonite ore"
-			quality = GIBTONITE_QUALITY_LOW
-			return
+		if(istype(I, /obj/item/device/mining_scanner))
+			var/obj/item/device/mining_scanner/S = I
+			if(!S.can_defuse)
+				to_chat(user, "<span class='boldwarning'>[S] does not have the necessary frequencies for disarming gibtonite!</span>")
+				return
+			do_disarm = TRUE
+	if(do_disarm)
+		primed = FALSE
+		if(det_timer)
+			deltimer(det_timer)
+		user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+		icon_state = "Gibtonite ore"
+		quality = GIBTONITE_QUALITY_LOW
+		return
 	..()
 
 /obj/item/twohanded/required/gibtonite/attack_self(user)
