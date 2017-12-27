@@ -19,7 +19,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
 	else
-		..()
+		return ..()
 
 /turf/closed/indestructible
 	name = "wall"
