@@ -536,6 +536,7 @@
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_drivers.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_scripts.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\_trap_object.dm"
+#include "code\game\gamemodes\clock_cult\clock_structures\archon_projector.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ark_of_the_clockwork_justicar.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\clockwork_obelisk.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\eminence_spire.dm"

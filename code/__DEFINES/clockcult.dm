@@ -54,6 +54,8 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define POWER_PLASTEEL (CLOCKCULT_POWER_UNIT*0.05) //how much power is in one sheet of plasteel
 
+#define ARCHON_FIRE_POWER 175 //how much power an Archon Projector requires to fire
+
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
 
@@ -78,6 +80,10 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define FABRICATOR_REPAIR_PER_TICK 4 //how much a fabricator repairs each tick, and also how many deciseconds each tick is
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
+
+#define ARCHON_TURRET_EXCLUSION_RANGE 4 //the range at which archon projectors cannot be placed near each other
+
+#define ARCHON_SHOOT_COOLDOWN 10
 
 #define CLOCKWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of clockwork armor
 
