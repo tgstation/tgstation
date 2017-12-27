@@ -444,7 +444,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	if(!(z in GLOB.station_z_levels))
 		return
-
+	var/mob/living/user = invokers[1]
+	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+	var/area/place = get_area(src)
+	if(!(place in summon_objective.summon_spots))
+		to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
@@ -503,14 +509,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
 		log_game("Raise Dead rune failed - no cultists to revive")
 		fail_invoke()
-		rune_in_use = FALSE
 		return
 	if(potential_revive_mobs.len > 1)
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
 	else
 		mob_to_revive = potential_revive_mobs[1]
 	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
-		rune_in_use = FALSE
+		fail_invoke()
 		return
 	if(user.name == "Herbert West")
 		invocation = "To life, to life, I bring them!"
@@ -521,12 +526,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(LAZYLEN(GLOB.sacrificed) <= revives_used)
 			to_chat(user, "<span class='warning'>Your cult must carry out another sacrifice before it can revive a cultist!</span>")
 			fail_invoke()
-			rune_in_use = FALSE
 			return
 		revives_used++
 		mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 		mob_to_revive.grab_ghost()
-	else if(!mob_to_revive.client || mob_to_revive.client.is_afk())
+	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", "[name]", null, ROLE_CULTIST, 50, mob_to_revive)
 		var/mob/dead/observer/theghost = null
@@ -536,6 +540,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(0)
 			mob_to_revive.key = theghost.key
+		else
+			fail_invoke()
+			return
+	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult.ogg')
 	to_chat(mob_to_revive, "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>")
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
@@ -548,28 +556,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!Adjacent(user) || user.incapacitated())
 		return FALSE
 	if(QDELETED(target_mob))
-		fail_invoke()
 		return FALSE
 	if(!(target_mob in T.contents))
 		to_chat(user, "<span class='cult italic'>The cultist to revive has been moved!</span>")
-		fail_invoke()
 		log_game("Raise Dead rune failed - revival target moved")
-		return FALSE
-	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
-		to_chat(user, "<span class='cult italic'>The corpse to revive has no spirit!</span>")
-		fail_invoke()
-		log_game("Raise Dead rune failed - revival target has no ghost")
-		return FALSE
-	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
-		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
-		fail_invoke()
-		log_game("Raise Dead rune failed - too few sacrificed")
 		return FALSE
 	return TRUE
 
 /obj/effect/rune/raise_dead/fail_invoke()
 	..()
+	rune_in_use = FALSE
 	for(var/mob/living/M in range(1,src))
 		if(iscultist(M) && M.stat == DEAD)
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
