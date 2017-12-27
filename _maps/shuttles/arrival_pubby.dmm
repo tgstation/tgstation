@@ -13,7 +13,7 @@
 "m" = (/obj/structure/grille,/obj/structure/window/shuttle,/obj/machinery/door/poddoor/shutters/preopen{id = "arrivy"; name = "ship shutters"},/turf/open/floor/plating,/area/shuttle/arrival)
 "n" = (/obj/machinery/door/airlock/titanium{name = "Arrivals Shuttle Airlock"},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
 "o" = (/obj/structure/chair{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
-"p" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/obj/docking_port/mobile/arrivals{height = 13; name = "pubby arrivals shuttle"; width = 6},/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 13; id = "arrivals_stationary"; name = "pubby arrivals"; width = 6},/turf/open/floor/plating/airless,/area/shuttle/arrival)
+"p" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/obj/docking_port/mobile/arrivals{height = 13; name = "pubby arrivals shuttle"; width = 6},/turf/open/floor/plating/airless,/area/shuttle/arrival)
 "q" = (/obj/machinery/light/small,/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
 "r" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/open/floor/plating/airless,/area/shuttle/arrival)
 "s" = (/obj/structure/closet/emcloset,/obj/item/storage/firstaid/o2,/obj/item/tank/internals/emergency_oxygen,/obj/item/clothing/mask/breath,/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
