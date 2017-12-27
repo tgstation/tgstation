@@ -455,6 +455,9 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
+/obj/machinery/door/airlock/cult/emp_act(severity)
+	return
+
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
 

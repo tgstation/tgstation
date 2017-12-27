@@ -470,9 +470,10 @@
 		user.Knockdown(100)
 		user.blind_eyes(30)
 
-/obj/item/reagent_containers/food/drinks/bottle/unholywater
+/obj/item/reagent_containers/glass/beaker/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
+	icon = 'icons/obj/drinks.dmi'
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 50)

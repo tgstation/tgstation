@@ -97,7 +97,7 @@
 			pickedtype += /obj/structure/constructshell
 			pickedtype += /obj/structure/constructshell
 		if("Flask of Unholy Water")
-			pickedtype += /obj/item/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype += /obj/item/reagent_containers/glass/beaker/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)

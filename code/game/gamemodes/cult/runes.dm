@@ -44,7 +44,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	. = ..()
 	if(set_keyword)
 		keyword = set_keyword
-	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
+	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
 
@@ -574,26 +574,134 @@ structure_check() searches for nearby cultist structures required for the invoca
 			M.visible_message("<span class='warning'>[M] twitches.</span>")
 
 
-/obj/effect/rune/emp
+/obj/effect/rune/apocalypse
 	cultist_name = "Apocalypse"
-	cultist_desc = "emits a large electromagnetic pulse, increasing in size for each cultist invoking it, hindering electronics and disabling silicons."
+	cultist_desc = "a harbinger of the end times. Grows in strength with the cult's desperation - but at the risk of... side effects."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
-	icon_state = "5"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "apoc"
+	pixel_x = -32
+	pixel_y = -32
 	allow_excess_invokers = TRUE
-	color = RUNE_COLOR_EMP
+	color = RUNE_COLOR_DARKRED
 	req_cultists = 5
 
-/obj/effect/rune/emp/invoke(var/list/invokers)
-	var/turf/E = get_turf(src)
-	..()
+/obj/effect/rune/apocalypse/invoke(var/list/invokers)
+	if(rune_in_use)
+		return
+	. = ..()
+	rune_in_use = TRUE
+	var/turf/T = get_turf(src)
+	var/intensity
+	for(var/mob/living/M in GLOB.player_list)
+		if(iscultist(M))
+			intensity++
+	intensity = max(60, 300 - (300*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
+	var/duration = intensity*10
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
-	playsound(E, 'sound/magic/disable_tech.ogg', 100, 1)
-	for(var/M in invokers)
-		var/mob/living/L = M
+	playsound(T, 'sound/magic/disable_tech.ogg', 100, 1)
+	for(var/mob/living/L in invokers)
 		to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")
 		L.Knockdown(40)
-	qdel(src) //delete before pulsing because it's a delay reee
-	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
+	empulse(T, 0.42*(intensity), 1)
+	var/list/images = list()
+	var/zmatch = T.z
+	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	for(var/mob/living/M in GLOB.alive_mob_list)
+		if(M.z != zmatch)
+			continue
+		if(ishuman(M))
+			if(!iscultist(M))
+				AH.remove_hud_from(M)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
+			var/image/A = image('icons/mob/mob.dmi',M,"cultist", ABOVE_MOB_LAYER)
+			A.override = 1
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, FALSE)
+			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)
+			images += A
+			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/spookoween/ghost_whisper.ogg'),sound('sound/spookoween/ghosty_wind.ogg')))
+		else
+			var/construct = pick("floater","artificer","behemoth")
+			var/image/B = image('icons/mob/mob.dmi',M,construct, ABOVE_MOB_LAYER)
+			B.override = 1
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, FALSE)
+			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)
+			images += B
+		if(!iscultist(M))
+			var/image/C = image('icons/effects/cult_effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
+			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
+			images += C
+	image_handler(images, duration)
+	if(intensity>=240) // Based on the prior formula, this means the cult makes up <15% of current players
+		var/outcome = rand(1,100)
+		switch(outcome)
+			if(1 to 10)
+				var/datum/round_event_control/disease_outbreak/D = new()
+				var/datum/round_event_control/mice_migration/M = new()
+				D.runEvent()
+				M.runEvent()
+			if(11 to 20)
+				var/datum/round_event_control/radiation_storm/RS = new()
+				RS.runEvent()
+			if(21 to 30)
+				var/datum/round_event_control/brand_intelligence/BI = new()
+				BI.runEvent()
+			if(31 to 40)
+				var/datum/round_event_control/immovable_rod/R = new()
+				R.runEvent()
+				R.runEvent()
+				R.runEvent()
+			if(41 to 50)
+				var/datum/round_event_control/meteor_wave/MW = new()
+				MW.runEvent()
+			if(51 to 60)
+				var/datum/round_event_control/spider_infestation/SI = new()
+				SI.runEvent()
+			if(61 to 70)
+				var/datum/round_event_control/anomaly/anomaly_flux/AF
+				var/datum/round_event_control/anomaly/anomaly_grav/AG
+				var/datum/round_event_control/anomaly/anomaly_pyro/AP
+				var/datum/round_event_control/anomaly/anomaly_vortex/AV
+				AF.runEvent()
+				AG.runEvent()
+				AP.runEvent()
+				AV.runEvent()
+			if(71 to 80)
+				var/datum/round_event_control/spacevine/SV = new()
+				var/datum/round_event_control/grey_tide/GT = new()
+				SV.runEvent()
+				GT.runEvent()
+			if(81 to 100)
+				var/datum/round_event_control/portal_storm_narsie/N = new()
+				N.runEvent()
+	qdel(src)
+
+/obj/effect/rune/apocalypse/proc/image_handler(var/list/images, duration)
+	var/end = world.time + duration
+	set waitfor = 0
+	while(end>world.time)
+		for(var/image/I in images)
+			I.override = FALSE
+			animate(I, alpha = 0, time = 25, flags = ANIMATION_PARALLEL)
+		sleep(45)
+		for(var/image/I in images)
+			animate(I, alpha = 255, time = 25, flags = ANIMATION_PARALLEL)
+		sleep(25)
+		for(var/image/I in images)
+			if(I.icon_state != "bloodsparkles")
+				I.override = TRUE
+		sleep(180)
+
+
+
+/proc/hudFix(mob/living/carbon/human/target)
+	if(!target || !target.client)
+		return
+	var/obj/O = target.get_item_by_slot(slot_glasses)
+	if(istype(O, /obj/item/clothing/glasses/hud/security))
+		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+		AH.add_hud_to(target)
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
