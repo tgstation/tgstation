@@ -20,11 +20,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"t" = "Syndicate",
 	"y" = "CentCom",
 
-	// Species
-	"b" = "binary",
-	"g" = "changeling",
-	"a" = "alientalk",
-
 	// Admin
 	"p" = "admin",
 	"d" = "deadmin",
