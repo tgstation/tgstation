@@ -300,6 +300,15 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+				// Hippie Start - Handle un-impaling player if pinned item falls out
+				if (I.pinned)
+					do_pindown(pinned_to, 0)
+					pinned_to = null
+					anchored = FALSE
+					update_canmove()
+					I.pinned = null
+				// Hippie End
+
 /mob/living/carbon/human/proc/can_heartattack()
 	CHECK_DNA_AND_SPECIES(src)
 	if(NOBLOOD in dna.species.species_traits)
