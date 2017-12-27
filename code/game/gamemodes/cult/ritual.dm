@@ -68,6 +68,34 @@ This file contains the cult dagger and rune list code
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
+	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
+		if((world.time - SSticker.round_start_time) <= 6000)
+			var/wait = 6000 - (world.time - SSticker.round_start_time)
+			to_chat(user, "<span class='cult italic'>The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)].</span>")
+			return
+		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+		if(!(A in summon_objective.summon_spots))
+			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+			return
+		if(summon_objective.summon_spots.len <= 1)
+			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
+			return
+		var/mob/living/CM = user_antag.cult_team.cult_master
+		var/mob/living/decider = user
+		if(CM && !CM.incapacitated() && iscultist(CM) && CM.stat != DEAD)
+			decider = CM
+		var/confirm_final = alert(decider, "The Apocalypse Rite will prevent Nar-sie from being summoned at this particular site", "Are you sure you wish to lose this summoning site?", "It must be done!", "No")
+		if(confirm_final == "No")
+			if(decider == user)
+				to_chat(user, "<span class='cult'>You decide against scribing the rune.</span>")
+			else
+				to_chat(user, "<span class='cult'>[decider] has forbade you from scribing the rune here.</span>")
+			return
+		Turf = get_turf(user) //we may have moved. adjust as needed...
+		A = get_area(src)
+		if(!(A in summon_objective.summon_spots)) //Repeat check to make sure they didn't move
+			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+			return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives

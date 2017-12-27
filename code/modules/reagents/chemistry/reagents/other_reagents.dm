@@ -251,7 +251,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent(src.id,reac_volume/5)
+		M.reagents.add_reagent(id,reac_volume/4)
 		return
 	return ..()
 
@@ -261,6 +261,7 @@
 		M.AdjustUnconscious(-20, 0)
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
+		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
@@ -273,7 +274,7 @@
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god

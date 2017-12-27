@@ -159,7 +159,7 @@
 				if(!B.current.incapacitated())
 					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.</span>")
 		return FALSE
-	team.cult_mastered = TRUE
+	team.cult_master = Nominee
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
 	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
 	for(var/datum/mind/B in team.members)

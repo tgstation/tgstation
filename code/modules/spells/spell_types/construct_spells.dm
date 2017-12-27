@@ -100,43 +100,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/device/soulstone/anybody)
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune
-	name = "Summon Rune"
-	desc = "This spell draws a rune from the void, as though it had been there all along..."
-	school = "conjuration"
-	charge_max = 3000
-	clothes_req = 0
-	invocation = "none"
-	invocation_type = "none"
-	range = 0
-	cast_sound = 'sound/magic/enter_blood.ogg'
-	action_icon = 'icons/mob/actions/actions_cult.dmi'
-	action_icon_state = "telerune"
-	action_background_icon_state = "bg_demon"
-	summon_type = list(/obj/effect/rune)
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/cast(list/targets,mob/user = usr)
-	if(do_after(user, 60, target = user))
-		..()
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/teleport
-	name = "Summon Teleport Rune"
-	summon_type = list(/obj/effect/rune/teleport)
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/revive
-	name = "Summon Revive Rune"
-	action_icon_state = "revive"
-	summon_type = list(/obj/effect/rune/raise_dead)
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/wall
-	name = "Summon Barrier Rune"
-	action_icon_state = "barrier"
-	summon_type = list(/obj/effect/rune/wall)
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/barrier/post_summon(atom/summoned_object, mob/user)
-	var/obj/effect/rune/wall/W = summoned_object
-	W.spread_density()
-
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
@@ -337,3 +300,13 @@
 	amt_dam_brute = 30
 	amt_knockdown = 50
 	sound = 'sound/weapons/punch3.ogg'
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(T)
+	for(var/obj/O in range(src,1))
+		if(O.density && !istype(O, /obj/structure/destructible/cult))
+			O.take_damage(90, BRUTE, "gauntlet echo", 0)
+			new /obj/effect/temp_visual/cult/turf/floor
+	..()

@@ -330,13 +330,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
 			if(!summon_objective)
 				return
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
 			if(icon_state == "runed_sense1")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)

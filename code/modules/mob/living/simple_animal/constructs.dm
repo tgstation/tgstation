@@ -37,23 +37,28 @@
 	var/seeking = FALSE
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
+	var/runetype
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
 	var/spellnum = 1
 	for(var/spell in construct_spells)
-		if(istype(spell, /obj/effect/proc_holder/spell/aoe_turf/conjure/rune))
-			if(mind && !mind.has_antag_datum(/datum/antagonist/cult,TRUE))
-				continue
-		AddSpell(new spell(null))
+		var/the_spell = new spell(null)
+		AddSpell(the_spell)
 		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
 		var/pos = 2+spellnum*31
-		if(construct_spells.len >= 5)
+		if(construct_spells.len >= 4)
 			pos -= 31*(construct_spells.len - 4)
 		S.action.button.screen_loc = "6:[pos],4:-2"
 		S.action.button.moved = "6:[pos],4:-2"
 		spellnum++
+	if(runetype)
+		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
+		CR.Grant(src)
+		var/pos = 2+spellnum*31
+		CR.button.screen_loc = "6:[pos],4:-2"
+		CR.button.moved = "6:[pos],4:-2"
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -130,8 +135,8 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
-							/obj/effect/proc_holder/spell/dumbfire/juggernaut,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/wall)
+							/obj/effect/proc_holder/spell/dumbfire/juggernaut)
+	runetype = /datum/action/innate/cult/create_rune/wall
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
@@ -180,8 +185,8 @@
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/teleport)
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
+	runetype = /datum/action/innate/cult/create_rune/tele
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
 
 	var/attack_refund = 10 //1 second per attack
@@ -236,8 +241,8 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/rune/revive)
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	runetype = /datum/action/innate/cult/create_rune/revive
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
 
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \

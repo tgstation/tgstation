@@ -107,7 +107,7 @@
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
 	current.verbs += /mob/living/proc/cult_help
-	if(!cult_team.cult_mastered)
+	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
 	if(ishuman(current))
@@ -193,7 +193,7 @@
 	var/blood_target_reset_timer
 
 	var/cult_vote_called = FALSE
-	var/cult_mastered = FALSE
+	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
 
 

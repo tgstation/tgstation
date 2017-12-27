@@ -76,6 +76,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(invokers.len >= req_cultists)
 		invoke(invokers)
 	else
+		to_chat(user, "<span class='danger'>You need [req_cultists - invokers.len] more adjacent cultists to use this rune in such a manner.</span>")
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/M)
@@ -414,7 +415,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
-	cultist_name = "Summon Nar-Sie"
+	cultist_name = "Nar-Sie"
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
@@ -447,7 +448,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
-		log_game("Summon Nar-Sie rune failed - already summoned")
+		log_game("Nar-Sie rune failed - already summoned")
 		return
 	//BEGIN THE SUMMONING
 	used = TRUE
@@ -584,25 +585,37 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	allow_excess_invokers = TRUE
 	color = RUNE_COLOR_DARKRED
-	req_cultists = 5
+	req_cultists = 3
+	scribe_delay = 100
 
 /obj/effect/rune/apocalypse/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
 	. = ..()
+	var/area/place = get_area(src)
+	var/mob/living/user = invokers[1]
+	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
+	if(summon_objective.summon_spots.len <= 1)
+		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
+		return
+	if(!(place in summon_objective.summon_spots))
+		to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+		return
+	summon_objective.summon_spots -= place
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
-	var/intensity
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(T)
+	var/intensity = 0
 	for(var/mob/living/M in GLOB.player_list)
 		if(iscultist(M))
 			intensity++
-	intensity = max(60, 300 - (300*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
+	intensity = max(60, 360 - (360*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
-	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
-	playsound(T, 'sound/magic/disable_tech.ogg', 100, 1)
-	for(var/mob/living/L in invokers)
-		to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")
-		L.Knockdown(40)
+	playsound(T, 'sound/magic/enter_blood.ogg', 100, 1)
+	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
+	for(var/mob/living/L in range(src, 3))
+		L.Knockdown(30)
 	empulse(T, 0.42*(intensity), 1)
 	var/list/images = list()
 	var/zmatch = T.z
@@ -628,12 +641,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)
 			images += B
 		if(!iscultist(M))
-			var/image/C = image('icons/effects/cult_effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
-			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
-			images += C
+			if(M.client)
+				var/image/C = image('icons/effects/cult_effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
+				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
+				addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
+				images += C
+		else
+			to_chat(M, "<span class='cultlarge'>An Apocalypse Rune was invoked in /the [place.name], it is no longer available as a summoning site!</span>")
+			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity>=240) // Based on the prior formula, this means the cult makes up <15% of current players
+	if(intensity>=285) // Based on the prior formula, this means the cult makes up <~15% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)
@@ -684,14 +701,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/image/I in images)
 			I.override = FALSE
 			animate(I, alpha = 0, time = 25, flags = ANIMATION_PARALLEL)
-		sleep(45)
+		sleep(35)
 		for(var/image/I in images)
 			animate(I, alpha = 255, time = 25, flags = ANIMATION_PARALLEL)
 		sleep(25)
 		for(var/image/I in images)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
-		sleep(180)
+		sleep(190)
 
 
 
