@@ -127,9 +127,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
+	AddComponent(/datum/component/knockoff,90,list("mouth"),list(slot_wear_mask))//90% to knock off when wearing a mask
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list("mouth"),list(slot_wear_mask))//90% to knock off when wearing a mask
+	else
+		AddComponent(/datum/component/dippable, TRUE, 0, 0, 1, DIP_TYPE_FRACTIONAL_DIPPED_MAXIMUM)
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -143,19 +145,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		return ..()
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
-	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
-		return
-	if(istype(glass))	//you can dip cigarettes into beakers
-		if(glass.reagents.trans_to(src, chem_volume))	//if reagents were transfered, show the message
-			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
-		else			//if not, either the beaker was empty, or the cigarette was full
-			if(!glass.reagents.total_volume)
-				to_chat(user, "<span class='notice'>[glass] is empty.</span>")
-			else
-				to_chat(user, "<span class='notice'>[src] is full.</span>")
-
-
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
 		return
@@ -164,6 +153,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		return
 
+	var/datum/component/dippable/D = GetExactComponent(/datum/component/dippable)
+	if(D)
+		qdel(D)	//This handles not being able to dip a cigarette anymore once lit.
 	lit = TRUE
 	name = "lit [name]"
 	attack_verb = list("burnt", "singed")

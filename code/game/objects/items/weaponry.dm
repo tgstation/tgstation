@@ -294,10 +294,16 @@
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
 
+/obj/item/switchblade/Initialize()
+	..()
+	AddComponent(/datum/component/dippable, FALSE, 45, 1, 1, DIP_TYPE_FRACTIONAL_DIP_TOTAL, FALSE, 0.5)
+
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	var/datum/component/dippable/D = GetExactComponent(/datum/component/dippable)
 	if(extended)
+		D.transfer_on_attack = TRUE
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
@@ -306,6 +312,7 @@
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = IS_SHARP
 	else
+		D.transfer_on_attack = FALSE
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5

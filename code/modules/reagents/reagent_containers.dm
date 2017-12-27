@@ -48,6 +48,10 @@
 /obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
+/obj/item/reagent_containers/attackby(obj/item/I, mob/living/user, params)
+	I.SendSignal(COMSIG_ITEM_ATTACK_REAGENT_CONTAINER, src, user, params)
+	return ..()
+
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0
