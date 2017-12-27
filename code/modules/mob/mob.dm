@@ -409,11 +409,14 @@
 		setDir(D)
 		spintime -= speed
 
+/mob/stop_pulling()
+	..()
+	update_pull_hud_icon()
+
 /mob/verb/stop_pulling1()
 	set name = "Stop Pulling"
 	set category = "IC"
 	stop_pulling()
-	update_pull_hud_icon()
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)

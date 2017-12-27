@@ -124,6 +124,9 @@
 		if(pullee && get_dist(src, pullee) > 1)
 			stop_pulling()
 			return
+		if(!isturf(loc))
+			stop_pulling()
+			return
 		if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
@@ -141,7 +144,8 @@
 	if(pulling)
 		if(pullee && get_dist(src, pullee) > 1)
 			stop_pulling()
-		if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
+
+		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
 	if(!loc || !newloc)
