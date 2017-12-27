@@ -225,7 +225,6 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
-	return
 
 
 //reveal, stun, icon updates, cast checks, and essence changing

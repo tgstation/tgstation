@@ -263,9 +263,6 @@
 	for(var/obj/mecha/M in src)
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
-/turf/proc/Bless()
-	flags_1 |= NOJAUNT_1
-
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")

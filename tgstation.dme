@@ -766,6 +766,7 @@
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\effects\alien_acid.dm"
 #include "code\game\objects\effects\anomalies.dm"
+#include "code\game\objects\effects\blessing.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
 #include "code\game\objects\effects\contraband.dm"
 #include "code\game\objects\effects\countdown.dm"

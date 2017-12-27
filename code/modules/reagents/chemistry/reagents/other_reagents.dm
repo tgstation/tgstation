@@ -235,7 +235,8 @@
 	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
-	T.Bless()
+
+	new /obj/effect/blessing(T)
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
