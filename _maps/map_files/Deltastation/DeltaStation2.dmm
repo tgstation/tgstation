@@ -19939,6 +19939,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
 "aQo" = (
@@ -99412,10 +99413,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "dVT" = (
@@ -105063,6 +105064,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"ehQ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/lightsout,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -139958,7 +139967,7 @@ dKD
 dUp
 dVd
 dVS
-dVd
+ehQ
 dVd
 dVd
 dVd

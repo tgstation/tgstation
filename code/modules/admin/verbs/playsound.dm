@@ -80,14 +80,32 @@
 				to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
 				return
 			var/shell_scrubbed_input = shell_url_scrub(web_sound_input)
-			var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --get-url \"[shell_scrubbed_input]\"")
+			var/list/output = world.shelleo("[ytdl] --format \"bestaudio\[ext=mp3]/best\[ext=mp4]\[height<=360]/bestaudio\[ext=m4a]/bestaudio\[ext=aac]\" --dump-single-json --no-playlist -- \"[shell_scrubbed_input]\"")
 			var/errorlevel = output[SHELLEO_ERRORLEVEL]
 			var/stdout = output[SHELLEO_STDOUT]
 			var/stderr = output[SHELLEO_STDERR]
 			if(!errorlevel)
-				var/static/regex/content_url_regex = regex("https?://\\S+")
-				if(content_url_regex.Find(stdout))
-					web_sound_url = content_url_regex.match
+				var/list/data
+				try
+					data = json_decode(stdout)
+				catch(var/exception/e)
+					to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>")
+					to_chat(src, "<span class='warning'>[e]: [stdout]</span>")
+					return
+
+				if (data["url"])
+					web_sound_url = data["url"]
+					var/title = "[data["title"]]"
+					var/webpage_url = title
+					if (data["webpage_url"])
+						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
+
+					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
+					switch(res)
+						if("Yes")
+							to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>")
+						if("Cancel")
+							return
 
 					if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 						pitch = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
