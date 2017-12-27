@@ -23528,7 +23528,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bfR" = (
-/obj/configuration/shuttle_loader/arrival/box,
+/obj/configuration/shuttle_loader/arrival/pubby,
 /turf/open/space/basic,
 /area/space)
 "bfS" = (

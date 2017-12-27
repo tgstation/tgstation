@@ -97,3 +97,7 @@
 /obj/configuration/shuttle_loader/emergency/pubby
 	name = "Pubby emergency shuttle loader"
 	shuttle_id = "emergency_pubby"
+
+/obj/configuration/shuttle_loader/arrival/pubby
+	name = "Pubby arrival shuttle loader"
+	shuttle_id = "arrival_pubby"
