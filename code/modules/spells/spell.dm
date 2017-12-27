@@ -18,7 +18,7 @@
 /obj/effect/proc_holder/Initialize()
 	. = ..()
 	if(has_action)
-		action = new(src)
+		action = new base_action(src)
 
 /obj/effect/proc_holder/proc/on_gain(mob/living/user)
 	return
