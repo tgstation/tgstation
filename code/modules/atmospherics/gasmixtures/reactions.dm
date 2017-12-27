@@ -182,7 +182,7 @@
 
 	return cached_results[id] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting.
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again.
 /datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
@@ -193,39 +193,40 @@
 	min_requirements = list(
 		"ENER" = PLASMA_BINDING_ENERGY * 10,
 		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
-		/datum/gas/tritium = MINIMUM_HEAT_CAPACITY
+		/datum/gas/carbon_dioxide = MINIMUM_HEAT_CAPACITY
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, turf/open/location)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-
-	if(((cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/tritium][MOLES])/air.total_moles() < FUSION_PURITY_THRESHOLD) || air.return_pressure() < 10*ONE_ATMOSPHERE)
-		//Fusion wont occur if the level of impurities is too high or if there is too little pressure.
+	if(air.return_pressure() < 10*ONE_ATMOSPHERE)
+		//Fusion wont occur if there is too little pressure.
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/catalyst_efficency = max(min(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],MAX_CATALYST_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),1)
 	var/reaction_energy = THERMAL_ENERGY(air)
-	var/moles_impurities = air.total_moles()-(cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/tritium][MOLES])
-
-	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/10
-	var/tritium_catalyzed = (CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/40
-	var/oxygen_added = tritium_catalyzed
-	var/waste_added = max((plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY),0)
-	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)))*PLASMA_BINDING_ENERGY),0)
-
-	air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/nitryl)
-	//Fusion produces an absurd amount of waste products now, requiring active filtration.
-	cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - plasma_fused,0)
-	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES] - tritium_catalyzed,0)
-	cached_gases[/datum/gas/oxygen][MOLES] += oxygen_added
-	cached_gases[/datum/gas/water_vapor][MOLES] += waste_added
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] += waste_added
-	cached_gases[/datum/gas/nitryl][MOLES] += waste_added
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] += waste_added
-	if (location)
-		radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY*MAX_CATALYST_EFFICENCY))
+	var/mediation = (air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(total_moles-cached_gases[/datum/gas/plasma][MOLES])
+	var/carbon_amount = 2*cached_gases[/datum/gas/carbon_dioxide][MOLES]
+	var/plasma_fused
+	var/oxygen_added
+	if (carbon_amount) < 20 //Lack of catalyst, fusion reaction starts to break down.
+		plasma_fused = carbon_amount
+		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= 1
+		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
+		cached_gases[/datum/gas/bz][MOLES] += 0.5
+		cached_gases[datum/gas/nitrous_oxide][MOLES] += 0.5
+		if (location)
+			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY))
+	else
+		plasma_fused = max((carbon_amount*5),MAX_CATALYST_EFFICENCY)*((cached_gases[/datum/gas/plasma][MOLES])/mediation))
+		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
+		air.assert_gases(/datum/gas/oxygen)
+		cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - plasma_fused,0)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
+		cached_gases[/datum/gas/oxygen][MOLES] += oxygen_added
+		if (location)
+			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY*MAX_CATALYST_EFFICENCY))
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
