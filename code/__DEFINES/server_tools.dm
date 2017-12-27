@@ -1,5 +1,5 @@
 // /tg/station 13 server tools API
-#define SERVICE_API_VERSION_STRING "3.2.0.1"
+#define SERVICE_API_VERSION_STRING "3.2.1.0"
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
@@ -82,6 +82,7 @@
 #define SERVICE_CMD_LIST_CUSTOM "list_custom_commands"
 #define SERVICE_CMD_API_COMPATIBLE "api_compat"
 #define SERVICE_CMD_PLAYER_COUNT "client_count"
+#define SERVICE_CMD_PING "pingerino"
 
 #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
 #define SERVICE_CMD_PARAM_COMMAND "command"
