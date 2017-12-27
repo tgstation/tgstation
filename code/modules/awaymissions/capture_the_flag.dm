@@ -48,9 +48,6 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
-	if(!is_ctf_target(user))
-		to_chat(user, "Non players shouldn't be moving the flag!")
-		return
 	if(team in user.faction)
 		to_chat(user, "You can't move your own flag!")
 		return
