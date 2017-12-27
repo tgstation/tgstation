@@ -413,6 +413,7 @@
 	set name = "Stop Pulling"
 	set category = "IC"
 	stop_pulling()
+	update_pull_hud_icon()
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)

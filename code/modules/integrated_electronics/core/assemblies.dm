@@ -38,6 +38,7 @@
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
+	check_pulling()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.

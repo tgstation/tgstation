@@ -118,6 +118,23 @@
 		return
 	step(pulling, get_dir(pulling.loc, A))
 
+/atom/movable/proc/check_pulling()
+	if(pulling)
+		var/atom/movable/pullee = pulling
+		if(pullee && get_dist(src, pullee) > 1)
+			stop_pulling()
+			return
+		if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
+			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
+			stop_pulling()
+			return
+		if(pulling.anchored)
+			stop_pulling()
+			return
+
+
+
+
 /atom/movable/Move(atom/newloc, direct = 0)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
