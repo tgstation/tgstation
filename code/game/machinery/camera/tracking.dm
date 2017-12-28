@@ -130,9 +130,9 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!src.can_use())
+	if (!can_use())
 		return
-	user.eyeobj.setLoc(get_turf(src))
+	ai.switchCamera(src)
 
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a

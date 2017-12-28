@@ -430,19 +430,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
-	if(!tracking)
-		cameraFollow = null
-
 	if(QDELETED(C))
 		return FALSE
 
-	if(!src.eyeobj)
+	if(!tracking)
+		cameraFollow = null
+
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
