@@ -227,6 +227,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		after each shot."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
+	player_minimum = 25
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)
 
