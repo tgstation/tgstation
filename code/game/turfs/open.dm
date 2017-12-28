@@ -89,7 +89,7 @@
 	. = FALSE
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/Ark = GLOB.ark_of_the_clockwork_justiciar
 	for(var/mob/living/L in src)
-		if(is_servant_of_ratvar(L) && L.stat != DEAD && Ark && Ark.progress_in_seconds < GATEWAY_REEBE_FOUND)
+		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
 			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
 			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
