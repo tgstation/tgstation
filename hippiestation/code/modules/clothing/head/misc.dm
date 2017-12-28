@@ -11,3 +11,9 @@
 	name = "zoot suit hat"
 	desc = "What's swingin', toots?"
 	icon_state = "zoothat"
+
+/obj/item/clothing/head/hippie/toad
+	name = "bup boy hat"
+	desc = "Shout out to simpleflips"
+	icon_state = "toad"
+	alternate_screams = list('hippiestation/sound/voice/aaaaaa.ogg', 'hippiestation/sound/voice/ahwowow.ogg')

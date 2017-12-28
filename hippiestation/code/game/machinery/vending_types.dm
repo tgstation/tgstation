@@ -12,7 +12,7 @@ CLOTHESMATE
 	vend_reply = "Thank you for using the ClothesMate!"
 	height = 750
 	refill_canister = /obj/item/vending_refill/clothing
-	// 118 standard, 9 contraband, 11 premium
+	// 119 standard, 9 contraband, 12 premium
 	products = list(
 		/obj/item/clothing/head/that=2,
 		/obj/item/clothing/head/fedora=1,
@@ -102,7 +102,8 @@ CLOTHESMATE
 		/obj/item/clothing/suit/jacket/letterman_red=1,
 		/obj/item/clothing/ears/headphones = 10,
 		/obj/item/clothing/under/hippie/zootsuit = 1,
-		/obj/item/clothing/head/hippie/zoothat = 1
+		/obj/item/clothing/head/hippie/zoothat = 1,
+		/obj/item/clothing/head/hippie/toad = 1
 		)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool=1,
