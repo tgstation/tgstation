@@ -11,7 +11,6 @@
 #define ROLE_CHANGELING			"changeling"
 #define ROLE_WIZARD				"wizard"
 #define ROLE_MALF				"malf AI"
-#define ROLE_REV				"revolutionary"
 #define ROLE_ALIEN				"xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"cultist"
@@ -23,6 +22,7 @@
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BROTHER			"blood brother"
+#define ROLE_SHADOWLING			"shadowling"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_CHANGELING = /datum/game_mode/changeling,
 	ROLE_WIZARD = /datum/game_mode/wizard,
 	ROLE_MALF,
-	ROLE_REV = /datum/game_mode/revolution,
 	ROLE_ALIEN,
 	ROLE_PAI,
 	ROLE_CULTIST = /datum/game_mode/cult,
@@ -45,6 +44,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult
+	ROLE_SHADOWLING = /datum/game_mode/shadowling
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

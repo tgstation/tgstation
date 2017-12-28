@@ -212,12 +212,6 @@
 	special_role = null
 	remove_antag_equip()
 
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -236,10 +230,18 @@
 	remove_nukeop()
 	remove_wizard()
 	remove_cultist()
-	remove_rev()
+	remove_shadowling()
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 
+ 
+ /datum/mind/proc/remove_shadowling()
+ 	if(src in SSticker.mode.thralls)
+ 		SSticker.mode.remove_thrall(src)
+ 	if(src in SSticker.mode.shadows)
+ 		SSticker.mode.remove_shadowling(src)
+ 	remove_objectives()
+	
 /datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
 	if(!current)
 		return
@@ -315,10 +317,6 @@
 	if(iscultist(creator))
 		SSticker.mode.add_cultist(src)
 
-	else if(is_revolutionary(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
-		converter.add_revolutionary(src,FALSE)
-
 	else if(is_servant_of_ratvar(creator))
 		add_servant_of_ratvar(current)
 
@@ -380,7 +378,6 @@
 		"changeling",
 		"nuclear",
 		"wizard",
-		"revolution",
 		"cult",
 		"clockcult",
 		"abductor",
@@ -533,52 +530,25 @@
 		sections["wizard"] = text
 
 
-		/** REVOLUTION ***/
-		text = "revolution"
-		if (SSticker.mode.config_tag=="revolution")
+		/** SHADOWLING **/
+		text = "shadowling"
+		if(SSticker.mode.config_tag == "shadowling")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (assigned_role in GLOB.command_positions)
-			text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
-		else if (has_antag_datum(/datum/antagonist/rev/head))
-			var/datum/antagonist/rev/head = has_antag_datum(/datum/antagonist/rev/head)
-			var/last_healthy_headrev = TRUE
-			for(var/datum/mind/I in head.rev_team.head_revolutionaries())
-				if(I == src)
-					continue
-				var/mob/M = I.current
-				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
-					last_healthy_headrev = FALSE
-					break
-			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"
-			text += "<br>Flash: <a href='?src=[REF(src)];revolution=flash'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/assembly/flash/flash = locate() in L
-			if (flash)
-				if(!flash.crit_fail)
-					text += " | <a href='?src=[REF(src)];revolution=takeflash'>take</a>."
-				else
-					text += " | <a href='?src=[REF(src)];revolution=takeflash'>take</a> | <a href='?src=[REF(src)];revolution=repairflash'>repair</a>."
-			else
-				text += "."
-
-			text += " <a href='?src=[REF(src)];revolution=reequip'>Reequip</a> (gives traitor uplink)."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=[REF(src)];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if(current.isloyal())
-			text += "head | <b>MINDSHIELDED</b> | employee | <a href='?src=[REF(src)];revolution=headrev'>headrev</a> | rev"
-		else if (has_antag_datum(/datum/antagonist/rev))
-			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <a href='?src=[REF(src)];revolution=headrev'>headrev</a> | <b>REV</b>"
+		if(src in SSticker.mode.shadows)
+			text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+		else if(src in SSticker.mode.thralls)
+			text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else
-			text += "head | not mindshielded | <b>EMPLOYEE</b> | <a href='?src=[REF(src)];revolution=headrev'>headrev</a> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"
+			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
 
-		if(current && current.client && (ROLE_REV in current.client.prefs.be_special))
-			text += " | Enabled in Prefs"
+		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
+			text += "|Enabled in Prefs"
 		else
-			text += " | Disabled in Prefs"
+			text += "|Disabled in Prefs"
 
-		sections["revolution"] = text
+		sections["shadowling"] = text
+
 
 		/** ABDUCTION **/
 		text = "abductor"
@@ -955,63 +925,6 @@
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
-	else if (href_list["revolution"])
-		switch(href_list["revolution"])
-			if("clear")
-				remove_rev()
-				message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
-				log_admin("[key_name(usr)] has de-rev'ed [current].")
-			if("rev")
-				if(has_antag_datum(/datum/antagonist/rev/head))
-					var/datum/antagonist/rev/head/head = has_antag_datum(/datum/antagonist/rev/head)
-					head.demote()
-				else if(!has_antag_datum(/datum/antagonist/rev))
-					add_antag_datum(/datum/antagonist/rev)
-					special_role = "Revolutionary"
-					message_admins("[key_name_admin(usr)] has rev'ed [current].")
-					log_admin("[key_name(usr)] has rev'ed [current].")
-				else
-					return
-
-			if("headrev")
-				if(has_antag_datum(/datum/antagonist/rev))
-					var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-					rev.promote()
-				else if(!has_antag_datum(/datum/antagonist/rev/head))
-					//what about the team here.
-					var/datum/antagonist/rev/head/new_head = new /datum/antagonist/rev/head(src)
-					new_head.give_flash = TRUE
-					new_head.give_hud = TRUE
-					new_head.remove_clumsy = TRUE
-					add_antag_datum(new_head)
-					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
-				else
-					return
-				special_role = "Head Revolutionary"
-				message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
-				log_admin("[key_name(usr)] has head-rev'ed [current].")
-
-			if("flash")
-				var/datum/antagonist/rev/head/head = has_antag_datum(/datum/antagonist/rev/head)
-				if(!head.equip_rev())
-					to_chat(usr, "<span class='danger'>Spawning flash failed!</span>")
-
-			if("takeflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/assembly/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='danger'>Deleting flash failed!</span>")
-				qdel(flash)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/assembly/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='danger'>Repairing flash failed!</span>")
-				else
-					flash.crit_fail = 0
-					flash.update_icon()
-
 
 
 	else if (href_list["cult"])
@@ -1147,8 +1060,46 @@
 				else
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
-					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")	
 
+	else if(href_list["shadowling"])
+		switch(href_list["shadowling"])
+			if("clear")
+				SSticker.mode.update_shadow_icons_removed(src)
+				if(src in SSticker.mode.shadows)
+					SSticker.mode.shadows -= src
+					special_role = null
+					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
+				else if(src in SSticker.mode.thralls)
+					SSticker.mode.remove_thrall(src,0)
+					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
+					log_admin("[key_name(usr)] has de-thrall'ed [current].")
+			if("shadowling")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				SSticker.mode.shadows += src
+				special_role = "shadowling"
+				to_chat(current,"<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
+				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
+				</b></span>")
+				SSticker.mode.finalize_shadowling(src)
+				SSticker.mode.update_shadow_icons_added(src)
+				current.playsound_local(get_turf(current), 'sound/ambience/antag/sling.ogg', 100, FALSE, pressure_affected = FALSE)
+			if("thrall")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				SSticker.mode.add_thrall(src)
+				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
+				log_admin("[key_name(usr)] has thrall'ed [current].")
+					
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
 		switch(href_list["devil"])
@@ -1385,13 +1336,6 @@
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-
-/datum/mind/proc/make_Rev()
-	var/datum/antagonist/rev/head/head = new(src)
-	head.give_flash = TRUE
-	head.give_hud = TRUE
-	add_antag_datum(head)
-	special_role = "Head Revolutionary"
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S

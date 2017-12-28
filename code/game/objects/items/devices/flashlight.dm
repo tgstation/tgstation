@@ -157,6 +157,13 @@
 	else
 		return ..()
 
+/obj/item/device/flashlight/disable_light()
+	on = FALSE
+	update_brightness()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+		
 /obj/item/device/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
@@ -316,6 +323,9 @@
 /obj/item/device/flashlight/flare/is_hot()
 	return on * heat
 
+/obj/item/device/flashlight/flare/disable_light()
+	return FALSE
+	
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
@@ -348,6 +358,9 @@
 	materials = list()
 	brightness_on = 6 //luminosity when on
 
+/obj/item/device/flashlight/slime/disable_light()
+	return 0
+	
 /obj/item/device/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4

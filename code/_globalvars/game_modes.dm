@@ -10,3 +10,4 @@ GLOBAL_DATUM(start_state, /datum/station_state) // Used in round-end report
 
 //TODO clear this one up too
 GLOBAL_DATUM(cult_narsie, /obj/singularity/narsie/large/cult)
+GLOBAL_LIST_INIT(possibleShadowlingNames, list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian"))
