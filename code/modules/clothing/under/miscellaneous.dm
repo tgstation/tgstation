@@ -274,10 +274,7 @@
 	icon_state = "burial"
 	item_state = "burial"
 	item_color = "burial"
-
-/obj/item/clothing/under/burial/Initialize()
-	. = ..()
-	verbs -= /obj/item/clothing/under/verb/toggle
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/skirt/black
 	name = "black skirt"
