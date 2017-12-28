@@ -18,6 +18,9 @@
 	//Antag information
 	gather_antag_data()
 
+	//Nuke disk
+	record_nuke_disk_location()
+
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
 	var/list/team_ids = list()
@@ -45,6 +48,25 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
+
+/datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
+	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+	if(N)
+		var/list/data = list()
+		var/turf/T = get_turf(N)
+		if(T)
+			data["x"] = T.x
+			data["y"] = T.y
+			data["z"] = T.z
+		var/atom/outer = get_atom_on_turf(N,/mob/living)
+		if(outer != N)
+			if(isliving(outer))
+				var/mob/living/L = outer
+				data["holder"] = L.real_name
+			else
+				data["holder"] = outer.name
+
+		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
