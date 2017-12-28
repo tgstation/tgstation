@@ -132,7 +132,7 @@
 		return
 	if (!can_use())
 		return
-	ai.switchCamera(src)
+	user.switchCamera(src)
 
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a
