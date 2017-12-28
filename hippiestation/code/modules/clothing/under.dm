@@ -15,5 +15,14 @@
 	if(slot == slot_w_uniform)
 		var/mob/living/carbon/human/H = user
 		H.dna.add_mutation(CLUWNEMUT)
-		H.reindex_screams()
 	return ..()
+
+/obj/item/clothing/under/hippie/cosby
+	name = "sweater"
+	desc = "Zip zap zoobity bap"
+	icon_state = "cosby"
+	item_state = "r_suit" //bleh
+	item_color = "cosby"
+	can_adjust = 0
+	force = 0.001 	//TG doesn't have the forcehitsound that Hippie has at the moment, so this is just a hacky solution until or unless we figure something out -DerptheStewpidGoat
+	alternate_screams = list('hippiestation/sound/voice/cosby1.ogg','hippiestation/sound/voice/cosby2.ogg','hippiestation/sound/voice/cosby3.ogg','hippiestation/sound/voice/cosby4.ogg','hippiestation/sound/voice/cosby5.ogg')
