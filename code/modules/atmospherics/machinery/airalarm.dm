@@ -447,11 +447,9 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"add_filters" = list("co2"),
+					"remove_filters" = list("o2", "n2", "plasma", "water_vapor", "nob", "n2o",
+						"no2", "tritium", "bz", "stim", "pluox"),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -465,11 +463,9 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 1,
-					"n2o_scrub" = 1,
-					"rare_scrub"= 1,
-					"water_vapor_scrub"= 1,
+					"add_filters" = list("co2", "plasma", "water_vapor", "nob", "n2o",
+						"no2", "tritium", "bz", "stim", "pluox"),
+					"remove_filters" = list("o2", "n2"),
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -496,11 +492,9 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"add_filters" = list("co2"),
+					"remove_filters" = list("o2", "n2", "plasma", "water_vapor", "nob", "n2o",
+						"no2", "tritium", "bz", "stim", "pluox"),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
