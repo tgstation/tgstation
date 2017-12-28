@@ -665,7 +665,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			NC.d1 = 0
 			NC.d2 = fdirn
-			NC.add_fingerprint(user)
+			NC.add_fingerprint()
 			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
@@ -716,7 +716,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		//updates the stored cable coil
 		C.update_stored(2, item_color)
 
-		C.add_fingerprint(user)
+		C.add_fingerprint()
 		C.update_icon()
 
 
