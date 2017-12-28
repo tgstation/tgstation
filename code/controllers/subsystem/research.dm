@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(research)
 	var/list/errored_datums = list()
 	//----------------------------------------------
 	var/single_server_income = 40.7
-	var/multiserver_calculation = FALSE
+	var/multiserver_calculation = TRUE
 	var/last_income = 0
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
