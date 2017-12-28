@@ -135,4 +135,6 @@
 
 	var/list/mousemove_intercept_objects
 
+	var/shadow_walk = FALSE
+
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT

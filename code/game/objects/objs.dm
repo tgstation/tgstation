@@ -228,3 +228,6 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
+
+/obj/proc/disable_light() //used for forcing a light off. shadowlings, for example
+	return 0

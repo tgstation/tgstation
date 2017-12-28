@@ -136,8 +136,6 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
@@ -182,8 +180,6 @@
 				message_say = "FOR THE HIVE!"
 			else if(role == "cultist")
 				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
 	user.say(message_say)
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)

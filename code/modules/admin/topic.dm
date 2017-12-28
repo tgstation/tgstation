@@ -78,13 +78,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create changelings.")
-			if("revs")
-				if(src.makeRevs())
-					message_admins("[key_name(usr)] started a revolution.")
-					log_admin("[key_name(usr)] started a revolution.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution.")
 			if("cult")
 				if(src.makeCult())
 					message_admins("[key_name(usr)] started a cult.")
@@ -147,6 +140,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
+			if("shadowling")
+				if(src.makeShadowling())
+					message_admins("[key_name(usr)] created a shadowling.")
+					log_admin("[key_name(usr)] created a shadowling.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a shadowling.")
 			if("clockcult")
 				if(src.makeClockCult())
 					message_admins("[key_name(usr)] started a clockwork cult.")
@@ -835,12 +835,6 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=operative;jobban4=[REF(M)]'><font color=red>Nuke Operative</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=operative;jobban4=[REF(M)]'>Nuke Operative</a></td>"
-
-		//Revolutionary
-		if(jobban_isbanned(M, "revolutionary") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=revolutionary;jobban4=[REF(M)]'><font color=red>Revolutionary</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=revolutionary;jobban4=[REF(M)]'>Revolutionary</a></td>"
 
 		//Cultist
 		if(jobban_isbanned(M, "cultist") || isbanned_dept)

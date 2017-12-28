@@ -351,9 +351,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return FALSE
 	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
 		switch(SSticker.mode.config_tag)
-			if("revolution")
-				if(is_revolutionary(M))
-					return 2
 			if("cult")
 				if(M.mind in SSticker.mode.cult)
 					return 2

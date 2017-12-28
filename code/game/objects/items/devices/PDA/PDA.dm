@@ -938,6 +938,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	src.aiPDA.create_message(src, selected)
 
 
+/obj/item/device/pda/disable_light()
+	fon = FALSE
+	
+
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Sender/Receiver"
