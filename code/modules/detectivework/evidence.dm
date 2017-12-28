@@ -23,7 +23,7 @@
 	icon_state = initial(icon_state)
 	desc = initial(desc)
 
-/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
+/obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)	
 	if(!istype(I) || I.anchored == 1)
 		return
 

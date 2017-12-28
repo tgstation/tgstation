@@ -40,26 +40,26 @@
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
-		return FALSE
+		return 0
 	if(!ishuman(loc))
-		return FALSE	//Only works while worn
+		return 0 //Only works while worn
 
 	var/mob/living/carbon/human/H = loc
 
 	var/obj/item/clothing/suit/space/space_ninja/suit = H.wear_suit
 	if(!istype(suit))
-		return FALSE
+		return 0
 	if(isturf(A))
-		return FALSE
+		return 0
 
 	if(!proximity)
-		return FALSE
+		return 0
 
 	A.add_fingerprint(H)
 
-	draining = TRUE
+	draining = 1
 	. = A.ninjadrain_act(suit,H,src)
-	draining = FALSE
+	draining = 0
 
 	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(.)
@@ -67,7 +67,7 @@
 		else
 			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
-		. = FALSE	//as to not cancel attack_hand()
+		. = 0 //as to not cancel attack_hand()
 
 
 /obj/item/clothing/gloves/space_ninja/proc/toggledrain()
