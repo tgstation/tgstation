@@ -51784,6 +51784,12 @@
 	dir = 8
 	},
 /obj/structure/closet/l3closet,
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Medbay Storage APC";
+	areastring = "/area/medical/storage";
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
 	},
@@ -52991,12 +52997,6 @@
 /obj/item/storage/firstaid/brute{
 	pixel_x = -3;
 	pixel_y = -3
-	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Medbay Storage APC";
-	areastring = "/area/medical/storage";
-	pixel_y = -24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
