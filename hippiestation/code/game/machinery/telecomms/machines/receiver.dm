@@ -7,7 +7,7 @@
 		var/obj/item/O = I.get_object()
 		if(get_area(O)) //if it isn't in nullspace, can happen due to printer newing all possible circuits to fetch list data
 			dat += "<br>[O.name] = [O.x], [O.y], [O.z], [get_area(O)]"
-	dat += "<br><br>Listening interceptor signals: "
+	dat += "<br><br>Circuit jammer signals: "
 	for(var/i in GLOB.ic_jammers)
 		var/obj/item/integrated_circuit/I = i
 		var/obj/item/O = I.get_object()
