@@ -87,7 +87,6 @@
 
 /turf/open/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/Ark = GLOB.ark_of_the_clockwork_justiciar
 	for(var/mob/living/L in src)
 		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
