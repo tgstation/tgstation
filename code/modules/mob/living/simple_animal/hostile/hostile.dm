@@ -229,7 +229,8 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
-		if(target.z != z)
+		var/turf/T = get_turf(src)
+		if(target.z != T.z)
 			LoseTarget()
 			return 0
 		var/target_distance = get_dist(targets_from,target)
