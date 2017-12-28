@@ -20,11 +20,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"t" = "Syndicate",
 	"y" = "CentCom",
 
-	// Species
-	"b" = "binary",
-	"g" = "changeling",
-	"a" = "alientalk",
-
 	// Admin
 	"p" = "admin",
 	"d" = "deadmin",
@@ -55,11 +50,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"å" = "Syndicate",
 	"í" = "CentCom",
 
-	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
-
 	// Admin
 	"ç" = "admin",
 	"â" = "deadmin",
@@ -81,13 +71,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
+	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
-	else if(message_mode)
+	else if(message_mode || saymode)
 		message = copytext(message, 3)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
@@ -135,8 +126,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
 
-	var/datum/saymode/SM = SSradio.saymodes[talk_key]
-	if(SM && !SM.handle_message(src, message, language))
+	if(saymode && !saymode.handle_message(src, message, language))
 		return
 
 	if(!can_speak_vocal(message))
