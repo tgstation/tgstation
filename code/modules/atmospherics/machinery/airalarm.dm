@@ -447,9 +447,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"add_filters" = list("co2"),
-					"remove_filters" = list("o2", "n2", "plasma", "water_vapor", "nob", "n2o",
-						"no2", "tritium", "bz", "stim", "pluox"),
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -463,9 +461,18 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"add_filters" = list("co2", "plasma", "water_vapor", "nob", "n2o",
-						"no2", "tritium", "bz", "stim", "pluox"),
-					"remove_filters" = list("o2", "n2"),
+					"set_filters" = list(
+						/datum/gas/carbon_dioxide,
+						/datum/gas/plasma,
+						/datum/gas/water_vapor,
+						/datum/gas/hypernoblium,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/nitryl,
+						/datum/gas/tritium,
+						/datum/gas/bz,
+						/datum/gas/stimulum,
+						/datum/gas/pluoxium
+					),
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -492,9 +499,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"add_filters" = list("co2"),
-					"remove_filters" = list("o2", "n2", "plasma", "water_vapor", "nob", "n2o",
-						"no2", "tritium", "bz", "stim", "pluox"),
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))

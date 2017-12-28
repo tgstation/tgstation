@@ -238,14 +238,8 @@
 	if("toggle_filter" in signal.data)
 		filter_types ^= gas_id2path(signal.data["toggle_filter"])
 
-	if("add_filters" in signal.data)
-		var/list/filters = signal.data["add_filters"]
-		for(var/filter in filters)
-			filter_types |= gas_id2path(filter)
-	if("remove_filters" in signal.data)
-		var/list/filters = signal.data["remove_filters"]
-		for(var/filter in filters)
-			filter_types -= gas_id2path(filter)
+	if("set_filters" in signal.data)
+		filter_types = signal.data["set_filters"]
 
 	if("init" in signal.data)
 		name = signal.data["init"]
