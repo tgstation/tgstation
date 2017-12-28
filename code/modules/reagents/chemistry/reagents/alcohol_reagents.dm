@@ -51,9 +51,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = O
 			affectedbook.dat = null
-			O.visible_message("<span class='notice'>[O]'s writing is washed away by ethanol!</span>")
+			O.visible_message("<span class='notice'>[O]'s writing is washed away by [name]!</span>")
 		else
-			O.visible_message("<span class='warning'>[O]'s ink is smeared by ethanol, but doesn't wash away!</span>")
+			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
