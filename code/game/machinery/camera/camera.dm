@@ -57,19 +57,17 @@
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
-	toggle_cam(null, 0) //kick anyone viewing out
+	if(can_use())
+		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
-	if(assembly)
-		qdel(assembly)
-		assembly = null
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
-	GLOB.cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	GLOB.cameranet.cameras -= src
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
