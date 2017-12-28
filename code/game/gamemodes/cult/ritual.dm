@@ -84,12 +84,13 @@ This file contains the cult dagger and rune list code
 		var/mob/living/decider = user
 		if(CM && !CM.incapacitated() && iscultist(CM) && CM.stat != DEAD)
 			decider = CM
+			to_chat(user, "<span class='cult'><b>The cult master is deciding whether to permit this rune...</b></span>")
 		var/confirm_final = alert(decider, "The Apocalypse Rite will prevent Nar-sie from being summoned at this particular site", "Are you sure you wish to lose this summoning site?", "It must be done!", "No")
 		if(confirm_final == "No")
 			if(decider == user)
 				to_chat(user, "<span class='cult'>You decide against scribing the rune.</span>")
 			else
-				to_chat(user, "<span class='cult'>[decider] has forbade you from scribing the rune here.</span>")
+				to_chat(user, "<span class='cultlarge'>Master [decider] has forbade you from scribing the rune here.</span>")
 			return
 		Turf = get_turf(user) //we may have moved. adjust as needed...
 		A = get_area(src)
