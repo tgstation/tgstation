@@ -69,7 +69,7 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	sting_icon = "sting_transform"
-	chemical_cost = 50
+	chemical_cost = 25
 	dna_cost = 3
 	var/datum/changelingprofile/selected_dna = null
 
