@@ -183,6 +183,10 @@
 		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
 		return 1
 
+/obj/item/device/modular_computer/disable_lights()
+	light_on = FALSE
+	set_light(0)
+
 /obj/item/device/modular_computer/examine(mob/user)
 	..()
 	if(obj_integrity <= integrity_failure)

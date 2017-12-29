@@ -79,6 +79,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		to_chat(user, "<span class='notice'>Alt-click to remove contents.</span>")
 
+
+/obj/item/device/pda/disable_lights()
+	fon = FALSE
+	set_light(0)
+	update_icon()
+
 /obj/item/device/pda/Initialize()
 	. = ..()
 	if(fon)

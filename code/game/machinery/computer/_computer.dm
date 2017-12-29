@@ -69,6 +69,10 @@
 	update_icon()
 	return
 
+/obj/machinery/computer/disable_lights()
+	visible_message("<span class='warning'>[src] grows dim, its screen barely readable.</span>")
+	set_light(0)
+
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, I.usesound, 50, 1)
