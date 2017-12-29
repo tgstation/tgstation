@@ -13,7 +13,7 @@
 	log_game("[key_name(owner.current)] was made into a shadowling!")
 
 	var/mob/living/carbon/human/S = owner.current
-	owner.AddSpell(new /obj/effect/proc_holder/spell/shadowling_hatch(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hatch(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/shadowling_hivemind(null))
 
 	if(owner.assigned_role == "Clown")

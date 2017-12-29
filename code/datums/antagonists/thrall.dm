@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(thrall_spell_types, typecacheof(/obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind, /obj/effect/proc_holder/spell/targeted/lesser_glare, /obj/effect/proc_holder/spell/self/lesser_shadow_walk, /obj/effect/proc_holder/spell/self/thrall_night_vision))
+GLOBAL_LIST_INIT(thrall_spell_types, typecacheof(/obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind, /obj/effect/proc_holder/spell/targeted/sling/lesser_glare, /obj/effect/proc_holder/spell/self/lesser_shadow_walk, /obj/effect/proc_holder/spell/self/thrall_night_vision))
 
 /datum/antagonist/thrall
 	name = "Shadowling Thrall"
@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(thrall_spell_types, typecacheof(/obj/effect/proc_holder/spell/s
 	log_game("[key_name(owner.current)] was enthralled by a shadowling!")
 
 	owner.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/lesser_glare(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_night_vision(null))
 
