@@ -453,12 +453,11 @@
 			user.adjustBruteLoss(25)
 			user.dropItemToGround(src, TRUE)
 
-/obj/item/clothing/glasses/night/cultblind
-	desc = "May nar-sie guide you through the darkness and shield you from the light."
+/obj/item/clothing/glasses/hud/health/night/cultblind
+	desc = "may Nar-Sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	darkness_view = 8
 	flash_protect = 1
 
 /obj/item/clothing/glasses/night/cultblind/equipped(mob/living/user, slot)
@@ -627,3 +626,105 @@
 		..()
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
+
+/obj/item/twohanded/spear/cult
+	name = "Nar'sien spear"
+	desc = "A sickening spear composed entirely of crystallized blood."
+	icon_state = "blood_spear0"
+	item_state = "blood_spear0"
+	force = 17
+	force_wielded = 24
+	throwforce = 30
+	armour_penetration = 30
+	block_chance = 30
+	embed_chance = 0
+	embedded_fall_chance = 0
+	var/blocks = 3
+
+/obj/item/twohanded/spear/cult/update_icon()
+	icon_state = "blood_spear[wielded]"
+
+/obj/item/twohanded/spear/cult/throw_impact(atom/target)
+	var/turf/T = get_turf(target)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(iscultist(L))
+			if(L.put_in_active_hand(src))
+				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
+			else
+				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+		else if(!..())
+			if(!L.null_rod_check())
+				if(is_servant_of_ratvar(L))
+					L.Knockdown(100)
+				else
+					L.Knockdown(50)
+				L.adjustBruteLoss(40)
+			break_spear(T)
+	else
+		..()
+
+/obj/item/twohanded/spear/cult/proc/break_spear(turf/T)
+	if(src)
+		if(!T)
+			T = get_turf(src)
+		if(T)
+			T.visible_message("<span class='warning'>[src] shatters and melts back into blood!</span>")
+			new /obj/effect/temp_visual/cult/sparks(T)
+			new /obj/effect/decal/cleanable/blood/splatter(T)
+			playsound(T, 'sound/effects/glassbr3.ogg', 100)
+	qdel(src)
+
+/obj/item/twohanded/spear/cult/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(wielded)
+		final_block_chance *= 2
+	if(prob(final_block_chance))
+		if(attack_type == PROJECTILE_ATTACK)
+			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
+			return TRUE
+		else
+			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
+			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+			return TRUE
+	return FALSE
+
+
+
+
+
+/obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
+	name = "blood bolt barrage"
+	desc = "Blood for blood."
+	guns_left = 24
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+	fire_sound = 'sound/weapons/punchmiss.ogg'
+
+
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
+
+/obj/item/ammo_casing/magic/arcane_barrage/blood
+	projectile_type = /obj/item/projectile/magic/arcane_barrage/blood
+
+/obj/item/projectile/magic/arcane_barrage/blood
+	name = "blood bolt"
+	icon_state = "mini_leaper"
+	damage_type = BRUTE
+
+/obj/item/projectile/magic/arcane_barrage/blood/on_hit(atom/target, blocked = FALSE)
+	var/turf/T = get_turf(target)
+	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+	new /obj/effect/temp_visual/cult/sparks(T)
+	if(iscultist(target))
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.stat != DEAD)
+				H.reagents.add_reagent("unholywater", 4)
+		if(isshade(target) || isconstruct(target))
+			var/mob/living/simple_animal/M = target
+			if(M.health+5 < M.maxHealth)
+				M.adjustHealth(-5)
+		qdel(src)
+	else
+		..()

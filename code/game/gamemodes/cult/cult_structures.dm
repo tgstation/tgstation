@@ -220,8 +220,6 @@
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				for(var/obj/effect/decal/D in F.contents)
-					qdel(D)
 				new /obj/effect/temp_visual/cult/turf/floor(F)
 			else
 				// Are we in space or something? No cult turfs or
