@@ -463,7 +463,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(0, usr, survivor_probability)
+			rightandwrong(SUMMON_GUNS, usr, survivor_probability)
 
 		if("magic")
 			if(!check_rights(R_FUN))
@@ -476,7 +476,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(1, usr, survivor_probability)
+			rightandwrong(SUMMON_MAGIC, usr, survivor_probability)
 
 		if("events")
 			if(!check_rights(R_FUN))
