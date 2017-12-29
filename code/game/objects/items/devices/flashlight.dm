@@ -42,6 +42,9 @@
 	user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
+/obj/item/device/flashlight/disable_lights()
+	on = FALSE
+	set_light(0)
 
 
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
@@ -258,9 +261,9 @@
 	light_color = LIGHT_COLOR_FLARE
 	grind_results = list("sulfur" = 15)
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/device/flashlight/flare/Initialize()
+	. = ..()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	..()
 
 /obj/item/device/flashlight/flare/process()
 	open_flame(heat)
@@ -270,6 +273,10 @@
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/disable_lights()
+	visible_message("<span class='danger'>[src] dims slightly before scattering the shadows around it.</span>")
+	return
 
 /obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
 	if(fuel && on)
@@ -347,6 +354,10 @@
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+
+/obj/item/device/flashlight/slime/disable_lights()
+	visible_message("<span class='danger'>[src] dims slightly before scattering the shadows around it.</span>")
+	return
 
 /obj/item/device/flashlight/emp
 	var/emp_max_charges = 4

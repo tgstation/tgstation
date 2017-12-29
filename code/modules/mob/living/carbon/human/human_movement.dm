@@ -26,9 +26,12 @@
 	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
+	if(!dna.species.spec_move(src, NewLoc, direct))
+		return
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
+
 
 	if(shoes)
 		if(!lying && !buckled)

@@ -1,6 +1,11 @@
 #define HEART_RESPAWN_THRESHHOLD 40
 #define HEART_SPECIAL_SHADOWIFY 2
 
+#define SLING_LIGHT_HEAL_THRESHOLD 2
+#define SLING_LIGHT_DAMAGE_TAKEN 7
+#define SLING_LIGHT_DAM_THRESHOLD 0.25
+
+
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
@@ -66,6 +71,41 @@
 	return 0
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
+	return FALSE
+
+/datum/species/shadow/ling
+	//Normal shadowpeople but with enhanced effects
+	name = "Shadowling"
+	id = "shadowling"
+	say_mod = "chitters"
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING)
+	no_equip = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	nojumpsuit = TRUE
+	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
+	burnmod = 1.5 //1.5x burn damage, 2x is excessive
+	heatmod = 1.5
+
+
+/datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
+	var/light_amount = 0
+	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
+	if(isturf(H.loc))
+		var/turf/T = H.loc
+		light_amount = T.get_lumcount()
+		if(light_amount > SLING_LIGHT_DAM_THRESHOLD) //Can survive in very small light levels.
+			H.take_overall_damage(0, SLING_LIGHT_DAMAGE_TAKEN)
+			if(H.stat != DEAD)
+				to_chat(H, "<span class='userdanger'>The light burns you!</span>") //Message spam to say "GET THE FUCK OUT"
+				H.playsound_local(get_turf(H), 'sound/weapons/sear.ogg', 150, 1, pressure_affected = FALSE)
+		else if (light_amount < SLING_LIGHT_HEAL_THRESHOLD)
+			H.heal_overall_damage(5,5)
+			H.adjustToxLoss(-5)
+			H.adjustBrainLoss(-25) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
+			H.adjustCloneLoss(-1)
+			H.SetKnockdown(0)
+			H.SetStun(0)
+
+/datum/species/shadow/ling/check_roundstart_eligible()
 	return FALSE
 
 //Organs

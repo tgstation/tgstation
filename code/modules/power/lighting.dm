@@ -221,6 +221,8 @@
 	var/emergency_mode = FALSE	// if true, the light is in emergency mode
 	var/no_emergency = FALSE	// if true, this light cannot ever have an emergency mode
 
+
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -297,6 +299,14 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 	return
+
+/obj/machinery/light/disable_lights()
+	if(!no_emergency)
+		no_emergency = TRUE
+		emergency_mode = FALSE
+		addtimer(VARSET_CALLBACK(src, no_emergency, FALSE), 55)
+	seton(FALSE)
+
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = 1)

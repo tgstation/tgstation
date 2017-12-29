@@ -1622,6 +1622,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
 
+////////////
+//Movement//
+////////////
+/datum/species/proc/spec_move(mob/living/carbon/human/H, newloc, direction)
+	return TRUE
+
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

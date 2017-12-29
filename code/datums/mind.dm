@@ -580,6 +580,25 @@
 
 		sections["revolution"] = text
 
+		/** SHADOWLING **/
+		text = "shadowling"
+		if(SSticker.mode.config_tag == "shadowling")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in SSticker.mode.shadows)
+			text += "<b>SHADOWLING</b> | thrall | <a href='?src=[REF(src)];shadowling=clear'>human</a>"
+		else if(src in SSticker.mode.thralls)
+			text += "shadowling | <b>THRALL</b> | <a href='?src=[REF(src)];shadowling=clear'>human</a>"
+		else
+			text += "<a href='?src=[REF(src)];shadowling=shadowling'>shadowling</a> | <a href='?src=[REF(src)];shadowling=thrall'>thrall</a> | <b>HUMAN</b>"
+
+		if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+
+		sections["shadowling"] = text
+
 		/** ABDUCTION **/
 		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
@@ -1148,6 +1167,37 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+
+	else if(href_list["shadowling"])
+		switch(href_list["shadowling"])
+			if("clear")
+				SSticker.mode.update_shadow_icons_removed(src)
+				if(is_shadow(current))
+					special_role = null
+					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/shadowling_hivemind)
+					remove_sling(src)
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
+				else if(is_thrall(current))
+					remove_thrall(src)
+					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
+					log_admin("[key_name(usr)] has de-thrall'ed [current].")
+			if("shadowling")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				add_sling(src)
+			if("thrall")
+				if(!ishuman(current))
+					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
+					return
+				add_thrall(src)
+				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
+				log_admin("[key_name(usr)] has thrall'ed [current].")
 
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
