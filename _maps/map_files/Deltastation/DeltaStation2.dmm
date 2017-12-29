@@ -70964,7 +70964,6 @@
 	},
 /obj/machinery/requests_console{
 	department = "Medbay Storage";
-	departmentType = 0;
 	name = "Medbay Storage RC";
 	pixel_y = 28
 	},

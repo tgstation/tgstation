@@ -33889,7 +33889,6 @@
 	pixel_x = 11
 	},
 /obj/machinery/requests_console{
-	announcementConsole = 0;
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
@@ -57742,7 +57741,6 @@
 	pixel_y = -3
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
 	listening = 1;
@@ -57753,7 +57751,6 @@
 /area/medical/sleeper)
 "QoZ" = (
 /obj/machinery/requests_console{
-	announcementConsole = 0;
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
