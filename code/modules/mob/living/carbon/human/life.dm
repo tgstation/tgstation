@@ -63,6 +63,10 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
+	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
+		a_intent_change(INTENT_HELP)
+
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
