@@ -90,6 +90,7 @@
 		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/spook(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))

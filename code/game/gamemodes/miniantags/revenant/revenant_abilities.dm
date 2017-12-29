@@ -180,6 +180,29 @@
 		action.UpdateButtonIcon()
 	return TRUE
 
+//Spook: Free spell that gives people phobias with a jump!
+/obj/effect/proc_holder/spell/aoe_turf/revenant/spook
+	name = "Spook"
+	desc = "Materialize with a jump to give spacemen phobias. Phobias you can exploit."
+	locked = FALSE
+	range = 7
+	stun = 20
+	reveal = 50
+	cast_amount = 20
+	unlock_amount = 50 //for some reason if this is locked
+	action_icon_state = "spook"
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/spook/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		playsound(user, 'sound/magic/divulge_end.ogg', 15, 1, -1) //it's a sound, i don't need to take in account people seeing it
+		for(var/mob/living/M in viewers(7, user))
+			if(M == user)
+				continue //don't spook yaself :(
+			flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 50)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "skeletons")
+
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload
 	name = "Overload Lights"
@@ -354,7 +377,7 @@
 				to_chat(user, "<span class='revennotice'>Their brain is too basic for our powers!</span>")
 				return FALSE
 			to_chat(user, "<span class='revenwarning'>We have seeded madness in [M]'s mind! It will continue to fester...</span>")
-			to_chat(M, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy...")
+			to_chat(M, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy... (FINISH THIS FUCKER)")
 
 /obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_sounds()
 	playsound(src, 'sound/magic/divulge_ending.ogg', 50, 1, -1)
@@ -398,7 +421,7 @@
 			S = new(M.loc)
 			S.name = "[M]'s haunted remains"
 			if(length(M.logging[INDIVIDUAL_SAY_LOG]))
-				S.lastthingtheysaid = M.logging[INDIVIDUAL_SAY_LOG][M.logging[INDIVIDUAL_SAY_LOG].len]
+				S.speak += M.logging[INDIVIDUAL_SAY_LOG][M.logging[INDIVIDUAL_SAY_LOG].len]
 			M.gib()
 
 //Blight: Infects nearby humans and in general messes living stuff up.
