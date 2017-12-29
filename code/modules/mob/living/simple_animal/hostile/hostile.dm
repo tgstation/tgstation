@@ -229,7 +229,8 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
-		if(target.z != z)
+		var/turf/T = get_turf(src)
+		if(target.z != T.z)
 			LoseTarget()
 			return 0
 		var/target_distance = get_dist(targets_from,target)
@@ -403,7 +404,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if(buckled)
 		buckled.attack_animal(src)
 	if(!isturf(targets_from.loc) && targets_from.loc != null)//Did someone put us in something?
-		var/atom/A = get_turf(targets_from)
+		var/atom/A = targets_from.loc
 		A.attack_animal(src)//Bang on it till we get out
 
 
