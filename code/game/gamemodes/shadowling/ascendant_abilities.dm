@@ -69,10 +69,10 @@
 		to_chat(user, "<span class='warning'>You can only enthrall humans.</span>")
 		revert_cast()
 		return
-	to_chat(user, "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>")
+	to_chat(user, "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, brainwashing them into a thrall.</span>")
 	to_chat(target, "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>")
 	target.mind.special_role = "thrall"
-	SSticker.mode.add_thrall(target.mind)
+	add_thrall(target.mind)
 	user = null
 	target = null
 
@@ -86,7 +86,7 @@
 	action_icon = 'icons/mob/actions/actions_shadowling.dmi'
 	action_icon_state = "shadow_walk"
 
-/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/simple_animal/ascendant_shadowling/user)
+/obj/effect/proc_holder/spell/self/shadowling_phase_shift/cast(mob/living/user)
 	user.incorporeal_move = !user.incorporeal_move
 	if(user.incorporeal_move)
 		user.visible_message("<span class='danger'>[user] suddenly vanishes!</span>", \
@@ -111,7 +111,7 @@
 	action_icon = 'icons/mob/actions/actions_shadowling.dmi'
 	sound = 'sound/magic/lightningbolt.ogg'
 
-/obj/effect/proc_holder/spell/ascendant_storm/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
+/obj/effect/proc_holder/spell/ascendant_storm/cast(list/targets,mob/user = usr)
 	if(user.incorporeal_move)
 		to_chat(user, "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		revert_cast()
@@ -176,7 +176,6 @@
 	var/turf/T = get_turf(L)
 	user.face_atom(L)
 	user.visible_message("<span class='danger bold'>[user] dashes into [L], instantly turning them into a spray of gore!</span>")
-	user.Beam(target,"slingbeam",'hippiestation/icons/mob/sling.dmi',time=25)
 	user.forceMove(T)
 	playsound(T, 'sound/magic/disintegrate.ogg', 35, 1)
 	L.gib()

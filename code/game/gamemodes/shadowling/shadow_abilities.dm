@@ -382,17 +382,12 @@
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/unearthly_screech(null))
 
-	if(thralls >= CEILING(5*SSticker.mode.thrall_ratio, 1) && !blind_smoke_acquired)
+	if(thralls >= CEILING(7*SSticker.mode.thrall_ratio, 1) && !blind_smoke_acquired)
 		blind_smoke_acquired = TRUE
 		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
 			</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/blindness_smoke(null))
 
-	if(thralls >= CEILING(9*SSticker.mode.thrall_ratio, 1) && !reviveThrallAcquired)
-		reviveThrallAcquired = TRUE
-		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
-		with no bodily defects.</i></span>")
-		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/revive_thrall(null))
 
 	if(thralls < victory_threshold)
 		to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
@@ -406,8 +401,8 @@
 				if(CM in M.mind.spell_list)
 					M.mind.spell_list -= CM
 					qdel(CM)
-				M.mind.RemoveSpell(/obj/effect/proc_holder/spell/shadowling_hatch)
-				M.mind.AddSpell(new /obj/effect/proc_holder/spell/shadowling_ascend(null))
+				M.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
+				M.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_ascend(null))
 				if(M == user)
 					to_chat(user, "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>")
 				else

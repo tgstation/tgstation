@@ -89,7 +89,6 @@
 			H.undershirt = "Nude"
 			H.socks = "Nude"
 			H.faction |= "faithless"
-			H.shadow_walk = TRUE
 
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(H), slot_wear_suit)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(H), slot_head)
