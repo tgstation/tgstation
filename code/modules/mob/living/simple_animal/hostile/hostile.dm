@@ -476,7 +476,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		toggle_ai(AI_Z_OFF)
 		return
 
-	if (isturf(T) && !(T.z in GLOB.station_z_levels))
+	if (isturf(T) && !is_station_level(T.z))
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()

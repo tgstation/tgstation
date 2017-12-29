@@ -231,7 +231,7 @@
 							num_human_escapees++
 						if(shuttle_areas[get_area(Player)])
 							num_shuttle_escapees++
-	
+
 	.[POPCOUNT_SURVIVORS] = num_survivors
 	.[POPCOUNT_ESCAPEES] = num_escapees
 	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
@@ -243,7 +243,7 @@
 	var/list/parts = list()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/popcount = count_survivors()
-	
+
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
@@ -442,7 +442,7 @@
 			text += " <span class='greentext'>survived</span>"
 		if(fleecheck)
 			var/turf/T = get_turf(ply.current)
-			if(!T || !(T.z in GLOB.station_z_levels))
+			if(!T || !is_station_level(T.z))
 				text += " while <span class='redtext'>fleeing the station</span>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"

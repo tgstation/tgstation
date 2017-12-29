@@ -109,7 +109,7 @@
 	if(!T)
 		return FALSE
 
-	if(T.z == ZLEVEL_TRANSIT)
+	if(is_transit_level(T.z))
 		for(var/A in SSshuttle.mobile)
 			var/obj/docking_port/mobile/M = A
 			if(M.launch_status == ENDGAME_TRANSIT)
@@ -118,7 +118,7 @@
 					if(T in shuttle_area)
 						return TRUE
 
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+	if(!is_centcom_level(T.z))//if not, don't bother
 		return FALSE
 
 	//Check for centcom itself
@@ -137,15 +137,15 @@
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 
-	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
+	if(!is_centcom_level(T.z))//if not, don't bother
+		return FALSE
 
-	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership))
-		return 1
+	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership) || istype(T.loc, /area/shuttle/assault_pod))
+		return TRUE
 
-	return 0
+	return FALSE
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	SendSignal(COMSIG_ATOM_HULK_ATTACK, user)

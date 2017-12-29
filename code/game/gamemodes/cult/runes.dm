@@ -268,7 +268,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/teleportnames = list()
 	for(var/R in GLOB.teleport_runes)
 		var/obj/effect/rune/teleport/T = R
-		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
+		if(T != src && !is_away_level(T.z))
 			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
 
 	if(!potential_runes.len)
@@ -277,7 +277,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 
-	if(user.z > ZLEVEL_SPACEMAX)
+	var/turf/T = get_turf(src)
+	if(is_away_level(T.z))
 		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
 		log_game("Teleport rune failed - user in away mission")
 		fail_invoke()
@@ -289,7 +290,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 
-	var/turf/T = get_turf(src)
 	var/turf/target = get_turf(actual_selected_rune)
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
@@ -479,7 +479,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
-	if(!(z in GLOB.station_z_levels))
+	if(!is_station_level(z))
 		return
 
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
@@ -826,7 +826,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target was deconverted")
 		return
-	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
+	if(is_away_level(cultist_to_summon.z))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
