@@ -192,21 +192,21 @@
 
 /obj/machinery/autolathe/proc/make_item(power, metal_cost, glass_cost, multiplier, coeff, is_stack)
 	GET_COMPONENT(materials, /datum/component/material_container)
-	var/turf/T = drop_location()
+	var/atom/A = drop_location()
 	use_power(power)
 	var/list/materials_used = list(MAT_METAL=metal_cost*coeff*multiplier, MAT_GLASS=glass_cost*coeff*multiplier)
 	materials.use_amount(materials_used)
 
 	if(is_stack)
-		var/obj/item/stack/N = new being_built.build_path(T, multiplier)
+		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
 		N.update_icon()
 		N.autolathe_crafted(src)
-		for(var/obj/item/stack/S in T.contents - N)
+		for(var/obj/item/stack/S in (A.contents - N))
 			if(istype(S, N.merge_type))
 				N.merge(S)
 	else
 		for(var/i=1, i<=multiplier, i++)
-			var/obj/item/new_item = new being_built.build_path(T)
+			var/obj/item/new_item = new being_built.build_path(A)
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
