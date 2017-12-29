@@ -4,13 +4,11 @@
 /obj/item/clothing/under/color/random
 	icon_state = "random_jumpsuit"
 
-/obj/item/clothing/under/color/random/New()
+/obj/item/clothing/under/color/random/Initialize()
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
-	name = initial(C.name)
-	icon_state = initial(C.icon_state)
-	item_state = initial(C.item_state)
-	item_color = initial(C.item_color)
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost)
+	new C(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"

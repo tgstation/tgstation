@@ -192,7 +192,7 @@
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
@@ -205,9 +205,5 @@
 		/obj/item/clothing/gloves/color/brown = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	item_state = initial(selected.item_state)
-	item_color = initial(selected.item_color)
+	new selected(loc)
+	return INITIALIZE_HINT_QDEL
