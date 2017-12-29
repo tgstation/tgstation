@@ -23,7 +23,12 @@
 	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/Examine)
 
 	if(disable_time)
-		QDEL_IN(src, disable_time)
+		addtimer(CALLBACK(src, .proc/Disable), disable_time)
+
+/datum/component/explosive_trap/proc/Disable()
+	for(var/i in immune)
+		to_chat(i, "<span class='danger'>The explosive trap on [parent] has expired without detonating.</span>")
+	qdel(src)
 
 /datum/component/explosive_trap/proc/Detonate(mob/living/victim)
 	if(!isliving(victim))
@@ -37,8 +42,11 @@
 
 	new /obj/effect/temp_visual/explosion(get_turf(parent))
 	victim.ex_act(EXPLODE_HEAVY)
-	qdel(src)
 
+	for(var/i in immune)
+		to_chat(i, "<span class='notice'>The explosive trap on [parent] has caught [victim]!</span>")
+
+	qdel(src)
 	return TRUE
 
 /datum/component/explosive_trap/proc/Attackby(obj/item/I, mob/living/user, params)
