@@ -111,7 +111,7 @@
 	action_icon = 'icons/mob/actions/actions_shadowling.dmi'
 	sound = 'sound/magic/lightningbolt.ogg'
 
-/obj/effect/proc_holder/spell/ascendant_storm/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/ascendant_storm/cast(list/targets,mob/living/user = usr)
 	if(user.incorporeal_move)
 		to_chat(user, "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>")
 		revert_cast()

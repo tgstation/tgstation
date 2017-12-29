@@ -608,6 +608,7 @@
 #include "code\game\gamemodes\sandbox\h_sandbox.dm"
 #include "code\game\gamemodes\sandbox\sandbox.dm"
 #include "code\game\gamemodes\shadowling\ascendant_abilities.dm"
+#include "code\game\gamemodes\shadowling\ascendant_mob.dm"
 #include "code\game\gamemodes\shadowling\shadow_abiities_special.dm"
 #include "code\game\gamemodes\shadowling\shadow_abilities.dm"
 #include "code\game\gamemodes\shadowling\shadow_items.dm"

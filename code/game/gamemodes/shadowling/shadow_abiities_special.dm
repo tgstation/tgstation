@@ -100,10 +100,10 @@
 			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sling/glare(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/veil(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/flashfreeze(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/collective_mind(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_regenarmor(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/shadowling_regenarmor(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle(null))
 
 

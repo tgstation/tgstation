@@ -367,10 +367,10 @@
 
 	to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
 
-	for(var/_M in get_antagonists(ANTAG_DATUM_THRALL))
-		var/mob/M = _M
+	for(var/_thrall in get_antagonists(ANTAG_DATUM_THRALL))
+		var/mob/thrall = _thrall
 		thralls++
-		to_chat(M, "<span class='shadowling'>You feel hooks sink into your mind and pull.</span>")
+		to_chat(thrall, "<span class='shadowling'>You feel hooks sink into your mind and pull.</span>")
 
 
 	if(!do_after(user, 30, target = user))

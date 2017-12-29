@@ -22,7 +22,7 @@
 		var/turf/T = loc
 		var/light_count = T.get_lumcount()
 		if(light_count > 0.25 && health > 0) //Die in the light
-			min(health-1, 0)
+			health--
 		else if(light_count < 2 && health < 3) //Heal in the dark
 			health = max(health+1, 5)
 		if(health < 1)

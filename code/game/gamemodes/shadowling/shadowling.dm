@@ -1,3 +1,4 @@
+#define MAX_SW_LUMS 0.2
 
 /*
 
@@ -162,3 +163,52 @@ Made by Xhuis
 	var/datum/atom_hud/antag/shadow_hud = GLOB.huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
+
+
+// Shadowling movement code
+
+/proc/Is_ShadowWalkable(var/turf/loc)
+	return (loc.get_lumcount()==null || loc.get_lumcount() <= MAX_SW_LUMS)
+
+/datum/species/shadow/ling/spec_move(mob/living/carbon/human/H, newloc, direction)
+	. = TRUE
+	if(H.Process_ShadowWalk(direction))
+		return FALSE
+
+/mob/living/proc/Process_ShadowWalk(direct)
+	var/turf/target = get_step(src, direct)
+	var/turf/mobloc = get_turf(src)
+
+	var/atom/movable/A
+	var/doPull = FALSE
+	if (istype(pulling))
+		doPull = TRUE
+		if (pulling.anchored)
+			stop_pulling()
+			doPull = FALSE
+		if(isliving(pulling))
+			var/mob/living/L = pulling
+			if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
+				stop_pulling()
+				doPull = FALSE
+		if((mobloc.density || target.density)) //this will disallow the target to be pulled if the shadowwalker is on or going into a solid tile.
+			doPull = FALSE
+			if(isliving(pulling))
+				var/mob/living/M = pulling
+				M.Knockdown(60)
+				to_chat(M, "<span class='danger'>You fall down as you slam against the surface!</span>")
+		if (doPull)
+			var/turf/pullloc = get_turf(pulling)
+			if(Is_ShadowWalkable(mobloc) || Is_ShadowWalkable(target) || Is_ShadowWalkable(pullloc))
+				pulling.dir = get_dir(pulling, src)
+				A = pulling
+				pulling.forceMove(loc)
+
+	if(Is_ShadowWalkable(target))
+		forceMove(target)
+		dir = direct
+		if (doPull)
+			start_pulling(A, TRUE) //this was the only way I could figure out how to do this
+		return TRUE
+
+	return FALSE
