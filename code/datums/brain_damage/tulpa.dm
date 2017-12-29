@@ -21,17 +21,13 @@
 		var/client/C = pick(candidates)
 		tulpa_mob.key = C.key
 		addtimer(CALLBACK(tulpa_mob, /mob/living/tulpa.proc/choose_name), 5)
+		to_chat(C, "<span class='notice'><B>You are a tulpa!</B></span>")
+		to_chat(C, "<span class='notice'>You are able to see and hear what your host sees, and you can talk to your host.</span>")
+		to_chat(C, "<span class='notice'>You are unable to control your host's body.</span>")
 		log_game("[key_name(tulpa_mob)] became [key_name(owner)]'s tulpa.")
 		message_admins("[key_name_admin(tulpa_mob)] became [key_name_admin(owner)]'s tulpa.")
 	else
 		qdel(src)
-
-
-
-
-
-
-
 
 
 /mob/living/tulpa
