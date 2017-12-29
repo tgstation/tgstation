@@ -11,6 +11,7 @@
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
 	roundend_category = "syndicate operatives" //just in case
+	panel_category = "nuclear"
 	job_rank = ROLE_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -320,3 +321,57 @@
 	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/nukeop/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "nuclear"
+	if(SSticker.mode.config_tag=="nuclear")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/nukeop/N = mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(N)
+		text += "<b>OPERATIVE</b> | <a mind='?src=[REF(mind)];nuclear=clear'>nanotrasen</a>"
+		text += "<br><a href='?src=[REF(src)];nuclear=lair'>To shuttle</a>, <a href='?src=[REF(mind)];common=undress'>undress</a>, <a href='?src=[REF(mind)];nuclear=dressup'>dress up</a>."
+		var/code
+		for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
+			if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
+				code = bombue.r_code
+				break
+		if (code)
+			text += " Code is [code]. <a href='?src=[REF(mind)];nuclear=tellcode'>tell the code.</a>"
+	else
+		text += "<a href='?src=[REF(mind)];nuclear=nuclear'>operative</a> | <b>NANOTRASEN</b>"
+	if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/nukeop/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			mind.remove_nukeop()
+			to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a syndicate operative!</span>")
+			message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
+			log_admin("[key_name(usr)] has de-nuke op'ed [current].")
+		if("nuclear")
+			if(!mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
+				mind.add_antag_datum(/datum/antagonist/nukeop)
+				mind.special_role = "Syndicate"
+				mind.assigned_role = "Syndicate"
+				message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
+				log_admin("[key_name(usr)] has nuke op'ed [current].")
+		if("lair")
+			current.forceMove(pick(GLOB.nukeop_start))
+		if("tellcode")
+			var/code
+			for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
+				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
+					code = bombue.r_code
+					break
+			if (code)
+				mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0, 0)
+				to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
+			else
+				to_chat(usr, "<span class='danger'>No valid nuke found!</span>")

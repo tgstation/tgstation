@@ -4,6 +4,7 @@
 /datum/antagonist/rev
 	name = "Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
+	panel_category = "revolution"
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
@@ -280,3 +281,104 @@
 	result += "</div>"
 
 	return result.Join()
+
+/datum/antagonist/rev/antag_panel_section(datum/mind/mind, mob/current)
+	if(!iscarbon(current))
+		return FALSE
+	var/text = "revolution"
+	if(SSticker.mode.config_tag == "revolution")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if (mind.assigned_role in GLOB.command_positions)
+		text += "<b>HEAD</b> | not mindshielded | employee | headrev | rev"
+	else if (mind.has_antag_datum(/datum/antagonist/rev/head))
+		var/datum/antagonist/rev/head = mind.has_antag_datum(/datum/antagonist/rev/head)
+		var/last_healthy_headrev = TRUE
+		for(var/datum/mind/I in head.rev_team.head_revolutionaries())
+			if(I == src)
+				continue
+			var/mob/M = I.current
+			if(M && (M.z in GLOB.station_z_levels) && !M.stat)
+				last_healthy_headrev = FALSE
+				break
+		text += "head | not mindshielded | <a href='?src=[REF(mind)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(mind)];revolution=rev'>rev</a>"
+		text += "<br>Flash: <a href='?src=[REF(mind)];revolution=flash'>give</a>"
+
+		var/list/L = current.get_contents()
+		var/obj/item/device/assembly/flash/flash = locate() in L
+		if (flash)
+			if(!flash.crit_fail)
+				text += " | <a href='?src=[REF(mind)];revolution=takeflash'>take</a>."
+			else
+				text += " | <a href='?src=[REF(mind)];revolution=takeflash'>take</a> | <a href='?src=[REF(mind)];revolution=repairflash'>repair</a>."
+		else
+			text += "."
+
+		text += " <a href='?src=[REF(mind)];revolution=reequip'>Reequip</a> (gives traitor uplink)."
+		if (mind.objectives.len==0)
+			text += "<br>Objectives are empty! <a href='?src=[REF(mind)];revolution=autoobjectives'>Set to kill all heads</a>."
+	else if(current.isloyal())
+		text += "head | <b>MINDSHIELDED</b> | employee | <a href='?src=[REF(mind)];revolution=headrev'>headrev</a> | rev"
+	else if (mind.has_antag_datum(/datum/antagonist/rev))
+		text += "head | not mindshielded | <a href='?src=[REF(mind)];revolution=clear'>employee</a> | <a href='?src=[REF(mind)];revolution=headrev'>headrev</a> | <b>REV</b>"
+	else
+		text += "head | not mindshielded | <b>EMPLOYEE</b> | <a href='?src=[REF(mind)];revolution=headrev'>headrev</a> | <a href='?src=[REF(mind)];revolution=rev'>rev</a>"
+
+	if(current && current.client && (ROLE_REV in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/rev/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			mind.remove_rev()
+			message_admins("[key_name_admin(usr)] has de-rev'ed [current].")
+			log_admin("[key_name(usr)] has de-rev'ed [current].")
+		if("rev")
+			if(mind.has_antag_datum(/datum/antagonist/rev/head))
+				var/datum/antagonist/rev/head/head = mind.has_antag_datum(/datum/antagonist/rev/head)
+				head.demote()
+			else if(!mind.has_antag_datum(/datum/antagonist/rev))
+				mind.add_antag_datum(/datum/antagonist/rev)
+				mind.special_role = "Revolutionary"
+				message_admins("[key_name_admin(usr)] has rev'ed [current].")
+				log_admin("[key_name(usr)] has rev'ed [current].")
+			else
+				return
+		if("headrev")
+			if(mind.has_antag_datum(/datum/antagonist/rev))
+				var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
+				rev.promote()
+			else if(!mind.has_antag_datum(/datum/antagonist/rev/head))
+				//what about the team here.
+				var/datum/antagonist/rev/head/new_head = new /datum/antagonist/rev/head(src)
+				new_head.give_flash = TRUE
+				new_head.give_hud = TRUE
+				new_head.remove_clumsy = TRUE
+				mind.add_antag_datum(new_head)
+				to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+			else
+				return
+			mind.special_role = "Head Revolutionary"
+			message_admins("[key_name_admin(usr)] has head-rev'ed [current].")
+			log_admin("[key_name(usr)] has head-rev'ed [current].")
+		if("flash")
+			var/datum/antagonist/rev/head/head = mind.has_antag_datum(/datum/antagonist/rev/head)
+			if(!head.equip_rev())
+				to_chat(usr, "<span class='danger'>Spawning flash failed!</span>")
+		if("takeflash")
+			var/list/L = current.get_contents()
+			var/obj/item/device/assembly/flash/flash = locate() in L
+			if (!flash)
+				to_chat(usr, "<span class='danger'>Deleting flash failed!</span>")
+			qdel(flash)
+		if("repairflash")
+			var/list/L = current.get_contents()
+			var/obj/item/device/assembly/flash/flash = locate() in L
+			if (!flash)
+				to_chat(usr, "<span class='danger'>Repairing flash failed!</span>")
+			else
+				flash.crit_fail = FALSE
+				flash.update_icon()

@@ -6,6 +6,7 @@
 /datum/antagonist/wizard
 	name = "Space Wizard"
 	roundend_category = "wizards/witches"
+	panel_category = "wizard"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
@@ -251,6 +252,41 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+
+
+/datum/antagonist/wizard/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "wizard"
+	if(SSticker.mode.config_tag=="wizard")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if (mind.has_antag_datum(/datum/antagonist/wizard))
+		text += "<b>YES</b> | <a href='?src=[REF(mind)];wizard=clear'>no</a>"
+		text += "<br><a href='?src=[REF(mind)];wizard=lair'>To lair</a>, <a href='?src=[REF(mind)];common=undress'>undress</a>"
+	else
+		text += "<a href='?src=[REF(mind)];wizard=wizard'>yes</a> | <b>NO</b>"
+
+	if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/wizard/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			mind.remove_wizard()
+			log_admin("[key_name(usr)] has de-wizard'ed [current].")
+		if("wizard")
+			if(!mind.has_antag_datum(/datum/antagonist/wizard))
+				mind.special_role = "Wizard"
+				mind.add_antag_datum(/datum/antagonist/wizard)
+				message_admins("[key_name_admin(usr)] has wizard'ed [current].")
+				log_admin("[key_name(usr)] has wizard'ed [current].")
+		if("lair")
+			current.forceMove(pick(GLOB.wizardstart))
+
 
 /datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]

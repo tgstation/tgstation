@@ -1,5 +1,6 @@
 /datum/antagonist/ninja
 	name = "Ninja"
+	panel_category = "ninja"
 	job_rank = ROLE_NINJA
 	var/helping_station = 0
 	var/give_objectives = TRUE
@@ -38,7 +39,7 @@
 					possible_targets[M] = 1						//good-guy
 
 	var/list/possible_objectives = list(1,2,3,4)
-	
+
 	while(objectives.len < quantity)
 		switch(pick_n_take(possible_objectives))
 			if(1)	//research
@@ -123,3 +124,47 @@
 	if(give_objectives)
 		addObjectives()
 	addMemories()
+
+/datum/antagonist/ninja/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "ninja"
+	if(SSticker.mode.config_tag == "ninja")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/ninja/ninjainfo = mind.has_antag_datum(ANTAG_DATUM_NINJA)
+	if(ninjainfo)
+		if(ninjainfo.helping_station)
+			text += "<a href='?src=[REF(mind)];ninja=clear'>employee</a>  |  syndicate  |  <b>NANOTRASEN</b>  |  <b><a href='?src=[REF(mind)];ninja=equip'>EQUIP</a></b>"
+		else
+			text += "<a href='?src=[REF(mind)];ninja=clear'>employee</a>  |  <b>SYNDICATE</b>  |  nanotrasen  |  <b><a href='?src=[REF(mind)];ninja=equip'>EQUIP</a></b>"
+	else
+		text += "<b>EMPLOYEE</b>  |  <a href='?src=[REF(mind)];ninja=syndicate'>syndicate</a>  |  <a href='?src=[REF(mind)];ninja=nanotrasen'>nanotrasen</a>  |  <a href='?src=[REF(mind)];ninja=random'>random allegiance</a>"
+	if(current && current.client && (ROLE_NINJA in current.client.prefs.be_special))
+		text += "  |  Enabled in Prefs"
+	else
+		text += "  |  Disabled in Prefs"
+	return text
+
+/datum/antagonist/ninja/antag_panel_href(href, datum/mind/mind, mob/current)
+	var/datum/antagonist/ninja/ninjainfo = mind.has_antag_datum(ANTAG_DATUM_NINJA)
+	switch(href)
+		if("clear")
+			remove_ninja(current)
+			message_admins("[key_name_admin(usr)] has de-ninja'ed [current].")
+			log_admin("[key_name(usr)] has de-ninja'ed [current].")
+		if("equip")
+			ninjainfo.equip_space_ninja()
+			return
+		if("nanotrasen")
+			add_ninja(current, ANTAG_DATUM_NINJA_FRIENDLY)
+			message_admins("[key_name_admin(usr)] has friendly ninja'ed [current].")
+			log_admin("[key_name(usr)] has friendly ninja'ed [current].")
+		if("syndicate")
+			add_ninja(current, ANTAG_DATUM_NINJA)
+			message_admins("[key_name_admin(usr)] has syndie ninja'ed [current].")
+			log_admin("[key_name(usr)] has syndie ninja'ed [current].")
+		if("random")
+			add_ninja(current)
+			message_admins("[key_name_admin(usr)] has random ninja'ed [current].")
+			log_admin("[key_name(usr)] has random ninja'ed [current].")

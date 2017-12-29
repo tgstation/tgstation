@@ -3,6 +3,7 @@
 /datum/antagonist/cult
 	name = "Cultist"
 	roundend_category = "cultists"
+	panel_category = "cult"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	job_rank = ROLE_CULTIST
@@ -297,3 +298,44 @@
 		parts += printplayerlist(members)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/cult/antag_panel_section(datum/mind/mind, mob/current)
+	if(issilicon(current))
+		return FALSE
+	var/text = "cult"
+	if(SSticker.mode.config_tag == "cult")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(iscultist(current))
+		text += "not mindshielded | <a href='?src=[REF(mind)];cult=clear'>employee</a> | <b>CULTIST</b>"
+		text += "<br>Give <a href='?src=[REF(mind)];cult=tome'>tome</a> | <a href='?src=[REF(mind)];cult=amulet'>amulet</a>."
+	else if(is_convertable_to_cult(current))
+		text += "not mindshielded | <b>EMPLOYEE</b> | <a href='?src=[REF(mind)];cult=cultist'>cultist</a>"
+	else
+		text += "[!current.isloyal() ? "not mindshielded" : "<b>MINDSHIELDED</b>"] | <b>EMPLOYEE</b> | <i>cannot serve Nar-Sie</i>"
+
+	if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/cult/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			mind.remove_cultist()
+			message_admins("[key_name_admin(usr)] has de-cult'ed [current].")
+			log_admin("[key_name(usr)] has de-cult'ed [current].")
+		if("cultist")
+			if(!(mind in get_antagonists(/datum/antagonist/cult)))
+				SSticker.mode.add_cultist(mind, 0)
+				message_admins("[key_name_admin(usr)] has cult'ed [current].")
+				log_admin("[key_name(usr)] has cult'ed [current].")
+		if("tome")
+			var/datum/antagonist/cult/C = mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if (C.equip_cultist(current,1))
+				to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
+		if("amulet")
+			var/datum/antagonist/cult/C = mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if (C.equip_cultist(current))
+				to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")

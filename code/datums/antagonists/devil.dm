@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil
 	name = "Devil"
 	roundend_category = "devils"
+	panel_category = "devil"
 	job_rank = ROLE_DEVIL
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_mind_deletion = FALSE
@@ -537,6 +538,74 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			parts += printplayer(sintouched_mind)
 			parts += printobjectives(sintouched_mind)
 	return parts.Join("<br>")
+
+/datum/antagonist/devil/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current))
+		return FALSE
+	var/text = "devil"
+	if(SSticker.mode.config_tag == "devil")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	if(devilinfo)
+		if(!devilinfo.ascendable)
+			text += "<b>DEVIL</b> | <a href='?src=[REF(mind)];devil=ascendable_devil'>ascendable devil</a> | sintouched | <a href='?src=[REF(mind)];devil=clear'>human</a>"
+		else
+			text += "<a href='?src=[REF(mind)];devil=devil'>DEVIL</a> | <b>ASCENDABLE DEVIL</b> | sintouched | <a href='?src=[REF(mind)];devil=clear'>human</a>"
+	else if(src in SSticker.mode.sintouched)
+		text += "devil | ascendable devil | <b>SINTOUCHED</b> | <a href='?src=[REF(mind)];devil=clear'>human</a>"
+	else
+		text += "<a href='?src=[REF(mind)];devil=devil'>devil</a> | <a href='?src=[REF(mind)];devil=ascendable_devil'>ascendable devil</a> | <a href='?src=[REF(mind)];devil=sintouched'>sintouched</a> | <b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/devil/antag_panel_href(href, datum/mind/mind, mob/current)
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	switch(href)
+		if("clear")
+			if(mind in get_antagonists(/datum/antagonist/devil))
+				remove_devil(current)
+				message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
+				log_admin("[key_name(usr)] has de-devil'ed [current].")
+			if(mind in SSticker.mode.sintouched)
+				SSticker.mode.sintouched -= mind
+				message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
+				log_admin("[key_name(usr)] has de-sintouch'ed [current].")
+		if("devil")
+			if(devilinfo)
+				devilinfo.ascendable = FALSE
+				message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+				log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+				return
+			if(!ishuman(current) && !iscyborg(current))
+				to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
+				return
+			add_devil(current, FALSE)
+			message_admins("[key_name_admin(usr)] has devil'ed [current].")
+			log_admin("[key_name(usr)] has devil'ed [current].")
+		if("ascendable_devil")
+			if(devilinfo)
+				devilinfo.ascendable = TRUE
+				message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+				log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+				return
+			if(!ishuman(current) && !iscyborg(current))
+				to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
+				return
+			add_devil(current, TRUE)
+			message_admins("[key_name_admin(usr)] has devil'ed [current].  The devil has been marked as ascendable.")
+			log_admin("[key_name(usr)] has devil'ed [current]. The devil has been marked as ascendable.")
+		if("sintouched")
+			if(ishuman(current))
+				var/mob/living/carbon/human/H = current
+				H.influenceSin()
+				message_admins("[key_name_admin(usr)] has sintouch'ed [current].")
+			else
+				to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 
 //A simple super light weight datum for the codex gigas.
 /datum/fakeDevil

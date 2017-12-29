@@ -13,12 +13,17 @@ SUBSYSTEM_DEF(job)
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
+	var/list/antag_datum_cache = list()
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	generate_selectable_species()
+	for(var/_A in subtypesof(/datum/antagonist))
+		var/datum/antagonist/A = new _A()
+		antag_datum_cache += A
 	..()
 
 

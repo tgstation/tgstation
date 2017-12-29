@@ -5,6 +5,7 @@
 /datum/antagonist/changeling
 	name = "Changeling"
 	roundend_category  = "changelings"
+	panel_category = "changeling"
 	job_rank = ROLE_CHANGELING
 
 	var/you_are_greet = TRUE
@@ -36,14 +37,18 @@
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
+	var/stuff_generated = FALSE
+
 	// wip stuff
 	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
 
 
 /datum/antagonist/changeling/New()
 	. = ..()
-	generate_name()
-	create_actions()
+	if(owner && !stuff_generated) //avoid runtiming when creating an ownerless datum
+		generate_name()
+		create_actions()
+		stuff_generated = TRUE
 
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
@@ -75,6 +80,10 @@
 			forge_team_objectives()
 		forge_objectives()
 	remove_clownmut()
+	if(owner && !stuff_generated) //avoid runtiming when creating an ownerless datum
+		generate_name()
+		create_actions()
+		stuff_generated = TRUE
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
@@ -425,6 +434,58 @@
 		escape_objective_possible = FALSE
 
 	owner.objectives |= objectives
+
+/datum/antagonist/changeling/antag_panel_section(datum/mind/mind, mob/current)
+	if(!ishuman(current) && !ismonkey(current))
+		return FALSE
+	var/text = "changeling"
+	if (SSticker.mode.config_tag=="changeling" || SSticker.mode.config_tag=="traitorchan")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+	if(C)
+		text += "<b>[C.name]</b> | <a href='?src=[REF(mind)];changeling=clear'>No</a>"
+		if (mind.objectives.len < 1)
+			text += "<br>Objectives are empty! <a href='?src=[REF(mind)];changeling=autoobjectives'>Randomize!</a>"
+		if(C.stored_profiles.len && (current.real_name != C.first_prof.name) )
+			text += "<br><a href='?src=[REF(mind)];changeling=initialdna'>Transform to initial appearance.</a>"
+	else
+		text += "<a href='?src=[REF(mind)];changeling=changeling'>yes</a> | <b>NO</b>"
+
+	if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/changeling/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			mind.remove_antag_datum(/datum/antagonist/changeling)
+			mind.special_role = null
+			to_chat(current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
+			message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
+			log_admin("[key_name(usr)] has de-changeling'ed [current].")
+		if("changeling")
+			var/datum/antagonist/changeling/C = mind.make_Changling()
+			to_chat(current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [C.changelingID], a changeling!</span>")
+			message_admins("[key_name_admin(usr)] has changeling'ed [current].")
+			log_admin("[key_name(usr)] has changeling'ed [current].")
+		if("autoobjectives")
+			var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+			if(C)
+				C.forge_objectives()
+			to_chat(usr, "<span class='notice'>The objectives for changeling [mind.key] have been generated. You can edit them and anounce manually.</span>")
+		if("initialdna")
+			var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
+			if( !ling || !ling.stored_profiles.len || !iscarbon(current))
+				to_chat(usr, "<span class='danger'>Resetting DNA failed!</span>")
+			else
+				var/mob/living/carbon/C = current
+				ling.first_prof.dna.transfer_identity(C, transfer_SE=1)
+				C.real_name = ling.first_prof.name
+				C.updateappearance(mutcolor_update=1)
+				C.domutcheck()
 
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]

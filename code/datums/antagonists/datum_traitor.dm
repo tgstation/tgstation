@@ -1,6 +1,7 @@
 /datum/antagonist/traitor
 	name = "Traitor"
 	roundend_category = "traitors"
+	panel_category = "traitor"
 	job_rank = ROLE_TRAITOR
 	var/should_specialise = FALSE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
@@ -19,7 +20,7 @@
 	silent = TRUE
 	if(owner.current && isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
-	else 
+	else
 		owner.add_antag_datum(human_datum)
 	on_removal()
 
@@ -324,7 +325,7 @@
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
-	
+
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)
@@ -340,3 +341,45 @@
 /datum/antagonist/traitor/roundend_report_footer()
 	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
 		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+
+/datum/antagonist/traitor/antag_panel_section(datum/mind/mind, mob/current)
+	var/text = "traitor"
+	if (findtext(SSticker.mode.config_tag, "traitor"))
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(mind in get_antagonists(/datum/antagonist/traitor))
+		text += "<b>TRAITOR</b> | <a href='?src=[REF(mind)];traitor=clear'>loyal</a>"
+		if (objectives.len==0)
+			text += "<br>Objectives are empty! <a href='?src=[REF(mind)];traitor=autoobjectives'>Randomize</a>!"
+	else
+		text += "<a href='?src=[REF(mind)];traitor=traitor'>traitor</a> | <b>LOYAL</b>"
+
+	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	return text
+
+/datum/antagonist/traitor/antag_panel_href(href, datum/mind/mind, mob/current)
+	switch(href)
+		if("clear")
+			to_chat(current, "<span class='userdanger'>You have been brainwashed!</span>")
+			mind.remove_traitor()
+			message_admins("[key_name_admin(usr)] has de-traitor'ed [current].")
+			log_admin("[key_name(usr)] has de-traitor'ed [current].")
+			SSticker.mode.update_traitor_icons_removed(mind)
+		if("traitor")
+			if(!(src in get_antagonists(/datum/antagonist/traitor)))
+				message_admins("[key_name_admin(usr)] has traitor'ed [current].")
+				log_admin("[key_name(usr)] has traitor'ed [current].")
+				mind.make_Traitor()
+		if("autoobjectives")
+			var/datum/antagonist/traitor/traitordatum = mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+			if(!traitordatum)
+				message_admins("[key_name_admin(usr)] has traitor'ed [current] as part of autoobjectives.")
+				log_admin("[key_name(usr)] has traitor'ed [current] as part of autoobjectives.")
+				mind.make_Traitor()
+			else
+				log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
+				traitordatum.forge_traitor_objectives()
+				to_chat(usr, "<span class='notice'>The objectives for traitor [mind.key] have been generated. You can edit them and anounce manually.</span>")
