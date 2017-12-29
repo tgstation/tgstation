@@ -137,15 +137,15 @@
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 
 	if(!is_centcom_level(T.z))//if not, don't bother
-		return 0
+		return FALSE
 
 	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership) || istype(T.loc, /area/shuttle/assault_pod))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	SendSignal(COMSIG_ATOM_HULK_ATTACK, user)
