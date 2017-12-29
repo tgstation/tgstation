@@ -336,6 +336,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
+	var/obj/item/implant/radio/imp = locate() in src
+	if(imp && imp.radio.on)
+		if(message_mode == MODE_HEADSET)
+			imp.radio.talk_into(src, message, , spans, language)
+			return ITALICS | REDUCE_RANGE
+		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+			imp.radio.talk_into(src, message, message_mode, spans, language)
+			return ITALICS | REDUCE_RANGE
+
 	switch(message_mode)
 		if(MODE_WHISPER)
 			return ITALICS
@@ -357,6 +366,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		if(MODE_BINARY)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
+
 	return 0
 
 /mob/living/say_mod(input, message_mode)
