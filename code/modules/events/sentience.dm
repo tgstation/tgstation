@@ -9,6 +9,7 @@
 	role_name = "random animal"
 	var/animals = 1
 	var/one = "one"
+	fakeable = TRUE
 
 /datum/round_event/ghost_role/sentience/announce(fake)
 	var/sentience_report = ""
@@ -30,7 +31,7 @@
 	var/list/potential = list()
 	for(var/mob/living/simple_animal/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L)
-		if(!(T.z in GLOB.station_z_levels))
+		if(!is_station_level(T.z))
 			continue
 		if(!(L in GLOB.player_list) && !L.mind)
 			potential += L

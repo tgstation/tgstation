@@ -66,7 +66,7 @@
 				if(result_filters["Responsive"] && !APC.aidisabled)
 					continue
 				dat += "<a href='?src=[REF(src)];access_apc=[REF(APC)]'>[A]</a><br>\
-				<b>Charge:</b> [DisplayPower(APC.cell.charge)] / [DisplayPower(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
+				<b>Charge:</b> [DisplayEnergy(APC.cell.charge)] / [DisplayEnergy(APC.cell.maxcharge)] ([round((APC.cell.charge / APC.cell.maxcharge) * 100)]%)<br>\
 				<b>Area:</b> [APC.area]<br>\
 				[APC.aidisabled || APC.panel_open ? "<font color='#FF0000'>APC does not respond to interface query.</font>" : "<font color='#00FF00'>APC responds to interface query.</font>"]<br><br>"
 			dat += "<a href='?src=[REF(src)];check_logs=1'>Check Logs</a><br>"
@@ -161,7 +161,7 @@
 			return
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = Clamp(new_filter, 0, 100)
+			new_filter = CLAMP(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		result_filters["Charge Above"] = new_filter
 	if(href_list["below_filter"])
@@ -171,7 +171,7 @@
 			return
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = Clamp(new_filter, 0, 100)
+			new_filter = CLAMP(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		result_filters["Charge Below"] = new_filter
 	if(href_list["access_filter"])

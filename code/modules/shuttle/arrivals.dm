@@ -137,7 +137,7 @@
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
-/obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
+/obj/docking_port/mobile/arrivals/initiate_docking(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
 	if(docked)	//about to launch
@@ -200,5 +200,5 @@
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("perma_docked")
-			SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "ShA[var_value ? "s" : "g"]")
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("arrivals shuttle", "[var_value ? "stopped" : "started"]"))
 	return ..()

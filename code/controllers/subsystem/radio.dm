@@ -14,35 +14,22 @@ SUBSYSTEM_DEF(radio)
 /datum/controller/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
-
 	if(!frequency)
-		frequency = new
-		frequency.frequency = new_frequency
-		frequencies[f_text] = frequency
-
+		frequencies[f_text] = frequency = new(new_frequency)
 	frequency.add_listener(device, filter)
 	return frequency
 
 /datum/controller/subsystem/radio/proc/remove_object(obj/device, old_frequency)
 	var/f_text = num2text(old_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
-
 	if(frequency)
 		frequency.remove_listener(device)
-
-		if(frequency.devices.len == 0)
-			qdel(frequency)
-			frequencies -= f_text
-
+		// let's don't delete frequencies in case a non-listener keeps a reference
 	return 1
 
 /datum/controller/subsystem/radio/proc/return_frequency(new_frequency as num)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
-
 	if(!frequency)
-		frequency = new
-		frequency.frequency = new_frequency
-		frequencies[f_text] = frequency
-
+		frequencies[f_text] = frequency = new(new_frequency)
 	return frequency

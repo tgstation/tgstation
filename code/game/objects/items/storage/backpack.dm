@@ -72,7 +72,7 @@
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/living/user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(src)
-		if(loccheck.z == ZLEVEL_CITYOFCOGS)
+		if(is_reebe(loccheck.z))
 			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
 			user.Knockdown(60)
 			return
@@ -419,7 +419,7 @@
 	name = "suspicious looking duffel bag"
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
-	item_state = "duffel-syndie"
+	item_state = "duffel-syndieammo"
 	silent = 1
 	slowdown = 0
 

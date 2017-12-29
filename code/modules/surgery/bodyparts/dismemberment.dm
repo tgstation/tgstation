@@ -18,7 +18,7 @@
 			return 0
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
-	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	drop_limb()
@@ -102,7 +102,7 @@
 
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
-		I.loc = src
+		I.forceMove(src)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 
@@ -142,16 +142,16 @@
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
 	Remove(C)
-	loc = LB
+	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
 	Remove(C)	//Changeling brain concerns are now handled in Remove
-	loc = LB
+	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
-		LB.brainmob.loc = LB
+		LB.brainmob.forceMove(LB)
 		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
@@ -167,7 +167,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(C.loc)
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -185,7 +185,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(C.loc)
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -201,7 +201,7 @@
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(owner.loc)
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -212,7 +212,7 @@
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(owner.loc)
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -235,6 +235,11 @@
 		var/obj/pill = AP.target
 		if(pill)
 			pill.forceMove(src)
+
+	//Make sure de-zombification happens before organ removal instead of during it
+	var/obj/item/organ/zombie_infection/ooze = owner.getorganslot(ORGAN_SLOT_ZOMBIE)
+	if(istype(ooze))
+		ooze.transfer_to_limb(src, owner)
 
 	name = "[owner.real_name]'s head"
 	..()
@@ -265,7 +270,7 @@
 	attach_limb(C, special)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	loc = null
+	moveToNullspace()
 	owner = C
 	C.bodyparts += src
 	if(held_index)
@@ -306,7 +311,7 @@
 	if(brain)
 		if(brainmob)
 			brainmob.container = null //Reset brainmob head var.
-			brainmob.loc = brain //Throw mob into brain.
+			brainmob.forceMove(brain) //Throw mob into brain.
 			brain.brainmob = brainmob //Set the brain to use the brainmob
 			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper

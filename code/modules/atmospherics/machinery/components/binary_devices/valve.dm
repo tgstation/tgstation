@@ -31,7 +31,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	open = TRUE
 	update_icon_nopipes()
 	update_parents()
-	var/datum/pipeline/parent1 = PARENT1
+	var/datum/pipeline/parent1 = parents[1]
 	parent1.reconcile_air()
 	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 

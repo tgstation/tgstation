@@ -125,7 +125,7 @@
 
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
-	
+
 	if(!target) //Checks for remains
 		target = scan(/obj/effect/decal/remains)
 
@@ -242,7 +242,7 @@
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-			victim.acid_act(5, 2, 100)
+			victim.acid_act(5, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))
 				var/turf/open/T = loc
