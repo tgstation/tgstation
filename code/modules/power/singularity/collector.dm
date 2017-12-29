@@ -65,7 +65,7 @@
 				loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
 				loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += bitcoinproduction_drain*2*drainratio
 				loaded_tank.air_contents.garbage_collect()
-				var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT))
+				var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
 				linked_techweb.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
 				last_power-=bitcoins_mined
 
