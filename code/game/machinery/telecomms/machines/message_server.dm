@@ -108,8 +108,8 @@
 
 /datum/signal/subspace/pda/proc/format_message()
 	if (data["photo"])
-		return "[data["message"]] <a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
-	return data["message"]
+		return "\"[data["message"]]\" <a href='byond://?src=[REF(src)];photo=1'>(Photo)</a>"
+	return "\"[data["message"]]\""
 
 /datum/signal/subspace/pda/broadcast()
 	for (var/obj/item/device/pda/P in GLOB.PDAs)
