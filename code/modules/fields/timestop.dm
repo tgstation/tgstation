@@ -92,7 +92,6 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
 	var/datum/thrownthing/T = frozen_throws[AM]
-	escape_the_negative_zone(AM)
 	T.paused = FALSE
 	frozen_throws -= AM
 
