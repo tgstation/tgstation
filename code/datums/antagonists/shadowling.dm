@@ -40,7 +40,7 @@
 	if(issilicon(M))
 		M.audible_message("<span class='notice'>[M] lets out a short blip.</span>", \
 						  "<span class='userdanger'>You have been turned into a robot! You are no longer a shadowling! Though you try, you cannot remember anything about your time as one...</span>")
-	else
+	else if(is_species(M, /datum/species/shadow/ling)) //a non antag full-powered shadowling is REALLY REALLY BAD for balance reasons
 		M.visible_message("<span class='big'>[M] screams and contorts!</span>", \
 						  "<span class='userdanger'>THE LIGHT-- YOUR MIND-- <i>BURNS--</i></span>")
 		addtimer(CALLBACK(src, .proc/explodify), 30)
@@ -61,7 +61,7 @@
 	to_chat(owner, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
 	to_chat(owner, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://wiki.hippiestation.com/index.php?title=Shadowling</b><br>")
 	to_chat(owner, "<b>You require [SSticker.mode.required_thralls || 15] thralls to ascend.</b><br>")
-	SEND_SOUND(owner.current, sound('hippiestation/sound/ambience/antag/sling.ogg'))
+	SEND_SOUND(owner.current, sound('sound/ambience/antag/sling.ogg'))
 
 /datum/antagonist/shadowling/proc/check_shadow_death()
 	for(var/datum/mind/shadow_mind in get_antagonists(/datum/antagonist/shadowling))
