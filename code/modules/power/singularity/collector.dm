@@ -33,7 +33,7 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
-/obj/machinery/power/rad_collector/anchored/Initialize()
+/obj/machinery/power/rad_collector/Initialize()
 	. = ..()
 	if(z in GLOB.station_z_levels)
 		linked_techweb = SSresearch.science_tech
@@ -46,6 +46,7 @@
 		if(!bitcoinmining)
 			if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
 				investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
+				playsound(src, 'sound/machines/ding.ogg', 50, 1)
 				eject()
 			else
 				loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= powerproduction_drain*drainratio
@@ -58,6 +59,7 @@
 				last_power-=power_produced
 		else if(linked_techweb)
 			if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
+				playsound(src, 'sound/machines/ding.ogg', 50, 1)
 				eject()
 			else
 				loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] -= bitcoinproduction_drain*drainratio
@@ -147,10 +149,13 @@
 /obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
 	if(!linked_techweb)
 		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
+		return TRUE
 	if(locked)
 		to_chat(user, "<span class='warning'>[src] is locked!</span>")
+		return TRUE
 	if(active)
 		to_chat(user, "<span class='warning'>[src] is currently active, producing [bitcoinmining ? "research points":"power"].</span>")
+		return TRUE
 	bitcoinmining = !bitcoinmining
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
@@ -159,9 +164,14 @@
 	. = ..()
 	if(active)
 		if(!bitcoinmining)
-			to_chat(user, "<span class='notice'>[src]'s display states that it is processing [DisplayPower(last_power)].</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it is processing <b>[DisplayPower(last_power)]</b>.</span>")
 		else
-			to_chat(user, "<span class='notice'>[src]'s display states that it is producing a total of [last_power*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points.</span>")
+			to_chat(user, "<span class='notice'>[src]'s display states that it is producing a total of <b>[last_power*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b> research points per minute.</span>")
+	else
+		if(!bitcoinmining)
+			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>")
+		else
+			to_chat(user,"<span class='notice'><b>[src]'s display displays the words:</b> \"Research point production mode. Please insert <b>Tritium</b> and <b>Oxygen</b>. Use a multitool to change production modes.\"</span>")
 
 /obj/machinery/power/rad_collector/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
