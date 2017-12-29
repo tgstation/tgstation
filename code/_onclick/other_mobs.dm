@@ -5,7 +5,6 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-
 	if(!has_active_hand()) //can't attack without a hand.
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
 		return
@@ -25,6 +24,8 @@
 	if(override)
 		return
 
+
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	A.attack_hand(src)
 	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, src)
@@ -58,7 +59,8 @@
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(atom/A)
+/mob/living/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_animal(src)
 
 /atom/proc/attack_animal(mob/user)
@@ -70,7 +72,8 @@
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
+/mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_paw(src)
 /atom/proc/attack_paw(mob/user)
 	return
@@ -113,7 +116,8 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
+/mob/living/carbon/alien/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_alien(src)
 /atom/proc/attack_alien(mob/living/carbon/alien/user)
 	attack_paw(user)
@@ -122,7 +126,8 @@
 	return
 
 // Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
+/mob/living/carbon/alien/larva/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_larva(src)
 /atom/proc/attack_larva(mob/user)
 	return
@@ -132,7 +137,8 @@
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
+/mob/living/simple_animal/slime/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_slime(src)
 /atom/proc/attack_slime(mob/user)
 	return
@@ -143,7 +149,8 @@
 /*
 	Drones
 */
-/mob/living/simple_animal/drone/UnarmedAttack(atom/A)
+/mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_drone(src)
 
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user)
@@ -158,6 +165,7 @@
 */
 
 /mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 	A.attack_hand(src)
 
 /*
@@ -184,6 +192,7 @@
 	if(!dextrous)
 		return ..()
 	if(!ismob(A))
+		SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity)
 		A.attack_hand(src)
 		update_inv_hands()
 
@@ -195,7 +204,7 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
 	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
-		..()
+		return ..()
 	else
 		AttackingTarget()
 

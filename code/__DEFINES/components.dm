@@ -79,6 +79,9 @@
 #define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
 #define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
 
+// /mob signals
+#define COMSIG_UNARMED_ATTACK "mob_unarmed_attack" // from base of /mob/proc/UnarmedAttack(): (/mob/attacker, proximity_flag)
+
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
