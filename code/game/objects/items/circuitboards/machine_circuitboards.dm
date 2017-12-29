@@ -701,6 +701,16 @@
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/podfab
+	name = "Spacepod Fabricator (Machine Board)"
+	build_path = /obj/machinery/mecha_part_fabricator/spacepod
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/console_screen = 1)
+
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/donksofttoyvendor

@@ -706,6 +706,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The gravitons generated here could throw off your warp's destination and possibly throw you into deep space."
 
+/area/engine/pod_construction
+	name = "Space Pod Construction Area"
+	icon_state = "yellow"
+
 /area/engine/secure_construction
 	name = "Secure Construction Area"
 	icon_state = "engine"
