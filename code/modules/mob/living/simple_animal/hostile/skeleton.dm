@@ -81,3 +81,15 @@
 	health = 75
 	color = rgb(114,228,250)
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})
+
+/mob/living/simple_animal/hostile/skeleton/revenant
+	name = "haunted remains"
+	desc = "It's a skeleton alright, but it seems to be fuelled by haunted energies."
+	gold_core_spawnable = NO_SPAWN
+	maxHealth = 70
+	health = 70
+	var/lastthingtheysaid = "Kill..."
+
+/mob/living/simple_animal/hostile/skeleton/revenant/Life()
+	if(prob(10))
+		say("[lastthingtheysaid]")

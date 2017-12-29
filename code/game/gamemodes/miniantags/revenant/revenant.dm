@@ -93,7 +93,8 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/madness(null))
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/animate_bone(null))
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()
