@@ -47,6 +47,7 @@
 
 
 /datum/antagonist/shadowling/proc/explodify()
+	var/mob/living/M = owner.current
 	if(!M || QDELETED(M))
 		return
 	M.visible_message("<span class='warning'>[M] suddenly bloats and explodes!</span>", \

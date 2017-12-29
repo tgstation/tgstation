@@ -1,7 +1,9 @@
 #define HEART_RESPAWN_THRESHHOLD 40
 #define HEART_SPECIAL_SHADOWIFY 2
+
 #define SLING_LIGHT_HEAL_THRESHOLD 2
 #define SLING_LIGHT_DAMAGE_TAKEN 7
+#define SLING_LIGHT_DAM_THRESHOLD 0.25
 
 
 /datum/species/shadow
@@ -79,7 +81,7 @@
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING)
 	no_equip = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = TRUE
-	mutanteyes = /obj/item/organ/eyes/night_vision/alien/sling
+	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
@@ -91,7 +93,7 @@
 		var/turf/T = H.loc
 		light_amount = T.get_lumcount()
 		if(light_amount > SLING_LIGHT_DAM_THRESHOLD) //Can survive in very small light levels.
-			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
+			H.take_overall_damage(0, SLING_LIGHT_DAMAGE_TAKEN)
 			if(H.stat != DEAD)
 				to_chat(H, "<span class='userdanger'>The light burns you!</span>") //Message spam to say "GET THE FUCK OUT"
 				H.playsound_local(get_turf(H), 'sound/weapons/sear.ogg', 150, 1, pressure_affected = FALSE)
