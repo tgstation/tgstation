@@ -223,7 +223,7 @@
 	else if(!new_comp)
 		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
 
-	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
+	if(QDELETED(old_comp) && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
 		SendSignal(COMSIG_COMPONENT_ADDED, new_comp)
 		return new_comp
 	return old_comp
