@@ -16,11 +16,6 @@ GLOBAL_LIST_EMPTY(menulist)
 /datum/verbs/menu/GetList()
 	return GLOB.menulist
 
-/datum/verbs/menu/Generate_list()
-	. = ..()
-	for(var/I in .)
-		.[I] = list2params(.[I])
-
 /datum/verbs/menu/HandleVerb(list/entry, verbpath, client/C)
 	var/datum/verbs/menu/verb_true_parent = GLOB.menulist[verblist[verbpath]]
 	var/true_checkbox = verb_true_parent.checkbox
@@ -37,6 +32,7 @@ GLOBAL_LIST_EMPTY(menulist)
 		entry["command"] = ".updatemenuchecked \"[verb_true_parent.type]\" \"[verbpath]\"\n[entry["command"]]"
 		entry["can-check"] = TRUE
 		entry["group"] = "[verb_true_parent.type]"
+	return list2params(entry)
 
 /datum/verbs/menu/proc/Get_checked(client/C)
 	return C.prefs.menuoptions[type] || default || FALSE
@@ -72,10 +68,11 @@ GLOBAL_LIST_EMPTY(menulist)
 	var/atom/verb/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
+	
 	if (copytext(verbpath.name,1,2) == "@")
-		winset(C, null, "command = [copytext(verbpath.name,2)]")
+		winset(C, null, list2params(list("command" = copytext(verbpath.name,2))))
 	else
-		winset(C, null, "command = [replacetext(verbpath.name, " ", "-")]")
+		winset(C, null, list2params(list("command" = replacetext(verbpath.name, " ", "-"))))
 
 /datum/verbs/menu/Icon/Size
 	checkbox = CHECKBOX_GROUP

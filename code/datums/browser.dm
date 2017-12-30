@@ -92,6 +92,10 @@
 	"}
 
 /datum/browser/proc/open(use_onclose = 1)
+	if(isnull(window_id))	//null check because this can potentially nuke goonchat
+		WARNING("Browser [title] tried to open with a null ID")
+		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
+		return
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
@@ -111,7 +115,10 @@
 			break
 
 /datum/browser/proc/close()
-	user << browse(null, "window=[window_id]")
+	if(!isnull(window_id))//null check because this can potentially nuke goonchat
+		user << browse(null, "window=[window_id]")
+	else
+		WARNING("Browser [title] tried to close with a null ID")
 
 /datum/browser/alert
 	var/selectedbutton = 0
@@ -125,13 +132,13 @@
 
 	var/output =  {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
-		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=\ref[src];button=1">[Button1]</a>"}
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=[REF(src)];button=2">[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=3">[Button3]</a>"}
+		output += {"<a style="font-size:large;float:right" href="?src=[REF(src)];button=3">[Button3]</a>"}
 
 	output += {"</div>"}
 
@@ -170,7 +177,7 @@
 
 /datum/browser/alert/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
-		stoplag()
+		stoplag(1)
 
 /datum/browser/alert/Topic(href,href_list)
 	if (href_list["close"] || !user || !user.client)
@@ -213,18 +220,6 @@
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
 /mob/proc/browse_rsc_icon(icon, icon_state, dir = -1)
-	/*
-	var/icon/I
-	if (dir >= 0)
-		I = new /icon(icon, icon_state, dir)
-	else
-		I = new /icon(icon, icon_state)
-		setDir("default")
-
-	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
-	src << browse_rsc(I, filename)
-	return filename
-	*/
 
 
 // Registers the on-close verb for a browse window (client/verb/.windowclose)
@@ -242,14 +237,14 @@
 // Otherwise, the user mob's machine var will be reset directly.
 //
 /proc/onclose(mob/user, windowid, atom/ref=null)
-	if(!user.client) return
+	if(!user.client)
+		return
 	var/param = "null"
 	if(ref)
-		param = "\ref[ref]"
+		param = "[REF(ref)]"
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 
-	//to_chat(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
 
 // the on-close client verb
@@ -261,12 +256,10 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	//to_chat(world, "windowclose: [atomref]")
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
-			//to_chat(world, "[src] Topic [href] [hsrc]")
 			usr = src.mob
 			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
@@ -274,6 +267,5 @@
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//to_chat(world, "[src] was [src.mob.machine], setting to null")
 		src.mob.unset_machine()
 	return

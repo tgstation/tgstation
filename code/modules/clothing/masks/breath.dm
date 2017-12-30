@@ -4,15 +4,15 @@
 	icon_state = "breath"
 	item_state = "m_mask"
 	body_parts_covered = 0
-	flags = MASKINTERNALS
-	visor_flags = MASKINTERNALS
+	flags_1 = MASKINTERNALS_1
+	visor_flags = MASKINTERNALS_1
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.10
-	permeability_coefficient = 0.50
+	gas_transfer_coefficient = 0.1
+	permeability_coefficient = 0.5
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
@@ -35,4 +35,4 @@
 	icon_state = "medical"
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
-	put_on_delay = 10
+	equip_delay_other = 10

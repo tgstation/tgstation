@@ -16,9 +16,9 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
-	var/obj/item/weapon/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 
 	switch(action)
 		if("PRG_openfile")
@@ -170,19 +170,26 @@
 	t = replacetext(t, "\[td\]", "<td>")
 	t = replacetext(t, "\[cell\]", "<td>")
 	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
+
+	t = parsemarkdown_basic(t)
+
 	return t
 
 /datum/computer_file/program/filemanager/proc/prepare_printjob(t) // Additional stuff to parse if we want to print it and make a happy Head of Personnel. Forms FTW.
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
+
 	t = parse_tags(t)
+
+	t = replacetext(t, regex("(?:%s(?:ign)|%f(?:ield))(?=\\s|$)", "ig"), "<span class=\"paper_field\"></span>")
+
 	return t
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
 	if(error)
 		data["error"] = error
 	if(open_file)

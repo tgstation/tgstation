@@ -46,7 +46,7 @@ ROBOT_DELAY 0
 MONKEY_DELAY 0
 ALIEN_DELAY 0
 SLIME_DELAY 0
-ANIMAL_DELAY 0
+ANIMAL_DELAY 1
 
 
 ## NAMES ###
@@ -61,7 +61,7 @@ ANIMAL_DELAY 0
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
 ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
 ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
@@ -77,40 +77,41 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 ## Set to 0 to disable that mode.
 
 PROBABILITY TRAITOR 5
+PROBABILITY TRAITORBRO 2
 PROBABILITY TRAITORCHAN 4
 PROBABILITY INTERNAL_AFFAIRS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
-PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
-PROBABILITY MALFUNCTION 1
-PROBABILITY BLOB 2
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
+PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
+## Percent weight reductions for three of the most recent modes
+
+REPEATED_MODE_ADJUST 45 30 10
 
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
 
 CONTINUOUS TRAITOR
+CONTINUOUS TRAITORBRO
 CONTINUOUS TRAITORCHAN
-CONTINUOUS DOUBLE_AGENTS
+CONTINUOUS INTERNAL_AFFAIRS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-CONTINUOUS GANG
 CONTINUOUS CULT
 CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
-CONTINUOUS MALFUNCTION
 CONTINUOUS BLOB
 CONTINUOUS ABDUCTION
 #CONTINUOUS MONKEY
@@ -119,22 +120,22 @@ CONTINUOUS ABDUCTION
 
 CONTINUOUS METEOR
 CONTINUOUS EXTENDED
+CONTINUOUS SECRET_EXTENDED
 
 
 ## Toggles for allowing midround antagonists (aka mulligan antagonists).
 ## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
 
 MIDROUND_ANTAG TRAITOR
+#MIDROUND_ANTAG TRAITORBRO
 MIDROUND_ANTAG TRAITORCHAN
-MIDROUND_ANTAG DOUBLE_AGENTS
+MIDROUND_ANTAG INTERNAL_AFFAIRS
 #MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
-#MIDROUND_ANTAG  GANG
 MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
-MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
 MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  MONKEY
@@ -148,6 +149,9 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP TRAITOR 0
 #MAX_POP TRAITOR -1
 
+#MIN_POP TRAITORBRO 0
+#MAX_POP TRAITORBRO -1
+
 #MIN_POP TRAITORCHAN 15
 #MAX_POP TRAITORCHAN -1
 
@@ -159,9 +163,6 @@ MIDROUND_ANTAG ABDUCTION
 
 #MIN_POP REVOLUTION 20
 #MAX_POP REVOLUTION -1
-
-#MIN_POP GANG 20
-#MAX_POP GANG -1
 
 #MIN_POP CULT 24
 #MAX_POP CULT -1
@@ -203,6 +204,7 @@ SHUTTLE_REFUEL_DELAY 12000
 ## Used as (Antagonists = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
 TRAITOR_SCALING_COEFF 6
+BROTHER_SCALING_COEFF 6
 CHANGELING_SCALING_COEFF 6
 
 ## Variables calculate how number of open security officer positions will scale to population.
@@ -213,6 +215,7 @@ SECURITY_SCALING_COEFF 8
 ## The number of objectives traitors get.
 ## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
+BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
@@ -380,10 +383,6 @@ LAW_WEIGHT buildawall,0
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-## Uncomment to give players the choice of their species before they join the game
-JOIN_WITH_MUTANT_RACE
-
-
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
@@ -476,8 +475,11 @@ LAVALAND_BUDGET 60
 Space_Budget 16
 
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
-## Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+## Must be at least 30. At least 55 recommended to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+## Uncomment to require the arrivals shuttle to be in flight (if it can fly) before late join players can join
+#ARRIVALS_SHUTTLE_REQUIRE_UNDOCKED
 
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
@@ -486,3 +488,8 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 MICE_ROUNDSTART 10
 
+## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
+#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING

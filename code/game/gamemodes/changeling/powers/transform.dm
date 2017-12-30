@@ -8,10 +8,10 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -19,10 +19,10 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -30,11 +30,11 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	allowed = list(/obj/item/changeling)
 
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -42,10 +42,10 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -53,10 +53,10 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -64,10 +64,10 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -75,10 +75,10 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -86,12 +86,12 @@
 
 /obj/item/changeling
 	name = "flesh"
-	flags = NODROP
+	flags_1 = NODROP_1
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 
 /obj/item/changeling/attack_hand(mob/user)
-	if(loc == user && user.mind && user.mind.changeling)
+	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -99,8 +99,8 @@
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
-	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA", user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA")
 
 	if(!chosen_prof)
 		return
@@ -108,7 +108,10 @@
 	changeling_transform(user, chosen_prof)
 	return TRUE
 
-/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
+/datum/antagonist/changeling/proc/select_dna(var/prompt, var/title)
+	var/mob/living/carbon/user = owner.current
+	if(!istype(user))
+		return
 	var/list/names = list("Drop Flesh Disguise")
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		names += "[prof.name]"

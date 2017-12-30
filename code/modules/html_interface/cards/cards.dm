@@ -1,4 +1,4 @@
-// Used by playing cards; /obj/item/weapon/hand
+// Used by playing cards; /obj/item/hand
 // Subtype exists because of sendResources; these must be sent when the client connects.
 
 /datum/html_interface/cards/New()

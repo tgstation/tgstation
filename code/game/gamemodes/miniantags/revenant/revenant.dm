@@ -6,7 +6,7 @@
 #define INVISIBILITY_REVENANT 50
 
 /mob/living/simple_animal/revenant
-	name = "revenant"
+	name = "\a Revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
@@ -21,6 +21,7 @@
 	maxHealth = INFINITY
 	layer = GHOST_LAYER
 	healable = FALSE
+	spacewalk = TRUE
 	sight = SEE_SELF
 
 	see_in_dark = 8
@@ -63,7 +64,7 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	to_chat(src, "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>")
+	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
 	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
 	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
@@ -74,7 +75,7 @@
 		generated_objectives_and_spells = TRUE
 		mind.remove_all_antag()
 		mind.wipe_memory()
-		src << 'sound/effects/ghost.ogg'
+		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 		var/datum/objective/revenant/objective = new
 		objective.owner = mind
 		mind.objectives += objective
@@ -86,6 +87,7 @@
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
 		SSticker.mode.traitors |= mind //Necessary for announcing
+		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -141,7 +143,7 @@
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)
 		return
-	log_say("[key_name(src)] : [message]")
+	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 	var/rendered = "<span class='revennotice'><b>[src]</b> says, \"[message]\"</span>"
 	for(var/mob/M in GLOB.mob_list)
 		if(isrevenant(M))
@@ -153,8 +155,6 @@
 
 
 //Immunities
-/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -174,7 +174,7 @@
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	. = ..()
-	if(istype(W, /obj/item/weapon/nullrod))
+	if(istype(W, /obj/item/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
 		adjustBruteLoss(25) //hella effective
@@ -218,7 +218,7 @@
 		alpha = i
 	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
-	var/obj/item/weapon/ectoplasm/revenant/R = new(get_turf(src))
+	var/obj/item/ectoplasm/revenant/R = new(get_turf(src))
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
 	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src
@@ -279,7 +279,7 @@
 		to_chat(src, "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>")
 		return FALSE
 	for(var/obj/O in T)
-		if(O.density && !O.CanPass(src, T, 5))
+		if(O.density && !O.CanPass(src, T))
 			to_chat(src, "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>")
 			return FALSE
 	if(inhibited)
@@ -321,7 +321,7 @@
 
 
 //reforming
-/obj/item/weapon/ectoplasm/revenant
+/obj/item/ectoplasm/revenant
 	name = "glimmering residue"
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
@@ -333,14 +333,14 @@
 	var/client/client_to_revive
 	var/mob/living/simple_animal/revenant/revenant
 
-/obj/item/weapon/ectoplasm/revenant/New()
+/obj/item/ectoplasm/revenant/New()
 	..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
-/obj/item/weapon/ectoplasm/revenant/proc/scatter()
+/obj/item/ectoplasm/revenant/proc/scatter()
 	qdel(src)
 
-/obj/item/weapon/ectoplasm/revenant/proc/try_reform()
+/obj/item/ectoplasm/revenant/proc/try_reform()
 	if(reforming)
 		reforming = FALSE
 		reform()
@@ -348,34 +348,34 @@
 		inert = TRUE
 		visible_message("<span class='warning'>[src] settles down and seems lifeless.</span>")
 
-/obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
+/obj/item/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
-	user.drop_item()
+	user.dropItemToGround(src)
 	scatter()
 
-/obj/item/weapon/ectoplasm/revenant/throw_impact(atom/hit_atom)
+/obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom)
 	..()
 	if(inert)
 		return
 	visible_message("<span class='notice'>[src] breaks into particles upon impact, which fade away to nothingness.</span>")
 	scatter()
 
-/obj/item/weapon/ectoplasm/revenant/examine(mob/user)
+/obj/item/ectoplasm/revenant/examine(mob/user)
 	..()
 	if(inert)
 		to_chat(user, "<span class='revennotice'>It seems inert.</span>")
 	else if(reforming)
 		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
 
-/obj/item/weapon/ectoplasm/revenant/proc/reform()
+/obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	loc = get_turf(src) //In case it's in a backpack or someone's hand
+	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 	revenant.forceMove(loc)
 	if(client_to_revive)
 		for(var/mob/M in GLOB.dead_mob_list)
@@ -412,14 +412,18 @@
 	revenant = null
 	qdel(src)
 
-/obj/item/weapon/ectoplasm/revenant/Destroy()
+/obj/item/ectoplasm/revenant/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!</span>")
+	scatter()
+	return (OXYLOSS)
+
+/obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
 		qdel(revenant)
 	..()
 
 //objectives
 /datum/objective/revenant
-	dangerrating = 10
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
@@ -439,7 +443,6 @@
 	return TRUE
 
 /datum/objective/revenantFluff
-	dangerrating = 0
 
 /datum/objective/revenantFluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \

@@ -19,23 +19,23 @@
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
 	if(!is_respec)
-		SSblackbox.add_details("changeling_power_purchase",name)
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
 	return
 
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
-	if(!user || !user.mind || !user.mind.changeling)
+	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
 		return
 	try_to_sting(user)
 
 /obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return
-	var/datum/changeling/c = user.mind.changeling
+	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(sting_action(user, target))
-		SSblackbox.add_details("changeling_powers",name)
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 		sting_feedback(user, target)
 		c.chem_charges -= chemical_cost
 
@@ -52,7 +52,7 @@
 	if(req_human && !ishuman(user))
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
-	var/datum/changeling/c = user.mind.changeling
+	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(c.chem_charges < chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0

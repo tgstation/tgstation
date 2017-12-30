@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/blob,
 		/obj/effect/rune,
 		/obj/structure/spider/spiderling,
-		/obj/item/weapon/disk/nuclear,
+		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/device/radio/beacon,
 		/obj/singularity,
@@ -16,7 +16,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/recieving_pad,
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
-		/obj/item/device/warp_cube
+		/obj/item/device/warp_cube,
+		/obj/machinery/rnd/protolathe, //print tracking beacons, send shuttle
+		/obj/machinery/autolathe, //same
+		/obj/item/projectile/beam/wormhole,
+		/obj/effect/portal,
+		/obj/item/device/shared_storage
 	)))
 
 /obj/docking_port/mobile/supply
@@ -25,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	callTime = 600
 
 	dir = WEST
-	port_angle = 90
+	port_direction = EAST
 	width = 12
 	dwidth = 5
 	height = 7
@@ -40,16 +45,18 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()
-	if(z == ZLEVEL_STATION)
-		return check_blacklist(areaInstance)
+	if(is_station_level(z))
+		return check_blacklist(shuttle_areas)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
-	for(var/trf in areaInstance)
-		var/turf/T = trf
-		for(var/a in T.GetAllContents())
-			if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-				return FALSE
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
+	for(var/place in areaInstances)
+		var/area/shuttle/shuttle_area = place
+		for(var/trf in shuttle_area)
+			var/turf/T = trf
+			for(var/a in T.GetAllContents())
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+					return FALSE
 	return TRUE
 
 /obj/docking_port/mobile/supply/request()
@@ -57,10 +64,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/dock()
+/obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
-	if(..()) // Fly/enter transit.
+	. = ..() // Fly/enter transit.
+	if(. != DOCKING_SUCCESS)
 		return
 	if(getDockedId() == "supply_away") // Sell when we get home
 		sell()
@@ -70,10 +78,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return
 
 	var/list/empty_turfs = list()
-	for(var/turf/open/floor/T in areaInstance)
-		if(is_blocked_turf(T))
-			continue
-		empty_turfs += T
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/turf/open/floor/T in shuttle_area)
+			if(is_blocked_turf(T))
+				continue
+			empty_turfs += T
 
 	var/value = 0
 	var/purchases = 0
@@ -89,8 +99,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
-		SSblackbox.add_details("cargo_imports",
-			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
@@ -107,10 +116,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/msg = ""
 	var/sold_atoms = ""
 
-	for(var/atom/movable/AM in areaInstance)
-		if(AM.anchored)
-			continue
-		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+	for(var/place in shuttle_areas)
+		var/area/shuttle/shuttle_area = place
+		for(var/atom/movable/AM in shuttle_area)
+			if(AM.anchored || iscameramob(AM))
+				continue
+			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."

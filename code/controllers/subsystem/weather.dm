@@ -13,9 +13,10 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in GLOB.mob_list)
-			if(W.can_impact(L))
-				W.impact(L)
+		for(var/i in GLOB.mob_living_list)
+			var/mob/living/L = i
+			if(W.can_weather_act(L))
+				W.weather_act(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
@@ -30,8 +31,7 @@ SUBSYSTEM_DEF(weather)
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()
 	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
-		new W	//weather->New will handle adding itself to the list
+		new V //Weather's New() will handle adding stuff to the list
 
 /datum/controller/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)
@@ -40,6 +40,15 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.name == weather_name && W.target_z == Z)
 			W.telegraph()
+
+/datum/controller/subsystem/weather/proc/is_weather_affecting_area(area/A, weather_datum_type)
+	for(var/V in processing)
+		var/datum/weather/W = V
+		if(!istype(W, weather_datum_type))
+			continue
+		if(A in W.impacted_areas)
+			return TRUE
+	return FALSE
 
 /datum/controller/subsystem/weather/proc/make_z_eligible(zlevel)
 	eligible_zlevels |= zlevel

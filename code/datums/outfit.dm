@@ -22,6 +22,7 @@
 	var/internals_slot = null //ID of slot containing a gas tank
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
 	var/list/implants = null
+	var/accessory = null
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 
@@ -64,6 +65,13 @@
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),slot_s_store)
 
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U)
+			U.attach_accessory(new accessory(H))
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
+
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
 	if(r_hand)
@@ -93,11 +101,11 @@
 			H.update_action_buttons_icon()
 		if(implants)
 			for(var/implant_type in implants)
-				var/obj/item/weapon/implant/I = new implant_type(H)
-				I.implant(H, null, silent=TRUE)
+				var/obj/item/implant/I = new implant_type(H)
+				I.implant(H, null, TRUE)
 
 	H.update_body()
-	return 1
+	return TRUE
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))

@@ -1,13 +1,16 @@
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
-	desc = "Stabby stabby"
+	desc = "Stabby stabby."
 	var/sting_icon = null
 
 /obj/effect/proc_holder/changeling/sting/Click()
 	var/mob/user = usr
-	if(!user || !user.mind || !user.mind.changeling)
+	if(!user || !user.mind)
 		return
-	if(!(user.mind.changeling.chosen_sting))
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling)
+		return
+	if(!changeling.chosen_sting)
 		set_sting(user)
 	else
 		unset_sting(user)
@@ -15,41 +18,48 @@
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
-	user.mind.changeling.chosen_sting = src
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.chosen_sting = src
+
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
-	user.mind.changeling.chosen_sting = null
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.chosen_sting = null
+
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/unset_sting()
-	if(mind && mind.changeling && mind.changeling.chosen_sting)
-		src.mind.changeling.chosen_sting.unset_sting(src)
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling && changeling.chosen_sting)
+			changeling.chosen_sting.unset_sting(src)
 
 /obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if(!user.mind.changeling.chosen_sting)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!changeling.chosen_sting)
 		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
+	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = 0))
 		return
-	if(target.mind && target.mind.changeling)
+	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
-		user.mind.changeling.chem_charges -= chemical_cost
+		changeling.chem_charges -= chemical_cost //??
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
 	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
-	if(target.mind && target.mind.changeling)
+	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	return 1
 
@@ -65,7 +75,7 @@
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
 		unset_sting(user)
 		return
@@ -73,14 +83,14 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!")
+		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>")
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
+	if((target.has_disability(DISABILITY_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -109,32 +119,35 @@
 	chemical_cost = 20
 	dna_cost = 1
 
-/obj/item/weapon/melee/arm_blade/false
+/obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
 	force = 5 //Basically as strong as a punch
 
-/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
 	return
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
-		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
+	if(isliving(target))
+		var/mob/living/L = target
+		if((L.has_disability(DISABILITY_HUSK)) || !L.has_dna())
+			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
+			return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", object="falso armblade sting")
 
-	if(!target.drop_item())
-		to_chat(user, "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>")
+	var/obj/item/held = target.get_active_held_item()
+	if(held && !target.dropItemToGround(held))
+		to_chat(user, "<span class='warning'>[held] is stuck to their hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
-	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
+	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
@@ -142,7 +155,7 @@
 	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
 	return TRUE
 
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms their [blade.name] into an arm!</span>",
@@ -162,12 +175,14 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
-		return user.mind.changeling.can_absorb_dna(user, target)
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		return changeling.can_absorb_dna(target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
-	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_new_profile(target, user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!(changeling.has_dna(target.dna)))
+		changeling.add_new_profile(target)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/mute
@@ -194,7 +209,7 @@
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.become_nearsighted()
+	target.become_nearsighted(EYE_DAMAGE)
 	target.blind_eyes(20)
 	target.blur_eyes(40)
 	return TRUE

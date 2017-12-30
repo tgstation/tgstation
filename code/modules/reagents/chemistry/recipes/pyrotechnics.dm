@@ -74,7 +74,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Weaken(2)
+				C.Knockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -139,11 +139,11 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	name = "Meth explosion"
 	id = "methboom1"
-	results = list("methboom1" = 1)
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -153,9 +153,9 @@
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
+	id = "methboom2"
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
-	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -168,7 +168,7 @@
 		return
 	holder.remove_reagent("sorium", created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*4), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -179,7 +179,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume), 1, 6)
+	var/range = CLAMP(sqrt(created_volume), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -193,7 +193,7 @@
 		return
 	holder.remove_reagent("liquid_dark_matter", created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*3), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -204,7 +204,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume/2), 1, 6)
+	var/range = CLAMP(sqrt(created_volume/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -221,9 +221,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 	holder.remove_reagent("flash_powder", created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -238,9 +238,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -269,7 +269,7 @@
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
 	secondary = 1
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -296,7 +296,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -308,7 +308,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"
@@ -341,6 +341,23 @@
 	holder.chem_temp = 20 // cools the fuck down
 	return
 
+/datum/chemical_reaction/cryostylane_oxygen
+	name = "ephemeral cryostylane reaction"
+	id = "cryostylane_oxygen"
+	results = list("cryostylane" = 1)
+	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp -= 10*created_volume
+
+/datum/chemical_reaction/pyrosium_oxygen
+	name = "ephemeral pyrosium reaction"
+	id = "pyrosium_oxygen"
+	results = list("pyrosium" = 1)
+	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+
+/datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp += 10*created_volume
 
 /datum/chemical_reaction/pyrosium
 	name = "pyrosium"
@@ -364,7 +381,6 @@
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
 	required_reagents = list("teslium" = 1, "water" = 1)
-	results = list("destabilized_teslium" = 1)
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"

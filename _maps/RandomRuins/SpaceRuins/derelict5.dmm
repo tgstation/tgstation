@@ -35,7 +35,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
@@ -49,7 +49,7 @@
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "o" = (

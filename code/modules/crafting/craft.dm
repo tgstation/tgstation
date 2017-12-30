@@ -7,7 +7,8 @@
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
-				CAT_FOOD)
+				CAT_FOOD,
+				CAT_CLOTHING)
 	var/list/subcategories = list(
 						list(	//Weapon subcategories
 							CAT_WEAPON,
@@ -28,7 +29,8 @@
 							CAT_SALAD,
 							CAT_SANDWICH,
 							CAT_SOUP,
-							CAT_SPAGHETTI))
+							CAT_SPAGHETTI),
+                        CAT_CLOTHING) //Clothing subcategories
 
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
@@ -81,22 +83,22 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(HAS_SECONDARY_FLAG(AM, HOLOGRAM))
+				if(AM.flags_2 & HOLOGRAM_2)
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
-		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
+		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.[I.type] += S.amount
 		else
-			if(istype(I, /obj/item/weapon/reagent_containers))
-				var/obj/item/weapon/reagent_containers/RC = I
-				if(RC.container_type & OPENCONTAINER)
+			if(istype(I, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/RC = I
+				if(RC.is_drainable())
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.[A.type] += A.volume
 			.[I.type] += 1
@@ -106,7 +108,7 @@
 		return 1
 	var/list/possible_tools = list()
 	for(var/obj/item/I in user.contents)
-		if(istype(I, /obj/item/weapon/storage))
+		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
 		possible_tools += I.type
@@ -135,7 +137,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					SSblackbox.add_details("object_crafted","[I.type]")
+					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 				return 0
 			return "."
 		return ", missing tool."
@@ -181,7 +183,7 @@
 				var/datum/reagent/RG = new A
 				var/datum/reagent/RGNT
 				while(amt > 0)
-					var/obj/item/weapon/reagent_containers/RC = locate() in surroundings
+					var/obj/item/reagent_containers/RC = locate() in surroundings
 					RG = RC.reagents.get_reagent(A)
 					if(RG)
 						if(!locate(RG.type) in Deletion)
@@ -264,7 +266,7 @@
 		qdel(DL)
 
 
-/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
+/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
@@ -311,14 +313,14 @@
 	switch(action)
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"])
-			busy = 1
+			busy = TRUE
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
-			busy = 0
+			busy = FALSE
 			ui_interact(usr)
 		if("forwardCat") //Meow
 			viewing_category = next_cat(FALSE)
@@ -379,7 +381,7 @@
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()
 	data["name"] = R.name
-	data["ref"] = "\ref[R]"
+	data["ref"] = "[REF(R)]"
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalyst_text = ""

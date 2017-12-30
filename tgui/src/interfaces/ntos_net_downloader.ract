@@ -65,7 +65,7 @@
 			
 			{{#if data.hackedavailable}}
 				<ui-display title='UNKNOWN Software Repository'>
-					<i>Please note that NanoTrasen does not recommend download of software from non-official servers.</i>
+					<i>Please note that Nanotrasen does not recommend download of software from non-official servers.</i>
 					{{#each data.hacked_programs}}
 						<ui-subdisplay title='{{filedesc}}'>
 							<div style='display: table-caption; margin-left: 3px'>{{fileinfo}}</div>
@@ -86,5 +86,5 @@
 			{{/if}}
 		{{/if}}
 	{{/if}}
-	<br><br><hr><i>NTOS v2.0.4b Copyright NanoTrasen 2557 - 2559</i>
+	<br><br><hr><i>NTOS v2.0.4b Copyright Nanotrasen 2557 - 2559</i>
 </ui-display>

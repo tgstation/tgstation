@@ -12,14 +12,14 @@
 
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(n, c, source)
+	sparks.autocleanup = TRUE
 	sparks.start()
-	qdel(sparks)
 
 
 /obj/effect/particle_effect/sparks
 	name = "sparks"
 	icon_state = "sparks"
-	anchored = 1
+	anchored = TRUE
 	light_range = 1
 
 /obj/effect/particle_effect/sparks/New()

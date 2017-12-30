@@ -5,7 +5,7 @@
 	icon_state = "seed-wheat"
 	species = "wheat"
 	plantname = "Wheat Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+	product = /obj/item/reagent_containers/food/snacks/grown/wheat
 	production = 1
 	yield = 4
 	potency = 15
@@ -13,7 +13,7 @@
 	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat)
 	reagents_add = list("nutriment" = 0.04)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/wheat
+/obj/item/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
 	name = "wheat"
 	desc = "Sigh... wheat... a-grain?"
@@ -21,6 +21,8 @@
 	icon_state = "wheat"
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
+	foodtype = GRAIN
+	grind_results = list("flour" = 0)
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -29,10 +31,10 @@
 	icon_state = "seed-oat"
 	species = "oat"
 	plantname = "Oat Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/oat
+	product = /obj/item/reagent_containers/food/snacks/grown/oat
 	mutatelist = list()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/oat
+/obj/item/reagent_containers/food/snacks/grown/oat
 	seed = /obj/item/seeds/wheat/oat
 	name = "oat"
 	desc = "Eat oats, do squats."
@@ -40,6 +42,8 @@
 	icon_state = "oat"
 	filling_color = "#556B2F"
 	bitesize_mod = 2
+	foodtype = GRAIN
+	grind_results = list("flour" = 0)
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -48,11 +52,11 @@
 	icon_state = "seed-rice"
 	species = "rice"
 	plantname = "Rice Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/rice
+	product = /obj/item/reagent_containers/food/snacks/grown/rice
 	mutatelist = list()
 	growthstages = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/rice
+/obj/item/reagent_containers/food/snacks/grown/rice
 	seed = /obj/item/seeds/wheat/rice
 	name = "rice"
 	desc = "Rice to meet you."
@@ -60,6 +64,8 @@
 	icon_state = "rice"
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
+	foodtype = GRAIN
+	grind_results = list("rice" = 0)
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -68,10 +74,10 @@
 	icon_state = "seed-meatwheat"
 	species = "meatwheat"
 	plantname = "Meatwheat"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
+	product = /obj/item/reagent_containers/food/snacks/grown/meatwheat
 	mutatelist = list()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
+/obj/item/reagent_containers/food/snacks/grown/meatwheat
 	name = "meatwheat"
 	desc = "Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough."
 	icon_state = "meatwheat"
@@ -79,12 +85,13 @@
 	filling_color = rgb(150, 0, 0)
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
+	foodtype = MEAT | GRAIN
+	grind_results = list("flour" = 0, "blood" = 0)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
+/obj/item/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
 	playsound(user, 'sound/effects/blobattack.ogg', 50, 1)
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat/M = new(get_turf(user))
-	user.drop_item()
+	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new
 	qdel(src)
 	user.put_in_hands(M)
 	return 1

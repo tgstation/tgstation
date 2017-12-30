@@ -38,7 +38,7 @@
 	var/path = "sound/chatter/[phomeme]_[length].ogg"
 
 	playsound(loc, path,
-		vol = 40, vary = 0, extrarange = 3, falloff = FALSE, surround = 1)
+		vol = 40, vary = 0, extrarange = 3, falloff = FALSE)
 
 	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
 

@@ -6,12 +6,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/next_ask
 	var/askDelay = 600 //one minute
 	var/searching = FALSE
 	brainmob = null
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE //if it pings on creation immediately
@@ -25,6 +24,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names //If you leave this blank, it will use the global posibrain names
 	var/picked_name
 
@@ -36,20 +36,25 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(!brainmob || brainmob.key)
+	if(!brainmob)
+		brainmob = new(src)
+	if(is_occupied())
+		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
 		return
 	if(next_ask > world.time)
+		to_chat(user, recharge_message)
 		return
 	//Start the process of requesting a new ghost.
 	to_chat(user, begin_activation_message)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
+	update_icon()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/device/mmi/posibrain/proc/check_success()
@@ -80,7 +85,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(is_occupied() || jobban_isbanned(user,"posibrain"))
 		return
-	
+
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
 		return
@@ -109,7 +114,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		to_chat(candidate, "This brain has already been taken! Please try your possession again later!")
+		to_chat(candidate, "<span class='warning'>This [name] was taken over before you could get to it! Perhaps it might be available later?</span>")
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -120,10 +125,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
 	GLOB.dead_mob_list -= brainmob
-	GLOB.living_mob_list += brainmob
+	GLOB.alive_mob_list += brainmob
 
 	visible_message(new_mob_message)
-	update_icon()
+	check_success()
 	return TRUE
 
 
@@ -143,7 +148,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	to_chat(user, msg)
 
 /obj/item/device/mmi/posibrain/Initialize()
-	..()
+	. = ..()
 	brainmob = new(src)
 	var/new_name
 	if(!LAZYLEN(possible_names))
@@ -152,7 +157,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		new_name = pick(possible_names)
 	brainmob.name = "[new_name]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
-	brainmob.loc = src
+	brainmob.forceMove(src)
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)

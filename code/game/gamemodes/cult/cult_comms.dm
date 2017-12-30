@@ -2,9 +2,10 @@
 #define MARK_COOLDOWN
 
 /datum/action/innate/cult
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
@@ -29,7 +30,7 @@
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
-	var/span = "cultitalic"
+	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
 		span = "cultlarge"
 		if(ishuman(user))
@@ -39,14 +40,15 @@
 	else if(!ishuman(user))
 		title = "Construct"
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
 		if(iscultist(M))
 			to_chat(M, my_message)
 		else if(M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"
@@ -81,74 +83,71 @@
 	popup.open()
 	return 1
 
-/mob/living/proc/cult_master()
-	set category = "Cultist"
-	set name = "Assert Leadership"
-	pollCultists(src)  // This proc handles the distribution of cult master actions
-
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
 /datum/action/innate/cult/mastervote/IsAvailable()
-	if(GLOB.cult_vote_called)
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	pollCultists(owner)
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	pollCultists(owner,C.cult_team)
 
-/proc/pollCultists(var/mob/living/Nominee) //Cult Master Poll
+/proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
+		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
-	GLOB.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
-	for(var/datum/mind/B in SSticker.mode.cult)
+	team.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
+	for(var/datum/mind/B in team.members)
 		if(B.current)
 			B.current.update_action_buttons_icon()
 			if(!B.current.incapacitated())
-				B.current << 'sound/hallucinations/im_here1.ogg'
+				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 				to_chat(B.current, "<span class='cultlarge'>Acolyte [Nominee] has asserted that they are worthy of leading the cult. A vote will be called shortly.</span>")
 	sleep(100)
 	var/list/asked_cultists = list()
-	for(var/datum/mind/B in SSticker.mode.cult)
+	for(var/datum/mind/B in team.members)
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			B.current << 'sound/magic/exit_blood.ogg'
+			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
 			asked_cultists += B.current
 	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
-		GLOB.cult_vote_called = FALSE
-		for(var/datum/mind/B in SSticker.mode.cult)
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/B in team.members)
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has died in the process of attempting to win the cult's support!</span>")
 		return FALSE
 	if(!Nominee.mind)
-		GLOB.cult_vote_called = FALSE
-		for(var/datum/mind/B in SSticker.mode.cult)
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/B in team.members)
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!")
+					to_chat(B.current,"<span class='cultlarge'>[Nominee] has gone catatonic in the process of attempting to win the cult's support!</span>")
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
-		GLOB.cult_vote_called = FALSE
-		for(var/datum/mind/B in SSticker.mode.cult)
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/B in team.members)
 			if(B.current)
 				B.current.update_action_buttons_icon()
 				if(!B.current.incapacitated())
-					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.")
+					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.</span>")
 		return FALSE
-	GLOB.cult_mastered = TRUE
+	team.cult_mastered = TRUE
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
 	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
-	for(var/datum/mind/B in SSticker.mode.cult)
+	for(var/datum/mind/B in team.members)
 		if(B.current)
 			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
 				vote.Remove(B.current)
 			if(!B.current.incapacitated())
-				to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!")
+				to_chat(B.current,"<span class='cultlarge'>[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!</span>")
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()
@@ -162,6 +161,9 @@
 	button_icon_state = "sintouch"
 
 /datum/action/innate/cult/master/finalreck/Activate()
+	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!antag)
+		return
 	for(var/i in 1 to 4)
 		chant(i)
 		var/list/destinations = list()
@@ -172,7 +174,7 @@
 			to_chat(owner, "<span class='warning'>You need more space to summon the cult!</span>")
 			return
 		if(do_after(owner, 30, target = owner))
-			for(var/datum/mind/B in SSticker.mode.cult)
+			for(var/datum/mind/B in antag.cult_team.members)
 				if(B.current && B.current.stat != DEAD)
 					var/turf/mobloc = get_turf(B.current)
 					switch(i)
@@ -197,7 +199,7 @@
 								addtimer(CALLBACK(B.current, /mob/.proc/reckon, final), 10)
 		else
 			return
-	GLOB.reckoning_complete = TRUE
+	antag.cult_team.reckoning_complete = TRUE
 	Remove(owner)
 
 /mob/proc/reckon(turf/final)
@@ -236,7 +238,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can mark another target!</b></span>")
 		return FALSE
 	return ..()
 
@@ -272,34 +274,37 @@
 	var/turf/T = get_turf(ranged_ability_user)
 	if(!isturf(T))
 		return FALSE
+
+	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+
 	if(target in view(7, get_turf(ranged_ability_user)))
-		GLOB.blood_target = target
+		C.cult_team.blood_target = target
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
 		addtimer(CALLBACK(attached_action.owner, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)
-		GLOB.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
-		GLOB.blood_target_image.appearance_flags = RESET_COLOR
-		GLOB.blood_target_image.pixel_x = -target.pixel_x
-		GLOB.blood_target_image.pixel_y = -target.pixel_y
+		C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+		C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
+		C.cult_team.blood_target_image.pixel_x = -target.pixel_x
+		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
-				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [GLOB.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
-				B.current << pick(sound('sound/hallucinations/over_here2.ogg',0,1,75), sound('sound/hallucinations/over_here3.ogg',0,1,75))
-				B.current.client.images += GLOB.blood_target_image
+				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+				B.current.client.images += C.cult_team.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
 		remove_ranged_ability("<span class='cult'>The marking rite is complete! It will last for 90 seconds.</span>")
-		GLOB.blood_target_reset_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target), 900, TIMER_STOPPABLE)
+		C.cult_team.blood_target_reset_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target,C.cult_team), 900, TIMER_STOPPABLE)
 		return TRUE
 	return FALSE
 
-/proc/reset_blood_target()
-	for(var/datum/mind/B in SSticker.mode.cult)
+/proc/reset_blood_target(datum/team/cult/team)
+	for(var/datum/mind/B in team.members)
 		if(B.current && B.current.stat != DEAD && B.current.client)
-			if(GLOB.blood_target)
+			if(team.blood_target)
 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
-			B.current.client.images -= GLOB.blood_target_image
-	QDEL_NULL(GLOB.blood_target_image)
-	GLOB.blood_target = null
+			B.current.client.images -= team.blood_target_image
+	QDEL_NULL(team.blood_target_image)
+	team.blood_target = null
 
 
 
@@ -310,6 +315,7 @@
 /datum/action/innate/cult/master/pulse
 	name = "Eldritch Pulse"
 	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "arcane_barrage"
 	var/obj/effect/proc_holder/pulse/PM
 	var/cooldown = 0
@@ -327,7 +333,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!PM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>"
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can pulse again!</b></span>")
 		return FALSE
 	return ..()
 
@@ -370,7 +376,7 @@
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE
 			attached_action.throwee = target
-			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
+			SEND_SOUND(ranged_ability_user, sound('sound/weapons/thudswoosh.ogg'))
 			to_chat(ranged_ability_user,"<span class='cult'><b>You reach through the veil with your mind's eye and seize [target]!</b></span>")
 			return
 		else

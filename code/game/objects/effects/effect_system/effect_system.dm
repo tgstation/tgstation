@@ -8,17 +8,15 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/particle_effect
 	name = "particle effect"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/particle_effect/New()
 	..()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 
 /obj/effect/particle_effect/Destroy()
-	if(SSticker)
-		GLOB.cameranet.updateVisibility(src)
+	GLOB.cameranet.updateVisibility(src)
 	. = ..()
 
 /datum/effect_system
@@ -28,6 +26,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/atom/holder
 	var/effect_type
 	var/total_effects = 0
+	var/autocleanup = FALSE //will delete itself after use
 
 /datum/effect_system/Destroy()
 	holder = null
@@ -60,7 +59,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	total_effects++
 	var/direction
 	if(cardinals)
-		direction = pick(GLOB.cardinal)
+		direction = pick(GLOB.cardinals)
 	else
 		direction = pick(GLOB.alldirs)
 	var/steps_amt = pick(1,2,3)
@@ -71,3 +70,5 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /datum/effect_system/proc/decrement_total_effect()
 	total_effects--
+	if(autocleanup && total_effects <= 0)
+		qdel(src)

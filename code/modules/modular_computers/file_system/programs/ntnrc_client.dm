@@ -34,12 +34,12 @@
 			if(!message || !channel)
 				return
 			channel.add_message(message, username)
-			log_chat("[user]/([user.ckey]) as [username] sent to [channel.title]: [message]")
+			log_talk(user,"[key_name(user)] as [username] sent to [channel.title]: [message]",LOGCHAT)
 
 		if("PRG_joinchannel")
 			. = 1
 			var/datum/ntnet_conversation/C
-			for(var/datum/ntnet_conversation/chan in GLOB.ntnet_global.chat_channels)
+			for(var/datum/ntnet_conversation/chan in SSnetworks.station_network.chat_channels)
 				if(chan.id == text2num(params["id"]))
 					C = chan
 					break
@@ -85,7 +85,7 @@
 					channel = null
 				return 1
 			var/mob/living/user = usr
-			if(can_run(usr, 1, GLOB.access_network))
+			if(can_run(usr, 1, ACCESS_NETWORK))
 				if(channel)
 					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
 					if(response == "Yes")
@@ -110,7 +110,7 @@
 			if(!channel)
 				return
 			var/mob/living/user = usr
-			var/logname = input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
+			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
 			if(!logname || !channel)
 				return 1
 			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
@@ -121,7 +121,7 @@
 				logfile.stored_data += "[logstring]\[BR\]"
 			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
+			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
@@ -183,7 +183,7 @@
 	..()
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
-	if(!GLOB.ntnet_global || !GLOB.ntnet_global.chat_channels)
+	if(!SSnetworks.station_network || !SSnetworks.station_network.chat_channels)
 		return
 
 	var/list/data = list()
@@ -212,7 +212,7 @@
 
 	else // Channel selection screen
 		var/list/all_channels[0]
-		for(var/C in GLOB.ntnet_global.chat_channels)
+		for(var/C in SSnetworks.station_network.chat_channels)
 			var/datum/ntnet_conversation/conv = C
 			if(conv && conv.title)
 				all_channels.Add(list(list(

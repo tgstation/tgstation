@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness
+// eye damage, eye_blind, eye_blurry, druggy, DISABILITY_BLIND disability, and DISABILITY_NEARSIGHT disability.
 
 /////////////////////////////////// EYE_BLIND ////////////////////////////////////
 

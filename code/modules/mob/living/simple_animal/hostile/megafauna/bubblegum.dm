@@ -64,9 +64,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(GLOB.cardinal))
+			step(B, pick(GLOB.cardinals))
 		else
-			B.setDir(pick(GLOB.cardinal))
+			B.setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -79,10 +79,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp((health/maxHealth) * 10, 5, 10)
+	move_to_delay = CLAMP((health/maxHealth) * 10, 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = Clamp(((maxHealth - health)/60),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -105,11 +105,10 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
-	..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
+	. = ..()
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
 		if(B != src)
-			qdel(src) //There can be only one
-			return
+			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
@@ -170,12 +169,13 @@ Difficulty: Hard
 			charge(bonus_charges)
 		else
 			Goto(target, move_to_delay, minimum_distance)
+			SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
-			A.ex_act(2)
+			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
 	..()
 
@@ -392,11 +392,11 @@ Difficulty: Hard
 	icon_aggro = "bloodbrood"
 	attacktext = "pierces"
 	color = "#C80000"
-	density = 0
+	density = FALSE
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0

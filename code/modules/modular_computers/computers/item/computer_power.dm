@@ -3,16 +3,16 @@
 	if(check_power_override())
 		return TRUE
 
-	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
 	if(recharger && recharger.check_functionality())
 		if(recharger.use_power(amount))
 			return TRUE
 
-	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
-		var/obj/item/weapon/stock_parts/cell/cell = battery_module.battery
+		var/obj/item/stock_parts/cell/cell = battery_module.battery
 		if(cell.use(amount * GLOB.CELLRATE))
 			return TRUE
 		else // Discharge the cell anyway.
@@ -21,13 +21,13 @@
 	return FALSE
 
 /obj/item/device/modular_computer/proc/give_power(amount)
-	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	if(battery_module && battery_module.battery)
 		return battery_module.battery.give(amount)
 	return 0
 
 /obj/item/device/modular_computer/get_cell()
-	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	if(battery_module && battery_module.battery)
 		return battery_module.battery
 
@@ -43,13 +43,13 @@
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /obj/item/device/modular_computer/proc/handle_power()
-	var/obj/item/weapon/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
+	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 	if(recharger)
 		recharger.process()
 
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 
-	for(var/obj/item/weapon/computer_hardware/H in all_components)
+	for(var/obj/item/computer_hardware/H in all_components)
 		if(H.enabled)
 			power_usage += H.power_usage
 

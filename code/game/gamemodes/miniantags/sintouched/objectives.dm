@@ -1,17 +1,5 @@
 /datum/objective/sintouched
-	dangerrating = 5
 	completed = 1
-
-/*  NO ERP OBJECTIVE FOR YOU.
-/datum/objective/sintouched/lust
-	dangerrating = 3 // it's not AS dangerous.
-
-/datum/objective/sintouched/lust/New()
-	var/mob/dead/D = pick(dead_mob_list)
-	if(prob(50) && D)
-		explanation_text = "You know that [D] has perished.... and you think [D] is kinda cute.  Make sure everyone knows how HOT [D]'s lifeless body is."
-	else
-		explanation_text = "Go get married, then immediately cheat on your new spouse." */
 
 /datum/objective/sintouched/gluttony
 	explanation_text = "Everything is so delicious. Go eat everything."

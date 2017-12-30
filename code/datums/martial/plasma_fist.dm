@@ -93,14 +93,14 @@
 	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the target and an item at them.")
 	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Knocks the brain out of the opponent and gibs their body.")
 
-/obj/item/weapon/plasma_fist_scroll
+/obj/item/plasma_fist_scroll
 	name = "frayed scroll"
 	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
 	var/used = 0
 
-/obj/item/weapon/plasma_fist_scroll/attack_self(mob/user)
+/obj/item/plasma_fist_scroll/attack_self(mob/user)
 	if(!ishuman(user))
 		return
 	if(!used)

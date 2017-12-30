@@ -1,5 +1,6 @@
 /proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
-	if(!epicenter) return
+	if(!epicenter)
+		return
 
 	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
@@ -20,12 +21,12 @@
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emp_act(1)
+			T.emp_act(EMP_HEAVY)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emp_act(1)
+				T.emp_act(EMP_HEAVY)
 			else
-				T.emp_act(2)
+				T.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
-			T.emp_act(2)
+			T.emp_act(EMP_LIGHT)
 	return 1

@@ -9,6 +9,7 @@
 	range = 1
 	cooldown_min = 0
 	overlay = null
+	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "bloodcrawl"
 	action_background_icon_state = "bg_demon"
 	var/phased = 0

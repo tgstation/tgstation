@@ -78,7 +78,7 @@
 //If you specify a value the FIRST ONE is removed
 /datum/linked_list/proc/Remove(node)
 	var/datum/linked_node/removing
-	if(istype(node,/datum/linked_node))
+	if(istype(node, /datum/linked_node))
 		removing = node
 	else
 		//optimise removing head and tail, no point looping for them, especially the tail

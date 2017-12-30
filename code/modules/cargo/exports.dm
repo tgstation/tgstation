@@ -1,5 +1,5 @@
 /* How it works:
- The shuttle arrives at Centcom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
+ The shuttle arrives at CentCom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
  The loop only checks contents of storage types, see supply.dm shuttle code.
 
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.
@@ -71,11 +71,14 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/total_cost = 0
 	var/total_amount = 0
 	var/init_cost
-	
+
 /datum/export/New()
 	..()
 	SSprocessing.processing += src
 	init_cost = cost
+	export_types = typecacheof(export_types)
+	exclude_types = typecacheof(exclude_types)
+
 
 /datum/export/Destroy()
 	SSprocessing.processing -= src
@@ -83,7 +86,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 /datum/export/process()
 	..()
-	cost *= GLOB.E**(k_elasticity * (1/30))
+	cost *= NUM_E**(k_elasticity * (1/30))
 	if(cost > init_cost)
 		cost = init_cost
 
@@ -91,7 +94,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
 	var/amount = get_amount(O, contr, emag)
 	if(k_elasticity!=0)
-		return round((cost/k_elasticity) * (1 - GLOB.E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+		return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
 	else
 		return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
@@ -108,11 +111,11 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!include_subtypes && !(O.type in export_types))
 		return FALSE
-	if(include_subtypes && (!is_type_in_list(O, export_types) || is_type_in_list(O, exclude_types)))
+	if(include_subtypes && (!is_type_in_typecache(O, export_types) || is_type_in_typecache(O, exclude_types)))
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
-	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+	if(O.flags_2 & HOLOGRAM_2)
 		return FALSE
 	return TRUE
 
@@ -123,14 +126,13 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/the_cost = get_cost(O)
 	var/amount = get_amount(O)
 	total_cost += the_cost
-	if(istype(O,/datum/export/material))
+	if(istype(O, /datum/export/material))
 		total_amount += amount*MINERAL_MATERIAL_AMOUNT
 	else
 		total_amount += amount
-	
-	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
-	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
-	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
+
+	cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+	SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.

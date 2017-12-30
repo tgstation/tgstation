@@ -37,7 +37,7 @@
 	return isturf(t) ? t : null
 
 /datum/topic_input/proc/getAtom(i)
-	return getType(i,/atom)
+	return getType(i, /atom)
 
 /datum/topic_input/proc/getArea(i)
 	var/t = getAndLocate(i)

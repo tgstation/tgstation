@@ -4,9 +4,12 @@
 	if (!message)
 		return
 
-	log_say("Ghost/[src.key] : [message]")
+	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
 
-	. = src.say_dead(message)
+	if(check_emote(message))
+		return
+
+	. = say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/atom/movable/to_follow = speaker

@@ -1,21 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/space)
 "c" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless,
 /area/space)
 "d" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f10";
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "e" = (
 /turf/closed/wall/mineral/titanium,
@@ -30,26 +25,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
 "h" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall13";
-	icon_state = "swall13"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "i" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall8";
-	icon_state = "swall8"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "j" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
 "k" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall4";
-	icon_state = "swall4"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "l" = (
 /obj/structure/chair{
@@ -68,16 +54,10 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "o" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f5";
-	icon_state = "swall_f5"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/space)
 "q" = (
@@ -85,17 +65,11 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/space)
 "s" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f9";
-	icon_state = "swall_f9"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 
 (1,1,1) = {"

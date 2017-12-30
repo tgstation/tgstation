@@ -21,7 +21,6 @@
 		target.gib(1, 1)
 	else
 		target.adjustBruteLoss(min(99,(target.health - 1)))
-		target.Stun(20)
-		target.Weaken(20)
+		target.Knockdown(400)
 		target.stuttering = 20
 

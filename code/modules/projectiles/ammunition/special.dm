@@ -3,6 +3,7 @@
 	desc = "I didn't even know magic needed ammo..."
 	projectile_type = /obj/item/projectile/magic
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
+	heavy_metal = FALSE
 
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/item/projectile/magic/change
@@ -49,12 +50,12 @@
 /obj/item/ammo_casing/syringegun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if(!BB)
 		return
-	if(istype(loc, /obj/item/weapon/gun/syringe))
-		var/obj/item/weapon/gun/syringe/SG = loc
+	if(istype(loc, /obj/item/gun/syringe))
+		var/obj/item/gun/syringe/SG = loc
 		if(!SG.syringes.len)
 			return
 
-		var/obj/item/weapon/reagent_containers/syringe/S = SG.syringes[1]
+		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
 
 		S.reagents.trans_to(BB, S.reagents.total_volume)
 		BB.name = S.name
@@ -73,19 +74,19 @@
 /obj/item/ammo_casing/dnainjector/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if(!BB)
 		return
-	if(istype(loc, /obj/item/weapon/gun/syringe/dna))
-		var/obj/item/weapon/gun/syringe/dna/SG = loc
+	if(istype(loc, /obj/item/gun/syringe/dna))
+		var/obj/item/gun/syringe/dna/SG = loc
 		if(!SG.syringes.len)
 			return
 
-		var/obj/item/weapon/dnainjector/S = popleft(SG.syringes)
+		var/obj/item/dnainjector/S = popleft(SG.syringes)
 		var/obj/item/projectile/bullet/dnainjector/D = BB
 		S.forceMove(D)
 		D.injector = S
 	..()
 
 /obj/item/ammo_casing/energy/c3dbullet
-	projectile_type = /obj/item/projectile/bullet/midbullet3
+	projectile_type = /obj/item/projectile/bullet/c3d
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20

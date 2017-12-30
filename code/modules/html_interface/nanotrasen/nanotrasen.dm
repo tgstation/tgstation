@@ -27,7 +27,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 
 /datum/html_interface/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 	// Update the title in our custom header (in addition to default functionality)
-	winset(hclient.client, "browser_\ref[src].uiTitle", list2params(list("text" = "[src.title]")))
+	winset(hclient.client, "browser_[REF(src)].uiTitle", list2params(list("text" = "[src.title]")))
 
 /datum/html_interface/nanotrasen/registerResources(var/list/resources = list())
 	resources["uiBg.png"] = 'uiBg.png'
@@ -39,19 +39,19 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	. = ..() // we want the default window
 
 	// Remove the titlebar
-	winset(hclient.client, "browser_\ref[src]", list2params(list(
+	winset(hclient.client, "browser_[REF(src)]", list2params(list(
 		"titlebar"    = "false"
 	)))
 
 	// Reposition the browser
-	winset(hclient.client, "browser_\ref[src].browser", list2params(list(
+	winset(hclient.client, "browser_[REF(src)].browser", list2params(list(
 		"pos"         = "0,35",
 		"size"        = "[width]x[height - 35]"
 	)))
 
 	// Add top background image
-	winset(hclient.client, "browser_\ref[src].topbg", list2params(list(
-		"parent"      = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].topbg", list2params(list(
+		"parent"      = "browser_[REF(src)]",
 		"type"        = "label",
 		"pos"         = "0,0",
 		"size"        = "[width]x35",
@@ -63,8 +63,8 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	)))
 
 	// Add Nanotrasen logo
-	winset(hclient.client, "browser_\ref[src].uiTitleFluff", list2params(list(
-		"parent"      = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].uiTitleFluff", list2params(list(
+		"parent"      = "browser_[REF(src)]",
 		"type"        = "label",
 		"pos"         = "[width - 42 - 4 - 24 - 4 - 24 - 4],5",
 		"size"        = "42x24",
@@ -76,8 +76,8 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	)))
 
 	// Add Eye picture
-	winset(hclient.client, "browser_\ref[src].uiTitleEye", list2params(list(
-		"parent"      = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].uiTitleEye", list2params(list(
+		"parent"      = "browser_[REF(src)]",
 		"type"        = "label",
 		"pos"         = "8,5",
 		"size"        = "42x24",
@@ -89,8 +89,8 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	)))
 
 	// Add title text
-	winset(hclient.client, "browser_\ref[src].uiTitle", list2params(list(
-		"parent"         = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].uiTitle", list2params(list(
+		"parent"         = "browser_[REF(src)]",
 		"type"           = "label",
 		"is-transparent" = "true",
 		"pos"            = "64,0",
@@ -107,8 +107,8 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 
 	// Add minimize button
 	// TODO: Style the button (add image)
-	winset(hclient.client, "browser_\ref[src].uiTitleMinimize", list2params(list(
-		"parent"         = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].uiTitleMinimize", list2params(list(
+		"parent"         = "browser_[REF(src)]",
 		"type"           = "button",
 		"is-flat"        = "true",
 		"background-color"="#383838", // should be unnecessary if image is used
@@ -123,18 +123,18 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 		"font-size"      = "12", // ~ 16px - should be unnecessary if image is used
 
 		// Disable resizing (disables maximizing), minimize window, bind window.on-size to catch 'restore window' button to enable resizing if restored.
-		"command"        = ".winset \"browser_\ref[src].can-resize=false;browser_\ref[src].is-minimized=true;browser_\ref[src].on-size=\".swinset \\\"browser_\ref[src].can-resize=true;browser_\ref[src].on-size=\\\"\"\""
+		"command"        = ".winset \"browser_[REF(src)].can-resize=false;browser_[REF(src)].is-minimized=true;browser_[REF(src)].on-size=\".swinset \\\"browser_[REF(src)].can-resize=true;browser_[REF(src)].on-size=\\\"\"\""
 	)))
 
 	// Add close button
 	// TODO: Style the button (add image)
-	winset(hclient.client, "browser_\ref[src].uiTitleClose", list2params(list(
-		"parent"         = "browser_\ref[src]",
+	winset(hclient.client, "browser_[REF(src)].uiTitleClose", list2params(list(
+		"parent"         = "browser_[REF(src)]",
 		"type"           = "button",
 		"is-flat"        = "true",
 		"background-color"="#383838", // should be unnecessary if image is used
 		"text-color"     = "#FFFFFF", // should be unnecessary if image is used
-		"command"        = "byond://?src=\ref[src];html_interface_action=onclose",
+		"command"        = "byond://?src=[REF(src)];html_interface_action=onclose",
 		"is-transparent" = "true",
 		"pos"            = "[width - 24 - 4],5",
 		"size"           = "24x24",
@@ -161,14 +161,18 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	if (istype(hclient))
 		var/resource
 		switch (color)
-			if ("green")  resource = 'uiEyeGreen.png'
-			if ("orange") resource = 'uiEyeOrange.png'
-			if ("red")    resource = 'uiEyeRed.png'
-			else          CRASH("Invalid color: [color]")
+			if ("green")
+				resource = 'uiEyeGreen.png'
+			if ("orange")
+				resource = 'uiEyeOrange.png'
+			if ("red")
+				resource = 'uiEyeRed.png'
+			else
+				CRASH("Invalid color: [color]")
 
 		if (hclient.getExtraVar("eye_color") != color)
 			hclient.putExtraVar("eye_color", color)
 
-			winset(hclient.client, "browser_\ref[src].uiTitleEye", list2params(list("image" = "[resource]")))
+			winset(hclient.client, "browser_[REF(src)].uiTitleEye", list2params(list("image" = "[resource]")))
 	else
 		WARNING("Invalid object passed to /datum/html_interface/nanotrasen/proc/setEyeColor")

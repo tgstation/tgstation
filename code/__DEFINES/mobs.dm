@@ -2,6 +2,11 @@
 
 //Misc mob defines
 
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -38,13 +43,30 @@
 #define BODYPART_ROBOTIC   2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
-#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augments.dmi'
+#define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 #define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
+
+//Brain Damage defines
+#define BRAIN_DAMAGE_MILD 20
+#define BRAIN_DAMAGE_SEVERE 100
+#define BRAIN_DAMAGE_DEATH 200
+
+#define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
+#define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
+#define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+
+#define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+
+//Health hud screws for carbon mobs
+#define SCREWYHUD_NONE 0
+#define SCREWYHUD_CRIT 1
+#define SCREWYHUD_DEAD 2
+#define SCREWYHUD_HEALTHY 3
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -53,6 +75,12 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+
+//Disgust levels for humans
+#define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -76,17 +104,17 @@
 //Mob AI Status
 
 //Hostile simple animals
+//If you add a new status, be sure to add a list for it to the simple_animals global in _globalvars/lists/mobs.dm
 #define AI_ON		1
 #define AI_IDLE		2
 #define AI_OFF		3
+#define AI_Z_OFF	4
 
+//determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-
-#define ENVIRONMENT_SMASH_STRUCTURES 1
-
-#define ENVIRONMENT_SMASH_WALLS 2
-
-#define ENVIRONMENT_SMASH_RWALLS 3
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2   //walls
+#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
 
 
 //SNPCs
@@ -129,3 +157,32 @@
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED 1
+#define JUDGE_IDCHECK 2
+#define JUDGE_WEAPONCHECK 4
+#define JUDGE_RECORDCHECK 8
+//ED209's ignore monkeys
+#define JUDGE_IGNOREMONKEYS 16
+
+#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
+
+#define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+// Offsets defines
+
+#define OFFSET_UNIFORM "uniform"
+#define OFFSET_ID "id"
+#define OFFSET_GLOVES "gloves"
+#define OFFSET_GLASSES "glasses"
+#define OFFSET_EARS "ears"
+#define OFFSET_SHOES "shoes"
+#define OFFSET_S_STORE "s_store"
+#define OFFSET_FACEMASK "mask"
+#define OFFSET_HEAD "head"
+#define OFFSET_FACE "face"
+#define OFFSET_BELT "belt"
+#define OFFSET_BACK "back"
+#define OFFSET_SUIT "suit"
+#define OFFSET_NECK "neck"

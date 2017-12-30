@@ -2,15 +2,21 @@
 /obj/effect/spresent
 	name = "strange present"
 	desc = "It's a ... present?"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "strangepresent"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 
 /obj/effect/beam
 	name = "beam"
 	var/def_zone
 	pass_flags = PASSTABLE
+
+/obj/effect/beam/singularity_act()
+	return
+
+/obj/effect/beam/singularity_pull()
+	return
 
 /obj/effect/spawner
 	name = "object spawner"
@@ -23,6 +29,16 @@
 	var/master = null
 
 	var/list/container = list(  )
+
+/obj/effect/overlay/thermite
+	name = "thermite"
+	desc = "Looks hot."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2" //what?
+	anchored = TRUE
+	opacity = TRUE
+	density = TRUE
+	layer = FLY_LAYER
 
 //Makes a tile fully lit no matter what
 /obj/effect/fullbright

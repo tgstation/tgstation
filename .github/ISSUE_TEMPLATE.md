@@ -1,3 +1,9 @@
-[Note]: # (Please enter the commit hash and active testmerge numbers from the "Show Server Revision" verb if you can. If you believe the issue to be caused by a testmerge, please report it in its relative PR thread. State what the issue is from a "whats wrong" prospective. Issue reports should clearly allow maintainers to understand whats wrong and how to test/reproduce if that is not obvious. Avoid ambiguity. Start your issue report below both of these lines (or remove them))
+[Round ID]: # (If you discovered this issue from playing tgstation hosted servers:)
+[Round ID]: # (**INCLUDE THE ROUND ID**)
+[Round ID]: # (It can be found in the Status panel or retrieved from https://atlantaned.space/statbus/round.php ! The round id let's us look up valuable information and logs for the round the bug happened.)
 
-[Admins]: # (If you are reporting a bug that occured AFTER you used varedit/admin buttons to alter an object out of normal operating conditions, please verify that you can re-create the bug without the varedit usage/admin buttons before reporting the issue.)
+[Testmerges]: # (If you believe the issue to be caused by a test merge [OOC tab -> Show Server Revision], report it in the pull request's comment section instead.)
+
+[Reproduction]: # (Explain your issue in detail, including the steps to reproduce it. Issues without proper reproduction steps or explanation are open to being ignored/closed by maintainers.)
+
+[For Admins]: # (Oddities induced by var-edits and other admin tools are not necessarily bugs. Verify that your issues occur under regular circumstances before reporting them.)

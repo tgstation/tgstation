@@ -2,7 +2,7 @@
 	mob_type_allowed_typecache = list(/mob/living/brain)
 	mob_type_blacklist_typecache = list()
 
-/datum/emote/brain/can_run_emote(mob/user)
+/datum/emote/brain/can_run_emote(mob/user, status_check = TRUE)
 	. = ..()
 	var/mob/living/brain/B = user
 	if(!istype(B) || (!(B.container && istype(B.container, /obj/item/device/mmi))))

@@ -47,3 +47,21 @@
 #define SEC_DEPT_MEDICAL "Medical"
 #define SEC_DEPT_SCIENCE "Science"
 #define SEC_DEPT_SUPPLY "Supply"
+
+// Playtime tracking system, see jobs_exp.dm
+#define EXP_TYPE_LIVING			"Living"
+#define EXP_TYPE_CREW			"Crew"
+#define EXP_TYPE_COMMAND		"Command"
+#define EXP_TYPE_ENGINEERING	"Engineering"
+#define EXP_TYPE_MEDICAL		"Medical"
+#define EXP_TYPE_SCIENCE		"Science"
+#define EXP_TYPE_SUPPLY			"Supply"
+#define EXP_TYPE_SECURITY		"Security"
+#define EXP_TYPE_SILICON		"Silicon"
+#define EXP_TYPE_SERVICE		"Service"
+#define EXP_TYPE_ANTAG			"Antag"
+#define EXP_TYPE_SPECIAL		"Special"
+#define EXP_TYPE_GHOST			"Ghost"
+
+//Flags in the players table in the db
+#define DB_FLAG_EXEMPT 1

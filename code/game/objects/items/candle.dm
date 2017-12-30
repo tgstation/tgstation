@@ -30,7 +30,7 @@
 	icon_state = "candle[i][lit ? "_lit" : ""]"
 
 
-/obj/item/candle/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/candle/attackby(obj/item/W, mob/user, params)
 	..()
 	var/msg = W.ignition_effect(src, user)
 	if(msg)

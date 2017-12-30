@@ -10,6 +10,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
+	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -26,12 +27,12 @@
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
-	loot = list(/obj/item/weapon/ectoplasm)
+	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
-	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
 	var/can_repair_constructs = FALSE
@@ -50,7 +51,7 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"
@@ -85,9 +86,6 @@
 	else if(src != M)
 		return ..()
 
-/mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
-	return 1
-
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
@@ -121,7 +119,7 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
+	playstyle_string = "<span class='big bold'>You are a Juggernaut.</span><b> Though slow, your shell can withstand extreme punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
@@ -145,7 +143,6 @@
 				// redirect the projectile
 				P.original = locate(new_x, new_y, P.z)
 				P.starting = curloc
-				P.current = curloc
 				P.firer = src
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x
@@ -171,7 +168,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	playstyle_string = "<span class='big bold'>You are a Wraith.</span><b> Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
 	var/attack_refund = 10 //1 second per attack
 	var/crit_refund = 50 //5 seconds when putting a target into critical
 	var/kill_refund = 250 //full refund on kills
@@ -225,7 +222,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
-	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+	playstyle_string = "<span class='big bold'>You are an Artificer.</span><b> You are incredibly weak and fragile, but you are able to construct fortifications, \
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
@@ -299,12 +296,12 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
-						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
+	playstyle_string = "<span class='big bold'>You are a Harvester.</span><b> You are incapable of directly killing humans, but your attacks will remove their limbs: \
+						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</b>"
 	can_repair_constructs = TRUE
 
 
-/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+/mob/living/simple_animal/hostile/construct/harvester/Collide(atom/AM)
 	. = ..()
 	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
@@ -330,8 +327,8 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Weaken(30)
-			visible_message("<span class='danger'>[src] paralyzes [C]!</span>")
+			C.Knockdown(60)
+			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
 		do_attack_animation(C)
@@ -363,26 +360,33 @@
 	..()
 
 /datum/action/innate/seek_master/Activate()
-	if(!SSticker.mode.eldergod)
-		the_construct.master = GLOB.blood_target
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!C)
+		return
+	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives
+
+	if(summon_objective.check_completion())
+		the_construct.master = C.cult_team.blood_target
+	
 	if(!the_construct.master)
-		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		to_chat(the_construct, "<span class='cult italic'>You have no master to seek!</span>")
 		the_construct.seeking = FALSE
 		return
 	if(tracking)
 		tracking = FALSE
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are no longer tracking your master.</span>")
 		return
 	else
 		tracking = TRUE
 		the_construct.seeking = TRUE
-		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are now tracking your master.</span>")
 
 
 /datum/action/innate/seek_prey
 	name = "Seek the Harvest"
 	desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
@@ -399,14 +403,14 @@
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cultitalic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
 		return
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
 			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-			to_chat(the_construct, "<span class='cultitalic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
+			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
 		else
-			to_chat(the_construct, "<span class='cultitalic'>Nar'Sie has completed her harvest!</span>")
+			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
 			return
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"

@@ -24,11 +24,11 @@
 	..()
 	if(statpanel("Status"))
 		if(beacon_cooldown >= world.time)
-			stat(null, "Beacon Cooldown Remaining: [max(round((beacon_cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
-	if(toggle && iscarbon(target))
+	if(is_deployed() && toggle && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)
@@ -130,7 +130,7 @@
 	to_chat(src, "<span class='danger'><B>You begin to warp [A].</span></B>")
 	A.visible_message("<span class='danger'>[A] starts to glow faintly!</span>", \
 	"<span class='userdanger'>You start to faintly glow, and you feel strangely weightless!</span>")
-	do_attack_animation(A, null, 1)
+	do_attack_animation(A)
 
 	if(!do_mob(src, A, 60)) //now start the channel
 		to_chat(src, "<span class='danger'><B>You need to hold still!</span></B>")

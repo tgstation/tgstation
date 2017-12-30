@@ -4,7 +4,7 @@
 	var/name = "event"
 	var/next_phase = 0
 	var/datum/stock/company = null
-	var/current_title = "A company holding an pangalactic conference in the Seattle Conference Center, Seattle, Earth"
+	var/current_title = "A company holding a pangalactic conference in the Seattle Conference Center, Seattle, Earth"
 	var/current_desc = "We will continue to monitor their stocks as the situation unfolds."
 	var/phase_id = 0
 	var/hidden = 0

@@ -22,15 +22,15 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
-	var/facehugger
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -40,8 +40,8 @@
 	icon_state = "pug"
 	icon_living = "pug"
 	icon_dead = "pug_dead"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
-	gold_core_spawnable = 2
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -52,7 +52,7 @@
 			break
 
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
-	..()
+	. = ..()
 	regenerate_icons()
 
 
@@ -62,17 +62,18 @@
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
-	if(user.stat) return
+	if(user.stat)
+		return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
-		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
+		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=[REF(src)];remove_inv=head'>Remove</a>)"
 	else
-		dat +=	"<br><b>Head:</b> <a href='?src=\ref[src];add_inv=head'>Nothing</a>"
+		dat +=	"<br><b>Head:</b> <a href='?src=[REF(src)];add_inv=head'>Nothing</a>"
 	if(inventory_back)
-		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=\ref[src];remove_inv=back'>Remove</a>)"
+		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=[REF(src)];remove_inv=back'>Remove</a>)"
 	else
-		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
+		dat +=	"<br><b>Back:</b> <a href='?src=[REF(src)];add_inv=back'>Nothing</a>"
 
 	user << browse(dat, text("window=mob[];size=325x500", real_name))
 	onclose(user, "mob[real_name]")
@@ -97,7 +98,7 @@
 	return armorval*0.5
 
 /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/weapon/razor))
+	if (istype(O, /obj/item/razor))
 		if (shaved)
 			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
 			return
@@ -107,7 +108,7 @@
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
-			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 			shaved = 1
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -119,10 +120,16 @@
 	..()
 	update_corgi_fluff()
 
-
+/mob/living/simple_animal/pet/dog/corgi/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "corgi", null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi', FALSE)
+	if(!L.put_in_hands(holder))
+		qdel(holder)
+	else
+		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
-	if(usr.stat) return
+	if(usr.stat)
+		return
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
@@ -132,7 +139,7 @@
 		switch(remove_from)
 			if("head")
 				if(inventory_head)
-					inventory_head.loc = src.loc
+					inventory_head.forceMove(drop_location())
 					inventory_head = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -141,7 +148,7 @@
 					return
 			if("back")
 				if(inventory_back)
-					inventory_back.loc = src.loc
+					inventory_back.forceMove(drop_location())
 					inventory_back = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -173,22 +180,22 @@
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
 
-					if(!usr.drop_item())
+					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
 						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+					if(istype(item_to_add, /obj/item/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
 					//The objects that corgis can wear on their backs.
 					var/allowed = FALSE
-					if(ispath(item_to_add.dog_fashion,/datum/dog_fashion/back))
+					if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/back))
 						allowed = TRUE
 
 					if(!allowed)
 						to_chat(usr, "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>")
-						item_to_add.loc = loc
+						item_to_add.forceMove(drop_location())
 						if(prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
@@ -196,8 +203,7 @@
 							sleep(1)
 						return
 
-					usr.drop_item()
-					item_to_add.loc = src
+					item_to_add.forceMove(src)
 					src.inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
@@ -213,7 +219,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
+	if(istype(item_to_add, /obj/item/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 
@@ -225,7 +231,7 @@
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
-	if(user && !user.drop_item())
+	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return 0
 
@@ -242,13 +248,13 @@
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
 				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
-		item_to_add.loc = src
+		item_to_add.forceMove(src)
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
 		regenerate_icons()
 	else
 		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
-		item_to_add.loc = loc
+		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
@@ -288,14 +294,14 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	var/age = 0
 	var/record_age = 1
-	var/memory_saved = 0
+	var/memory_saved = FALSE
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
-	..()
+	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
@@ -307,8 +313,8 @@
 			P.real_name = "Ian"
 			P.gender = MALE
 			P.desc = "It's the HoP's beloved corgi puppy."
-			Write_Memory(0)
-			qdel(src)
+			Write_Memory(FALSE)
+			return INITIALIZE_HINT_QDEL
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
@@ -317,42 +323,57 @@
 		turns_per_move = 20
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory(0)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		Write_Memory(FALSE)
+		memory_saved = TRUE
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/death()
 	if(!memory_saved)
-		Write_Memory(1)
+		Write_Memory(TRUE)
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-	S["age"] 			>> age
-	S["record_age"]		>> record_age
-	S["saved_head"] 	>> saved_head
-
+	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+		S["age"] 		>> age
+		S["record_age"]	>> record_age
+		S["saved_head"] >> saved_head
+		fdel("data/npc_saves/Ian.sav")
+	else
+		var/json_file = file("data/npc_saves/Ian.json")
+		if(!fexists(json_file))
+			return
+		var/list/json = json_decode(file2text(json_file))
+		age = json["age"]
+		record_age = json["record_age"]
+		saved_head = json["saved_head"]
 	if(isnull(age))
 		age = 0
 	if(isnull(record_age))
 		record_age = 1
-
 	if(saved_head)
 		place_on_head(new saved_head)
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+	var/json_file = file("data/npc_saves/Ian.json")
+	var/list/file_data = list()
 	if(!dead)
-		S["age"] 				<< age + 1
+		file_data["age"] = age + 1
 		if((age + 1) > record_age)
-			S["record_age"]		<< record_age + 1
+			file_data["record_age"] = record_age + 1
+		else
+			file_data["record_age"] = record_age
 		if(inventory_head)
-			S["saved_head"] << inventory_head.type
+			file_data["saved_head"] = inventory_head.type
+		else
+			file_data["saved_head"] = null
 	else
-		S["age"] 		<< 0
-		S["saved_head"] << null
-	memory_saved = 1
-
+		file_data["age"] = 0
+		file_data["record_age"] = record_age
+		file_data["saved_head"] = null
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -368,7 +389,7 @@
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
+				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
 					if(isturf(S.loc) || ishuman(S.loc))
 						movement_target = S
 						break
@@ -408,6 +429,41 @@
 					setDir(i)
 					sleep(1)
 
+/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
+	N.setDir(dir)
+	gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie
+	name = "Nars-Ian"
+	desc = "Ia! Ia!"
+	icon_state = "narsian"
+	icon_living = "narsian"
+	icon_dead = "narsian_dead"
+	faction = list("dog", "cult")
+	gold_core_spawnable = NO_SPAWN
+	nofur = TRUE
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
+	..()
+	for(var/mob/living/simple_animal/pet/P in range(1, src))
+		if(P != src && prob(5))
+			visible_message("<span class='warning'>[src] devours [P]!</span>", \
+			"<span class='cult big bold'>DELICIOUS SOULS</span>")
+			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			narsie_act()
+			P.gib()
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
+	..()
+	speak = list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR")
+	speak_emote = list("growls", "barks ominously")
+	emote_hear = list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable.")
+	emote_see = list("communes with the unnameable.", "ponders devouring some souls.", "shakes.")
+
+/mob/living/simple_animal/pet/dog/corgi/narsie/narsie_act()
+	adjustBruteLoss(-maxHealth)
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
@@ -451,13 +507,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(facehugger)
-		var/mutable_appearance/facehugger_overlay = mutable_appearance('icons/mob/mask.dmi')
-		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			facehugger_overlay.icon_state = "facehugger_corgipuppy"
-		else
-			facehugger_overlay.icon_state = "facehugger_corgi"
-		add_overlay(facehugger_overlay)
 	if(pcollar)
 		add_overlay(collar)
 		add_overlay(pettag)
@@ -473,7 +522,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	density = 0
+	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
@@ -515,7 +564,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)

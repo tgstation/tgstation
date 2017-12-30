@@ -4,9 +4,9 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	use_power = 0
-	anchored = 1
-	density = 1
+	use_power = NO_POWER_USE
+	anchored = TRUE
+	density = TRUE
 
 	var/charges = 1
 	var/insisting = 0
@@ -45,6 +45,7 @@
 		var/datum/objective/hijack/hijack = new
 		hijack.owner = user.mind
 		user.mind.objectives += hijack
+		user.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 		user.mind.announce_objectives()
 

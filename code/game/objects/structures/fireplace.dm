@@ -38,7 +38,7 @@
 		return TRUE
 
 /obj/structure/fireplace/attackby(obj/item/T, mob/user)
-	if(istype(T,/obj/item/stack/sheet/mineral/wood))
+	if(istype(T, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/wood = T
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
@@ -51,14 +51,14 @@
 		user.visible_message("<span class='notice'>[user] tosses some \
 			wood into [src].</span>", "<span class='notice'>You add \
 			some fuel to [src].</span>")
-	else if(istype(T, /obj/item/weapon/paper_bin))
-		var/obj/item/weapon/paper_bin/paper_bin = T
+	else if(istype(T, /obj/item/paper_bin))
+		var/obj/item/paper_bin/paper_bin = T
 		user.visible_message("<span class='notice'>[user] throws [T] into \
 			[src].</span>", "<span class='notice'>You add [T] to [src].\
 			</span>")
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
-	else if(istype(T, /obj/item/weapon/paper))
+	else if(istype(T, /obj/item/paper))
 		user.visible_message("<span class='notice'>[user] throws [T] into \
 			[src].</span>", "<span class='notice'>You throw [T] into [src].\
 			</span>")
@@ -129,7 +129,7 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = Clamp(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)

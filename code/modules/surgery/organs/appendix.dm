@@ -2,7 +2,7 @@
 	name = "appendix"
 	icon_state = "appendix"
 	zone = "groin"
-	slot = "appendix"
+	slot = ORGAN_SLOT_APPENDIX
 	var/inflamed = 0
 
 /obj/item/organ/appendix/update_icon()

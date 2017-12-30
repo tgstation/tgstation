@@ -23,9 +23,6 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 	. = shared_ui_interaction(src_object)
 	if(. > UI_CLOSE)
 		. = min(., shared_living_ui_distance(src_object)) // Check the distance...
-		// Derp a bit if we have brain loss.
-		if(prob(getBrainLoss()))
-			return UI_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
@@ -33,7 +30,8 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 		return
 
 	// Robots can interact with anything they can see.
-	if(get_dist(src, src_object) <= client.view)
+	var/list/clientviewlist = getviewsize(client.view)
+	if(get_dist(src, src_object) <= min(clientviewlist[1],clientviewlist[2]))
 		return UI_INTERACTIVE
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
@@ -42,8 +40,8 @@ GLOBAL_DATUM_INIT(default_state, /datum/ui_state/default, new)
 	if(. < UI_INTERACTIVE)
 		return
 
-	// The AI can interact with anything it can see nearby, or with cameras.
-	if((get_dist(src, src_object) <= client.view) || GLOB.cameranet.checkTurfVis(get_turf_pixel(src_object)))
+	// The AI can interact with anything it can see nearby, or with cameras while wireless control is enabled.
+	if(!control_disabled && can_see(src_object))
 		return UI_INTERACTIVE
 	return UI_CLOSE
 

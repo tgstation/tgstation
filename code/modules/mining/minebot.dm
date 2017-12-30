@@ -8,8 +8,8 @@
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
-	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	mouse_opacity = 1
+	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
+	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -34,11 +34,11 @@
 	ranged_message = "shoots"
 	ranged_cooldown_time = 30
 	projectiletype = /obj/item/projectile/kinetic
-	projectilesound = 'sound/weapons/Gunshot4.ogg'
+	projectilesound = 'sound/weapons/gunshot4.ogg'
 	speak_emote = list("states")
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/titanium)
+	wanted_objects = list(/obj/item/ore/diamond, /obj/item/ore/gold, /obj/item/ore/silver,
+						  /obj/item/ore/plasma,  /obj/item/ore/uranium,    /obj/item/ore/iron,
+						  /obj/item/ore/bananium, /obj/item/ore/titanium)
 	healable = 0
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
@@ -48,7 +48,7 @@
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
-	..()
+	. = ..()
 	toggle_light_action = new()
 	toggle_light_action.Grant(src)
 	toggle_mode_action = new()
@@ -59,12 +59,12 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
-	AIStatus = AI_OFF
+	..()
 	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/W = I
+	if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/W = I
 		if(W.welding && !stat)
 			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
@@ -124,19 +124,19 @@
 	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
+	if(istype(target, /obj/item/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	var/obj/item/weapon/ore/O
+	var/obj/item/ore/O
 	for(O in src.loc)
-		O.loc = src
+		O.forceMove(src)
 	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		for(O in T)
-			O.loc = src
+			O.forceMove(src)
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
@@ -146,9 +146,9 @@
 		return
 	if(message)
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
-	for(var/obj/item/weapon/ore/O in contents)
+	for(var/obj/item/ore/O in contents)
 		contents -= O
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
@@ -170,6 +170,7 @@
 
 /datum/action/innate/minedrone
 	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	background_icon_state = "bg_default"
 
 /datum/action/innate/minedrone/toggle_light
@@ -260,7 +261,6 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
-	origin_tech = "programming=6"
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK

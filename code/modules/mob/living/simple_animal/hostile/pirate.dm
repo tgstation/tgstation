@@ -13,6 +13,7 @@
 	speed = 0
 	maxHealth = 100
 	health = 100
+	spacewalk = TRUE
 
 	harm_intent_damage = 5
 	obj_damage = 60
@@ -25,7 +26,7 @@
 	unsuitable_atmos_damage = 15
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate,
-			/obj/item/weapon/melee/energy/sword/pirate)
+			/obj/item/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
 
@@ -41,7 +42,7 @@
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
-			/obj/item/weapon/gun/energy/laser)
+			/obj/item/gun/energy/laser)
 
 /mob/living/simple_animal/hostile/pirate/space
 	name = "Space Pirate"
@@ -62,7 +63,5 @@
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
-			/obj/item/weapon/gun/energy/laser)
+			/obj/item/gun/energy/laser)
 
-/mob/living/simple_animal/hostile/pirate/space/Process_Spacemove(movement_dir = 0)
-	return 1

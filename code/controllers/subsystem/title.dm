@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(title)
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
 		var/F = file("data/previous_title.dat")
-		F << file_path
+		WRITE_FILE(F, file_path)
 
 	for(var/thing in GLOB.clients)
 		if(!thing)

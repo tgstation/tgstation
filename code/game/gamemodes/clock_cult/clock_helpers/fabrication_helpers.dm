@@ -9,7 +9,7 @@
 	return FALSE
 
 /atom/proc/consume_visual(obj/item/clockwork/replica_fabricator/fabricator, power_amount)
-	if(fabricator.can_use_power(power_amount))
+	if(get_clockwork_power(power_amount))
 		var/obj/effect/temp_visual/ratvar/beam/itemconsume/B = new /obj/effect/temp_visual/ratvar/beam/itemconsume(get_turf(src))
 		B.pixel_x = pixel_x
 		B.pixel_y = pixel_y
@@ -27,9 +27,6 @@
 /turf/closed/wall/mineral/cult/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //no metal
 	return list("operation_time" = 80, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = SOUTH)
 
-/turf/closed/wall/shuttle/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //two sheets of metal
-	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_TOTAL - (POWER_METAL * 2), "spawn_dir" = SOUTH)
-
 /turf/closed/wall/r_wall/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
@@ -40,7 +37,7 @@
 	if(floor_tile == /obj/item/stack/tile/plasteel)
 		new floor_tile(src)
 		make_plating()
-		playsound(src, 'sound/items/Crowbar.ogg', 10, 1) //clink
+		playsound(src, 'sound/items/crowbar.ogg', 10, 1) //clink
 	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "power_cost" = POWER_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/plating/asteroid/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
@@ -49,7 +46,7 @@
 /turf/open/floor/plating/ashplanet/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
-/turf/open/floor/plating/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
+/turf/open/lava/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
 
 /turf/open/floor/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
@@ -93,7 +90,7 @@
 	if(amount_temp < 2)
 		to_chat(user, "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>")
 		return TRUE
-	if(IsOdd(amount_temp))
+	if(ISODD(amount_temp))
 		amount_temp--
 		no_delete = TRUE
 		use(amount_temp)
@@ -135,7 +132,7 @@
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir)
+	return list("operation_time" = 60, "new_obj_type" = doortype, "power_cost" = POWER_WALL_TOTAL, "spawn_dir" = dir, "transfer_name" = TRUE)
 
 /obj/machinery/door/airlock/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
@@ -191,7 +188,7 @@
 
 //Windoor conversion
 /obj/machinery/door/window/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE)
+	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "power_cost" = POWER_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE, "transfer_name" = TRUE)
 
 /obj/machinery/door/window/clockwork/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
 	return FALSE
@@ -242,8 +239,8 @@
 		if(!do_after(user, repair_values["healing_for_cycle"] * fabricator.speed_multiplier, target = src, \
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
-		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		obj_integrity = CLAMP(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)
@@ -251,28 +248,6 @@
 		if(user)
 			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
-
-//Hitting a sigil of transmission will try to charge from it.
-/obj/effect/clockwork/sigil/transmission/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent)
-	. = TRUE
-	var/list/charge_values = list()
-	if(!fabricator.sigil_charge_checks(charge_values, src, user))
-		return
-	user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts draining glowing orange energy from [src]...</span>", \
-	"<span class='alloy'>You start recharging your [fabricator.name]...</span>")
-	fabricator.recharging = src
-	while(fabricator && user && src)
-		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
-			break
-		modify_charge(charge_values["power_gain"])
-		fabricator.modify_stored_power(charge_values["power_gain"])
-		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
-
-	if(fabricator)
-		fabricator.recharging = null
-		if(user)
-			user.visible_message("<span class='notice'>[user]'s [fabricator.name] stops draining glowing orange energy from [src].</span>", \
-			"<span class='alloy'>You finish recharging your [fabricator.name]. It now contains <b>[fabricator.get_power()]W/[fabricator.get_max_power()]W</b> power.</span>")
 
 //Fabricator mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/fabricator_heal(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator)
@@ -287,7 +262,7 @@
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
 		fabricator_heal_tick(repair_values["healing_for_cycle"])
-		fabricator.modify_stored_power(-repair_values["power_required"])
+		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(fabricator)
@@ -328,7 +303,7 @@
 		return
 	if(health == maxHealth)
 		return FALSE
-	else if(!(flags & GODMODE))
+	else if(!(flags_1 & GODMODE))
 		user.visible_message("<span class='notice'>[user]'s [fabricator.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
 		fabricator.repairing = src

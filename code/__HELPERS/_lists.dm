@@ -9,6 +9,16 @@
  * Misc
  */
 
+#define LAZYINITLIST(L) if (!L) L = list()
+#define UNSETEMPTY(L) if (L && !L.len) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
@@ -32,9 +42,9 @@
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
-	if(istype(L))
-		if(isnum(index) && IsInteger(index))
-			if(IsInRange(index,1,L.len))
+	if(LAZYLEN(L))
+		if(isnum(index) && ISINTEGER(index))
+			if(ISINRANGE(index,1,L.len))
 				return L[index]
 		else if(index in L)
 			return L[index]
@@ -42,29 +52,29 @@
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
-	if(istype(L) && L.len)
+	if(LAZYLEN(L))
 		return pick(L)
 
 //Checks if the list is empty
 /proc/isemptylist(list/L)
 	if(!L.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return 0
+	if(!LAZYLEN(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 
-		return 0
+		return FALSE
 	if(ispath(A))
 		. = L[A]
 	else
@@ -72,16 +82,16 @@
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(string == V)
-			return 1
+			return TRUE
 	return
 
 //Removes a string from a list
 /proc/remove_strings_from_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(V == string)
@@ -91,9 +101,23 @@
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
-	for (var/thing in atoms)
+	for(var/thing in atoms)
 		var/atom/A = thing
 		if (typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
+/proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(typecache_include[A.type] && !typecache_exclude[A.type])
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
@@ -170,7 +194,11 @@
 		result = first ^ second
 	return result
 
-//Pretends to pick an element based on its weight but really just seems to pick a random element.
+//Picks a random element from a list based on a weighting system:
+//1. Adds up the total of weights for each element
+//2. Gets a number between 1 and that total
+//3. For each element in the list, subtracts its weighting from that number
+//4. If that makes the number 0 or less, return that element.
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
@@ -183,6 +211,22 @@
 	for (item in L)
 		total -=L [item]
 		if (total <= 0)
+			return item
+
+	return null
+
+/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+	var/total = 0
+	var/item
+	for (item in L)
+		if (!L[item])
+			L[item] = 0
+		total += L[item]
+
+	total = rand(0, total)
+	for (item in L)
+		total -=L [item]
+		if (total <= 0 && L[item])
 			return item
 
 	return null
@@ -287,7 +331,7 @@
 //Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield2list(bitfield = 0, list/wordlist)
 	var/list/r = list()
-	if(istype(wordlist,/list))
+	if(islist(wordlist))
 		var/max = min(wordlist.len,16)
 		var/bit = 1
 		for(var/i=1, i<=max, i++)
@@ -302,7 +346,7 @@
 	return r
 
 // Returns the key based on the index
-#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
+#define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
@@ -440,7 +484,7 @@
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox
-#elseif
+#endif
 //Flattens a keyed list into a list of it's contents
 /proc/flatten_list(list/key_list)
 	if(!islist(key_list))
@@ -450,17 +494,7 @@
 		. |= key_list[key]
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
-
-#define LAZYINITLIST(L) if (!L) L = list()
-
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
-#define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
-#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
 /* Definining a counter as a series of key -> numeric value entries
 
