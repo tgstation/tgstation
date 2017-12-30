@@ -101,6 +101,7 @@
 		return
 	if(..())
 		return TRUE
+	add_fingerprint(usr)
 
 	if(href_list["category"])
 		current_category = href_list["category"]

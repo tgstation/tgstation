@@ -425,14 +425,14 @@ Code:
 			switch(SSshuttle.supply.mode)
 				if(SHUTTLE_CALL)
 					menu += "Moving to "
-					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
+					if(!is_station_level(SSshuttle.supply.z))
 						menu += "station"
 					else
 						menu += "centcom"
 					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
 				else
 					menu += "At "
-					if(!(SSshuttle.supply.z in GLOB.station_z_levels))
+					if(!is_station_level(SSshuttle.supply.z))
 						menu += "centcom"
 					else
 						menu += "station"

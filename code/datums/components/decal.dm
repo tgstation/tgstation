@@ -6,19 +6,11 @@
 	var/mutable_appearance/pic
 
 /datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_GOD, _color, _layer=TURF_LAYER, _description)
-	if(!isatom(parent) || !_icon || !_icon_state)
+	if(!isatom(parent) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color))
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("A turf decal was applied incorrectly to [parent.type]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]")
-
-	// It has to be made from an image or dir breaks because of a byond bug
-	var/temp_image = image(_icon, null, _icon_state, _layer, _dir)
-	pic = new(temp_image)
-	pic.color = _color
-
-	cleanable = _cleanable
 	description = _description
-
-	apply()
+	cleanable = _cleanable
 
 	if(_dir) // If no dir is assigned at start then it follows the atom's dir
 		RegisterSignal(COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
@@ -26,6 +18,7 @@
 		RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	if(_description)
 		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
+	apply()
 
 /datum/component/decal/Destroy()
 	remove()
@@ -35,6 +28,15 @@
 	remove()
 	remove(thing)
 	apply(thing)
+
+/datum/component/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
+	if(!_icon || !_icon_state)
+		return FALSE
+	// It has to be made from an image or dir breaks because of a byond bug
+	var/temp_image = image(_icon, null, _icon_state, _layer, _dir)
+	pic = new(temp_image)
+	pic.color = _color
+	return TRUE
 
 /datum/component/decal/proc/apply(atom/thing)
 	var/atom/master = thing || parent

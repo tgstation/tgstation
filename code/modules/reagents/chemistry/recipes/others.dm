@@ -616,12 +616,6 @@
 	results = list("oil" = 3)
 	required_reagents = list("welding_fuel" = 1, "carbon" = 1, "hydrogen" = 1)
 
-/datum/chemical_reaction/oil2
-	name = "Oil"
-	id = "oil2"
-	results = list("oil" = 4)
-	required_reagents = list("cornoil" = 4, "hydrogen" = 1)
-
 /datum/chemical_reaction/phenol
 	name = "phenol"
 	id = "phenol"
@@ -752,3 +746,8 @@
 	required_reagents = list("strange_reagent" = 1, "nothing" = 1)
 
 
+/datum/chemical_reaction/pax
+	name = "pax"
+	id = "pax"
+	results = list("pax" = 3)
+	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)

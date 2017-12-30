@@ -128,7 +128,7 @@
 	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
 	if(!istype(H)) //Invalid input
 		return
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		var/total_health = round(H.health/H.getMaxHealth(), 0.01)*100
 		var/missing_health = H.getMaxHealth() - H.health
 
@@ -142,6 +142,49 @@
 
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/input/slime_scanner
+	name = "slime_scanner"
+	desc = "A very small version of the xenobio analyser.  This allows the machine to know every needed properties of slime."
+	icon_state = "medscan_adv"
+	complexity = 12
+	inputs = list("\<REF\> target")
+	outputs = list(
+		"colour"		     = IC_PINTYPE_STRING,
+		"adult"	             = IC_PINTYPE_BOOLEAN,
+		"nutrition"			 = IC_PINTYPE_NUMBER,
+		"charge"		     = IC_PINTYPE_NUMBER,
+		"health"		     = IC_PINTYPE_NUMBER,
+		"possible mutation"	 = IC_PINTYPE_LIST,
+		"genetic destability"= IC_PINTYPE_NUMBER,
+		"slime core amount"	 = IC_PINTYPE_NUMBER,
+		"Growth progress"	 = IC_PINTYPE_NUMBER,
+	)
+	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 80
+
+/obj/item/integrated_circuit/input/slime_scanner/do_work()
+	var/mob/living/simple_animal/slime/T = get_pin_data_as_type(IC_INPUT, 1, /mob/living/simple_animal/slime)
+	if(!isslime(T)) //Invalid input
+		return
+	if(T in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
+
+		set_pin_data(IC_OUTPUT, 1, T.colour)
+		set_pin_data(IC_OUTPUT, 2, T.is_adult)
+		set_pin_data(IC_OUTPUT, 3, T.nutrition/T.get_max_nutrition())
+		set_pin_data(IC_OUTPUT, 4, T.powerlevel)
+		set_pin_data(IC_OUTPUT, 5, round(T.health/T.maxHealth,0.01)*100)
+		set_pin_data(IC_OUTPUT, 6, uniqueList(T.slime_mutation))
+		set_pin_data(IC_OUTPUT, 7, T.mutation_chance)
+		set_pin_data(IC_OUTPUT, 8, T.cores)
+		set_pin_data(IC_OUTPUT, 9, T.amount_grown/SLIME_EVOLUTION_THRESHOLD)
+
+
+	push_data()
+	activate_pin(2)
+
+
 
 /obj/item/integrated_circuit/input/plant_scanner
 	name = "integrated plant analyzer"
@@ -180,7 +223,7 @@
 		return
 	for(var/i=1, i<=outputs.len, i++)
 		set_pin_data(IC_OUTPUT, i, null)
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		if(H.myseed)
 			set_pin_data(IC_OUTPUT, 1, H.myseed.plantname)
 			set_pin_data(IC_OUTPUT, 2, H.age)
@@ -228,7 +271,7 @@
 		return
 	for(var/i=1, i<=outputs.len, i++)
 		set_pin_data(IC_OUTPUT, i, null)
-	if(H in view(get_turf(H))) // Like medbot's analyzer it can be used in range..
+	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
 		if(H.myseed)
 			for(var/datum/plant_gene/reagent/G in H.myseed.genes)
 				greagents.Add(G.get_name())
@@ -663,12 +706,15 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/proc/scan(var/atom/A)
+/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user,prox)
+	if(!prox)
+		return FALSE
+	if(!check_then_do_work())
+		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
 		if(istype(A, /obj/item/storage))
 			return FALSE
-
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
 	activate_pin(1)
@@ -685,6 +731,52 @@
 	activators = list("on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
+
+/obj/item/integrated_circuit/input/sensor/ranged/sense(var/atom/A,mob/user)
+	if(!user)
+		return FALSE
+	if(user.client)
+		if(!(A in view(user.client)))
+			return FALSE
+	else
+		if(!(A in view(user)))
+			return FALSE
+	if(!check_then_do_work())
+		return FALSE
+	var/ignore_bags = get_pin_data(IC_INPUT, 1)
+	if(ignore_bags)
+		if(istype(A, /obj/item/storage))
+			return FALSE
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
+	push_data()
+	activate_pin(1)
+	return TRUE
+
+/obj/item/integrated_circuit/input/objscaner
+	name = "scaner"
+	desc = "Scans and obtains a reference for any objects you use on assembly."
+	extended_desc = "If 'put down' pin is set to true, assembly will take scanned object from your hands to it's location.\
+	useful for interaction with grabber. Scaner works only with help intent."
+	icon_state = "recorder"
+	complexity = 4
+	inputs = list("put down" = IC_PINTYPE_BOOLEAN)
+	outputs = list("scanned" = IC_PINTYPE_REF)
+	activators = list("on scanned" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 20
+
+/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user,intent)
+	if(intent!=INTENT_HELP)
+		return FALSE
+	if(!check_then_do_work())
+		return FALSE
+	var/pu = get_pin_data(IC_INPUT, 1)
+	if(pu)
+		user.transferItemToLoc(A,drop_location())
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
+	push_data()
+	activate_pin(1)
+	return TRUE
 
 /obj/item/integrated_circuit/input/internalbm
 	name = "internal battery monitor"
@@ -750,5 +842,40 @@
 				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
 				set_pin_data(IC_OUTPUT, 3, C.percent())
 	activate_pin(2)
+	push_data()
+	return
+
+/obj/item/integrated_circuit/input/ntnetsc
+	name = "NTnet scaner"
+	desc = "This can return NTnet id of component insi given object, if there is any."
+	icon_state = "signalsc"
+	w_class = WEIGHT_CLASS_TINY
+	complexity = 2
+	inputs = list("target" = IC_PINTYPE_REF)
+	outputs = list(
+		"id" = IC_PINTYPE_STRING
+		)
+	activators = list("read" = IC_PINTYPE_PULSE_IN, "found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 1
+
+/obj/item/integrated_circuit/input/ntnetsc/do_work()
+
+	var/atom/AM = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/list/processing_list = list(AM)
+	var/datum/component/ntnet_interface/net = null
+	set_pin_data(IC_OUTPUT, 1, null)
+	while(processing_list.len && !net)
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+		//This is also why we don't need to check against assembled as we go along
+		processing_list += A.contents
+		net = A.GetComponent(/datum/component/ntnet_interface)
+	if(net)
+		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
+		activate_pin(2)
+	else
+		activate_pin(3)
 	push_data()
 	return

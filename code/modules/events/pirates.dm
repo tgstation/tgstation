@@ -100,7 +100,7 @@
 
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
-		if(z in GLOB.station_z_levels)
+		if(is_station_level(z))
 			var/siphoned = min(SSshuttle.points,siphon_per_tick)
 			SSshuttle.points -= siphoned
 			credits_stored += siphoned
@@ -208,7 +208,7 @@
 
 /obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	. = ..()
-	if(. == DOCKING_SUCCESS && new_dock.z != ZLEVEL_TRANSIT)
+	if(. == DOCKING_SUCCESS && !is_transit_level(new_dock.z))
 		engines_cooling = TRUE
 		addtimer(CALLBACK(src,.proc/reset_cooldown),engine_cooldown,TIMER_UNIQUE)
 
@@ -252,7 +252,7 @@
 	var/list/results = list()
 	for(var/atom/movable/AM in world)
 		if(is_type_in_typecache(AM,GLOB.pirate_loot_cache))
-			if(AM.z in GLOB.station_z_levels)
+			if(is_station_level(AM.z))
 				if(get_area(AM) == get_area(src)) //Should this be variable ?
 					continue
 				results += AM
