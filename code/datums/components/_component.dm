@@ -205,13 +205,13 @@
 						new_comp = new nt(arglist(args))
 					if(!QDELETED(new_comp))
 						old_comp.InheritComponent(new_comp, TRUE)
-						qdel(new_comp)
+						QDEL_NULL(new_comp)
 				if(COMPONENT_DUPE_HIGHLANDER)
 					if(!new_comp)
 						new_comp = new nt(arglist(args))
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
-						qdel(old_comp)
+						QDEL_NULL(old_comp)
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = args.Copy(2)
@@ -223,7 +223,7 @@
 	else if(!new_comp)
 		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
 
-	if(QDELETED(old_comp) && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
+	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
 		SendSignal(COMSIG_COMPONENT_ADDED, new_comp)
 		return new_comp
 	return old_comp
