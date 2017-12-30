@@ -12139,6 +12139,7 @@
 "aED" = (
 /obj/structure/table,
 /obj/item/aiModule/core/full/asimov,
+/obj/effect/spawner/lootdrop/aimodule_harmless,
 /obj/item/aiModule/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -12147,7 +12148,7 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/item/aiModule/core/full/corp,
+/obj/effect/spawner/lootdrop/aimodule_neutral,
 /obj/item/aiModule/core/full/custom,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -12196,7 +12197,7 @@
 	req_access_txt = "20"
 	},
 /obj/item/aiModule/reset/purge,
-/obj/item/aiModule/core/full/antimov,
+/obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/item/aiModule/supplied/protectStation,
 /obj/structure/window/reinforced{
 	dir = 1;

@@ -18478,6 +18478,7 @@
 "aMG" = (
 /obj/structure/table,
 /obj/item/aiModule/core/full/asimov,
+/obj/effect/spawner/lootdrop/aimodule_harmless,
 /obj/item/aiModule/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -18487,7 +18488,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/item/aiModule/core/full/corp,
+/obj/effect/spawner/lootdrop/aimodule_neutral,
 /obj/item/aiModule/core/full/custom,
 /obj/machinery/flasher{
 	pixel_y = 24;
@@ -18512,7 +18513,7 @@
 	pixel_y = 24;
 	id = "AI"
 	},
-/obj/item/aiModule/core/full/antimov,
+/obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/item/aiModule/supplied/oxygen,
 /obj/item/aiModule/supplied/protectStation,
 /obj/item/aiModule/zeroth/oneHuman,
