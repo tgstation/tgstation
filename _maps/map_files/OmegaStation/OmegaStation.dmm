@@ -2377,8 +2377,8 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmless{
-	fan_out_items = 1,
-	lootdoubles = 0,
+	fan_out_items = 1;
+	lootdoubles = 0;
 	lootcount = 3
 	},
 /obj/structure/sign/nanotrasen{
@@ -2496,8 +2496,8 @@
 	req_access_txt = "20"
 	},
 /obj/effect/spawner/lootdrop/aimodule_harmful{
-	fan_out_items = 1,
-	lootdoubles = 0,
+	fan_out_items = 1;
+	lootdoubles = 0;
 	lootcount = 2
 	},
 /obj/item/aiModule/supplied/oxygen{
@@ -4362,8 +4362,8 @@
 "ahV" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/lootdrop/aimodule_neutral{
-	fan_out_items = 1,
-	lootdoubles = 0,
+	fan_out_items = 1;
+	lootdoubles = 0;
 	lootcount = 3
 	},
 /turf/open/floor/plasteel/vault{
