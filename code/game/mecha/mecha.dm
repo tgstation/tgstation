@@ -24,7 +24,7 @@
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags_1 = HEAR_1
-	var/can_move = 1
+	var/can_move = 0 //time of next allowed movement
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
@@ -502,7 +502,7 @@
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
-	if(!can_move)
+	if(can_move >= world.time)
 		return 0
 	if(!Process_Spacemove(direction))
 		return 0
@@ -520,20 +520,18 @@
 		return 0
 
 	var/move_result = 0
+	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
 	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
-	if(move_result)
+	if(move_result || loc != oldloc)// halfway done diagonal move still returns false
 		use_power(step_energy_drain)
-		can_move = 0
-		spawn(step_in)
-			can_move = 1
+		can_move = world.time + step_in
 		return 1
 	return 0
-
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
@@ -573,9 +571,9 @@
 		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
 			if(nextsmash < world.time)
 				obstacle.mech_melee_attack(src)
-				if(!obstacle || !obstacle.density)
-					step(src,dir)
 				nextsmash = world.time + smashcooldown
+				if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
+					step(src,dir)
 		if(isobj(obstacle))
 			var/obj/O = obstacle
 			if(!O.anchored)

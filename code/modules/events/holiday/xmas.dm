@@ -1,19 +1,3 @@
-/datum/round_event_control/treevenge
-	name = "Treevenge (Christmas)"
-	holidayID = CHRISTMAS
-	typepath = /datum/round_event/treevenge
-	max_occurrences = 1
-	weight = 20
-
-/datum/round_event/treevenge/start()
-	for(var/obj/structure/flora/tree/pine/xmas in world)
-		var/mob/living/simple_animal/hostile/tree/evil_tree = new /mob/living/simple_animal/hostile/tree(xmas.loc)
-		evil_tree.icon_state = xmas.icon_state
-		evil_tree.icon_living = evil_tree.icon_state
-		evil_tree.icon_dead = evil_tree.icon_state
-		evil_tree.icon_gib = evil_tree.icon_state
-		qdel(xmas) //b-but I don't want to delete xmas...
-
 //this is an example of a possible round-start event
 /datum/round_event_control/presents
 	name = "Presents under Trees (Christmas)"
@@ -24,12 +8,11 @@
 	earliest_start = 0
 
 /datum/round_event/presents/start()
-	for(var/obj/structure/flora/tree/pine/xmas in world)
+	for(var/obj/structure/flora/tree/pine/xmas/xmas in world)
 		if(!(xmas.z in GLOB.station_z_levels))
 			continue
-		for(var/turf/open/floor/T in orange(1,xmas))
-			for(var/i=1,i<=rand(1,5),i++)
-				new /obj/item/a_gift(T)
+		xmas.icon_state = "pinepresents"
+		xmas.gifts_under_tree = TRUE
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
@@ -98,7 +81,7 @@
 	name = "Santa is coming to town! (Christmas)"
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/santa
-	weight = 150
+	weight = 20
 	max_occurrences = 1
 	earliest_start = 20000
 

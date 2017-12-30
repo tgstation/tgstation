@@ -206,7 +206,7 @@
 		if("pressure")
 			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
 			if(!isnull(target) && !..())
-				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
+				target =  CLAMP(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

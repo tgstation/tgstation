@@ -15,6 +15,7 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = TRUE
@@ -47,7 +48,6 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	src.desc = "The safety is [safety ? "on" : "off"]."
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
@@ -66,11 +66,10 @@
 
 /obj/item/extinguisher/examine(mob/user)
 	..()
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
+
 	if(reagents.total_volume)
-		to_chat(user, "It contains [round(reagents.total_volume)] unit\s.")
 		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
-	else
-		to_chat(user, "It is empty.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))

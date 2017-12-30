@@ -1,3 +1,7 @@
+//Helper proc to get an Eminence mob if it exists
+/proc/get_eminence()
+	return locate(/mob/camera/eminence) in servants_and_ghosts()
+
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
 	name = "\the Emininence"
@@ -12,6 +16,7 @@
 	layer = FLY_LAYER
 	faction = list("ratvar")
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	var/turf/last_failed_turf
 	var/static/superheated_walls = 0
 
 /mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
@@ -20,25 +25,38 @@
 /mob/camera/eminence/Move(NewLoc, direct)
 	var/OldLoc = loc
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
-		forceMove(get_turf(NewLoc))
+		var/turf/T = get_turf(NewLoc)
+		if(T.flags_1 & NOJAUNT_1)
+			if(last_failed_turf != T)
+				T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", ignore_mob = src)
+				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+				last_failed_turf = T
+			to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+			return
+		if(istype(get_area(T), /area/chapel))
+			to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
+			return
+		forceMove(T)
 	Moved(OldLoc, direct)
 	if(GLOB.ratvar_awakens)
 		for(var/turf/T in range(5, src))
 			if(prob(166 - (get_dist(src, T) * 33)))
 				T.ratvar_act() //Causes moving to leave a swath of proselytized area behind the Eminence
 
+/mob/camera/eminence/Process_Spacemove(movement_dir = 0)
+	return TRUE
+
 /mob/camera/eminence/Login()
 	..()
+	add_servant_of_ratvar(src, TRUE)
 	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-	if(!C)
-		add_servant_of_ratvar(src, TRUE)
-		C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-		if(C && C.clock_team)
-			if(C.clock_team.eminence)
-				remove_servant_of_ratvar(src,TRUE)
-				qdel(src)
-			else
-				C.clock_team.eminence = src
+	if(C && C.clock_team)
+		if(C.clock_team.eminence)
+			remove_servant_of_ratvar(src,TRUE)
+			qdel(src)
+			return
+		else
+			C.clock_team.eminence = src
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
@@ -53,6 +71,12 @@
 		E.Grant(src)
 
 /mob/camera/eminence/say(message)
+	if(client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, "You cannot send IC messages (muted).")
+			return
+		if(client.handle_spam_prevention(message,MUTE_IC))
+			return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
@@ -60,7 +84,13 @@
 	if(GLOB.ratvar_awakens)
 		visible_message("<span class='brass'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
 		playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
-	hierophant_message("<span class='large_brass'><b>The Eminence:</b> \"[message]\"</span>")
+	message = "<span class='big brass'><b>The [GLOB.ratvar_awakens ? "Radiance" : "Eminence"]:</b> \"[message]\"</span>"
+	for(var/mob/M in servants_and_ghosts())
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [message]")
+		else
+			to_chat(M, message)
 
 /mob/camera/eminence/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(z == ZLEVEL_CITYOFCOGS || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything

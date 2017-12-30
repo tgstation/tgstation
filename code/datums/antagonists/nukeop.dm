@@ -12,7 +12,7 @@
 	name = "Nuclear Operative"
 	roundend_category = "syndicate operatives" //just in case
 	job_rank = ROLE_OPERATIVE
-	var/datum/objective_team/nuclear/nuke_team
+	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
 	var/nukeop_outfit = /datum/outfit/syndicate
@@ -39,7 +39,7 @@
 	if(!ishuman(owner.current))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	
+
 	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
 
 	H.equipOutfit(nukeop_outfit)
@@ -103,14 +103,14 @@
 /datum/antagonist/nukeop/leader/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
 
-/datum/antagonist/nukeop/create_team(datum/objective_team/nuclear/new_team)
+/datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
 				if(N.nuke_team)
 					nuke_team = N.nuke_team
 					return
-		nuke_team = new /datum/objective_team/nuclear
+		nuke_team = new /datum/team/nuclear
 		nuke_team.update_objectives()
 		assign_nuke() //This is bit ugly
 		return
@@ -158,7 +158,7 @@
 		return
 	nuke_team.rename_team(ask_name())
 
-/datum/objective_team/nuclear/proc/rename_team(new_name)
+/datum/team/nuclear/proc/rename_team(new_name)
 	syndicate_name = new_name
 	name = "[syndicate_name] Team"
 	for(var/I in members)
@@ -201,40 +201,40 @@
 			stack_trace("Station self destruct ot found during lone op team creation.")
 			nuke_team.memorized_code = null
 
-/datum/objective_team/nuclear
+/datum/team/nuclear
 	var/syndicate_name
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
 
-/datum/objective_team/nuclear/New()
+/datum/team/nuclear/New()
 	..()
 	syndicate_name = syndicate_name()
 
-/datum/objective_team/nuclear/proc/update_objectives()
+/datum/team/nuclear/proc/update_objectives()
 	if(core_objective)
 		var/datum/objective/O = new core_objective
 		O.team = src
 		objectives += O
 
-/datum/objective_team/nuclear/proc/disk_rescued()
+/datum/team/nuclear/proc/disk_rescued()
 	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
 		if(!D.onCentCom())
 			return FALSE
 	return TRUE
 
-/datum/objective_team/nuclear/proc/operatives_dead()
+/datum/team/nuclear/proc/operatives_dead()
 	for(var/I in members)
 		var/datum/mind/operative_mind = I
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
 
-/datum/objective_team/nuclear/proc/syndies_escaped()
+/datum/team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
 	return (S && (S.z == ZLEVEL_CENTCOM || S.z == ZLEVEL_TRANSIT))
 
-/datum/objective_team/nuclear/proc/get_result()
+/datum/team/nuclear/proc/get_result()
 	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
 	var/disk_rescued = disk_rescued()
 	var/syndies_didnt_escape = !syndies_escaped()
@@ -262,10 +262,10 @@
 	else
 		return	//Undefined result
 
-/datum/objective_team/nuclear/roundend_report()
+/datum/team/nuclear/roundend_report()
 	var/list/parts = list()
 	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
-	
+
 	switch(get_result())
 		if(NUKE_RESULT_FLUKE)
 			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
@@ -316,7 +316,7 @@
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())
 		text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
-	
+
 	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

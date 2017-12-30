@@ -24,12 +24,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	container_type = OPENCONTAINER_1
-	slot_flags = SLOT_BELT
-	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
-	throw_speed = 3
-	throw_range = 10
 
 /obj/item/reagent_containers/spray/weedspray/Initialize()
 	. = ..()
@@ -48,12 +42,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	container_type = OPENCONTAINER_1
-	slot_flags = SLOT_BELT
-	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
-	throw_speed = 3
-	throw_range = 10
 
 /obj/item/reagent_containers/spray/pestspray/Initialize()
 	. = ..()

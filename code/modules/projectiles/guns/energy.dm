@@ -130,7 +130,7 @@
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = Ceiling((cell.charge / cell.maxcharge) * charge_sections)
+	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
@@ -175,7 +175,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, "gun_dry_fire", 50, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return (OXYLOSS)
 
 

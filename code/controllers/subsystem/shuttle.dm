@@ -305,6 +305,9 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
+	if (!SSticker.IsRoundInProgress())
+		return
+
 	var/callShuttle = 1
 
 	for(var/thing in GLOB.shuttle_caller_list)
@@ -395,7 +398,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
+		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -410,7 +413,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D) != DOCKING_SUCCESS)
+		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 

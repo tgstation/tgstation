@@ -285,11 +285,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	firstname.Find(real_name)
 	return firstname.match
 
-/mob/proc/abiotic(full_body = 0)
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			return 1
-	return 0
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
