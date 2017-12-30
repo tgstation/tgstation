@@ -2387,6 +2387,7 @@
 #include "code\white\curses\curse_types.dm"
 #include "code\white\curses\curses.dm"
 #include "code\white\fogmann\fogmann.dm"
+#include "code\white\hule\jungle\jungleshit.dm"
 #include "code\white\jukebox\diskwriter.dm"
 #include "code\white\jukebox\jukebox_huli.dm"
 #include "code\white\jukebox\jukebox_huli_tracks.dm"
