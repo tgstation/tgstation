@@ -119,6 +119,8 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
+\tShift+e = Put held item into belt or take out most recent item added to belt.
+\tShift+b = Put held item into backpack or take out most recent item added to backpack.
 \tf = cycle-intents-left
 \tg = cycle-intents-right
 \t1 = help-intent

@@ -32,7 +32,7 @@
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
-	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
 	var/can_repair_constructs = FALSE
@@ -119,7 +119,7 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
+	playstyle_string = "<span class='big bold'>You are a Juggernaut.</span><b> Though slow, your shell can withstand extreme punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
@@ -168,7 +168,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	playstyle_string = "<span class='big bold'>You are a Wraith.</span><b> Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
 	var/attack_refund = 10 //1 second per attack
 	var/crit_refund = 50 //5 seconds when putting a target into critical
 	var/kill_refund = 250 //full refund on kills
@@ -222,7 +222,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
-	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+	playstyle_string = "<span class='big bold'>You are an Artificer.</span><b> You are incredibly weak and fragile, but you are able to construct fortifications, \
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
@@ -296,8 +296,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
-	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
-						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
+	playstyle_string = "<span class='big bold'>You are a Harvester.</span><b> You are incapable of directly killing humans, but your attacks will remove their limbs: \
+						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</b>"
 	can_repair_constructs = TRUE
 
 
@@ -369,18 +369,18 @@
 		the_construct.master = C.cult_team.blood_target
 	
 	if(!the_construct.master)
-		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		to_chat(the_construct, "<span class='cult italic'>You have no master to seek!</span>")
 		the_construct.seeking = FALSE
 		return
 	if(tracking)
 		tracking = FALSE
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are no longer tracking your master.</span>")
 		return
 	else
 		tracking = TRUE
 		the_construct.seeking = TRUE
-		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are now tracking your master.</span>")
 
 
 /datum/action/innate/seek_prey
@@ -403,14 +403,14 @@
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cultitalic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
+		to_chat(the_construct, "<span class='cult italic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
 		return
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
 			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-			to_chat(the_construct, "<span class='cultitalic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
+			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
 		else
-			to_chat(the_construct, "<span class='cultitalic'>Nar'Sie has completed her harvest!</span>")
+			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
 			return
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"

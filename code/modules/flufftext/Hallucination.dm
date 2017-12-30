@@ -80,6 +80,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /obj/effect/hallucination
 	invisibility = INVISIBILITY_OBSERVER
+	anchored = TRUE
 	var/mob/living/carbon/target = null
 
 /obj/effect/hallucination/simple
@@ -713,6 +714,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
+		if(!A.density)
+			continue
 		count++
 		I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
 		doors += I

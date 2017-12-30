@@ -37,7 +37,7 @@
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			T.on_new(src, loc)
 		seed.prepare_result(src)
-		transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 		add_juice()
 
 
@@ -146,7 +146,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/on_grind()
 	var/nutriment = reagents.get_reagent_amount("nutriment")
-	if(grind_results.len)
+	if(grind_results&&grind_results.len)
 		for(var/i in 1 to grind_results.len)
 			grind_results[grind_results[i]] = nutriment
 		reagents.del_reagent("nutriment")
@@ -154,7 +154,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/on_juice()
 	var/nutriment = reagents.get_reagent_amount("nutriment")
-	if(juice_results.len)
+	if(juice_results&&juice_results.len)
 		for(var/i in 1 to juice_results.len)
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent("nutriment")

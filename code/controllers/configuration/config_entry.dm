@@ -113,7 +113,7 @@
 		return FALSE
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
-		value = Clamp(integer ? round(temp) : temp, min_val, max_val)
+		value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
 		if(value != temp && !var_edited)
 			log_config("Changing [name] from [temp] to [value]!")
 		return TRUE

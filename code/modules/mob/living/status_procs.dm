@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, DISABILITY_BLIND disability, and DISABILITY_NEARSIGHT disability.
 
 
 ////////////////////////////// STUN ////////////////////////////////////
@@ -137,3 +137,79 @@
 				to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 		priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
+
+/////////////////////////////////// DISABILITIES ////////////////////////////////////
+
+/mob/living/proc/add_disability(disability, source)
+	if(!disabilities[disability])
+		disabilities[disability] = list(source)
+	else
+		disabilities[disability] |= list(source)
+
+/mob/living/proc/remove_disability(disability, list/sources)
+	if(!disabilities[disability])
+		return
+
+	if(!islist(sources))
+		sources = list(sources)
+
+	if(LAZYLEN(sources))
+		for(var/S in sources)
+			if(S in disabilities[disability])
+				disabilities[disability] -= S
+	else
+		disabilities[disability] = list()
+
+	if(!LAZYLEN(disabilities[disability]))
+		disabilities -= disability
+
+/mob/living/proc/has_disability(disability, list/sources)
+	if(!disabilities[disability])
+		return FALSE
+
+	. = FALSE
+
+	if(LAZYLEN(sources))
+		for(var/S in sources)
+			if(S in disabilities[disability])
+				return TRUE
+	else
+		if(LAZYLEN(disabilities[disability]))
+			return TRUE
+
+/mob/living/proc/remove_all_disabilities()
+	disabilities = list()
+
+/////////////////////////////////// DISABILITY PROCS ////////////////////////////////////
+
+/mob/living/proc/cure_blind(list/sources)
+	remove_disability(DISABILITY_BLIND, sources)
+	if(!has_disability(DISABILITY_BLIND))
+		adjust_blindness(-1)
+
+/mob/living/proc/become_blind(source)
+	if(!has_disability(DISABILITY_BLIND))
+		blind_eyes(1)
+	add_disability(DISABILITY_BLIND, source)
+
+/mob/living/proc/cure_nearsighted(list/sources)
+	remove_disability(DISABILITY_NEARSIGHT, sources)
+	if(!has_disability(DISABILITY_NEARSIGHT))
+		clear_fullscreen("nearsighted")
+
+/mob/living/proc/become_nearsighted(source)
+	if(!has_disability(DISABILITY_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	add_disability(DISABILITY_NEARSIGHT, source)
+
+/mob/living/proc/cure_husk(list/sources)
+	remove_disability(DISABILITY_HUSK, sources)
+	if(!has_disability(DISABILITY_HUSK))
+		status_flags &= ~DISFIGURED
+		update_body()
+
+/mob/living/proc/become_husk(source)
+	if(!has_disability(DISABILITY_HUSK))
+		status_flags |= DISFIGURED	//makes them unknown
+		update_body()
+	add_disability(DISABILITY_HUSK, source)

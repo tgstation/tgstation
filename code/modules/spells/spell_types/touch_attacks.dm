@@ -23,6 +23,11 @@
 		charge_counter = 0
 		stoplag(1)
 
+/obj/effect/proc_holder/spell/targeted/touch/can_cast(mob/user = usr)
+	if(attached_hand)
+		return TRUE
+	return ..()
+
 /obj/effect/proc_holder/spell/targeted/touch/proc/ChargeHand(mob/living/carbon/user)
 	attached_hand = new hand_path(src)
 	if(!user.put_in_hands(attached_hand))

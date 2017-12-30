@@ -119,7 +119,7 @@
 		return
 
 	if(!my_port)
-		my_port = new(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
+		my_port = new()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
@@ -128,6 +128,7 @@
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
 	my_port.dir = the_eye.dir
+	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 	if(current_user.client)
 		current_user.client.images -= the_eye.placed_images
 
@@ -172,7 +173,10 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/turf/eyeturf = get_turf(the_eye)
 	if(!eyeturf)
-		return
+		return SHUTTLE_DOCKER_BLOCKED
+	if(z_lock.len && !(eyeturf.z in z_lock))
+		return SHUTTLE_DOCKER_BLOCKED
+
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
 	var/list/bounds = shuttle_port.return_coords(the_eye.x - x_offset, the_eye.y - y_offset, the_eye.dir)
 	var/list/overlappers = SSshuttle.get_dock_overlap(bounds[1], bounds[2], bounds[3], bounds[4], the_eye.z)

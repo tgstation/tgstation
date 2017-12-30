@@ -50,7 +50,7 @@
 	var/list/all_cults = list()
 	for(var/datum/antagonist/cult/C in GLOB.antagonists)
 		all_cults |= C.cult_team
-	for(var/datum/objective_team/cult/T in all_cults)
+	for(var/datum/team/cult/T in all_cults)
 		deltimer(T.blood_target_reset_timer)
 		T.blood_target = src
 		var/datum/objective/eldergod/summon_objective = locate() in T.objectives
@@ -61,7 +61,7 @@
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && (player.loc.z in GLOB.station_z_levels) && !iscultist(player))
+		if(player.stat != DEAD && is_station_level(player.loc.z) && !iscultist(player))
 			souls_needed[player] = TRUE
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	INVOKE_ASYNC(src, .proc/begin_the_end)

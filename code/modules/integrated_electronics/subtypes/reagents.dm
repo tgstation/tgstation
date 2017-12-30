@@ -1,3 +1,5 @@
+#define IC_SMOKE_REAGENTS_MINIMUM_UNITS 10
+
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
@@ -7,8 +9,11 @@
 	. = ..()
 	if(volume)
 		create_reagents(volume)
+		push_vol()
 
-
+/obj/item/integrated_circuit/reagent/proc/push_vol()
+	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
+	push_data()
 
 /obj/item/integrated_circuit/reagent/smoke
 	name = "smoke generator"
@@ -17,7 +22,7 @@
 	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
 	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 100
 
 	complexity = 20
@@ -29,7 +34,8 @@
 		)
 	activators = list(
 		"create smoke" = IC_PINTYPE_PULSE_IN,
-		"on smoked" = IC_PINTYPE_PULSE_OUT
+		"on smoked" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
@@ -40,24 +46,27 @@
 	//reset warning only if we have reagents now
 	if(changetype == ADD_REAGENT)
 		notified = FALSE
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
-/obj/item/integrated_circuit/reagent/smoke/do_work()
-	var/location = get_turf(src)
-	var/datum/effect_system/smoke_spread/chem/S = new
-	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	if(S)
-		S.set_up(reagents, smoke_radius, location, notified)
-		if(!notified)
-			notified = TRUE
-		S.start()
-
-	if(reagents)
-		reagents.clear_reagents()
-	activate_pin(2)
-
+/obj/item/integrated_circuit/reagent/smoke/do_work(ord)
+	switch(ord)
+		if(1)
+			if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
+				return
+			var/location = get_turf(src)
+			var/datum/effect_system/smoke_spread/chem/S = new
+			S.attach(location)
+			playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+			if(S)
+				S.set_up(reagents, smoke_radius, location, notified)
+				if(!notified)
+					notified = TRUE
+				S.start()
+			reagents.clear_reagents()
+			activate_pin(2)
+		if(3)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
@@ -66,7 +75,7 @@
 	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 30
 
 	complexity = 20
@@ -85,7 +94,9 @@
 	activators = list(
 		"inject" = IC_PINTYPE_PULSE_IN,
 		"on injected" = IC_PINTYPE_PULSE_OUT,
-		"on fail" = IC_PINTYPE_PULSE_OUT
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+
 		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 15
@@ -93,15 +104,8 @@
 	var/transfer_amount = 10
 	var/busy = FALSE
 
-/obj/item/integrated_circuit/reagent/injector/interact(mob/user)
-	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
-	push_data()
-	..()
-
-
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
 /obj/item/integrated_circuit/reagent/injector/on_data_written()
 	var/new_amount = get_pin_data(IC_INPUT, 2)
@@ -111,7 +115,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, volume)
+		new_amount = CLAMP(new_amount, 0, volume)
 		transfer_amount = new_amount
 
 // Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
@@ -127,7 +131,15 @@
 	temp_reagents.clear_reagents()
 	qdel(temp_reagents)
 
-/obj/item/integrated_circuit/reagent/injector/do_work()
+/obj/item/integrated_circuit/reagent/injector/do_work(ord)
+	switch(ord)
+		if(1)
+			inject()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/injector/proc/inject()
 	set waitfor = FALSE // Don't sleep in a proc that is called by a processor without this set, otherwise it'll delay the entire thing
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/atom/movable/acting_object = get_object()
@@ -145,7 +157,7 @@
 		return
 
 	if(direction_mode == SYRINGE_INJECT)
-		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.total_volume >= AM.reagents.maximum_volume)
+		if(!reagents.total_volume || !AM.is_injectable() || AM.reagents.holder_full())
 			activate_pin(3)
 			return
 
@@ -156,12 +168,8 @@
 				return
 
 			//Always log attemped injections for admins
-			var/list/rinject = list()
-			for(var/datum/reagent/R in reagents.reagent_list)
-				rinject += R.name
-			var/contained = english_list(rinject)
-
-			add_logs(src, L, "attemped to inject", addition="which had [contained]") //TODO: proper logging (maybe last touched and assembled)
+			var/contained = reagents.log_list()
+			add_logs(src, L, "attemped to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
@@ -169,6 +177,7 @@
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
+				add_logs(src, L, "injected", addition="which had [contained]")
 				L.visible_message("<span class='danger'>[acting_object] injects [L] with its needle!</span>", \
 									"<span class='userdanger'>[acting_object] injects you with its needle!</span>")
 			else
@@ -184,7 +193,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = Clamp(transfer_amount, 0, reagents.total_volume)
+		var/tramount = CLAMP(transfer_amount, 0, reagents.total_volume)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -235,7 +244,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/pump/do_work()
@@ -263,8 +272,7 @@
 			activate_pin(2)
 		return
 
-	// FALSE in those procs makes mobs invalid targets.
-	if(!source.is_drawable(FALSE) || !target.is_injectable(FALSE))
+	if(!source.is_drainable() || !target.is_refillable())
 		return
 
 	source.reagents.trans_to(target, transfer_amount)
@@ -276,7 +284,7 @@
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	volume = 60
 
 	complexity = 4
@@ -285,18 +293,16 @@
 		"volume used" = IC_PINTYPE_NUMBER,
 		"self reference" = IC_PINTYPE_REF
 		)
-	activators = list()
+	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
-/obj/item/integrated_circuit/reagent/storage/interact(mob/user)
+/obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
-	..()
 
 /obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
-	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	push_data()
+	push_vol()
 
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
@@ -311,6 +317,7 @@
 	. = ..()
 	reagents.set_reacting(FALSE)
 
+
 /obj/item/integrated_circuit/reagent/storage/big
 	name = "big reagent storage"
 	desc = "Stores liquid inside, and away from electrical components. Can store up to 180u."
@@ -321,6 +328,99 @@
 
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/reagent/storage/grinder
+	name = "reagent grinder"
+	desc = "This is reagent grinder.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"grind" = IC_PINTYPE_PULSE_IN,
+		"on grind" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+
+/obj/item/integrated_circuit/reagent/storage/grinder/do_work(ord)
+	switch(ord)
+		if(1)
+			grind()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/grinder/proc/grind()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I)&&(I.grind_results)&&check_target(I)&&(I.on_grind(src) != -1))
+		reagents.add_reagent_list(I.grind_results)
+		if(I.reagents)
+			I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
+	activate_pin(3)
+	return FALSE
+
+obj/item/integrated_circuit/reagent/storage/juicer
+	name = "reagent juicer"
+	desc = "This is reagent juicer.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"juice" = IC_PINTYPE_PULSE_IN,
+		"on juice" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/reagent/storage/juicer/do_work(ord)
+	switch(ord)
+		if(1)
+			juice()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/juicer/proc/juice()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I)&&check_target(I)&&(I.juice_results)&&(I.on_juice() != -1))
+		reagents.add_reagent_list(I.juice_results)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
+	activate_pin(3)
+	return FALSE
+
+
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
@@ -335,17 +435,22 @@
 		"list of reagents" = IC_PINTYPE_LIST
 		)
 	activators = list(
-		"scan" = IC_PINTYPE_PULSE_IN
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"push ref" = IC_PINTYPE_PULSE_IN
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/reagent/storage/scan/do_work()
-	var/cont[0]
-	for(var/datum/reagent/RE in reagents.reagent_list)
-		cont += RE.id
-	set_pin_data(IC_OUTPUT, 3, cont)
-	push_data()
-
+/obj/item/integrated_circuit/reagent/storage/scan/do_work(ord)
+	switch(ord)
+		if(1)
+			var/cont[0]
+			for(var/datum/reagent/RE in reagents.reagent_list)
+				cont += RE.id
+			set_pin_data(IC_OUTPUT, 3, cont)
+			push_data()
+		if(2)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
 
 /obj/item/integrated_circuit/reagent/filter
 	name = "reagent filter"
@@ -384,7 +489,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/filter/do_work()
@@ -416,3 +521,45 @@
 	activate_pin(2)
 	push_data()
 
+/obj/item/integrated_circuit/reagent/storage/heater
+	name = "chemical heater"
+	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
+	to target temperature, when turned on."
+	icon_state = "heater"
+	container_type = OPENCONTAINER
+	complexity = 8
+	inputs = list(
+		"target temperature" = IC_PINTYPE_NUMBER,
+		"on" = IC_PINTYPE_BOOLEAN
+		)
+	inputs_default = list("1" = 300)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"temperature" = IC_PINTYPE_NUMBER)
+	spawn_flags = IC_SPAWN_RESEARCH
+	var/heater_coefficient = 0.1
+
+/obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
+	if(get_pin_data(IC_INPUT, 2))
+		power_draw_idle = 30
+	else
+		power_draw_idle = 0
+
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+	.=..()
+	START_PROCESSING(SScircuit, src)
+
+/obj/item/integrated_circuit/reagent/storage/heater/Destroy()
+	STOP_PROCESSING(SScircuit, src)
+	return ..()
+
+/obj/item/integrated_circuit/reagent/storage/heater/process()
+	if(power_draw_idle)
+		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		if(reagents.chem_temp > target_temperature)
+			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+		if(reagents.chem_temp < target_temperature)
+			reagents.chem_temp += max(1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+
+		reagents.chem_temp = round(reagents.chem_temp)
+		reagents.handle_reactions()
+		set_pin_data(IC_OUTPUT, 3, reagents.chem_temp)
+		push_data()

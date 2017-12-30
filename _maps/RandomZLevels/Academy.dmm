@@ -3738,7 +3738,7 @@
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "ml" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mm" = (

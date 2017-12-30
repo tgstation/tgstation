@@ -11,6 +11,7 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
+	can_be_held = TRUE
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -57,7 +58,10 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
+	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
+	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -138,7 +142,7 @@
 /mob/living/silicon/pai/proc/process_hack()
 
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = Clamp(hackprogress + 4, 0, 100)
+		hackprogress = CLAMP(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -283,8 +287,8 @@
 
 
 /mob/living/silicon/pai/process()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)
+	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)
 
 /mob/living/silicon/pai/generateStaticOverlay()
 	return

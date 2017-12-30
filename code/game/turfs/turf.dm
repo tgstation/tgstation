@@ -3,7 +3,13 @@
 	level = 1
 
 	var/intact = 1
-	var/turf/baseturf = /turf/open/space
+
+	// baseturfs can be either a list or a single turf type.
+	// In class definition like here it should always be a single type.
+	// A list will be created in initialization that figures out the baseturf's baseturf etc.
+	// In the case of a list it is sorted from bottom layer to top.
+	// This shouldn't be modified directly, use the helper procs.
+	var/list/baseturfs = /turf/open/space
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -34,6 +40,8 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+
+	assemble_baseturfs()
 
 	levelupdate()
 	if(smooth)
@@ -180,6 +188,55 @@
 /turf/proc/is_plasteel_floor()
 	return FALSE
 
+// A proc in case it needs to be recreated or badmins want to change the baseturfs
+/turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
+	var/static/list/created_baseturf_lists = list()
+	var/turf/current_target
+	if(fake_baseturf_type)
+		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
+			baseturfs = fake_baseturf_type
+			return
+		current_target = fake_baseturf_type
+	else
+		if(length(baseturfs))
+			return // No replacement baseturf has been given and the current baseturfs value is already a list/assembled
+		if(!baseturfs)
+			current_target = initial(baseturfs) || type // This should never happen but just in case...
+			stack_trace("baseturfs var was null for [type]. Failsafe activated and it has been given a new baseturfs value of [current_target].")
+		else
+			current_target = baseturfs
+
+	// If we've made the output before we don't need to regenerate it
+	if(created_baseturf_lists[current_target])
+		var/list/premade_baseturfs = created_baseturf_lists[current_target]
+		if(length(premade_baseturfs))
+			baseturfs = premade_baseturfs.Copy()
+		else
+			baseturfs = premade_baseturfs
+		return baseturfs
+
+	var/turf/next_target = initial(current_target.baseturfs)
+	//Most things only have 1 baseturf so this loop won't run in most cases
+	if(current_target == next_target)
+		baseturfs = current_target
+		created_baseturf_lists[current_target] = current_target
+		return current_target
+	var/list/new_baseturfs = list(current_target)
+	for(var/i=0;current_target != next_target;i++)
+		if(i > 100) 
+			// A baseturfs list over 100 members long is silly
+			// Because of how this is all structured it will only runtime/message once per type
+			stack_trace("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
+			message_admins("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
+			break
+		new_baseturfs.Insert(1, next_target)
+		current_target = next_target
+		next_target = initial(current_target.baseturfs)
+
+	baseturfs = new_baseturfs
+	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
+	return new_baseturfs
+
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
@@ -196,119 +253,6 @@
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 	if(L)
 		qdel(L)
-
-//wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
-	return ChangeTurf(path, new_baseturf, defer_change, ignore_air, forceop)
-
-//Creates a new turf
-/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
-	if(!path)
-		return
-	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
-		return src
-
-	var/old_opacity = opacity
-	var/old_dynamic_lighting = dynamic_lighting
-	var/old_affecting_lights = affecting_lights
-	var/old_lighting_object = lighting_object
-	var/old_corners = corners
-
-	var/old_exl = explosion_level
-	var/old_exi = explosion_id
-	var/old_bp = blueprint_data
-	blueprint_data = null
-
-	var/old_baseturf = baseturf
-	changing_turf = TRUE
-
-	qdel(src)	//Just get the side effects and call Destroy
-	var/turf/W = new path(src)
-
-	if(new_baseturf)
-		W.baseturf = new_baseturf
-	else
-		W.baseturf = old_baseturf
-
-	W.explosion_id = old_exi
-	W.explosion_level = old_exl
-
-	if(!defer_change)
-		W.AfterChange(ignore_air)
-
-	W.blueprint_data = old_bp
-
-	if(SSlighting.initialized)
-		recalc_atom_opacity()
-		lighting_object = old_lighting_object
-		affecting_lights = old_affecting_lights
-		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
-			reconsider_lights()
-
-		if (dynamic_lighting != old_dynamic_lighting)
-			if (IS_DYNAMIC_LIGHTING(src))
-				lighting_build_overlay()
-			else
-				lighting_clear_overlay()
-
-		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			S.update_starlight()
-
-	return W
-
-/turf/proc/AfterChange(ignore_air = FALSE) //called after a turf has been replaced in ChangeTurf()
-	levelupdate()
-	CalculateAdjacentTurfs()
-
-	//update firedoor adjacency
-	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
-	for(var/I in turfs_to_check)
-		var/turf/T = I
-		for(var/obj/machinery/door/firedoor/FD in T)
-			FD.CalculateAffectingAreas()
-
-	queue_smooth_neighbors(src)
-
-	HandleTurfChange(src)
-
-/turf/open/AfterChange(ignore_air)
-	..()
-	RemoveLattice()
-	if(!ignore_air)
-		Assimilate_Air()
-
-//////Assimilate Air//////
-/turf/open/proc/Assimilate_Air()
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
-	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
-		return
-
-	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
-	var/list/total_gases = total.gases
-
-	for(var/T in atmos_adjacent_turfs)
-		var/turf/open/S = T
-		if(!S.air)
-			continue
-		var/list/S_gases = S.air.gases
-		for(var/id in S_gases)
-			ASSERT_GAS(id, total)
-			total_gases[id][MOLES] += S_gases[id][MOLES]
-		total.temperature += S.air.temperature
-
-	air.copy_from(total)
-
-	var/list/air_gases = air.gases
-	for(var/id in air_gases)
-		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
-
-	air.temperature /= turf_count
-	SSair.add_to_active(src)
-
-/turf/proc/ReplaceWithLattice()
-	ChangeTurf(baseturf)
-	new /obj/structure/lattice(locate(x, y, z))
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
 	for(var/mob/living/M in src)
@@ -361,7 +305,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ChangeTurf(src.baseturf)
+	ScrapeAway()
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -437,21 +381,6 @@
 	if(!SSticker.HasRoundStarted())
 		add_blueprints(AM)
 
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
-	// Remove all atoms except observers, landmarks, docking ports
-	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
-	allowed_contents -= src
-	for(var/i in 1 to allowed_contents.len)
-		var/thing = allowed_contents[i]
-		qdel(thing, force=TRUE)
-
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop)
-
-	SSair.remove_from_active(newT)
-	newT.CalculateAdjacentTurfs()
-	SSair.add_to_active(newT,1)
-
 /turf/proc/is_transition_turf()
 	return
 
@@ -473,32 +402,8 @@
 	if(!has_acid_effect)
 		new acid_type(src, acidpwr, acid_volume)
 
-
 /turf/proc/acid_melt()
 	return
-
-
-/turf/proc/copyTurf(turf/T)
-	if(T.type != type)
-		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-			O = new()
-			O.underlays.Add(T)
-		T.ChangeTurf(type)
-		for(var/group in decals)
-			T.add_decal(decals[group],group)
-		if(underlays.len)
-			T.underlays = O.underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(color)
-		T.atom_colours = atom_colours.Copy()
-		T.update_atom_colour()
-	if(T.dir != dir)
-		T.setDir(dir)
-	return T
 
 /turf/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)

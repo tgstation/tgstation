@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
 	for(var/area/A in world)
 		var/turf/picked = safepick(get_area_turfs(A.type))
-		if(picked && (picked.z in GLOB.station_z_levels))
+		if(picked && is_station_level(picked.z))
 			if(!(A.type in GLOB.the_station_areas) && !is_type_in_typecache(A, station_areas_blacklist))
 				GLOB.the_station_areas.Add(A.type)
 

@@ -64,7 +64,7 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
@@ -126,7 +126,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target, 0, 1000)
+				target_temperature = CLAMP(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			eject_beaker()
