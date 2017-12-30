@@ -254,9 +254,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //won't bug irc
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "[REF(src)]"
-
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-
 	//Message to be sent to all admins
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [keywords_lookup(msg)]</span>"
 
@@ -606,7 +603,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message["message"] = msg
 	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
 	message["key"] = comms_key
-	message["crossmessage"] = type
+	message += type
 
 	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
 	for(var/I in servers)

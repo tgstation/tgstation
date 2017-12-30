@@ -387,9 +387,9 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 22
 	begin_month = DECEMBER
-	end_day = 25
+	end_day = 27
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"

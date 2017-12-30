@@ -20,7 +20,7 @@
 	endWhen = rand(25, 100)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 	if(!vents.len)

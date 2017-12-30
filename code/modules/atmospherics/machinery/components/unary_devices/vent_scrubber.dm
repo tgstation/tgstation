@@ -77,7 +77,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!NODE1 || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational())
 		icon_state = "scrub_off"
 		return
 
@@ -138,7 +138,7 @@
 	..()
 	if(welded || !is_operational())
 		return FALSE
-	if(!NODE1 || !on)
+	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
 	scrub(loc)
@@ -152,7 +152,7 @@
 		return FALSE
 
 	var/datum/gas_mixture/environment = tile.return_air()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	var/list/env_gases = environment.gases
 
 	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE)
@@ -175,7 +175,7 @@
 			filtered_out.temperature = removed.temperature
 
 			for(var/gas in filter_types & removed_gases)
-				ADD_GAS(gas, filtered_gases)
+				filtered_out.add_gas(gas)
 				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
 				removed_gases[gas][MOLES] = 0
 

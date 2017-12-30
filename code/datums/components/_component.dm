@@ -6,54 +6,16 @@
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
-	if(type == /datum/component)
-		qdel(src)
-		CRASH("[type] instantiated!")
-
-	//check for common mishaps
-	if(!isnum(dupe_mode))
-		qdel(src)
-		CRASH("[type]: Invalid dupe_mode!")
-	var/dt = dupe_type
-	if(dt && !ispath(dt))
-		qdel(src)
-		CRASH("[type]: Invalid dupe_type!")
-
 	parent = P
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
 		return
 
-	_CheckDupesAndJoinParent(P)
+	_JoinParent(P)
 
-/datum/component/proc/_CheckDupesAndJoinParent()
+/datum/component/proc/_JoinParent()
 	var/datum/P = parent
-	var/dm = dupe_mode
-
-	var/datum/component/old
-	if(dm != COMPONENT_DUPE_ALLOWED)
-		var/dt = dupe_type
-		if(!dt)
-			old = P.GetExactComponent(type)
-		else
-			old = P.GetComponent(dt)
-		if(old)
-			//One or the other has to die
-			switch(dm)
-				if(COMPONENT_DUPE_UNIQUE)
-					old.InheritComponent(src, TRUE)
-					qdel(src, TRUE, TRUE)
-					return
-				if(COMPONENT_DUPE_HIGHLANDER)
-					InheritComponent(old, FALSE)
-					qdel(old, FALSE, TRUE)
-
-	//provided we didn't eat someone
-	if(!old)
-		//let the others know
-		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
@@ -212,10 +174,59 @@
 		return list(.)
 
 /datum/proc/AddComponent(new_type, ...)
-	var/nt = new_type
+	var/datum/component/nt = new_type
+	var/dm = initial(nt.dupe_mode)
+	var/dt = initial(nt.dupe_type)
+
+	var/datum/component/old_comp
+	var/datum/component/new_comp
+	
+	if(ispath(nt))
+		if(nt == /datum/component)
+			CRASH("[nt] attempted instantiation!")
+		if(!isnum(dm))
+			CRASH("[nt]: Invalid dupe_mode ([dm])!")
+		if(dt && !ispath(dt))
+			CRASH("[nt]: Invalid dupe_type ([dt])!")
+	else
+		new_comp = nt
+
 	args[1] = src
-	var/datum/component/C = new nt(arglist(args))
-	return QDELING(C) ? GetExactComponent(new_type) : C
+
+	if(dm != COMPONENT_DUPE_ALLOWED)
+		if(!dt)
+			old_comp = GetExactComponent(nt)
+		else
+			old_comp = GetComponent(dt)
+		if(old_comp)
+			switch(dm)
+				if(COMPONENT_DUPE_UNIQUE)
+					if(!new_comp)
+						new_comp = new nt(arglist(args))
+					if(!QDELETED(new_comp))
+						old_comp.InheritComponent(new_comp, TRUE)
+						qdel(new_comp)
+				if(COMPONENT_DUPE_HIGHLANDER)
+					if(!new_comp)
+						new_comp = new nt(arglist(args))
+					if(!QDELETED(new_comp))
+						new_comp.InheritComponent(old_comp, FALSE)
+						qdel(old_comp)
+				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
+					if(!new_comp)
+						var/list/arguments = args.Copy(2)
+						old_comp.InheritComponent(null, TRUE, arguments)
+					else
+						old_comp.InheritComponent(new_comp, TRUE)
+		else if(!new_comp)
+			new_comp = new nt(arglist(args)) // There's a valid dupe mode but there's no old component, act like normal
+	else if(!new_comp)
+		new_comp = new nt(arglist(args)) // Dupes are allowed, act like normal
+
+	if(!old_comp && !QDELETED(new_comp)) // Nothing related to duplicate components happened and the new component is healthy
+		SendSignal(COMSIG_COMPONENT_ADDED, new_comp)
+		return new_comp
+	return old_comp
 
 /datum/proc/LoadComponent(component_type, ...)
 	. = GetComponent(component_type)
@@ -235,7 +246,8 @@
 	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
 	C.parent = src
-	C._CheckDupesAndJoinParent()
+	if(C == AddComponent(C))
+		C._JoinParent()
 
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components

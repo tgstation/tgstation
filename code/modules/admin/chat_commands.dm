@@ -47,7 +47,9 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	return IrcPm(target, all_params.Join(" "), sender)
+	var/res = IrcPm(target, all_params.Join(" "), sender)
+	if(res != "Message Successful")
+		return res
 
 /datum/server_tools_command/namecheck
 	name = "namecheck"
@@ -92,6 +94,7 @@ GLOBAL_LIST(round_end_notifiees)
 		return "Unable to run query, another admin proc call is in progress. Try again later."
 	GLOB.AdminProcCaller = "CHAT_[sender]"	//_ won't show up in ckeys so it'll never match with a real admin
 	var/list/results = world.SDQL2_query(params, GLOB.AdminProcCaller, GLOB.AdminProcCaller)
+	GLOB.AdminProcCaller = null
 	if(!results)
 		return "Query produced no output"
 	var/list/text_res = results.Copy(1, 3)

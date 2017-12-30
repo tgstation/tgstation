@@ -139,9 +139,11 @@
 
 		if(isliving(A))
 			var/mob/living/L = A
-			if(L.pulling)
+			var/atom/movable/AM = L.pulling
+			if(AM)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.forceMove(T)
+				AM.forceMove(T)
+				L.start_pulling(AM)
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
@@ -202,3 +204,4 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
+

@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 			neigbours[A] = src
 
 /datum/space_level/proc/set_neigbours(list/L)
-	for(var/datum/point/P in L)
+	for(var/datum/space_transition_point/P in L)
 		if(P.x == xi)
 			if(P.y == yi+1)
 				neigbours[TEXT_NORTH] = P.spl
@@ -35,13 +35,13 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 				neigbours[TEXT_WEST] = P.spl
 				P.spl.neigbours[TEXT_EAST] = src
 
-/datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
+/datum/space_transition_point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
 	var/list/neigbours = list()
 	var/x
 	var/y
 	var/datum/space_level/spl
 
-/datum/point/New(nx, ny, list/point_grid)
+/datum/space_transition_point/New(nx, ny, list/point_grid)
 	if(!point_grid)
 		qdel(src)
 		return
@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 		return
 	point_grid[x][y] = src
 
-/datum/point/proc/set_neigbours(list/grid)
+/datum/space_transition_point/proc/set_neigbours(list/grid)
 	var/max_X = grid.len
 	var/list/max_Y = grid[1]
 	max_Y = max_Y.len
@@ -86,13 +86,13 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 		k++
 	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
 	var/list/grid = list()
-	var/datum/point/P
+	var/datum/space_transition_point/P
 	for(var/i = 1, i<=conf_set_len*2+1, i++)
 		for(var/j = 1, j<=conf_set_len*2+1, j++)
-			P = new/datum/point(i,j, point_grid)
+			P = new/datum/space_transition_point(i,j, point_grid)
 			point_grid[i][j] = P
 			grid.Add(P)
-	for(var/datum/point/pnt in grid)
+	for(var/datum/space_transition_point/pnt in grid)
 		pnt.set_neigbours(point_grid)
 	P = point_grid[conf_set_len+1][conf_set_len+1]
 	var/list/possible_points = list()

@@ -10,6 +10,9 @@
 			else
 				say_verb(verbtextinput("Say"))
 			return
+		if("M")
+			me_verb(verbtextinput("Me"))
+			return
 		if("Delete", "H")
 			if(!pulling)
 				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")

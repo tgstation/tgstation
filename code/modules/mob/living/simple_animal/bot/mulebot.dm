@@ -33,8 +33,6 @@
 
 	path_image_color = "#7F5200"
 
-	path_image_color = "#7F5200"
-
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)

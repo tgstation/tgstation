@@ -2,7 +2,7 @@
 	name = "Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
-	var/datum/objective_team/pirate/crew
+	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
 	to_chat(owner, "<span class='boldannounce'>You are a Space Pirate!</span>")
@@ -12,15 +12,16 @@
 /datum/antagonist/pirate/get_team()
 	return crew
 
-/datum/antagonist/pirate/create_team(datum/objective_team/pirate/new_team)
+/datum/antagonist/pirate/create_team(datum/team/pirate/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
 			if(P.crew)
-				new_team = P.crew
+				crew = P.crew
+				return
 		if(!new_team)
-			crew = new /datum/objective_team/pirate
+			crew = new /datum/team/pirate
 			crew.forge_objectives()
-		return
+			return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	crew = new_team
@@ -35,10 +36,10 @@
 		owner.objectives -= crew.objectives
 	. = ..()
 
-/datum/objective_team/pirate
+/datum/team/pirate
 	name = "Pirate crew"
 
-/datum/objective_team/pirate/proc/forge_objectives()
+/datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
 	getbooty.storage_area = locate(/area/shuttle/pirate/vault) in GLOB.sortedAreas
@@ -104,13 +105,11 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value
 
-
-
-/datum/objective_team/pirate/roundend_report()
+/datum/team/pirate/roundend_report()
 	var/list/parts = list()
 
 	parts += "<span class='header'>Space Pirates were:</span>"
-	
+
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)
 		if(considered_alive(M))
@@ -126,5 +125,5 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 		parts += "<span class='greentext big'>The pirate crew was successful!</span>"
 	else
 		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
-	
-	return parts.Join("<br>")
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

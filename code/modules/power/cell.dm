@@ -157,7 +157,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return Clamp(round(charge/10000), 10, 90) + rand(-5,5)
+		return CLAMP(round(charge/10000), 10, 90) + rand(-5,5)
 	else
 		return 0
 
@@ -336,7 +336,7 @@
 	return
 
 /obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
-	charge = Clamp((charge-(10000/severity)),0,maxcharge)
+	charge = CLAMP((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"
