@@ -53,7 +53,7 @@
 			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
 			add_avail(power_produced)
 			last_power-=power_produced
-	else if(z in GLOB.station_z_levels && SSresearch.science_tech)
+	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			eject()
@@ -143,7 +143,7 @@
 	return TRUE
 
 /obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
-	if(!linked_techweb)
+	if(!is_station_level(z) && !SSresearch.science_tech)
 		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
 		return TRUE
 	if(locked)
