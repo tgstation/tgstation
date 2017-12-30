@@ -26,14 +26,14 @@
 	var/obj/item/bodypart/head/H = locate() in contents
 	var/mutable_appearance/MA = new()
 	if(H)
-		MA.overlays = H.overlays.Copy()
+		MA.copy_overlays(H)
 		MA.pixel_y = 12 //Or some value that lines it up on the spike bit better
-		add_overlay(MA)
+		add_overlay(H)
 
 /obj/structure/headpike/attack_hand(mob/user)
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
-	var/obj/item/weapon/twohanded/spear/S = locate() in contents
+	var/obj/item/twohanded/spear/S = locate() in contents
 	if(H && S)
 		to_chat(user, "<span class='notice'>You take down [src].</span>")
 		H.forceMove(get_turf(src))
@@ -43,7 +43,7 @@
 /obj/structure/headpike/bone/attack_hand(mob/user)
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
-	var/obj/item/weapon/twohanded/bonespear/S = locate() in contents
+	var/obj/item/twohanded/bonespear/S = locate() in contents
 	if(H && S)
 		to_chat(user, "<span class='notice'>You take down [src].</span>")
 		H.forceMove(get_turf(src))
