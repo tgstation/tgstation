@@ -7,6 +7,9 @@
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
+	switch(alert("Are we sure we wish to kill ourself and create a headcrab?",,"Yes", "No"))
+		if("No")
+			return
 	set waitfor = FALSE
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone("head", 1)
