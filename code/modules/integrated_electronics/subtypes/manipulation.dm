@@ -155,9 +155,11 @@
 			if(isnum(wanted_dir.data))
 				if(step(assembly, wanted_dir.data))
 					activate_pin(2)
+					return
 				else
 					activate_pin(3)
 					return FALSE
+	return FALSE
 
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
@@ -247,9 +249,14 @@
 /obj/item/integrated_circuit/manipulation/plant_module/do_work()
 	..()
 	var/turf/T = get_turf(src)
-	var/obj/machinery/hydroponics/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/machinery/hydroponics)
-	if(!istype(AM)) //Invalid input
+	var/obj/OM = get_pin_data_as_type(IC_INPUT, 1, /obj)
+	if(istype(OM,/obj/structure/spacevine) && get_pin_data(IC_INPUT, 2) == 2)
+		qdel(OM)
+		activate_pin(2)
 		return
+	var/obj/machinery/hydroponics/AM = OM
+	if(!istype(AM)) //Invalid input
+		return FALSE
 	var/mob/living/M = get_turf(AM)
 	if(!M.Adjacent(T))
 		return //Can't reach
@@ -276,6 +283,7 @@
 				qdel(AM.myseed)
 				AM.myseed = null
 			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			AM.dead = 0
 			AM.update_icon()
 		else
 			activate_pin(2)
@@ -284,7 +292,7 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for small/medium items, used to grab and store things."
+	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
 	w_class = WEIGHT_CLASS_SMALL
@@ -307,7 +315,7 @@
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(check_target(AM, exclude_contents = TRUE))
+			if(check_target(AM))
 				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)

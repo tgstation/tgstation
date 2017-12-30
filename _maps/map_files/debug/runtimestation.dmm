@@ -20,10 +20,6 @@
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"ag" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -310,7 +306,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aU" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
@@ -339,7 +335,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aX" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
@@ -2307,13 +2303,13 @@ aa
 ab
 ac
 ae
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 bu
 bG
 ce
@@ -2361,13 +2357,13 @@ aa
 ab
 ac
 ae
-ag
+ab
 ai
 an
 ai
 aQ
 ai
-ag
+ab
 bv
 bH
 cf
@@ -2415,13 +2411,13 @@ aa
 ab
 ac
 ae
-ag
+ab
 ai
 ao
 aA
 aR
 ai
-ag
+ab
 bv
 bI
 cf
@@ -2469,13 +2465,13 @@ aa
 ab
 ac
 ae
-ag
-ag
-ag
+ab
+ab
+ab
 aB
-ag
-ag
-ag
+ab
+ab
+ab
 bv
 bJ
 cf
@@ -2525,9 +2521,9 @@ ac
 ae
 ac
 ac
-ag
+ab
 aB
-ag
+ab
 ac
 ac
 bv

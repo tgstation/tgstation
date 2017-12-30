@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(T)
-	if(((A && !A.blob_allowed) || !T || !(T.z in GLOB.station_z_levels)) && LAZYLEN(GLOB.blobstart))
+	if(((A && !A.blob_allowed) || !T || !is_station_level(T.z)) && LAZYLEN(GLOB.blobstart))
 		T = get_turf(pick(GLOB.blobstart))
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
-	
+
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
 	..()
@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/turf/T = get_turf(L)
-		if(!T || !(T.z in GLOB.station_z_levels))
+		if(!T || !is_station_level(T.z))
 			continue
 
 		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))

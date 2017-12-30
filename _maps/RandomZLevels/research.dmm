@@ -742,12 +742,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"co" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "cp" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
@@ -1596,7 +1590,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
 "eS" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -1913,7 +1907,7 @@
 	},
 /area/awaymission/research/interior)
 "fS" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -2013,12 +2007,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "gh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/research/interior/secure)
-"gi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -2295,12 +2283,6 @@
 	dir = 1
 	},
 /area/awaymission/research/interior)
-"gW" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/whitepurple,
-/area/awaymission/research/interior)
 "gX" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/whitepurple/side{
@@ -2323,7 +2305,7 @@
 	},
 /area/awaymission/research/interior)
 "hb" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
@@ -2447,12 +2429,6 @@
 	dir = 10
 	},
 /area/awaymission/research/interior/cryo)
-"hw" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "hx" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -2679,12 +2655,6 @@
 "ib" = (
 /obj/structure/window/reinforced{
 	dir = 8
-	},
-/turf/open/floor/plasteel/purple,
-/area/awaymission/research/interior/genetics)
-"ic" = (
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/plasteel/purple,
 /area/awaymission/research/interior/genetics)
@@ -3249,12 +3219,6 @@
 /obj/structure/sign/bluecross,
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
-"jL" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whiteblue,
-/area/awaymission/research/interior)
 "jM" = (
 /obj/machinery/light{
 	dir = 8
@@ -3542,43 +3506,6 @@
 	dir = 4
 	},
 /area/awaymission/research/interior/dorm)
-"kG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"kH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
-/area/awaymission/research/interior)
-"kI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen,
-/area/awaymission/research/interior)
-"kJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 8
-	},
-/area/awaymission/research/interior)
-"kK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kL" = (
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -3596,15 +3523,6 @@
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/awaymission/research/interior/medbay)
-"kP" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
 "kQ" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/yellowsiding{
@@ -4151,13 +4069,6 @@
 "my" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
-"mz" = (
-/turf/open/floor/plating/asteroid/airless,
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/research/exterior)
 "mA" = (
 /obj/structure/chair{
 	dir = 8
@@ -4275,14 +4186,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side,
-/area/awaymission/research/interior/escapepods)
-"mR" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitegreen/side{
-	dir = 4
-	},
 /area/awaymission/research/interior/escapepods)
 "mS" = (
 /obj/machinery/door/airlock/external{

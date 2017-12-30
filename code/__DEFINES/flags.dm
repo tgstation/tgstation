@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1			512		// item has priority to check when entering or leaving
 
 #define NOSLIP_1			1024 		//prevents from slipping on wet floors, in space etc
-#define CLEAN_ON_MOVE_1		2048
+#define _UNUSED_1		2048
 
 // BLOCK_GAS_SMOKE_EFFECT_1 only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT_1 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!

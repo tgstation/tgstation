@@ -297,7 +297,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
-/obj/machinery/door/airlock/glass_medical,
+/obj/machinery/door/airlock/medical/glass,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -966,13 +966,6 @@
 "cB" = (
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
-"cC" = (
-/obj/structure/lattice,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/space,
-/area/ruin/space/has_grav/onehalf/hallway)
 "cD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
@@ -984,7 +977,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cE" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
 /turf/open/floor/plasteel,
@@ -998,7 +991,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
 /turf/open/floor/plasteel,
@@ -1050,13 +1043,6 @@
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
 /area/template_noop)
-"cO" = (
-/obj/structure/lattice,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/space,
-/area/ruin/space/has_grav/onehalf/hallway)
 "cP" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"

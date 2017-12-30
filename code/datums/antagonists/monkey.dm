@@ -16,8 +16,7 @@
 
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
 	if(!owner.current.HasDisease(D))
-		D.affected_mob = owner
-		owner.current.viruses += D
+		owner.current.AddDisease(D)
 	else
 		QDEL_NULL(D)
 

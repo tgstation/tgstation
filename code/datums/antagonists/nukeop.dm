@@ -232,7 +232,7 @@
 
 /datum/team/nuclear/proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	return (S && (S.z == ZLEVEL_CENTCOM || S.z == ZLEVEL_TRANSIT))
+	return S && (is_centcom_level(S.z) || is_transit_level(S.z))
 
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = SSshuttle.emergency.mode == SHUTTLE_ENDGAME
