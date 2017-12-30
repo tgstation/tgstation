@@ -257,6 +257,4 @@
 	max_val = 1
 	integer = FALSE
 
-/datum/config_entry/flag/emergency_shuttle_has_voice
-
 /datum/config_entry/flag/ic_printing
