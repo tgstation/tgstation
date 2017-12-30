@@ -8,6 +8,7 @@
 	var/obj/item/device/radio/radio
 	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
+	var/datum/techweb/linked_techweb
 
 /obj/machinery/computer/bank_machine/Initialize()
 	. = ..()
@@ -15,6 +16,7 @@
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
+	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/computer/bank_machine/Destroy()
 	QDEL_NULL(radio)
@@ -60,7 +62,12 @@
 		return
 	src.add_fingerprint(usr)
 	var/dat = "[world.name] secure vault. Authorized personnel only.<br>"
-	dat += "Current Balance: [SSshuttle.points] credits.<br>"
+	dat += "Current Credit Balance: [SSshuttle.points] credits.<br>"
+
+	if(istype(linked_techweb))
+		dat += "Current Research Point Balance: [linked_techweb.research_points] research points.<br>"
+		dat += "<A href='?src=[REF(src)];credstobitcoin=1'>Exchange Credits for Research Points</A><br>"
+
 	if(!siphoning)
 		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
 	else
@@ -68,7 +75,6 @@
 
 	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
-	var/datum/browser/popup = new(user, "computer", "Bank Vault", 300, 200)
 	popup.set_content("<center>[dat]</center>")
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -76,9 +82,20 @@
 /obj/machinery/computer/bank_machine/Topic(href, href_list)
 	if(..())
 		return
+	if(href_list["credstobitcoin"])
+		var/credstoconv = input(usr, "Please enter the number of credits you want to convert to research points. The current conversion rate is [CONFIG_GET(number/cargo_credits_per_research_point)] credits to 1 research point", "Credits to Research Points") as null|num
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
+			return
+		if(credstoconv)
+			var/bitcoinsreceived = credstoconv/CONFIG_GET(number/cargo_credits_per_research_point)
+			linked_techweb.research_points += bitcoinsreceived
+			SSshuttle.points += -credstoconv
+			say("Thank you for your transaction. You have successfully converted [credstoconv] to [bitcoinsreceived] research points.")
 	if(href_list["siphon"])
 		say("Siphon of station credits has begun!")
 		siphoning = TRUE
 	if(href_list["halt"])
 		say("Station credit withdrawal halted.")
 		siphoning = FALSE
+
+	interact(usr)
