@@ -67,6 +67,7 @@
 	if(istype(linked_techweb))
 		dat += "Current Research Point Balance: [linked_techweb.research_points] research points.<br>"
 		dat += "<A href='?src=[REF(src)];credstobitcoin=1'>Exchange Credits for Research Points</A><br>"
+		dat += "<A href='?src=[REF(src)];bitcointocreds=1'>Exchange Research Points for Credits</A><br>"
 
 	if(!siphoning)
 		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
@@ -88,10 +89,25 @@
 		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(credstoconv)
+			if(credstoconv > SSshuttle.points)
+				say("Insufficient credits.")
+				return
 			var/bitcoinsreceived = credstoconv/CONFIG_GET(number/cargo_credits_per_research_point)
 			linked_techweb.research_points += bitcoinsreceived
 			SSshuttle.points += -credstoconv
-			say("Thank you for your transaction. You have successfully converted [credstoconv] to [bitcoinsreceived] research points.")
+			say("Thank you for your transaction. You have successfully converted [credstoconv] credits to [bitcoinsreceived] research points.")
+	if(href_list["bitcointocreds"])
+		var/coinstoconv = input(usr, "Please enter the number of research points you want to convert to credits. The current conversion rate is [CONFIG_GET(number/cargo_credits_per_research_point)] credits to 1 research point", "Research Points to Credits") as null|num
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
+			return
+		if(coinstoconv)
+			if(coinstoconv > linked_techweb.research_points)
+				say("Insufficient research points.")
+				return
+			var/creditssreceived = coinstoconv*CONFIG_GET(number/cargo_credits_per_research_point)
+			linked_techweb.research_points += creditssreceived
+			SSshuttle.points += -coinstoconv
+			say("Thank you for your transaction. You have successfully converted [coinstoconv] research points to [creditssreceived] credits.")
 	if(href_list["siphon"])
 		say("Siphon of station credits has begun!")
 		siphoning = TRUE
