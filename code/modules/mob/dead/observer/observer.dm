@@ -75,10 +75,15 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	var/turf/T
+
+	timeofdeath = world.time
+
 	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		logging = body.logging			//preserve our logs by copying them to our ghost
+
+		timeofdeath = body.timeofdeath
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -826,3 +831,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+/mob/dead/observer/proc/respawn_check(var/thing = "cancer rat", var/respawn_time = 2 MINUTES, feedback = TRUE)
+	if(!client)
+		return FALSE
+	if(mind && mind.current && mind.current.stat != DEAD && can_reenter_corpse)
+		if(feedback)
+			to_chat(src, "<span class='warning'>Your non-dead body prevents you from respawning as \a [thing].</span>")
+		return FALSE
+
+	var/timedifference = world.time - timeofdeath
+	if(respawn_time && timeofdeath && timedifference < respawn_time MINUTES)
+		var/timedifference_text = time2text(respawn_time - timedifference, "mm:ss")
+		if(feedback)
+			to_chat(src, "<span class='warning'>You must have been dead for [respawn_time / (1 MINUTES)] minute\s to respawn as [thing]. You have [timedifference_text] left.</span>")
+		return FALSE
+
+	return FALSE

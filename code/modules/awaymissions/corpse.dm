@@ -27,7 +27,7 @@
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
-/obj/effect/mob_spawn/attack_ghost(mob/user)
+/obj/effect/mob_spawn/attack_ghost(mob/dead/observer/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
 	if(!uses)
@@ -35,6 +35,8 @@
 		return
 	if(jobban_isbanned(user, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
+		return
+	if(!user.respawn_check(mob_name, DEFAULT_RESPAWN_TIME))
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
