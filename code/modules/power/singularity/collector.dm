@@ -22,7 +22,6 @@
 	var/drainratio = 1
 	var/powerproduction_drain = 0.001
 
-	var/datum/techweb/linked_techweb
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
 
@@ -33,43 +32,41 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
-/obj/machinery/power/rad_collector/Initialize()
-	. = ..()
-	if(z in GLOB.station_z_levels)
-		linked_techweb = SSresearch.science_tech
-
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
-	if(loaded_tank)
-		if(!bitcoinmining)
-			if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
-				investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
-				playsound(src, 'sound/machines/ding.ogg', 50, 1)
-				eject()
-			else
-				loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= powerproduction_drain*drainratio
-				loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
-				loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += powerproduction_drain*drainratio
-				loaded_tank.air_contents.garbage_collect()
+	if(!loaded_tank)
+		return
+	if(!bitcoinmining)
+		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			eject()
+		else
+			var/gasdrained = powerproduction_drain*drainratio
+			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
+			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
+			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
+			loaded_tank.air_contents.garbage_collect()
 
-				var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
-				add_avail(power_produced)
-				last_power-=power_produced
-		else if(linked_techweb)
-			if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
-				playsound(src, 'sound/machines/ding.ogg', 50, 1)
-				eject()
-			else
-				loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] -= bitcoinproduction_drain*drainratio
-				loaded_tank.air_contents.gases[/datum/gas/oxygen][MOLES] -= bitcoinproduction_drain*drainratio
-				loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
-				loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += bitcoinproduction_drain*2*drainratio
-				loaded_tank.air_contents.garbage_collect()
-				var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
-				linked_techweb.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
-				last_power-=bitcoins_mined
+			var/power_produced = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
+			add_avail(power_produced)
+			last_power-=power_produced
+	else if(z in GLOB.station_z_levels && SSresearch.science_tech)
+		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			eject()
+		else
+			var/gasdrained = bitcoinproduction_drain*drainratio
+			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] -= gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/oxygen][MOLES] -= gasdrained
+			loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
+			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
+			loaded_tank.air_contents.garbage_collect()
+			var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
+			SSresearch.science_tech.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(..())
@@ -142,9 +139,8 @@
 			return TRUE
 		eject()
 		return TRUE
-	else
-		to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
-		return TRUE
+	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
+	return TRUE
 
 /obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
 	if(!linked_techweb)
