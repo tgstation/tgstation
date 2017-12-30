@@ -488,6 +488,10 @@
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/M)
 	if (M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if(M.mind && M.mind.assigned_role == "Scientist")
+		M.drunkenness = max((H.drunkenness + (sqrt(volume) * 65 * ALCOHOL_RATE)), 0)
+		if(SSresearch.science_tech)
+			SSresearch.science_tech.research_points += 0.5*REM
 	..()
 
 /datum/reagent/consumable/shamblers
