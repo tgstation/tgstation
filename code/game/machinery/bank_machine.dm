@@ -75,6 +75,7 @@
 
 	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
+	var/datum/browser/popup = new(user, "computer", "Bank Vault", 320, 220)
 	popup.set_content("<center>[dat]</center>")
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
