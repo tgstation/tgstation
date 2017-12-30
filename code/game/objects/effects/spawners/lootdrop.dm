@@ -184,16 +184,6 @@
 				/obj/item/aiModule/core/full/paladin
 				)
 
-/obj/effect/spawner/lootdrop/aimodule_harmless/two
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 2
-
-/obj/effect/spawner/lootdrop/aimodule_harmless/three
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 3
-
 /obj/effect/spawner/lootdrop/aimodule_neutral // These shouldn't allow the AI to start butchering people without reason
 	name = "neutral AI module spawner"
 	loot = list(
@@ -206,16 +196,6 @@
 				/obj/item/aiModule/core/full/liveandletlive
 				)
 
-/obj/effect/spawner/lootdrop/aimodule_neutral/two
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 2
-
-/obj/effect/spawner/lootdrop/aimodule_neutral/three
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 3
-
 /obj/effect/spawner/lootdrop/aimodule_harmful // These will get the shuttle called
 	name = "harmful AI module spawner"
 	loot = list(
@@ -224,13 +204,3 @@
 				/obj/item/aiModule/core/full/tyrant,
 				/obj/item/aiModule/core/full/thermurderdynamic
 				)
-
-/obj/effect/spawner/lootdrop/aimodule_harmful/two
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 2
-
-/obj/effect/spawner/lootdrop/aimodule_harmful/three
-	fan_out_items = TRUE
-	lootdoubles = FALSE
-	lootcount = 3

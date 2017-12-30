@@ -2376,7 +2376,11 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmless/three,
+/obj/effect/spawner/lootdrop/aimodule_harmless{
+	fan_out_items = 1,
+	lootdoubles = 0,
+	lootcount = 3
+	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
@@ -2491,7 +2495,11 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/lootdrop/aimodule_harmful/two,
+/obj/effect/spawner/lootdrop/aimodule_harmful{
+	fan_out_items = 1,
+	lootdoubles = 0,
+	lootcount = 2
+	},
 /obj/item/aiModule/supplied/oxygen{
 	pixel_x = -3;
 	pixel_y = -3
@@ -4353,7 +4361,11 @@
 /area/ai_monitored/turret_protected/ai)
 "ahV" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/aimodule_neutral/three,
+/obj/effect/spawner/lootdrop/aimodule_neutral{
+	fan_out_items = 1,
+	lootdoubles = 0,
+	lootcount = 3
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
