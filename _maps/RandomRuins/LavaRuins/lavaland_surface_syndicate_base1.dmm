@@ -274,7 +274,7 @@
 "dL" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/structure/closet/crate,
 /obj/item/extinguisher{
@@ -432,7 +432,7 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -747,7 +747,6 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "ex" = (
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -1534,12 +1533,11 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/l3closet,
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -2559,7 +2557,7 @@
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2579,7 +2577,6 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "hP" = (
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -2594,7 +2591,7 @@
 /obj/item/ammo_box/magazine/m10mm,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2919,7 +2916,7 @@
 "iB" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -3011,7 +3008,7 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -3352,7 +3349,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3390,7 +3387,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3486,7 +3483,6 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jC" = (
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -3601,7 +3597,7 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -3700,7 +3696,6 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jR" = (
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -4022,7 +4017,7 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/machinery/vending/coffee{
 	extended_inventory = 1
@@ -4970,7 +4965,7 @@
 	dir = 8;
 	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = 150
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
@@ -5296,7 +5291,7 @@
 /obj/structure/sign/barsign{
 	pixel_y = -32;
 	req_access = null;
-	req_access_txt = "150"
+	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
@@ -5432,7 +5427,6 @@
 	use_power = 0
 	},
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -5765,7 +5759,6 @@
 	req_access = 150
 	},
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -5997,7 +5990,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 152
+	req_access = 150
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6398,7 +6391,6 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/small{
-	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plating,
