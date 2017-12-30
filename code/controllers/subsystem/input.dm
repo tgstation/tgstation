@@ -40,6 +40,10 @@ SUBSYSTEM_DEF(input)
 			"Tab" = "\".winset \\\"mainwindow.macro=old_hotkeys map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\"",
 			"Ctrl+T" = "say",
 			"Ctrl+O" = "ooc",
+			"F1" = "adminhelp",
+			"F2" = "ooc",
+			"F3" = "say",
+			"F4" = "me"
 			),
 		"old_hotkeys" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
