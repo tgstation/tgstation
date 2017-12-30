@@ -138,6 +138,12 @@
 	if(ishuman(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
 
+/obj/item/clothing/head/kitty/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(. && M && M.mind && (M.mind.assigned_role in GLOB.command_positions))
+		to_chat(M, "<span class='warning'>You cannot wear this, as it'd discredit the authority of Nanotrasen and Central Command.</span>")
+		return FALSE
+
 /obj/item/clothing/head/kitty/genuine
 	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
 
