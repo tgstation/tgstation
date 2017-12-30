@@ -3257,7 +3257,8 @@
 	height = 7;
 	id = "supply_away";
 	name = "CentCom";
-	width = 20
+	width = 20;
+	json_key = "cargo"
 	},
 /turf/open/space,
 /area/space)
@@ -3543,7 +3544,7 @@
 	id = "emergency_syndicate";
 	name = "Syndicate Auxillary Shuttle Dock";
 	turf_type = /turf/open/floor/plating/asteroid/snow;
-	width = 50
+	width = 50;
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
@@ -8033,7 +8034,8 @@
 	height = 50;
 	id = "emergency_away";
 	name = "CentCom Emergency Shuttle Dock";
-	width = 50
+	width = 50;
+	json_key = "emergency"
 	},
 /turf/open/space,
 /area/space)
@@ -8080,48 +8082,6 @@
 /area/shuttle/syndicate/eva)
 "vq" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/airlock)
-"vr" = (
-/obj/docking_port/stationary{
-	area_type = /area/syndicate_mothership;
-	baseturf_type = /turf/open/floor/plating/asteroid/snow;
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_away";
-	name = "syndicate recon outpost";
-	turf_type = /turf/open/floor/plating/asteroid/snow;
-	width = 18
-	},
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "outer blast door"
-	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_x = -26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate";
-	name = "syndicate infiltrator";
-	port_direction = 1;
-	roundstart_move = "syndicate_away";
-	hidden = 1;
-	width = 18;
-	timid = 0
-	},
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
 /obj/structure/sign/securearea{
@@ -8806,7 +8766,8 @@
 	height = 13;
 	id = "ferry_away";
 	name = "CentCom Ferry Dock";
-	width = 5
+	width = 5;
+	json_key = "ferry"
 	},
 /turf/open/space,
 /area/space)
@@ -14697,6 +14658,7 @@
 	name = "syndicate recon outpost";
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
+	roundstart_template = /datum/map_template/shuttle/infiltrator/basic
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)

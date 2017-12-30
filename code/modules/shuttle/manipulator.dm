@@ -190,8 +190,7 @@
 
 	update_icon()
 
-/obj/machinery/shuttle_manipulator/proc/action_load(
-	datum/map_template/shuttle/loading_template)
+/obj/machinery/shuttle_manipulator/proc/action_load(datum/map_template/shuttle/loading_template, obj/docking_port/stationary/destination_port)
 	// Check for an existing preview
 	if(preview_shuttle && (loading_template != preview_template))
 		preview_shuttle.jumpToNullSpace()
@@ -207,12 +206,12 @@
 	var/mode = SHUTTLE_IDLE
 	var/obj/docking_port/stationary/D
 
-	if(existing_shuttle)
+	if(istype(destination_port))
+		D = destination_port
+	else if(existing_shuttle)
 		timer = existing_shuttle.timer
 		mode = existing_shuttle.mode
 		D = existing_shuttle.get_docked()
-	else
-		D = preview_shuttle.findRoundstartDock()
 
 	if(!D)
 		var/m = "No dock found for preview shuttle ([preview_template.name]), aborting."

@@ -167,6 +167,9 @@
 
 	var/last_dock_time
 
+	var/datum/map_template/shuttle/roundstart_template
+	var/json_key
+
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
@@ -183,6 +186,28 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
+
+/obj/docking_port/stationary/proc/load_roundstart()
+	if(json_key)
+		var/sid = SSmapping.config.shuttles[json_key]
+		var/datum/map_template/shuttle/D = SSmapping.shuttle_templates[sid]
+		if(!istype(D))
+			CRASH("Bad json_key [json_key] for stationary port [src]")
+
+		roundstart_template = D
+
+	if(ispath(roundstart_template))
+		for(var/sid in SSmapping.shuttle_templates)
+			var/datum/map_template/shuttle/D = SSmapping.shuttle_templates[sid]
+			if(D.type == roundstart_template)
+				roundstart_template = D
+				break
+
+	if(istype(roundstart_template))
+		SSshuttle.manipulator.action_load(roundstart_template, src)
+		return
+	if(roundstart_template)
+		CRASH("Bad roundstart_template type ([roundstart_template]) for [src]")
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -234,7 +259,7 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-	var/roundstart_move				//id of port to send shuttle to at roundstart
+	var/roundstart_move // REMOVE THIS
 
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
@@ -474,15 +499,6 @@
 /obj/docking_port/mobile/proc/check_poddoors()
 	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
-
-/obj/docking_port/mobile/proc/findRoundstartDock()
-	if(!roundstart_move)
-		CRASH("`roundstart_move` of [src] is null.")
-
-	return SSshuttle.getDock(roundstart_move)
-
-/obj/docking_port/mobile/proc/dockRoundstart()
-	. = dock_id(roundstart_move)
 
 /obj/docking_port/mobile/proc/dock_id(id)
 	var/port = SSshuttle.getDock(id)

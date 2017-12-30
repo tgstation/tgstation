@@ -74,8 +74,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	initial_load()
 
-	initial_move()
-
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
@@ -94,9 +92,9 @@ SUBSYSTEM_DEF(shuttle)
 	if(!istype(manipulator))
 		CRASH("No shuttle manipulator found.")
 
-	for(var/d in shuttle_templates_to_load)
-		var/datum/map_template/shuttle/D = d
-		manipulator.action_load(D)
+	for(var/s in stationary)
+		var/obj/docking_port/stationary/S = s
+		S.load_roundstart()
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
@@ -561,14 +559,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	M.assigned_transit = new_transit_dock
 	return new_transit_dock
-
-/datum/controller/subsystem/shuttle/proc/initial_move()
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(!M.roundstart_move)
-			continue
-		M.dockRoundstart()
-		M.roundstart_move = FALSE
-		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/Recover()
 	if (istype(SSshuttle.mobile))

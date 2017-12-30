@@ -5430,7 +5430,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "amI" = (
-/obj/configuration/shuttle_loader/labour/box,
 /turf/open/space/basic,
 /area/space)
 "amJ" = (
@@ -5909,7 +5908,8 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/labour/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -12377,7 +12377,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aEr" = (
-/obj/configuration/shuttle_loader/arrival/box,
 /turf/open/space/basic,
 /area/space)
 "aEs" = (
@@ -35444,7 +35443,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -51434,7 +51434,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cxo" = (
-/obj/configuration/shuttle_loader/emergency/box,
 /turf/open/space/basic,
 /area/space)
 "cxp" = (
@@ -51515,7 +51514,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cxC" = (
-/obj/configuration/shuttle_loader/ferry/fancy,
 /turf/open/space/basic,
 /area/space)
 "cxD" = (
@@ -51913,7 +51911,6 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyB" = (
-/obj/configuration/shuttle_loader/cargo/box,
 /turf/open/space/basic,
 /area/space)
 "cyC" = (
@@ -54901,7 +54898,8 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/arrival/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -55607,7 +55605,6 @@
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "cTo" = (
-/obj/configuration/shuttle_loader/mining/box,
 /turf/open/space/basic,
 /area/space)
 "cTx" = (
@@ -56027,7 +56024,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "QlF" = (
-/obj/configuration/shuttle_loader/whiteship/meta,
 /turf/open/space/basic,
 /area/space)
 "QlG" = (
