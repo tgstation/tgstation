@@ -27,7 +27,7 @@
 	var/mutable_appearance/MA = new()
 	if(H)
 		MA.copy_overlays(H)
-		MA.pixel_y = 12 //Or some value that lines it up on the spike bit better
+		MA.pixel_y = 12
 		add_overlay(H)
 
 /obj/structure/headpike/attack_hand(mob/user)
