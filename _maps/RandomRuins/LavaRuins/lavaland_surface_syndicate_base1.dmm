@@ -2740,7 +2740,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "ih" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2748,7 +2748,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "ii" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
@@ -2857,13 +2857,13 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "iw" = (
 /obj/structure/chair{
 	dir = 4
@@ -3265,7 +3265,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "jf" = (
 /obj/machinery/door/airlock{
 	name = "Cabin 1";
@@ -3333,7 +3333,7 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "jl" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -4588,13 +4588,13 @@
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/syndicate_lava_base/arrivals)
+/area/lavaland/surface/outdoors)
 "lx" = (
 /obj/structure/bookcase/random,
 /obj/effect/decal/cleanable/dirt,
