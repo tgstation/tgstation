@@ -23,7 +23,7 @@
 	complexity = 30
 	w_class = WEIGHT_CLASS_SMALL
 	inputs = list(
-		"on" = IC_PINTYPE_BOOLEAN,
+		"intercept" = IC_PINTYPE_BOOLEAN,
 		"no pass" = IC_PINTYPE_BOOLEAN
 		)
 	outputs = list(
@@ -48,7 +48,7 @@
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/Destroy()
 	qdel(receiver)
-	GLOB.ic_jammers -= src
+	LAZYREMOVE(GLOB.ic_jammers,src)
 	..()
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/receive_signal(datum/signal/signal)
@@ -71,7 +71,7 @@
 		else
 			power_draw_idle = 100
 	else
-		GLOB.ic_jammers -= src
+		LAZYREMOVE(GLOB.ic_jammers,src)
 		if(get_pin_data(IC_INPUT, 1))
 			power_draw_idle = 100
 		else

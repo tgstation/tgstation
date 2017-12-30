@@ -20,7 +20,7 @@
 		GLOB.remote_control = !GLOB.remote_control
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-	if(GLOB.ic_jammers.len && GLOB.remote_control)
+	if(LAZYLEN(GLOB.ic_jammers) && GLOB.remote_control)
 		for(var/i in GLOB.ic_jammers)
 			var/obj/item/integrated_circuit/input/tcomm_interceptor/T = i
 			var/obj/item/O = T.get_object()

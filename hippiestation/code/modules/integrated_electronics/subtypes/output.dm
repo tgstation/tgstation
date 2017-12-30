@@ -21,11 +21,11 @@
 	..()
 	radio = new(src)
 	radio.frequency = FREQ_COMMON
-	GLOB.ic_speakers += src
+	LAZYADD(GLOB.ic_speakers,src)
 
 /obj/item/integrated_circuit/output/text_to_radio/Destroy()
 	qdel(radio)
-	GLOB.ic_speakers -= src
+	LAZYREMOVE(GLOB.ic_speakers,src)
 	..()
 
 /obj/item/integrated_circuit/output/text_to_radio/on_data_written()
