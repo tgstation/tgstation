@@ -97,14 +97,14 @@
 			SSshuttle.points += -credstoconv
 			say("Thank you for your transaction. You have successfully converted [credstoconv] credits to [bitcoinsreceived] research points.")
 	if(href_list["bitcointocreds"])
-		var/coinstoconv = input(usr, "Please enter the number of research points you want to convert to credits. The current conversion rate is 1 research point to [CONFIG_GET(number/cargo_credits_per_research_point)*0.1] credits", "Research Points to Credits") as null|num
+		var/coinstoconv = input(usr, "Please enter the number of research points you want to convert to credits. The current conversion rate is 1 research point to [CONFIG_GET(number/cargo_credits_per_research_point)*CONFIG_GET(number/research_to_credit_modifier)] credits", "Research Points to Credits") as null|num
 		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(coinstoconv)
 			if(coinstoconv > linked_techweb.research_points)
 				say("Insufficient research points.")
 				return
-			var/creditssreceived = coinstoconv*(CONFIG_GET(number/cargo_credits_per_research_point)*0.1)
+			var/creditssreceived = coinstoconv*(CONFIG_GET(number/cargo_credits_per_research_point)*CONFIG_GET(number/research_to_credit_modifier))
 			linked_techweb.research_points += creditssreceived
 			SSshuttle.points += -coinstoconv
 			say("Thank you for your transaction. You have successfully converted [coinstoconv] research points to [creditssreceived] credits.")

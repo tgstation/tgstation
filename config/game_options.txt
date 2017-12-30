@@ -496,3 +496,6 @@ MICE_ROUNDSTART 10
 
 ## Determines how many cargo credits are in a single research point.
 CARGO_CREDITS_PER_RESEARCH_POINT 500
+
+## Determines the modifier for research point to cargo credit transactions.
+RESEARCH_TO_CREDIT_MODIFIER 0.01

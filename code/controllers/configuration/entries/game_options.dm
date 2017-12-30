@@ -261,3 +261,7 @@
 
 /datum/config_entry/number/cargo_credits_per_research_point
 	value = 500
+
+/datum/config_entry/number/research_to_credit_modifier
+	value = 0.01
+	integer = FALSE
