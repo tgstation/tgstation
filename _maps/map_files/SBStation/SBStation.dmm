@@ -4630,6 +4630,7 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_x = -32
 	},
+/obj/item/clothing/gloves/boxing,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/theatre)
 "alg" = (
