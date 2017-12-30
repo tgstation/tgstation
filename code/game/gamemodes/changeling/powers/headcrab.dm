@@ -10,7 +10,6 @@
 	set waitfor = FALSE
 	switch(alert("Are we sure we wish to kill ourself and create a headcrab?",,"Yes", "No"))
 		if("No")
-			set waitfor = TRUE
 			return
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone("head", 1)
