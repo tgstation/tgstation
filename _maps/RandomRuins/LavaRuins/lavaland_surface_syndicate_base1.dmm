@@ -560,7 +560,6 @@
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "el" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -3055,7 +3054,6 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ja" = (
 /obj/effect/turf_decal/stripes/red/corner{
-	icon_state = "warninglinecorner_red";
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -3813,7 +3811,7 @@
 	pixel_y = 5
 	},
 /obj/structure/cable/yellow{
-	icon_state = "1-2"	
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -5393,7 +5391,6 @@
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	icon_state = "closed";
 	id_tag = "syndie_lavaland_incinerator_interior";
 	locked = 1;
 	name = "Turbine Interior Airlock";
@@ -5885,7 +5882,6 @@
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	icon_state = "closed";
 	id_tag = "syndie_lavaland_incinerator_exterior";
 	locked = 1;
 	name = "Turbine Exterior Airlock";
@@ -5941,17 +5937,15 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oB" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
 	id = "syndie_lavaland_inc_in"
+	},
+/obj/structure/sign/vacuum{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
 	},
 /turf/open/floor/engine{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
