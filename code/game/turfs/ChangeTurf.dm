@@ -44,6 +44,10 @@
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
 	if(!path)
 		return
+	if(path == /turf/open/space/basic)
+		// basic doesn't initialize and this will cause issues
+		// no warning though because this can happen naturaly as a result of it being built on top of
+		path = /turf/open/space
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP)) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
@@ -142,7 +146,7 @@
 	return ChangeTurf(fake_turf_type, temp_baseturfs)
 
 // Copy an existing turf and put it on top
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY) // x, 1, 0
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
 	new_baseturfs += type
