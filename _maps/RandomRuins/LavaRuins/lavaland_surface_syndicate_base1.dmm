@@ -1673,6 +1673,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "gg" = (
@@ -6392,6 +6393,16 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/syndicate_lava_base/engineering)
+"oI" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/arrivals)
 
 (1,1,1) = {"
 aa
@@ -7184,7 +7195,7 @@ mU
 np
 nP
 mS
-mq
+oI
 oD
 lT
 ab
