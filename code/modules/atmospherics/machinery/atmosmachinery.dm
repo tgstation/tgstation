@@ -60,8 +60,8 @@ Pipelines + Other Objects -> Pipe network
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
-	for(DEVICE_TYPE_LOOP)
-		nullifyNode(I)
+	for(var/i in 1 to device_type)
+		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
 
@@ -79,22 +79,22 @@ Pipelines + Other Objects -> Pipe network
 	// Called to build a network from this node
 	return
 
-/obj/machinery/atmospherics/proc/nullifyNode(I)
-	if(NODE_I)
-		var/obj/machinery/atmospherics/N = NODE_I
+/obj/machinery/atmospherics/proc/nullifyNode(i)
+	if(nodes[i])
+		var/obj/machinery/atmospherics/N = nodes[i]
 		N.disconnect(src)
-		NODE_I = null
+		nodes[i] = null
 
 /obj/machinery/atmospherics/proc/getNodeConnects()
 	var/list/node_connects = list()
 	node_connects.len = device_type
 
-	for(DEVICE_TYPE_LOOP)
+	for(var/i in 1 to device_type)
 		for(var/D in GLOB.cardinals)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
-				node_connects[I] = D
+				node_connects[i] = D
 				break
 	return node_connects
 
@@ -109,10 +109,10 @@ Pipelines + Other Objects -> Pipe network
 	if(!node_connects) //for pipes where order of nodes doesn't matter
 		node_connects = getNodeConnects()
 
-	for(DEVICE_TYPE_LOOP)
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
-			if(can_be_node(target, I))
-				NODE_I = target
+	for(var/i in 1 to device_type)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
+			if(can_be_node(target, i))
+				nodes[i] = target
 				break
 	update_icon()
 
@@ -171,8 +171,7 @@ Pipelines + Other Objects -> Pipe network
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	var/I = nodes.Find(reference)
-	NODE_I = null
+	nodes[nodes.Find(reference)] = null
 	update_icon()
 
 /obj/machinery/atmospherics/update_icon()

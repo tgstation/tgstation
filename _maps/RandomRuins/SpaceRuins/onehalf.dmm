@@ -297,7 +297,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aV" = (
-/obj/machinery/door/airlock/glass_medical,
+/obj/machinery/door/airlock/medical/glass,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -984,7 +984,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cE" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
 /turf/open/floor/plasteel,
@@ -998,7 +998,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
 /turf/open/floor/plasteel,

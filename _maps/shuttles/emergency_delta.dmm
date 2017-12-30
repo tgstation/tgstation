@@ -306,7 +306,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
@@ -353,7 +353,6 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/lava/smooth/lava_land_surface;
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -423,7 +422,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aV" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
@@ -650,14 +649,14 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bt" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bu" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
 	req_access_txt = "19"
 	},

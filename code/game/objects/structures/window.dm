@@ -283,11 +283,10 @@
 		return
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
-		var/turf/T = loc
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/i in debris)
 				var/obj/item/I = i
-				I.loc = T
+				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
@@ -380,7 +379,7 @@
 			return
 
 		var/ratio = obj_integrity / max_integrity
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 
 		if(smooth)
 			queue_smooth(src)

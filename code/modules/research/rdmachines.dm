@@ -61,7 +61,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if(is_open_container() && O.is_open_container())
+	if(is_refillable() && O.is_drainable())
 		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return TRUE

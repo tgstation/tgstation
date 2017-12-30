@@ -70,7 +70,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(current_cycle-10))
-				M.cure_nearsighted()
+				M.cure_nearsighted(list(EYE_DAMAGE))
 	..()
 	return
 
@@ -170,6 +170,22 @@
 	if(!iscarbon(M))
 		return
 	M.emote("laugh")
+	..()
+
+/datum/reagent/consumable/superlaughter
+	name = "Super Laughter"
+	id = "superlaughter"
+	description = "Funny until you're the one laughing."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "#FF4DD2"
+	taste_description = "laughter"
+
+/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M)
+	if(!iscarbon(M))
+		return
+	if(prob(30))
+		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
+		M.Stun(5)
 	..()
 
 /datum/reagent/consumable/potato_juice
