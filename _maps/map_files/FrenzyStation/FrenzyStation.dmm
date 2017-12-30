@@ -338,7 +338,7 @@
 /turf/closed/wall/r_wall,
 /area/bridge)
 "ba" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 2;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -368,7 +368,7 @@
 /area/bridge)
 "bd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 2;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -2239,7 +2239,7 @@
 /area/storage/primary)
 "fu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Primary Tool Storage";
 	req_access_txt = "0"
 	},
@@ -2348,7 +2348,7 @@
 /area/storage/primary)
 "fI" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Primary Tool Storage";
 	req_access_txt = "0"
 	},
@@ -2372,7 +2372,7 @@
 	},
 /area/hallway/primary/central)
 "fK" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Equipment Room";
 	req_access_txt = "1"
 	},
@@ -2710,7 +2710,7 @@
 /area/hallway/primary/central)
 "gv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "secexterior";
 	name = "Security";
 	req_access_txt = "63"
@@ -2836,7 +2836,7 @@
 /area/hallway/primary/central)
 "gK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "secexterior";
 	name = "Security";
 	req_access_txt = "63"
@@ -3018,7 +3018,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "hh" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "";
 	name = "Cryostasis";
 	req_access_txt = "0"
@@ -3460,7 +3460,7 @@
 /area/medical/sleeper)
 "ik" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
@@ -3580,7 +3580,7 @@
 /area/medical/sleeper)
 "iA" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
@@ -4668,13 +4668,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"lq" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
-	name = "Galley"
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
 "lr" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar,
@@ -6618,7 +6611,7 @@
 /area/engine/atmos)
 "pL" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	cyclelinkeddir = 0;
 	name = "Life Support";
 	req_access_txt = "24"
@@ -6689,7 +6682,7 @@
 /area/engine/engineering)
 "pW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine";
 	req_access_txt = "10"
 	},
@@ -7110,7 +7103,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "qN" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
@@ -8816,7 +8809,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Teleporter"
 	},
 /turf/open/floor/plasteel/dark,
@@ -8906,7 +8899,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "uL" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 1;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -8919,7 +8912,7 @@
 /area/bridge)
 "uM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 1;
 	name = "Bridge";
 	req_access_txt = "19"
