@@ -135,43 +135,11 @@
 	if (orbiting)
 		orbiting.Check()
 
-	if(flags_1 & CLEAN_ON_MOVE_1)
-		clean_on_move()
-
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
 	if(proximity_monitor)
 		proximity_monitor.HandleMove()
 
 	return 1
-
-/atom/movable/proc/clean_on_move()
-	var/turf/tile = loc
-	if(isturf(tile))
-		tile.clean_blood()
-		for(var/A in tile)
-			if(is_cleanable(A))
-				qdel(A)
-			else if(istype(A, /obj/item))
-				var/obj/item/cleaned_item = A
-				cleaned_item.clean_blood()
-			else if(ishuman(A))
-				var/mob/living/carbon/human/cleaned_human = A
-				if(cleaned_human.lying)
-					if(cleaned_human.head)
-						cleaned_human.head.clean_blood()
-						cleaned_human.update_inv_head()
-					if(cleaned_human.wear_suit)
-						cleaned_human.wear_suit.clean_blood()
-						cleaned_human.update_inv_wear_suit()
-					else if(cleaned_human.w_uniform)
-						cleaned_human.w_uniform.clean_blood()
-						cleaned_human.update_inv_w_uniform()
-					if(cleaned_human.shoes)
-						cleaned_human.shoes.clean_blood()
-						cleaned_human.update_inv_shoes()
-					cleaned_human.clean_blood()
-					cleaned_human.wash_cream()
-					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
 	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
@@ -620,8 +588,8 @@
 
 /atom/movable/proc/in_bounds()
 	. = FALSE
-	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
+	var/turf/T = get_turf(src)
+	if (T && (is_centcom_level(T.z) || is_station_level(T.z) || is_transit_level(T.z)))
 		. = TRUE
 
 

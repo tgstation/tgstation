@@ -360,7 +360,7 @@
 					if(isdrone(M))
 						drones++
 						continue
-					if(M.z == ZLEVEL_CENTCOM)
+					if(is_centcom_level(M.z))
 						living_skipped++
 						continue
 					living_players++

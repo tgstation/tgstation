@@ -391,7 +391,7 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
-	if((SSshuttle.lockdown && (z in GLOB.station_z_levels)) || !canMove())	//emp went off, no escape
+	if((SSshuttle.lockdown && is_station_level(z)) || !canMove())	//emp went off, no escape
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
@@ -465,7 +465,7 @@
 		var/turf/T1 = L1[i]
 		if(!T1)
 			continue
-		if(T0.type != T0.baseturf)
+		if(T0.type != T0.baseturfs)
 			ripple_turfs += T1
 
 	return ripple_turfs

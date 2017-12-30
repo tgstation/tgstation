@@ -293,7 +293,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -302,7 +302,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_disability(CLUMSY) && (wielded) && prob(40))
+	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))

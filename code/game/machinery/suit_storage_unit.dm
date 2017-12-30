@@ -236,8 +236,7 @@
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				I.clean_blood()
-				I.fingerprints = list()
+				I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
 				var/datum/component/radioactive/contamination = I.GetComponent(/datum/component/radioactive)
 				if(contamination)
 					qdel(contamination)

@@ -73,7 +73,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-	
+
 	var/datum/antagonist/wizard/apprentice/app = new(app_mind)
 	app.master = user
 	app.school = kind
@@ -108,7 +108,7 @@
 	if(!user.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!user.onSyndieBase())
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
 		return FALSE
 	return TRUE
@@ -165,7 +165,7 @@
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(!creator_op)
 		return
-	
+
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
@@ -187,7 +187,7 @@
 	R.real_name = R.name
 
 	R.key = C.key
-	
+
 	var/datum/antagonist/nukeop/new_borg = new(R.mind)
 	new_borg.send_to_spawnpoint = FALSE
 	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
@@ -208,7 +208,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(!(user.z in GLOB.station_z_levels))
+	if(!is_station_level(user.z))
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
