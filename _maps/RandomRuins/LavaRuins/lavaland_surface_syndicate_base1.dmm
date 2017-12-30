@@ -925,7 +925,8 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -24;
-	req_access = null
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
@@ -1016,7 +1017,7 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "eV" = (
 /obj/structure/closet/secure_closet/chemical{
-	req_access_txt = "152"
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -1785,7 +1786,6 @@
 /obj/machinery/door/airlock/virology{
 	frequency = 1449;
 	id_tag = "lavaland_syndie_virology_exterior";
-	locked = 0;
 	name = "Virology Lab Exterior Airlock";
 	req_access_txt = "150"
 	},
@@ -2686,7 +2686,6 @@
 "ir" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -2702,7 +2701,6 @@
 "it" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -2833,7 +2831,6 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iH" = (
 /obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/red{
@@ -3075,7 +3072,6 @@
 "jb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -3089,7 +3085,6 @@
 "jd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
-	icon_state = "warningline_red";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
