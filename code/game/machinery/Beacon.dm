@@ -1,5 +1,4 @@
 /obj/machinery/bluespace_beacon
-
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_beaconf"
 	name = "bluespace gigabeacon"
@@ -9,41 +8,24 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
-	var/obj/item/device/radio/beacon/Beacon
+	var/obj/item/device/radio/beacon/beacon
 
 /obj/machinery/bluespace_beacon/Initialize()
 	. = ..()
+	beacon = new(src)
+	beacon.invisibility = INVISIBILITY_MAXIMUM
 	var/turf/T = loc
-	Beacon = new(T)
-	Beacon.invisibility = INVISIBILITY_MAXIMUM
-
 	hide(T.intact)
 
 /obj/machinery/bluespace_beacon/Destroy()
-	QDEL_NULL(Beacon)
+	QDEL_NULL(beacon)
 	return ..()
 
 // update the invisibility and icon
 /obj/machinery/bluespace_beacon/hide(intact)
 	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	updateicon()
+	update_icon()
 
 // update the icon_state
-/obj/machinery/bluespace_beacon/proc/updateicon()
-	var/state="floor_beacon"
-
-	if(invisibility)
-		icon_state = "[state]f"
-
-	else
-		icon_state = "[state]"
-
-/obj/machinery/bluespace_beacon/process()
-	if(!Beacon)
-		var/turf/T = loc
-		Beacon = new(T)
-		Beacon.invisibility = INVISIBILITY_MAXIMUM
-	else if (Beacon.loc != loc)
-		Beacon.forceMove(loc)
-
-	updateicon()
+/obj/machinery/bluespace_beacon/update_icon()
+	icon_state = "floor_beacon[invisibility ? "f" : null]"
