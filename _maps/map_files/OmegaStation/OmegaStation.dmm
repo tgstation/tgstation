@@ -23716,7 +23716,6 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -24208,7 +24207,6 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -74138,7 +74136,7 @@ aRf
 aSk
 aTr
 aUt
-aVk
+aVl
 aWg
 aRf
 aXr
