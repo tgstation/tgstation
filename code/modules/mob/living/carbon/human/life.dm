@@ -393,7 +393,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					else
 						ballmer_percent = 1 // right on the money
 
-					var/ballmer_percent = (drunkenness - 12.9) / (13.8 - 12.9)
 					if(ballmer_percent > 1)
 						ballmer_percent = 1
 					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
