@@ -618,6 +618,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/clothing/accessory/rank/lieutenant,
+/obj/item/door_remote/head_of_security,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abk" = (
@@ -1540,14 +1541,14 @@
 /area/security/main)
 "ado" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/restraints/handcuffs,
+/obj/machinery/syndicatebomb/training,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "adp" = (
 /obj/structure/table,
 /obj/item/device/taperecorder,
 /obj/item/restraints/handcuffs,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "adq" = (
@@ -10125,7 +10126,6 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/captain)
 "ayd" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -10135,20 +10135,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
-	layer = 2.9;
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/crew_quarters/heads/captain)
 "aye" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "Captain's Office";
-	req_access = null;
-	req_access_txt = "20"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/white{
 	icon_state = "2-4"
@@ -10158,6 +10148,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "captainhall";
+	name = "Captain's Hall Shutters"
+	},
+/obj/machinery/door/airlock/glass_command{
+	name = "Captain's Office";
+	req_access_txt = "20"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/captain)
@@ -10277,33 +10275,30 @@
 "ayo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "Head of Personnel's Office";
-	req_access = null;
-	req_access_txt = "57"
-	},
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "hopblast";
+	name = "HoP Blast door"
+	},
+/obj/machinery/door/airlock/glass_command{
+	name = "Head of Personnel's Office";
+	req_access_txt = "57"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "ayp" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
-	layer = 2.9;
-	name = "bridge blast door"
-	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
 "ayq" = (
 /turf/closed/wall/r_wall,
@@ -10791,6 +10786,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/hand_tele,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "azy" = (
@@ -10903,6 +10899,11 @@
 	locked = 0;
 	pixel_y = 23
 	},
+/obj/item/storage/box/silver_ids{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/ids,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
@@ -12444,11 +12445,6 @@
 /area/crew_quarters/heads/hop)
 "aDk" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/ids,
-/obj/item/storage/box/silver_ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/hop";
 	dir = 8;
@@ -12459,6 +12455,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aDl" = (
@@ -16940,6 +16938,7 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/item/storage/box/bodybags,
+/obj/item/cautery,
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "aMy" = (
@@ -20593,7 +20592,7 @@
 "aUW" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4;
-	on = 1;
+	on = 0;
 	target_temperature = 80
 	},
 /obj/structure/cable/white{
@@ -21842,7 +21841,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Gas to Filter";
-	on = 1
+	on = 0
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -23932,17 +23931,14 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bcJ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/circuit,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
 "bcK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bcL" = (
 /obj/effect/turf_decal/delivery,
@@ -23953,14 +23949,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bcN" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bcO" = (
@@ -24008,45 +23997,28 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "bcT" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/camera/motion{
 	c_tag = "Satellite - AI Access";
 	dir = 4;
 	name = "motion-sensitive security camera";
 	network = list("SS13","Satellite")
 	},
-/turf/open/floor/circuit,
+/turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bcU" = (
 /obj/machinery/porta_turret/ai{
 	installation = /obj/item/gun/energy/e_gun
 	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai)
-"bcV" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
 "bcW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bcX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bcY" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bcZ" = (
 /obj/structure/cable{
@@ -24076,21 +24048,31 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bdd" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bde" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/machinery/door/window{
+	base_state = "rightsecure";
+	dir = 2;
+	icon_state = "rightsecure";
+	name = "Primary AI Core Access";
+	req_access_txt = "16"
+	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bdf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bdg" = (
@@ -24135,60 +24117,7 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"bdl" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
 "bdm" = (
-/obj/machinery/door/window{
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
-	name = "Primary AI Core Access";
-	req_access_txt = "16"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bdn" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bdo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/xmastree,
-/turf/open/floor/carpet,
-/area/chapel/main)
-"bdr" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
-"bds" = (
-/obj/machinery/turretid{
-	control_area = /area/ai_monitored/turret_protected/ai;
-	name = "turret control panel 2";
-	pixel_x = -28;
-	tag = "Turret Control 2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bdt" = (
 /obj/effect/landmark/start/ai,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -24214,30 +24143,34 @@
 	pixel_x = 28;
 	pixel_y = -31
 	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bdu" = (
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	name = "AI RC";
-	pixel_x = 30
+/obj/machinery/turretid{
+	control_area = /area/ai_monitored/turret_protected/ai;
+	name = "turret control panel 2";
+	pixel_x = -28;
+	tag = "Turret Control 2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"bdx" = (
+"bdn" = (
 /obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/item/clothing/accessory/medal/service_star{
 	name = "Service Star - Hal";
 	commended = 1
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
-"bdy" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light{
+"bdo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/xmastree,
+/turf/open/floor/carpet,
+/area/chapel/main)
+"bdr" = (
+/obj/structure/table/reinforced,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bdC" = (
@@ -25087,24 +25020,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"bfv" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
-"bfw" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
 "bfx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -25151,6 +25066,15 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"qyI" = (
+/obj/machinery/porta_turret/ai{
+	installation = /obj/item/gun/energy/e_gun
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ai_monitored/turret_protected/ai)
 
 (1,1,1) = {"
 aaa
@@ -51014,9 +50938,9 @@ bbs
 bbP
 bcb
 bcr
-bcI
+bcr
 bcT
-bcI
+bcr
 bcr
 bcr
 bcr
@@ -51531,9 +51455,9 @@ bct
 bcJ
 bcJ
 bcJ
-bfv
-bfx
-bdx
+bcr
+bcr
+bcr
 bcr
 bcr
 aad
@@ -51786,11 +51710,11 @@ bbS
 bce
 bcu
 bcK
-bcV
+bcK
 bdd
-bdl
-bds
+bfx
 bdr
+bcr
 bcr
 bcr
 aaa
@@ -52046,8 +51970,8 @@ bcL
 bcW
 bde
 bdm
-bdt
 bdr
+bcr
 bcr
 bcr
 aaa
@@ -52300,11 +52224,11 @@ bbU
 bcg
 bcw
 bcM
-bcX
+bcM
 bdf
 bdn
-bdu
 bfz
+bcr
 bcr
 bcr
 bfB
@@ -52556,12 +52480,12 @@ bbw
 bbU
 bch
 bcx
-bcN
-bcN
-bcN
-bfw
-bdy
-bdr
+bcJ
+bcJ
+bcJ
+bcr
+bcr
+bcr
 bcr
 bcr
 aad
@@ -52814,7 +52738,7 @@ bbQ
 bcc
 bcy
 bcI
-bcU
+qyI
 bcI
 bcr
 bcr
@@ -53070,9 +52994,9 @@ bby
 bbU
 bci
 bcx
-bcI
-bcY
-bcI
+bcr
+bcr
+bcr
 bcr
 bcr
 bcr
