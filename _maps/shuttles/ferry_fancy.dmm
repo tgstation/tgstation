@@ -72,7 +72,6 @@
 	name = "ferry shuttle";
 	port_direction = 1;
 	preferred_direction = 4;
-	roundstart_move = "ferry_away";
 	timid = 1;
 	width = 5
 	},

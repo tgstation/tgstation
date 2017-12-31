@@ -92,7 +92,6 @@
 /obj/docking_port/mobile/supply{
 	dir = 4;
 	dwidth = 4;
-	roundstart_move = "supply_away";
 	timid = 1;
 	width = 12
 	},

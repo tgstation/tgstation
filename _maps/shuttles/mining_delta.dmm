@@ -78,8 +78,7 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 8;
-	width = 7;
-	roundstart_move = "mining_home"
+	width = 7
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/mining)

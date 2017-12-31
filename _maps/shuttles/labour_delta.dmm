@@ -251,8 +251,7 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	width = 9;
-	roundstart_move = "laborcamp_home"
+	width = 9
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

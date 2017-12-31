@@ -756,7 +756,6 @@
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
 #include "code\game\objects\buckling.dm"
-#include "code\game\objects\configuration.dm"
 #include "code\game\objects\empulse.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\obj_defense.dm"

@@ -354,7 +354,6 @@
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "syndicate infiltrator";
 	port_direction = 4;
-	roundstart_move = "syndicate_away";
 	width = 23
 	},
 /obj/structure/fans/tiny,

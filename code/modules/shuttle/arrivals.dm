@@ -8,8 +8,6 @@
 	dir = WEST
 	port_direction = SOUTH
 
-	roundstart_move = "arrivals_stationary"
-
 	callTime = INFINITY
 	ignitionTime = 50
 

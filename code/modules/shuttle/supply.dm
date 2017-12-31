@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
-	roundstart_move = "supply_away"
 
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE

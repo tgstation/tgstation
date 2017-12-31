@@ -112,8 +112,7 @@
 	name = "labor camp shuttle";
 	port_direction = 4;
 	timid = 1;
-	width = 9;
-	roundstart_move = "laborcamp_home"
+	width = 9
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)

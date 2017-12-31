@@ -94,7 +94,6 @@
 	name = "White Ship";
 	port_direction = 4;
 	preferred_direction = 1;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 9
 	},

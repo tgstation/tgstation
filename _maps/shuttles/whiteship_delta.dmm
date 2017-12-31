@@ -1519,7 +1519,6 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 32
 	},
