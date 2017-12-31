@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, DISABILITY_BLIND disability, and DISABILITY_NEARSIGHT disability.
 
 
 ////////////////////////////// STUN ////////////////////////////////////
@@ -183,33 +183,33 @@
 /////////////////////////////////// DISABILITY PROCS ////////////////////////////////////
 
 /mob/living/proc/cure_blind(list/sources)
-	remove_disability(BLIND, sources)
-	if(!has_disability(BLIND))
+	remove_disability(DISABILITY_BLIND, sources)
+	if(!has_disability(DISABILITY_BLIND))
 		adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
-	if(!has_disability(BLIND))
+	if(!has_disability(DISABILITY_BLIND))
 		blind_eyes(1)
-	add_disability(BLIND, source)
+	add_disability(DISABILITY_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(list/sources)
-	remove_disability(NEARSIGHT, sources)
-	if(!has_disability(NEARSIGHT))
+	remove_disability(DISABILITY_NEARSIGHT, sources)
+	if(!has_disability(DISABILITY_NEARSIGHT))
 		clear_fullscreen("nearsighted")
 
 /mob/living/proc/become_nearsighted(source)
-	if(!has_disability(NEARSIGHT))
+	if(!has_disability(DISABILITY_NEARSIGHT))
 		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	add_disability(NEARSIGHT, source)
+	add_disability(DISABILITY_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(list/sources)
-	remove_disability(HUSK, sources)
-	if(!has_disability(HUSK))
+	remove_disability(DISABILITY_HUSK, sources)
+	if(!has_disability(DISABILITY_HUSK))
 		status_flags &= ~DISFIGURED
 		update_body()
 
 /mob/living/proc/become_husk(source)
-	if(!has_disability(HUSK))
+	if(!has_disability(DISABILITY_HUSK))
 		status_flags |= DISFIGURED	//makes them unknown
 		update_body()
-	add_disability(HUSK, source)
+	add_disability(DISABILITY_HUSK, source)

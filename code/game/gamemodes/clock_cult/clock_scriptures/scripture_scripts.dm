@@ -70,6 +70,12 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Vitality Matrix, which drains non-Servants on it to heal Servants that cross it."
 
+/datum/clockwork_scripture/create_object/vitality_matrix/check_special_requirements()
+	if(locate(object_path) in range(1, invoker))
+		to_chat(invoker, "<span class='danger'>Vitality matrices placed next to each other could interfere and cause a feedback loop! Move away from the other ones!</span>")
+		return FALSE
+	return ..()
+
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor

@@ -20,7 +20,7 @@
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_TRANSIT)
+	if(!device_turf || is_centcom_level(device_turf.z) || is_transit_level(device_turf.z))
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
@@ -40,7 +40,7 @@
 
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
-		if(T.z in GLOB.station_z_levels)
+		if(is_station_level(T.z))
 			destinations += B
 
 	return destinations

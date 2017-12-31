@@ -3204,7 +3204,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gk" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Post";
 	req_access_txt = "201"
 	},
@@ -4009,7 +4009,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "hG" = (
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Research Storage";
 	req_access_txt = "201"
 	},
@@ -4244,11 +4244,9 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ie" = (
-/obj/machinery/door/airlock/glass_medical{
-	glass = 0;
+/obj/machinery/door/airlock/medical{
 	id_tag = "";
 	name = "Research Division";
-	opacity = 1;
 	req_access_txt = "201";
 	req_one_access_txt = "0"
 	},
