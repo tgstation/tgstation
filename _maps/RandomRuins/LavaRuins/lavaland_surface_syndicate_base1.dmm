@@ -241,7 +241,6 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dK" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 4
 	},
 /obj/structure/closet/crate/secure/gear{
@@ -307,7 +306,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "dM" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 1
 	},
 /obj/structure/closet/crate,
@@ -426,7 +424,6 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "ea" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 8
 	},
 /obj/structure/closet/crate/secure/weapon{
@@ -1039,7 +1036,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eX" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 4
 	},
 /obj/structure/closet/crate/internals,
@@ -1056,7 +1052,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eY" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 1
 	},
 /obj/structure/closet/crate,
@@ -1310,7 +1305,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fs" = (
 /obj/effect/turf_decal/box/white/corners{
-	icon_state = "box_corners_white";
 	dir = 8
 	},
 /obj/structure/closet/crate,
@@ -1578,7 +1572,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/stand_clear{
-	icon_state = "stand_clear";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4083,7 +4076,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -4176,7 +4168,6 @@
 "li" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -4702,7 +4693,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mi" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4900,7 +4890,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mH" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -4909,7 +4898,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/fueltank,
@@ -4919,7 +4907,6 @@
 "mJ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/reagent_dispensers/watertank,
@@ -5539,7 +5526,6 @@
 "nP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution/stand_clear{
-	icon_state = "stand_clear";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5927,7 +5913,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/igniter{
-	icon_state = "igniter0";
 	id = "syndie_lavaland_Incinerator";
 	luminosity = 2;
 	on = 0
