@@ -24,7 +24,7 @@ obj/item/projectile/rod/proc/Impale(mob/living/carbon/human/H)
         var/obj/item/stack/rods/R = new(H.loc, 1, FALSE) // Don't merge
 
         if (istype(BP))
-            R.add_blood(H)
+            R.add_blood_DNA(H.return_blood_DNA())
             R.forceMove(H)
             BP.embedded_objects += R
             H.update_damage_overlays()
