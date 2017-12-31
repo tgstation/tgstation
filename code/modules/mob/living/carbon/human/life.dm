@@ -387,9 +387,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
 					var/ballmer_percent = 0
 					if(drunkenness > 13.35)
-						ballmer_percent = (drunkenness - 13.8) / (12.9 - 13.8)
+						ballmer_percent = ((drunkenness - 13.8) / (12.9 - 13.8) * 2)
 					else if(drunkenness < 13.35)
-						ballmer_percent = (drunkenness - 12.9) / (13.8 - 12.9)
+						ballmer_percent = ((drunkenness - 12.9) / (13.8 - 12.9) * 2)
 					else
 						ballmer_percent = 1 // right on the money
 
