@@ -126,9 +126,11 @@
 		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
+	var/datum/gas_mixture/turf/old_air = air
 	var/turf/open/floor/W = ..()
 	W.icon_regular_floor = old_icon
 	W.setDir(old_dir)
+	W.air = old_air
 	W.update_icon()
 	return W
 
