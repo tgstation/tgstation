@@ -2388,6 +2388,7 @@
 #include "code\white\curses\curses.dm"
 #include "code\white\fogmann\fogmann.dm"
 #include "code\white\fogmann\funmote.dm"
+#include "code\white\hule\boyareeshneek\boyarka.dm"
 #include "code\white\hule\jungle\jungleshit.dm"
 #include "code\white\hule\bearcat\bearcat.dm"
 #include "code\white\hule\bearcat\coord_nav.dm"
