@@ -1,6 +1,6 @@
-[Round ID]: # (If you discovered this issue from playing tgstation hosted servers:)
+[Round ID]: # (If you discovered this issue from playing HippieStation hosted servers:)
 [Round ID]: # (**INCLUDE THE ROUND ID**)
-[Round ID]: # (It can be found in the Status panel or retrieved from https://atlantaned.space/statbus/round.php ! The round id let's us look up valuable information and logs for the round the bug happened.)
+[Round ID]: # (It can be found in the Status panel or retrieved from https://tools.hippiestation.com/stats/round.php ! The round id let's us look up valuable information and logs for the round the bug happened.)
 
 [Testmerges]: # (If you believe the issue to be caused by a test merge [OOC tab -> Show Server Revision], report it in the pull request's comment section instead.)
 
