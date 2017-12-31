@@ -11670,7 +11670,6 @@
 	},
 /area/security/nuke_storage)
 "ayt" = (
-/obj/configuration/shuttle_loader/labour/box,
 /turf/open/space/basic,
 /area/space)
 "ayu" = (
@@ -11996,7 +11995,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "azh" = (
-/obj/configuration/shuttle_loader/mining/box,
 /turf/open/space/basic,
 /area/space)
 "azi" = (
@@ -12722,7 +12720,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -12922,7 +12921,8 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/labour/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -27160,7 +27160,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "beC" = (
-/obj/configuration/shuttle_loader/arrival/box,
 /turf/open/space/basic,
 /area/space)
 "beD" = (
@@ -72755,7 +72754,6 @@
 /turf/open/floor/wood,
 /area/library)
 "cUV" = (
-/obj/configuration/shuttle_loader/cargo/box,
 /turf/open/space/basic,
 /area/space)
 "cUW" = (
@@ -72923,7 +72921,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "cVv" = (
-/obj/configuration/shuttle_loader/ferry/fancy,
 /turf/open/space/basic,
 /area/space)
 "cVw" = (
@@ -73374,7 +73371,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cWp" = (
-/obj/configuration/shuttle_loader/whiteship/meta,
 /turf/open/space/basic,
 /area/space)
 "cWq" = (
@@ -74760,7 +74756,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cYO" = (
-/obj/configuration/shuttle_loader/emergency/meta,
 /turf/open/space/basic,
 /area/space)
 "cYP" = (
@@ -79030,7 +79025,8 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/arrival/box
 	},
 /turf/open/space/basic,
 /area/space)

@@ -1782,7 +1782,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/supply)
 "ads" = (
-/obj/configuration/shuttle_loader/cargo/delta,
 /turf/open/space/basic,
 /area/space)
 "adt" = (
@@ -3590,22 +3589,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"agD" = (
-/obj/docking_port/mobile/supply{
-	dwidth = 5;
-	roundstart_move = "supply_away";
-	width = 12
-	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 5;
-	height = 7;
-	id = "supply_home";
-	name = "Cargo Bay";
-	width = 12
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
 "agE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ore/silver,
@@ -8545,7 +8528,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/delta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -8557,7 +8541,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "apr" = (
-/obj/configuration/shuttle_loader/mining/delta,
 /turf/open/space/basic,
 /area/space)
 "aps" = (
@@ -8565,36 +8548,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/mining)
-"apt" = (
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "mining shuttle";
-	port_direction = 4;
-	width = 7
-	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	width = 7
-	},
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
 /area/shuttle/mining)
 "apu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -15902,7 +15855,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aDl" = (
-/obj/configuration/shuttle_loader/emergency/omega,
 /turf/open/space/basic,
 /area/space)
 "aDm" = (
@@ -32648,7 +32600,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bjZ" = (
-/obj/configuration/shuttle_loader/arrival/delta,
 /turf/open/space/basic,
 /area/space)
 "bka" = (
@@ -33860,7 +33811,8 @@
 	height = 17;
 	id = "arrivals_stationary";
 	name = "omega arrivals";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/arrival/delta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -34131,7 +34083,6 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "bwi" = (
-/obj/configuration/shuttle_loader/ferry/fancy,
 /turf/open/space/basic,
 /area/space)
 "bwo" = (

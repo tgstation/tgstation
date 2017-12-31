@@ -7348,7 +7348,6 @@
 /turf/open/floor/circuit/green,
 /area/maintenance/department/security/brig)
 "atr" = (
-/obj/configuration/shuttle_loader/labour/box,
 /turf/open/space/basic,
 /area/space)
 "ats" = (
@@ -8203,7 +8202,8 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/labour/box
 	},
 /turf/open/space/basic,
 /area/space)
@@ -13752,7 +13752,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aIx" = (
-/obj/configuration/shuttle_loader/emergency/pubby,
 /turf/open/space/basic,
 /area/space)
 "aIy" = (
@@ -17458,7 +17457,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
 "aRr" = (
-/obj/configuration/shuttle_loader/cargo/box,
 /turf/open/space/basic,
 /area/space)
 "aRs" = (
@@ -23464,35 +23462,11 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/delta
 	},
 /turf/open/space/basic,
 /area/space)
-"bfL" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
-	},
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "mining shuttle";
-	port_direction = 4;
-	width = 7;
-	timid = 0
-	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	width = 7
-	},
-/turf/open/floor/plating,
-/area/shuttle/labor)
 "bfM" = (
 /obj/structure/chair{
 	dir = 4
@@ -23528,7 +23502,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bfR" = (
-/obj/configuration/shuttle_loader/arrival/pubby,
 /turf/open/space/basic,
 /area/space)
 "bfS" = (
@@ -23947,7 +23920,8 @@
 	height = 13;
 	id = "arrivals_stationary";
 	name = "pubby arrivals";
-	width = 6
+	width = 6;
+	roundstart_template = /datum/map_template/shuttle/arrival/pubby
 	},
 /turf/open/space/basic,
 /area/space)
@@ -28741,7 +28715,6 @@
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "bsk" = (
-/obj/configuration/shuttle_loader/ferry/fancy,
 /turf/open/space/basic,
 /area/space)
 "bsl" = (
@@ -51314,7 +51287,6 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cCX" = (
-/obj/configuration/shuttle_loader/mining/delta,
 /turf/open/space/basic,
 /area/space)
 

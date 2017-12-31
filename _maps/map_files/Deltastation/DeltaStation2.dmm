@@ -1050,7 +1050,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
 "aci" = (
-/obj/configuration/shuttle_loader/whiteship/delta,
 /turf/open/space/basic,
 /area/space)
 "acj" = (
@@ -1262,7 +1261,8 @@
 	height = 17;
 	id = "arrivals_stationary";
 	name = "delta arrivals";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/arrival/delta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -1703,7 +1703,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "adu" = (
-/obj/configuration/shuttle_loader/arrival/delta,
 /turf/open/space/basic,
 /area/space)
 "adv" = (
@@ -2238,7 +2237,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "aeu" = (
-/obj/configuration/shuttle_loader/ferry/fancy,
 /turf/open/space/basic,
 /area/space)
 "aev" = (
@@ -12398,7 +12396,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/supply)
 "aAM" = (
-/obj/configuration/shuttle_loader/cargo/delta,
 /turf/open/space/basic,
 /area/space)
 "aAN" = (
@@ -28080,7 +28077,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/delta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -28092,7 +28090,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "bgW" = (
-/obj/configuration/shuttle_loader/mining/delta,
 /turf/open/space/basic,
 /area/space)
 "bgX" = (
@@ -28100,37 +28097,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/mining)
-"bgY" = (
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining";
-	name = "mining shuttle";
-	port_direction = 4;
-	width = 7;
-	timid = 0
-	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_home";
-	name = "mining shuttle bay";
-	width = 7
-	},
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
 /area/shuttle/mining)
 "bgZ" = (
 /turf/closed/wall/r_wall,
@@ -37804,7 +37770,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "bAa" = (
-/obj/configuration/shuttle_loader/labour/delta,
 /turf/open/space/basic,
 /area/space)
 "bAb" = (
@@ -37820,7 +37785,8 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	width = 9
+	width = 9;
+	roundstart_template = /datum/map_template/shuttle/labour/delta
 	},
 /turf/open/space/basic,
 /area/space)
@@ -98795,7 +98761,6 @@
 	},
 /area/shuttle/escape)
 "dUD" = (
-/obj/configuration/shuttle_loader/emergency/delta,
 /turf/open/space/basic,
 /area/space)
 "dUE" = (
