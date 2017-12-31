@@ -368,12 +368,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 81-90: Extremely high alcohol content - light brain damage, passing out
 91-100: Dangerously toxic - swift death
 */
-
+#define BALLMER_POINTS 5
 /mob/living/carbon/human/handle_status_effects()
 	..()
+
+
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
-
 		if(drunkenness >= 6)
 			if(prob(25))
 				slurring += 2
@@ -381,7 +382,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
+		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
+			if(SSresearch.science_tech)
+				if(drunkenness >= 12.9 && drunkenness <= 13.8)
+					var/ballmer_percent = 0
+					if(drunkenness > 13.35)
+						ballmer_percent = (drunkenness - 13.8) / (12.9 - 13.8)
+					else if(drunkenness < 13.35)
+						ballmer_percent = (drunkenness - 12.9) / (13.8 - 12.9)
+					else
+						ballmer_percent = 1 // right on the money
 
+					var/ballmer_percent = (drunkenness - 12.9) / (13.8 - 12.9)
+					if(ballmer_percent > 1)
+						ballmer_percent = 1
+					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
+				if(drunkenness > 26) // by this point you're into windows ME territory
+					if(prob(1))
+						SSresearch.science_tech.research_points -= 1
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2
