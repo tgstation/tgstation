@@ -1,44 +1,27 @@
-/*
-//////////////////////////////////////
-Sensory-Restoration
-	Very very very very noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-	Fatal.
-Bonus
-	The body generates Sensory restorational chemicals.
-	inacusiate for ears
-	antihol for removal of alcohol
-	synaphydramine to purge sensory hallucigens and histamine based impairment
-	mannitol to kickstart the mind
-
-//////////////////////////////////////
-*/
 /datum/symptom/mind_restoration
 	name = "Mind Restoration"
 	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
 	stealth = -1
-	resistance = -4
-	stage_speed = -4
+	resistance = -2
+	stage_speed = 1
 	transmittable = -3
 	level = 5
 	symptom_delay_min = 5
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE
-	var/brain_heal = FALSE
-	var/trauma_heal = FALSE
-	threshold_desc = "<b>Resistance 6:</b> Heals brain damage.<br>\
-					  <b>Resistance 9:</b> Heals brain traumas.<br>\
+	var/trauma_heal_mild = FALSE
+	var/trauma_heal_severe = FALSE
+	threshold_desc = "<b>Resistance 6:</b> Heals minor brain traumas.<br>\
+					  <b>Resistance 9:</b> Heals severe brain traumas.<br>\
 					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["resistance"] >= 6) //heal brain damage
-		brain_heal = TRUE
-	if(A.properties["resistance"] >= 9) //heal brain traumas
-		trauma_heal = TRUE
+		trauma_heal_mild = TRUE
+	if(A.properties["resistance"] >= 9) //heal severe traumas
+		trauma_heal_severe = TRUE
 	if(A.properties["transmittable"] >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
@@ -46,8 +29,7 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
-	if(A.stage >= 2)
-		M.restoreEars()
+
 
 	if(A.stage >= 3)
 		M.dizziness = max(0, M.dizziness - 2)
@@ -68,11 +50,59 @@ Bonus
 			M.reagents.remove_reagent("histamine", 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
-	if(brain_heal && A.stage >= 5)
+	if(A.stage >= 5)
 		M.adjustBrainLoss(-3)
-		if(trauma_heal && iscarbon(M))
+		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
 				C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
 				C.cure_trauma_type(BRAIN_TRAUMA_MILD)
+			if(trauma_heal_severe && prob(10) && C.has_trauma_type(BRAIN_TRAUMA_SEVERE))
+				C.cure_trauma_type(BRAIN_TRAUMA_SEVERE)
+
+
+
+/datum/symptom/sensory_restoration
+	name = "Sensory Restoration"
+	desc = "The virus stimulates the production and replacement of sensory tissues, causing the host to regenerate eyes and ears when damaged."
+	stealth = 0
+	resistance = 1
+	stage_speed = -2
+	transmittable = 2
+	level = 4
+	base_message_chance = 7
+	symptom_delay_min = 1
+	symptom_delay_max = 1
+
+/datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	if (!eyes)
+		return
+	switch(A.stage)
+		if(4, 5)
+			M.restoreEars()
+
+			if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
+				if(prob(20))
+					to_chat(M, "<span class='notice'>Your vision slowly returns...</span>")
+					M.cure_blind(EYE_DAMAGE)
+					M.cure_nearsighted(EYE_DAMAGE)
+					M.blur_eyes(35)
+
+				else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
+					to_chat(M, "<span class='notice'>You can finally focus your eyes on distant objects.</span>")
+					M.cure_nearsighted(EYE_DAMAGE)
+					M.blur_eyes(10)
+
+				else if(M.eye_blind || M.eye_blurry)
+					M.set_blindness(0)
+					M.set_blurriness(0)
+				else if(eyes.eye_damage > 0)
+					M.adjust_eye_damage(-1)
+		else
+			if(prob(base_message_chance))
+				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")
