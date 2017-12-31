@@ -736,6 +736,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	..()
+	var/target_name = target.first_name()
 	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
 	"[pick_list_replacements(HAL_LINES_FILE, "greetings")][target.first_name()]!",\
 	"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
@@ -769,8 +770,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 				person = H
 		people += H
 	if(person) //Basic talk
+		var/chosen = pick(speak_messages)
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		var/message = target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,null,person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 		if(target.client)
@@ -778,11 +781,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			sleep(30)
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
+		var/chosen = pick(radio_messages)
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
-		var/message = target.compose_message(person,understood_language,pick(radio_messages),"[FREQ_COMMON]",person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,"[FREQ_COMMON]",person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Radio, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 	qdel(src)
