@@ -753,7 +753,7 @@
 	return TRUE
 
 /obj/item/integrated_circuit/input/objscaner
-	name = "scaner"
+	name = "scanner"
 	desc = "Scans and obtains a reference for any objects you use on assembly."
 	extended_desc = "If 'put down' pin is set to true, assembly will take scanned object from your hands to it's location.\
 	useful for interaction with grabber. Scaner works only with help intent."
