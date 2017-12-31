@@ -54238,14 +54238,10 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/item/aiModule/core/full/paladin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/aiModule/core/full/asimov,
-/obj/item/aiModule/core/full/corp{
-	pixel_x = -3;
-	pixel_y = -3
+/obj/effect/spawner/lootdrop/aimodule_harmless{
+	fan_out_items = 1;
+	lootdoubles = 0;
+	lootcount = 3
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
@@ -54298,12 +54294,12 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/item/aiModule/core/full/antimov{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/effect/spawner/lootdrop/aimodule_harmful{
+	fan_out_items = 1;
+	lootdoubles = 0;
+	lootcount = 2
 	},
-/obj/item/aiModule/supplied/oxygen,
-/obj/item/aiModule/supplied/protectStation{
+/obj/item/aiModule/supplied/oxygen{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -55157,6 +55153,10 @@
 	pixel_y = 3
 	},
 /obj/item/aiModule/core/full/custom,
+/obj/item/aiModule/core/full/asimov{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -55239,7 +55239,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/item/aiModule/core/full/tyrant{
+/obj/item/aiModule/supplied/protectStation{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -57290,14 +57290,10 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "clQ" = (
 /obj/structure/table/reinforced,
-/obj/item/aiModule/core/full/drone{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/aiModule/core/full/reporter,
-/obj/item/aiModule/core/full/liveandletlive{
-	pixel_x = -3;
-	pixel_y = -3
+/obj/effect/spawner/lootdrop/aimodule_neutral{
+	fan_out_items = 1;
+	lootdoubles = 0;
+	lootcount = 3
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
