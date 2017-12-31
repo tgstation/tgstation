@@ -31,7 +31,7 @@
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
-		if(!A.active || !(A.z in GLOB.station_z_levels))
+		if(!A.active || !is_station_level(A.z))
 			continue
 		coverage |= view(A.kill_range,A)
 	return coverage.len

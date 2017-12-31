@@ -9,6 +9,8 @@
 	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
 
+	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
 	return
@@ -172,11 +174,13 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/head/hardhat
 
 /datum/holiday/firefighter
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/head/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -190,6 +194,7 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
+	drone_hat = /obj/item/clothing/head/nursehat
 
 /datum/holiday/UFO
 	name = "UFO Day"
@@ -221,6 +226,7 @@
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
+	drone_hat = /obj/item/clothing/head/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -321,6 +327,7 @@
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
+	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/thanksgiving/canada
 	name = "Thanksgiving in Canada"
@@ -384,21 +391,35 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
+	drone_hat = /obj/item/clothing/mask/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
 	begin_day = 22
 	begin_month = DECEMBER
 	end_day = 27
+	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/xmas/celebrate()
+	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+
+/datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
+		Monitor.icon_state = "entertainment_xmas"
+
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
+
 
 /datum/holiday/festive_season
 	name = FESTIVE_SEASON
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
+	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -421,6 +442,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter
 	name = EASTER
+	drone_hat = /obj/item/clothing/head/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 

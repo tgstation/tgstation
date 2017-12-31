@@ -1,27 +1,3 @@
-//this is an example of a possible round-start event
-/datum/round_event_control/presents
-	name = "Presents under Trees (Christmas)"
-	holidayID = CHRISTMAS
-	typepath = /datum/round_event/presents
-	weight = -1							//forces it to be called, regardless of weight
-	max_occurrences = 1
-	earliest_start = 0
-
-/datum/round_event/presents/start()
-	for(var/obj/structure/flora/tree/pine/xmas/xmas in world)
-		if(!(xmas.z in GLOB.station_z_levels))
-			continue
-		xmas.icon_state = "pinepresents"
-		xmas.gifts_under_tree = TRUE
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
-		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
-		Monitor.icon_state = "entertainment_xmas"
-
-/datum/round_event/presents/announce(fake)
-	priority_announce("Ho Ho Ho, Merry Xmas!", "Unknown Transmission")
-
-
 /obj/item/toy/xmas_cracker
 	name = "xmas cracker"
 	icon = 'icons/obj/christmas.dmi'
@@ -65,17 +41,21 @@
 
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
-	var/tree = /obj/structure/flora/tree/pine/xmas
+	var/festive_tree = /obj/structure/flora/tree/pine/xmas
+	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
 /obj/effect/landmark/xmastree/Initialize(mapload)
 	..()
-	if(FESTIVE_SEASON in SSevents.holidays)
-		new tree(get_turf(src))
+	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
+		new christmas_tree(get_turf(src))
+	else if((FESTIVE_SEASON in SSevents.holidays) && festive_tree)
+		new festive_tree(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
-	tree = /obj/structure/festivus
+	festive_tree = /obj/structure/festivus
+	christmas_tree = null
 
 /datum/round_event_control/santa
 	name = "Santa is coming to town! (Christmas)"
@@ -92,7 +72,7 @@
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
-	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be santa?", poll_time=150)
+	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/Z = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))

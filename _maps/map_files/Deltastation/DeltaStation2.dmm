@@ -19885,6 +19885,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/xmastree,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
 "aQo" = (
@@ -70851,6 +70852,15 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/requests_console{
+	department = "Medbay Storage";
+	name = "Medbay Storage RC";
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cNQ" = (
@@ -73221,10 +73231,6 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -74104,12 +74110,6 @@
 /obj/item/storage/firstaid/o2{
 	pixel_x = -3;
 	pixel_y = -3
-	},
-/obj/machinery/requests_console{
-	department = "Medbay Storage";
-	departmentType = 0;
-	name = "Medbay Storage RC";
-	pixel_x = 32
 	},
 /obj/machinery/door/window/westleft{
 	name = "First-Aid Supplies";
@@ -99336,10 +99336,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "dVT" = (
@@ -104969,6 +104969,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"ehQ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/lightsout,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main)
 
 (1,1,1) = {"
 aaa
@@ -128500,7 +128508,7 @@ cqr
 ctp
 cuQ
 cjd
-cxC
+cje
 cje
 cAK
 cCr
@@ -139864,7 +139872,7 @@ dKD
 dUp
 dVd
 dVS
-dVd
+ehQ
 dVd
 dVd
 dVd

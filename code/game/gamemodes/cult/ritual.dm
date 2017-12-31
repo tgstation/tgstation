@@ -203,7 +203,7 @@ This file contains the arcane tome files.
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	
+
 	//AAAAAAAAAAAAAAAH, i'm rewriting enough for now so TODO: remove this shit
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!summon_objective)
@@ -266,10 +266,8 @@ This file contains the arcane tome files.
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 
-
-	if(!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_MINING)
+	if(!is_station_level(T.z) && !is_mining_level(T.z))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
 		return FALSE
 
 	return TRUE

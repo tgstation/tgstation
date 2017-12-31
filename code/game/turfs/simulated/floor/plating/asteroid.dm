@@ -59,7 +59,7 @@
 
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	if(turf_z_is_planet(src))
+	if(is_planet_level(z))
 		return ..()
 	ScrapeAway()
 

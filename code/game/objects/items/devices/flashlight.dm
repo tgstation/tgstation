@@ -493,7 +493,7 @@
 	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	. = ..()
+	..()
 	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
 	new T(loc)
 	return INITIALIZE_HINT_QDEL
