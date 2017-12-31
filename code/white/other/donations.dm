@@ -96,7 +96,7 @@ Special Stuff
 Santa Bag:/obj/item/storage/backpack/santabag:600
 Bible:/obj/item/storage/book/bible:100
 Inovations
-Memories Writer:/obj/machinery/party/musicwriter:2000
+Memories Writer:/obj/machinery/party/musicwriter:1200
 Lazer Machine:/obj/machinery/party/lasermachine:500
 "}
 
