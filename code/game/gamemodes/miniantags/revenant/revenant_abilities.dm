@@ -420,8 +420,7 @@
 			var/mob/living/simple_animal/hostile/skeleton/revenant/S
 			S = new(M.loc)
 			S.name = "[M]'s haunted remains"
-			if(length(M.logging[INDIVIDUAL_SAY_LOG]))
-				S.speak += M.logging[INDIVIDUAL_SAY_LOG][M.logging[INDIVIDUAL_SAY_LOG].len]
+				S.speak += "Join us..."
 			M.gib()
 
 //Blight: Infects nearby humans and in general messes living stuff up.
