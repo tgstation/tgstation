@@ -37,7 +37,17 @@
 	. = ..()
 
 /datum/team/pirate
-	name = "Pirate crew"
+	name = "Pirate Crew"
+
+/datum/antagonist/pirate/apply_innate_effects(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.gain_trauma(/datum/brain_trauma/mild/pirate_slang, TRUE)
+
+/datum/antagonist/pirate/remove_innate_effects(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.cure_trauma_type(/datum/brain_trauma/mild/pirate_slang, TRUE)
 
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
@@ -125,5 +135,10 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 		parts += "<span class='greentext big'>The pirate crew was successful!</span>"
 	else
 		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
+<<<<<<< 6f2e27f7eee4f53e11df530f4b2818cbbb58bdaf
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+=======
+	
+	return parts.Join("<br>")
+>>>>>>> New brain trauma: Pirate Slang; Space Pirates have this

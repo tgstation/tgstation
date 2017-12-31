@@ -154,6 +154,7 @@
 		owner.adjustStaminaLoss(50)
 	..()
 
+
 /datum/brain_trauma/mild/muscle_spasms
 	name = "Muscle Spasms"
 	desc = "Patient has occasional muscle spasms, causing them to move unintentionally."
@@ -212,3 +213,13 @@
 					log_attack("[key_name(owner)] threw [I] due to a Muscle Spasm.")
 					owner.throw_item(pick(targets))
 	..()
+
+/datum/brain_trauma/mild/pirate_slang
+	name = "Pirate Slang"
+	desc = "Patient talks like a person who partakes in robbery or criminal violence by ship or boat-borne attackers upon another ship or a coastal area."
+	scan_desc = "pirate slang"
+	gain_text = "<span class='warning'>You feel nautical.</span>"
+	lose_text = "<span class='notice'>You feel more comfortable on land.</span>"
+
+/datum/brain_trauma/mild/pirate_slang/on_say(message)
+	return piratify(message)
