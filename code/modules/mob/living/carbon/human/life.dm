@@ -386,18 +386,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
 					var/ballmer_percent = 0
-					if(drunkenness > 13.35)
-						ballmer_percent = ((drunkenness - 13.8) / (12.9 - 13.8) * 2)
-					else if(drunkenness < 13.35)
-						ballmer_percent = ((drunkenness - 12.9) / (13.8 - 12.9) * 2)
+					if(drunkenness == 13.35) // why run math if I dont have to
+						ballmer_percent = 1
 					else
-						ballmer_percent = 1 // right on the money
+						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 0.5
 
 					if(ballmer_percent > 1)
 						ballmer_percent = 1
 					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
 				if(drunkenness > 26) // by this point you're into windows ME territory
-					if(prob(1))
+					if(prob(5))
 						SSresearch.science_tech.research_points -= 1
 		if(drunkenness >= 41)
 			if(prob(25))
