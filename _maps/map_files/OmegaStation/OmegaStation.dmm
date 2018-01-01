@@ -487,8 +487,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -500,8 +498,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -523,8 +519,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -534,8 +528,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -550,8 +542,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/bridge)
@@ -584,8 +574,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -603,8 +591,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -617,8 +603,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -636,8 +620,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -710,8 +692,6 @@
 /area/bridge)
 "abo" = (
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -798,8 +778,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -809,8 +787,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -829,8 +805,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -852,8 +826,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -896,8 +868,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -907,8 +877,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -921,8 +889,6 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1124,8 +1090,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -1135,8 +1099,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1156,8 +1118,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1200,8 +1160,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -1210,8 +1168,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -1221,8 +1177,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1246,8 +1200,6 @@
 	name = "command camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/hop)
@@ -1321,8 +1273,6 @@
 /area/hallway/primary/central)
 "acw" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1545,8 +1495,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -1556,8 +1504,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1592,8 +1538,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/bridge)
@@ -1697,8 +1641,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -1713,8 +1655,6 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -1729,8 +1669,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/hop)
@@ -1809,7 +1747,7 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/fore)
@@ -1940,6 +1878,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/fore)
@@ -1999,6 +1938,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/crew_quarters/heads/captain/private)
@@ -2045,8 +1985,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -2089,8 +2027,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -2102,8 +2038,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -2335,7 +2269,7 @@
 "aep" = (
 /turf/open/floor/plating,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered{
@@ -2429,8 +2363,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -2457,8 +2389,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -2594,8 +2524,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -2608,8 +2536,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -2621,8 +2547,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -2698,8 +2622,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (WEST)";
-	icon_state = "vaultcorner";
 	dir = 8
 	},
 /area/crew_quarters/heads/hop)
@@ -2801,8 +2723,6 @@
 /obj/item/device/taperecorder,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/detectives_office)
@@ -2876,8 +2796,6 @@
 /obj/machinery/suit_storage_unit/captain,
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/captain/private)
@@ -2923,6 +2841,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken2"
 	},
 /area/crew_quarters/heads/captain/private)
@@ -2930,7 +2849,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -2939,8 +2857,6 @@
 	name = "command camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -2968,8 +2884,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -3000,8 +2914,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -3019,8 +2931,6 @@
 	name = "command camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -3036,8 +2946,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -3089,6 +2997,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/crew_quarters/heads/hop)
@@ -3135,8 +3044,6 @@
 	name = "command camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/heads/hop)
@@ -3260,8 +3167,6 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/detectives_office)
@@ -3343,8 +3248,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/captain/private)
@@ -3413,8 +3316,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -3423,8 +3324,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -3457,8 +3356,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -3500,16 +3397,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
 "agl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -3568,6 +3461,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/crew_quarters/heads/hop)
@@ -3579,6 +3473,7 @@
 	},
 /obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken6"
 	},
 /area/crew_quarters/heads/hop)
@@ -3608,8 +3503,6 @@
 	req_access_txt = "57"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/heads/hop)
@@ -3743,8 +3636,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/detectives_office)
@@ -3794,7 +3685,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/fore)
@@ -3814,8 +3705,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/captain/private)
@@ -3918,8 +3807,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -3929,8 +3816,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -3945,8 +3830,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -4020,8 +3903,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -4030,8 +3911,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -4044,8 +3923,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -4089,6 +3966,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/fore)
@@ -4289,8 +4167,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/detectives_office)
@@ -4368,8 +4244,6 @@
 	},
 /obj/item/gun/energy/e_gun/hos,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/heads/captain/private)
@@ -4441,8 +4315,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -4453,8 +4325,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -4503,8 +4373,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -4524,8 +4392,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -4649,8 +4515,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/security/brig)
@@ -4700,8 +4564,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/security/brig)
@@ -5029,8 +4891,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/security/brig)
@@ -5052,8 +4912,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/security/brig)
@@ -5576,8 +5434,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/security/brig)
@@ -5629,8 +5485,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/security/brig)
@@ -6871,8 +6725,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/teleporter)
@@ -6914,8 +6766,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/teleporter)
@@ -6943,8 +6793,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/hallway/primary/central)
@@ -6984,8 +6832,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHWEST)";
-	icon_state = "vault";
 	dir = 9
 	},
 /area/hallway/primary/central)
@@ -7014,8 +6860,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/storage/eva)
@@ -7061,8 +6905,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/storage/eva)
@@ -7322,8 +7164,6 @@
 	name = "command camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/teleporter)
@@ -7356,8 +7196,6 @@
 "amX" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/teleporter)
@@ -7375,8 +7213,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -7407,8 +7243,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -7456,7 +7290,6 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -7798,8 +7631,6 @@
 /obj/structure/closet/crate/engineering,
 /obj/item/hand_tele,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/teleporter)
@@ -7834,8 +7665,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/teleporter)
@@ -8169,8 +7998,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/brig)
@@ -8294,8 +8121,6 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/teleporter)
@@ -8324,8 +8149,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/teleporter)
@@ -8463,7 +8286,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/central)
@@ -8821,8 +8644,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/brig)
@@ -8969,8 +8790,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/teleporter)
@@ -9019,8 +8838,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/teleporter)
@@ -9193,8 +9010,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/ai_monitored/storage/eva)
@@ -9257,8 +9072,6 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/ai_monitored/storage/eva)
@@ -9492,8 +9305,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/brig)
@@ -9536,8 +9347,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/brig)
@@ -10064,8 +9873,6 @@
 	},
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/security/brig)
@@ -10418,8 +10225,6 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -10455,8 +10260,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/bar/atrium)
@@ -10690,8 +10493,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (EAST)";
-	icon_state = "vaultcorner";
 	dir = 4
 	},
 /area/security/brig)
@@ -10729,8 +10530,6 @@
 	name = "security camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10741,8 +10540,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10777,8 +10574,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10800,8 +10595,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10817,8 +10610,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10843,8 +10634,6 @@
 	name = "security camera"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -10863,8 +10652,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/security/brig)
@@ -11029,8 +10816,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (SOUTHEAST)";
-	icon_state = "vault";
 	dir = 6
 	},
 /area/crew_quarters/bar/atrium)
@@ -11038,15 +10823,12 @@
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (SOUTHWEST)";
-	icon_state = "vault";
 	dir = 10
 	},
 /area/crew_quarters/bar/atrium)
@@ -11497,6 +11279,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken6"
 	},
 /area/crew_quarters/theatre)
@@ -11518,8 +11301,6 @@
 "aub" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -11634,7 +11415,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/central)
@@ -11837,7 +11618,7 @@
 /obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/fore)
@@ -11895,8 +11676,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -12046,8 +11825,6 @@
 /obj/item/clothing/head/fedora,
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -12377,6 +12154,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/fore)
@@ -12449,8 +12227,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -12597,6 +12373,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/crew_quarters/theatre)
@@ -12605,8 +12382,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -13822,8 +13597,6 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -13930,15 +13703,12 @@
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
 "ayW" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
@@ -13955,7 +13725,6 @@
 	pixel_y = 23
 	},
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -13970,8 +13739,6 @@
 	pixel_y = 32
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -13988,8 +13755,6 @@
 	pixel_y = 24
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14002,8 +13767,6 @@
 	pixel_y = 32
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14284,6 +14047,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/crew_quarters/theatre)
@@ -14316,8 +14080,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/bar/atrium)
@@ -14376,6 +14138,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/central)
@@ -14427,8 +14190,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -14456,8 +14217,6 @@
 "azY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -14989,8 +14748,6 @@
 /obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -15019,8 +14776,6 @@
 "aBf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
@@ -15429,13 +15184,12 @@
 	c_tag = "Theatre Storage"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/theatre)
 "aBW" = (
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken7"
 	},
 /area/crew_quarters/theatre)
@@ -15529,20 +15283,16 @@
 /obj/machinery/vending/snack/random,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
 "aCi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -15550,13 +15300,9 @@
 "aCj" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/door/window/brigdoor/southright{
@@ -15566,8 +15312,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/folder/red,
@@ -15580,11 +15324,9 @@
 "aCk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -15593,19 +15335,13 @@
 "aCl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15623,7 +15359,6 @@
 "aCm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -15682,8 +15417,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15697,8 +15430,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15706,8 +15437,6 @@
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
 /obj/machinery/meter,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15721,8 +15450,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15736,8 +15463,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15748,8 +15473,6 @@
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15819,8 +15542,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15837,8 +15558,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/engine/atmos)
@@ -15970,8 +15689,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/theatre)
@@ -16106,8 +15823,6 @@
 /area/hallway/secondary/exit)
 "aDe" = (
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/escape{
@@ -16116,8 +15831,6 @@
 /area/hallway/secondary/exit)
 "aDg" = (
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16366,8 +16079,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/crew_quarters/theatre)
@@ -16383,6 +16094,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/crew_quarters/theatre)
@@ -16707,8 +16419,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/engine/engineering)
@@ -16739,8 +16449,6 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/engine/engineering)
@@ -16819,7 +16527,6 @@
 "aEz" = (
 /obj/machinery/shower{
 	dir = 8;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16983,6 +16690,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken7"
 	},
 /area/crew_quarters/dorms)
@@ -17016,8 +16724,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (EAST)";
-	icon_state = "vaultcorner";
 	dir = 4
 	},
 /area/crew_quarters/theatre)
@@ -17032,8 +16738,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/theatre)
@@ -17046,8 +16750,6 @@
 	},
 /obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/theatre)
@@ -17061,8 +16763,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/theatre)
@@ -17266,8 +16966,6 @@
 /obj/machinery/light/small,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/engine/engineering)
@@ -17311,8 +17009,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/engine/engineering)
@@ -17399,7 +17095,6 @@
 "aFB" = (
 /obj/machinery/shower{
 	dir = 8;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/light/small,
@@ -17972,7 +17667,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/central)
@@ -18107,8 +17802,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/kitchen)
@@ -18125,8 +17818,6 @@
 /obj/item/clothing/head/chefhat,
 /obj/machinery/light,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/kitchen)
@@ -18142,8 +17833,6 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/kitchen)
@@ -18155,8 +17844,6 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/crew_quarters/kitchen)
@@ -18536,8 +18223,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -18746,8 +18431,6 @@
 /obj/item/pen,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -19211,8 +18894,6 @@
 	},
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHWEST)";
-	icon_state = "vault";
 	dir = 9
 	},
 /area/crew_quarters/bar/atrium)
@@ -19681,8 +19362,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/janitor)
@@ -19717,8 +19396,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/janitor)
@@ -19820,8 +19497,6 @@
 "aJX" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/bar/atrium)
@@ -19916,8 +19591,6 @@
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -20124,7 +19797,6 @@
 "aKC" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	icon_state = "pump_map";
 	name = "Gas to Chamber"
 	},
 /turf/open/floor/engine,
@@ -20292,8 +19964,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/janitor)
@@ -20329,8 +19999,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/janitor)
@@ -20430,8 +20098,6 @@
 /obj/item/reagent_containers/food/snacks/grown/tomato,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -20449,8 +20115,6 @@
 /obj/item/seeds/tower,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -20469,15 +20133,12 @@
 /obj/machinery/vending/snack/random,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/bar/atrium)
@@ -20878,8 +20539,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/janitor)
@@ -20913,8 +20572,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/janitor)
@@ -21075,8 +20732,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -21151,7 +20806,6 @@
 "aMH" = (
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /turf/open/floor/plasteel/cmo,
@@ -21462,8 +21116,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/janitor)
@@ -21489,8 +21141,6 @@
 /obj/structure/closet/l3closet/janitor,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/janitor)
@@ -21528,8 +21178,6 @@
 /obj/item/storage/box/disks_plantgene,
 /obj/item/toy/figure/botanist,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -21569,8 +21217,6 @@
 "aNt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -21584,8 +21230,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -21666,7 +21310,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/central)
@@ -22778,8 +22422,6 @@
 /obj/item/storage/briefcase,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -23275,8 +22917,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -23305,6 +22945,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/maintenance/starboard)
@@ -23797,7 +23438,6 @@
 "aRN" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	icon_state = "pump_map";
 	name = "Freezer to Gas"
 	},
 /turf/open/floor/engine,
@@ -23840,7 +23480,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port)
@@ -23943,8 +23583,6 @@
 /obj/effect/landmark/revenantspawn,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -23961,8 +23599,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -24126,7 +23762,6 @@
 "aSA" = (
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/firealarm{
@@ -24144,7 +23779,6 @@
 "aSB" = (
 /obj/machinery/shower{
 	dir = 8;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -24159,7 +23793,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard)
@@ -24204,6 +23838,7 @@
 "aSJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken2"
 	},
 /area/maintenance/starboard)
@@ -24431,8 +24066,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -24453,8 +24086,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -24464,7 +24095,6 @@
 	},
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/newscaster{
@@ -24710,6 +24340,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard)
@@ -24782,6 +24413,7 @@
 "aTV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken7"
 	},
 /area/maintenance/starboard)
@@ -24873,6 +24505,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/library)
@@ -24913,8 +24546,6 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -24930,8 +24561,6 @@
 "aUm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -24974,8 +24603,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/chemistry)
@@ -25042,8 +24669,6 @@
 	},
 /obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/science/lab)
@@ -25132,6 +24757,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard)
@@ -25159,6 +24785,7 @@
 	},
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/starboard)
@@ -25292,8 +24919,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -25314,8 +24939,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -25372,8 +24995,6 @@
 /obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/chemistry)
@@ -25474,8 +25095,6 @@
 	},
 /obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/science/lab)
@@ -25580,6 +25199,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/maintenance/starboard)
@@ -25699,8 +25319,6 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -25720,8 +25338,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -25812,8 +25428,6 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/medical/chemistry)
@@ -25835,8 +25449,6 @@
 /obj/item/grenade/chem_grenade,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/medical/chemistry)
@@ -25847,8 +25459,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/medical/chemistry)
@@ -25863,8 +25473,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/medical/chemistry)
@@ -26063,8 +25671,6 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/morgue)
@@ -26083,8 +25689,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/morgue)
@@ -27043,6 +26647,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken6"
 	},
 /area/library)
@@ -27075,6 +26680,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port)
@@ -27477,6 +27083,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/library)
@@ -27921,6 +27528,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard)
@@ -27985,8 +27593,6 @@
 /obj/item/clothing/head/syndicatefake,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/maintenance/port)
@@ -27999,8 +27605,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/maintenance/port)
@@ -28366,8 +27970,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/robotics/lab)
@@ -28464,8 +28066,6 @@
 /obj/item/clipboard,
 /obj/item/toy/syndicateballoon,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/maintenance/port)
@@ -28478,8 +28078,6 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/maintenance/port)
@@ -28535,7 +28133,6 @@
 "bbu" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -28662,7 +28259,6 @@
 /area/science/robotics/mechbay)
 "bbF" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28771,8 +28367,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/robotics/lab)
@@ -28786,6 +28380,7 @@
 /area/maintenance/starboard)
 "bbQ" = (
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/port)
@@ -28794,6 +28389,7 @@
 /area/maintenance/port)
 "bbS" = (
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken6"
 	},
 /area/maintenance/port)
@@ -28882,6 +28478,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port)
@@ -28954,8 +28551,6 @@
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHWEST)";
-	icon_state = "vault";
 	dir = 9
 	},
 /area/medical/medbay/zone3)
@@ -29123,8 +28718,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/robotics/lab)
@@ -29162,6 +28755,7 @@
 /area/maintenance/port)
 "bcI" = (
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken2"
 	},
 /area/maintenance/port)
@@ -29311,8 +28905,6 @@
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/medbay/zone3)
@@ -29321,8 +28913,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/medbay/zone3)
@@ -29552,8 +29142,6 @@
 /obj/item/cautery,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/science/robotics/lab)
@@ -29578,8 +29166,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/robotics/lab)
@@ -29635,12 +29221,14 @@
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/maintenance/port)
 "bdF" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/port)
@@ -29648,6 +29236,7 @@
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken2"
 	},
 /area/maintenance/port)
@@ -29833,8 +29422,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/medical/medbay/zone3)
@@ -29851,8 +29438,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/medical/medbay/zone3)
@@ -29965,7 +29550,6 @@
 /area/science/robotics/mechbay)
 "bej" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30004,8 +29588,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/science/robotics/lab)
@@ -30016,8 +29598,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/science/robotics/lab)
@@ -30035,8 +29615,6 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/science/robotics/lab)
@@ -30073,8 +29651,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/science/robotics/lab)
@@ -30665,7 +30241,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard)
@@ -30712,6 +30288,7 @@
 	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating{
+	burnt = 1;
 	icon_state = "panelscorched"
 	},
 /area/chapel/main)
@@ -30986,8 +30563,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/chapel/main)
@@ -31024,9 +30599,8 @@
 	name = "Station Intercom";
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 1
 	},
 /area/chapel/main)
 "bfY" = (
@@ -31044,9 +30618,8 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 4
 	},
 /area/chapel/main)
 "bfZ" = (
@@ -31056,18 +30629,16 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 1
 	},
 /area/chapel/main)
 "bga" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 4
 	},
 /area/chapel/main)
 "bgb" = (
@@ -31141,8 +30712,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -31309,8 +30878,6 @@
 	network = list("MINE")
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/chapel/main)
@@ -31350,9 +30917,8 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 8
 	},
 /area/chapel/main)
 "bgJ" = (
@@ -31368,9 +30934,7 @@
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "bgK" = (
 /obj/structure/chair/wood/normal{
@@ -31379,15 +30943,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 8
 	},
 /area/chapel/main)
 "bgL" = (
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "bgM" = (
 /obj/structure/table/wood,
@@ -31877,8 +31438,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/secondary/entry)
@@ -31951,8 +31510,6 @@
 /obj/item/cultivator,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
@@ -31964,8 +31521,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
@@ -31975,8 +31530,6 @@
 /obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
@@ -31990,8 +31543,6 @@
 /obj/item/hatchet,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
@@ -32001,8 +31552,6 @@
 /obj/item/reagent_containers/glass/bottle/nutrient/rh,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
@@ -32106,9 +31655,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 1
 	},
 /area/chapel/main)
 "bik" = (
@@ -32121,9 +31669,8 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 4
 	},
 /area/chapel/main)
 "bil" = (
@@ -32133,9 +31680,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 1
 	},
 /area/chapel/main)
 "bim" = (
@@ -32143,9 +31689,8 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 4
 	},
 /area/chapel/main)
 "bin" = (
@@ -32302,8 +31847,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/secondary/entry)
@@ -32314,7 +31857,6 @@
 "biC" = (
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32326,7 +31868,6 @@
 "biD" = (
 /obj/machinery/shower{
 	dir = 8;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32453,9 +31994,8 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 8
 	},
 /area/chapel/main)
 "biQ" = (
@@ -32468,9 +32008,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "biR" = (
 /obj/structure/chair/wood/normal{
@@ -32479,9 +32017,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
+/turf/open/floor/plasteel/chapel{
+	dir = 8
 	},
 /area/chapel/main)
 "biS" = (
@@ -32494,9 +32031,7 @@
 	pixel_y = -24;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
+/turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "biT" = (
 /obj/structure/bookcase,
@@ -33623,8 +33158,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -33677,8 +33210,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -33907,7 +33438,6 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	icon_state = "pump_map";
 	name = "Gas to Loop"
 	},
 /turf/open/floor/engine,
@@ -33984,8 +33514,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -34001,8 +33529,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -34016,36 +33542,27 @@
 /obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/secondary/exit)
 "bmG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/secondary/exit)
 "bsv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/escape{
@@ -34059,8 +33576,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -34076,8 +33591,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -34129,7 +33642,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -34139,7 +33651,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/status_display{
@@ -34151,7 +33662,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/light,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -34161,7 +33671,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/sign/poster/official/random{
@@ -34174,15 +33683,12 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -34214,8 +33720,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34228,8 +33732,6 @@
 	dir = 1
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -34243,13 +33745,9 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -34257,8 +33755,6 @@
 "bsR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34268,21 +33764,16 @@
 /area/hallway/secondary/exit)
 "bsS" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (EAST)";
-	icon_state = "escape";
 	dir = 4
 	},
 /area/hallway/secondary/exit)
 "bsT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34293,8 +33784,6 @@
 "bsV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34309,8 +33798,6 @@
 	dir = 2
 	},
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34324,16 +33811,12 @@
 /area/hallway/secondary/exit)
 "bsY" = (
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -34341,8 +33824,6 @@
 "bsZ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/delivery,
@@ -34354,8 +33835,6 @@
 /area/hallway/secondary/exit)
 "bta" = (
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -34367,8 +33846,6 @@
 	dir = 6
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -34381,8 +33858,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -34390,8 +33865,6 @@
 "btd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -34920,8 +34393,6 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -35033,8 +34504,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -35269,15 +34738,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHWEST)";
-	icon_state = "vault";
 	dir = 9
 	},
 /area/bridge)
 "swy" = (
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -35298,8 +34763,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -35329,8 +34792,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/bridge)
@@ -35342,8 +34803,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/bridge)
@@ -35742,8 +35201,6 @@
 /area/space)
 "sxY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -36119,8 +35576,6 @@
 "szJ" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -36168,7 +35623,6 @@
 "szV" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
@@ -36185,7 +35639,6 @@
 	pixel_y = 23
 	},
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -36200,8 +35653,6 @@
 	pixel_y = 32
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -36218,8 +35669,6 @@
 	pixel_y = 24
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -36232,8 +35681,6 @@
 	pixel_y = 32
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/red/side{
@@ -36328,8 +35775,6 @@
 "sAs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -36446,8 +35891,6 @@
 "sAS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
@@ -36495,6 +35938,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/central)
@@ -36559,8 +36003,6 @@
 "sBk" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTHEAST)";
-	icon_state = "escape";
 	dir = 5
 	},
 /area/space)
@@ -36570,7 +36012,6 @@
 "sBm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -36578,13 +36019,9 @@
 "sBn" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/door/window/brigdoor/southright{
@@ -36594,8 +36031,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/folder/red,
@@ -36608,11 +36043,9 @@
 "sBo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -36621,19 +36054,13 @@
 "sBp" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -36644,7 +36071,6 @@
 "sBq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -36735,12 +36161,9 @@
 /area/space)
 "sBG" = (
 /obj/structure/cable/white{
-	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -36760,7 +36183,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36770,7 +36192,6 @@
 /area/space)
 "sBI" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36782,12 +36203,9 @@
 /area/space)
 "sBJ" = (
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel,
@@ -36811,8 +36229,6 @@
 /area/space)
 "sBM" = (
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/escape{
@@ -36822,13 +36238,9 @@
 "sBN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/escape{
@@ -36837,8 +36249,6 @@
 /area/space)
 "sBO" = (
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -36890,7 +36300,6 @@
 /area/hallway/primary/central)
 "sBX" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -36898,7 +36307,6 @@
 /area/space)
 "sBY" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36908,7 +36316,6 @@
 /area/space)
 "sBZ" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36918,7 +36325,6 @@
 /area/space)
 "sCa" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36928,7 +36334,6 @@
 /area/space)
 "sCb" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36938,7 +36343,6 @@
 /area/space)
 "sCc" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36948,7 +36352,6 @@
 /area/space)
 "sCd" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36958,12 +36361,9 @@
 /area/space)
 "sCe" = (
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -36974,20 +36374,16 @@
 "sCg" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
 /area/space)
 "sCh" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (EAST)";
-	icon_state = "escape";
 	dir = 4
 	},
 /area/space)
@@ -37013,8 +36409,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -37049,7 +36443,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/central)
@@ -37057,7 +36451,7 @@
 /turf/open/floor/plating,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/hallway/primary/central)
@@ -37105,12 +36499,9 @@
 /area/space)
 "sCF" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -37152,8 +36543,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -37209,8 +36598,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/space)
@@ -37229,8 +36616,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/space)
@@ -37248,8 +36633,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/space)
@@ -37264,8 +36647,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/space)
@@ -37290,8 +36671,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/space)
@@ -37303,12 +36682,9 @@
 /area/space)
 "sDb" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -37340,8 +36716,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -37404,6 +36778,7 @@
 "sDp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/hallway/primary/central)
@@ -37422,7 +36797,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37432,7 +36806,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/status_display{
@@ -37444,7 +36817,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/light,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37454,7 +36826,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/escape,
@@ -37464,7 +36835,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37474,7 +36844,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -37491,7 +36860,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37501,7 +36869,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/sign/poster/official/random{
@@ -37514,7 +36881,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -37534,12 +36900,9 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/escape/corner{
-	tag = "icon-escapecorner (WEST)";
-	icon_state = "escapecorner";
 	dir = 8
 	},
 /area/space)
@@ -37548,15 +36911,12 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -37576,8 +36936,6 @@
 	dir = 8
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37588,8 +36946,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37599,8 +36955,6 @@
 	dir = 1
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -37614,13 +36968,9 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -37628,8 +36978,6 @@
 "sDG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -37702,7 +37050,6 @@
 "sDW" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/vault{
@@ -37721,13 +37068,10 @@
 /area/space)
 "sEa" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (EAST)";
-	icon_state = "escape";
 	dir = 4
 	},
 /area/space)
@@ -37759,8 +37103,6 @@
 "sEf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -37790,8 +37132,6 @@
 "sEl" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -37853,7 +37193,6 @@
 /area/space)
 "sEy" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -37885,8 +37224,6 @@
 "sED" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/escape,
@@ -37945,15 +37282,12 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "sEL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -38059,13 +37393,10 @@
 /area/space)
 "sFb" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (EAST)";
-	icon_state = "escape";
 	dir = 4
 	},
 /area/space)
@@ -38105,8 +37436,6 @@
 	dir = 2
 	},
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -38155,22 +37484,16 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/primary/central)
 "sFo" = (
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHWEST)";
-	icon_state = "vault";
 	dir = 9
 	},
 /area/hallway/primary/central)
 "sFp" = (
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTHEAST)";
-	icon_state = "vault";
 	dir = 5
 	},
 /area/hallway/primary/central)
@@ -38186,8 +37509,6 @@
 /obj/item/device/analyzer,
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -38211,7 +37532,6 @@
 /area/hallway/secondary/exit)
 "sFu" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -38235,7 +37555,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38245,7 +37564,6 @@
 /area/space)
 "sFw" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38255,7 +37573,6 @@
 /area/space)
 "sFx" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38265,7 +37582,6 @@
 /area/space)
 "sFy" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38291,7 +37607,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38301,7 +37616,6 @@
 /area/space)
 "sFA" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -38322,7 +37636,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38333,7 +37646,6 @@
 "sFC" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38347,30 +37659,23 @@
 	pixel_y = -32
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (SOUTHWEST)";
-	icon_state = "escape";
 	dir = 10
 	},
 /area/space)
 "sFE" = (
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -38378,16 +37683,12 @@
 "sFF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/space)
 "sFG" = (
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -38399,8 +37700,6 @@
 	dir = 6
 	},
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -38413,8 +37712,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -38422,8 +37719,6 @@
 "sFJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/brown{
@@ -38478,6 +37773,7 @@
 "sFQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/hallway/primary/central)
@@ -38497,23 +37793,17 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/primary/central)
 "sFS" = (
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (SOUTHWEST)";
-	icon_state = "vault";
 	dir = 10
 	},
 /area/hallway/primary/central)
 "sFT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (SOUTHEAST)";
-	icon_state = "vault";
 	dir = 6
 	},
 /area/hallway/primary/central)
@@ -38529,8 +37819,6 @@
 /obj/item/electronics/airlock,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -38557,8 +37845,6 @@
 /obj/item/clothing/mask/breath,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -38570,8 +37856,6 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -38582,8 +37866,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	tag = "icon-doors"
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall,
 /area/space)
@@ -38700,7 +37983,7 @@
 /turf/open/floor/plating,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	tag = "icon-platingdmg2";
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/hallway/primary/central)
@@ -38732,12 +38015,9 @@
 /area/hallway/primary/central)
 "sGA" = (
 /obj/structure/cable/white{
-	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating{
@@ -38760,14 +38040,12 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "sGC" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38779,12 +38057,9 @@
 /area/hallway/secondary/exit)
 "sGD" = (
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel,
@@ -38912,7 +38187,6 @@
 /area/hallway/primary/central)
 "sGY" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38922,7 +38196,6 @@
 /area/hallway/primary/central)
 "sGZ" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38932,7 +38205,6 @@
 /area/hallway/primary/central)
 "sHa" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38942,7 +38214,6 @@
 /area/hallway/primary/central)
 "sHb" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -38953,7 +38224,6 @@
 /area/hallway/primary/central)
 "sHc" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38963,7 +38233,6 @@
 /area/hallway/primary/central)
 "sHd" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -38976,12 +38245,9 @@
 /area/hallway/primary/central)
 "sHe" = (
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -38989,20 +38255,16 @@
 "sHf" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "sHg" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (EAST)";
-	icon_state = "escape";
 	dir = 4
 	},
 /area/hallway/secondary/exit)
@@ -39083,8 +38345,6 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/hallway/primary/central)
@@ -39098,12 +38358,9 @@
 /area/hallway/secondary/exit)
 "sHC" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -39225,8 +38482,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -39250,12 +38505,9 @@
 /area/hallway/secondary/exit)
 "sId" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -39301,6 +38553,7 @@
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/space)
@@ -39359,7 +38612,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/escape,
@@ -39369,7 +38621,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -39386,7 +38637,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -39406,12 +38656,9 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/escape/corner{
-	tag = "icon-escapecorner (WEST)";
-	icon_state = "escapecorner";
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -39443,13 +38690,10 @@
 "sIG" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/secondary/exit)
@@ -39474,6 +38718,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/central)
@@ -39498,8 +38743,6 @@
 /obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (EAST)";
-	icon_state = "vault";
 	dir = 4
 	},
 /area/hallway/secondary/exit)
@@ -39510,7 +38753,6 @@
 /area/hallway/secondary/exit)
 "sIR" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -39607,18 +38849,17 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "sJc" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/hallway/secondary/exit)
@@ -39640,7 +38881,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39650,7 +38890,6 @@
 /area/hallway/secondary/exit)
 "sJe" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39660,7 +38899,6 @@
 /area/hallway/secondary/exit)
 "sJf" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39670,7 +38908,6 @@
 /area/hallway/secondary/exit)
 "sJg" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39699,7 +38936,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39709,7 +38945,6 @@
 /area/hallway/secondary/exit)
 "sJi" = (
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -39727,7 +38962,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -39741,15 +38975,12 @@
 	pixel_y = -32
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/escape{
-	tag = "icon-escape (SOUTHWEST)";
-	icon_state = "escape";
 	dir = 10
 	},
 /area/hallway/secondary/exit)
@@ -39767,8 +38998,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (WEST)";
-	icon_state = "vault";
 	dir = 8
 	},
 /area/crew_quarters/bar/atrium)
@@ -39780,6 +39009,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/central)
@@ -39790,8 +39020,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	tag = "icon-doors"
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall,
 /area/hallway/secondary/exit)
@@ -39850,8 +39079,6 @@
 	pixel_x = 12
 	},
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hydroponics)
@@ -39907,8 +39134,6 @@
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -39916,8 +39141,6 @@
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -39955,6 +39178,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken7"
 	},
 /area/library)
@@ -40021,6 +39245,7 @@
 "sKd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken"
 	},
 /area/library)
@@ -40029,6 +39254,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
+	broken = 1;
 	icon_state = "wood-broken2"
 	},
 /area/library)
@@ -40221,6 +39447,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
+	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard)
@@ -40263,8 +39490,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault/side{
-	tag = "icon-vault (NORTH)";
-	icon_state = "vault";
 	dir = 1
 	},
 /area/maintenance/starboard)
