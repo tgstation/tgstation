@@ -1,5 +1,11 @@
 #define ARK_GRACE_PERIOD 300 //In seconds, how long the crew has before the Ark truly "begins"
 
+/proc/clockwork_ark_active() //A helper proc so the Ark doesn't have to be typecast every time it's checked; returns null if there is no Ark and its active var otherwise
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	if(!G)
+		return
+	return G.active
+
 //The gateway to Reebe, from which Ratvar emerges.
 /obj/structure/destructible/clockwork/massive/celestial_gateway
 	name = "\improper Ark of the Clockwork Justicar"
@@ -63,7 +69,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/cry_havoc()
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
-	hierophant_message("<span class='bold large_brass'>The Ark is activating! Get back to the base!</span>")
+	hierophant_message("<span class='bold large_brass'>The Ark is activating! You will be transported there soon!</span>")
 	for(var/mob/M in GLOB.player_list)
 		if(is_servant_of_ratvar(M) || isobserver(M) || M.z == z)
 			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, FALSE, pressure_affected = FALSE)
@@ -86,6 +92,8 @@
 		var/datum/stack_recipe/R = V
 		if(R.title == "wall gear")
 			R.time *= 2 //Building walls becomes slower when the Ark activates
+	mass_recall()
+	recalls_remaining++ //So it doesn't use up a charge
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
 	new/obj/effect/clockwork/city_of_cogs_rift(T)
@@ -261,6 +269,12 @@
 			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
 				O.take_damage(50, BURN, "bomb")
 			O.update_icon()
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if(is_servant_of_ratvar(M) && M.z != z)
+			M.forceMove(get_step(src, SOUTH))
+			M.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
+			M.clear_fullscreen("flash", 5)
 	if(grace_period)
 		grace_period--
 		return
