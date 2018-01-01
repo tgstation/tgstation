@@ -74,7 +74,8 @@
 /obj/effect/statclick/radio/Click()
 	var/mob/living/M = usr
 	M.hullrot_ptt = key
-	M.ptt_tick()
+	if (M.client.keys_held["V"])
+		M.ptt_tick()
 
 /mob/living/key_down(_key, client/user)
 	switch(_key)
