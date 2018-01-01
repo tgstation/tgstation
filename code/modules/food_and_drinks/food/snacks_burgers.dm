@@ -105,6 +105,10 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6, "banana" = 6)
 	foodtype = GRAIN | FRUIT
 
+/obj/item/reagent_containers/food/snacks/burger/clown/On_Consume(mob/M)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	..()
+
 /obj/item/reagent_containers/food/snacks/burger/mime
 	name = "mime burger"
 	desc = "Its taste defies language."
