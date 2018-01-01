@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
+// eye damage, eye_blind, eye_blurry, druggy, DISABILITY_BLIND disability, DISABILITY_NEARSIGHT disability, and DISABILITY_HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)

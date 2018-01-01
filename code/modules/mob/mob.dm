@@ -260,13 +260,13 @@
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if(isturf(loc))
+			if(isturf(loc) && (!A || loc == A))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		return 1
+				client.eye = A
+		return 1 
 
 /mob/living/reset_perspective(atom/A)
 	if(..())

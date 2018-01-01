@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_point_items = list()		//path = value
 	var/list/errored_datums = list()
 	//----------------------------------------------
-	var/single_server_income = 40.7
+	var/single_server_income = 54.3
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
