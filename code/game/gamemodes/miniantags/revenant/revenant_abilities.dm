@@ -372,6 +372,8 @@
 		roundend_category = "insane people"
 
 /datum/antagonist/abductee/mindsnapped/greet()
+	playsound(owner, 'sound/spookoween/ghost_whisper.ogg', 50, 1, -1)
+	to_chat(owner, "<span class='revenboldnotice'>You finally snap, and the voices in your head speak to you directly. They have a job for you...")
 	owner.announce_objectives()
 
 /obj/effect/proc_holder/spell/targeted/revenant/madness/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
