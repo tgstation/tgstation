@@ -194,6 +194,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dC" = (
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dD" = (
@@ -1683,6 +1684,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1985,6 +1987,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gS" = (
@@ -3020,6 +3023,7 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4482,6 +4486,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lO" = (
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lP" = (
@@ -5138,6 +5143,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -6004,6 +6010,38 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
+"oJ" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/engine,
+/area/ruin/unpowered/syndicate_lava_base/testlab)
+"oK" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4;
+	piping_layer = 3;
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"oL" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"oM" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/medbay)
+"oN" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel/red/side,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 
 (1,1,1) = {"
@@ -6907,7 +6945,7 @@ ae
 aq
 aq
 aq
-aq
+oJ
 aq
 aq
 ae
@@ -6928,7 +6966,7 @@ ha
 jy
 jM
 jN
-jZ
+oL
 kJ
 lh
 lz
@@ -7078,7 +7116,7 @@ mx
 jy
 jy
 nU
-oo
+oN
 ox
 ab
 ab
@@ -7244,7 +7282,7 @@ et
 eT
 fo
 fO
-gG
+oK
 hg
 hz
 hO
@@ -7496,7 +7534,7 @@ ku
 kR
 ln
 lI
-lI
+oM
 mC
 lI
 nA
