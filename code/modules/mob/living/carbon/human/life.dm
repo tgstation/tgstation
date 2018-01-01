@@ -395,7 +395,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.research_points -= 1
+						SSresearch.science_tech.research_points -= BALLMER_POINTS
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2
