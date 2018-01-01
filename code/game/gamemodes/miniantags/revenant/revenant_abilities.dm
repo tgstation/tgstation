@@ -363,8 +363,8 @@
 	include_user = 0
 	stun = 20
 	reveal = 80
-	unlock_amount = 20
-	cast_amount = 30
+	unlock_amount = 150
+	cast_amount = 60
 	action_icon_state = "induce_madness"
 
 /datum/antagonist/abductee/mindsnapped //pillzredux
@@ -405,7 +405,7 @@
 	include_user = 0
 	reveal = 0 //How long it reveals the revenant in deciseconds
 	stun = 0 //How long it stuns the revenant in deciseconds
-	unlock_amount = 74
+	unlock_amount = 150
 	cast_amount = 30
 	action_icon_state = "animate_bone"
 
