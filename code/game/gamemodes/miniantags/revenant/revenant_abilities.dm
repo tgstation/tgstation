@@ -367,20 +367,33 @@
 	cast_amount = 30
 	action_icon_state = "induce_madness"
 
+/datum/antagonist/abductee/mindsnapped //pillzredux
+		name = "Broken"
+		roundend_category = "insane people"
+
+/datum/antagonist/abductee/mindsnapped/greet()
+	owner.announce_objectives()
+
 /obj/effect/proc_holder/spell/targeted/revenant/madness/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
-		for(var/mob/living/M in targets)
-			if(M.stat)
+		for(var/mob/living/carbon/human/target in targets)
+			if(target.stat)
 				to_chat(user, "<span class='revennotice'>Not enough brain activity for our powers!</span>")
-				return FALSE
-			if(!istype(M, /mob/living/carbon/human))
-				to_chat(user, "<span class='revennotice'>Their brain is too basic for our powers!</span>")
-				return FALSE
-			to_chat(user, "<span class='revenwarning'>We have seeded madness in [M]'s mind! It will continue to fester...</span>")
-			to_chat(M, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy... (FINISH THIS FUCKER)")
+				continue
+			to_chat(user, "<span class='revenwarning'>We have seeded madness in [target]'s mind! It will continue to fester...</span>")
+			to_chat(target, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy...")
+			var/turf/soundturf = get_turf(target)
+			target.playsound_local(soundturf, 'sound/spookoween/ghosty_wind.ogg', 50, 1)
+			addtimer(CALLBACK(src, .proc/mind_warn, target), 300)
+			addtimer(CALLBACK(src, .proc/mind_snap, target), 600)
 
-/obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_sounds()
-	playsound(src, 'sound/magic/divulge_ending.ogg', 50, 1, -1)
+/obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_warn(mob/living/carbon/human/target)
+	to_chat(target, "<span class='revenwarning'>voices in your head whisper, acclimating their arrival in disgust.")
+
+/obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_snap(mob/living/carbon/human/target)
+	target.mind.add_antag_datum(/datum/antagonist/abductee/mindsnapped) // this handles adding the random objective in it's on_gain proc
+	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+	target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 
 /obj/effect/proc_holder/spell/targeted/revenant/animate_bone
 	name = "Animate Bone"
