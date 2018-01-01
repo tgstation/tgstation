@@ -385,14 +385,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)
 				if(drunkenness >= 12.9 && drunkenness <= 13.8)
+					drunkenness = round(drunkenness, 0.01)
 					var/ballmer_percent = 0
 					if(drunkenness == 13.35) // why run math if I dont have to
 						ballmer_percent = 1
 					else
-						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 0.5
+						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 
-					if(ballmer_percent > 1)
-						ballmer_percent = 1
 					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
