@@ -4962,6 +4962,13 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/device/multitool,
+/obj/machinery/button/door{
+	id = "lavalandsyndi_telecomms";
+	name = "Telecomms Blast Door Control";
+	pixel_x = 26;
+	pixel_y = 0;
+	req_access_txt = "150"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mS" = (
@@ -6043,6 +6050,13 @@
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/red/side,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+"oO" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/bar)
 
 (1,1,1) = {"
 aa
@@ -6219,11 +6233,11 @@ ab
 ab
 ab
 ab
-ab
 mn
 mn
 mn
-ab
+mn
+mn
 ab
 ab
 ab
@@ -6265,13 +6279,13 @@ ab
 ab
 ab
 ab
-ab
 mn
 mn
+mM
 nh
+mM
 mn
 mn
-ab
 ab
 ab
 ab
@@ -6312,13 +6326,13 @@ ab
 ab
 ab
 ab
-ab
 mn
+mM
 mM
 ni
 mM
+mM
 mn
-ab
 ab
 ab
 ab
@@ -6359,7 +6373,7 @@ ab
 ab
 ab
 ab
-ab
+mn
 mo
 mN
 nj
@@ -6407,8 +6421,8 @@ ab
 ab
 ab
 ab
-mn
-mO
+mp
+mP
 ni
 nH
 oh
@@ -6828,7 +6842,7 @@ jx
 kn
 kH
 jN
-jZ
+oO
 lU
 mt
 mU
