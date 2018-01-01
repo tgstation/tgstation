@@ -144,6 +144,10 @@
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(L.incorporeal_move)
+			return
 	if(!iscarbon(A))
 		return
 	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
