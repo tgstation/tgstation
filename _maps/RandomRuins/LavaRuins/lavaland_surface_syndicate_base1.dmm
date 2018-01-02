@@ -4966,7 +4966,6 @@
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
 	pixel_x = 26;
-	pixel_y = 0;
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/dark,
