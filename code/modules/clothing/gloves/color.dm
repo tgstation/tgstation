@@ -192,7 +192,7 @@
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
@@ -202,12 +202,14 @@
 		/obj/item/clothing/gloves/color/green = 1,
 		/obj/item/clothing/gloves/color/grey = 1,
 		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1)
+		/obj/item/clothing/gloves/color/brown = 1,
+		/obj/item/clothing/gloves/color/white = 1,
+		/obj/item/clothing/gloves/color/rainbow = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	item_state = initial(selected.item_state)
-	item_color = initial(selected.item_color)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new selected(H), slot_gloves)
+	else
+		new selected(loc)
+	return INITIALIZE_HINT_QDEL

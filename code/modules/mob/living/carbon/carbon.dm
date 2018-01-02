@@ -157,7 +157,7 @@
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
-				if(has_disability(PACIFISM))
+				if(has_disability(DISABILITY_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
@@ -170,7 +170,7 @@
 		thrown_thing = I
 		dropItemToGround(I)
 
-		if(has_disability(PACIFISM) && I.throwforce)
+		if(has_disability(DISABILITY_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
@@ -365,16 +365,9 @@
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
+		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		if(I == handcuffed)
-			handcuffed = null
-			update_handcuffed()
-			return
-		else if(I == legcuffed)
-			legcuffed = null
-			update_inv_legcuffed()
-			return
-		return TRUE
+		return
 
 	else
 		if(I == handcuffed)
@@ -409,7 +402,7 @@
 	dropItemToGround(I)
 
 	var/modifier = 0
-	if(has_disability(CLUMSY))
+	if(has_disability(DISABILITY_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
@@ -774,7 +767,7 @@
 			reagents.addiction_list = list()
 	cure_all_traumas(TRUE, TRUE)
 	..()
-	// heal ears after healing disabilities, since ears check DEAF disability
+	// heal ears after healing disabilities, since ears check DISABILITY_DEAF disability
 	// when healing.
 	restoreEars()
 

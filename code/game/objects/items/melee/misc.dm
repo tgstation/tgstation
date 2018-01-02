@@ -99,7 +99,7 @@
 		return ..()
 
 	add_fingerprint(user)
-	if((user.has_disability(CLUMSY)) && prob(50))
+	if((user.has_disability(DISABILITY_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))
@@ -275,17 +275,18 @@
 		consume_turf(target)
 
 /obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
-	if(istype(T, T.baseturf))
-		return //Can't void the void, baby!
+	var/oldtype = T.type
+	var/turf/newT = T.ScrapeAway()
+	if(newT.type == oldtype)
+		return
 	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
 
-/obj/item/melee/supermatter_sword/add_blood(list/blood_dna)
-	return 0
+/obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
+	return FALSE
 
 /obj/item/melee/curator_whip
 	name = "curator's whip"

@@ -10,6 +10,8 @@
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
+	baseturfs = /turf/open/floor/plating
+
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -78,7 +80,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
-	ChangeTurf(/turf/open/floor/plating)
+	ScrapeAway()
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
@@ -96,7 +98,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ChangeTurf(baseturf)
+			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
 			return
 		if(2)
@@ -294,7 +296,7 @@
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			ScrapeAway()
 			return TRUE
 	return FALSE
 

@@ -67,7 +67,7 @@
 
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-			if(!(H.z in GLOB.station_z_levels))
+			if(!is_station_level(H.z))
 				continue
 			if(H.mind && H.client && H.stat != DEAD)
 				if(H.HasDisease(D))
