@@ -128,3 +128,14 @@
 /obj/item/device/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
 	droptype = /obj/item/device/powersink
+
+/obj/item/device/sbeacondrop/spacepod
+	desc = "A label on it reads: <i>Warning: Activating this device will send a syndicate spacepod to your location</i>."
+	droptype = /obj/vehicle/sealed/spacepod/syndicate
+
+/obj/item/device/sbeacondrop/spacepod/attack_self(mob/user)
+	if(!isspaceturf(user.loc))
+		var/confirm = alert("Are you sure you want to summon a spacepod here? You should really use this in space!", "Confirm Pod Spawn", "Yes", "No")
+		if(confirm != "Yes")
+			return
+	return ..()

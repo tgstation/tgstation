@@ -206,9 +206,9 @@
 	build_path = /obj/machinery/computer/cargo/express
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
-	if (!emagged) 
+	if (!emagged)
 		to_chat(user, "<span class='notice'>Routing protocols are already set to: \"factory defaults\".</span>")
-	else 
+	else
 		to_chat(user, "<span class='notice'>You reset the routing protocols to: \"factory defaults\".</span>")
 		emagged = FALSE
 
@@ -326,3 +326,7 @@
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
+
+/obj/item/circuitboard/computer/pod_tracking
+	name = "Spacepod Tracking Console (Computer Board)"
+	build_path = /obj/machinery/computer/podtracker
