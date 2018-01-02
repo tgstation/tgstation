@@ -17,6 +17,8 @@
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	victim = locate(/obj/item/bodypart/head) in parts_list
+	name = "[victim.name] on a spear"
+	update_icon()
 	if(bonespear)
 		spear = locate(/obj/item/twohanded/bonespear) in parts_list
 	else
@@ -42,4 +44,4 @@
 	victim = null
 	spear.forceMove(get_turf(src))
 	spear = null
-	qdel()
+	qdel(src)
