@@ -51,7 +51,7 @@ As mentioned before, you are expected to follow these specifications in order to
 ### Object Oriented Code
 As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
-### All BYOND paths must contain the full path.
+### All BYOND paths must contain the full path
 (i.e. absolute pathing)
 
 DM will allow you nest almost any type keyword into a block, such as:
@@ -105,7 +105,7 @@ The previous code made compliant:
 	code
 ```
 
-### No overriding type safety checks.
+### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ### Type paths must begin with a /
