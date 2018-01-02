@@ -299,7 +299,6 @@
 					if(!L.dropItemToGround(W))
 						qdel(W)
 				L.dust()
-				qdel(L)
 			else
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
 					vitality_drained = L.adjustToxLoss(1)
