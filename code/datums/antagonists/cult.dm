@@ -243,7 +243,7 @@
 	return sacced || completed
 
 /datum/objective/sacrifice/update_explanation_text()
-	if(target && !sacced)
+	if(target)
 		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
