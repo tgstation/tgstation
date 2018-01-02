@@ -4,8 +4,6 @@
 //DRONES AS ITEMS//
 ///////////////////
 //Drone shells
-//Drones as hats
-
 
 //DRONE SHELL
 /obj/item/drone_shell
@@ -14,6 +12,8 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
+	var/seasonal_hats = TRUE //If TRUE, and there are no default hats, different holidays will grant different hats
+	var/static/list/possible_seasonal_hats //This is built automatically in build_seasonal_hats() but can also be edited by admins!
 
 /obj/item/drone_shell/Initialize()
 	. = ..()
@@ -21,6 +21,17 @@
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	GLOB.poi_list |= src
+	if(isnull(possible_seasonal_hats))
+		build_seasonal_hats()
+
+/obj/item/drone_shell/proc/build_seasonal_hats()
+	possible_seasonal_hats = list()
+	if(!SSevents.holidays.len)
+		return //no holidays, no hats; we'll keep the empty list so we never call this proc again
+	for(var/V in SSevents.holidays)
+		var/datum/holiday/holiday = SSevents.holidays[V]
+		if(holiday.drone_hat)
+			possible_seasonal_hats += holiday.drone_hat
 
 /obj/item/drone_shell/Destroy()
 	GLOB.poi_list -= src
@@ -42,48 +53,10 @@
 	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
+	if(!D.default_hatmask && seasonal_hats && possible_seasonal_hats.len)
+		var/hat_type = pick(possible_seasonal_hats)
+		var/obj/item/new_hat = new hat_type(D)
+		D.equip_to_slot_or_del(new_hat, slot_head)
 	D.admin_spawned = admin_spawned
 	D.key = user.key
 	qdel(src)
-
-
-//DRONE HOLDER
-/obj/item/clothing/head/drone_holder//Only exists in someones hand.or on their head
-	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball."
-	icon = 'icons/mob/drone.dmi'
-	icon_state = "drone_maint_hat"
-	var/mob/living/simple_animal/drone/drone //stored drone
-
-/obj/item/clothing/head/drone_holder/proc/uncurl()
-	if(!drone)
-		return
-
-	if(isliving(loc))
-		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[drone] is trying to escape!</span>")
-		if(!do_after(drone, 50, target = L))
-			return
-		L.dropItemToGround(src)
-
-	contents -= drone
-	drone.forceMove(drop_location())
-	drone.reset_perspective()
-	drone.setDir(SOUTH )//Looks better
-	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")
-	drone = null
-	qdel(src)
-
-
-/obj/item/clothing/head/drone_holder/relaymove()
-	uncurl()
-
-/obj/item/clothing/head/drone_holder/container_resist(mob/living/user)
-	uncurl()
-
-
-/obj/item/clothing/head/drone_holder/proc/updateVisualAppearence(mob/living/simple_animal/drone/D)
-	if(!D)
-		return
-	icon_state = "[D.visualAppearence]_hat"
-	. = icon_state

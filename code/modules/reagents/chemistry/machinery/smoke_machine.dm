@@ -46,6 +46,8 @@
 	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
+	if(!reagents)
+		create_reagents(new_volume)
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
 		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing

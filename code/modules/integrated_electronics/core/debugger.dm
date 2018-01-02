@@ -1,6 +1,3 @@
-
-
-
 /obj/item/device/integrated_electronics/debugger
 	name = "circuit debugger"
 	desc = "This small tool allows one working with custom machinery to directly set data to a specific pin, useful for writing \
@@ -59,7 +56,7 @@
 			data_to_show = A.name
 		to_chat(user, "<span class='notice'>You write '[data_to_write ? data_to_show : "NULL"]' to the '[io]' pin of \the [io.holder].</span>")
 	else if(io.io_type == PULSE_CHANNEL)
-		io.holder.check_then_do_work(ignore_power = TRUE)
+		io.holder.check_then_do_work(io.ord,ignore_power = TRUE)
 		to_chat(user, "<span class='notice'>You pulse \the [io.holder]'s [io].</span>")
 
 	io.holder.interact(user) // This is to update the UI.

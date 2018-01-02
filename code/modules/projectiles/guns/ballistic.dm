@@ -31,8 +31,7 @@
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
 			AC.forceMove(drop_location()) //Eject casing onto ground.
-			AC.SpinAnimation(10, 1) //next gen special effects
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, AC, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+			AC.bounce_away(TRUE)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
@@ -125,8 +124,7 @@
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
 		AC.forceMove(drop_location())
-		AC.SpinAnimation(10, 1)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, AC, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+		AC.bounce_away()
 		chambered = null
 		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
 		playsound(src, "gun_slide_lock", 70, 1)
@@ -166,7 +164,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				user_dna = C.dna
-				B.add_blood(user_dna)
+				B.add_blood_DNA(user_dna)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)

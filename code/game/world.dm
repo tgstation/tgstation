@@ -36,6 +36,9 @@ GLOBAL_PROTECT(security_mode)
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
+	
+	if("no-init" in params)
+		return
 
 	Master.Initialize(10, FALSE)
 
@@ -258,3 +261,4 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+
