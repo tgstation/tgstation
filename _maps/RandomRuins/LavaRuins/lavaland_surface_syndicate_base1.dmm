@@ -194,6 +194,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dC" = (
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dD" = (
@@ -1683,6 +1684,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1985,6 +1987,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gS" = (
@@ -3020,6 +3023,7 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4482,6 +4486,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lO" = (
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lP" = (
@@ -4957,6 +4962,12 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/device/multitool,
+/obj/machinery/button/door{
+	id = "lavalandsyndi_telecomms";
+	name = "Telecomms Blast Door Control";
+	pixel_x = 26;
+	req_access_txt = "150"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mS" = (
@@ -5138,6 +5149,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -6005,6 +6017,45 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
+"oJ" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/engine,
+/area/ruin/unpowered/syndicate_lava_base/testlab)
+"oK" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4;
+	piping_layer = 3;
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/main)
+"oL" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"oM" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered/syndicate_lava_base/medbay)
+"oN" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plasteel/red/side,
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
+"oO" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/unpowered/syndicate_lava_base/bar)
 
 (1,1,1) = {"
 aa
@@ -6181,11 +6232,11 @@ ab
 ab
 ab
 ab
-ab
 mn
 mn
 mn
-ab
+mn
+mn
 ab
 ab
 ab
@@ -6227,13 +6278,13 @@ ab
 ab
 ab
 ab
-ab
 mn
 mn
+mM
 nh
+mM
 mn
 mn
-ab
 ab
 ab
 ab
@@ -6274,13 +6325,13 @@ ab
 ab
 ab
 ab
-ab
 mn
+mM
 mM
 ni
 mM
+mM
 mn
-ab
 ab
 ab
 ab
@@ -6321,7 +6372,7 @@ ab
 ab
 ab
 ab
-ab
+mn
 mo
 mN
 nj
@@ -6369,8 +6420,8 @@ ab
 ab
 ab
 ab
-mn
-mO
+mp
+mP
 ni
 nH
 oh
@@ -6790,7 +6841,7 @@ jx
 kn
 kH
 jN
-jZ
+oO
 lU
 mt
 mU
@@ -6907,7 +6958,7 @@ ae
 aq
 aq
 aq
-aq
+oJ
 aq
 aq
 ae
@@ -6928,7 +6979,7 @@ ha
 jy
 jM
 jN
-jZ
+oL
 kJ
 lh
 lz
@@ -7078,7 +7129,7 @@ mx
 jy
 jy
 nU
-oo
+oN
 ox
 ab
 ab
@@ -7244,7 +7295,7 @@ et
 eT
 fo
 fO
-gG
+oK
 hg
 hz
 hO
@@ -7496,7 +7547,7 @@ ku
 kR
 ln
 lI
-lI
+oM
 mC
 lI
 nA
