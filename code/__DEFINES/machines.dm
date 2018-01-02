@@ -29,6 +29,7 @@
 #define BIOGENERATOR 32 //Uses biomass
 #define LIMBGROWER 64 //Uses synthetic flesh
 #define SMELTER 128 //uses various minerals
+#define PODFAB 256
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines

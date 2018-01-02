@@ -202,6 +202,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/spacepod
+	name = "Armed Syndicate Spacepod"
+	desc = "A syndicate spacepod, equipped with lasers, a passenger seat, and a syndicate cloaking device. \
+			Use the given beacon in space to summon the spacepod."
+	item = /obj/item/device/sbeacondrop/spacepod
+	cost = 85
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
