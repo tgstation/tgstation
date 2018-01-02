@@ -848,6 +848,8 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cultist;jobban4=[REF(M)]'>Cultist</a></td>"
 
+		dat += "</tr><tr align='center'>" //So things dont get squished.
+
 		//Servant of Ratvar
 		if(jobban_isbanned(M, "servant of Ratvar") || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=servant of Ratvar;jobban4=[REF(M)]'><font color=red>Servant</font></a></td>"
