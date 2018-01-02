@@ -37,8 +37,8 @@
 	else
 		..()
 
-/obj/item/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)
+/obj/item/reagent_containers/food/snacks/proc/On_Consume(mob/M)
+	if(!usr || !M)
 		return
 	if(!reagents.total_volume)
 		var/obj/item/trash_item = generate_trash(usr)
@@ -110,8 +110,9 @@
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
+				reagents.maximum_volume -= bitesize
 				bitecount++
-				On_Consume()
+				On_Consume(M)
 				checkLiked(fraction, M)
 				return 1
 

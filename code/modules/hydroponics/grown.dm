@@ -117,7 +117,7 @@
 
 	qdel(src)
 
-/obj/item/reagent_containers/food/snacks/grown/On_Consume()
+/obj/item/reagent_containers/food/snacks/grown/On_Consume(mob/M)
 	if(iscarbon(usr))
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
