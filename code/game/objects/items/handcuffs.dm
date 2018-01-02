@@ -39,7 +39,7 @@
 
 //pretty sure swalloing these would choke you
 /obj/item/restraints/handcuffs/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is swalloing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] flips into a handstand, hitting [user.p_their()] neck with the chain as [user.p_they()] go! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
