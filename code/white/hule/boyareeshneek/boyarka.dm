@@ -20,7 +20,7 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/boyarka/New()
-	name = "[pick("Boyarka24","Boyarin24","Boyarishnik24", "BoyarkaPlus", "BoyarinPlus", "BoyarishnikPlus", "BoyarkaForte", "BoyarinForte", "BoyarishnikForte")]"
+	name = "[pick("Boyarka24","Boyarin24","Boyarishneek24", "BoyarkaPlus", "BoyarinPlus", "BoyarishneekPlus", "BoyarkaForte", "BoyarinForte", "BoyarishneekForte")]"
 
 /datum/reagent/consumable/ethanol/boyarka
 	name = "Boyarishnik"
@@ -29,36 +29,36 @@
 	color = "#0064C8"
 	boozepwr = 100
 	taste_description = "berry alcohol"
-	glass_icon_state = "boyarka_bottle"
-	glass_name = "boyarishnik bottle"
-	glass_desc = "The glass contain boyarishnik."
+	glass_icon_state = "wineglass"
+	glass_name = "boyarishnik glass"
+	glass_desc = "Царский напиток в царской рюмке."
 	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/boyarka/on_mob_life(mob/living/M)
 	if(prob(7.5))
 		M.adjustToxLoss(2*REM, 0)
 		M.blur_eyes(35)
-		M.set_eye_damage(30)
+		M.set_eye_damage(50)
 		. = 1
 	..()
 
 	if(prob(5))
 		M.set_drugginess(50)
-		M.adjustBrainLoss(3*REM, 150)
+		M.adjustBrainLoss(5*REM, 150)
 	..()
 
 	if(prob(5))
 		M.hallucination += 4
 		M.adjustToxLoss(5*REM, 0)
 		M.Sleeping(40, 0)
-		return ..()
+	 ..()
 
 	if(prob(4))
 		M.set_eye_damage(100)
 		M.Sleeping(300, 0)
-		return ..()
+	 ..()
 
-	if(prob(3))
+	if(prob(1.5))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
@@ -70,16 +70,21 @@
 				H.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 
-	if(prob(2.5))
+	if(prob(4))
 		M.damageoverlaytemp = 60
 		M.update_damage_hud()
 		M.blur_eyes(3)
 		M.Sleeping(40, 0)
-		return ..()
+		M.adjustBrainLoss(100)
+	 ..()
 
 	if(prob(0.3))
 		M.gib()
 	return ..()
+
+	if(prob(1))
+		M.reagents.add_reagent("sugar",300)
+	..()
 
 	if(prob(2.5))		//НАРОДНАЯ МЕДИЦИНА ХУЛЕ
 		if(iscarbon(M))
@@ -115,13 +120,29 @@
 		..()
 		. = 1
 
-/obj/item/reagent_containers/glass/bottle/boyarishnik //не роботоет(
-	name = "Boyarishnik bottle"
-	desc = "Алкогольная сладкая пакость двадцать шестого века."
-	icon = 'code/white/hule/boyareeshneek/boyarka.dmi'
-	icon_state = "boyarka_bottle"
-	list_reagents = list("boyarka" = 30)
-	amount_per_transfer_from_this = 10
+	if(prob(0.1))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
+				var/obj/item/organ/zombie_infection/ZI = new()
+				ZI.Insert(H)
+	..()
+
+	if(prob(0.2))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.set_species(/datum/species/abductor)
+			H.name = "[pick("Ayy Lmao", "Boy Arishnik", "Somewhere in Nevada...", "Naruto Uzumaki", "Jebediah Cristoff")]"
+
+	if(prob(0.2))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.set_species(/datum/species/vampire)
+
+	if(prob(0.2))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.set_species(/datum/species/angel)
 
 /obj/item/reagent_containers/food/drinks/boyarishnik
 	name = "Boyarishnik bottle"
@@ -130,3 +151,52 @@
 	icon_state = "boyarka_bottle"
 	list_reagents = list("boyarka" = 30)
 	foodtype = ALCOHOL
+
+/obj/item/storage/briefcase/boyarishneek
+	name = "Boyarishnik case"
+	desc = "Элитный напиток в элегантном кейсе. Ровно десять пузырьков желанного нектара."
+	display_contents_with_number = TRUE
+	storage_slots = 10
+	can_hold = list(
+		/obj/item/reagent_containers/food/drinks/boyarishnik
+		)
+
+/obj/item/storage/briefcase/boyarishneek/PopulateContents()
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+	new /obj/item/reagent_containers/food/drinks/boyarishnik(src)
+
+/obj/item/reagent_containers/syringe/lethal/boyarishneek
+	name = "boyarka injection syringe"
+	desc = "Только для самых бесстрашных. И безнадежных."
+	list_reagents = list("boyarka" = 50)
+
+/obj/item/storage/briefcase/boyarishneek
+	name = "Boyarishnik injection case"
+	desc = "Десять шприцов с боярышником."
+	display_contents_with_number = TRUE
+	storage_slots = 10
+	can_hold = list(
+		/obj/item/reagent_containers/syringe/lethal/boyarishneek
+		)
+
+/obj/item/storage/briefcase/boyarishneekinjections/PopulateContents()
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
