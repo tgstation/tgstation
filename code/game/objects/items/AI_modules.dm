@@ -561,7 +561,7 @@ AI MODULES
 		name = "damaged Core AI Module"
 		desc = "An AI Module for programming laws to an AI. It looks slightly damaged."
 
-/obj/item/aiModule/core/full/damaged/install(datum/ai_laws/law_datum, mob/user) //These boards replace inherent laws.
+/obj/item/aiModule/core/full/damaged/install(datum/ai_laws/law_datum, mob/user)
 	laws += generate_ion_law()
 	while (prob(75))
 		laws += generate_ion_law()
