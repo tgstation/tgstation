@@ -15,7 +15,8 @@
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
-			var/damagetype = held_item.suicide_act(src)
+			var/obj/item/suicide_item = getSuicideItem()
+			var/damagetype = suicide_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
@@ -169,7 +170,16 @@
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
-	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+	if(istype(handcuffed, /obj/item/restraints))
+		var/obj/item/restraints/R = handcuffed
+		if(R.can_suicide))
+			return TRUE
+	if(!canmove || restrained())
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	return TRUE
+
+/mob/living/carbon/proc/getSuicideItem()
+	if(restrained())
+		return handcuffed
+	return get_active_held_item()

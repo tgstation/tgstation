@@ -33,8 +33,14 @@
 	materials = list(MAT_METAL=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	can_suicide = TRUE
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
+
+//pretty sure swalloing these would choke you
+/obj/item/restraints/handcuffs/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is swalloing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(!istype(C))
@@ -261,6 +267,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
