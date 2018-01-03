@@ -114,7 +114,7 @@
 						//Only notify people if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-						deadchat_broadcast("<span class='deadsay'><b>[usr.name] has changed the security level to [get_security_level()].</b></span>", usr)
+						deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [get_security_level()].</span>", usr)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -129,7 +129,7 @@
 			if(authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] made an priority announcement.</b></span>", usr)
+				deadchat_broadcast("<span class='deadsay bold'>[usr.name] made an priority announcement.</span>", usr)
 
 		if("crossserver")
 			if(authenticated==2)
@@ -146,7 +146,7 @@
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_talk(usr,"[key_name(usr)] has sent a message to the other server: [input]",LOGSAY)
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has sent an outgoing message to the other station(s).</b></span>", usr)
+				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has sent an outgoing message to the other station(s).</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		if("purchase_menu")
@@ -249,13 +249,13 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay'><b>[usr.name] enabled emergency maintenance access.</b></span>", usr)
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] enabled emergency maintenance access.</span>", usr)
 			state = STATE_DEFAULT
 		if("disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay'><b>[usr.name] disabled emergency maintenance access.</b></span>", usr)
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] disabled emergency maintenance access.</span>", usr)
 			state = STATE_DEFAULT
 
 		// Status display stuff
@@ -388,7 +388,7 @@
 				//Only notify people if an actual change happened
 				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has changed the security level to [get_security_level()].</b></span>", usr)
+				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [get_security_level()].</span>", usr)
 			tmp_alertlevel = 0
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
@@ -399,13 +399,13 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay'><b>[usr.name] enabled emergency maintenance access.</b></span>", usr)
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] enabled emergency maintenance access.</span>", usr)
 			aistate = STATE_DEFAULT
 		if("ai-disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay'><b>[usr.name] disabled emergency maintenance access.</b></span>", usr)
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] disabled emergency maintenance access.</span>", usr)
 			aistate = STATE_DEFAULT
 
 	updateUsrDialog()
