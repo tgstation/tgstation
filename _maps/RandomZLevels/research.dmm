@@ -2718,7 +2718,7 @@
 "ij" = (
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "A beefy variant of the standard securitron model.";
-	emagged = 1;
+	obj_flags = 5;
 	faction = list("nanotrasenprivate");
 	health = 50;
 	maxHealth = 50;

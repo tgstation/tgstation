@@ -41,7 +41,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	on_blueprints = TRUE
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	var/datum/powernet/powernet

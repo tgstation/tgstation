@@ -144,7 +144,7 @@
 /area/awaymission/beach)
 "aA" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1
+	obj_flags = 5
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
