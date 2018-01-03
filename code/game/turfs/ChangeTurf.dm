@@ -143,22 +143,33 @@
 // Make a new turf and put it on top
 // The args behave identical to PlaceOnBottom except they go on top
 /turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type)
+	var/turf/newT
 	if(fake_turf_type)
-		if(!new_baseturfs)
+		if(!new_baseturfs) // If no baseturfs list then we want to create one from the turf type
 			var/list/old_baseturfs = baseturfs.Copy()
-			assemble_baseturfs(fake_turf_type)
+			newT = ChangeTurf(fake_turf_type)
+			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
 			if(!length(baseturfs))
-				baseturfs = list(baseturfs)
-			baseturfs.Insert(1, old_baseturfs)
-			return
-		else if(!length(new_baseturfs))
-			new_baseturfs = list(new_baseturfs, fake_turf_type)
-		else
-			new_baseturfs += fake_turf_type
+				newT.baseturfs = list(baseturfs)
+			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
+			return newT
+		if(!length(baseturfs))
+			baseturfs = list(baseturfs)
+		baseturfs += type
+		baseturfs += new_baseturfs
+		return ChangeTurf(fake_turf_type)
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	baseturfs += new_baseturfs
-
+	baseturfs += type
+	var/turf/change_type
+	if(length(new_baseturfs))
+		change_type = new_baseturfs[new_baseturfs.len]
+		new_baseturfs.len--
+		if(new_baseturfs.len)
+			baseturfs += new_baseturfs
+	else
+		change_type = new_baseturfs
+	return ChangeTurf(change_type)
 
 // Copy an existing turf and put it on top
 /turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY)
