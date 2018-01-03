@@ -543,31 +543,49 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
+		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
+			to_chat(world, "<b>Test Areas:<b> Skipping over [AA] in invalid location, [AA.loc].")
+			continue
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
 	for(var/obj/machinery/requests_console/RC in GLOB.machines)
 		var/area/A = get_area(RC)
+		if(!A)
+			to_chat(world, "<b>Test Areas:<b> Skipping over [RC] in invalid location, [RC.loc].")
+			continue
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
 	for(var/obj/machinery/light/L in GLOB.machines)
 		var/area/A = get_area(L)
+		if(!A)
+			to_chat(world, "<b>Test Areas:<b> Skipping over [L] in invalid location, [L.loc].")
+			continue
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
 	for(var/obj/machinery/light_switch/LS in GLOB.machines)
 		var/area/A = get_area(LS)
+		if(!A)
+			to_chat(world, "<b>Test Areas:<b> Skipping over [LS] in invalid location, [LS.loc].")
+			continue
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
 
 	for(var/obj/item/device/radio/intercom/I in GLOB.machines)
 		var/area/A = get_area(I)
+		if(!A)
+			to_chat(world, "<b>Test Areas:<b> Skipping over [I] in invalid location, [I.loc].")
+			continue
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
 	for(var/obj/machinery/camera/C in GLOB.machines)
 		var/area/A = get_area(C)
+		if(!A)
+			to_chat(world, "<b>Test Areas:<b> Skipping over [C] in invalid location, [C.loc].")
+			continue
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
 
