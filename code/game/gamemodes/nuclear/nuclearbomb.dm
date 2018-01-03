@@ -564,8 +564,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.death(0)
 
 /obj/item/disk/fakenucleardisk
-	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint odor of cheese."
+	name = "nuclear authentication disk"
+	desc = "A cheap plastic imitation of the nuclear authentication disk. Smells like broken dreams and cheese."
 	icon_state = "nucleardisk"
 
 /obj/item/disk/fakenucleardisk/suicide_act(mob/user)
