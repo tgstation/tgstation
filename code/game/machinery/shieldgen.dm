@@ -59,9 +59,11 @@
 	color = "#FF0000"
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_MOB_LAYER
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
+
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"

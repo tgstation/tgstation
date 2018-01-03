@@ -103,7 +103,7 @@
 	..()
 
 /datum/action/innate/cult/blood_spell/IsAvailable()
-	if(!iscultist(owner) || !charges)
+	if(!iscultist(owner) || owner.incapacitated()  || !charges)
 		return FALSE
 	return ..()
 
@@ -144,11 +144,13 @@
 	desc = "A large spell that immediately disables all electronics in the area."
 	button_icon_state = "emp"
 	health_cost = 5
+	invocation = "Ta'gh fara'qha fel d'amar det!"
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
 	empulse(owner, 4, 8)
+	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
 		qdel(src)
@@ -569,9 +571,7 @@
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/obj/machinery/door/airlock))
-			var/turf/tar = get_turf(target)
-			qdel(target)
-			new /obj/machinery/door/airlock/cult/weak(tar)
+			target.narsie_act()
 			uses -= 50
 			user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
@@ -678,9 +678,11 @@
 				if(uses > missing)
 					M.adjustHealth(-missing)
 					M.visible_message("<span class='warning'>[M] is fully-healed by [user]'s blood magic!</span>")
+					uses -= missing
 				else
 					M.adjustHealth(-uses)
 					M.visible_message("<span class='warning'>[M] is healed by [user]'sblood magic!</span>")
+					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M,icon_state="sendbeam",time=10)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
@@ -723,7 +725,10 @@
 					uses -= 200
 					var/turf/T = get_turf(user)
 					qdel(src)
-					var/obj/rite = new /obj/item/twohanded/spear/cult(T)
+					var/datum/action/innate/cult/spear/S = new(user)
+					var/obj/item/twohanded/spear/cult/rite = new(T)
+					S.Grant(user, rite)
+					rite.spear_act = S
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cultitalic'>A [rite.name] appears in your hand!</span>")
 					else
@@ -734,7 +739,6 @@
 					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
-					to_chat(user, "<span class='cultitalic'>A [rite.name] appears in your hand!</span>")
 					uses -= 400
 					qdel(src)
 					if(user.put_in_hands(rite))
@@ -743,4 +747,14 @@
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
 			if("Blood Beam (600)")
-				to_chat(user, "<span class='cultitalic'>Coming soon!</span>")
+				if(uses < 600)
+					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
+				else
+					var/obj/rite = new /obj/item/blood_beam()
+					uses -= 600
+					qdel(src)
+					if(user.put_in_hands(rite))
+						to_chat(user, "<span class='cultlarge'><b>Your hands glow with <u>ULTIMATE</u> power!!!</b></span>")
+					else
+						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
+						qdel(rite)

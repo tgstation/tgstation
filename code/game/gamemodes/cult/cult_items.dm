@@ -28,8 +28,6 @@
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
 
-/datum/action/innate
-
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
@@ -630,19 +628,24 @@
 /obj/item/twohanded/spear/cult
 	name = "Nar'sien spear"
 	desc = "A sickening spear composed entirely of crystallized blood."
-	icon_state = "blood_spear0"
-	item_state = "blood_spear0"
+	icon_state = "bloodspear0"
 	force = 17
 	force_wielded = 24
-	throwforce = 30
+	throwforce = 40
 	armour_penetration = 30
 	block_chance = 30
 	embed_chance = 0
 	embedded_fall_chance = 0
 	var/blocks = 3
+	var/datum/action/innate/cult/spear/spear_act
+
+/obj/item/twohanded/spear/cult/Destroy()
+	if(spear_act)
+		qdel(spear_act)
+	..()
 
 /obj/item/twohanded/spear/cult/update_icon()
-	icon_state = "blood_spear[wielded]"
+	icon_state = "bloodspear[wielded]"
 
 /obj/item/twohanded/spear/cult/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
@@ -659,7 +662,6 @@
 					L.Knockdown(100)
 				else
 					L.Knockdown(50)
-				L.adjustBruteLoss(40)
 			break_spear(T)
 	else
 		..()
@@ -689,13 +691,37 @@
 			return TRUE
 	return FALSE
 
+/datum/action/innate/cult/spear
+	name = "Blood Bond"
+	desc = "Call the blood spear back to your hand!"
+	background_icon_state = "bg_demon"
+	button_icon_state = "bloodspear"
+	var/obj/item/twohanded/spear/cult/spear
 
+/datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
+	. = ..()
+	spear = blood_spear
+	button.screen_loc = "6:157,4:-2"
+	button.moved = "6:157,4:-2"
 
+/datum/action/innate/cult/spear/Activate()
+	if(owner == spear.loc)
+		return
+	var/ST = get_turf(spear)
+	var/OT = get_turf(owner)
+	if(get_dist(OT, ST) > 10)
+		to_chat(owner,"<span class='cult'>The spear is too far away!</span>")
+	else
+		if(isliving(spear.loc))
+			var/mob/living/L = spear.loc
+			L.dropItemToGround(spear)
+		spear.throw_at(owner, 10, 4)
 
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
+	color = "#ff0000"
 	guns_left = 24
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
 	fire_sound = 'sound/weapons/punchmiss.ogg'
@@ -711,11 +737,12 @@
 	name = "blood bolt"
 	icon_state = "mini_leaper"
 	damage_type = BRUTE
+	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
-/obj/item/projectile/magic/arcane_barrage/blood/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
+	colliding = TRUE
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-	new /obj/effect/temp_visual/cult/sparks(T)
 	if(iscultist(target))
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -725,6 +752,191 @@
 			var/mob/living/simple_animal/M = target
 			if(M.health+5 < M.maxHealth)
 				M.adjustHealth(-5)
+		new /obj/effect/temp_visual/cult/sparks(T)
 		qdel(src)
+		colliding = FALSE
 	else
 		..()
+
+/obj/item/blood_beam
+	name = "\improper magical aura"
+	desc = "Sinister looking aura that distorts the flow of reality around it."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "disintegrate"
+	item_state = null
+	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	w_class = WEIGHT_CLASS_HUGE
+	throwforce = 0
+	throw_range = 0
+	throw_speed = 0
+	var/charging = FALSE
+	var/firing = FALSE
+	var/angle
+
+
+/obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)
+	if(firing || charging)
+		return
+	var/C = user.client
+	if(ishuman(user) && C)
+		angle = mouse_angle_from_client(C)
+	else
+		qdel(src)
+		return
+	charging = TRUE
+	INVOKE_ASYNC(src, .proc/charge, user)
+	if(do_after(user, 80, target = user))
+		firing = TRUE
+		INVOKE_ASYNC(src, .proc/pewpew, user, params)
+		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
+		if(do_after(user, 100, target = user))
+			user.Knockdown(40)
+			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
+		firing = FALSE
+		if(N)
+			qdel(N)
+		qdel(src)
+	charging = FALSE
+
+/obj/item/blood_beam/proc/charge(mob/user)
+	var/obj/O
+	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, 1)
+	for(var/i in 1 to 11)
+		if(!charging)
+			break
+		if(i > 1)
+			sleep(15)
+		if(i < 4)
+			O = new /obj/effect/temp_visual/cult/rune_spawn/rune1/inner(user.loc, 30, "#ff0000")
+		else
+			O = new /obj/effect/temp_visual/cult/rune_spawn/rune5(user.loc, 30, "#ff0000")
+			new /obj/effect/temp_visual/dir_setting/cult/phase/out(user.loc, user.dir)
+	if(O)
+		qdel(O)
+
+/obj/item/blood_beam/proc/pewpew(mob/user, params)
+	var/turf/targets_from = get_turf(src)
+	var/spread = 40
+	var/second = FALSE
+	var/set_angle = angle
+	for(var/i in 1 to 10)
+		if(second)
+			set_angle = angle - spread
+			spread -= 10
+		else
+			sleep(20)
+			set_angle = angle + spread
+		second = !second //Handles beam firing in pairs
+		if(!firing)
+			break
+		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
+		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
+		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
+		var/datum/beam/current_beam = new(user,temp_target,time=6,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
+		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+		for(var/turf/T in getline(targets_from,temp_target))
+			T.narsie_act(TRUE, TRUE)
+			for(var/mob/living/target in T.contents)
+				if(iscultist(target))
+					new /obj/effect/temp_visual/cult/sparks(target)
+					if(ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.stat != DEAD)
+							H.reagents.add_reagent("unholywater", 7)
+					if(isshade(target) || isconstruct(target))
+						var/mob/living/simple_animal/M = target
+						if(M.health+15 < M.maxHealth)
+							M.adjustHealth(-15)
+						else
+							M.health = M.maxHealth
+				else
+					var/mob/living/L = target
+					if(L.density)
+						L.Knockdown(20)
+						L.adjustBruteLoss(45)
+						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
+						L.emote("scream")
+
+
+/obj/effect/ebeam/blood
+	name = "blood beam"
+
+
+/*
+/obj/item/blood_beam/proc/pewpew(mob/user, params)
+	var/turf/targets_from = get_turf(src)
+	var/turf/target = get_turf_in_angle(angle, targets_from, 40)
+	var/spread = 40
+	var/second = FALSE
+	var/set_angle = angle
+	for(var/i in 1 to 10)
+		if(second)
+			set_angle = angle - spread
+			spread -= 10
+		else
+			sleep(20)
+			set_angle = angle + spread
+		if(!firing)
+			break
+		var/obj/item/projectile/beam/beam_rifle/hitscan/blood/P = new
+		P.gun = src
+		P.preparePixelProjectile(target, user, params, 0)
+		P.fire(set_angle)
+		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
+		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
+		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
+		for(var/turf/turf in getline(targets_from,temp_target))
+			turf.narsie_act(TRUE, TRUE)
+		second = !second //Handles beam firing in pairs
+
+/obj/item/projectile/beam/beam_rifle/hitscan/blood
+	name = "blood beam"
+	tracer_type = /obj/effect/projectile_beam/blood
+	range = 40
+	impact_direct_damage = 45
+
+
+/obj/item/projectile/beam/beam_rifle/hitscan/blood/check_pierce(atom/target)
+	if(pierced[target])
+		forceMove(get_turf(target))
+		return TRUE
+	if(isliving(target))
+		forceMove(target)
+		handle_impact(target)
+		pierced[target] = TRUE
+		return TRUE
+	if(isclosedturf(target))
+		forceMove(target)
+		return TRUE
+	if(ismovableatom(target))
+		var/atom/movable/AM = target
+		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
+			pierced[AM] = TRUE
+			forceMove(AM.drop_location())
+			return TRUE
+	return FALSE
+
+/obj/item/projectile/beam/beam_rifle/hitscan/blood/handle_impact(atom/target)
+	if(isliving(target))
+		if(iscultist(target))
+			new /obj/effect/temp_visual/cult/sparks(target)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if(H.stat != DEAD)
+					H.reagents.add_reagent("unholywater", 7)
+			if(isshade(target) || isconstruct(target))
+				var/mob/living/simple_animal/M = target
+				if(M.health+15 < M.maxHealth)
+					M.adjustHealth(-15)
+				else
+					M.health = M.maxHealth
+		else
+			var/mob/living/L = target
+			playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
+			L.emote("scream")
+			L.Knockdown(20)
+			L.adjustBruteLoss(impact_direct_damage)
+
+/obj/effect/projectile_beam/blood
+	icon_state = "blood_beam"
+*/

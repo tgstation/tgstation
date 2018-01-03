@@ -327,7 +327,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 
 /obj/effect/rune/empower
-	cultist_name = "Empowerment"
+	cultist_name = "Empower"
 	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
@@ -482,7 +482,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every sacrifice your cult has carried out.
 /obj/effect/rune/raise_dead
-	cultist_name = "Revive Cultist"
+	cultist_name = "Revive"
 	cultist_desc = "requires a dead, mindless, or inactive cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be given a new life."
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
@@ -767,7 +767,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
-	cultist_name = "Spirits"
+	cultist_name = "Awaken Spirits"
 	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "7"
@@ -817,6 +817,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
+		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
 		ghosts++
 		if(ghosts >= ghost_limit)
 			to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
