@@ -25,14 +25,17 @@
 // common disability sources
 #define EYE_DAMAGE "eye_damage"
 #define GENETIC_MUTATION "genetic"
-#define STATUE_MUTE "statue"
-#define CHANGELING_DRAIN "drain"
 #define OBESITY "obesity"
 #define MAGIC_DISABILITY "magic"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_DISABILITY "trauma"
 #define CHEMICAL_DISABILITY "chemical"
+
+// unique disability sources, still defines
+#define STATUE_MUTE "statue"
+#define CHANGELING_DRAIN "drain"
+#define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 
 // bitflags for machine stat variable
 #define BROKEN		1
