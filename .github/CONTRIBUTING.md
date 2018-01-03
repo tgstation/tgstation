@@ -35,16 +35,7 @@ As BYOND's Dream Maker is an object oriented language, code must be object orien
 
 Byond will allow you nest almost any type keyword into a block, such as:
 
-<<<<<<< HEAD
-```c++
-=======
-### All BYOND paths must contain the full path
-(i.e. absolute pathing)
-
-DM will allow you nest almost any type keyword into a block, such as:
-
 ```DM
->>>>>>> fd7718092d... removes some dots (#33987)
 datum
 	datum1
 		var
@@ -93,15 +84,12 @@ The previous code made compliant:
 	code
 ```
 
-<<<<<<< HEAD
 ### Use the "hippiestation" folder.
 
 See [the README.md](/hippiestation/README.md) in the folder for further details.
 
 ### No overriding type safety checks.
-=======
-### No overriding type safety checks
->>>>>>> fd7718092d... removes some dots (#33987)
+
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ### Type paths must began with a /
