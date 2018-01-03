@@ -2,7 +2,8 @@
 	name = "Boyarishnik vending machine"
 	desc = "¬ысококачественный напиток дл€ высокопоставленных господ! ¬сего 49 русских грывней! —дачу не возвращаем!"
 	density = FALSE
-	icon = 'code/white/hule/boyareeshneek/boyarka.dmi'
+	use_power = NO_POWER_USE  //ну будем считать что он механический
+	icon = 'code/white/hule/boyareeshneek/boyarishneek.dmi'
 	icon_state = "boyarka"
 	icon_vend = "boyarka"
 	product_ads = "ѕокупайте-покупайте!; осмическое искушение!;¬сего за 49 русских грывней!"
@@ -12,7 +13,7 @@
 
 	contraband = list(/obj/item/reagent_containers/food/drinks/boyarishnik = 5)
 
-	premium = list(/obj/item/reagent_containers/food/drinks/boyarishnik = 50)
+	premium = list(/obj/item/reagent_containers/food/drinks/boyarishnik = 50, /obj/item/seeds/berry/boyarishneek = 1)
 
 	refill_canister = null
 
@@ -23,7 +24,7 @@
 	name = "[pick("Boyarka24","Boyarin24","Boyarishneek24", "BoyarkaPlus", "BoyarinPlus", "BoyarishneekPlus", "BoyarkaForte", "BoyarinForte", "BoyarishneekForte")]"
 
 /datum/reagent/consumable/ethanol/boyarka
-	name = "Boyarishnik"
+	name = "Boyarka"
 	id = "boyarka"
 	description = "Number one drink AND fueling choice for Russians worldwide."
 	color = "#0064C8"
@@ -44,7 +45,7 @@
 
 	if(prob(5))
 		M.set_drugginess(50)
-		M.adjustBrainLoss(5*REM, 150)
+		M.adjustBrainLoss(2*REM, 50)
 	..()
 
 	if(prob(5))
@@ -147,7 +148,7 @@
 /obj/item/reagent_containers/food/drinks/boyarishnik
 	name = "Boyarishnik bottle"
 	desc = "јлкогольна€ сладка€ пакость двадцать шестого века."
-	icon = 'code/white/hule/boyareeshneek/boyarka.dmi'
+	icon = 'code/white/hule/boyareeshneek/boyarishneek.dmi'
 	icon_state = "boyarka_bottle"
 	list_reagents = list("boyarka" = 30)
 	foodtype = ALCOHOL
@@ -200,3 +201,15 @@
 	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
 	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
 	new /obj/item/reagent_containers/syringe/lethal/boyarishneek(src)
+
+/datum/supply_pack/organic/boyarka
+	name = "Boyarka Case"
+	cost = 1000
+	contains = list(/obj/item/storage/briefcase/boyarishneek)
+	crate_name = "boyarka crate"
+
+/datum/supply_pack/organic/boyarkainjections
+	name = "Boyarka Injections Case"
+	cost = 5000
+	contains = list(/obj/item/storage/briefcase/boyarishneekinjections)
+	crate_name = "boyarka crate"
