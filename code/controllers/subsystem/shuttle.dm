@@ -247,6 +247,7 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
+	deadchat_broadcast("<span class='deadsay'><b>[user.name] has called the shuttle.</b></span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -284,6 +285,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		deadchat_broadcast("<span class='deadsay'><b>[user.name] has recalled the shuttle.</b></span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
