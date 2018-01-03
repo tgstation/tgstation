@@ -30,12 +30,12 @@ As mentioned before, you are expected to follow these specifications in order to
 ### Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
-### All Byond paths must contain the full path.
+### All Byond paths must contain the full path
 (ie: absolute pathing)
 
 Byond will allow you nest almost any type keyword into a block, such as:
 
-```c++
+```DM
 datum
 	datum1
 		var
@@ -64,7 +64,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 
 The previous code made compliant:
 
-```c++
+```DM
 /datum/datum1
 		var/varname1
 		var/varname2
@@ -84,11 +84,12 @@ The previous code made compliant:
 	code
 ```
 
-### Use the "hippiestation" folder.
+### Use the "hippiestation" folder
 
 See [the README.md](/hippiestation/README.md) in the folder for further details.
 
-### No overriding type safety checks.
+### No overriding type safety checks
+
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ### Type paths must began with a /
