@@ -36,4 +36,4 @@
 	text = get_pin_data(IC_INPUT, 1)
 	if(!isnull(text))
 		var/atom/movable/A = get_object()
-		radio.talk_into(A, text, , SPAN_ROBOT)
+		radio.talk_into(A, text, , get_spans())
