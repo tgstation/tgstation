@@ -76,6 +76,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/white
 	cable_color = "white"
+	color = "#ffffff"
 
 // the power cable object
 /obj/structure/cable/Initialize(mapload, param_color)
