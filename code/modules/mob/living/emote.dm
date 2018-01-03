@@ -193,6 +193,7 @@
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
+	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
@@ -205,7 +206,7 @@
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
