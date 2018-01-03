@@ -112,9 +112,10 @@
 						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 						//Only notify people if an actual change happened
-						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-						deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [get_security_level()].</span>", usr)
+						var/security_level = get_security_level()
+						log_game("[key_name(usr)] has changed the security level to [security_level].")
+						message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
+						deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [security_level].</span>", usr)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -386,9 +387,10 @@
 			set_security_level(tmp_alertlevel)
 			if(GLOB.security_level != old_level)
 				//Only notify people if an actual change happened
-				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [get_security_level()].</span>", usr)
+				var/security_level = get_security_level()
+				log_game("[key_name(usr)] has changed the security level to [security_level].")
+				message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
+				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [security_level].</span>", usr)
 			tmp_alertlevel = 0
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
