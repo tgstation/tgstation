@@ -565,7 +565,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/fakenucleardisk
 	name = "nuclear authentication disk"
-	desc = "A cheap plastic imitation of the nuclear authentication disk. Smells like broken dreams and cheese."
+	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 
 /obj/item/disk/fakenucleardisk/suicide_act(mob/user)
@@ -573,3 +573,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
+
+/obj/item/disk/fakenucleardisk/examine(mob/user)
+	..()
+	if(Adjacent(user))
+		to_chat(user, "<span class='warning'>Wait, this is a fake!</span>")
