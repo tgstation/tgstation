@@ -118,14 +118,14 @@
 				revert_cast()
 				return ..()
 		else
-			user.notransform = 1
+			user.notransform = TRUE
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.notransform = 0
+				user.notransform = FALSE
 				user.fakefireextinguish()
 		start_recharge()
 		return
