@@ -785,11 +785,11 @@
 		return
 	charging = TRUE
 	INVOKE_ASYNC(src, .proc/charge, user)
-	if(do_after(user, 80, target = user))
+	if(do_after(user, 90, target = user))
 		firing = TRUE
 		INVOKE_ASYNC(src, .proc/pewpew, user, params)
 		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
-		if(do_after(user, 100, target = user))
+		if(do_after(user, 90, target = user))
 			user.Knockdown(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
 		firing = FALSE
@@ -801,7 +801,7 @@
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O
 	playsound(src, 'sound/magic/lightning_chargeup.ogg', 100, 1)
-	for(var/i in 1 to 11)
+	for(var/i in 1 to 12)
 		if(!charging)
 			break
 		if(i > 1)
@@ -816,15 +816,15 @@
 
 /obj/item/blood_beam/proc/pewpew(mob/user, params)
 	var/turf/targets_from = get_turf(src)
-	var/spread = 40
+	var/spread = 42
 	var/second = FALSE
 	var/set_angle = angle
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 12)
 		if(second)
 			set_angle = angle - spread
-			spread -= 10
+			spread -= 7
 		else
-			sleep(20)
+			sleep(15)
 			set_angle = angle + spread
 		second = !second //Handles beam firing in pairs
 		if(!firing)
@@ -838,7 +838,7 @@
 			T.narsie_act(TRUE, TRUE)
 			for(var/mob/living/target in T.contents)
 				if(iscultist(target))
-					new /obj/effect/temp_visual/cult/sparks(target)
+					new /obj/effect/temp_visual/cult/sparks(T)
 					if(ishuman(target))
 						var/mob/living/carbon/human/H = target
 						if(H.stat != DEAD)

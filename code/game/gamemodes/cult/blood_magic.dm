@@ -697,6 +697,7 @@
 			if(B.bloodiness)
 				temp += B.bloodiness/10
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
+				new /datum/beam(user,T,time=10,beam_icon_state="drainbeam",btype=/obj/effect/ebeam)
 				qdel(B)
 			else if(B.blood_state == "blood")
 				temp++
@@ -705,9 +706,9 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in range(T, 2))
 			qdel(TH)
 	if(temp)
-		new /obj/effect/temp_visual/cult/sparks(T)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(user))
 		playsound(T, 'sound/magic/enter_blood.ogg', 50)
-		to_chat(user, "<span class='cultitalic'>Your blood rites have gained [temp] charge\s from blood sources around you!</span>")
+		to_chat(user, "<span class='cultitalic'>Your blood rite has gained [temp] charge\s from blood sources around you!</span>")
 		uses += temp
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
@@ -754,7 +755,7 @@
 					uses -= 600
 					qdel(src)
 					if(user.put_in_hands(rite))
-						to_chat(user, "<span class='cultlarge'><b>Your hands glow with <u>ULTIMATE</u> power!!!</b></span>")
+						to_chat(user, "<span class='cultlarge'><b>Your hands glow with POWER OVERWHELMING!!!</b></span>")
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
