@@ -125,7 +125,8 @@
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
-				user.ExtinguishMob()
+				user.notransform = 0
+				user.fakefireextinguish()
 		start_recharge()
 		return
 	revert_cast()
