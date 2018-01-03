@@ -48,7 +48,7 @@
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/Destroy()
 	qdel(receiver)
-	LAZYREMOVE(GLOB.ic_jammers,src)
+	GLOB.ic_jammers -= src
 	..()
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/receive_signal(datum/signal/signal)
@@ -71,7 +71,7 @@
 		else
 			power_draw_idle = 100
 	else
-		LAZYREMOVE(GLOB.ic_jammers,src)
+		GLOB.ic_jammers -= src
 		if(get_pin_data(IC_INPUT, 1))
 			power_draw_idle = 100
 		else
