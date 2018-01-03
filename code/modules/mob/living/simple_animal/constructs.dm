@@ -146,6 +146,10 @@
 				P.firer = src
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x
+				var/new_angle_s = P.Angle + rand(120,240)
+				while(new_angle_s > 180)	// Translate to regular projectile degrees
+					new_angle_s -= 360
+				P.setAngle(new_angle_s)
 
 			return -1 // complete projectile permutation
 
