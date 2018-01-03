@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(title)
 		file_path = "config/title_screens/images/[pick(title_screens)]"
 	
 	if(!file_path)
-		file_path = "icons/default.dmi"
+		file_path = "icons/default_title.dmi"
 
 	icon = new(fcopy_rsc(file_path))
 
