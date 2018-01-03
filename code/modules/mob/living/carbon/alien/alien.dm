@@ -147,8 +147,6 @@ Des: Removes all infected images from the alien.
 		mind.transfer_to(new_xeno)
 	qdel(src)
 
-	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
-
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
 #undef HEAT_DAMAGE_LEVEL_3
