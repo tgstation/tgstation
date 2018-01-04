@@ -26,7 +26,7 @@
 	return TRUE
 
 // Get a list of all z which have the specified trait
-/datum/controller/subsystem/mapping/proc/levels_by_trait(z, trait)
+/datum/controller/subsystem/mapping/proc/levels_by_trait(trait)
 	. = list()
 	var/list/_z_list = z_list
 	for(var/A in _z_list)
@@ -35,7 +35,7 @@
 			. += S.z_value
 
 // Get a list of all z which have any of the specified traits
-/datum/controller/subsystem/mapping/proc/levels_by_any_trait(z, list/traits)
+/datum/controller/subsystem/mapping/proc/levels_by_any_trait(list/traits)
 	. = list()
 	var/list/_z_list = z_list
 	for(var/A in _z_list)
