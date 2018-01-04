@@ -16,7 +16,7 @@
 	nodamage = 1
 	knockdown = 100
 	stutter = 5
-	jitter = 20
+	jitter = 30
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 
@@ -30,6 +30,7 @@
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANKNOCKDOWN)
 			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
+			C.say(pick("Блять!", "Блядь!", "С-сука!"))
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
