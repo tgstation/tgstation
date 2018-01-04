@@ -36135,10 +36135,7 @@
 	},
 /area/bridge)
 "bwA" = (
-/obj/machinery/vending/cigarette{
-	pixel_y = 2;
-	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7, /obj/item/storage/fancy/cigarettes/cigpack_uplift = 3, /obj/item/storage/fancy/cigarettes/cigpack_robust = 2, /obj/item/storage/fancy/cigarettes/cigpack_carp = 3, /obj/item/storage/fancy/cigarettes/cigpack_midori = 1, /obj/item/storage/box/matches = 10, /obj/item/lighter/greyscale = 4, /obj/item/storage/fancy/rollingpapers = 5)
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bwB" = (
@@ -37844,9 +37841,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/vending/cigarette{
-	pixel_x = 2
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bAa" = (
@@ -42622,9 +42617,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKo" = (
-/obj/machinery/vending/cigarette{
-	pixel_y = 1
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKp" = (
