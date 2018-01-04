@@ -12,14 +12,14 @@
 	return trait_list[trait]
 
 // Check if levels[z] has any of the specified traits
-/datum/controller/subsystem/mapping/proc/level_any_trait(z, list/traits)
+/datum/controller/subsystem/mapping/proc/level_has_any_trait(z, list/traits)
 	for (var/I in traits)
 		if (level_trait(z, I))
 			return TRUE
 	return FALSE
 
 // Check if levels[z] has all of the specified traits
-/datum/controller/subsystem/mapping/proc/level_all_traits(z, list/traits)
+/datum/controller/subsystem/mapping/proc/level_has_all_traits(z, list/traits)
 	for (var/I in traits)
 		if (!level_trait(z, I))
 			return FALSE

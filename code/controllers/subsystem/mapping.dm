@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(mapping)
 	if (lava_ruins.len)
 		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
 		for (var/lava_z in lava_ruins)
-			spawn_rivers(target_z = lava_z)
+			spawn_rivers(lava_z)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
