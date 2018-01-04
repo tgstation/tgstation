@@ -49,3 +49,27 @@ Last space-z level = empty
 #define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
+
+// traits
+#define ZTRAIT_CENTCOM "CentCom"
+#define ZTRAIT_STATION "Station"
+#define ZTRAIT_MINING "Mining"
+#define ZTRAIT_REEBE "Reebe"
+#define ZTRAIT_TRANSIT "Transit"
+#define ZTRAIT_AWAY "Away Mission"
+
+// trait definitions
+#define DL_NAME "name"
+#define DL_LINKAGE "linkage"
+#define DL_TRAITS "traits"
+
+#define DECLARE_LEVEL(NAME, LINKAGE, TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKAGE, DL_TRAITS = TRAITS)
+// corresponds to basemap.dm
+#define DEFAULT_MAP_TRAITS list(\
+    DECLARE_LEVEL(CENTCOM, SELFLOOPING, list(ZTRAIT_CENTCOM = TRUE)),\
+    DECLARE_LEVEL(MAIN_STATION, CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
+    DECLARE_LEVEL(EMPTY_AREA_1, CROSSLINKED, list()),\
+    DECLARE_LEVEL(EMPTY_AREA_2, CROSSLINKED, list()),\
+    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE)),\
+    DECLARE_LEVEL(CITY_OF_COGS, UNAFFECTED, list(ZTRAIT_REEBE = TRUE)),\
+)
