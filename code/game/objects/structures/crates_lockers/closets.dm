@@ -132,7 +132,7 @@
 	if(opened || !can_open(user))
 		return
 	playsound(loc, open_sound, 15, 1, -3)
-	opened = 1
+	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
 	climb_time *= 0.5 //it's faster to climb onto an open thing
@@ -185,7 +185,7 @@
 	take_contents()
 	playsound(loc, close_sound, 15, 1, -3)
 	climb_time = initial(climb_time)
-	opened = 0
+	opened = FALSE
 	density = TRUE
 	update_icon()
 	return 1
@@ -206,6 +206,8 @@
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
+	if (istype(src, /obj/structure/closet/bsdroppod))
+		return ..()//dont wanna do anything if you're a drop pod
 	if(user in src)
 		return
 	if(opened)
