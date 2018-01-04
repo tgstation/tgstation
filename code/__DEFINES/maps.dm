@@ -49,7 +49,7 @@ Last space-z level = empty
 #define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
-#define EMPTY_SPACE_COUNT 7
+#define ZLEVEL_SPACE_RUIN_COUNT 5
 
 // traits
 #define ZTRAIT_CENTCOM "CentCom"
@@ -58,6 +58,8 @@ Last space-z level = empty
 #define ZTRAIT_REEBE "Reebe"
 #define ZTRAIT_TRANSIT "Transit"
 #define ZTRAIT_AWAY "Away Mission"
+#define ZTRAIT_SPACE_RUINS "Space Ruins"
+#define ZTRAIT_LAVA_RUINS "Lava Ruins"
 
 // trait definitions
 #define DL_NAME "name"
@@ -67,10 +69,10 @@ Last space-z level = empty
 #define DECLARE_LEVEL(NAME, LINKAGE, TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKAGE, DL_TRAITS = TRAITS)
 // corresponds to basemap.dm
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL(CENTCOM, SELFLOOPING, list(ZTRAIT_CENTCOM = TRUE)),\
-    DECLARE_LEVEL(MAIN_STATION, CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
-    DECLARE_LEVEL(EMPTY_AREA_1, CROSSLINKED, list()),\
-    DECLARE_LEVEL(EMPTY_AREA_2, CROSSLINKED, list()),\
-    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE)),\
-    DECLARE_LEVEL(CITY_OF_COGS, UNAFFECTED, list(ZTRAIT_REEBE = TRUE)),\
+    DECLARE_LEVEL("CentCom", SELFLOOPING, list(ZTRAIT_CENTCOM = TRUE)),\
+    DECLARE_LEVEL("Main Station", CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
+    DECLARE_LEVEL("Empty Area 1", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
+    DECLARE_LEVEL("Empty Area 2", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
+    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE)),\
+    DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE)),\
 )

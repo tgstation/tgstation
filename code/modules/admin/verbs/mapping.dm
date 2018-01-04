@@ -343,7 +343,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	var/grid[max_x - min_x + 1][max_y - min_y + 1]
 	for(var/datum/space_level/S in linked_levels)
-		grid[S.xi - min_x + 1][S.yi - min_y + 1] = "(<b>[S.z_value]</b>) S.name"
+		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
 
 	messages += "<table border='1'>"
 	for(var/y in max_y to min_y step -1)
