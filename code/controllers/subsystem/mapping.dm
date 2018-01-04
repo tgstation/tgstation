@@ -22,6 +22,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/loading_ruins = FALSE
 
+	// Z-manager stuff
+	var/list/z_list
+
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
@@ -98,6 +101,8 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
+	z_list = SSmapping.z_list
+
 /datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
 	if(!loader)
@@ -121,6 +126,7 @@ SUBSYSTEM_DEF(mapping)
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
+	InitializeDefaultZLevels()
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
