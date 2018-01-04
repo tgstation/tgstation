@@ -153,10 +153,10 @@
 			return
 
 
-	//Exclude lasertag guns from the CLUMSY check.
+	//Exclude lasertag guns from the DISABILITY_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_disability(CLUMSY) && prob(40))
+			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)

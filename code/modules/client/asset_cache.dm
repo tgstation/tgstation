@@ -375,3 +375,39 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/meter = icon('icons/obj/atmospherics/pipes/simple.dmi', "meterX", SOUTH, frame, movement_states)
 	if(meter)
 		register_asset(sanitize_filename("[prefix].south.meterX.png"), fcopy_rsc(meter))
+
+// Representative icons for each research design
+/datum/asset/simple/research_designs/register()
+	for (var/path in subtypesof(/datum/design))
+		var/datum/design/D = path
+
+		// construct the icon and slap it into the resource cache
+		var/atom/item = initial(D.build_path)
+		if (!ispath(item, /atom))
+			// biogenerator outputs to beakers by default
+			if (initial(D.build_type) & BIOGENERATOR)
+				item = /obj/item/reagent_containers/glass/beaker/large
+			else
+				continue  // shouldn't happen, but just in case
+
+		// circuit boards become their resulting machines or computers
+		if (ispath(item, /obj/item/circuitboard))
+			var/obj/item/circuitboard/C = item
+			var/machine = initial(C.build_path)
+			if (machine)
+				item = machine
+		var/icon_file = initial(item.icon)
+		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
+
+		// computers (and snowflakes) get their screen and keyboard sprites
+		if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))
+			var/obj/machinery/computer/C = item
+			var/screen = initial(C.icon_screen)
+			var/keyboard = initial(C.icon_keyboard)
+			if (screen)
+				I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
+			if (keyboard)
+				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
+
+		assets["design_[initial(D.id)].png"] = I
+	return ..()

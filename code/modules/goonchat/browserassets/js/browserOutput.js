@@ -641,7 +641,11 @@ $(function() {
 		opts.updatedVolume = newVolume;
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
-	} 
+	}
+	else{
+		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
+	}
+	
 	if (savedConfig.smessagecombining) {
 		if (savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
@@ -649,9 +653,7 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-	else {
-		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
-	}
+
 
 	(function() {
 		var dataCookie = getCookie('connData');

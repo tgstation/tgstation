@@ -339,7 +339,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	if(crds)
 		if(!no_changeturf && ispath(path, /turf))
-			. = crds.ChangeTurf(path, FALSE, TRUE)
+			. = crds.ChangeTurf(path, null, CHANGETURF_DEFER_CHANGE)
 		else
 			. = create_atom(path, crds)//first preloader pass
 

@@ -671,3 +671,9 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to 10)
 		new /obj/item/stack/sheet/plastic(location)
+
+/datum/chemical_reaction/pax
+	name = "pax"
+	id = "pax"
+	results = list("pax" = 3)
+	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)

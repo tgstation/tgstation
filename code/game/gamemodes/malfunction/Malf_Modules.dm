@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/nuke_station/Activate()
 	var/turf/T = get_turf(owner)
-	if(!istype(T) || !(T.z in GLOB.station_z_levels))
+	if(!istype(T) || !is_station_level(T.z))
 		to_chat(owner, "<span class='warning'>You cannot activate the doomsday device while off-station!</span>")
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
-	if(!T || !(T.z in GLOB.station_z_levels))
+	if(!T || !is_station_level(T.z))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/turf/T = get_turf(L)
-		if(!T || !(T.z in GLOB.station_z_levels))
+		if(!T || !is_station_level(T.z))
 			continue
 		if(issilicon(L))
 			continue
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/lockdown/Activate()
 	for(var/obj/machinery/door/D in GLOB.airlocks)
-		if(!(D.z in GLOB.station_z_levels))
+		if(!is_station_level(D.z))
 			continue
 		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, owner)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
@@ -503,7 +503,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/break_fire_alarms/Activate()
 	for(var/obj/machinery/firealarm/F in GLOB.machines)
-		if(!(F.z in GLOB.station_z_levels))
+		if(!is_station_level(F.z))
 			continue
 		F.emagged = TRUE
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
@@ -530,7 +530,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/break_air_alarms/Activate()
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
-		if(!(AA.z in GLOB.station_z_levels))
+		if(!is_station_level(AA.z))
 			continue
 		AA.emagged = TRUE
 	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
@@ -753,7 +753,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/emergency_lights/Activate()
 	for(var/obj/machinery/light/L in GLOB.machines)
-		if(L.z in GLOB.station_z_levels)
+		if(is_station_level(L.z))
 			L.no_emergency = TRUE
 			INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 		CHECK_TICK

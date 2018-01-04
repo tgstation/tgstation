@@ -199,11 +199,23 @@
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		SM.copy_known_languages_from(user, TRUE)
+		after_success(user, SM)
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>")
 		being_used = 0
 		..()
+
+/obj/item/slimepotion/sentience/proc/after_success(mob/living/user, mob/living/simple_animal/SM)
+	return
+
+/obj/item/slimepotion/sentience/nuclear
+	name = "syndicate intelligence potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target."
+
+/obj/item/slimepotion/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
+	var/obj/item/implant/radio/imp = new(src)
+	imp.implant(SM, user)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"

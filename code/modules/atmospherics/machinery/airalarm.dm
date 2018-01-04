@@ -447,11 +447,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -465,11 +461,18 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 1,
-					"n2o_scrub" = 1,
-					"rare_scrub"= 1,
-					"water_vapor_scrub"= 1,
+					"set_filters" = list(
+						/datum/gas/carbon_dioxide,
+						/datum/gas/plasma,
+						/datum/gas/water_vapor,
+						/datum/gas/hypernoblium,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/nitryl,
+						/datum/gas/tritium,
+						/datum/gas/bz,
+						/datum/gas/stimulum,
+						/datum/gas/pluoxium
+					),
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -496,11 +499,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
