@@ -122,6 +122,10 @@
 	flags_1 = ABSTRACT_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/item/twohanded/offhand/Destroy()
+	wielded = FALSE
+	return ..()
+
 /obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
