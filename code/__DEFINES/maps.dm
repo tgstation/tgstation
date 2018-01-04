@@ -36,11 +36,8 @@ Last space-z level = empty
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_CENTCOM 1
 #define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_CITYOFCOGS 6
 #define ZLEVEL_EMPTY_SPACE 12
 //Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
 #define ZLEVEL_TRANSIT 13
@@ -60,6 +57,7 @@ Last space-z level = empty
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+#define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
 // trait definitions
 #define DL_NAME "name"
@@ -73,6 +71,6 @@ Last space-z level = empty
     DECLARE_LEVEL("Main Station", CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
     DECLARE_LEVEL("Empty Area 1", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
     DECLARE_LEVEL("Empty Area 2", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE)),\
-    DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE)),\
+    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 3)),\
+    DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)),\
 )
