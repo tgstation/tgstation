@@ -120,7 +120,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.has_disability(MUTE)) || H.silent)
+					if((H.has_disability(DISABILITY_MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -443,7 +443,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
-	if(!(z in GLOB.station_z_levels))
+	if(!is_station_level(z))
 		return
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)

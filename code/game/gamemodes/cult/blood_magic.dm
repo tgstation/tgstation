@@ -604,7 +604,7 @@
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Blood Rite"
-	desc = "A spell that will absorb blood from anything it touches, can be used for healing or large quantities can be concentrated into powerful spells."
+	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br>Clicking the hand will potentially let you focus the spell into something stronger."
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/user, proximity)
