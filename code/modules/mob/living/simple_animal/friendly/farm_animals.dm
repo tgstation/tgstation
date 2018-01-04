@@ -79,7 +79,15 @@
 	if(GS)
 		qdel(GS)
 		eaten = TRUE
-
+	
+	var/mob/living/carbon/human/species/pod/PP = locate(/mob/living/carbon/human/species/pod) in loc
+	if(PP)
+		PP.adjustBruteLoss(30)
+		PP.dismember()
+		PP.visible_message("<span class='warning'>[src] takes a big chomp out of [PP]!</span>", \
+						  "<span class='userdanger'>[src] takes a big chomp out of you!</span>")
+		eaten = TRUE
+	
 	if(eaten && prob(10))
 		say("Nom")
 
