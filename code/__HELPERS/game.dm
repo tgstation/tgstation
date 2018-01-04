@@ -129,6 +129,8 @@
 
 	return dist
 
+/proc/get_mobs_in_view(var/R, var/atom/source)
+
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)

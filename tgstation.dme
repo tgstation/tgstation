@@ -2405,6 +2405,7 @@
 #include "code\white\other\donations.dm"
 #include "code\white\other\give.dm"
 #include "code\white\other\keybindings_rebind.dm"
+#include "code\white\other\looc.dm"
 #include "code\white\other\multiaccounts.dm"
 #include "code\white\other\report.dm"
 #include "code\white\telescience\telepad.dm"
