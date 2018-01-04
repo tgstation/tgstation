@@ -470,6 +470,9 @@
 /mob/proc/become_overmind(starting_points = 60)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
 	B.key = key
+	var/area/blob_area = get_area(B.loc)
+	if(isspaceturf(B.loc) || !blob_area.blob_allowed || !(B.z in GLOB.station_z_levels))
+		B.forceMove(pick(GLOB.blobstart))
 	. = B
 	qdel(src)
 
