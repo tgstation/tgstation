@@ -129,6 +129,10 @@
 
 /datum/game_mode/cult/set_round_result()
 	..()
+	for(var/datum/antagonist/cult/H in GLOB.antagonists)
+		if(H.cult_team)
+			main_cult = H.cult_team
+			break
 	if(check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
