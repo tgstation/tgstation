@@ -89,17 +89,21 @@
 
 	walk_to(user, target, 0, 0.05, 20) // NOTE: this runs in the background! to cancel it, you need to use walk(owner.current,0), or give them a new path.
 	var/safety = 0
-	while(get_turf(user) != target && get_turf(user) != get_turf(target) && safety < 20 && !(isliving(target) && target.Adjacent(user)))
+	while(!user.incapacitated() && get_turf(user) != target && get_turf(user) != get_turf(target) && safety < 20 && !(isliving(target) && target.Adjacent(user)))
 		sleep(1)
 		safety += 1
-		// Knockback on people we pass!
+		// Spin/Stun people we pass.
 		var/mob/living/newtarget = locate(/mob/living) in oview(1, user)
-		if (newtarget && newtarget != target && !newtarget.IsKnockdown())
-			playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 20, 1, -1)
-			if (rand(0,2) == 0)
-				newtarget.Knockdown(10)
+		if (newtarget && newtarget != target)//!newtarget.IsKnockdown())
+			//if (rand(0,2) == 0)
+				//playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
+				//newtarget.Knockdown(10)
+			newtarget.Stun(10)
+			if(newtarget.IsStun())
+				newtarget.spin(10,1)
+
 		// Can't move, Can't Haste!
-		if (user && !user.canmove)
+		if (user && user.incapacitated())
 			// Did I get knocked down?
 			if (user.lying)
 				var/send_dir = get_dir(user, user)
@@ -107,8 +111,10 @@
 				user.spin(10)
 			break
 
+	message_admins("DEBUG: Haste [user] / [user.incapacitated()] / [isliving(target)] / [target.Adjacent(user)]")
+
 	//Knockdown Target!
-	if (user && user.canmove && isliving(target) && target.Adjacent(user))
+	if (user && !user.incapacitated() && isliving(target) && target.Adjacent(user))
 		var/mob/living/M = target
 		//user.pulling = M
 		//user.grab_state = max(owner.current.grab_state,GRAB_AGGRESSIVE)
@@ -118,10 +124,7 @@
 						  "<span class='userdanger'>[user] has knocked [M] down!</span>", null, COMBAT_MESSAGE_RANGE)
 		M.Knockdown(rand(10,20))
 
-	//while (
 	user.update_canmove()
-
-	//movement_type = prev_movement
 
 	// Done
 	cancel_spell(user)

@@ -491,6 +491,7 @@
 #include "code\game\gamemodes\bloodsucker\powers\bs_expelblood.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_feed.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_haste.dm"
+#include "code\game\gamemodes\bloodsucker\powers\bs_invis.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_recover.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_senses.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_torpor.dm"
@@ -2409,3 +2410,4 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 // END_INCLUDE
+

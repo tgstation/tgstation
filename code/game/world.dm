@@ -36,7 +36,7 @@ GLOBAL_PROTECT(security_mode)
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
-	
+
 	if("no-init" in params)
 		return
 
@@ -245,7 +245,7 @@ GLOBAL_PROTECT(security_mode)
 	else if (n > 0)
 		features += "~[n] player"
 
-	if (hostedby) // (!host && hostedby) // FULPSTATION: Host wasn't showing.
+	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
