@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			if(M_turf && M_turf.z == z0)
 				var/dist = get_dist(M_turf, epicenter)
 				var/baseshakeamount
-				if(orig_max_distance - dist)
+				if(orig_max_distance - dist > 0)
 					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
