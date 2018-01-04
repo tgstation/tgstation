@@ -206,10 +206,12 @@
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
-	if (istype(src, /obj/structure/closet/bsdroppod))
-		return ..()//dont wanna do anything if you're a drop pod
 	if(user in src)
 		return
+	if(!src.tool_interact(W,user))
+		return ..()
+
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weldingtool))
@@ -219,29 +221,29 @@
 					playsound(loc, cutting_sound, 40, 1)
 					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!opened || !WT.isOn())
-							return
+							return TRUE
 						playsound(loc, cutting_sound, 50, 1)
 						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 										"<span class='italics'>You hear welding.</span>")
 						deconstruct(TRUE)
-					return 0
+					return TRUE
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
-				return 0
+				return TRUE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
-			return 1
+			return TRUE
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
-			return
+			return TRUE
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
 		playsound(loc, 'sound/items/welder2.ogg', 40, 1)
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
-				return
+				return TRUE
 			playsound(loc, WT.usesound, 50, 1)
 			welded = !welded
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
@@ -250,7 +252,7 @@
 			update_icon()
 	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
-			return
+			return TRUE
 		anchored = !anchored
 		playsound(src.loc, W.usesound, 75, 1)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
@@ -259,9 +261,9 @@
 	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
-		return 1
+		return TRUE
 	else
-		return ..()
+		return FALSE
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))

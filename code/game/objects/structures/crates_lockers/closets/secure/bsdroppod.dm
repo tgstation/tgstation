@@ -31,6 +31,9 @@
 	else
 		add_overlay("BDP_door")
 
+/obj/structure/closet/bsdroppod/tool_interact(obj/item/W, mob/user)
+	return TRUE
+
 /obj/structure/closet/bsdroppod/toggle(mob/living/user)
 	return
 
@@ -80,8 +83,8 @@
 	addtimer(CALLBACK(src, .proc/endLaunch, SO), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
 
 /obj/effect/BDPtarget/proc/endLaunch(datum/supply_order/SO)
-	explosion(src,0,0,2, flame_range = 2) //explosion and camshake (shoutout to @cyberboss)
 	new /obj/structure/closet/bsdroppod(drop_location(), SO)//pod is created
+	explosion(src,0,0,2, flame_range = 2) //explosion and camshake (shoutout to @cyberboss)
 	qdel(src)
 
 /obj/effect/BDPtarget/Destroy()
