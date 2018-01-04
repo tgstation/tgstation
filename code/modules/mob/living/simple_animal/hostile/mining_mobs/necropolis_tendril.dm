@@ -71,7 +71,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = TABLE_LAYER
+	layer = BELOW_OBJ_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
