@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "PDA Interface color is now a preference."
-  - bugfix: "Fixed PDA font style not applying at round start."
