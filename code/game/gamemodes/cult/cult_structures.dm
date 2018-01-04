@@ -124,7 +124,7 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar'sien Bolas")
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	if(user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
 		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	var/list/pickedtype = list()
@@ -141,10 +141,8 @@
 				to_chat(user, "<span class='cult italic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
-		if("Nar'sien Bolas")
-			pickedtype += /obj/item/restraints/legcuffs/bola/cult
-			pickedtype += /obj/item/restraints/legcuffs/bola/cult
-			pickedtype += /obj/item/restraints/legcuffs/bola/cult
+		if("Mirror Shield")
+			pickedtype += /obj/item/shield/mirror
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)

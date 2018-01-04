@@ -157,7 +157,7 @@
 
 /obj/item/twohanded/required/cult_bastard/IsReflect()
 	if(spinning)
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
+		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 		return TRUE
 	else
 		..()
@@ -166,7 +166,7 @@
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
+			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 			return TRUE
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
@@ -273,7 +273,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
+	armor = list(melee = 40, bullet = 30, laser = 40,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -286,7 +286,7 @@
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
+	armor = list(melee = 40, bullet = 30, laser = 40,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -629,14 +629,15 @@
 	name = "Nar'sien spear"
 	desc = "A sickening spear composed entirely of crystallized blood."
 	icon_state = "bloodspear0"
+	slot_flags = 0
 	force = 17
 	force_wielded = 24
 	throwforce = 40
+	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
 	embed_chance = 0
 	embedded_fall_chance = 0
-	var/blocks = 3
 	var/datum/action/innate/cult/spear/spear_act
 
 /obj/item/twohanded/spear/cult/Destroy()
@@ -652,6 +653,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(iscultist(L))
+			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
 			else
@@ -683,20 +685,21 @@
 	if(prob(final_block_chance))
 		if(attack_type == PROJECTILE_ATTACK)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
-			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 100, 1)
+			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 			return TRUE
 		else
-			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
+			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 			return TRUE
 	return FALSE
 
 /datum/action/innate/cult/spear
-	name = "Blood Bond"
+	name = "Bloody Bond"
 	desc = "Call the blood spear back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
 	var/obj/item/twohanded/spear/cult/spear
+	var/cooldown = 0
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
 	. = ..()
@@ -705,17 +708,18 @@
 	button.moved = "6:157,4:-2"
 
 /datum/action/innate/cult/spear/Activate()
-	if(owner == spear.loc)
+	if(owner == spear.loc || cooldown > world.time)
 		return
 	var/ST = get_turf(spear)
 	var/OT = get_turf(owner)
 	if(get_dist(OT, ST) > 10)
 		to_chat(owner,"<span class='cult'>The spear is too far away!</span>")
 	else
+		cooldown = world.time + 20
 		if(isliving(spear.loc))
 			var/mob/living/L = spear.loc
 			L.dropItemToGround(spear)
-		spear.throw_at(owner, 10, 4)
+		spear.throw_at(owner, 10, 2, owner)
 
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
@@ -724,7 +728,8 @@
 	color = "#ff0000"
 	guns_left = 24
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
-	fire_sound = 'sound/weapons/punchmiss.ogg'
+	fire_sound = 'sound/magic/wand_teleport.ogg'
+	flags_1 = NOBLUDGEON_1 | DROPDEL_1
 
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
@@ -816,13 +821,13 @@
 
 /obj/item/blood_beam/proc/pewpew(mob/user, params)
 	var/turf/targets_from = get_turf(src)
-	var/spread = 42
+	var/spread = 40
 	var/second = FALSE
 	var/set_angle = angle
 	for(var/i in 1 to 12)
 		if(second)
 			set_angle = angle - spread
-			spread -= 7
+			spread -= 8
 		else
 			sleep(15)
 			set_angle = angle + spread
@@ -831,6 +836,7 @@
 			break
 		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
+		to_chat(world, "This is Iteration#[i], the base angle is [angle], the current spread is [spread] and the new angle is [set_angle]")
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
 		var/datum/beam/current_beam = new(user,temp_target,time=6,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
 		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
@@ -861,7 +867,92 @@
 /obj/effect/ebeam/blood
 	name = "blood beam"
 
+/obj/item/shield/mirror
+	name = "mirror shield"
+	desc = "An infamous shield used by Nar'sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "mirror_shield" // eshield1 for expanded
+	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	force = 5
+	throwforce = 15
+	throw_speed = 1
+	throw_range = 6
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("bumped", "prodded")
+	hitsound = 'sound/weapons/smash.ogg'
+	var/illusions = 3
 
+/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(iscultist(owner))
+		if(istype(hitby, /obj/item/projectile))
+			var/obj/item/projectile/P = hitby
+			if(P.is_reflectable)
+				return FALSE //To avoid reflection chance double-dipping with block chance
+		. = ..()
+		if(.)
+			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
+			if(illusions > 0)
+				illusions--
+				addtimer(CALLBACK(src, /obj/item/shield/mirror.proc/readd), 450)
+				if(prob(60))
+					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
+					M.faction = list("cult")
+					M.Copy_Parent(owner, 70, 10, 5)
+					M.move_to_delay = owner.movement_delay()
+				else
+					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
+					E.Copy_Parent(owner, 70, 10)
+					E.GiveTarget(owner)
+					E.Goto(owner, owner.movement_delay(), E.minimum_distance)
+			return TRUE
+	else
+		if(prob(50))
+			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
+			H.Copy_Parent(owner, 100, 20, 5)
+			H.faction = list("cult")
+			H.GiveTarget(owner)
+			H.move_to_delay = owner.movement_delay()
+			to_chat(owner, "<span class='danger'><b>[src] betrays you!</b></span>")
+		return FALSE
+
+/obj/item/shield/mirror/proc/readd()
+	illusions++
+	if(illusions == initial(illusions) && isliving(loc))
+		var/mob/living/holder = loc
+		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
+
+/obj/item/shield/mirror/IsReflect()
+	if(prob(block_chance))
+		return TRUE
+	return FALSE
+
+/obj/item/shield/mirror/throw_impact(atom/target, throwingdatum)
+	var/turf/T = get_turf(target)
+	var/datum/thrownthing/D = throwingdatum
+	if(isliving(target))
+		var/mob/living/L = target
+		if(iscultist(L))
+			playsound(src, 'sound/weapons/throwtap.ogg', 50)
+			if(L.put_in_active_hand(src))
+				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
+			else
+				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+		else if(!..())
+			if(!L.null_rod_check())
+				if(is_servant_of_ratvar(L))
+					L.Knockdown(80)
+				else
+					L.Knockdown(40)
+				if(D.thrower)
+					for(var/mob/living/Next in orange(2, T))
+						if(!Next.density || iscultist(Next))
+							continue
+						throw_at(Next, 3, 1, D.thrower)
+						return
+					throw_at(D.thrower, 7, 1, D.thrower)
+	else
+		..()
 /*
 /obj/item/blood_beam/proc/pewpew(mob/user, params)
 	var/turf/targets_from = get_turf(src)
