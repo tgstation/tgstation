@@ -56,8 +56,8 @@
 
 /obj/item/gun/ballistic/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
-		chambered.loc = get_turf(src)//Eject casing
-		chambered.SpinAnimation(5, 1)
+		chambered.forceMove(drop_location())//Eject casing
+		chambered.bounce_away()
 		chambered = null
 
 /obj/item/gun/ballistic/shotgun/proc/pump_reload(mob/M)

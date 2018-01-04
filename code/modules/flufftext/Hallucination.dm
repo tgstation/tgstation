@@ -80,6 +80,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /obj/effect/hallucination
 	invisibility = INVISIBILITY_OBSERVER
+	anchored = TRUE
 	var/mob/living/carbon/target = null
 
 /obj/effect/hallucination/simple
@@ -454,7 +455,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/list/image/delusions = list()
 	cost = 50
 
-/datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
+/datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null, custom_name = null)
 	. = ..()
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
@@ -467,23 +468,31 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		switch(kind)
 			if("monkey")//Monkey
 				A = image('icons/mob/monkey.dmi',H,"monkey1")
+				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
 				A = image('icons/mob/animal.dmi',H,"carp")
+				A.name = "Space Carp"
 			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
+				A.name = "Corgi"
 			if("skeleton")//Skeletons
 				A = image('icons/mob/human.dmi',H,"skeleton")
+				A.name = "Skeleton"
 			if("zombie")//Zombies
 				A = image('icons/mob/human.dmi',H,"zombie")
+				A.name = "Zombie"
 			if("demon")//Demon
 				A = image('icons/mob/mob.dmi',H,"daemon")
+				A.name = "Demon"
 			if("custom")
 				A = image(custom_icon_file, H, custom_icon)
+				A.name = custom_name
 		A.override = 1
 		if(target.client)
 			delusions |= A
 			target.client.images |= A
-	QDEL_IN(src, duration)
+	if(duration)
+		QDEL_IN(src, duration)
 
 /datum/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
@@ -705,6 +714,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
+		if(!A.density)
+			continue
 		count++
 		I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
 		doors += I
@@ -725,6 +736,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	..()
+	var/target_name = target.first_name()
 	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
 	"[pick_list_replacements(HAL_LINES_FILE, "greetings")][target.first_name()]!",\
 	"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
@@ -758,8 +770,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 				person = H
 		people += H
 	if(person) //Basic talk
+		var/chosen = pick(speak_messages)
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		var/message = target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,null,person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 		if(target.client)
@@ -767,11 +781,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			sleep(30)
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
+		var/chosen = pick(radio_messages)
+		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
-		var/message = target.compose_message(person,understood_language,pick(radio_messages),"1459",person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,"[FREQ_COMMON]",person.get_spans(),face_name = TRUE)
 		feedback_details += "Type: Radio, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 	qdel(src)

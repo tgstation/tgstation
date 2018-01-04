@@ -353,7 +353,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 				. = TRUE
 		if("safety")
 			if(auth && yes_code)
@@ -451,12 +451,12 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && (bomb_location.z in GLOB.station_z_levels))
+	if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_NEAR_MISS
-	else if((istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate)) && bomb_location.z == ZLEVEL_CENTCOM))
+	else if(bomb_location.onSyndieBase())
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_MISS_STATION
@@ -551,16 +551,30 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
+	playsound(src, 'sound/machines/alarm.ogg', 50, -1, 1)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
-	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
-	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
-	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
-	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
 
+/obj/item/disk/proc/manual_suicide(mob/living/user)
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.adjustOxyLoss(200)
+	user.death(0)
+
 /obj/item/disk/fakenucleardisk
-	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint odor of cheese."
+	name = "nuclear authentication disk"
+	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
+
+/obj/item/disk/fakenucleardisk/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is pretending to go delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
+	return MANUAL_SUICIDE
+
+/obj/item/disk/fakenucleardisk/examine(mob/user)
+	..()
+	if(Adjacent(user))
+		to_chat(user, "<span class='warning'>Wait, this is a fake!</span>")

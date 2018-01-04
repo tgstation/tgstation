@@ -28,7 +28,6 @@
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/disabilities = 0	//Carbon
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
@@ -40,6 +39,7 @@
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
+	var/derpspeech = 0      //Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon

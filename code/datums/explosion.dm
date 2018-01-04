@@ -55,6 +55,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
 	
+	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
+	
 	//Zlevel specific bomb cap multiplier
 	var/cap_multiplier = 1
 	switch(epicenter.z)
@@ -85,9 +87,16 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
+	var/area/epi_area = get_area(epicenter)
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [get_area(epicenter)] [ADMIN_COORDJMP(epicenter)]")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [epi_area] [ADMIN_COORDJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
+	
+	var/x0 = epicenter.x
+	var/y0 = epicenter.y
+	var/z0 = epicenter.z
+	
+	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flash" = flash_range, "flame" = flame_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = epi_area.type))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
@@ -99,10 +108,6 @@ GLOBAL_LIST_EMPTY(explosions)
 	far_dist += heavy_impact_range * 5
 	far_dist += devastation_range * 20
 
-	var/x0 = epicenter.x
-	var/y0 = epicenter.y
-	var/z0 = epicenter.z
-
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/sound/explosion_sound = sound(get_sfx("explosion"))
@@ -113,14 +118,19 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/M_turf = get_turf(M)
 			if(M_turf && M_turf.z == z0)
 				var/dist = get_dist(M_turf, epicenter)
+				var/baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
+					if(baseshakeamount > 0)
+						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
+					if(baseshakeamount > 0)
+						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit

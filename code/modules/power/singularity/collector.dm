@@ -37,7 +37,7 @@
 			eject()
 		else
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= 0.001*drainratio
-			ASSERT_GAS(/datum/gas/tritium,loaded_tank.air_contents)
+			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += 0.001*drainratio
 			loaded_tank.air_contents.garbage_collect()
 
@@ -132,7 +132,7 @@
 	var/obj/item/tank/internals/plasma/Z = src.loaded_tank
 	if (!Z)
 		return
-	Z.loc = get_turf(src)
+	Z.forceMove(drop_location())
 	Z.layer = initial(Z.layer)
 	Z.plane = initial(Z.plane)
 	src.loaded_tank = null

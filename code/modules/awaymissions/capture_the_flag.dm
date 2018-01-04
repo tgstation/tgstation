@@ -26,6 +26,7 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
+	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
@@ -48,7 +49,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
-	if(!is_ctf_target(user))
+	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
 	if(team in user.faction)
@@ -509,7 +510,7 @@
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.REDTEAM_FREQ)
+	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
@@ -517,7 +518,7 @@
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.BLUETEAM_FREQ)
+	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0

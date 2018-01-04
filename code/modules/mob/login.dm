@@ -26,18 +26,26 @@
 
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
 
-	if(ckey in GLOB.deadmins)
-		verbs += /client/proc/readmin
-
 	add_click_catcher()
 
 	sync_mind()
+
+	//Reload alternate appearances
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
 
 	update_client_colour()
 	if(client)
 		client.click_intercept = null
 
-		client.change_view(world.view) // Resets the client.view in case it was changed.
+		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
+
+		if(client.player_details.player_actions.len)
+			for(var/datum/action/A in client.player_details.player_actions)
+				A.Grant(src)
 
 	if(!GLOB.individual_log_list[ckey])
 		GLOB.individual_log_list[ckey] = logging

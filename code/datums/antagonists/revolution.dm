@@ -3,9 +3,10 @@
 
 /datum/antagonist/rev
 	name = "Revolutionary"
+	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
-	var/datum/objective_team/revolution/rev_team
+	var/datum/team/revolution/rev_team
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
@@ -39,17 +40,17 @@
 	. = ..()
 
 /datum/antagonist/rev/greet()
-	to_chat(owner, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
+	to_chat(owner, "<span class='userdanger'>You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</span>")
 	owner.announce_objectives()
 
-/datum/antagonist/rev/create_team(datum/objective_team/revolution/new_team)
+/datum/antagonist/rev/create_team(datum/team/revolution/new_team)
 	if(!new_team)
 		//For now only one revolution at a time
 		for(var/datum/antagonist/rev/head/H in GLOB.antagonists)
 			if(H.rev_team)
 				rev_team = H.rev_team
 				return
-		rev_team = new /datum/objective_team/revolution
+		rev_team = new /datum/team/revolution
 		rev_team.update_objectives()
 		rev_team.update_heads()
 		return
@@ -77,7 +78,7 @@
 	old_owner.add_antag_datum(new_revhead,old_team)
 	new_revhead.silent = FALSE
 	to_chat(old_owner, "<span class='userdanger'>You have proved your devotion to revolution! You are a head revolutionary now!</span>")
-				
+
 
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
@@ -131,14 +132,14 @@
 	old_owner.add_antag_datum(new_rev,old_team)
 	new_rev.silent = FALSE
 	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
-				
+
 /datum/antagonist/rev/farewell()
 	if(ishuman(owner.current))
-		owner.current.visible_message("[owner.current] looks like they just remembered their real allegiance!")
-		to_chat(owner, "<span class='userdanger'><FONT size = 3>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like they just remembered their real allegiance!</span>", ignored_mob = owner.current)
+		to_chat(owner, "<span class='userdanger'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</span>")
 	else if(issilicon(owner.current))
-		owner.current.visible_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.")
-		to_chat(owner, "<span class='userdanger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</FONT></span>")
+		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.</span>", ignored_mob = owner.current)
+		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
 	log_attack("[owner.current] (Key: [key_name(owner.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
@@ -163,7 +164,7 @@
 	if(remove_clumsy && owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-	
+
 	if(give_flash)
 		var/obj/item/device/assembly/flash/T = new(H)
 		var/list/slots = list (
@@ -176,18 +177,17 @@
 			to_chat(H, "The Syndicate were unfortunately unable to get you a flash.")
 		else
 			to_chat(H, "The flash in your [where] will help you to persuade the crew to join your cause.")
-	
+
 	if(give_hud)
 		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(H)
 		S.Insert(H, special = FALSE, drop_if_replaced = FALSE)
 		to_chat(H, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
-/datum/objective_team/revolution
+/datum/team/revolution
 	name = "Revolution"
-	var/list/objectives = list()
 	var/max_headrevs = 3
 
-/datum/objective_team/revolution/proc/update_objectives(initial = FALSE)
+/datum/team/revolution/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
 	for(var/datum/objective/mutiny/O in objectives)
 		untracked_heads -= O.target
@@ -199,16 +199,16 @@
 		objectives += new_target
 	for(var/datum/mind/M in members)
 		M.objectives |= objectives
-	
+
 	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
-/datum/objective_team/revolution/proc/head_revolutionaries()
+/datum/team/revolution/proc/head_revolutionaries()
 	. = list()
 	for(var/datum/mind/M in members)
 		if(M.has_antag_datum(/datum/antagonist/rev/head))
 			. += M
 
-/datum/objective_team/revolution/proc/update_heads()
+/datum/team/revolution/proc/update_heads()
 	if(SSticker.HasRoundStarted())
 		var/list/datum/mind/head_revolutionaries = head_revolutionaries()
 		var/list/datum/mind/heads = SSjob.get_all_heads()
@@ -227,3 +227,56 @@
 				rev.promote()
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+
+
+/datum/team/revolution/roundend_report()
+	if(!members.len)
+		return
+
+	var/list/result = list()
+
+	result += "<div class='panel redborder'>"
+
+	var/num_revs = 0
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
+		if(survivor.ckey)
+			num_survivors++
+			if(survivor.mind)
+				if(is_revolutionary(survivor))
+					num_revs++
+	if(num_survivors)
+		result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B><br>"
+
+
+	var/list/targets = list()
+	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
+	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
+	if(headrevs.len)
+		var/list/headrev_part = list()
+		headrev_part += "<span class='header'>The head revolutionaries were:</span>"
+		headrev_part += printplayerlist(headrevs,TRUE)
+		result += headrev_part.Join("<br>")
+
+	if(revs.len)
+		var/list/rev_part = list()
+		rev_part += "<span class='header'>The revolutionaries were:</span>"
+		rev_part += printplayerlist(revs,TRUE)
+		result += rev_part.Join("<br>")
+
+	var/list/heads = SSjob.get_all_heads()
+	if(heads.len)
+		var/head_text = "<span class='header'>The heads of staff were:</span>"
+		head_text += "<ul class='playerlist'>"
+		for(var/datum/mind/head in heads)
+			var/target = (head in targets)
+			head_text += "<li>"
+			if(target)
+				head_text += "<span class='redtext'>Target</span>"
+			head_text += "[printplayer(head, 1)]</li>"
+		head_text += "</ul><br>"
+		result += head_text
+
+	result += "</div>"
+
+	return result.Join()
