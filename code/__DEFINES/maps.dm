@@ -21,7 +21,7 @@ Last space-z level = empty
 #define CITY_OF_COGS "City of Cogs"
 #define EMPTY_AREA_1 "Empty Area 1"
 #define EMPTY_AREA_2 "Empty Area 2"
-#define MINING "Mining Asteroid"
+#define MINING_ASTEROID "Mining Asteroid"
 #define EMPTY_AREA_3 "Empty Area 3"
 #define EMPTY_AREA_4 "Empty Area 4"
 #define EMPTY_AREA_5 "Empty Area 5"
@@ -49,6 +49,7 @@ Last space-z level = empty
 #define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
+#define EMPTY_SPACE_COUNT 7
 
 // traits
 #define ZTRAIT_CENTCOM "CentCom"

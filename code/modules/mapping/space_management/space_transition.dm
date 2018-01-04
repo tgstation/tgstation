@@ -1,5 +1,3 @@
-//This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
-
 /datum/space_level/proc/set_linkage(new_linkage)
 	linkage = new_linkage
 	if(linkage == SELFLOOPING)
@@ -123,6 +121,7 @@
 				while(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
 					D = D.neigbours["[dirside]"]
 				zdestination = D.z_value
+			D = I
 			for(var/turf/open/space/S in turfblock)
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
