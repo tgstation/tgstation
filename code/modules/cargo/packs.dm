@@ -1104,7 +1104,7 @@
 /datum/supply_pack/organic/critter/crab/generate()
 	. = ..()
 	for(var/i in 1 to 49)
-		new /mob/living/simple_animal/butterfly(.)
+		new /mob/living/simple_animal/crab(.)
 		
 
 /datum/supply_pack/organic/hydroponics
