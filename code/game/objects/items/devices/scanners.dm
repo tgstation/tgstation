@@ -18,6 +18,10 @@ GAS ANALYZER
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
+/obj/item/device/t_scanner/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
@@ -73,6 +77,10 @@ GAS ANALYZER
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
+
+/obj/item/device/healthanalyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with \the [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
@@ -334,6 +342,10 @@ GAS ANALYZER
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+
+/obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with \the [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
 
 /obj/item/device/analyzer/attack_self(mob/user)
 

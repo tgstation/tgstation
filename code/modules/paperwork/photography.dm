@@ -40,6 +40,13 @@
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
+/obj/item/photo/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
+	if (user.gender == MALE) 
+		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
+	else if (user.gender == FEMALE) 
+		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
