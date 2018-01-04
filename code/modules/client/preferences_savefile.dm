@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	15
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	19
+#define SAVEFILE_VERSION_MAX	20
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -109,6 +109,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["legs"] = "Normal Legs"
 	if(current_version < 19)
 		pda_style = "mono"
+	if(current_version < 20)
+		pda_color = "#808000"
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -160,6 +162,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
+	S["pda_color"]			>> pda_color 
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -185,6 +188,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 
 	return 1
 
@@ -225,6 +229,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
+	WRITE_FILE(S["pda_color"], pda_color)
 
 	return 1
 
