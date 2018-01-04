@@ -121,7 +121,7 @@
 	var/datum/map_template/template = SSmapping.map_templates["wizard_versus.dmm"]
 	if (!template)
 		return FALSE
-	spawnpoint = locate(90, 200, ZLEVEL_CENTCOM)  // I am the best at code
+	spawnpoint = locate(90, 200, pick(SSmapping.levels_by_trait(ZTRAIT_CENTCOM)))  // I am the best at code
 	if (!template.load(spawnpoint, centered = TRUE))
 		return FALSE
 

@@ -293,7 +293,7 @@
 	if (!B)
 		return FALSE // failure! try again soon
 	var/turf/T = get_turf(B)
-	if(!T || !(T.z in GLOB.station_z_levels))
+	if(!T || !is_station_level(T.z))
 		return FALSE
 	if (is_blocked_turf(T))
 		return FALSE // blocked, try again soon
@@ -345,7 +345,7 @@ GLOBAL_VAR(frenzy_exports)
 		var/turf/T = get_turf(R)
 		if(!T)
 			continue
-		if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+		if(is_centcom_level(T.z) || is_away_level(T.z))
 			continue
 		L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
@@ -360,7 +360,7 @@ GLOBAL_VAR(frenzy_exports)
 			var/turf/T = get_turf(M)
 			if(!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOM)
+			if(is_centcom_level(T.z))
 				continue
 			L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
