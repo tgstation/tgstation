@@ -26,7 +26,7 @@
 
 /obj/item/drone_shell/proc/build_seasonal_hats()
 	possible_seasonal_hats = list()
-	if(!SSevents.holidays.len)
+	if(!length(SSevents.holidays))
 		return //no holidays, no hats; we'll keep the empty list so we never call this proc again
 	for(var/V in SSevents.holidays)
 		var/datum/holiday/holiday = SSevents.holidays[V]
