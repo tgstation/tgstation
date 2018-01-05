@@ -65,6 +65,10 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
+	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
+		a_intent_change(INTENT_HELP)
+
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
@@ -300,6 +304,15 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+				// Hippie Start - Handle un-impaling player if pinned item falls out
+				if (I.pinned)
+					do_pindown(pinned_to, 0)
+					pinned_to = null
+					anchored = FALSE
+					update_canmove()
+					I.pinned = null
+				// Hippie End
+
 /mob/living/carbon/human/proc/can_heartattack()
 	CHECK_DNA_AND_SPECIES(src)
 	if(NOBLOOD in dna.species.species_traits)
@@ -407,7 +420,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4, 60)
 			if(prob(20) && !stat)
-				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && (z in GLOB.station_z_levels)) //QoL mainly
+				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
 					to_chat(src, "<span class='warning'>Just a quick nap...</span>")

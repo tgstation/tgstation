@@ -13,7 +13,6 @@
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
 	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
-	juice_results = list("banana" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -25,6 +24,7 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
+	juice_results = list("banana" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")

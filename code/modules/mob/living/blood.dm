@@ -16,7 +16,7 @@
 
 
 /mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= 225 && !(has_disability(NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
@@ -28,7 +28,7 @@
 		bleed_rate = 0
 		return
 
-	if(bodytemperature >= 225 && !(has_disability(NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
@@ -201,13 +201,13 @@
 		return "blood"
 
 /mob/living/carbon/monkey/get_blood_id()
-	if(!(has_disability(NOCLONE)))
+	if(!(has_disability(DISABILITY_NOCLONE)))
 		return "blood"
 
 /mob/living/carbon/human/get_blood_id()
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (has_disability(NOCLONE)))
+	else if((NOBLOOD in dna.species.species_traits) || (has_disability(DISABILITY_NOCLONE)))
 		return
 	return "blood"
 
@@ -252,8 +252,7 @@
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
-				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = drop.return_blood_DNA() //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())
@@ -266,7 +265,7 @@
 		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
-		B.blood_DNA |= temp_blood_DNA
+		B.add_blood_DNA(temp_blood_DNA)
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
@@ -278,7 +277,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
 	if(!B)
 		B = new(T)
-	B.blood_DNA["UNKNOWN DNA"] = "X*"
+	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
 	if(!T)

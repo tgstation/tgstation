@@ -122,6 +122,10 @@
 	flags_1 = ABSTRACT_1 | NODROP_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/item/twohanded/offhand/Destroy()
+	wielded = FALSE
+	return ..()
+
 /obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
 		wielded = FALSE
@@ -293,7 +297,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -302,7 +306,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_disability(CLUMSY) && (wielded) && prob(40))
+	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))

@@ -96,6 +96,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/device/pda/equipped(mob/user, slot)
 	if(!equipped)
 		if(user.client)
+			background_color = user.client.prefs.pda_color
 			switch(user.client.prefs.pda_style)
 				if(MONO)
 					font_index = MODE_MONO
@@ -112,7 +113,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
-		equipped = TRUE
+			equipped = TRUE
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation

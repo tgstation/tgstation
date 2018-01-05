@@ -1436,11 +1436,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
-
-
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)

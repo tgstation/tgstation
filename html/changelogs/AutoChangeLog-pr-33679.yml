@@ -1,4 +1,0 @@
-author: "improvedname"
-delete-after: True
-changes: 
-  - bugfix: "Corrects 357. speedloader in the autolathe"

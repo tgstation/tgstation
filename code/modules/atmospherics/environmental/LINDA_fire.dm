@@ -168,7 +168,7 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
-				T.ChangeTurf(T.baseturf)
+				T.ScrapeAway()
 			else
 				T.to_be_destroyed = FALSE
 				T.max_fire_temperature_sustained = 0

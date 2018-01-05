@@ -278,7 +278,7 @@
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src) && !L.buckled)
 		sigil_active = TRUE
 		if(animation_number >= 4)
 			new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
@@ -313,21 +313,28 @@
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
-					if(ghost)
-						ghost.reenter_corpse()
-					L.revive(1, 1)
-					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
-					animate(V, alpha = 0, transform = matrix()*2, time = 8)
-					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] body dripping blue ichor!</span>", "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
-					GLOB.clockwork_vitality -= revival_cost
+					if(L.has_status_effect(STATUS_EFFECT_ICHORIAL_STAIN))
+						visible_message("<span class='boldwarning'>[src] strains, but nothing happens...</span>")
+						if(L.pulledby)
+							to_chat(L.pulledby, "<span class='userdanger'>[L] was already revived recently by a vitality matrix! Wait a bit longer!</span>")
+						break
+					else
+						if(ghost)
+							ghost.reenter_corpse()
+						L.revive(1, 1)
+						var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
+						animate(V, alpha = 0, transform = matrix()*2, time = 8)
+						playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+						to_chat(L, "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
+						L.apply_status_effect(STATUS_EFFECT_ICHORIAL_STAIN)
+						GLOB.clockwork_vitality -= revival_cost
 				break
 			if(!L.client || L.client.is_afk())
 				set waitfor = FALSE
 				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", "[name]", null, "Clock Cultist", 50, L)
 				var/mob/dead/observer/theghost = null
 				if(candidates.len)
-					to_chat(L, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!")
+					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")
 					message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
 					L.ghostize(0)
 					L.key = theghost.key

@@ -110,6 +110,7 @@
 	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	old_current.transfer_observers_to(current)			//transfer anyone observing the old character to the new one
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -547,7 +548,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I.current
-				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
+				if(M && is_station_level(M.z) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"

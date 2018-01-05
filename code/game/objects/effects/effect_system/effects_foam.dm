@@ -76,7 +76,7 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.ChangeTurf(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open/floor/plating/foam)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
