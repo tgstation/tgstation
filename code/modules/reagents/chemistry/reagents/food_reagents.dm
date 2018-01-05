@@ -236,6 +236,7 @@
 				M.emote("shiver")
 			if(isslime(M))
 				M.bodytemperature -= rand(20,25)
+		M.bodytemperature = max(50, M.bodytemperature)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
