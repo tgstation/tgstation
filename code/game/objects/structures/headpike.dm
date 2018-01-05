@@ -6,8 +6,8 @@
 	density = FALSE
 	anchored = TRUE
 	var/bonespear = FALSE
-	var/obj/item/twohanded/spear/spear = null
-	var/obj/item/bodypart/head/victim = null
+	var/obj/item/twohanded/spear/spear
+	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
