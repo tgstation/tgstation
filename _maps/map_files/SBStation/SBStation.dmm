@@ -10153,7 +10153,7 @@
 	id = "captainhall";
 	name = "Captain's Hall Shutters"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Captain's Office";
 	req_access_txt = "20"
 	},
@@ -10285,7 +10285,7 @@
 	id = "hopblast";
 	name = "HoP Blast door"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Head of Personnel's Office";
 	req_access_txt = "57"
 	},
