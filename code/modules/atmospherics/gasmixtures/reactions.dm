@@ -193,7 +193,7 @@
 	min_requirements = list(
 		"ENER" = PLASMA_BINDING_ENERGY * 10,
 		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
-		/datum/gas/carbon_dioxide = MINIMUM_HEAT_CAPACITY
+		/datum/gas/carbon_dioxide = 1
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, turf/open/location)
@@ -205,33 +205,31 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy = THERMAL_ENERGY(air)
-	var/mediation = (air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(total_moles-cached_gases[/datum/gas/plasma][MOLES])
+	var/mediation = (air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES])
 	var/carbon_amount = 2*cached_gases[/datum/gas/carbon_dioxide][MOLES]
-	var/plasma_fused
-	var/oxygen_added
-	if (carbon_amount) < 20 //Lack of catalyst, fusion reaction starts to break down.
+	var/plasma_fused = 0
+	if (carbon_amount < 20) //Lack of catalyst, fusion reaction starts to break down.
 		plasma_fused = carbon_amount
 		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= 1
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= carbon_amount/20
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += 0.5
-		cached_gases[datum/gas/nitrous_oxide][MOLES] += 0.5
+		cached_gases[/datum/gas/bz][MOLES] += cached_gases[/datum/gas/carbon_dioxide][MOLES]/20
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += cached_gases[/datum/gas/carbon_dioxide][MOLES]/20
 		if (location)
 			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY))
 	else
-		plasma_fused = max((carbon_amount*5),MAX_CATALYST_EFFICENCY)*((cached_gases[/datum/gas/plasma][MOLES])/mediation))
+		plasma_fused = max((carbon_amount*5),MAX_CATALYST_EFFICENCY)*((cached_gases[/datum/gas/plasma][MOLES])/mediation)
 		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
 		air.assert_gases(/datum/gas/oxygen)
-		cached_gases[/datum/gas/plasma][MOLES] = max(cached_gases[/datum/gas/plasma][MOLES] - plasma_fused,0)
+		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
-		cached_gases[/datum/gas/oxygen][MOLES] += oxygen_added
+		cached_gases[/datum/gas/oxygen][MOLES] += carbon_amount
 		if (location)
 			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY*MAX_CATALYST_EFFICENCY))
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
-			//Prevents whatever mechanism is causing it to hit negative temperatures.
 		return REACTING
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
