@@ -79,15 +79,22 @@
 	if(GS)
 		qdel(GS)
 		eaten = TRUE
-	
-	var/mob/living/carbon/human/species/pod/PP = locate(/mob/living/carbon/human/species/pod) in loc
+
+	var/mob/living/carbon/human/PP = locate(/mob/living/carbon/human) in oviewers(1, src)
+	var/list/nommable_parts = list()//a list that'll store the limbs of our victim
 	if(PP)
-		PP.adjustBruteLoss(30)
-		PP.dismember()
-		PP.visible_message("<span class='warning'>[src] takes a big chomp out of [PP]!</span>", \
-						  "<span class='userdanger'>[src] takes a big chomp out of you!</span>")
-		eaten = TRUE
-	
+		if(istype(PP.dna.species, /datum/species/pod))//is the species of the mob a podperson?
+			for(var/Q in PP.bodyparts) //getting the victim's current body aprts
+				var/obj/item/bodypart/NN = Q
+				if(NN.body_part != CHEST && NN.body_part != HEAD) //getting every limb but the chest & head
+					nommable_parts += NN //adding the limbs we got to the above-mentioned list
+			PP.adjustBruteLoss(10)//nom
+			var/obj/item/bodypart/NB = pick(nommable_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
+			NB.dismember()
+			PP.visible_message("<span class='warning'>[src] takes a big chomp out of [PP]!</span>", \
+							  "<span class='userdanger'>[src] takes a big chomp out of you!</span>")
+			eaten = TRUE
+
 	if(eaten && prob(10))
 		say("Nom")
 
