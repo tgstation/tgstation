@@ -27,7 +27,7 @@
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
-	var/atom/movable/pulling = null
+	var/atom/movable/pulling
 	var/grab_state = 0
 
 /atom/movable/vv_edit_var(var_name, var_value)
@@ -64,7 +64,7 @@
 	return ..()
 
 /atom/movable/proc/start_pulling(atom/movable/AM,gs)
-	if(!AM || !src)
+	if(QDELETED(AM))
 		return FALSE
 	if(!(AM.can_be_pulled(src)))
 		return FALSE
