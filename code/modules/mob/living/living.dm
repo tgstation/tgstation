@@ -1034,7 +1034,7 @@
 	. = ..()
 	if(.)
 		if(client)
-			reset_perspective(destination)
+			reset_perspective()
 		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
