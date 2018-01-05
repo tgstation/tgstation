@@ -12,6 +12,7 @@ CLOTHESMATE
 	vend_reply = "Thank you for using the ClothesMate!"
 	height = 750
 	refill_canister = /obj/item/vending_refill/clothing
+	// 119 standard, 9 contraband, 12 premium
 	products = list(
 		/obj/item/clothing/head/that=2,
 		/obj/item/clothing/head/fedora=1,
@@ -100,6 +101,9 @@ CLOTHESMATE
 		/obj/item/clothing/head/beanie/stripedgreen=1,
 		/obj/item/clothing/suit/jacket/letterman_red=1,
 		/obj/item/clothing/ears/headphones = 10,
+		/obj/item/clothing/under/hippie/zootsuit = 1,
+		/obj/item/clothing/head/hippie/zoothat = 1,
+		/obj/item/clothing/head/hippie/toad = 1
 		)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool=1,
@@ -267,6 +271,7 @@ AUTODROBE
 	vend_reply = "Thank you for using AutoDrobe!"
 	height = 750
 	refill_canister = /obj/item/vending_refill/autodrobe
+	// 108 standard, 9 contraband, 15 premium
 	products = list(
 		/obj/item/clothing/suit/chickensuit = 1,
 		/obj/item/clothing/head/chicken = 1,
@@ -365,7 +370,10 @@ AUTODROBE
 		/obj/item/clothing/head/cueball = 1,
 		/obj/item/clothing/under/scratch = 1,
 		/obj/item/clothing/ears/headphones = 2,
-		/obj/item/clothing/under/sailor = 1
+		/obj/item/clothing/under/sailor = 1,
+		/obj/item/clothing/under/hippie/zootsuit = 1,
+		/obj/item/clothing/head/hippie/zoothat = 1,
+		/obj/item/clothing/under/hippie/robbie = 4
 		)
 	contraband = list(
 		/obj/item/clothing/suit/judgerobe = 1,

@@ -413,6 +413,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		qdel(src)
 	in_inventory = FALSE
 	SendSignal(COMSIG_ITEM_DROPPED,user)
+	
+	// Hippie Start - Custom screams
+	if (iscarbon(user))
+		var/mob/living/carbon/C = user
+		if (C)
+			C.reindex_screams()
+	// Hippie End
+
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -445,6 +453,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			A.Grant(user)
 	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	in_inventory = TRUE
+
+	// Hippie Start - Custom screams
+	if (iscarbon(user))
+		var/mob/living/carbon/C = user
+		if (C)
+			C.reindex_screams()
+	// Hippie End
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
