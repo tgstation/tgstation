@@ -350,6 +350,11 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
+			return FALSE // Skip over them if they have no exposed flesh.
+
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
@@ -479,7 +484,7 @@
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
-		var/failed = FALSE;
+		var/failed = FALSE
 		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
