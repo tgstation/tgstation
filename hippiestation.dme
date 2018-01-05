@@ -2545,6 +2545,7 @@
 #include "hippiestation\code\modules\atmospherics\unary_devices\vent_pump.dm"
 #include "hippiestation\code\modules\atmospherics\unary_devices\vent_scrubber.dm"
 #include "hippiestation\code\modules\awaymissions\corpse.dm"
+#include "hippiestation\code\modules\cargo\packs.dm"
 #include "hippiestation\code\modules\client\preferences.dm"
 #include "hippiestation\code\modules\client\preferences_savefile.dm"
 #include "hippiestation\code\modules\client\loadout\glasses.dm"
