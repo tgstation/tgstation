@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "External airlocks of the mining base and gulag are now cycle-linked."

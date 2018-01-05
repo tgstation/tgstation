@@ -117,7 +117,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.loc = src.loc
+	eyeobj.forceMove(src.loc)
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -430,20 +430,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
+	if(QDELETED(C))
+		return FALSE
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
-		return FALSE
-
-	if(!src.eyeobj)
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()

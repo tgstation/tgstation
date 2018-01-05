@@ -8,12 +8,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
 	var/efficiency_coeff
-	var/console_link = TRUE			//can this link to a console?
-	var/requires_console = TRUE
 
 	var/datum/component/material_container/materials	//Store for hyper speed!
 
@@ -36,6 +34,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	create_reagents(0)
+	RefreshParts()
 	return ..()
 
 /obj/machinery/rnd/circuit_imprinter/RefreshParts()

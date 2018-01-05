@@ -17,7 +17,11 @@
 		return
 	if(kingmaking)
 		return
-	if(SSticker.mode.eminence)
+
+	var/datum/antagonist/clockcult/C = user.mind.has_antag_datum(/datum/antagonist/clockcult)
+	if(!C || !C.clock_team)
+		return
+	if(C.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
 		return
 	if(!GLOB.servants_active)
@@ -34,7 +38,8 @@
 /obj/structure/destructible/clockwork/eminence_spire/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return
-	if(SSticker.mode.eminence)
+	var/datum/antagonist/clockcult/random_cultist = locate() in GLOB.antagonists //if theres no cultists new team without eminence will be created anyway.
+	if(random_cultist && random_cultist.clock_team && random_cultist.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
 		return
 	if(!GLOB.servants_active)

@@ -1,32 +1,11 @@
 /obj/item/device/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
-	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
-	var/on = TRUE // 0 for off
-	var/last_transmission
-	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
-	var/canhear_range = 3 // the range which mobs can hear this radio from
-	var/list/secure_radio_connections
-	var/prison_radio = 0
-	var/b_stat = 0
-	var/broadcasting = 0
-	var/listening = 1
-	var/translate_binary = 0
-	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
-	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
-	var/subspace_switchable = 0
-	var/subspace_transmission = 0
-	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/independent = FALSE // If true, bypasses any tcomms machinery.
-	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
-	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
-//			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
+
 	flags_1 = CONDUCT_1 | HEAR_1
 	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
@@ -35,12 +14,33 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
-	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
-	var/const/FREQ_LISTENING = 1
-		//FREQ_BROADCASTING = 2
+	var/on = TRUE
+	var/frequency = FREQ_COMMON
+	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
+	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
+	var/emped = 0  // Tracks the number of EMPs currently stacked.
 
-	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
-	var/use_command = FALSE
+	var/broadcasting = FALSE  // Whether the radio will transmit dialogue it hears nearby.
+	var/listening = TRUE  // Whether the radio is currently receiving.
+	var/prison_radio = FALSE  // If true, the transmit wire starts cut.
+	var/unscrewed = FALSE  // Whether wires are accessible. Toggleable by screwdrivering.
+	var/freerange = FALSE  // If true, the radio has access to the full spectrum.
+	var/subspace_transmission = FALSE  // If true, the radio transmits and receives on subspace exclusively.
+	var/subspace_switchable = FALSE  // If true, subspace_transmission can be toggled at will.
+	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
+	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
+	var/command = FALSE  // If true, use_command can be toggled at will.
+
+	// Encryption key handling
+	var/obj/item/device/encryptionkey/keyslot
+	var/translate_binary = FALSE  // If true, can hear the special binary channel.
+	var/independent = FALSE  // If true, can say/hear on the special CentCom channel.
+	var/syndie = FALSE  // If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
+	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h).
+	var/list/secure_radio_connections
+
+	var/const/FREQ_LISTENING = 1
+	//FREQ_BROADCASTING = 2
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
@@ -48,23 +48,19 @@
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
-	translate_binary = 0
-	syndie = 0
+	translate_binary = FALSE
+	syndie = FALSE
 	independent = FALSE
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
-			if(ch_name in src.channels)
-				continue
-			channels += ch_name
-			channels[ch_name] = keyslot.channels[ch_name]
+			if(!(ch_name in channels))
+				channels[ch_name] = keyslot.channels[ch_name]
 
 		if(keyslot.translate_binary)
-			translate_binary = 1
-
+			translate_binary = TRUE
 		if(keyslot.syndie)
-			syndie = 1
-
+			syndie = TRUE
 		if(keyslot.independent)
 			independent = TRUE
 
@@ -78,10 +74,9 @@
 	recalculateChannels()
 
 /obj/item/device/radio/Destroy()
-	qdel(wires)
-	wires = null
 	remove_radio_all(src) //Just to be sure
-	keyslot = null
+	QDEL_NULL(wires)
+	QDEL_NULL(keyslot)
 	return ..()
 
 /obj/item/device/radio/Initialize()
@@ -99,7 +94,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !isAI(user))
+	if(unscrewed && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -192,41 +187,33 @@
 		spans = M.get_spans()
 	if(!language)
 		language = M.get_default_language()
-	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans, language)
+	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on)
 		return // the device has to be on
-	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message)
 		return
-
-	if(wires.is_cut(WIRE_TX))
+	if(wires.is_cut(WIRE_TX))  // Permacell and otherwise tampered-with radios
 		return
-
 	if(!M.IsVocal())
 		return
 
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	/* Quick introduction:
-		This new radio system uses a very robust FTL signaling technology unoriginally
-		dubbed "subspace" which is somewhat similar to 'blue-space' but can't
-		actually transmit large mass. Headsets are the only radio devices capable
-		of sending subspace transmissions to the Communications Satellite.
-
-		A headset sends a signal to a subspace listener/reciever elsewhere in space,
-		the signal gets processed and logged, and an audible transmission gets sent
-		to each individual headset.
-	*/
-
 	/*
-		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
+	Roughly speaking, radios attempt to make a subspace transmittion (which
+	is received, processed, and rebroadcast by the telecomms satellite) and
+	if that fails, they send a mundane radio transmission.
+
+	Headsets cannot send/receive mundane transmissions, only subspace.
+	Syndicate radios can hear transmissions on all well-known frequencies.
+	CentCom radios can hear the CentCom frequency no matter what.
 	*/
 
-		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.
+	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
 		if(channel == "department")
@@ -238,270 +225,95 @@
 		freq = frequency
 		channel = null
 
-	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
+	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
-
-	var/jammed = FALSE
 	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
 		if(get_dist(position,get_turf(jammer)) < jammer.range)
-			jammed = TRUE
+			message = Gibberish(message,100)
 			break
 
-	//#### Tagging the signal with all appropriate identity values ####//
+	// Determine the identity information which will be attached to the signal.
+	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
 
-	// ||-- The mob's name identity --||
-	var/real_name = M.name // mob's real name
-	var/mobkey = "none" // player key associated with mob
-	var/voicemask = 0 // the speaker is wearing a voice mask
-	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
-	if(ismob(M))
-		var/mob/speaker = M
-		real_name = speaker.real_name
-		if(speaker.client)
-			mobkey = speaker.key // assign the mob's key
+	// Construct the signal
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans)
 
-
-	var/jobname // the mob's "job"
-
-	if(jammed)
-		message = Gibberish(message,100)
-
-	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
-	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, GLOB.data_core.general)
-
-		if(voice != real_name)
-			voicemask = 1
-		if(findjob)
-			jobname = findjob.fields["rank"]
-		else
-			jobname = "Unknown"
-
-	// --- Carbon Nonhuman ---
-	else if(iscarbon(M)) // Nonhuman carbon mob
-		jobname = "No id"
-
-	// --- AI ---
-	else if(isAI(M))
-		jobname = "AI"
-
-	// --- Cyborg ---
-	else if(iscyborg(M))
-		var/mob/living/silicon/robot/B = M
-		jobname = "[B.designation] Cyborg"
-
-	// --- Personal AI (pAI) ---
-	else if(istype(M, /mob/living/silicon/pai))
-		jobname = "Personal AI"
-
-	// --- Cold, emotionless machines. ---
-	else if(isobj(M))
-		jobname = "Machine"
-
-	// --- Unidentifiable mob ---
-	else
-		jobname = "Unknown"
-
-	/* ###### `independent` radios bypass all comms relays. ###### */
-
-	if(independent)
-		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_SUBSPACE
-		signal.data = list(
-			"mob" = M, 				// store a reference to the mob
-			"mobtype" = M.type, 	// the mob's type
-			"realname" = real_name, // the mob's real name
-			"name" = voice,			// the mob's voice name
-			"job" = jobname,		// the mob's job
-			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
-
-			"compression" = 0,		// uncompressed radio signal
-			"message" = message, 	// the actual sent message
-			"radio" = src, 			// stores the radio used for transmission
-			"slow" = 0,
-			"traffic" = 0,
-			"type" = 0,
-			"server" = null,
-			"reject" = 0,
-			"level" = 0,
-			"language" = language,
-			"spans" = spans,
-			"verb_say" = M.verb_say,
-			"verb_ask" = M.verb_ask,
-			"verb_exclaim" = M.verb_exclaim,
-			"verb_yell" = M.verb_yell,
-			)
-		signal.frequency = freqnum // Quick frequency set
-		Broadcast_Message(M, voicemask,
-				  src, message, voice, jobname, real_name,
-				  5, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell, language)
+	// Independent radios, on the CentCom frequency, reach all independent radios
+	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE))
+		signal.data["compression"] = 0
+		signal.transmission_method = TRANSMISSION_SUPERSPACE
+		signal.levels = list(0)  // reaches all Z-levels
+		signal.broadcast()
 		return
 
-	/* ###### Radio headsets can only broadcast through subspace ###### */
+	// All radios make an attempt to use the subspace system first
+	signal.send_to_receivers()
 
-	if(subspace_transmission)
-		// First, we want to generate a new radio signal
-		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_SUBSPACE
-		// --- Finally, tag the actual signal with the appropriate values ---
-		signal.data = list(
-			// Identity-associated tags:
-			"mob" = M, // store a reference to the mob
-			"mobtype" = M.type, 	// the mob's type
-			"realname" = real_name, // the mob's real name
-			"name" = voice,			// the mob's voice name
-			"job" = jobname,		// the mob's job
-			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
-
-			// We store things that would otherwise be kept in the actual mob
-			// so that they can be logged even AFTER the mob is deleted or something
-
-			// Other tags:
-			"compression" = rand(35,65), // compressed radio signal
-			"message" = message, // the actual sent message
-			"radio" = src, // stores the radio used for transmission
-			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
-			"traffic" = 0, // dictates the total traffic sum that the signal went through
-			"type" = 0, // determines what type of radio input it is: normal broadcast
-			"server" = null, // the last server to log this signal
-			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
-			"level" = position.z, // The source's z level
-			"language" = language,
-			"spans" = spans, //the span classes of this message.
-			"verb_say" = M.verb_say, //the verb used when talking normally
-			"verb_ask" = M.verb_ask, //the verb used when asking
-			"verb_exclaim" = M.verb_exclaim, //the verb used when exclaiming
-			"verb_yell" = M.verb_yell //the verb used when yelling
-			)
-		signal.frequency = freq
-
-		 //#### Sending the signal to all subspace receivers ####//
-
-		for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-			R.receive_signal(signal)
-
-		// Allinone can act as receivers.
-		for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
-			R.receive_signal(signal)
-
-		// Receiving code can be located in Telecommunications.dm
+	// If the radio is subspace-only, that's all it can do
+	if (subspace_transmission)
 		return
 
+	// Non-subspace radios will check in a couple of seconds, and if the signal
+	// was never received, send a mundane broadcast (no headsets).
+	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
 
-	 /* ###### Intercoms and station-bounced radios ###### */
+/obj/item/device/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
+	var/turf/T = get_turf(src)
+	if (signal.data["done"] && (T.z in signal.levels))
+		return
 
-	var/filter_type = 2
-
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_SUBSPACE
-
-
-	/* --- Try to send a normal subspace broadcast first */
-
-	signal.data = list(
-		"mob" = M, 				// store a reference to the mob
-		"mobtype" = M.type, 	// the mob's type
-		"realname" = real_name, // the mob's real name
-		"name" = voice,			// the mob's voice name
-		"job" = jobname,		// the mob's job
-		"key" = mobkey,			// the mob's key
-		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
-
-		"compression" = 0,		// uncompressed radio signal
-		"message" = message, 	// the actual sent message
-		"radio" = src, 			// stores the radio used for transmission
-		"slow" = 0,
-		"traffic" = 0,
-		"type" = 0,
-		"server" = null,
-		"reject" = 0,
-		"level" = position.z,
-		"language" = language,
-		"spans" = spans,
-		"verb_say" = M.verb_say,
-		"verb_ask" = M.verb_ask,
-		"verb_exclaim" = M.verb_exclaim,
-		"verb_yell" = M.verb_yell
-		)
-	signal.frequency = freqnum // Quick frequency set
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
-		R.receive_signal(signal)
-
-	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
-	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
-		R.receive_signal(signal)
-
-	spawn(20) // wait a little...
-
-		if(signal.data["done"] && position.z in signal.data["level"])
-			// we're done here.
-			return
-
-		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-		// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, voicemask,
-						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
+	// Okay, the signal was never processed, send a mundane broadcast.
+	signal.data["compression"] = 0
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.levels = list(T.z)
+	signal.broadcast()
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(radio_freq)
+	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
-	if(broadcasting)
-		if(get_dist(src, speaker) <= canhear_range)
-			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
-				raw_message = stars(raw_message)
-			talk_into(speaker, raw_message, , spans, language=message_language)
 
-/obj/item/device/radio/proc/receive_range(freq, level)
-	// check if this radio can receive on the given frequency, and if so,
-	// what the range is in which mobs will hear the radio
-	// returns: -1 if can't receive, range otherwise
+	if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
+		// radios don't pick up whispers very well
+		raw_message = stars(raw_message)
+	else if(message_mode == MODE_L_HAND || message_mode == MODE_R_HAND)
+		// try to avoid being heard double
+		if (loc == speaker && ismob(speaker))
+			var/mob/M = speaker
+			var/idx = M.get_held_index_of_item(src)
+			// left hands are odd slots
+			if (idx && (idx % 2) == (message_mode == MODE_L_HAND))
+				return
 
-	if (wires.is_cut(WIRE_RX))
-		return -1
-	if(!listening)
-		return -1
-	if(!(0 in level))
+	talk_into(speaker, raw_message, , spans, language=message_language)
+
+// Checks if this radio can receive on the given frequency.
+/obj/item/device/radio/proc/can_receive(freq, level)
+	// deny checks
+	if (!on || !listening || wires.is_cut(WIRE_RX))
+		return FALSE
+	if (freq == FREQ_SYNDICATE && !syndie)
+		return FALSE
+	if (freq == FREQ_CENTCOM)
+		return independent  // hard-ignores the z-level check
+	if (!(0 in level))
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
-			return -1
-	if(freq == FREQ_SYNDICATE)
-		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
-			return -1
-	if(freq == FREQ_CENTCOM)
-		if(!independent)
-			return -1
-	if (!on)
-		return -1
-	if (!freq) //received on main frequency
-		if (!listening)
-			return -1
-	else
-		var/accept = (freq==frequency && listening)
-		if (!accept)
-			for(var/ch_name in channels)
-				if(channels[ch_name] & FREQ_LISTENING)
-					if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie) //the GLOB.radiochannels list is located in communications.dm
-						accept = 1
-						break
-		if (!accept)
-			return -1
-	return canhear_range
+			return FALSE
 
-/obj/item/device/radio/proc/send_hear(freq, level)
-
-	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
+	// allow checks: are we listening on that frequency?
+	if (freq == frequency)
+		return TRUE
+	for(var/ch_name in channels)
+		if(channels[ch_name] & FREQ_LISTENING)
+			//the GLOB.radiochannels list is located in communications.dm
+			if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie)
+				return TRUE
+	return FALSE
 
 
 /obj/item/device/radio/examine(mob/user)
 	..()
-	if (b_stat)
+	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
 		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
@@ -509,8 +321,8 @@
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
-		b_stat = !b_stat
-		if(b_stat)
+		unscrewed = !unscrewed
+		if(unscrewed)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
 			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
@@ -522,8 +334,8 @@
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
 		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
-	broadcasting = 0
-	listening = 0
+	broadcasting = FALSE
+	listening = FALSE
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	on = FALSE
@@ -541,7 +353,7 @@
 
 /obj/item/device/radio/borg
 	name = "cyborg radio"
-	subspace_switchable = 1
+	subspace_switchable = TRUE
 	dog_fashion = null
 	flags_2 = NO_EMP_WIRES_2
 
@@ -568,7 +380,7 @@
 			if(keyslot)
 				var/turf/T = get_turf(user)
 				if(T)
-					keyslot.loc = T
+					keyslot.forceMove(T)
 					keyslot = null
 
 			recalculateChannels()

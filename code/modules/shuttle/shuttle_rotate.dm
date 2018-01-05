@@ -48,10 +48,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Structure rotate procs************************************/
 
-/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation, params)
-	. = ..()
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-
 /obj/structure/cable/shuttleRotate(rotation, params)
 	params &= ~ROTATE_DIR
 	. = ..()
@@ -88,28 +84,30 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /obj/machinery/atmospherics/shuttleRotate(rotation, params)
 	var/list/real_node_connect = getNodeConnects()
-	for(DEVICE_TYPE_LOOP)
-		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
+	for(var/i in 1 to device_type)
+		real_node_connect[i] = angle2dir(rotation+dir2angle(real_node_connect[i]))
 
 	. = ..()
 	SetInitDirections()
 	var/list/supposed_node_connect = getNodeConnects()
 	var/list/nodes_copy = nodes.Copy()
 
-	for(DEVICE_TYPE_LOOP)
-		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
-		nodes[new_pos] = nodes_copy[I]
+	for(var/i in 1 to device_type)
+		var/new_pos = supposed_node_connect.Find(real_node_connect[i])
+		nodes[new_pos] = nodes_copy[i]
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gateway/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
 
-/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation, params)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-	return ..()
-
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
+
+/obj/machinery/door/airlock/shuttleRotate(rotation, params)
+	. = ..()
+	if(cyclelinkeddir)
+		cyclelinkeddir = angle2dir(rotation+dir2angle(cyclelinkeddir))
+		cyclelinkairlock()

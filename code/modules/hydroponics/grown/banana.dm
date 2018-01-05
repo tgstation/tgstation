@@ -24,6 +24,7 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
+	juice_results = list("banana" = 0)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")

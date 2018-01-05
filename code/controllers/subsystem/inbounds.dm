@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(inbounds)
 	name = "Inbounds"
-	priority = 40
+	priority = FIRE_PRIORITY_INBOUNDS
 	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_GAME
 

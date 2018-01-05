@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(minimap)
 	for(var/z in z_levels)
 		send_asset(client, "minimap_[z].png")
 
-/datum/controller/subsystem/minimap/proc/generate(z = 1, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
+/datum/controller/subsystem/minimap/proc/generate(z, x1 = 1, y1 = 1, x2 = world.maxx, y2 = world.maxy)
 	// Load the background.
 	var/icon/minimap = new /icon('icons/minimap.dmi')
 	// Scale it up to our target size.
