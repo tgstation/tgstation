@@ -491,6 +491,8 @@
 		return FALSE
 	return TRUE
 
+/datum/action/spell_action/spell
+
 /datum/action/spell_action/spell/IsAvailable()
 	if(!target)
 		return FALSE

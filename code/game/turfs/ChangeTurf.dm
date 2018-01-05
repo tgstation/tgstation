@@ -44,6 +44,10 @@
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
 	if(!path)
 		return
+	if(path == /turf/open/space/basic)
+		// basic doesn't initialize and this will cause issues
+		// no warning though because this can happen naturaly as a result of it being built on top of
+		path = /turf/open/space
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP)) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
@@ -119,30 +123,45 @@
 // Take the input as baseturfs and put it underneath the current baseturfs
 // If fake_turf_type is provided and new_baseturfs is not the baseturfs list will be created identical to the turf type's
 // If both or just new_baseturfs is provided they will be inserted below the existing baseturfs
-/turf/proc/PlaceOnBottom(turf/fake_turf_type, list/new_baseturfs)
+/turf/proc/PlaceOnBottom(list/new_baseturfs, turf/fake_turf_type)
 	if(fake_turf_type)
 		if(!new_baseturfs)
 			var/list/old_baseturfs = baseturfs.Copy()
 			assemble_baseturfs(fake_turf_type)
+			if(!length(baseturfs))
+				baseturfs = list(baseturfs)
 			baseturfs += old_baseturfs
 			return
 		else if(!length(new_baseturfs))
 			new_baseturfs = list(new_baseturfs, fake_turf_type)
 		else
 			new_baseturfs += fake_turf_type
+	if(!length(baseturfs))
+		baseturfs = list(baseturfs)
 	baseturfs.Insert(1, new_baseturfs)
 
 // Make a new turf and put it on top
-/turf/proc/PlaceOnTop(turf/fake_turf_type, list/new_baseturfs)
-	var/list/temp_baseturfs = list()
-	temp_baseturfs += baseturfs // Doesn't matter if baseturfs is a list or single item, either will get added correctly
-	temp_baseturfs += type
-	if(new_baseturfs)
-		temp_baseturfs += new_baseturfs
-	return ChangeTurf(fake_turf_type, temp_baseturfs)
+// The args behave identical to PlaceOnBottom except they go on top
+/turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type)
+	if(fake_turf_type)
+		if(!new_baseturfs)
+			var/list/old_baseturfs = baseturfs.Copy()
+			assemble_baseturfs(fake_turf_type)
+			if(!length(baseturfs))
+				baseturfs = list(baseturfs)
+			baseturfs.Insert(1, old_baseturfs)
+			return
+		else if(!length(new_baseturfs))
+			new_baseturfs = list(new_baseturfs, fake_turf_type)
+		else
+			new_baseturfs += fake_turf_type
+	if(!length(baseturfs))
+		baseturfs = list(baseturfs)
+	baseturfs += new_baseturfs
+
 
 // Copy an existing turf and put it on top
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY) // x, 1, 0
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
 	new_baseturfs += type

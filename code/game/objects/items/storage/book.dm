@@ -213,5 +213,5 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	else
 		return ..(M,user,heal_mode = FALSE)
 
-/obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
+/obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE

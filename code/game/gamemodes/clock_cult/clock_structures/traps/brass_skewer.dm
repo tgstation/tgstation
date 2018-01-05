@@ -21,9 +21,10 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	if(buckled_mobs && buckled_mobs.len)
 		var/mob/living/L = buckled_mobs[1]
-		L.Knockdown(100)
-		L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in their body!</span>")
-		L.adjustBruteLoss(15)
+		if(iscarbon(L))
+			L.Knockdown(100)
+			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in their body!</span>")
+			L.adjustBruteLoss(15)
 		unbuckle_mob(L)
 	return ..()
 
@@ -48,14 +49,22 @@
 /obj/structure/destructible/clockwork/trap/brass_skewer/activate()
 	if(density)
 		return
-	var/mob/living/carbon/squirrel = locate() in get_turf(src)
+	var/mob/living/squirrel = locate() in get_turf(src)
 	if(squirrel)
-		squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, impaling [squirrel]!</span>", \
-		"<span class='userdanger'>A massive brass spike rams through your chest, hoisting you into the air!</span>")
-		squirrel.emote("scream")
-		playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
-		playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
-		squirrel.apply_damage(20, BRUTE, "chest")
+		if(iscyborg(squirrel))
+			if(!squirrel.stat)
+				squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, rending [squirrel]'s chassis but shattering into pieces!</span>", \
+				"<span class='userdanger'>A massive brass spike rips through your chassis and bursts into shrapnel in your casing!</span>")
+				squirrel.adjustBruteLoss(50)
+				squirrel.Stun(20)
+				addtimer(CALLBACK(src, .proc/take_damage, max_integrity), 1)
+		else
+			squirrel.visible_message("<span class='boldwarning'>A massive brass spike erupts from the ground, impaling [squirrel]!</span>", \
+			"<span class='userdanger'>A massive brass spike rams through your chest, hoisting you into the air!</span>")
+			squirrel.emote("scream")
+			playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
+			playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
+			squirrel.apply_damage(20, BRUTE, "chest")
 		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
 	else

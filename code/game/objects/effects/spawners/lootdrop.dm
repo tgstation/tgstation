@@ -5,19 +5,29 @@
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
+	var/fan_out_items = FALSE //Whether the items should be distributed to offsets 0,3,-3,6,-6,9,-9.. This overrides pixel_x/y on the spawner itself
 
 /obj/effect/spawner/lootdrop/Initialize(mapload)
 	..()
 	if(loot && loot.len)
 		var/turf/T = get_turf(src)
-		while(lootcount && loot.len)
+		var/loot_spawned = 0
+		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
 
 			if(lootspawn)
-				new lootspawn(T)
-			lootcount--
+				var/atom/movable/spawned_loot = new lootspawn(T)
+				if (!fan_out_items)
+					if (pixel_x != 0)
+						spawned_loot.pixel_x = pixel_x
+					if (pixel_y != 0)
+						spawned_loot.pixel_y = pixel_y
+				else
+					if (loot_spawned)
+						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-3)+((loot_spawned%2)*(loot_spawned+1)/2*3)
+			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/lootdrop/armory_contraband

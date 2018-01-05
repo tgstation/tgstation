@@ -70,7 +70,7 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z in GLOB.station_z_levels)
+		if(is_station_level(z))
 			add_overlay("overlay_[GLOB.security_level]")
 		else
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
@@ -124,7 +124,7 @@
 	var/list/data = list()
 	data["emagged"] = emagged
 
-	if(src.z in GLOB.station_z_levels)
+	if(is_station_level(z))
 		data["seclevel"] = get_security_level()
 	else
 		data["seclevel"] = "green"

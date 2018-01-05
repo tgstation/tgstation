@@ -88,7 +88,7 @@
 /turf/open/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
-		if(is_servant_of_ratvar(L))
+		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
 			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
 			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
@@ -173,7 +173,7 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	clean_blood()
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)

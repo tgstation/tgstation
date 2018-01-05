@@ -547,7 +547,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I.current
-				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
+				if(M && is_station_level(M.z) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"
