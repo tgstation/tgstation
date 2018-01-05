@@ -1,5 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - bugfix: "Devils will no longer be permanently stuck if interrupted while trying to jaunt."
-  - bugfix: "Devils will now properly clear the fake fire if failing to jaunt."
