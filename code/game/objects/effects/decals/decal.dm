@@ -5,7 +5,7 @@
 
 /obj/effect/decal/Initialize()
 	. = ..()
-	if(NeverShouldHaveComeHere(T))
+	if(!isturf(loc) && NeverShouldHaveComeHere(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
