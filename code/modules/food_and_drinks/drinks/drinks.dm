@@ -100,10 +100,10 @@
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	..()
 
-/obj/item/reagent_containers/food/drinks/throw_impact(atom/target, mob/thrower)
+/obj/item/reagent_containers/food/drinks/throw_impact(atom/target, datum/thrownthing/throwinfo)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(target, thrower, TRUE)
+		smash(target, throwinfo.thrower, TRUE)
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
