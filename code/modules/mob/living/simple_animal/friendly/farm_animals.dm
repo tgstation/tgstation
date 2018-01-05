@@ -86,7 +86,7 @@
 		if(istype(PP.dna.species, /datum/species/pod))//is the species of the mob a podperson?
 			for(var/Q in PP.bodyparts) //getting the victim's current body aprts
 				var/obj/item/bodypart/NN = Q
-				if(NN.body_part != CHEST) //getting every limb but the chest for the list
+				if(NN.body_part != CHEST && NN.body_part != HEAD) //getting every limb but the chest & head
 					nommable_parts += NN //adding the limbs we got to the above-mentioned list
 			PP.adjustBruteLoss(10)//nom
 			var/obj/item/bodypart/NB = pick(nommable_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
