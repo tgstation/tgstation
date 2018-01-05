@@ -3,11 +3,11 @@
 	desc = "When you really want to send a message."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "headpike"
+	density = FALSE
+	anchored = TRUE
 	var/bonespear = FALSE
 	var/obj/item/twohanded/spear/spear = null
 	var/obj/item/bodypart/head/victim = null
-	density = FALSE
-	anchored = TRUE
 
 /obj/structure/headpike/bone //for bone spears
 	icon_state = "headpike-bone"
@@ -40,8 +40,8 @@
 /obj/structure/headpike/attack_hand(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
-	victim.forceMove(get_turf(src))
+	victim.forceMove(drop_location())
 	victim = null
-	spear.forceMove(get_turf(src))
+	spear.forceMove(drop_location())
 	spear = null
 	qdel(src)
