@@ -814,7 +814,8 @@
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200)
 	build_path = /obj/item/stack/packageWrap
 	category = list("initial", "Misc")
-	
+	maxstack = 30
+
 /datum/design/holodisk
 	name = "Holodisk"
 	id = "holodisk"
