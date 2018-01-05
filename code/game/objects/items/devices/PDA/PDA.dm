@@ -94,6 +94,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	update_icon()
 
 /obj/item/device/pda/equipped(mob/user, slot)
+	. = ..()
 	if(!equipped)
 		if(user.client)
 			background_color = user.client.prefs.pda_color
