@@ -1204,7 +1204,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/LocalSmite()
 	if(!check_rights(R_FUN))
 		return
-	if(!isadminobserver(usr))
+	if(!isobserver(usr))
 		to_chat(usr, "<span class='adminnotice'>You must be a ghost to do this!</span>")
 		return
 	var/mob/living/carbon/human/closest
