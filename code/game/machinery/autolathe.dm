@@ -201,9 +201,6 @@
 		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
 		N.update_icon()
 		N.autolathe_crafted(src)
-		for(var/obj/item/stack/S in (A.contents - N))
-			if(istype(S, N.merge_type))
-				N.merge(S)
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
