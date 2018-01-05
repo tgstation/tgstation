@@ -350,13 +350,13 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
+	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+		return TRUE
+
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
 			return FALSE // Skip over them if they have no exposed flesh.
-
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
-		return TRUE
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
