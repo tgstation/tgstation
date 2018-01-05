@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
-	wait = 6000
+	wait = 600
 	flags = SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_BLACKBOX
