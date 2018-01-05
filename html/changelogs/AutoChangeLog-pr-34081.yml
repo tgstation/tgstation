@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "Chameleon PDAs now have their chameleon action."
