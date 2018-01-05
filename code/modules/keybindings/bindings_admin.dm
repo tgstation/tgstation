@@ -15,4 +15,7 @@
 			else
 				user.invisimin()
 			return
+		if("U")
+			if(user.keys_held["Ctrl"] && user.keys_held["Shift"] && user.keys_held["F"])
+				LocalSmite()
 	..()
