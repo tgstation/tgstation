@@ -111,8 +111,6 @@
 				user.spin(10)
 			break
 
-	message_admins("DEBUG: Haste [user] / [user.incapacitated()] / [isliving(target)] / [target.Adjacent(user)]")
-
 	//Knockdown Target!
 	if (user && !user.incapacitated() && isliving(target) && target.Adjacent(user))
 		var/mob/living/M = target

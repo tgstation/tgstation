@@ -125,8 +125,10 @@
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
+			button.alpha = 100 // button.color = rgb(128,0,0,128) // FULPSTATION: We go transparent, not red.
 		else
 			button.color = rgb(255,255,255,255)
+			button.alpha = 255 // button.color = rgb(255,255,255,255) // FULPSTATION: We go transparent, not red.
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)

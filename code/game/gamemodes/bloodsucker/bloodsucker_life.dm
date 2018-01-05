@@ -82,9 +82,11 @@
 		// Wait before next pass
 		sleep(10)
 
+
 	// Message his Ghost
-	if (owner)
+	if (owner && AmFinalDeath()) // If we still have owner, it means it wasn't unassigned during removal. This means we left the loop due to Final Death.
 		to_chat(owner, "<span class='userdanger'>You have met your Final Death!</span>")
+
 	// Free my Vassals! (if I haven't yet)
 	FreeAllVassals()
 

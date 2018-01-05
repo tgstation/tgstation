@@ -37,9 +37,9 @@ Axolotl123		=	Administrator
 Qustinnus		=	Administrator
 Idontcareacount		=	Administrator
 Ss4gogeta0	=	Administrator
+Windarkata	=	Administrator
+Bricksqwad	=	Administrator
+Ishiro	=	Administrator
 
 #TRIAL ADMINS
-Windarkata	=	Trial Admin
-Bricksqwad	=	Trial Admin
-Ishiro	=	Trial Admin
 

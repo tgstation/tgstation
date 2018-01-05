@@ -113,7 +113,7 @@
 		//	action.button.desc += "<span class='warning'> (+</span>[bloodcost_constant]<span class='warning'>/sec)</span> "
 
 	// Power RECHARGING
-	action.button.alpha = (charge_counter < charge_max && !active) ? 100 : 255 // Alpha partly invis when not recharged yet.
+	//action.button.alpha = (charge_counter < charge_max && !active) ? 100 : 255 // Alpha partly invis when not recharged yet.  // MOVED: to action.dm
 	// NOTE: only_recharge is only true when called from process() above, which is like the spell's TICK for recharging.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +218,7 @@
 
 	// Reset Cast Time for  Targetting Spells on Cancel
 	if (amTargetted)
-		charge_counter = charge_max
+		revert_cast() // charge_counter = charge_max
 		update_icon()
 
 	return 1

@@ -1,6 +1,6 @@
 
 /datum/antagonist/bloodsucker/proc/AmFinalDeath()
- 	return !owner.current || !isliving(owner.current) || isbrain(owner.current)
+ 	return !owner.current || !isliving(owner.current) || isbrain(owner.current) || !get_turf(owner.current)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
 
