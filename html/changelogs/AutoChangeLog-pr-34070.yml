@@ -1,0 +1,6 @@
+author: "Okand37"
+delete-after: True
+changes: 
+  - rscadd: "Added a fully functioning A.I. satellite to Omegastation!"
+  - rscadd: "Added the CE's magboots to the gravity room on Omegastation!"
+  - rscadd: "Added a medical wrench to cryo for Omegastation!"
