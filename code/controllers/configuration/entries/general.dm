@@ -386,3 +386,11 @@
 
 /datum/config_entry/string/default_view
 	value = "15x15"
+
+
+/datum/config_entry/string/roundend_sound_folder
+	value = "config/sounds/roundend/"
+
+
+/datum/config_entry/string/lobby_music_folder
+	value = "config/sounds/title/"
