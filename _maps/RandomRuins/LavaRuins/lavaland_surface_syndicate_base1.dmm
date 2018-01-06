@@ -4114,9 +4114,10 @@
 "kZ" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
 	dir = 4;
-	node1_concentration = 0.2;
-	node2_concentration = 0.8;
-	on = 1
+	node1_concentration = 0.8;
+	node2_concentration = 0.1;
+	on = 1;
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -5758,17 +5759,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
-	on = 0;
-	target_pressure = 101.325
-	},
 /obj/machinery/doorButtons/access_button{
 	idDoor = "syndie_lavaland_incinerator_interior";
 	idSelf = "syndie_lavaland_incinerator_access";
 	name = "Incinerator airlock control";
 	pixel_x = -8;
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	target_pressure = 4500
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
