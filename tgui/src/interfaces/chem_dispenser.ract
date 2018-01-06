@@ -6,7 +6,7 @@
 <ui-display title='Saved Recipes' button>
   <ui-section>
     <ui-button icon='plus' action='add_recipe'>Add Recipe</ui-button>
-	<ui-button icon='plus' action='clear_recipes'>Clear Recipes</ui-button>
+	<ui-button icon='minus' action='clear_recipes'>Clear Recipes</ui-button>
     {{#each data.recipes}}
       <ui-button grid icon='tint' action='dispense_recipe' params='{"recipe": "{{contents}}"}'>{{recipe_name}}</ui-button>
     {{/each}}
