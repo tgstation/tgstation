@@ -520,6 +520,9 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
+/atom/Exited(atom/movable/AM)
+	SendSignal(COMSIG_ATOM_EXITED, AM)
+
 /atom/proc/return_temperature()
 	return
 
