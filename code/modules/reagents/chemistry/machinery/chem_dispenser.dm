@@ -9,8 +9,17 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/cell_type = /obj/item/stock_parts/cell/high
-	var/obj/item/stock_parts/cell/cell
+
+	/obj/machinery/chem_dispenser/constructable/RefreshParts()
+	var/time = 0
+	var/i
+	for(var/obj/item/stock_parts/cell/P in component_parts)
+		cell = P
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+		time += M.rating
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
+		time += C.rating
+	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	var/powerefficiency = 0.01
 	var/amount = 30
 	var/recharged = 0
