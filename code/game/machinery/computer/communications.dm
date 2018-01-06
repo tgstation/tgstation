@@ -701,7 +701,7 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
-	deadchat_broadcast("<span class='deadsay bold'>[user.name] made an priority announcement.</span>", usr)
+	deadchat_broadcast("<span class='deadsay bold'>[user.name] made an priority announcement.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
