@@ -1513,7 +1513,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	usr = M
 	. = CB.Invoke()
 	usr = temp
-
+  
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
@@ -1537,10 +1537,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
-
-/proc/load_rsc_on_all_clients(thingy)
-	for(var/thing in GLOB.clients)
-		var/client/C = thing
-		if (!C)
-			continue
-		C.Export("##action=load_rsc", thingy)

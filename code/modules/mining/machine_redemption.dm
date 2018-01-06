@@ -257,9 +257,8 @@
 		if("Release")
 
 			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
-				var/out = get_step(src, output_dir)
 				if(params["id"] == "all")
-					materials.retrieve_all(out)
+					materials.retrieve_all(get_step(src, output_dir))
 				else
 					var/mat_id = params["id"]
 					if(!materials.materials[mat_id])
@@ -277,7 +276,7 @@
 						desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
 					var/sheets_to_remove = round(min(desired,50,stored_amount))
-					materials.retrieve_sheets(sheets_to_remove, mat_id, out)
+					materials.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
 
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")

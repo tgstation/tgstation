@@ -18453,6 +18453,7 @@
 "aMG" = (
 /obj/structure/table,
 /obj/item/aiModule/core/full/asimov,
+/obj/effect/spawner/lootdrop/aimodule_harmless,
 /obj/item/aiModule/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
@@ -18462,7 +18463,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/item/aiModule/core/full/corp,
+/obj/effect/spawner/lootdrop/aimodule_neutral,
 /obj/item/aiModule/core/full/custom,
 /obj/machinery/flasher{
 	pixel_y = 24;
@@ -18487,7 +18488,7 @@
 	pixel_y = 24;
 	id = "AI"
 	},
-/obj/item/aiModule/core/full/antimov,
+/obj/effect/spawner/lootdrop/aimodule_harmful,
 /obj/item/aiModule/supplied/oxygen,
 /obj/item/aiModule/supplied/protectStation,
 /obj/item/aiModule/zeroth/oneHuman,
@@ -46128,9 +46129,6 @@
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
 	},
-/obj/item/device/radio/intercom{
-	pixel_y = -25
-	},
 /obj/item/kitchen/rollingpin,
 /obj/machinery/camera{
 	c_tag = "Kitchen";
@@ -46175,6 +46173,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -47295,44 +47294,35 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUl" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/hydroponics)
+"bUm" = (
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
 	name = "BrewMaster 2199";
 	pixel_x = -4
 	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"bUm" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 29
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUn" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/glass/bucket,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUo" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/shovel/spade,
-/obj/item/wrench,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/cultivator,
-/obj/item/wirecutters,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUp" = (
@@ -62641,18 +62631,16 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "czs" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "czt" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "czu" = (
@@ -63218,23 +63206,24 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAz" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -78548,6 +78537,12 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
+/obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/wrench,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/cultivator,
+/obj/item/wirecutters,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "dix" = (
@@ -80368,13 +80363,13 @@
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "dDA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "dDB" = (
@@ -80579,6 +80574,7 @@
 /area/engine/atmos)
 "EDw" = (
 /obj/machinery/rnd/protolathe/department/service,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/hydroponics)
 "EDx" = (
@@ -80629,6 +80625,10 @@
 /obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Ljw" = (
+/obj/structure/sign/poster/official/random,
+/turf/closed/wall,
+/area/hydroponics)
 
 (1,1,1) = {"
 aaa
@@ -112664,7 +112664,7 @@ cvS
 cwR
 crQ
 cyB
-czu
+czy
 cAz
 cBt
 cCu
@@ -114693,7 +114693,7 @@ bNA
 bOU
 bQD
 bRS
-EDw
+Ljw
 bUi
 bVu
 bWO
@@ -115721,7 +115721,7 @@ bNC
 bOW
 bQH
 bRV
-bST
+EDw
 bUl
 bVx
 bWS

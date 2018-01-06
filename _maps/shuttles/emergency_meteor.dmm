@@ -86,7 +86,7 @@
 	dwidth = 20;
 	height = 40;
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
-	name = "a meteor with engines strapped to it";
+	name = "\proper a meteor with engines strapped to it";
 	timid = 1;
 	width = 40
 	},

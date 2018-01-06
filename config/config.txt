@@ -409,11 +409,3 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 15x15
-
-## Where roundend sounds are located. MUST HAVE A TRAILING SLASH!
-## Uncomment to change it from the default of 'config/sounds/roundend/'.
-#ROUNDEND_SOUND_FOLDER
-
-## Where lobby music is located. MUST HAVE A TRAILING SLASH!
-## Uncomment to change it from the default of 'config/sounds/title/'.
-#LOBBY_MUSIC_FOLDER

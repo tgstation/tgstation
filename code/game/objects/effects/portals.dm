@@ -42,6 +42,7 @@
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
 		user.forceMove(get_turf(src))
+		return TRUE
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
 	if(isobserver(AM))
