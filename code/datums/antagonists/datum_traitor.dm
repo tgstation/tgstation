@@ -301,11 +301,11 @@
 	var/TC_uses = 0
 	var/uplink_true = FALSE
 	var/purchases = ""
-	for(var/datum/component/uplink/H in GLOB.uplinks)
-		if(H.owner && H.owner == owner.key)
-			TC_uses += H.purchase_log.total_spent
-			uplink_true = TRUE
-			purchases += H.purchase_log.generate_render(FALSE)
+	var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[owner.key]
+	if(H)
+		TC_uses = H.total_spent
+		uplink_true = TRUE
+		purchases += H.generate_render(FALSE)
 
 	var/objectives_text = ""
 	if(objectives.len)//If the traitor had no objectives, don't need to process this.
