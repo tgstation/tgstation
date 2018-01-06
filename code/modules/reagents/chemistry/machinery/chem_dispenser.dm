@@ -193,12 +193,13 @@
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
 					var/actual = min(chemicals_to_dispense[r_id], (cell.charge * powerefficiency)*10, free)
-					R.add_reagent(r_id, actual)
-					cell.use((actual / 10) / powerefficiency)
+					if(actual)
+						R.add_reagent(r_id, actual)
+						cell.use((actual / 10) / powerefficiency)
 		if("clear_recipes")
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
-				saved_recipes = list()
+				LAZYCLEARLIST(saved_recipes)
 		if("add_recipe")
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			var/recipe = stripped_input(usr,"Recipe","Insert recipe with chem IDs")
@@ -212,7 +213,7 @@
 						var/temp = fuck[1]
 						to_chat(usr, "[src] can't process [temp]!")
 						return
-				saved_recipes += list(list("recipe_name" = name, "contents" = recipe))
+				LAZYADD(saved_recipes, list("recipe_name" = name, "contents" = recipe))
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
