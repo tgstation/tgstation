@@ -117,6 +117,7 @@
 	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -654,8 +655,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "et" = (
@@ -1012,9 +1013,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "eV" = (
-/obj/structure/closet/secure_closet/chemical{
-	req_access_txt = "150"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
 	dir = 6
@@ -1277,8 +1275,10 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "fp" = (
-/obj/structure/sign/chemistry,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "fq" = (
 /obj/machinery/vending/assist,
@@ -1613,11 +1613,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/medical{
-	desc = "Medical drug dispenser. Looks to have been outfitted with illicit software.";
-	extended_inventory = 1;
 	name = "SyndiMed Plus";
-	premium = list(/obj/item/reagent_containers/hypospray/medipen = 2, /obj/item/storage/belt/medical = 2);
-	products = list(/obj/item/reagent_containers/syringe = 6, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/gauze = 4, /obj/item/reagent_containers/pill/patch/styptic = 3, /obj/item/reagent_containers/pill/insulin = 5, /obj/item/reagent_containers/pill/patch/silver_sulf = 3, /obj/item/reagent_containers/glass/bottle/charcoal = 2, /obj/item/reagent_containers/spray/medical/sterilizer = 1, /obj/item/reagent_containers/glass/bottle/epinephrine = 2, /obj/item/reagent_containers/glass/bottle/morphine = 2, /obj/item/reagent_containers/glass/bottle/salglu_solution = 2, /obj/item/reagent_containers/glass/bottle/toxin = 2, /obj/item/reagent_containers/syringe/antiviral = 3, /obj/item/reagent_containers/pill/salbutamol = 1, /obj/item/device/healthanalyzer = 2);
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -3836,10 +3832,13 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kt" = (
-/obj/structure/grille,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ku" = (
@@ -4022,9 +4021,11 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kN" = (
-/obj/structure/reagent_dispensers/beerkeg,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kO" = (
@@ -4244,6 +4245,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lm" = (
@@ -5882,16 +5884,12 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "os" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/medical{
-	desc = "Medical drug dispenser. Looks to have been outfitted with illicit software.";
-	extended_inventory = 1;
 	name = "SyndiMed Plus";
-	premium = list(/obj/item/reagent_containers/hypospray/medipen = 2, /obj/item/storage/belt/medical = 2);
-	products = list(/obj/item/reagent_containers/syringe = 6, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/gauze = 4, /obj/item/reagent_containers/pill/patch/styptic = 3, /obj/item/reagent_containers/pill/insulin = 5, /obj/item/reagent_containers/pill/patch/silver_sulf = 3, /obj/item/reagent_containers/glass/bottle/charcoal = 2, /obj/item/reagent_containers/spray/medical/sterilizer = 1, /obj/item/reagent_containers/glass/bottle/epinephrine = 2, /obj/item/reagent_containers/glass/bottle/morphine = 2, /obj/item/reagent_containers/glass/bottle/salglu_solution = 2, /obj/item/reagent_containers/glass/bottle/toxin = 2, /obj/item/reagent_containers/syringe/antiviral = 3, /obj/item/reagent_containers/pill/salbutamol = 1, /obj/item/device/healthanalyzer = 2);
 	req_access_txt = "150"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "ot" = (
@@ -6074,6 +6072,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
+"oP" = (
+/obj/structure/sign/chemistry,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/testlab)
 
 (1,1,1) = {"
 aa
@@ -6859,7 +6861,7 @@ jx
 kn
 kH
 jN
-oO
+jZ
 lU
 mt
 mU
@@ -7170,7 +7172,7 @@ ae
 ae
 ae
 ae
-ae
+oP
 fH
 gG
 he
@@ -7730,8 +7732,8 @@ ab
 ab
 ab
 ac
-dP
 dy
+dP
 eA
 fa
 dy
