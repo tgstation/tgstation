@@ -303,14 +303,10 @@
 	var/TC_uses = 0
 	for(var/I in members)
 		var/datum/mind/syndicate = I
-		for(var/U in GLOB.uplinks)
-			var/datum/component/uplink/H = U
-			if(H.owner == syndicate.key)
-				TC_uses += H.purchase_log.total_spent
-				if(H.purchase_log)
-					purchases += H.purchase_log.generate_render(show_key = FALSE)
-				else
-					stack_trace("WARNING: Nuke Op uplink with no purchase_log Owner: [H.owner]")
+		var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[syndicate.key]
+		if(H)
+			TC_uses += H.total_spent
+			purchases += H.generate_render(show_key = FALSE)
 	text += printplayerlist(members)
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
