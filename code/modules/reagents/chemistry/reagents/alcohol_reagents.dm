@@ -835,8 +835,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A spicy mix of Vodka and Spice. Very hot."
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
-	if (M.bodytemperature < (BODYTEMP_NORMAL + 50))
-		M.bodytemperature = min((BODYTEMP_NORMAL + 50), M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
+	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/red_mead
@@ -874,8 +874,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A beer so frosty, the air around it freezes."
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
-	if(M.bodytemperature > (BODYTEMP_NORMAL - 40))
-		M.bodytemperature = max((BODYTEMP_NORMAL - 40), M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
+	if(M.bodytemperature > T0C)
+		M.bodytemperature = max(T0C, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/grog
