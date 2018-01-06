@@ -2340,9 +2340,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
-	},
-/mob/living/carbon/monkey{
 	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
