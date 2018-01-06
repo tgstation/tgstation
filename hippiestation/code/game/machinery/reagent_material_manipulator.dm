@@ -1,6 +1,6 @@
 /obj/machinery/reagent_material_manipulator
 	name = "material manipulation machine"
-	desc = "A high tech machine that can both analyse material traits and combine material traits with each other"
+	desc = "A high tech machine that can both analyse material traits and combine material traits with each other."
 	icon_state = "circuit_imprinter"
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE

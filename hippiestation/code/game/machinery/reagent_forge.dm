@@ -1,6 +1,6 @@
 /obj/machinery/reagent_forge
 	name = "material forge"
-	desc = "A bulky machine that can smelt practically any material in existence"
+	desc = "A bulky machine that can smelt practically any material in existence."
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "huge_engine"
 	bound_width = 96
