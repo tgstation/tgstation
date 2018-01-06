@@ -40,7 +40,7 @@
 					break
 				else
 					qdel(RR)
-		ChangeTurf(baseturf)
+		ScrapeAway()
 
 
 /turf/open/floor/mineral/reagent/proc/reagent_act(atom/A)
