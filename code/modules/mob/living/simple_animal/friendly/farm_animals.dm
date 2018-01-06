@@ -82,18 +82,22 @@
 
 	var/mob/living/carbon/human/PP = locate(/mob/living/carbon/human) in oviewers(1, src)
 	var/list/nommable_parts = list()//a list that'll store the limbs of our victim
+	var/time_between_nom = 0 //variable to keep track of the delay between each bite
+	var/nom_delay = 60 //the actual delay
 	if(PP)
 		if(istype(PP.dna.species, /datum/species/pod))//is the species of the mob a podperson?
 			for(var/Q in PP.bodyparts) //getting the victim's current body aprts
 				var/obj/item/bodypart/NN = Q
 				if(NN.body_part != CHEST && NN.body_part != HEAD) //getting every limb but the chest & head
 					nommable_parts += NN //adding the limbs we got to the above-mentioned list
-			PP.adjustBruteLoss(10)//nom
-			var/obj/item/bodypart/NB = pick(nommable_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
-			NB.dismember()
-			PP.visible_message("<span class='warning'>[src] takes a big chomp out of [PP]!</span>", \
-							  "<span class='userdanger'>[src] takes a big chomp out of you!</span>")
-			eaten = TRUE
+			if(time_between_nom <= world.time && nommable_parts) //checking if the delay is over & if the victim actually has any parts to nom
+				PP.adjustBruteLoss(10)
+				var/obj/item/bodypart/NB = pick(nommable_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
+				NB.dismember()
+				PP.visible_message("<span class='warning'>[src] takes a big chomp out of [PP]!</span>", \
+								  "<span class='userdanger'>[src] takes a big chomp out of you!</span>")
+				eaten = TRUE
+				time_between_nom = world.time + nom_delay //sets the nom delay
 
 	if(eaten && prob(10))
 		say("Nom")
