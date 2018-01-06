@@ -455,11 +455,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eb" = (
 /obj/structure/closet/crate,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/monkeycubes,
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 4
 	},
@@ -546,7 +541,9 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -888,7 +885,9 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -2198,7 +2197,9 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -2217,7 +2218,9 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hr" = (
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -2341,7 +2344,9 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
@@ -2359,7 +2364,9 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hG" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 6
 	},
@@ -2595,6 +2602,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2603,6 +2611,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2707,12 +2716,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2866,6 +2877,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
@@ -3091,6 +3103,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -3154,6 +3167,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -4141,6 +4155,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
@@ -4316,12 +4331,14 @@
 	dir = 10
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
