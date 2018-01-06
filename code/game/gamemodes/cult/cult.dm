@@ -80,6 +80,7 @@
 		cultist.special_role = "Cultist"
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
+	
 
 	return (cultists_to_cult.len>=required_enemies)
 
@@ -87,6 +88,8 @@
 /datum/game_mode/cult/post_setup()
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		add_cultist(cult_mind, 0, equip=TRUE)
+		if(!main_cult)
+			main_cult = cult_mind.current.cult_team
 	..()
 
 
@@ -129,10 +132,6 @@
 
 /datum/game_mode/cult/set_round_result()
 	..()
-	for(var/datum/antagonist/cult/H in GLOB.antagonists)
-		if(H.cult_team)
-			main_cult = H.cult_team
-			break
 	if(check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
