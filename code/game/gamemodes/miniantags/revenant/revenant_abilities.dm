@@ -180,6 +180,29 @@
 		action.UpdateButtonIcon()
 	return TRUE
 
+//Spook: Free spell that gives people phobias with a jump!
+/obj/effect/proc_holder/spell/aoe_turf/revenant/spook
+	name = "Spook"
+	desc = "Materialize with a jump to give spacemen phobias. Phobias you can exploit."
+	locked = FALSE
+	range = 7
+	stun = 20
+	reveal = 50
+	cast_amount = 20
+	unlock_amount = 50 //for some reason if this is locked
+	action_icon_state = "spook"
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/spook/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		playsound(user, 'sound/magic/divulge_end.ogg', 15, 1, -1) //it's a sound, i don't need to take in account people seeing it
+		for(var/mob/living/M in viewers(7, user))
+			if(M == user)
+				continue //don't spook yaself :(
+			flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 50)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "skeletons")
+
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload
 	name = "Overload Lights"
@@ -271,50 +294,149 @@
 	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
 
-//Malfunction: Makes bad stuff happen to robots and machines.
-/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction
-	name = "Malfunction"
-	desc = "Corrupts and damages nearby machines and mechanical objects."
-	charge_max = 200
-	range = 4
+/obj/effect/proc_holder/spell/targeted/revenant
+	clothes_req = 0
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
+	action_background_icon_state = "bg_revenant"
+	panel = "Revenant Abilities (Locked)"
+	name = "Report this to a coder"
+	var/reveal = 80 //How long it reveals the revenant in deciseconds
+	var/stun = 20 //How long it stuns the revenant in deciseconds
+	var/locked = TRUE //If it's locked and needs to be unlocked before use
+	var/unlock_amount = 100 //How much essence it costs to unlock
+	var/cast_amount = 50 //How much essence it costs to use
+
+/obj/effect/proc_holder/spell/targeted/revenant/New()
+	..()
+	if(locked)
+		name = "[initial(name)] ([unlock_amount]E)"
+	else
+		name = "[initial(name)] ([cast_amount]E)"
+
+/obj/effect/proc_holder/spell/targeted/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+	if(charge_counter < charge_max)
+		return FALSE
+	if(!istype(user)) //Badmins, no. Badmins, don't do it.
+		return TRUE
+	if(user.inhibited)
+		return FALSE
+	if(locked)
+		if(user.essence <= unlock_amount)
+			return FALSE
+	if(user.essence <= cast_amount)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/revenant/proc/attempt_cast(mob/living/simple_animal/revenant/user = usr)
+	if(!istype(user)) //If you're not a revenant, it works. Please, please, please don't give this to a non-revenant.
+		name = "[initial(name)]"
+		if(locked)
+			panel = "Revenant Abilities"
+			locked = FALSE
+		return TRUE
+	if(locked)
+		if(!user.castcheck(-unlock_amount))
+			charge_counter = charge_max
+			return FALSE
+		name = "[initial(name)] ([cast_amount]E)"
+		to_chat(user, "<span class='revennotice'>You have unlocked [initial(name)]!</span>")
+		panel = "Revenant Abilities"
+		locked = FALSE
+		charge_counter = charge_max
+		return FALSE
+	if(!user.castcheck(-cast_amount))
+		charge_counter = charge_max
+		return FALSE
+	name = "[initial(name)] ([cast_amount]E)"
+	user.reveal(reveal)
+	user.stun(stun)
+	if(action)
+		action.UpdateButtonIcon()
+	return TRUE
+
+//Induce Madness: Drive someone boooooonkers!
+/obj/effect/proc_holder/spell/targeted/revenant/madness
+	name = "Induce Madness"
+	desc = "Slowly descends someone into madness, causing them to do unpredictable things and, as a side effect, melts their brain."
+	charge_max = 150
+	range = 7
+	include_user = 0
+	stun = 20
+	reveal = 80
+	unlock_amount = 150
 	cast_amount = 60
-	unlock_amount = 200
-	action_icon_state = "malfunction"
+	action_icon_state = "induce_madness"
 
-//A note to future coders: do not replace this with an EMP because it will wreck malf AIs and gang dominators and everyone will hate you.
-/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/datum/antagonist/abductee/mindsnapped //pillzredux
+		name = "Broken"
+		roundend_category = "insane people"
+
+/datum/antagonist/abductee/mindsnapped/greet()
+	playsound(owner, 'sound/spookoween/ghost_whisper.ogg', 50, 1, -1)
+	to_chat(owner, "<span class='revenboldnotice'>You finally snap, and the voices in your head speak to you directly. They have a job for you...")
+	owner.announce_objectives()
+
+/obj/effect/proc_holder/spell/targeted/revenant/madness/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
-		for(var/turf/T in targets)
-			INVOKE_ASYNC(src, .proc/malfunction, T, user)
+		for(var/mob/living/carbon/human/target in targets)
+			if(target.stat)
+				to_chat(user, "<span class='revennotice'>Not enough brain activity for our powers!</span>")
+				continue
+			to_chat(user, "<span class='revenwarning'>We have seeded madness in [target]'s mind! It will continue to fester...</span>")
+			to_chat(target, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy...")
+			var/turf/soundturf = get_turf(target)
+			target.playsound_local(soundturf, 'sound/spookoween/ghosty_wind.ogg', 50, 1)
+			addtimer(CALLBACK(src, .proc/mind_warn, target), 300)
+			addtimer(CALLBACK(src, .proc/mind_snap, target), 600)
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
-	for(var/mob/living/simple_animal/bot/bot in T)
-		if(!bot.emagged)
-			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = FALSE
-			bot.open = TRUE
-			bot.emag_act()
-	for(var/mob/living/carbon/human/human in T)
-		if(human == user)
-			continue
-		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
-		new /obj/effect/temp_visual/revenant(human.loc)
-		human.emp_act(EMP_HEAVY)
-	for(var/obj/thing in T)
-		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
-			continue
-		if(prob(20))
-			if(prob(50))
-				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(null)
-		else
-			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
-				thing.emp_act(EMP_HEAVY)
-	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
-		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-		new /obj/effect/temp_visual/revenant(S.loc)
-		S.spark_system.start()
-		S.emp_act(EMP_HEAVY)
+/obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_warn(mob/living/carbon/human/target)
+	to_chat(target, "<span class='revenwarning'>voices in your head whisper, acclimating their arrival in disgust.")
+
+/obj/effect/proc_holder/spell/targeted/revenant/madness/proc/mind_snap(mob/living/carbon/human/target)
+	target.mind.add_antag_datum(/datum/antagonist/abductee/mindsnapped) // this handles adding the random objective in it's on_gain proc
+	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+	target.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+
+/obj/effect/proc_holder/spell/targeted/revenant/animate_bone
+	name = "Animate Bone"
+	desc = "Exhumes the skeleton from it's host, as long as the body has been drained. It will hunt down the living."
+	charge_max = 300
+	range = 1
+	include_user = 0
+	reveal = 0 //How long it reveals the revenant in deciseconds
+	stun = 0 //How long it stuns the revenant in deciseconds
+	unlock_amount = 150
+	cast_amount = 30
+	action_icon_state = "animate_bone"
+
+/obj/effect/proc_holder/spell/targeted/revenant/animate_bone/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		for(var/mob/living/M in targets)
+			if(!(M in user.drained_mobs))
+				to_chat(user, "<span class='revenwarning'>Harvest the soul first!</span>")
+				return FALSE
+			to_chat(user, "<span class='revenboldnotice'>Ah yes, this will do nicely! You charge up your necrotic powers...</span>")
+			if(!do_after(user, 30, 0, M))
+				return FALSE
+			user.reveal(66)
+			user.stun(66)
+			M.visible_message("<span class='warning'>[M] starts shaking violently!</span>", \
+				  "<span class='userdanger'>You lock up, but your bones do not! THEY'RE TRYING TO GET OUT!</span>")
+			M.Knockdown(66)
+			M.Jitter(66)
+			M.adjustBruteLoss(30) //i'm pretty sure your skeleton trying to get out hurts, but i'm no doctor.
+			var/datum/beam/B = user.Beam(M,icon_state="animate",time=INFINITY)
+			if(!do_after(user, 66, 0, M))
+				to_chat(user, "<span class='revenwarning'>The animation has been broken!</span>")
+				qdel(B)
+				return FALSE
+			qdel(B)
+			M.visible_message("<span class='userdanger'>[M]'s skeleton explodes out of them in a shower of gore!</span>")
+			var/mob/living/simple_animal/hostile/skeleton/revenant/S
+			S = new(M.loc)
+			S.name = "[M]'s haunted remains"
+				S.speak += "Join us..."
+			M.gib()
 
 //Blight: Infects nearby humans and in general messes living stuff up.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight

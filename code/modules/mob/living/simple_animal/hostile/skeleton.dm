@@ -81,3 +81,13 @@
 	health = 75
 	color = rgb(114,228,250)
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})
+
+/mob/living/simple_animal/hostile/skeleton/revenant
+	name = "haunted remains"
+	desc = "It's a skeleton alright, but it seems to be fuelled by haunted energies."
+	icon_state = "revskeleton"
+	icon_living = "revskeleton"
+	gold_core_spawnable = NO_SPAWN
+	maxHealth = 70
+	health = 70
+	speak = list("")
