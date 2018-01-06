@@ -542,7 +542,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -886,7 +886,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -2198,7 +2198,7 @@
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
@@ -2219,7 +2219,7 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hr" = (
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
@@ -2343,9 +2343,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
-/obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
 	faction = list("syndicate")
+	},
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -2365,7 +2367,7 @@
 "hG" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("syndicate")
+	faction = list("neutral","syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 6
