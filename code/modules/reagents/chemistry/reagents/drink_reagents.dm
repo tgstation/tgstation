@@ -280,7 +280,7 @@
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
@@ -305,7 +305,7 @@
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
-	if (M.bodytemperature < BODYTEMP_NORMAL)  //310.15 is the normal bodytemp
+	if (M.bodytemperature < BODYTEMP_NORMAL)  //310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
@@ -342,7 +342,7 @@
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
@@ -365,7 +365,7 @@
 	M.AdjustSleeping(-40, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
-	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
@@ -382,7 +382,7 @@
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-5)
-	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
@@ -403,7 +403,7 @@
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
 	M.status_flags |= GOTTAGOFAST
-	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
@@ -440,7 +440,7 @@
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-6)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/space_up
@@ -456,7 +456,7 @@
 
 /datum/reagent/consumable/space_up/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/lemon_lime
@@ -472,7 +472,7 @@
 
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/pwr_game
@@ -487,7 +487,7 @@
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/shamblers
@@ -502,7 +502,7 @@
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 /datum/reagent/consumable/sodawater
 	name = "Soda Water"
@@ -569,7 +569,7 @@
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.SetSleeping(0, FALSE)
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
@@ -591,7 +591,7 @@
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.SetSleeping(0, FALSE)
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))

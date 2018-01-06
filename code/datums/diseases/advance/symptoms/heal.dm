@@ -387,7 +387,7 @@
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
-	else if(M.bodytemperature < 311)
+	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
