@@ -301,7 +301,7 @@
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
-				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION_PRIMARY) //approximate center of the station
+				var/turf/T = SSmapping.get_station_center()
 				new /obj/structure/destructible/clockwork/massive/ratvar(T)
 				SSticker.force_ending = TRUE
 				var/x0 = T.x
