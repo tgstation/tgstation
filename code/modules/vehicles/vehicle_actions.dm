@@ -84,8 +84,9 @@
 	LAZYINITLIST(occupant_actions[M])
 	for(var/path in occupant_actions[M])
 		stack_trace("Leftover action type [path] in vehicle type [type] for mob type [M.type] - THIS SHOULD NOT BE HAPPENING!")
-		var/datum/action/action = occupant_actions[M]
+		var/datum/action/action = occupant_actions[M][path]
 		action.Remove(M)
+		occupant_actions[M] -= path
 	occupant_actions -= M
 	return TRUE
 
