@@ -1454,7 +1454,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places) 
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		var/natural = 0
-		if((abs(BODYTEMP_DEFAULT - H.bodytemperature) <= 25) && (abs(BODYTEMP_DEFAULT - H.loc_temp) <= 25))
+		if((abs(BODYTEMP_DEFAULT - H.bodytemperature) <= 25) && (abs(BODYTEMP_DEFAULT - loc_temp) <= 25))
 			return //Performance saver
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
