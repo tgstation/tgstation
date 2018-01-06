@@ -9,8 +9,73 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/cell_type = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
+	var/powerefficiency = 0.01
+	var/amount = 30
+	var/recharged = 0
+	var/recharge_delay = 5
+	var/mutable_appearance/beaker_overlay
+	var/obj/item/reagent_containers/beaker = null
 
-	/obj/machinery/chem_dispenser/constructable/RefreshParts()
+	var/list/dispensable_reagents = list()
+	circuit = /obj/item/circuitboard/machine/chem_dispenser
+	var/static/list/dispensable_reagent_tiers = list(
+		list(
+			"hydrogen",
+			"oxygen",
+			"silicon",
+			"phosphorus",
+			"sulfur",
+			"carbon",
+			"nitrogen",
+			"water"
+		),
+		list(
+			"lithium",
+			"sugar",
+			"sacid",
+			"copper",
+			"mercury",
+			"sodium",
+			"iodine",
+			"bromine"
+		),
+		list(
+			"ethanol",
+			"chlorine",
+			"potassium",
+			"aluminium",
+			"radium",
+			"fluorine",
+			"iron",
+			"welding_fuel",
+			"silver",
+			"stable_plasma"
+		),
+		list(
+			"oil",
+			"ash",
+			"acetone",
+			"saltpetre",
+			"ammonia",
+			"diethylamine"
+		)
+)
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"morphine",
+		"carpotoxin",
+		"mine_salve",
+		"toxin"
+)
+/obj/machinery/chem_dispenser/Initialize()
+	. = ..()
+	cell = new cell_type
+	recharge()
+	dispensable_reagents = sortList(dispensable_reagents)
+
+/obj/machinery/chem_dispenser/RefreshParts()
 	var/time = 0
 	var/i
 	for(var/obj/item/stock_parts/cell/P in component_parts)
@@ -20,53 +85,15 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
 	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
-	var/powerefficiency = 0.01
-	var/amount = 30
-	var/recharged = 0
-	var/recharge_delay = 5
-	var/mutable_appearance/beaker_overlay
-	var/obj/item/reagent_containers/beaker = null
-	var/list/dispensable_reagents = list(
-		"hydrogen",
-		"lithium",
-		"carbon",
-		"nitrogen",
-		"oxygen",
-		"fluorine",
-		"sodium",
-		"aluminium",
-		"silicon",
-		"phosphorus",
-		"sulfur",
-		"chlorine",
-		"potassium",
-		"iron",
-		"copper",
-		"mercury",
-		"radium",
-		"water",
-		"ethanol",
-		"sugar",
-		"sacid",
-		"welding_fuel",
-		"silver",
-		"iodine",
-		"bromine",
-		"stable_plasma"
-	)
-	var/list/emagged_reagents = list(
-		"space_drugs",
-		"morphine",
-		"carpotoxin",
-		"mine_salve",
-		"toxin"
-	)
-
-/obj/machinery/chem_dispenser/Initialize()
-	. = ..()
-	cell = new cell_type
-	recharge()
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		for(i=1, i<=M.rating, i++)
+			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)
+
+/obj/machinery/chem_dispenser/Destroy()
+	QDEL_NULL(beaker)
+	QDEL_NULL(cell)
+	return ..()
 
 /obj/machinery/chem_dispenser/process()
 
@@ -188,7 +215,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
+	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -213,91 +240,7 @@
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
 
-/obj/machinery/chem_dispenser/emp_act(severity)
-	var/list/datum/reagents/R = list()
-	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
-	var/datum/reagents/Q = new(total*10)
-	if(beaker && beaker.reagents)
-		R += beaker.reagents
-	for(var/i in 1 to total)
-		Q.add_reagent(pick(dispensable_reagents), 10)
-	R += Q
-	chem_splash(get_turf(src), 3, R)
-	if(beaker && beaker.reagents)
-		beaker.reagents.remove_all()
-	cell.use(total/powerefficiency)
-	cell.emp_act()
-	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
-	..()
-
-/obj/machinery/chem_dispenser/constructable
-	name = "portable chem dispenser"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "minidispenser"
-	powerefficiency = 0.001
-	amount = 5
-	recharge_delay = 20
-	dispensable_reagents = list()
-	circuit = /obj/item/circuitboard/machine/chem_dispenser
-	var/static/list/dispensable_reagent_tiers = list(
-		list(
-			"hydrogen",
-			"oxygen",
-			"silicon",
-			"phosphorus",
-			"sulfur",
-			"carbon",
-			"nitrogen",
-			"water"
-		),
-		list(
-			"lithium",
-			"sugar",
-			"sacid",
-			"copper",
-			"mercury",
-			"sodium",
-			"iodine",
-			"bromine"
-		),
-		list(
-			"ethanol",
-			"chlorine",
-			"potassium",
-			"aluminium",
-			"radium",
-			"fluorine",
-			"iron",
-			"welding_fuel",
-			"silver",
-			"stable_plasma"
-		),
-		list(
-			"oil",
-			"ash",
-			"acetone",
-			"saltpetre",
-			"ammonia",
-			"diethylamine"
-		)
-	)
-
-/obj/machinery/chem_dispenser/constructable/RefreshParts()
-	var/time = 0
-	var/i
-	for(var/obj/item/stock_parts/cell/P in component_parts)
-		cell = P
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		time += M.rating
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		time += C.rating
-	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		for(i=1, i<=M.rating, i++)
-			dispensable_reagents |= dispensable_reagent_tiers[i]
-	dispensable_reagents = sortList(dispensable_reagents)
-
-/obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user, params)
+/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
 		return
 
@@ -308,10 +251,12 @@
 		return
 	return ..()
 
-/obj/machinery/chem_dispenser/constructable/on_deconstruction()
+/obj/machinery/chem_dispenser/on_deconstruction()
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
+	return ..()
+
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
@@ -403,4 +348,4 @@
 		"cryoxadone",
 		"ammonia",
 		"ash",
-		"diethylamine")
+"diethylamine")

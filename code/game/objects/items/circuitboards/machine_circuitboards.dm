@@ -534,7 +534,7 @@
 
 /obj/item/circuitboard/machine/chem_dispenser
 	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
+	build_path = /obj/machinery/chem_dispenser/
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
