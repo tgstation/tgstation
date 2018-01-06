@@ -24,3 +24,7 @@
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg',
 						 'hippiestation/sound/misc/honk_echo_distant.ogg')
+
+/area/maintenance/forge
+	name = "Forge room"
+	icon_state = "red"

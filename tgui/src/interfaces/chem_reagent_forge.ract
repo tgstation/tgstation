@@ -1,0 +1,46 @@
+<ui-display title='Forge'>
+  <ui-section label='{{data.currently_forging}}'>
+    <ui-bar min='0' max='200000' value='{{data.material_amount}}'>{{Math.round(data.material_amount)}} cm3</ui-bar>
+    <br />
+    <ui-button icon='Dump' state='{{data.currently_forging ? null : "disabled"}}' action='Dump'>Eject</ui-button>
+  </ui-section>
+</ui-display>
+<ui-display title='Recipes'>
+<div class="display tabular">
+	<section class="candystripe">
+			<section class="cell bold">
+				Recipe
+			</section>
+			<section class="cell bold">
+				Cost (cm3)
+			</section>
+      <section class="cell bold">
+        Type
+      </section>
+			<section class="cell bold" align='center'>
+				Create
+			</section>
+		</section>
+	{{#each data.recipes}}
+		<section class="candystripe">
+			<section class="cell">
+				{{name}}
+			</section>
+			<section class="cell" align='right'>
+				{{cost}}
+			</section>
+      <section class="cell" align='right'>
+				{{category}}
+			</section>
+			<section class="table" alight='right'>
+				<section class="cell"></section>
+				<section class="cell">
+					<ui-button grid action='Create' state='{{data.can_afford ? null : "disabled"}}' params='{ "name" : {{name}} }' >
+						Create
+					</ui-button>
+				</section>
+			</section>
+		</section>
+	{{/each}}
+</div>
+</ui-display>
