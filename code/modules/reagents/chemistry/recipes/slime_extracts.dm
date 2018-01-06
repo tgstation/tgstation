@@ -50,7 +50,7 @@
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
 	results = list("mutationtoxin" = 1)
-	required_reagents = list("plasma" = 1)
+	required_reagents = list("plasma" = 5)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
@@ -58,8 +58,8 @@
 /datum/chemical_reaction/slime/slimemutate_unstable
 	name = "Unstable Mutation Toxin"
 	id = "unstablemutationtoxin"
-	results = list("unstablemutationtoxin" = 1)
-	required_reagents = list("radium" = 1)
+	results = list("unstablemutationtoxin" = 3)
+	required_reagents = list("radium" = 5)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 	mix_message = "<span class='info'>The mixture rapidly expands and contracts, its appearance shifting into a sickening green.</span>"

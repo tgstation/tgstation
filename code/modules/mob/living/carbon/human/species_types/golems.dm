@@ -18,7 +18,7 @@
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
 	blacklisted = TRUE
-	dangerous_existence = TRUE
+	dangerous_existence = FALSE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
@@ -41,25 +41,6 @@
 	var/golem_name = "[prefix] [golem_surname]"
 	return golem_name
 
-/datum/species/golem/random
-	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
-	var/static/list/random_golem_types
-
-/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	if(!random_golem_types)
-		random_golem_types = subtypesof(/datum/species/golem) - type
-		for(var/V in random_golem_types)
-			var/datum/species/golem/G = V
-			if(!initial(G.random_eligible))
-				random_golem_types -= G
-	var/datum/species/golem/golem_type = pick(random_golem_types)
-	var/mob/living/carbon/human/H = C
-	H.set_species(golem_type)
-	to_chat(H, "[initial(golem_type.info_text)]")
-
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine golem"
@@ -68,6 +49,7 @@
 	fixed_mut_color = "4ed"
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
+	dangerous_existence = TRUE
 
 //The suicide bombers of golemkind
 /datum/species/golem/plasma
@@ -81,6 +63,7 @@
 	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
+	dangerous_existence = TRUE
 	var/boom_warning = FALSE
 	var/datum/action/innate/ignite/ignite
 
@@ -138,6 +121,7 @@
 	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
 	prefix = "Diamond"
 	special_names = list("Back")
+	dangerous_existence = TRUE
 
 //Faster but softer and less armoured
 /datum/species/golem/gold
@@ -149,6 +133,7 @@
 	meat = /obj/item/ore/gold
 	info_text = "As a <span class='danger'>Gold Golem</span>, you are faster but less resistant than the average golem."
 	prefix = "Golden"
+	dangerous_existence = TRUE
 
 //Heavier, thus higher chance of stunning when punching
 /datum/species/golem/silver
@@ -160,6 +145,7 @@
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
 	prefix = "Silver"
 	special_names = list("Surfer", "Chariot", "Lining")
+	dangerous_existence = TRUE
 
 //Harder to stun, deals more damage, but it's even slower
 /datum/species/golem/plasteel
@@ -176,6 +162,7 @@
 	attack_verb = "smash"
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
+	dangerous_existence = TRUE
 
 //Immune to ash storms
 /datum/species/golem/titanium
@@ -186,6 +173,7 @@
 	info_text = "As a <span class='danger'>Titanium Golem</span>, you are immune to ash storms, and slightly more resistant to burn damage."
 	burnmod = 0.9
 	prefix = "Titanium"
+	dangerous_existence = TRUE
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -204,6 +192,7 @@
 	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are immune to both ash storms and lava, and slightly more resistant to burn damage."
 	burnmod = 0.8
 	prefix = "Plastitanium"
+	dangerous_existence = TRUE
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -226,6 +215,7 @@
 	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster and regenerate over time. You are, however, only able to be heard by other alloy golems."
 	prefix = "Alien"
 	special_names = list("Outsider", "Technology", "Watcher", "Stranger") //ominous and unknown
+	dangerous_existence = TRUE
 
 //Regenerates because self-repairing super-advanced alien tech
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
@@ -251,6 +241,7 @@
 	special_names = list("Bark", "Willow", "Catalpa", "Woody", "Oak", "Sap", "Twig", "Branch", "Maple", "Birch", "Elm", "Basswood", "Cottonwood", "Larch", "Aspen", "Ash", "Beech", "Buckeye", "Cedar", "Chestnut", "Cypress", "Fir", "Hawthorn", "Hazel", "Hickory", "Ironwood", "Juniper", "Leaf", "Mangrove", "Palm", "Pawpaw", "Pine", "Poplar", "Redwood", "Redbud", "Sassafras", "Spruce", "Sumac", "Trunk", "Walnut", "Yew")
 	human_surname_chance = 0
 	special_name_chance = 100
+	dangerous_existence = TRUE
 
 /datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -297,6 +288,7 @@
 	var/last_event = 0
 	var/active = null
 	prefix = "Uranium"
+	dangerous_existence = TRUE
 
 /datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
 	if(!active)
@@ -319,6 +311,7 @@
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
 	attack_sound = 'sound/effects/shovel_dig.ogg'
 	prefix = "Sand"
+	dangerous_existence = TRUE
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
@@ -349,6 +342,7 @@
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
 	attack_sound = 'sound/effects/glassbr2.ogg'
 	prefix = "Glass"
+	dangerous_existence = TRUE
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, 1)
@@ -388,6 +382,7 @@
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 	var/teleport_cooldown = 100
 	var/last_teleport = 0
+	dangerous_existence = TRUE
 
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
@@ -480,6 +475,7 @@
 	attack_verb = "honk"
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
+	dangerous_existence = TRUE
 
 	var/last_honk = 0
 	var/honkooldown = 0
@@ -551,6 +547,7 @@
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
 	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
 	prefix = "Runic"
+	dangerous_existence = TRUE
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
 	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze
@@ -612,6 +609,7 @@
 	siemens_coeff = 0
 	damage_overlay_type = "synth"
 	prefix = "Clockwork"
+	dangerous_existence = TRUE
 	var/has_corpse
 
 /datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
@@ -663,6 +661,7 @@
 	punchstunthreshold = 7
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
+	dangerous_existence = TRUE
 
 /datum/species/golem/cloth/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -757,6 +756,7 @@
 	prefix = "Plastic"
 	fixed_mut_color = "fff"
 	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling, and passing through plastic flaps."
+	dangerous_existence = TRUE
 
 /datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
