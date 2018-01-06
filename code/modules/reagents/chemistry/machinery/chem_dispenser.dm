@@ -190,8 +190,11 @@
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
 			for(var/r_id in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
-					var/amt = chemicals_to_dispense[r_id]
-					beaker.reagents.add_reagent(r_id, amt)
+					var/datum/reagents/R = beaker.reagents
+					var/free = R.maximum_volume - R.total_volume
+					var/actual = min(chemicals_to_dispense[r_id], (cell.charge * powerefficiency)*10, free)
+					R.add_reagent(r_id, actual)
+					cell.use((actual / 10) / powerefficiency)
 		if("clear_recipes")
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
