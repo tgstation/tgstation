@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(wall_runes)
 
 This file contains runes.
 Runes are used by the cult to cause many different effects and are paramount to their success.
-They are drawn with an arcane tome in blood, and are distinguishable to cultists and normal crew by examining.
+They are drawn with a ritual dagger in blood, and are distinguishable to cultists and normal crew by examining.
 Fake runes can be drawn in crayon to fool people.
 Runes can either be invoked by one's self or with many different cultists. Each rune has a specific incantation that the cultists will say when invoking it.
 
@@ -471,8 +471,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
 		user.visible_message("<span class='warning'>[user.name] begins erasing [src]...</span>", "<span class='notice'>You begin erasing [src]...</span>")
 		if(do_after(user, 50, target = src))	//Prevents accidental erasures.
-			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with a tome")
-			message_admins("[key_name_admin(user)] erased a Narsie rune with a tome")
+			log_game("Summon Narsie rune erased by [user.mind.key] (ckey) with [I.name]")
+			message_admins("[key_name_admin(user)] erased a Narsie rune with [I.name]")
 			..()
 	else
 		if(istype(I, /obj/item/nullrod))	//Begone foul magiks. You cannot hinder me.

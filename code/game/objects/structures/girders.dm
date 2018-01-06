@@ -346,7 +346,7 @@
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/tome) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
+	if(istype(W, /obj/item/melee/cultblade/dagger) && iscultist(user)) //Cultists can demolish cult girders instantly with their tomes
 		user.visible_message("<span class='warning'>[user] strikes [src] with [W]!</span>", "<span class='notice'>You demolish [src].</span>")
 		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
 		R.amount = 1
