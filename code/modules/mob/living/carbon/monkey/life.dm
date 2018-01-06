@@ -66,7 +66,7 @@
 	var/loc_temp = get_temperature(environment)
 
 	if(stat != DEAD)
-		bodytemp += natural_bodytemperature_stabilization()
+		bodytemperature += natural_bodytemperature_stabilization()
 
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < bodytemperature)
