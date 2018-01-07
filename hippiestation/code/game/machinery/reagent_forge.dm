@@ -1,8 +1,8 @@
 /obj/machinery/reagent_forge
 	name = "material forge"
 	desc = "A bulky machine that can smelt practically any material in existence."
-	icon = 'icons/obj/3x3.dmi'
-	icon_state = "huge_engine"
+	icon = 'hippiestation/icons/obj/3x3.dmi'
+	icon_state = "arc_forge"
 	bound_width = 96
 	bound_height = 96
 	anchored = TRUE
