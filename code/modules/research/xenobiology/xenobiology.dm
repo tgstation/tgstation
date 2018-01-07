@@ -225,7 +225,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message("<span class='warning'>[user]'s skin flashes red for a moment...</span>", "<span class='warning'>Your skin flashes red as you emit rage-inducing pheromones...</span>")
 			for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(user), null))
-				slime.rabid = 1
+				slime.rabid = TRUE
 				slime.visible_message("<span class='danger'>The [slime] is driven into a frenzy!</span>")
 			return 600
 

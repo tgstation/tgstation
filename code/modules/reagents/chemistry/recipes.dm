@@ -42,7 +42,7 @@
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_act()
 
-		for(var/i = 1, i <= amount_to_spawn, i++)
+		for(var/i in 1 to amount_to_spawn)
 			var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), mob_class)
 			S.faction |= mob_faction
 			if(prob(50))
