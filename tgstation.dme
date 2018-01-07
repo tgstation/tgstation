@@ -247,6 +247,7 @@
 #include "code\controllers\subsystem\processing\projectiles.dm"
 #include "code\datums\action.dm"
 #include "code\datums\ai_laws.dm"
+#include "code\datums\armor.dm"
 #include "code\datums\beam.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
