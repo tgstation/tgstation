@@ -2182,12 +2182,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/computer/shuttle/syndicate/recall{
+/obj/machinery/computer/shuttle{
 	desc = "Occasionally used to call in a resupply shuttle if one is in range.";
 	dir = 8;
+	icon_keyboard = "syndie_key";
+	icon_screen = "syndishuttle";
+	light_color = "#FA8282";
 	name = "syndicate cargo shuttle terminal";
 	possible_destinations = "syndielavaland_cargo";
-	shuttleId = "syndie_cargo"
+	req_access_txt = "150"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
