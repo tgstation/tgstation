@@ -42,7 +42,6 @@
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
 	if (set_obj_flags)
-		warning("obj_flags to set in [src]")
 		var/flagslist = splittext(set_obj_flags,";")
 		var/static/list/string_to_objflag = list("EMAGGED" = EMAGGED, "IN_USE" = IN_USE, "CAN_BE_HIT" = CAN_BE_HIT, "BEING_SHOCKED" = BEING_SHOCKED, "DANGEROUS_POSSESSION" = DANGEROUS_POSSESSION, "ON_BLUEPRINTS" = ON_BLUEPRINTS, "UNIQUE_RENAME" = UNIQUE_RENAME)
 		for (var/flag in flagslist)
