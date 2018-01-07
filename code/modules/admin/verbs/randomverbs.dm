@@ -1201,6 +1201,26 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/LocalSmite()
+	if(!check_rights(R_FUN))
+		return
+	if(!isobserver(usr))
+		to_chat(usr, "<span class='adminnotice'>You must be a ghost to do this!</span>")
+		return
+	var/mob/living/carbon/human/closest
+	var/closest_dist = INFINITY
+	for(var/mob/living/carbon/human/M in range(15))
+		var/new_dist = get_dist(M, usr)
+		if(new_dist < closest_dist)
+			closest = M
+			if(new_dist == 0)
+				break;
+			closest_dist = new_dist
+	if(!closest)
+		to_chat(usr, "<span class='adminnotice'>No valid mobs in range!</span>")
+		return
+	usr.client.smite(closest)
+
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
