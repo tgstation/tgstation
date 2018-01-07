@@ -536,7 +536,7 @@
 	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
 
-/datum/reagent/slime_toxin //PSYCH
+/datum/reagent/slime_toxin
 	name = "Slime Mutation Toxin"
 	id = "slime_toxin"
 	description = "A toxin that turns organic material into slime."
@@ -550,6 +550,13 @@
 		return
 	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
 		return
+
+	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
+		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		H.set_species(species_type)
+		H.reagents.del_reagent(id)
+
 	switch(current_cycle)
 		if(1 to 6)
 			if(prob(10))
@@ -563,6 +570,7 @@
 		if(20 to INFINITY)
 			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
 			H.set_species(species_type)
+			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
 
 /datum/reagent/mulligan
