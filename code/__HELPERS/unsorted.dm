@@ -1513,7 +1513,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	usr = M
 	. = CB.Invoke()
 	usr = temp
-  
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
@@ -1537,3 +1537,29 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
