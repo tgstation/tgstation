@@ -28,6 +28,8 @@
 	path_image_color = "#DDDDFF"
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
+	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/firstaid = /obj/item/storage/firstaid
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
@@ -519,18 +521,15 @@
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	new /obj/item/storage/firstaid(Tsec)
-
+	drop_part(firstaid, Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-
-	new /obj/item/device/healthanalyzer(Tsec)
+	drop_part(healthanalyzer, Tsec)
 
 	if(reagent_glass)
-		reagent_glass.forceMove(Tsec)
-		reagent_glass = null
+		drop_part(reagent_glass, Tsec)
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)

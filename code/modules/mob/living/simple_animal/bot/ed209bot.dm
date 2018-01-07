@@ -41,6 +41,8 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
 	var/shoot_sound = 'sound/weapons/taser.ogg'
+	var/cell_type = /obj/item/stock_parts/cell
+	var/vest_type = /obj/item/clothing/suit/armor/vest
 
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
@@ -374,11 +376,12 @@ Auto Patrol[]"},
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	var/obj/item/ed209_assembly/Sa = new (Tsec)
+	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
+	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
 		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
@@ -402,7 +405,7 @@ Auto Patrol[]"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				drop_part(vest_type, Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")

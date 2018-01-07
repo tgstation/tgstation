@@ -5469,7 +5469,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/item/bucket_sensor,
+/obj/item/bot_assembly/cleanbot,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alI" = (
@@ -7899,7 +7899,9 @@
 /area/maintenance/port)
 "aqP" = (
 /obj/structure/light_construct/small,
-/obj/item/toolbox_tiles_sensor,
+/obj/item/bot_assembly/floorbot{
+	build_step = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqQ" = (
