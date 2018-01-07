@@ -2,6 +2,12 @@
 
 GLOBAL_LIST_EMPTY(armorobjects)
 
+/proc/getArmor(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+  if (GLOB.armorobjects[ARMORLISTID])
+    return GLOB.armorobjects[ARMORLISTID]
+  else
+    return new /datum/armor(melee, bullet, laser, energy, bomb, bio, rad, fire, acid)
+
 /datum/armor
   var/melee
   var/bullet
@@ -12,12 +18,6 @@ GLOBAL_LIST_EMPTY(armorobjects)
   var/rad
   var/fire
   var/acid
-
-/proc/getArmor(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-  if (GLOB.armorobjects[ARMORLISTID])
-    return GLOB.armorobjects[ARMORLISTID]
-  else
-    return new /datum/armor(melee, bullet, laser, energy, bomb, bio, rad, fire, acid)
 
 /datum/armor/New(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
   src.melee = melee
@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(armorobjects)
 /datum/armor/proc/modifyAllRatings(modifier = 0)
   return getArmor(src.melee+modifier, src.bullet+modifier, src.laser+modifier, src.energy+modifier, src.bomb+modifier, src.bio+modifier, src.rad+modifier, src.fire+modifier, src.acid+modifier)
 
-/datum/armor/proc/setRating(melee = null, bullet = null, laser = null, energy = null, bomb = null, bio = null, rad = null, fire = null, acid = null)
+/datum/armor/proc/setRating(melee, bullet, laser, energy, bomb, bio, rad, fire, acid)
   return getArmor((isnull(melee) ? src.melee : melee),\
                   (isnull(melee) ? src.bullet : bullet),\
                   (isnull(melee) ? src.laser : laser),\
