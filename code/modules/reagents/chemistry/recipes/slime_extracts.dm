@@ -48,21 +48,27 @@
 //Green
 /datum/chemical_reaction/slime/slimemutate
 	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	results = list("mutationtoxin" = 1)
+	id = "slimetoxin"
+	results = list("slime_toxin" = 1)
 	required_reagents = list("plasma" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
-//Mutated Green
-/datum/chemical_reaction/slime/slimemutate_unstable
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	results = list("unstablemutationtoxin" = 1)
+/datum/chemical_reaction/slime/slimehuman
+	name = "Human Mutation Toxin"
+	id = "humanmuttoxin"
+	results = list("stablemutationtoxin" = 1)
+	required_reagents = list("blood" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimelizard
+	name = "Human Mutation Toxin"
+	id = "lizardmuttoxin"
+	results = list("lizardmutationtoxin" = 1)
 	required_reagents = list("radium" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
-	mix_message = "<span class='info'>The mixture rapidly expands and contracts, its appearance shifting into a sickening green.</span>"
 
 //Metal
 /datum/chemical_reaction/slime/slimemetal

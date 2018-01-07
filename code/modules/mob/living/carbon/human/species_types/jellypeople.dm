@@ -551,6 +551,10 @@
 	link_mob(C)
 
 /datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
+	if(QDELETED(M) || M.stat == DEAD)
+		return FALSE
+	if(M.isloyal()) //mindshield implant, no dice
+		return FALSE
 	if(M in linked_mobs)
 		return FALSE
 	linked_mobs.Add(M)
@@ -567,8 +571,8 @@
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
 	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
-	linked_mobs -= link_id
-	linked_actions -= link_id
+	linked_mobs[link_id] = null
+	linked_actions[link_id] = null
 
 /datum/action/innate/linked_speech
 	name = "Slimelink"
@@ -680,3 +684,4 @@
 			to_chat(H, "<span class='notice'>You connect [target]'s mind to your slime link!</span>")
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
+			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
