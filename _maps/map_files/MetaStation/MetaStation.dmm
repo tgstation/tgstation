@@ -28456,7 +28456,7 @@
 	},
 /area/bridge)
 "bhl" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel/darkbrown/side{
 	dir = 1
 	},
@@ -28473,7 +28473,7 @@
 	},
 /area/bridge)
 "bhn" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkbrown/side{
 	dir = 1
 	},
@@ -53641,17 +53641,9 @@
 	},
 /area/hallway/primary/aft)
 "chi" = (
-/obj/structure/table,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/clothing/mask/gas,
-/obj/item/device/multitool{
-	pixel_x = 3
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 9
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/science/lab)
 "chj" = (
 /obj/structure/sink/kitchen{
@@ -53660,7 +53652,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/whitepurple/side{
-	dir = 9
+	dir = 1
 	},
 /area/science/lab)
 "chk" = (
@@ -54282,28 +54274,34 @@
 	},
 /area/medical/chemistry)
 "ciB" = (
-/obj/machinery/rnd/destructive_analyzer,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
 	},
+/obj/structure/chair/office/light{
+	icon_state = "officechair_white";
+	dir = 4
+	},
+/obj/effect/landmark/start/scientist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciC" = (
+/obj/structure/table,
+/obj/item/device/integrated_circuit_printer,
+/obj/item/device/integrated_circuit_printer{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/rnd/protolathe/department/science,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/lab)
 "ciE" = (
 /obj/structure/disposalpipe/segment{
@@ -54315,22 +54313,15 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ciF" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ciG" = (
-/obj/machinery/disposal/bin{
-	pixel_x = 5
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -54964,20 +54955,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "ckc" = (
-/obj/structure/table,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/micro_laser,
-/obj/item/stock_parts/micro_laser,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/clothing/glasses/science,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/machinery/rnd/protolathe/department/science,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ckd" = (
@@ -55621,21 +55603,13 @@
 	},
 /area/hallway/primary/aft)
 "clz" = (
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = 3;
-	pixel_y = 3
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 10
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/clothing/glasses/welding,
-/obj/structure/table,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/science/lab)
 "clA" = (
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/whitepurple/side{
+/turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
 	},
 /area/science/lab)
@@ -55656,17 +55630,14 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "clE" = (
-/obj/structure/table,
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/scanning_module,
-/obj/item/stock_parts/scanning_module,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/sign/nosmoking_2{
 	pixel_x = 30
 	},
+/obj/machinery/rnd/destructive_analyzer,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "clF" = (
@@ -56167,11 +56138,20 @@
 /obj/structure/table,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 2;
-	pixel_y = 3
+/obj/item/device/assembly/signaler,
+/obj/item/device/assembly/signaler,
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
 	},
-/obj/item/stock_parts/scanning_module,
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cmK" = (
@@ -56803,7 +56783,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/chair/stool,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cnU" = (
@@ -56824,15 +56803,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cnW" = (
-/obj/structure/table,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin{
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cnX" = (
@@ -57434,9 +57409,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -58158,6 +58131,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cqy" = (
@@ -58165,20 +58142,17 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cqz" = (
@@ -59487,13 +59461,9 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "csZ" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the RD's goons from the safety of his office.";
-	name = "Research Monitor";
-	network = list("RD");
-	pixel_y = 2
+/obj/machinery/computer/rdconsole{
+	dir = 4
 	},
-/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -80629,6 +80599,36 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
+"Ljx" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/device/multitool{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/item/device/multitool{
+	pixel_x = 3
+	},
+/obj/item/crowbar,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/science/lab)
+"Ljy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/heads/hor)
 
 (1,1,1) = {"
 aaa
@@ -108795,7 +108795,7 @@ ceM
 cgd
 chi
 ciB
-cjX
+cjY
 clz
 cgd
 cnR
@@ -109052,7 +109052,7 @@ ceN
 cgd
 chj
 ciC
-cjY
+Ljx
 clA
 cmF
 cnS
@@ -109309,9 +109309,9 @@ ceO
 cgd
 chk
 ciD
-cjZ
-clB
-cmG
+ciD
+ciD
+ciD
 cnT
 cpe
 cqy
@@ -109565,12 +109565,12 @@ cdJ
 ceP
 cgd
 chl
-ciE
-cka
-clC
-cmH
-cnU
-cpf
+ciD
+ciD
+ciD
+ciD
+cnT
+cpe
 cqz
 cgd
 csP
@@ -109827,7 +109827,7 @@ ckb
 clD
 cmI
 cnV
-cpg
+cpe
 cqA
 crI
 csQ
@@ -112400,7 +112400,7 @@ coe
 cpq
 cqJ
 crP
-cuN
+Ljy
 ctR
 cuN
 cvR

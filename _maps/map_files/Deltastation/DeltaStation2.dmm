@@ -36850,22 +36850,22 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "byo" = (
-/obj/machinery/computer/station_alert,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
 /area/bridge)
 "byp" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
 /area/bridge)
 "byq" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkyellow/corner{
 	dir = 4
 	},
@@ -77213,12 +77213,10 @@
 "daW" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/wrench,
-/obj/item/clothing/glasses/welding,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/crowbar,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
 	},
@@ -78029,18 +78027,18 @@
 /area/science/research)
 "dcE" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/matter_bin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/micro_laser,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -78064,11 +78062,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dcJ" = (
-/obj/effect/turf_decal/loading_area,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/whitepurple/corner,
 /area/science/lab)
 "dcK" = (
 /obj/machinery/ai_status_display{
@@ -78077,10 +78071,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
 /obj/machinery/rnd/protolathe/department/science,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dcL" = (
@@ -78680,18 +78675,6 @@
 /area/science/research)
 "ded" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/cable_coil/white{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stack/cable_coil/white,
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stock_parts/capacitor,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/manipulator,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -78699,6 +78682,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/device/assembly/signaler,
+/obj/item/device/assembly/signaler,
+/obj/item/device/multitool{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/device/multitool,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dee" = (
@@ -78730,11 +78720,11 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dej" = (
-/obj/item/reagent_containers/glass/beaker/sulphuric,
+/obj/machinery/rnd/destructive_analyzer,
+/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	dir = 6
+	dir = 8
 	},
-/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dek" = (
@@ -79220,11 +79210,6 @@
 /area/science/research)
 "dfq" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
-/obj/item/stock_parts/cell/high,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -79238,6 +79223,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dfr" = (
@@ -79940,6 +79928,9 @@
 "dgM" = (
 /obj/structure/table,
 /obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/folder,
+/obj/item/pen,
 /obj/item/toy/figure/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 10
@@ -79950,14 +79941,14 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/disk/tech_disk{
-	pixel_x = -6
-	},
-/obj/item/disk/tech_disk{
-	pixel_x = 6
-	},
-/obj/item/disk/tech_disk{
+/obj/item/device/integrated_circuit_printer,
+/obj/item/device/integrated_circuit_printer{
+	pixel_x = -2;
 	pixel_y = 6
+	},
+/obj/item/device/integrated_circuit_printer{
+	pixel_x = -4;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
@@ -81327,6 +81318,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "djZ" = (
@@ -81343,13 +81336,7 @@
 /area/science/lab)
 "dka" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/stack/cable_coil/white,
-/obj/item/stack/cable_coil/white,
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
@@ -81359,6 +81346,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/stack/cable_coil/white,
+/obj/item/stack/cable_coil/white,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dkb" = (
@@ -81372,16 +81365,17 @@
 /area/science/lab)
 "dkc" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/dropper,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/item/stack/sheet/metal/fifty{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dkd" = (
@@ -86314,9 +86308,6 @@
 	},
 /area/crew_quarters/heads/hor)
 "duM" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -86324,6 +86315,9 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -142782,8 +142776,8 @@ cQQ
 cXA
 cZp
 daU
-dcI
-deh
+dcH
+dcH
 dcH
 dgO
 dcH
@@ -143040,7 +143034,7 @@ cXB
 cZo
 daV
 dcJ
-dei
+dcJ
 dfu
 dgP
 dil
