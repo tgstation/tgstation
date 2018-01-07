@@ -55,7 +55,7 @@
 /area/ruin/powered/greed)
 "k" = (
 /obj/machinery/computer/arcade/battle{
-	obj_flags = 5
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)

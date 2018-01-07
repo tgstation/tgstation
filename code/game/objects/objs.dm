@@ -4,7 +4,7 @@
 	animate_movement = 2
 	var/throwforce = 0
 	var/obj_flags = CAN_BE_HIT
-	// var/in_use = 0
+	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -18,14 +18,9 @@
 
 	var/acid_level = 0 //how much acid is on that obj
 
-//	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
-//	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
-
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
-//	var/unique_rename = FALSE // can you customize the description/name of the thing?
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
-//	var/dangerous_possession = FALSE
 
 
 
@@ -46,6 +41,16 @@
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
+	if (set_obj_flags)
+		warning("obj_flags to set in [src]")
+		var/flagslist = splittext(set_obj_flags,";")
+		var/static/list/string_to_objflag = list("EMAGGED" = EMAGGED, "IN_USE" = IN_USE, "CAN_BE_HIT" = CAN_BE_HIT, "BEING_SHOCKED" = BEING_SHOCKED, "DANGEROUS_POSSESSION" = DANGEROUS_POSSESSION, "ON_BLUEPRINTS" = ON_BLUEPRINTS, "UNIQUE_RENAME" = UNIQUE_RENAME)
+		for (var/flag in flagslist)
+			if (findtext(flag,"!",1,2))
+				flag = copytext(flag,1-(length(flag))) // Get all but the initial !
+				obj_flags &= ~string_to_objflag[flag]
+			else
+				obj_flags |= string_to_objflag[flag]
 	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
