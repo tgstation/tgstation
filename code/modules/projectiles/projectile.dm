@@ -391,7 +391,7 @@
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc))
-		
+
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]
