@@ -26,21 +26,25 @@ SUBSYSTEM_DEF(title)
 		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
 			title_screens += S
 
-	if(!isemptylist(title_screens))
-		if(length(title_screens) > 1)
-			for(var/S in title_screens)
-				var/list/L = splittext(S,".")
-				if(L.len != 2 || L[1] != "default")
-					continue
-				title_screens -= S
-				break
-
-		file_path = "config/title_screens/images/[pick(title_screens)]"
+	for(var/S in title_screens)
+		var/list/L = splittext(S,".")
+		if(L.len != 2)
+			continue
+		title_screens -= S
+		break
 		
-		icon = new(fcopy_rsc(file_path))
+	if(length(title_screens))
+		file_path = "config/title_screens/images/[pick(title_screens)]"
+	
+	if(!file_path)
+		file_path = "icons/default_title.dmi"
+	
+	ASSERT(fexists(file_path))
 
-		if(splash_turf)
-			splash_turf.icon = icon
+	icon = new(fcopy_rsc(file_path))
+
+	if(splash_turf)
+		splash_turf.icon = icon
 
 /datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
 	. = ..()

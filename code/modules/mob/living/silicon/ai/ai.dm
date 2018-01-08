@@ -800,7 +800,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(control_disabled || incapacitated())
 		return FALSE
 	if(be_close && !in_range(M, src))

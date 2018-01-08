@@ -205,8 +205,26 @@
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
 	if(!I)
 		return FALSE
+
+	// If the item is a stack and we're already holding a stack then merge
+	if (istype(I, /obj/item/stack))
+		var/obj/item/stack/I_stack = I
+		var/obj/item/stack/active_stack = get_active_held_item()
+
+		if (istype(active_stack) && istype(I_stack, active_stack.merge_type))
+			if (I_stack.merge(active_stack))
+				to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
+				return TRUE
+		else
+			var/obj/item/stack/inactive_stack = get_inactive_held_item()
+			if (istype(inactive_stack) && istype(I_stack, inactive_stack.merge_type))
+				if (I_stack.merge(inactive_stack))
+					to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
+					return TRUE
+
 	if(put_in_active_hand(I))
 		return TRUE
+
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")

@@ -61,14 +61,9 @@
 	return ..()
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(user.incapacitated())
-		return
-	for(var/atom/movable/A in get_turf(src))
-		if(A.density)
-			if(A != src && A != M)
-				return
-	M.forceMove(get_turf(src))
-	. = ..()
+	if(!in_range(user, src) || !in_range(M, src))
+		return FALSE
+	. = ..(M, user, FALSE)
 
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)

@@ -20,6 +20,8 @@ GLOBAL_LIST(uplink_purchase_logs_by_key)	//assoc key = /datum/uplink_purchase_lo
 /datum/uplink_purchase_log/Destroy()
 	purchase_log = null
 	parent = null
+	if(GLOB.uplink_purchase_logs_by_key[owner] == src)
+		GLOB.uplink_purchase_logs_by_key -= owner
 	return ..()
 
 /datum/uplink_purchase_log/proc/MergeWithAndDel(datum/uplink_purchase_log/other)

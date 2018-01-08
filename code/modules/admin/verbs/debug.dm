@@ -514,6 +514,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set category = "Mapping"
 	set name = "Test Areas"
 
+	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
 	var/list/areas_with_multiple_APCs = list()
@@ -524,6 +525,9 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
+
+	if(on_station)
+		dat += "<b>Only checking areas on station z-levels.</b><br><br>"
 
 	for(var/area/A in world)
 		if(on_station)
@@ -536,6 +540,9 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		var/area/A = APC.area
+		if(!A) //This is usually an indicator that the machines subsystem hasn't finished initializing.
+			dat += "Skipped over [APC] in invalid location, [APC.loc]. Game likely hasn't finished setting up yet.<br>"
+			continue
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 		else if(A.type in areas_all)
@@ -543,31 +550,49 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
+		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
+			dat += "Skipped over [AA] in invalid location, [AA.loc].<br>"
+			continue
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
 	for(var/obj/machinery/requests_console/RC in GLOB.machines)
 		var/area/A = get_area(RC)
+		if(!A)
+			dat += "Skipped over [RC] in invalid location, [RC.loc].<br>"
+			continue
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
 	for(var/obj/machinery/light/L in GLOB.machines)
 		var/area/A = get_area(L)
+		if(!A)
+			dat += "Skipped over [L] in invalid location, [L.loc].<br>"
+			continue
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
 	for(var/obj/machinery/light_switch/LS in GLOB.machines)
 		var/area/A = get_area(LS)
+		if(!A)
+			dat += "Skipped over [LS] in invalid location, [LS.loc].<br>"
+			continue
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
 
 	for(var/obj/item/device/radio/intercom/I in GLOB.machines)
 		var/area/A = get_area(I)
+		if(!A)
+			dat += "Skipped over [I] in invalid location, [I.loc].<br>"
+			continue
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
 	for(var/obj/machinery/camera/C in GLOB.machines)
 		var/area/A = get_area(C)
+		if(!A)
+			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
+			continue
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
 
@@ -580,47 +605,52 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
 	if(areas_without_APC.len)
-		to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
+		dat += "<h1>AREAS WITHOUT AN APC:</h1>"
 		for(var/areatype in areas_without_APC)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_with_multiple_APCs.len)
-		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b>")
+		dat += "<h1>AREAS WITH MULTIPLE APCS:</h1>"
 		for(var/areatype in areas_with_multiple_APCs)
-			to_chat(world,"* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_air_alarm.len)
-		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
+		dat += "<h1>AREAS WITHOUT AN AIR ALARM:</h1>"
 		for(var/areatype in areas_without_air_alarm)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_RC.len)
-		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
+		dat += "<h1>AREAS WITHOUT A REQUEST CONSOLE:</h1>"
 		for(var/areatype in areas_without_RC)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_light.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
+		dat += "<h1>AREAS WITHOUT ANY LIGHTS:</h1>"
 		for(var/areatype in areas_without_light)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_LS.len)
-		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
+		dat += "<h1>AREAS WITHOUT A LIGHT SWITCH:</h1>"
 		for(var/areatype in areas_without_LS)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_intercom.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
+		dat += "<h1>AREAS WITHOUT ANY INTERCOMS:</h1>"
 		for(var/areatype in areas_without_intercom)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(areas_without_camera.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
+		dat += "<h1>AREAS WITHOUT ANY CAMERAS:</h1>"
 		for(var/areatype in areas_without_camera)
-			to_chat(world, "* [areatype]")
+			dat += "[areatype]<br>"
 
 	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
-		to_chat(world, "<b>No problem areas!</b>")
+		dat += "<b>No problem areas!</b>"
+
+	var/datum/browser/popup = new(usr, "testareas", "Test Areas", 500, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"

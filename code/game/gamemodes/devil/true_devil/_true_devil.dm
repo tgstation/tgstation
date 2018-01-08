@@ -92,7 +92,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
 		return 0
 	if(be_close && !in_range(M, src))

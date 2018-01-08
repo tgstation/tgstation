@@ -58,12 +58,21 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
-	var/area/A = get_area(T)
-	if(((A && !A.blob_allowed) || !T || !is_station_level(T.z)) && LAZYLEN(GLOB.blobstart))
-		T = get_turf(pick(GLOB.blobstart))
+	if(!is_valid_turf(T) && LAZYLEN(GLOB.blobstart))
+		var/list/blobstarts = shuffle(GLOB.blobstart)
+		for(var/_T in blobstarts)
+			if(is_valid_turf(_T))
+				T = _T
+				break
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
+	
+/mob/camera/blob/proc/is_valid_turf(turf/T)
+	var/area/A = get_area(T)
+	if((A && !A.blob_allowed) || !T || !is_station_level(T.z) || isspaceturf(T))
+		return FALSE
+	return TRUE
 
 /mob/camera/blob/Life()
 	if(!blob_core)
