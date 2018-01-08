@@ -117,6 +117,7 @@
 	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -455,11 +456,6 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eb" = (
 /obj/structure/closet/crate,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/monkeycubes,
 /obj/item/storage/toolbox/electrical{
 	pixel_y = 4
 	},
@@ -546,7 +542,9 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -657,8 +655,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "et" = (
@@ -888,7 +886,9 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1013,9 +1013,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "eV" = (
-/obj/structure/closet/secure_closet/chemical{
-	req_access_txt = "150"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
 	dir = 6
@@ -1278,8 +1275,10 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "fp" = (
-/obj/structure/sign/chemistry,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "fq" = (
 /obj/machinery/vending/assist,
@@ -1614,11 +1613,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/medical{
-	desc = "Medical drug dispenser. Looks to have been outfitted with illicit software.";
-	extended_inventory = 1;
 	name = "SyndiMed Plus";
-	premium = list(/obj/item/reagent_containers/hypospray/medipen = 2, /obj/item/storage/belt/medical = 2);
-	products = list(/obj/item/reagent_containers/syringe = 6, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/gauze = 4, /obj/item/reagent_containers/pill/patch/styptic = 3, /obj/item/reagent_containers/pill/insulin = 5, /obj/item/reagent_containers/pill/patch/silver_sulf = 3, /obj/item/reagent_containers/glass/bottle/charcoal = 2, /obj/item/reagent_containers/spray/medical/sterilizer = 1, /obj/item/reagent_containers/glass/bottle/epinephrine = 2, /obj/item/reagent_containers/glass/bottle/morphine = 2, /obj/item/reagent_containers/glass/bottle/salglu_solution = 2, /obj/item/reagent_containers/glass/bottle/toxin = 2, /obj/item/reagent_containers/syringe/antiviral = 3, /obj/item/reagent_containers/pill/salbutamol = 1, /obj/item/device/healthanalyzer = 2);
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2187,18 +2182,24 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/computer/shuttle/syndicate/recall{
+/obj/machinery/computer/shuttle{
 	desc = "Occasionally used to call in a resupply shuttle if one is in range.";
 	dir = 8;
+	icon_keyboard = "syndie_key";
+	icon_screen = "syndishuttle";
+	light_color = "#FA8282";
 	name = "syndicate cargo shuttle terminal";
 	possible_destinations = "syndielavaland_cargo";
+	req_access_txt = "150";
 	shuttleId = "syndie_cargo"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -2217,7 +2218,9 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hr" = (
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -2340,8 +2343,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
@@ -2359,7 +2363,9 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hG" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey,
+/mob/living/carbon/monkey{
+	faction = list("neutral","syndicate")
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 6
 	},
@@ -2595,6 +2601,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2603,6 +2610,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2707,12 +2715,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -2866,6 +2876,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
@@ -3091,6 +3102,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -3154,6 +3166,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -3820,10 +3833,13 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kt" = (
-/obj/structure/grille,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ku" = (
@@ -4006,9 +4022,11 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kN" = (
-/obj/structure/reagent_dispensers/beerkeg,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kO" = (
@@ -4098,9 +4116,10 @@
 "kZ" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
 	dir = 4;
-	node1_concentration = 0.2;
-	node2_concentration = 0.8;
-	on = 1
+	node1_concentration = 0.8;
+	node2_concentration = 0.1;
+	on = 1;
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4141,6 +4160,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
@@ -4226,6 +4246,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "lm" = (
@@ -4316,12 +4337,14 @@
 	dir = 10
 	},
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -5739,17 +5762,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
-	on = 0;
-	target_pressure = 101.325
-	},
 /obj/machinery/doorButtons/access_button{
 	idDoor = "syndie_lavaland_incinerator_interior";
 	idSelf = "syndie_lavaland_incinerator_access";
 	name = "Incinerator airlock control";
 	pixel_x = -8;
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	target_pressure = 4500
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -5864,16 +5885,12 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "os" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/medical{
-	desc = "Medical drug dispenser. Looks to have been outfitted with illicit software.";
-	extended_inventory = 1;
 	name = "SyndiMed Plus";
-	premium = list(/obj/item/reagent_containers/hypospray/medipen = 2, /obj/item/storage/belt/medical = 2);
-	products = list(/obj/item/reagent_containers/syringe = 6, /obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/gauze = 4, /obj/item/reagent_containers/pill/patch/styptic = 3, /obj/item/reagent_containers/pill/insulin = 5, /obj/item/reagent_containers/pill/patch/silver_sulf = 3, /obj/item/reagent_containers/glass/bottle/charcoal = 2, /obj/item/reagent_containers/spray/medical/sterilizer = 1, /obj/item/reagent_containers/glass/bottle/epinephrine = 2, /obj/item/reagent_containers/glass/bottle/morphine = 2, /obj/item/reagent_containers/glass/bottle/salglu_solution = 2, /obj/item/reagent_containers/glass/bottle/toxin = 2, /obj/item/reagent_containers/syringe/antiviral = 3, /obj/item/reagent_containers/pill/salbutamol = 1, /obj/item/device/healthanalyzer = 2);
 	req_access_txt = "150"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "ot" = (
@@ -6056,6 +6073,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
+"oP" = (
+/obj/structure/sign/chemistry,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/testlab)
 
 (1,1,1) = {"
 aa
@@ -6841,7 +6862,7 @@ jx
 kn
 kH
 jN
-oO
+jZ
 lU
 mt
 mU
@@ -7152,7 +7173,7 @@ ae
 ae
 ae
 ae
-ae
+oP
 fH
 gG
 he
@@ -7712,8 +7733,8 @@ ab
 ab
 ab
 ac
-dP
 dy
+dP
 eA
 fa
 dy
