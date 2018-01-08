@@ -1,7 +1,6 @@
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
-	if(client.click_intercept)
-		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_DBLCLICK, A, params))
+		return
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
@@ -18,9 +17,8 @@
 		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
-	if(client.click_intercept)
-		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])

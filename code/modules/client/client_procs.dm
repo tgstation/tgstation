@@ -402,6 +402,8 @@ GLOBAL_LIST(external_rsc_urls)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	Master.UpdateTickRate()
+	SendSignal(COMSIG_CLIENT_MOB_SWITCH, last_mob, null)
+	last_mob = null
 	return ..()
 
 /client/Destroy()

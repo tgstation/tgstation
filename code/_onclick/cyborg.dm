@@ -11,9 +11,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
-		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
-			return
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 
 	if(stat || lockcharge || IsKnockdown() || IsStun() || IsUnconscious())
 		return

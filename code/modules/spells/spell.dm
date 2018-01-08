@@ -67,7 +67,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else
 			return
 	user.ranged_ability = src
-	user.client.click_intercept = user.ranged_ability
+	var/datum/component/click_intercept/CI = AddComponent(/datum/component/click_intercept, CALLBACK(src, .proc/InterceptClickOn))
+	CI.attach_to(user)
 	add_mousepointer(user.client)
 	ranged_ability_user = user
 	if(msg)
@@ -86,8 +87,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
+	qdel(GetComponent(/datum/component/click_intercept))
 	ranged_ability_user.ranged_ability = null
-	ranged_ability_user.client.click_intercept = null
 	remove_mousepointer(ranged_ability_user.client)
 	if(msg)
 		to_chat(ranged_ability_user, msg)

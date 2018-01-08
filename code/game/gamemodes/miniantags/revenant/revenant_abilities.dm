@@ -1,6 +1,8 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 	A.examine(src)
 	if(ishuman(A))
 		if(A in drained_mobs)

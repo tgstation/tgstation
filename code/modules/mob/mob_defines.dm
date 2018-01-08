@@ -112,7 +112,6 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
@@ -124,7 +123,6 @@
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
 
-
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
 	var/resize = 1 //Badminnery resize
@@ -132,7 +130,5 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
-
-	var/list/mousemove_intercept_objects
 
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT

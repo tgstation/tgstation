@@ -39,13 +39,15 @@
 
 	update_client_colour()
 	if(client)
-		client.click_intercept = null
 
 		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
+
+		client.SendSignal(COMSIG_CLIENT_MOB_SWITCH, client.last_mob, src)
+		client.last_mob = src
 
 	if(!GLOB.individual_log_list[ckey])
 		GLOB.individual_log_list[ckey] = logging

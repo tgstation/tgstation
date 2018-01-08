@@ -2,6 +2,8 @@
 
 
 /mob/camera/blob/ClickOn(var/atom/A, var/params) //Expand blob
+	if(client && client.SendSignal(COMSIG_CLIENT_CLICK, A, params))
+		return
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"])
 		MiddleClickOn(A)
