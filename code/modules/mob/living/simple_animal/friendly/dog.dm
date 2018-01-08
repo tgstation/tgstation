@@ -31,6 +31,7 @@
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
+	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -42,6 +43,7 @@
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "pug"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -467,7 +469,7 @@
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	cut_overlays()
+	..()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -507,10 +509,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(pcollar)
-		add_overlay(collar)
-		add_overlay(pettag)
-
 	return
 
 
@@ -525,6 +523,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	collar_type = "puppy"
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
