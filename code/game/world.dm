@@ -172,6 +172,7 @@ GLOBAL_PROTECT(security_mode)
 		C.AnnouncePR(final_composed)
 
 /world/proc/FinishTestRun()
+	set waitfor = FALSE
 	var/list/fail_reasons
 	if(GLOB)
 		if(GLOB.total_runtimes != 0)
@@ -186,6 +187,7 @@ GLOBAL_PROTECT(security_mode)
 		text2file("Success!", "[GLOB.log_directory]/clean_run.lck")
 	else
 		log_world("Test run failed!\n[fail_reasons.Join("\n")]")
+	sleep(0)	//yes, 0, this'll let Reboot finish and prevent byond memes
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
@@ -201,6 +203,7 @@ GLOBAL_PROTECT(security_mode)
 
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()
+		return
 
 	if(SERVER_TOOLS_PRESENT)
 		var/do_hard_reboot

@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(failed_any_test, FALSE)
 	return ..()
 
 /datum/unit_test/proc/Run()
-	Fail("[type]/Run() called parent or not implemented")
+	Fail("Run() called parent or not implemented")
 
 /datum/unit_test/proc/Fail(reason = "No reason")
 	succeeded = FALSE
