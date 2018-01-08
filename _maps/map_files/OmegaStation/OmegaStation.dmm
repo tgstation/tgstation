@@ -33512,20 +33512,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-<<<<<<< HEAD
-||||||| merged common ancestors
-"swt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/service,
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar/atrium)
-"swu" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/closed/wall,
-/area/medical/medbay/zone3)
-=======
 "swv" = (
 /turf/closed/wall/r_wall/rust,
 /area/bridge)
@@ -35987,7 +35973,6 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
->>>>>>> upstream/master
 
 (1,1,1) = {"
 aaa
