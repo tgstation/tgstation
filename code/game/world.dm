@@ -37,7 +37,7 @@ GLOBAL_PROTECT(security_mode)
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
 	
-	if("no-init" in params)
+	if(NO_INIT_PARAMETER in params)
 		return
 
 	Master.Initialize(10, FALSE)
@@ -94,8 +94,9 @@ GLOBAL_PROTECT(security_mode)
 				GLOB.round_id = query_round_last_id.item[1]
 
 /world/proc/SetupLogs()
-	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
-	if(GLOB.round_id)
+	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
+	GLOB.log_directory = override_dir ? "data/logs/[override_dir]" : "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	if(!override_dir && GLOB.round_id)
 		GLOB.log_directory += "[GLOB.round_id]"
 	else
 		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
