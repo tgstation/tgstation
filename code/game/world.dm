@@ -42,6 +42,16 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
+	if(TEST_RUN_PARAMETER in params)
+		HandleTestRun()
+
+/world/proc/HandleTestRun()
+	//trigger things to run the whole process
+	Master.sleep_offline_after_initializations = FALSE
+	SSticker.start_immediately = TRUE
+	SSticker.OnRoundstart(CALLBACK(src, .proc/RunUnitTests))
+	CONFIG_SET(number/round_end_countdown, 0)
+
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
@@ -160,6 +170,23 @@ GLOBAL_PROTECT(security_mode)
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
+/world/proc/FinishTestRun()
+	var/list/fail_reasons
+	if(GLOB)
+		if(GLOB.total_runtimes != 0)
+			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
+		if(!GLOB.failed_any_test)
+			LAZYADD(fail_reasons, "Unit Tests failed!")
+		if(!GLOB.log_directory)
+			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
+	else
+		fail_reasons = list("Missing GLOB!")
+	if(!fail_reasons)
+		text2file("Success!", "[GLOB.log_directory]/clean_run.lck")
+	else
+		log_world("Test run failed!\n[fail_reasons.Join("\n")]")
+	qdel(src)	//shut it down
+
 /world/Reboot(reason = 0, fast_track = FALSE)
 	SERVER_TOOLS_ON_REBOOT
 	if (reason || fast_track) //special reboot, do none of the normal stuff
@@ -170,6 +197,9 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(TEST_RUN_PARAMETER in params)
+		FinishTestRun()
 
 	if(SERVER_TOOLS_PRESENT)
 		var/do_hard_reboot

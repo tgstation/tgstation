@@ -24,6 +24,13 @@
 #define testing(msg)
 #endif
 
+/proc/log_test(text)
+	var/static/test_results_file
+	if(!test_results_file)
+		test_results_file = file("[GLOB.log_directory]/tests.log")
+	WRITE_FILE(test_results_file, text)
+	SEND_TEXT(world.log, text)
+
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_admin))
