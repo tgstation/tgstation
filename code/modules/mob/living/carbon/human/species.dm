@@ -1454,19 +1454,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places) 
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		var/natural = 0
-		if((abs(BODYTEMP_DEFAULT - H.bodytemperature) <= 25) && (abs(BODYTEMP_DEFAULT - loc_temp) <= 25))
+		if((abs(BODYTEMP_NORMAL - H.bodytemperature) <= 25) && (abs(BODYTEMP_NORMAL - loc_temp) <= 25))
 			return //Performance saver
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
 		if(loc_temp < H.bodytemperature) //Place is colder than we are
 			var/thermal_protection = H.get_cold_protection(loc_temp) + 1 //This returns a 1 - 2 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(H.bodytemperature < BODYTEMP_DEFAULT) //we're cold, insulation helps us generate heat and will reduce the heat we lose to the environment
+			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us generate heat and will reduce the heat we lose to the environment
 				H.bodytemperature += (thermal_protection)*natural + max((2-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
 			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
 				H.bodytemperature += natural*(1/thermal_protection) + max((3-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
 		else //Place is hotter than we are
 			var/thermal_protection = H.get_heat_protection(loc_temp) + 1 //This returns a 1 - 2 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(H.bodytemperature < BODYTEMP_DEFAULT) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
+			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
 				H.bodytemperature += (thermal_protection)*natural + min((2-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 			else //we're sweating, insulation hinders out ability to reduce heat - but will reduce the amount of heat we get from the environment
 				H.bodytemperature += natural*(1/thermal_protection) + min((2-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
