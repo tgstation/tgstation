@@ -18,6 +18,10 @@ if [ "$BUILD_TOOLS" = false ]; then
 		grep '^var/' code/*.dm | echo
 		exit 1
 	fi;
+
+	#config folder should not be mandatory
+	rm -rf config
+
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
