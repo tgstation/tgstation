@@ -497,7 +497,7 @@
 	name = "Plasma Canister"
 	cost = 6000
 	access = ACCESS_ATMOSPHERICS
-	contains = list(/obj/machinery/portable_atmospherics/canister/plasma)
+	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
 	crate_name = "plasma canister crate"
 	crate_type = /obj/structure/closet/crate/secure
 
