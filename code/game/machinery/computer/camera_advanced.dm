@@ -283,6 +283,9 @@
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
+		return
 	. = ..()
 
 /datum/action/innate/servant_warp
