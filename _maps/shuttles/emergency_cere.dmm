@@ -399,7 +399,7 @@
 	},
 /area/shuttle/escape)
 "bn" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -717,7 +717,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ce" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Emergency Shuttle Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -986,7 +986,7 @@
 	},
 /area/shuttle/escape)
 "cP" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_one_access_txt = "10;24"
 	},

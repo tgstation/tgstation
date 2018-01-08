@@ -1,5 +1,5 @@
 /mob/living/can_speak_vocal(message)
-	if(has_disability(MUTE))
+	if(has_disability(DISABILITY_MUTE))
 		return FALSE
 
 	if(is_muzzled())
@@ -10,5 +10,5 @@
 
 	if(pulledby && pulledby.grab_state == GRAB_KILL)
 		return FALSE
-		
+
 	return TRUE

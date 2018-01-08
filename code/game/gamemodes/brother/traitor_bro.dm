@@ -43,6 +43,7 @@
 			possible_brothers -= bro
 			antag_candidates -= bro
 			team.add_member(bro)
+			bro.special_role = "brother"
 			bro.restricted_roles = restricted_jobs
 			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team

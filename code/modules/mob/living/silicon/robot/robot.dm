@@ -799,6 +799,9 @@
 /mob/living/silicon/robot/modules/security
 	set_module = /obj/item/robot_module/security
 
+/mob/living/silicon/robot/modules/clown
+	set_module = /obj/item/robot_module/clown
+
 /mob/living/silicon/robot/modules/peacekeeper
 	set_module = /obj/item/robot_module/peacekeeper
 
@@ -861,7 +864,7 @@
 		if(DISCONNECT) //Tampering with the wires
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(stat || lockcharge || low_power_mode)
 		return
 	if(be_close && !in_range(M, src))
@@ -1001,9 +1004,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		flags_1 |= CLEAN_ON_MOVE_1
+		AddComponent(/datum/component/cleaning)
 	else
-		flags_1 &= ~CLEAN_ON_MOVE_1
+		qdel(GetComponent(/datum/component/cleaning))
 
 	hat_offset = module.hat_offset
 
@@ -1141,7 +1144,7 @@
 		return
 	. = ..(M, force, check_loc)
 
-/mob/living/silicon/robot/unbuckle_mob(mob/user)
+/mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
 		GET_COMPONENT(riding_datum, /datum/component/riding)
 		if(istype(riding_datum))

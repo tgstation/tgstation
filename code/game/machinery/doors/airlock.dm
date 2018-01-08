@@ -135,7 +135,7 @@
 				for(var/turf/closed/T in range(2, src))
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
-				here.ChangeTurf(/turf/closed/wall)
+				here.PlaceOnTop(/turf/closed/wall)
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -255,16 +255,13 @@
 		note = null
 		update_icon()
 
-/obj/machinery/door/airlock/proc/unzap() //for addtimer
-	justzap = FALSE
-
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(isElectrified())
 			if(!justzap)
 				if(shock(user, 100))
 					justzap = TRUE
-					addtimer(CALLBACK(src, .proc/unzap), 10)
+					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
 					return
 			else
 				return
@@ -572,6 +569,8 @@
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
+	if(emagged)
+		to_chat(user, "<span class='warning'>Its access panel is smoking slightly.</span>")
 	if(charge && !panel_open && in_range(user, src))
 		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
 	if(charge && panel_open)
@@ -684,7 +683,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_disability(DUMB)) && Adjacent(user))
+		if((H.has_disability(DISABILITY_DUMB)) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1235,7 +1234,6 @@
 		if(!open())
 			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = TRUE
-		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = FALSE
 		locked = TRUE
 		loseMainPower()

@@ -8,7 +8,6 @@
 	var/colour = "red"
 	var/open = FALSE
 
-
 /obj/item/lipstick/purple
 	name = "purple lipstick"
 	colour = "purple"
@@ -22,7 +21,6 @@
 	name = "black lipstick"
 	colour = "black"
 
-
 /obj/item/lipstick/random
 	name = "lipstick"
 	icon_state = "random_lipstick"
@@ -32,8 +30,6 @@
 	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
-
-
 
 /obj/item/lipstick/attack_self(mob/user)
 	cut_overlays()
@@ -103,7 +99,6 @@
 	else
 		..()
 
-
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
@@ -111,7 +106,6 @@
 	icon_state = "razor"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-
 
 /obj/item/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
 	if(location == "mouth")

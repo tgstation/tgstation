@@ -30,6 +30,7 @@
 		GLOB.dead_mob_list += src
 	else
 		GLOB.alive_mob_list += src
+	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
@@ -253,24 +254,43 @@
 
 	return 0
 
+// reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
+// reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(ismovableatom(A))
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+		if(A)
+			if(ismovableatom(A))
+				//Set the the thing unless it's us
+				if(A != src)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else if(isturf(A))
+				//Set to the turf unless it's our current turf
+				if(A != loc)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else
+				//Do nothing
 		else
+			//Reset to common defaults: mob if on turf, otherwise current loc
 			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1
+		return 1 
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		if(client.eye != src)
+		if(client.eye && client.eye != src)
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
@@ -813,7 +833,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)

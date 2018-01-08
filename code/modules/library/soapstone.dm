@@ -142,7 +142,7 @@
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
-	realdate = world.timeofday
+	realdate = world.realtime
 	map = SSmapping.config.map_name
 	update_icon()
 

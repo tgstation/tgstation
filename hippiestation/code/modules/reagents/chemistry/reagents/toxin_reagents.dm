@@ -434,7 +434,7 @@
 	if(prob(1))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.add_disability(CLUMSY, CHEMISTRY_BULLSHIT)
+			H.add_disability(DISABILITY_CLUMSY, CHEMISTRY_BULLSHIT)
 
 	..()
 

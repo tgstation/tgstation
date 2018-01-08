@@ -30,7 +30,6 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(slot == slot_wear_mask)
-		H.add_screams(src.alternate_screams)
 		if(prob(1) && can_cluwne) // Its %99 curse free!
 			log_admin("[key_name(H)] was made into a cluwne by [src]")
 			message_admins("[key_name(H)] got cluwned by [src]")
@@ -50,9 +49,6 @@
 		else if(can_cluwne)
 			can_cluwne = FALSE
 			addtimer(CALLBACK(src, .proc/re_cluwne), CLUWNEDOWN)
-
-	else
-		H.reindex_screams()
 
 /obj/item/clothing/mask/hippie/cluwne/happy_cluwne/proc/re_cluwne()
 	if(!can_cluwne)

@@ -1503,7 +1503,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "adu" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Long-Term Cell 3";
 	req_access_txt = "2"
 	},
@@ -1514,7 +1514,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "adw" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -1522,7 +1522,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "adx" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},
@@ -2826,7 +2826,7 @@
 /area/security/prison)
 "afL" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing";
 	req_access_txt = "2"
 	},
@@ -2842,7 +2842,7 @@
 /area/security/prison)
 "afM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing";
 	req_access_txt = "2"
 	},
@@ -2972,7 +2972,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "afU" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Equipment Room";
 	req_access_txt = "1"
 	},
@@ -3793,7 +3793,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Brig Control";
 	req_access_txt = "3"
 	},
@@ -4493,7 +4493,7 @@
 /area/security/warden)
 "aiK" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Brig Control";
 	req_access_txt = "3"
 	},
@@ -5557,7 +5557,7 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akY" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = null;
 	name = "Evidence Storage";
 	req_access_txt = "63"
@@ -5669,7 +5669,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "alh" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
@@ -5699,7 +5699,7 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "alj" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
@@ -5715,7 +5715,7 @@
 	},
 /area/security/brig)
 "alk" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 2;
 	id_tag = "innerbrig";
 	name = "Brig";
@@ -6705,7 +6705,7 @@
 /turf/closed/wall,
 /area/security/processing)
 "anF" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Prisoner Processing";
 	req_access_txt = "2"
 	},
@@ -6856,7 +6856,7 @@
 /area/security/brig)
 "anR" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
@@ -6868,7 +6868,7 @@
 /area/security/brig)
 "anS" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Brig";
@@ -12824,7 +12824,7 @@
 /area/ai_monitored/storage/eva)
 "aBE" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "EVA Storage";
 	req_access_txt = "18"
 	},
@@ -15237,7 +15237,7 @@
 /area/ai_monitored/storage/eva)
 "aGY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "EVA Storage";
 	req_access_txt = "18"
 	},
@@ -21124,7 +21124,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "aVA" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Holding Area";
 	req_access_txt = "2"
 	},
@@ -23204,7 +23204,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -23233,7 +23233,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 8;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -23438,7 +23438,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 4;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -23481,7 +23481,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 8;
 	name = "Bridge";
 	req_access_txt = "19"
@@ -28453,7 +28453,7 @@
 /area/science/robotics/mechbay)
 "bnf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Robotics Lab";
 	req_access_txt = "29"
 	},
@@ -30055,7 +30055,7 @@
 /area/quartermaster/office)
 "bqK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
 	req_access_txt = "50"
 	},
@@ -30777,7 +30777,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bsh" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
 	req_access_txt = "31"
 	},
@@ -30846,7 +30846,7 @@
 /area/quartermaster/sorting)
 "bso" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Delivery Office";
 	req_access_txt = "50"
 	},
@@ -31570,7 +31570,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "btQ" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
 	req_access_txt = "31"
 	},
@@ -31785,7 +31785,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
@@ -31885,7 +31885,7 @@
 /area/medical/medbay/central)
 "buv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
@@ -31897,7 +31897,7 @@
 /area/medical/medbay/central)
 "buw" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
@@ -31935,7 +31935,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "buA" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -33225,7 +33225,7 @@
 /area/hallway/primary/central)
 "bxu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Chemistry Lab";
 	req_access_txt = "5; 33"
@@ -33676,7 +33676,7 @@
 /area/quartermaster/office)
 "byx" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
 	req_access_txt = "50"
 	},
@@ -34088,7 +34088,7 @@
 /area/medical/genetics)
 "bzm" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
 	req_access_txt = "5; 68"
@@ -36446,7 +36446,7 @@
 /turf/closed/wall,
 /area/quartermaster/qm)
 "bEj" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},
@@ -36591,7 +36591,7 @@
 /turf/closed/wall,
 /area/medical/sleeper)
 "bEz" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = "";
 	name = "Surgery Observation";
 	req_access_txt = "0"
@@ -36663,7 +36663,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "bEK" = (
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	name = "Genetics Research";
 	req_access_txt = "5; 9; 68"
 	},
@@ -36755,7 +36755,7 @@
 /turf/closed/wall,
 /area/security/checkpoint/science)
 "bEU" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -37615,7 +37615,7 @@
 	},
 /area/quartermaster/qm)
 "bGM" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Quartermaster";
 	req_access_txt = "41"
 	},
@@ -37695,7 +37695,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bGR" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -37899,7 +37899,7 @@
 /area/science/server)
 "bHq" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Server Room";
 	req_access_txt = "30"
 	},
@@ -38556,7 +38556,7 @@
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "bIB" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Recovery Room";
 	req_access_txt = "0"
@@ -39584,7 +39584,7 @@
 	},
 /area/medical/sleeper)
 "bKP" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "45"
@@ -39608,7 +39608,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bKS" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "45"
@@ -42104,7 +42104,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bQa" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	cyclelinkeddir = 8;
 	name = "Mining Dock";
 	req_access_txt = "48"
@@ -44341,7 +44341,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bUx" = (
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	autoclose = 0;
 	frequency = 1449;
 	glass = 1;
@@ -44363,7 +44363,7 @@
 /turf/open/floor/engine,
 /area/science/mixing)
 "bUz" = (
-/obj/machinery/door/airlock/glass_research{
+/obj/machinery/door/airlock/research/glass{
 	autoclose = 0;
 	frequency = 1449;
 	glass = 1;
@@ -46122,7 +46122,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	name = "Distribution Loop";
 	req_access_txt = "24"
 	},
@@ -46246,7 +46246,7 @@
 /area/medical/virology)
 "bZa" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_virology{
+/obj/machinery/door/airlock/virology/glass{
 	name = "Monkey Pen";
 	req_access_txt = "39"
 	},
@@ -47141,7 +47141,7 @@
 /area/engine/atmos)
 "caS" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/glass_atmos{
+/obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Monitoring";
 	req_access_txt = "24"
 	},
@@ -47800,7 +47800,7 @@
 /area/medical/virology)
 "ccl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_virology{
+/obj/machinery/door/airlock/virology/glass{
 	name = "Isolation A";
 	req_access_txt = "39"
 	},
@@ -47813,7 +47813,7 @@
 /area/medical/virology)
 "ccn" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_virology{
+/obj/machinery/door/airlock/virology/glass{
 	name = "Isolation B";
 	req_access_txt = "39"
 	},
@@ -49822,7 +49822,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cgX" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Control Room";
 	req_access_txt = "19; 61"
 	},
@@ -49897,7 +49897,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "chg" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -50290,7 +50290,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	cyclelinkeddir = 4;
 	name = "Server Room";
 	req_access_txt = "61"
@@ -50309,7 +50309,7 @@
 /area/tcommsat/computer)
 "chX" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	cyclelinkeddir = 8;
 	name = "Server Room";
 	req_access_txt = "61"
@@ -50847,9 +50847,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ciZ" = (
-/obj/machinery/icecream_vat,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
 "cja" = (
 /obj/machinery/light/small,
 /obj/structure/table_frame,
@@ -51957,7 +51956,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "32"
 	},
@@ -53160,8 +53159,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/closed/wall,
-/area/maintenance/port/aft)
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
 "con" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53793,19 +53792,13 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cpw" = (
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 2;
 	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -53823,11 +53816,6 @@
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -54384,6 +54372,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -55836,7 +55827,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "ctI" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
 	req_access_txt = "56"
 	},
@@ -56279,7 +56270,7 @@
 /area/engine/engineering)
 "cuC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Power Storage";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
@@ -62221,7 +62212,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "AI Core";
 	req_access_txt = "65"
 	},
@@ -72165,6 +72156,363 @@
 "dlE" = (
 /turf/closed/wall/r_wall,
 /area/aisat)
+"dlF" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dlG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dlH" = (
+/obj/machinery/reagent_sheet,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlI" = (
+/obj/machinery/reagent_sheet,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlJ" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlK" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlL" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlM" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlN" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlO" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Forge Room APC";
+	pixel_y = 25
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/item/wrench,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlP" = (
+/obj/machinery/reagent_material_manipulator,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dlR" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlS" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlT" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlU" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlV" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlW" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlX" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlY" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dlZ" = (
+/obj/structure/reagent_dispensers/chemical,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dma" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dmb" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmc" = (
+/obj/structure/closet/crate,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmd" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dme" = (
+/obj/machinery/reagent_forge,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmf" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmg" = (
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmh" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmi" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmj" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dml" = (
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmm" = (
+/turf/closed/wall,
+/area/maintenance/forge)
+"dmn" = (
+/obj/structure/sign/nosmoking_1,
+/turf/closed/wall,
+/area/maintenance/forge)
+"dmo" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"dmp" = (
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"dmq" = (
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/noslip,
+/area/maintenance/forge)
+"dmr" = (
+/obj/structure/sign/fire,
+/turf/closed/wall,
+/area/maintenance/forge)
+"dms" = (
+/turf/closed/wall,
+/area/maintenance/forge)
+"dmt" = (
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dmv" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmw" = (
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmx" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmy" = (
+/obj/item/device/flashlight/flare{
+	on = 1
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmz" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmC" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmD" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmE" = (
+/obj/structure/sign/securearea,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dmF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/engineering{
+	cyclelinkeddir = 4;
+	name = "Forge Room";
+	req_access_txt = "32";
+	security_level = 6
+	},
+/turf/open/floor/engine,
+/area/maintenance/forge)
+"dmG" = (
+/obj/structure/sign/electricshock,
+/turf/closed/wall/r_wall,
+/area/maintenance/forge)
+"dmH" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmI" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmK" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmL" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmM" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmO" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmP" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmQ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmR" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"dmT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -89474,13 +89822,13 @@ adT
 aaa
 aqL
 aqL
-dgc
+dfG
 amz
 anu
 cRR
-dgV
-dhh
-dhy
+dfG
+dfG
+dfG
 dhK
 anw
 amz
@@ -89731,14 +90079,14 @@ adT
 aqL
 aqL
 aaa
-dgd
-dgp
-dgB
+dfG
+dfG
+dfG
 dgI
-dgW
+dfG
 dhi
 dhz
-dhL
+dfG
 anw
 anw
 anw
@@ -89987,15 +90335,15 @@ ado
 adT
 aaa
 aaQ
-dfQ
-dge
+dfG
+dfG
 dgq
 anv
 aon
-dgX
-dhj
-dhA
-dhM
+dfX
+dfX
+dgF
+dfI
 anw
 amz
 cSO
@@ -90244,15 +90592,15 @@ aaa
 aqL
 aaa
 dfG
-dfR
+dfG
 dgf
 dgr
-dgC
+dgn
 dgJ
-dgY
+dfX
 dhk
-dhB
-dhN
+dfX
+dfI
 anw
 amz
 amz
@@ -90500,16 +90848,16 @@ aaQ
 aaQ
 aaQ
 aaQ
-dfH
+dfG
 dfS
 dgg
 dgs
-anx
+dgn
 aoo
 cSb
-dhl
+dfX
 dhC
-dhO
+dfI
 anw
 amz
 atD
@@ -90759,14 +91107,14 @@ aaa
 aaa
 dfI
 dfT
-dgh
-dgt
-anx
+dfX
+dgs
+dgn
 dgK
-dgZ
-dhm
-dhD
-dhP
+dfX
+dfX
+dfX
+dfI
 cSA
 anw
 anw
@@ -91014,16 +91362,16 @@ aaa
 aaa
 aaa
 aaa
-dfJ
+dfI
 dfU
-dgi
+dfX
 dgu
-anx
-dgL
-dha
+dgn
+dgK
+dfX
 dhn
-dhE
-dhQ
+dhn
+dfG
 amz
 amz
 anw
@@ -91271,16 +91619,16 @@ aaa
 aaa
 aaa
 aaa
-dfK
+dfI
 dfV
-dgj
+dfX
 dgv
-anx
-dgM
-dhb
+dgn
+dgK
+dfX
 dho
 dhF
-dhR
+dfG
 dhW
 amz
 anw
@@ -91356,7 +91704,7 @@ bOC
 cuu
 clc
 bSz
-cnx
+dji
 coj
 cpp
 cqx
@@ -91528,7 +91876,7 @@ aaa
 aaa
 aaa
 aaa
-dfL
+dfG
 dfW
 dgk
 dgw
@@ -91537,7 +91885,7 @@ dgN
 ape
 dhp
 dhG
-dhS
+dfG
 amz
 amz
 anw
@@ -91608,7 +91956,7 @@ cdz
 bOC
 bJm
 djd
-ccJ
+diV
 bOC
 bOC
 cZB
@@ -91785,18 +92133,18 @@ aaa
 aaa
 aaa
 aaa
-dfM
+dfI
 dfX
-dgl
+dfX
 dgx
-dgE
-dgO
-dhc
+dfX
+dgK
+dfX
 dhq
-dhH
-dhT
+dhq
+dfG
 dhX
-dic
+dfG
 aom
 amz
 amz
@@ -92042,10 +92390,10 @@ aaa
 aaa
 aaa
 aaa
-dfN
-dfY
+dfI
+dfX
 dgm
-dgy
+dfX
 dgF
 dgP
 dhd
@@ -92055,8 +92403,8 @@ aqM
 dhY
 did
 dih
-dij
-din
+dih
+dih
 diq
 ayX
 aAn
@@ -92299,23 +92647,23 @@ aaa
 aaa
 aaa
 aaa
-dfO
+dfI
 dfZ
 dgn
-dgz
+dfX
 dgG
 dgQ
-dhe
+dfX
 dhs
-dhI
+dhd
 aqM
 dhZ
-die
-dii
+did
+dih
 dik
-dio
+dih
 dir
-dit
+diq
 aAo
 cTD
 asO
@@ -92556,18 +92904,18 @@ aaa
 aaa
 aaa
 aaa
-dfP
-dga
-dgo
-dgA
-dgH
-dgR
+dfG
+dfG
+dfI
+dfI
+dfG
+dgI
 dhf
-dht
-dhJ
-dhU
-dia
-dif
+dfG
+dfG
+dfG
+dfG
+dfG
 atG
 atG
 atG
@@ -92827,7 +93175,7 @@ dib
 avK
 avK
 dil
-dip
+dig
 axA
 ayX
 aAp
@@ -93145,7 +93493,7 @@ bOC
 diN
 bJm
 diV
-ccJ
+diV
 bOC
 cok
 bOC
@@ -93415,7 +93763,7 @@ bZA
 bJm
 bJm
 cpw
-bJm
+dmH
 bJm
 bJm
 bJm
@@ -93665,16 +94013,16 @@ bJm
 bJm
 bJm
 bJm
-bSz
+dlF
+ciZ
+ciZ
+ciZ
+ciZ
+ciZ
+ciZ
+dmI
 bJm
-bJm
-bJm
-bJm
-bSz
-cZO
-bSz
-aaa
-bJm
+bOC
 ctr
 cZh
 bJm
@@ -93923,15 +94271,15 @@ aJy
 bJm
 chN
 ciZ
+dlH
+dlR
+dmb
+dml
+dmv
+ciZ
+dmJ
 bJm
-aJy
-aJy
-aJy
-bSz
-cpx
-bSz
-aaa
-bSz
+bOC
 bQe
 cuu
 bJm
@@ -94179,15 +94527,15 @@ bJm
 bJm
 bJm
 cdD
-cdD
+ciZ
+dlI
+dlS
+dmc
+dmm
+dmw
+ciZ
+dmK
 bJm
-aJy
-aJy
-aqL
-bSz
-cpx
-bSz
-aqL
 csF
 csF
 csF
@@ -94436,15 +94784,15 @@ cdD
 cdD
 cdD
 cdD
-bOC
+ciZ
+dlJ
+dlT
+dmd
+dmn
+dmx
+ciZ
+dmL
 bJm
-aJy
-aJy
-aJy
-bSz
-cpx
-bSz
-aaa
 csF
 cts
 cuv
@@ -94693,15 +95041,15 @@ ceI
 ceI
 cgO
 cdD
-cdz
+ciZ
+dlK
+dlU
+dme
+dmo
+dmy
+dmE
+dmM
 bJm
-aJy
-aJy
-aJy
-bSz
-cpx
-bSz
-aaa
 csF
 ctt
 cuw
@@ -94950,15 +95298,15 @@ cZj
 ceK
 cgP
 cZr
-cdz
+ciZ
+dlL
+dlV
+dmf
+dmp
+dmz
+dmF
+dmN
 bJm
-aqL
-aqL
-aqL
-bSz
-cpx
-bSz
-aqL
 csF
 ctu
 cux
@@ -95207,15 +95555,15 @@ ceJ
 cZn
 cdD
 cdD
-cja
+ciZ
+dlM
+dlW
+dmg
+dmq
+dmA
+dmG
+dmO
 bJm
-aJy
-aJy
-aJy
-bSz
-cpx
-bSz
-aaa
 csF
 ctt
 cuy
@@ -95464,15 +95812,15 @@ cZl
 cdD
 cdD
 cdz
-cZj
+ciZ
+dlN
+dlX
+dmh
+dmr
+dmB
+ciZ
+dmP
 bJm
-aJy
-aJy
-aJy
-bSz
-cpx
-bSz
-aaa
 csF
 ctv
 cuz
@@ -95721,15 +96069,15 @@ cdD
 cZo
 bOC
 cdD
-cdz
+ciZ
+dlO
+dlY
+dmi
+dms
+dmC
+ciZ
+dmQ
 bJm
-aJy
-aqL
-aqL
-bSz
-cpx
-bSz
-aqL
 csF
 csF
 csF
@@ -95978,15 +96326,15 @@ ceL
 cfT
 cdD
 cdz
-cdz
-bJm
-aJy
-aJy
-aJy
-bJm
-cpx
-bJm
-aaa
+ciZ
+dlP
+dlZ
+dmj
+dmt
+dmD
+ciZ
+dmR
+dmT
 aqL
 aaa
 aaa
@@ -96235,14 +96583,14 @@ bRp
 bRp
 bRp
 chO
-chO
-bRp
-bRp
-bRp
-bRp
+dlG
+dlQ
+dma
+dmk
+dmu
 com
-cpx
-bJm
+ciZ
+dmS
 bJm
 bJm
 bJm
@@ -107285,7 +107633,7 @@ diZ
 bWp
 bXI
 bYS
-djg
+diZ
 bWp
 bXI
 bYS
@@ -109641,11 +109989,11 @@ aaa
 aaa
 aqL
 aqL
-djK
-djO
-djQ
-djS
-djU
+djG
+djG
+djG
+djG
+djG
 aqL
 aOf
 aqL
@@ -109898,34 +110246,34 @@ bVk
 bVk
 cit
 djG
-djL
+djG
 cEi
 cEt
 cEE
-djV
-djY
-dka
-dkc
-dke
+djG
+djG
+djG
+djG
+djG
 aqL
 cJE
 aqL
 aqL
-dko
-dks
-dku
-dkw
-dky
-dkA
-dkC
-dkG
-dkK
-dkO
-dkQ
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
 cJF
-dkT
-dkY
-dlf
+djG
+djG
+djG
 aCn
 aCn
 aCn
@@ -110137,7 +110485,7 @@ cKQ
 aaa
 aOf
 aOf
-djo
+djn
 aOf
 aOf
 cKQ
@@ -110163,27 +110511,27 @@ cER
 cFa
 cFh
 cFs
-dkf
-dki
+djG
+djG
 cJF
-dkk
-dkm
-dkp
+djG
+djG
+djG
 cFO
 cFO
 cFO
 deH
 cGo
 cEZ
-dkH
-dkL
+djG
+djG
 cFY
 cFY
 cJO
-dkU
-dkZ
-dlg
-dll
+djG
+djG
+djG
+djG
 aqL
 aCn
 ddJ
@@ -110411,7 +110759,7 @@ aaa
 aaa
 aaa
 aqL
-djH
+djG
 cEc
 cEk
 cEu
@@ -110440,8 +110788,8 @@ cJO
 cFY
 cFY
 cFY
-dlm
-dlw
+djG
+djG
 aqL
 cCJ
 cHf
@@ -110664,11 +111012,11 @@ cCr
 cCO
 cCW
 cJA
-dju
-djA
-djC
-djE
-djI
+djs
+djs
+djs
+djs
+djG
 cDT
 cEl
 cEv
@@ -110695,10 +111043,10 @@ cGs
 cGs
 cJR
 cGv
-dla
+dkD
 cFY
-dln
-dlx
+djG
+djG
 aqL
 ddJ
 cHe
@@ -110921,7 +111269,7 @@ cCE
 cCL
 cCY
 djs
-djv
+djs
 cDm
 cDw
 cDI
@@ -110954,8 +111302,8 @@ cGS
 dkV
 dlb
 cFY
-dlo
-dly
+djG
+djG
 aCn
 ddJ
 cHg
@@ -111177,7 +111525,7 @@ cCq
 cCF
 cCP
 djq
-djt
+djs
 cDi
 cDn
 cDx
@@ -111211,8 +111559,8 @@ cJO
 cGV
 cGY
 dlh
-dlp
-dlz
+djG
+djG
 aCn
 ddJ
 cHg
@@ -111469,7 +111817,7 @@ cGW
 cGZ
 dli
 dlq
-dlA
+dlq
 cHc
 cHd
 cHh
@@ -111725,8 +112073,8 @@ cJO
 cGs
 cGt
 cFY
-dlr
-dlB
+djG
+djG
 aCn
 ddJ
 cHg
@@ -111982,8 +112330,8 @@ cJT
 cGt
 cGt
 cFY
-dls
-dlC
+djG
+djG
 aCn
 ddJ
 cHg
@@ -112206,7 +112554,7 @@ ddJ
 cCL
 cCW
 cDh
-djw
+djs
 cDr
 cDB
 cDN
@@ -112230,17 +112578,17 @@ cFY
 cFY
 cFY
 cFY
-dkE
+dkD
 cGB
 cGs
 cGs
 cGs
 cJR
 cGB
-dlc
+dkD
 cFY
-dlt
-dlD
+djG
+djG
 aqL
 ddJ
 cHe
@@ -112463,7 +112811,7 @@ ddJ
 cCL
 cCW
 aqL
-djx
+djs
 cDs
 cDC
 cDO
@@ -112496,8 +112844,8 @@ cJO
 cFY
 cFY
 cFY
-dlu
-dlE
+djG
+djG
 aqL
 cCJ
 cHf
@@ -112720,7 +113068,7 @@ ddJ
 cCL
 cCW
 aqL
-djy
+djs
 cDt
 cDD
 cDP
@@ -112733,27 +113081,27 @@ cEY
 cFa
 cFo
 cFt
-dkg
-dkj
+djG
+djG
 cJF
-dkl
-dkn
-dkq
+djG
+djG
+djG
 deH
 cFO
 cFO
 cFO
 cGo
 cEZ
-dkI
-dkM
+djG
+djG
 cFY
 cFY
 cJO
-dkW
-dld
-dlj
-dlv
+djG
+djG
+djG
+djG
 aqL
 aCn
 ddJ
@@ -112977,39 +113325,39 @@ ddJ
 cCL
 cCW
 aqL
-djz
-djB
-djD
-djF
-djJ
-djM
+djs
+djs
+djs
+djs
+djG
+djG
 cEr
 cED
 cEQ
-djW
-djZ
-dkb
-dkd
-dkh
+djG
+djG
+djG
+djG
+djG
 aqL
 cJE
 aqL
 aqL
-dkr
-dkt
-dkv
-dkx
-dkz
-dkB
-dkF
-dkJ
-dkN
-dkP
-dkS
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
+djG
 cJF
-dkX
-dle
-dlk
+djG
+djG
+djG
 aCn
 aCn
 aCn
@@ -113239,11 +113587,11 @@ aqL
 aqL
 aqL
 aqL
-djN
-djP
-djR
-djT
-djX
+djG
+djG
+djG
+djG
+djG
 aqL
 aOf
 aqL
@@ -121666,7 +122014,7 @@ bLu
 bLu
 bLu
 bLu
-diE
+diD
 bYe
 bYe
 bYe

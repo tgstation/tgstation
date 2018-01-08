@@ -30,12 +30,12 @@ As mentioned before, you are expected to follow these specifications in order to
 ### Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
-### All Byond paths must contain the full path.
+### All Byond paths must contain the full path
 (ie: absolute pathing)
 
 Byond will allow you nest almost any type keyword into a block, such as:
 
-```c++
+```DM
 datum
 	datum1
 		var
@@ -64,7 +64,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 
 The previous code made compliant:
 
-```c++
+```DM
 /datum/datum1
 		var/varname1
 		var/varname2
@@ -84,11 +84,12 @@ The previous code made compliant:
 	code
 ```
 
-### Use the "hippiestation" folder.
+### Use the "hippiestation" folder
 
 See [the README.md](/hippiestation/README.md) in the folder for further details.
 
-### No overriding type safety checks.
+### No overriding type safety checks
+
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ### Type paths must began with a /
@@ -225,6 +226,8 @@ This prevents nesting levels from getting deeper then they need to be.
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
+
+* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
 
 #### Enforced not enforced
 The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:

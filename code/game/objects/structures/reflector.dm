@@ -202,7 +202,7 @@
 	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
 	if(ISINRANGE_EX(norm_inc, -90, 90))
 		return FALSE
-	P.Angle = new_angle
+	P.setAngle(new_angle)
 	return ..()
 
 //DOUBLE
@@ -229,7 +229,7 @@
 	var/new_angle = WRAP(rotation_angle + norm_inc, 180, -180)
 	if(ISINRANGE_EX(norm_inc, -90, 90))
 		new_angle += 180
-	P.Angle = new_angle
+	P.setAngle(new_angle)
 	return ..()
 
 //BOX
@@ -251,7 +251,7 @@
 	anchored = TRUE
 
 /obj/structure/reflector/box/auto_reflect(obj/item/projectile/P)
-	P.Angle = rotation_angle
+	P.setAngle(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()

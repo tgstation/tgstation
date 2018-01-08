@@ -63,7 +63,7 @@
 
 	if(amount >= 50)
 		var/burning_time = max(100, 100-amount)
-		master = master.ChangeTurf(master.baseturf)
+		master = master.ScrapeAway()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)

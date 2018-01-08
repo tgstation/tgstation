@@ -76,7 +76,7 @@ datum/reagent/medicine/superzine/on_mob_life(mob/living/M as mob)
 /datum/reagent/medicine/defib/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		M.electrocute_act(1, "exstatic mixture")
-		if(!M.suiciding && !M.has_disability(NOCLONE) && !M.hellbound)
+		if(!M.suiciding && !M.has_disability(DISABILITY_NOCLONE) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
