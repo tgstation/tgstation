@@ -391,12 +391,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 												"Best idea ever: Disposal pipes instead of hallways."))
 /mob/living/carbon/human/handle_status_effects()
 	..()
-<<<<<<< HEAD
 	checklisp()
-=======
-
-
->>>>>>> c75d0f4ced... Implements the Ballmer Peak: Now the bartender can help R&D! (#33979)
+	
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
