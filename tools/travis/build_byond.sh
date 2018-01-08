@@ -24,7 +24,13 @@ if [ "$BUILD_TOOLS" = false ]; then
 
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme && DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
+		if [ ! -f data/logs/travis/clean_run.lk ]; then
+			echo "Test run failed!"
+			cat data/logs/travis/tests.log
+			cat data/logs/travis/runtime.log
+			exit 1
+		fi;
 	else
 		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 	fi;
