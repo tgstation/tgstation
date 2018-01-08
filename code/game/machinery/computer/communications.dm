@@ -130,7 +130,6 @@
 			if(authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-				deadchat_broadcast("<span class='deadsay bold'>[usr.name] made an priority announcement.</span>", usr)
 
 		if("crossserver")
 			if(authenticated==2)
@@ -702,6 +701,7 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
+	deadchat_broadcast("<span class='deadsay bold'>[user.name] made an priority announcement.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
