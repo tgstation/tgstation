@@ -52428,10 +52428,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "ceM" = (
-/obj/machinery/autolathe{
-	icon_state = "autolathe";
-	name = "public autolathe"
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 2
 	},
@@ -80629,6 +80625,22 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
+"QsX" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/obj/machinery/door/window/eastright{
+	dir = 2;
+	name = "Research and Development Desk";
+	req_access_txt = "7"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "research_shutters";
+	name = "research shutters"
+	},
+/turf/open/floor/plating,
+/area/science/lab)
 
 (1,1,1) = {"
 aaa
@@ -109820,7 +109832,7 @@ cax
 cch
 cdK
 ceQ
-cge
+QsX
 chk
 ciF
 ckb
