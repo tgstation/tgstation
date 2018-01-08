@@ -25,3 +25,4 @@
 	desc = "Renault, the Captain's trustworthy fox."
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
