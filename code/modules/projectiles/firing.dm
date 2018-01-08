@@ -20,7 +20,7 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override)
+/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if (!BB)
 		return
 	BB.original = target
