@@ -301,7 +301,8 @@ Pipelines + Other Objects -> Pipe network
 #define VENT_SOUND_DELAY 30
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!(direction & initialize_directions)) //cant go this way.
+	direction &= initialize_directions
+	if(!direction || !(direction in GLOB.cardinals)) //cant go this way.
 		return
 
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
@@ -322,13 +323,12 @@ Pipelines + Other Objects -> Pipe network
 				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
-	else
-		if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			user.forceMove(loc)
-			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
-	user.canmove = 0
-	spawn(1)
-		user.canmove = 1
+	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		user.forceMove(loc)
+		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
+	
+	user.canmove = FALSE
+	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
