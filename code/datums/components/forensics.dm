@@ -1,4 +1,5 @@
 /datum/component/forensics
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/fingerprints		//assoc print = print
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
