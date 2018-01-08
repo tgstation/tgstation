@@ -190,7 +190,7 @@
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
-	var/atoms[] = list()
+	var/list/atoms = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
@@ -203,15 +203,7 @@
 					continue
 			atoms.Add(A)
 
-	var/list/sorted = list()
-	var/j
-	for(var/i = 1 to atoms.len)
-		var/atom/c = atoms[i]
-		for(j = sorted.len, j > 0, --j)
-			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
-				break
-		sorted.Insert(j+1, c)
+	var/list/sorted = sortTim(atoms,/proc/cmp_atom_layer_asc)
 
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
