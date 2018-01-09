@@ -227,7 +227,9 @@
 			blueprints = 1
 
 	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		var/area/A = T.loc
+		if(A.icon_state)//There's actually something to blend in.
+			res.Blend(getFlatIcon(A), blendMode2iconMode(A.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
 
 	return res
 
