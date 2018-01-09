@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(posibrain_names, world.file2list("strings/names/posibrain.txt")
 GLOBAL_LIST_INIT(nightmare_names, world.file2list("strings/names/nightmare.txt"))
 GLOBAL_LIST_INIT(megacarp_first_names, world.file2list("strings/names/megacarp1.txt"))
 GLOBAL_LIST_INIT(megacarp_last_names, world.file2list("strings/names/megacarp2.txt"))
+GLOBAL_LIST_INIT(moth_names_male, world.file2list("strings/names/moth_male.txt"))
+GLOBAL_LIST_INIT(moth_names_female, world.file2list("strings/names/moth_female.txt"))
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
