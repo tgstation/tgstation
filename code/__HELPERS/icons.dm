@@ -864,7 +864,7 @@ The _flatIcons list is a cache for generated icon files.
 			curblend = BLEND_OVERLAY
 			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, start = FALSE)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
