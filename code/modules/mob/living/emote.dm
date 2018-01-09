@@ -244,6 +244,15 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/scream/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
+		return ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.scream_sound)
+			playsound(H.loc, H.dna.species.scream_sound, 50, 1, 4, 1.2)
+
 /datum/emote/living/scowl
 	key = "scowl"
 	key_third_person = "scowls"

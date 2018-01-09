@@ -77,6 +77,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/stomach/mutantstomach
 	var/override_float = FALSE
 
+	var/sound/scream_sound
+
 ///////////
 // PROCS //
 ///////////
