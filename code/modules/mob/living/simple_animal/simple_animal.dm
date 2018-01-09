@@ -83,13 +83,14 @@
 	var/datum/personal_crafting/handcrafting
 
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
+	var/pause_processing = FALSE		//forcefully prevent processing.
 
 	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
 
 	//domestication
 	var/tame = 0
 
-	var/my_z // I don't want to confuse this with client registered_z 
+	var/my_z // I don't want to confuse this with client registered_z
 
 /mob/living/simple_animal/Initialize()
 	. = ..()

@@ -55,7 +55,7 @@
 			user.body_l_leg()
 			return
 
-	if(client.keys_held["Ctrl"])
+	if(!key_movement_disabled && client.keys_held["Ctrl"])
 		switch(SSinput.movement_keys[_key])
 			if(NORTH)
 				northface()

@@ -47,14 +47,9 @@ SUBSYSTEM_DEF(npcpool)
 		while(currentrun.len)
 			var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 			--currentrun.len
+			if(!SA.pause_processing)
+				process_simple_animal(SA)
 
-			if(!SA.ckey)
-				if(SA.stat != DEAD)
-					SA.handle_automated_movement()
-				if(SA.stat != DEAD)
-					SA.handle_automated_action()
-				if(SA.stat != DEAD)
-					SA.handle_automated_speech()
 			if (MC_TICK_CHECK)
 				return
 
@@ -135,14 +130,23 @@ SUBSYSTEM_DEF(npcpool)
 
 		if(facCount == 1 && helpProb)
 			helpProb = 100
-	
+
 		if(prob(helpProb) && candidate.takeDelegate(check,FALSE))
 			--canBeUsed.len
 			candidate.eye_color = "yellow"
 			candidate.update_icons()
-			
+
 		if(!currentrun.len || MC_TICK_CHECK)	//don't change SS state if it isn't necessary
 			return
+
+/datum/controller/subsystem/npcpool/proc/process_simple_animal(mob/living/simple_animal/SA)
+	if(!SA.ckey || SA.pause_processing)
+		if(SA.stat != DEAD)
+			SA.handle_automated_movement()
+		if(SA.stat != DEAD)
+			SA.handle_automated_action()
+		if(SA.stat != DEAD)
+			SA.handle_automated_speech()
 
 /datum/controller/subsystem/npcpool/Recover()
 	processing = SSnpcpool.processing

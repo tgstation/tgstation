@@ -63,6 +63,12 @@
 	owner = null
 	qdel(src)
 
+/datum/status_effect/proc/clickcd_multiplier()
+	return 1
+
+/datum/status_effect/proc/clickcd_adjuster()
+	return 0
+
 ////////////////
 // ALERT HOOK //
 ////////////////

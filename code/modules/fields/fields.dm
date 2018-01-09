@@ -31,9 +31,10 @@
 	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
 	var/requires_processing = FALSE
+	var/priority_process = FALSE
 	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
 	var/setup_field_turfs = FALSE
-	var/use_host_turf = FALSE		//For fields from items carried on mobs to check turf instead of loc...
+	var/use_host_turf = TRUE		//For fields from items carried on mobs to check turf instead of loc...
 
 	var/list/turf/field_turfs = list()
 	var/list/turf/edge_turfs = list()
@@ -42,13 +43,14 @@
 
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
-	STOP_PROCESSING(SSfields, src)
+	var/datum/controller/subsystem/processing/subsystem = priority_process? SSpriority_process : SSfields
+	STOP_PROCESSING(subsystem, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/proc/assume_params(list/field_params)
 	var/pass_check = TRUE
 	for(var/param in field_params)
-		if(vars[param] || isnull(vars[param]) || (param in vars))
+		if(vars.Find(param))
 			vars[param] = field_params[param]
 		else
 			pass_check = FALSE
@@ -80,7 +82,8 @@
 
 /datum/proximity_monitor/advanced/New()
 	if(requires_processing)
-		START_PROCESSING(SSfields, src)
+		var/datum/controller/subsystem/processing/subsystem = priority_process? SSpriority_process : SSfields
+		START_PROCESSING(subsystem, src)
 
 /datum/proximity_monitor/advanced/proc/Initialize()
 	setup_field()
@@ -151,10 +154,7 @@
 	return TRUE
 
 /datum/proximity_monitor/advanced/HandleMove()
-	var/atom/_host = host
-	var/atom/new_host_loc = _host.loc
-	if(last_host_loc != new_host_loc)
-		recalculate_field()
+	recalculate_field()
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
@@ -313,4 +313,6 @@
 	check_turf(get_turf(src))
 
 /obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
+	if(!current)
+		return
 	current.HandleMove()

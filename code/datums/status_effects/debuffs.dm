@@ -503,3 +503,18 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+/datum/status_effect/rhythmfield_halting
+	id = "rhythmfield_halting"
+	duration = INFINITY
+	examine_text = "<span class='boldnotice'>SUBJECTPRONOUN is hopping to an invisible beat!</span>"
+
+/datum/status_effect/rhythmfield_halting/on_apply()
+	owner.visible_message("<span class='boldwarning'>[owner] halts in mid-motion and their movements become regulated and rhythmic!</span>")
+	return TRUE
+
+/datum/status_effect/rhythmfield_halting/on_remove()
+	owner.visible_message("<span class='boldnotice'>[owner] starts moving normally and smoothly again!</span>")
+
+/datum/status_effect/rhythmfield_halting/clickcd_multiplier()
+	return INFINITY			//NO MOVING!

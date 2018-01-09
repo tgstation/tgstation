@@ -20,6 +20,14 @@
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/living/changeNext_move(num, extra_adjust = 0, extra_modifier = 1)
+	var/EA = 0
+	var/EM = 1
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		EA += S.clickcd_adjuster()
+		EM *= S.clickcd_multiplier()
+	return ..(num, extra_adjust + EA, extra_modifier * EM)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
