@@ -96,6 +96,15 @@
 	research_cost = 2500
 	export_price = 10000
 
+/datum/techweb_node/app_engi
+	id = "app_engi"
+	display_name = "Applied Engineering"
+	description = "Technologies that allow for the construction of precision machines."
+	prereq_ids = list("adv_engi", "high_efficiency", "emp_super")
+	design_ids = list("protolathe")
+	research_cost = 10000
+	export_price = 10000
+
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
