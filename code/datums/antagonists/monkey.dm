@@ -12,7 +12,7 @@
 	var/monkey_only = TRUE
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
-	. = ..() && (!monkey_only || ismonkey(new_owner.current))
+	return ..() && (!monkey_only || ismonkey(new_owner.current))
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()

@@ -21,7 +21,7 @@
 	var/mob/living/carbon/human/scientist = makeBody(pick_n_take(candidates))
 
 	var/datum/team/abductor_team/T = new
-	if(T.team_number > T.max_teams)
+	if(T.team_number > ABDUCTOR_MAX_TEAMS)
 		return MAP_ERROR
 	
 	log_game("[scientist.mind.key] (ckey) has been selected as [T.name] abductor scientist.")

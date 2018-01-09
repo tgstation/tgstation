@@ -1,10 +1,11 @@
 /datum/antagonist/ninja
 	name = "Ninja"
+	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 
-	antagpanel_category = "Ninja"
+	
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)

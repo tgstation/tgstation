@@ -14,19 +14,21 @@
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
 	special_role = "internal affairs agent"
+	antagpanel_category = "IAA"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
-	antagpanel_category = "IAA"
+	
 
 /datum/antagonist/traitor/human/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
 	special_role = "internal affairs agent"
+	antagpanel_category = "IAA"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
-	antagpanel_category = "IAA"
+	
 	
 /datum/antagonist/traitor/human/internal_affairs/proc/give_pinpointer()
 	if(owner && owner.current)

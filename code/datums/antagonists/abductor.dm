@@ -1,14 +1,17 @@
+#define ABDUCTOR_MAX_TEAMS 4
+
 /datum/antagonist/abductor
 	name = "Abductor"
 	roundend_category = "abductors"
 	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
+	show_in_antagpanel = FALSE //should only show subtypes
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
 	var/landmark_type
 	var/greet_text
-	show_in_antagpanel = FALSE //should only show subtypes
+	
 
 /datum/antagonist/abductor/agent
 	name = "Abductor Agent"
@@ -83,11 +86,11 @@
 	var/list/current_teams = list()
 	for(var/datum/team/abductor_team/T in get_all_teams(/datum/team/abductor_team))
 		current_teams[T.name] = T
-	var/choice = input(admin,"Add to which team ?") as null|anything in current_teams + "new team"
-	if(choice in current_teams)
-		team = current_teams[choice]
-	else if (choice == "new team")
+	var/choice = input(admin,"Add to which team ?") as null|anything in (current_teams + "new team")
+	if (choice == "new team")
 		team = new
+	else if(choice in current_teams)
+		team = current_teams[choice]
 	else
 		return
 	new_owner.add_antag_datum(src)
@@ -115,7 +118,6 @@
 	var/team_number
 	var/list/datum/mind/abductees = list()
 	var/static/team_count = 1
-	var/const/max_teams = 4
 
 /datum/team/abductor_team/New()
 	..()

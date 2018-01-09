@@ -1,6 +1,7 @@
 /datum/antagonist/traitor
 	name = "Traitor"
 	roundend_category = "traitors"
+	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
@@ -10,12 +11,13 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 
-	antagpanel_category = "Traitor"
+	
 
 /datum/antagonist/traitor/human
-	var/should_equip = TRUE
 	show_in_antagpanel = FALSE
 	should_specialise = FALSE
+	var/should_equip = TRUE
+
 
 /datum/antagonist/traitor/AI
 	show_in_antagpanel = FALSE

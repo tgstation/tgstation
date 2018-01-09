@@ -165,11 +165,11 @@
 		to_chat(admin, "<span class='danger'>Spawning amulet failed!</span>")
 
 /datum/antagonist/cult/master
+	ignore_implant = TRUE
+	show_in_antagpanel = FALSE //Feel free to add this later
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
 	var/datum/action/innate/cult/master/pulse/throwing = new
-	ignore_implant = TRUE
-	show_in_antagpanel = FALSE //Feel free to add this later
 
 /datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(reckoning)

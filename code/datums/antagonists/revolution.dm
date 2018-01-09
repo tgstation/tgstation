@@ -4,20 +4,22 @@
 /datum/antagonist/rev
 	name = "Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
+	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
-	antagpanel_category = "Revolution"
+	
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(new_owner.assigned_role in GLOB.command_positions)
-		return FALSE
-	if(new_owner.unconvertable)
-		return FALSE
-	if(new_owner.current && new_owner.current.isloyal())
-		return FALSE
+	if(.)
+		if(new_owner.assigned_role in GLOB.command_positions)
+			return FALSE
+		if(new_owner.unconvertable)
+			return FALSE
+		if(new_owner.current && new_owner.current.isloyal())
+			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
