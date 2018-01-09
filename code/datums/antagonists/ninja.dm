@@ -1,31 +1,18 @@
 /datum/antagonist/ninja
 	name = "Ninja"
 	job_rank = ROLE_NINJA
-	var/helping_station = 0
+	var/helping_station = FALSE
 	var/give_objectives = TRUE
 
-/datum/antagonist/ninja/friendly
-	helping_station = 1
-
-/datum/antagonist/ninja/friendly/noobjective
-	give_objectives = FALSE
-
-/datum/antagonist/ninja/New(datum/mind/new_owner)
-	if(new_owner && !ishuman(new_owner.current))//It's fine if we aren't passed a mind, but if we are, they have to be human.
-		throw EXCEPTION("Only humans and/or humanoids may be ninja'ed")
-	..(new_owner)
-
-/datum/antagonist/ninja/randomAllegiance/New(datum/mind/new_owner)
-	..(new_owner)
-	helping_station = rand(0,1)
+	antagpanel_category = "Ninja"
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
 
 /datum/antagonist/ninja/proc/addMemories()
-	owner.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
-	owner.store_memory("Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
-	owner.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
+	antag_memory += "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
+	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!<br>"
+	antag_memory += "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.<br>"
 
 /datum/antagonist/ninja/proc/addObjectives(quantity = 6)
 	var/list/possible_targets = list()
@@ -103,11 +90,6 @@
 	datum.on_removal()
 	return TRUE
 
-/proc/add_ninja(mob/living/carbon/human/H, type = ANTAG_DATUM_NINJA_RANDOM)
-	if(!H || !H.mind)
-		return FALSE
-	return H.mind.add_antag_datum(type)
-
 /proc/is_ninja(mob/living/M)
 	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 
@@ -123,3 +105,24 @@
 	if(give_objectives)
 		addObjectives()
 	addMemories()
+
+/datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
+	var/adj
+	switch(input("What kind of ninja?", "Ninja") as null|anything in list("Random","Syndicate","Nanotrasen","No objectives"))
+		if("Random")
+			helping_station = pick(TRUE,FALSE)
+			adj = ""
+		if("Syndicate")
+			helping_station = FALSE
+			adj = "syndie"
+		if("Nanotrasen")
+			helping_station = TRUE
+			adj = "friendly"
+		if("No objectives")
+			give_objectives = FALSE
+			adj = "objectiveless"
+		else
+			return
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
+	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")

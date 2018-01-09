@@ -66,7 +66,9 @@ Contents:
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
-	var/datum/antagonist/ninja/ninjadatum = add_ninja(Ninja)
+	var/datum/antagonist/ninja/ninjadatum = new
+	ninjadatum.helping_station = pick(TRUE,FALSE)
+	Mind.add_antag_datum(ninjadatum)
 	ninjadatum.equip_space_ninja()
 
 	if(Ninja.mind != Mind)			//something has gone wrong!

@@ -1,6 +1,7 @@
 /datum/antagonist/blob
 	name = "Blob"
 	roundend_category = "blobs"
+	antagpanel_category = "Blob"
 	job_rank = ROLE_BLOB
 
 	var/datum/action/innate/blobpop/pop_action
