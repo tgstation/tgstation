@@ -13,6 +13,7 @@ You can use the run_loc_bottom_left and run_loc_top_right to get turfs for testi
 
 GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
+GLOBAL_VAR(test_log)
 
 /datum/unit_test
 	//Bit of metadata for the future maybe

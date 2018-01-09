@@ -24,12 +24,11 @@
 #define testing(msg)
 #endif
 
+#ifdef UNIT_TESTS
 /proc/log_test(text)
-	var/static/test_results_file
-	if(!test_results_file)
-		test_results_file = file("[GLOB.log_directory]/tests.log")
-	WRITE_FILE(test_results_file, text)
+	WRITE_FILE(GLOB.test_log, "\[[time_stamp()]]: [text]")
 	SEND_TEXT(world.log, text)
+#endif
 
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
