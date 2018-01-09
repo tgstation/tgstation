@@ -390,10 +390,11 @@ SILICON_MAX_LAW_AMOUNT 12
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
 ROUNDSTART_RACES human
 
-## Races that are strictly worse than humans that could probably be turned on without balance concerns
+## Races that are strictly worse than humans that could probably be turned on without balance concerns, but will probably be off due to the strict NO FUN policy
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES moth
 #ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others

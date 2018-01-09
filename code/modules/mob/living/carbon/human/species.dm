@@ -77,6 +77,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/stomach/mutantstomach
 	var/override_float = FALSE
 
+	var/sound/scream_sound
+
 ///////////
 // PROCS //
 ///////////
@@ -624,6 +626,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				if("moth_wings")
+					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 
 			if(!S || S.icon_state == "none")
 				continue
