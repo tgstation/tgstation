@@ -45,6 +45,8 @@
 
 /mob/living/death(gibbed)
 	stat = DEAD
+	if(death_sound)
+		playsound(src, death_sound, TRUE)
 	unset_machine()
 	timeofdeath = world.time
 	tod = worldtime2text()
