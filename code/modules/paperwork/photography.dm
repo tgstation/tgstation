@@ -214,8 +214,8 @@
 			if(L.lying)
 				img.Turn(L.lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = world.icon_size * (A.x - center.x) + A.pixel_x + 33
+		var/offY = world.icon_size * (A.y - center.y) + A.pixel_y + 33
 		if(ismovableatom(A))
 			var/atom/movable/AM = A
 			offX += AM.step_x
@@ -229,7 +229,7 @@
 	for(var/turf/T in turfs)
 		var/area/A = T.loc
 		if(A.icon_state)//There's actually something to blend in.
-			res.Blend(getFlatIcon(A), blendMode2iconMode(A.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+			res.Blend(getFlatIcon(A), blendMode2iconMode(A.blend_mode), world.icon_size * (T.x - center.x) + 33, world.icon_size * (T.y - center.y) + 33)
 
 	return res
 

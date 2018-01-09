@@ -758,7 +758,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 	
 	//These should use the parent's direction (most likely)
-	if(!A.dir || A.dir == 2)
+	if(!A.dir || A.dir == SOUTH)
 		curdir = defdir
 	else
 		curdir = A.dir
@@ -771,8 +771,8 @@ The _flatIcons list is a cache for generated icon files.
 		outer:
 			for(var/possible_dir in dirs_to_check)
 				test_icon = icon(curicon,curstate,possible_dir,frame=1)
-				for(var/x in 1 to 32)
-					for(var/y in 1 to 32)
+				for(var/x in 1 to world.icon_size)
+					for(var/y in 1 to world.icon_size)
 						if(!isnull(test_icon.GetPixel(x,y)))
 							directionals_exist = TRUE
 							break outer
