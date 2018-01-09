@@ -25,11 +25,17 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
+<<<<<<< HEAD
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 	update_teeth()
+=======
+	
+>>>>>>> a47adc94ee... Merge pull request #34195 from tgstation/Cyberboss-patch-1
 	. = ..()
+	
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -1052,6 +1058,7 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+<<<<<<< HEAD
 
 /mob/living/carbon/human/species/tarajan
 	race = /datum/species/tarajan
@@ -1064,3 +1071,5 @@
 
 /mob/living/carbon/human/species/bird
 	race = /datum/species/bird
+=======
+>>>>>>> a47adc94ee... Merge pull request #34195 from tgstation/Cyberboss-patch-1
