@@ -194,6 +194,7 @@
 	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	conflicting_reagents = list("styptic_powder", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -212,6 +213,14 @@
 	M.adjustFireLoss(-2*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/silver_sulfadiazine/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
+			M.adjustFireLoss(1*REM, 0)
+			M.adjustToxLoss(3*REM, 0)
 
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
@@ -242,6 +251,7 @@
 	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
+	conflicting_reagents = list("silver_sulfadiazine", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -262,6 +272,14 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/styptic_powder/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("silver_sulfadiazine", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
+			M.adjustBruteLoss(1*REM, 0)
+			M.adjustToxLoss(3*REM, 0)
+
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
@@ -271,6 +289,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
+	conflicting_reagents = list("iron")
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 
@@ -288,6 +307,16 @@
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = 1
 	..()
+
+/datum/reagent/medicine/salglu_solution/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("iron")
+			M.adjustBruteLoss(0.5*REM, 0)
+			M.blood_volume -= 2
+			if(M.blood_volume < 0)
+				M.blood_volume = 0
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
 	if(prob(3))
@@ -370,6 +399,7 @@
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "ash"
+	conflicting_reagents = list("styptic_powder", "silver_sulfadiazine", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -378,6 +408,15 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.id,1)
 	..()
+
+/datum/reagent/medicine/charcoal/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "silver_sulfadiazine", "synthflesh", "bicaridine", "kelotane", "tricordrazine")
+			if(prob(5))
+				M.emote("cough") // Nullifies the healing and purging. Seek stronger treatment.
+
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -460,7 +499,16 @@
 	color = "#D2D2D2"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
+	conflicting_reagents = list("synthflesh", "styptic_powder", "bicaridine")
 
+/datum/reagent/medicine/sal_acid/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("synthflesh", "styptic_powder", "bicaridine")
+			M.adjustBruteLoss(2*REM, 0)
+			M.adjustToxLoss(1*REM, 0)
+			M.adjustFireLoss(-3*REM, 0)
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() > 50)
@@ -483,6 +531,14 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	conflicting_reagents = list("dexalin", "perfluorodecalin")
+
+/datum/reagent/medicine/salbutamol/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("dexalin", "perfluorodecalin")
+			M.losebreath += 2
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
@@ -498,6 +554,14 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	conflicting_reagents = list("dexalin", "salbutamol")
+
+/datum/reagent/medicine/perfluorodecalin/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("dexalin", "perfluorodecalin")
+			M.silent = max(M.silent, 5)
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-12*REM, 0)
@@ -873,6 +937,14 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	conflicting_reagents = list("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "tricordrazine")
+
+/datum/reagent/medicine/bicaridine/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "tricordrazine")
+			M.adjustBruteLoss(2*REM, 0)
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM, 0)
@@ -891,6 +963,14 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	conflicting_reagents = list("perfluorodecalin", "salbutamol")
+
+/datum/reagent/medicine/dexalin/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("dexalin", "perfluorodecalin")
+			M.adjustOxyLoss(2*REM, 0)
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-2*REM, 0)
@@ -909,6 +989,14 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+	conflicting_reagents = list("styptic_powder", "synthflesh", "silver_sulfadiazine", "bicaridine", "tricordrazine")
+
+/datum/reagent/medicine/kelotane/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "synthflesh", "silver_sulfadiazine", "bicaridine", "tricordrazine")
+			M.adjustFireLoss(2*REM, 0)
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM, 0)
@@ -928,6 +1016,15 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "a roll of gauze"
+	conflicting_reagents = list("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "bicaridine", "tricordrazine")
+
+/datum/reagent/medicine/antitoxin/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "bicaridine", "tricordrazine")
+			if(prob(5))
+				M.emote("cough")
 
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -961,6 +1058,17 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "grossness"
+	conflicting_reagents = list("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "bicaridine", "omnizine")
+
+/datum/reagent/medicine/tricordrazine/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("styptic_powder", "synthflesh", "silver_sulfadiazine", "kelotane", "bicaridine", "omnizine")
+			M.adjustBruteLoss(1*REM, 0)
+			M.adjustFireLoss(1*REM, 0)
+			M.adjustOxyLoss(1*REM, 0)
+			M.adjustToxLoss(1*REM, 0)
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
