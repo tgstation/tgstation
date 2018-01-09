@@ -123,6 +123,7 @@
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.Dizzy(80)
+			user.dropItemToGround(src, TRUE)
 			user.Knockdown(30)
 			return
 		else
@@ -130,6 +131,7 @@
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.dropItemToGround(src, TRUE)
 			user.Knockdown(50)
 			return
 	jaunt.Grant(user, src)
