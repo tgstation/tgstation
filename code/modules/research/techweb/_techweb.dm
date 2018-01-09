@@ -20,7 +20,6 @@
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/last_bitcoins = 0										//Current per-second production, used for display only.
 	var/list/tiers = list()										//Assoc list, datum = number, 1 is available, 2 is all reqs are 1, so on
-	var/order = 1 //Currently only used for stat-tracking nodes
 
 /datum/techweb/New()
 	for(var/i in SSresearch.techweb_nodes_starting)
@@ -142,8 +141,6 @@
 	for(var/i in node.designs)
 		add_design(node.designs[i])
 	update_node_status(node)
-	SSblackbox.record_feedback("nested tally", "research_node_and_order", 1, list("[node.name]","[order]"))
-	order += 1
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
