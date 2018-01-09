@@ -100,7 +100,7 @@
 	id = "app_engi"
 	display_name = "Applied Engineering"
 	description = "Technologies that allow for the construction of precision machines."
-	prereq_ids = list("adv_engi", "high_efficiency")
+	prereq_ids = list("adv_engi", "high_efficiency", "emp_super")
 	design_ids = list("protolathe")
 	research_cost = 2500
 	export_price = 10000
