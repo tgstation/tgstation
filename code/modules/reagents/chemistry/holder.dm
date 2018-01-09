@@ -73,6 +73,17 @@
 		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
+/datum/reagents/proc/find_chemical_conflicts()
+	var/list/cached_reagents = reagent_list
+	var/list/conflicting_reagents
+	for(var/A in cached_reagents)
+		var/datum/reagent/R = A
+		for(var/D2 in cached_reagents)
+			var/datum/reagent/R2 = D2
+			if(R.conflicting_reagents && R.conflicting_reagents[R2.id])
+				LAZYADD(conflicting_reagents, list(list(R, R2)))
+	return conflicting_reagents
+
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
 	var/total_transfered = 0
@@ -241,6 +252,7 @@
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
+	var/list/conflict_reagents = find_chemical_conflicts()
 	if(C)
 		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
@@ -268,7 +280,17 @@
 							var/datum/reagent/A = addiction
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
-				need_mob_update += R.on_mob_life(C)
+				var/conflicting = FALSE
+				if(conflict_reagents)
+					for(var/assoc_list in conflict_reagents)
+						var/datum/reagent/base_reagent = assoc_list[1]
+						var/datum/reagent/conflict_reagent = assoc_list[2]
+						if(base_reagent == R)
+							conflicting = TRUE
+							if(base_reagent && conflict_reagent)
+								need_mob_update += R.on_reagent_conflict(C, conflict_reagent)
+				if(!conflicting)
+					need_mob_update += R.on_mob_life(C)
 
 	if(can_overdose)
 		if(addiction_tick == 6)
