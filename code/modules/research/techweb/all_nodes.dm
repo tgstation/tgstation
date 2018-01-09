@@ -28,7 +28,7 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower")
-	research_cost = 2500
+	research_cost = 10000
 	export_price = 10000
 
 /datum/techweb_node/bio_process
