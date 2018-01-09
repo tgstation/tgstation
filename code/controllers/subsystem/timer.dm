@@ -314,7 +314,7 @@ SUBSYSTEM_DEF(timer)
 		SStimer.hashes[hash] = src
 
 	if (flags & TIMER_STOPPABLE)
-		id = nextid
+		id = num2text(nextid, 100)
 		if (nextid >= SHORT_REAL_LIMIT)
 			nextid += min(1, 2**round(nextid/SHORT_REAL_LIMIT))
 		else
