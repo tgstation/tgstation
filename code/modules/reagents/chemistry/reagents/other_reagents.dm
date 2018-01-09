@@ -536,6 +536,14 @@
 	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
 
+/datum/reagent/stableslimetoxin/moth
+	name = "Moth Mutation Toxin"
+	id = "mothmutationtoxin"
+	description = "A glowing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/moth
+	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
+
 /datum/reagent/stableslimetoxin/unstable //PSYCH
 	name = "Unstable Mutation Toxin"
 	id = "unstablemutationtoxin"

@@ -175,6 +175,13 @@
 	results = list("golemmutationtoxin" = 1)
 	required_reagents = list("unstablemutationtoxin" = 1, "silver" = 1) //not too hard to get but also not just there in xenobio
 
+/datum/chemical_reaction/moth_mutation_toxin
+	name = "Moth Mutation Toxin"
+	id = "mothmutationtoxin"
+	results = list("mothmutationtoxin" = 1)
+	required_reagents = list("unstablemutationtoxin" = 1, "sugar" = 1)
+	mix_message = "The mix settles into a glowing, waterlike liquid."
+
 
 //BLACKLISTED RACES
 /datum/chemical_reaction/skeleton_mutation_toxin
