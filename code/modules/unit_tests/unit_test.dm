@@ -48,21 +48,30 @@ GLOBAL_VAR(test_log)
 
 	LAZYADD(fail_reasons, reason)
 
-/world/proc/RunUnitTests()
+/proc/RunUnitTests()
 	CHECK_TICK
+
 	for(var/I in subtypesof(/datum/unit_test))
 		var/datum/unit_test/test = new I
+
 		GLOB.current_test = test
 		var/duration = REALTIMEOFDAY
+
 		test.Run()
+
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
 		GLOB.failed_any_test |= !test.succeeded
+
 		var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [I] [duration / 10]s")
 		var/list/fail_reasons = test.fail_reasons
+
 		qdel(test)
+
 		for(var/J in 1 to LAZYLEN(fail_reasons))
 			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
 		log_test(log_entry.Join("\n"))
+
 		CHECK_TICK
+
 	SSticker.force_ending = TRUE

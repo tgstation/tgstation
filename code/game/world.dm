@@ -51,7 +51,7 @@ GLOBAL_PROTECT(security_mode)
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
 #ifdef UNIT_TESTS
-	SSticker.OnRoundstart(CALLBACK(src, .proc/RunUnitTests))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
 #else
 	SSticker.force_ending = TRUE
 #endif
