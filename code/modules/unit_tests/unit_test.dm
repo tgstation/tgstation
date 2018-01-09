@@ -50,8 +50,6 @@ GLOBAL_VAR(test_log)
 
 /world/proc/RunUnitTests()
 	CHECK_TICK
-	//can't rely on world/Error if this is off so results may be factually wrong
-#ifdef DEBUG
 	for(var/I in subtypesof(/datum/unit_test))
 		var/datum/unit_test/test = new I
 		GLOB.current_test = test
@@ -67,5 +65,4 @@ GLOBAL_VAR(test_log)
 			log_entry += "\tREASON #[J]: [fail_reasons[J]]"
 		log_test(log_entry.Join("\n"))
 		CHECK_TICK
-#endif
 	SSticker.force_ending = TRUE
