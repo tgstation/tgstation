@@ -13,7 +13,7 @@
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
 	var/cooldown = 0
-	var/last_use = 0
+	var/last_trigger = 0 //Last time it was successfully triggered.
 
 /obj/item/device/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
@@ -89,9 +89,9 @@
 	return considering & can_see*/
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
-	if(crit_fail || (world.time < last_use + cooldown))
+	if(crit_fail || (world.time < last_trigger + cooldown))
 		return FALSE
-	last_use = world.time
+	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	times_used++
 	flash_recharge()
