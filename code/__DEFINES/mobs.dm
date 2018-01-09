@@ -186,3 +186,5 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+
+#define DEFAULT_RESPAWN_TIME (5 MINUTES)

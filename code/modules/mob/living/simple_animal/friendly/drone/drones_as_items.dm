@@ -11,7 +11,7 @@
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
-	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
+	var/mob/living/simple_animal/drone/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 	var/seasonal_hats = TRUE //If TRUE, and there are no default hats, different holidays will grant different hats
 	var/static/list/possible_seasonal_hats //This is built automatically in build_seasonal_hats() but can also be edited by admins!
 
@@ -37,7 +37,7 @@
 	GLOB.poi_list -= src
 	. = ..()
 
-/obj/item/drone_shell/attack_ghost(mob/user)
+/obj/item/drone_shell/attack_ghost(mob/dead/observer/user)
 	if(jobban_isbanned(user,"drone"))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
@@ -49,6 +49,9 @@
 	if(!SSticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return
+	if(!user.respawn_check("a drone", DEFAULT_RESPAWN_TIME))
+		return
+
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || QDELETED(src) || !isobserver(user))
 		return
