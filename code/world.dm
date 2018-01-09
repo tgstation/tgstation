@@ -10,6 +10,6 @@
 	hub = "Exadv1.spacestation13"
 	name = "/tg/ Station 13"
 	fps = 20
-#if defined(GC_FAILURE_HARD_LOOKUP) || defined(FIND_REF_NO_CHECK_TICK)
+#ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif
