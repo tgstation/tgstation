@@ -13,7 +13,7 @@
 	stored_research = new /datum/techweb
 
 /obj/item/disk/tech_disk/debug
-	name = "centcomm technology disk"
+	name = "\improper CentCom technology disk"
 	desc = "A debug item for research"
 	materials = list()
 
