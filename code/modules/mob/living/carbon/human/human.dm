@@ -1055,7 +1055,6 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
-<<<<<<< HEAD
 
 /mob/living/carbon/human/species/tarajan
 	race = /datum/species/tarajan
@@ -1068,5 +1067,3 @@
 
 /mob/living/carbon/human/species/bird
 	race = /datum/species/bird
-=======
->>>>>>> a47adc94ee... Merge pull request #34195 from tgstation/Cyberboss-patch-1
