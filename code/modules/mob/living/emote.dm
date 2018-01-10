@@ -234,7 +234,7 @@
 /datum/emote/living/point/run_emote(mob/user, params)
 	message_param = initial(message_param) // reset
 	if(ishuman(user))
-		var/mob/carbon/human/H = user
+		var/mob/living/carbon/human/H = user
 		if(H.get_num_arms() == 0)
 			if(H.get_num_legs() != 0)
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
