@@ -54,7 +54,7 @@
 /datum/supply_pack/materials/uranium20
 	name = "20 Uranium Sheets"
 	cost = 8000
-	contains = list(/obj/item/stack/sheet/mineral/gold/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
 	crate_name = "uranium sheets crate"
 	
 /datum/supply_pack/science/plasma_canister
