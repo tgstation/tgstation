@@ -21,10 +21,6 @@ MAP_REMOVE_JOB(mime)
 MAP_REMOVE_JOB(curator)
 MAP_REMOVE_JOB(lawyer)
 
-/datum/outfit/job/clown/post_equip()
-	// prevents runtimes caused when NPC clowns try to set their job
-	MAP_JOB_CHECK_BASE
-
 /datum/outfit/job/chaplain/New()
 	..()
 	MAP_JOB_CHECK

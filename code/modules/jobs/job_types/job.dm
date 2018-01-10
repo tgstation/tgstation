@@ -175,6 +175,8 @@
 	var/datum/job/J = SSjob.GetJobType(jobtype)
 	if(!J)
 		J = SSjob.GetJob(H.job)
+		if (!J)  // Job might be removed by the map
+			return
 
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
