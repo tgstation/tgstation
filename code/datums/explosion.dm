@@ -118,7 +118,9 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/M_turf = get_turf(M)
 			if(M_turf && M_turf.z == z0)
 				var/dist = get_dist(M_turf, epicenter)
-				var/baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
+				var/baseshakeamount
+				if(orig_max_distance - dist > 0)
+					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)

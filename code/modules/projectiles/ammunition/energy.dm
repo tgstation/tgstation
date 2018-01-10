@@ -14,7 +14,7 @@
 	e_cost = 0
 	var/list/projectile_vars = list()
 
-/obj/item/ammo_casing/energy/chameleon/ready_proj()
+/obj/item/ammo_casing/energy/chameleon/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	. = ..()
 	if(!BB)
 		newshot()

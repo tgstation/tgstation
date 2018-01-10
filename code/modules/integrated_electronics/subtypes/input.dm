@@ -78,7 +78,7 @@
 
 /obj/item/integrated_circuit/input/med_scanner
 	name = "integrated medical analyser"
-	desc = "A very small version of the common medical analyser.  This allows the machine to know how healthy someone is."
+	desc = "A very small version of the common medical analyser. This allows the machine to know how healthy someone is."
 	icon_state = "medscan"
 	complexity = 4
 	inputs = list("\<REF\> target")
@@ -106,7 +106,7 @@
 
 /obj/item/integrated_circuit/input/adv_med_scanner
 	name = "integrated advanced medical analyser"
-	desc = "A very small version of the medbot's medical analyser.  This allows the machine to know how healthy someone is.  \
+	desc = "A very small version of the medbot's medical analyser. This allows the machine to know how healthy someone is. \
 	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
 	icon_state = "medscan_adv"
 	complexity = 12
@@ -145,20 +145,20 @@
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
-	desc = "A very small version of the xenobio analyser.  This allows the machine to know every needed properties of slime."
+	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("\<REF\> target")
 	outputs = list(
-		"colour"		     = IC_PINTYPE_STRING,
-		"adult"	             = IC_PINTYPE_BOOLEAN,
-		"nutrition"			 = IC_PINTYPE_NUMBER,
-		"charge"		     = IC_PINTYPE_NUMBER,
-		"health"		     = IC_PINTYPE_NUMBER,
-		"possible mutation"	 = IC_PINTYPE_LIST,
-		"genetic destability"= IC_PINTYPE_NUMBER,
-		"slime core amount"	 = IC_PINTYPE_NUMBER,
-		"Growth progress"	 = IC_PINTYPE_NUMBER,
+		"colour"				= IC_PINTYPE_STRING,
+		"adult"					= IC_PINTYPE_BOOLEAN,
+		"nutrition"				= IC_PINTYPE_NUMBER,
+		"charge"				= IC_PINTYPE_NUMBER,
+		"health"				= IC_PINTYPE_NUMBER,
+		"possible mutation"		= IC_PINTYPE_LIST,
+		"genetic destability"	= IC_PINTYPE_NUMBER,
+		"slime core amount"		= IC_PINTYPE_NUMBER,
+		"Growth progress"		= IC_PINTYPE_NUMBER,
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -188,8 +188,8 @@
 
 /obj/item/integrated_circuit/input/plant_scanner
 	name = "integrated plant analyzer"
-	desc = "A very small version of the plant analyser.  This allows the machine to know all valuable params of plants in trays.  \
-			it can't scan seeds and fruits.only plants."
+	desc = "A very small version of the plant analyser. This allows the machine to know all valuable params of plants in trays. \
+			It cannot scan seeds nor fruits, only plants."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("\<REF\> target")
@@ -210,7 +210,7 @@
 		"Water level"			= IC_PINTYPE_NUMBER,
 		"Nutrition level"			= IC_PINTYPE_NUMBER,
 		"harvest"			= IC_PINTYPE_NUMBER,
-		"dead"			= IC_PINTYPE_NUMBER    ,
+		"dead"			= IC_PINTYPE_NUMBER,
 		"plant health"			= IC_PINTYPE_NUMBER
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
@@ -250,8 +250,8 @@
 /obj/item/integrated_circuit/input/gene_scanner
 	name = "gene scanner"
 	desc = "This circuit will scan plant for traits and reagent genes."
-	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes.  \
-			it can't scan seeds and fruits.only plants."
+	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes. \
+			It cannot scan seeds nor fruits, only plants."
 	inputs = list(
 		"\<REF\> target" = IC_PINTYPE_REF
 	)
@@ -287,23 +287,23 @@
 
 /obj/item/integrated_circuit/input/examiner
 	name = "examiner"
-	desc = "It' s a little machine vision system. It can return the name, description, distance, \
-	relative coordinates, total amount of reagents, maximum amount of reagents, density and opacity of the referenced object."
+	desc = "It's a little machine vision system. It can return the name, description, distance, \
+	relative coordinates, total amount of reagents, maximum amount of reagents, density, and opacity of the referenced object."
 	icon_state = "video_camera"
 	complexity = 6
 	inputs = list(
 		"target" = IC_PINTYPE_REF
 		)
 	outputs = list(
-		"name"	            	= IC_PINTYPE_STRING,
-		"description"       	= IC_PINTYPE_STRING,
-		"X"         			= IC_PINTYPE_NUMBER,
-		"Y"			            = IC_PINTYPE_NUMBER,
-		"distance"			    = IC_PINTYPE_NUMBER,
+		"name"				 	= IC_PINTYPE_STRING,
+		"description"			= IC_PINTYPE_STRING,
+		"X"						= IC_PINTYPE_NUMBER,
+		"Y"						= IC_PINTYPE_NUMBER,
+		"distance"				= IC_PINTYPE_NUMBER,
 		"max reagents"			= IC_PINTYPE_NUMBER,
-		"amount of reagents"    = IC_PINTYPE_NUMBER,
-		"density"    			= IC_PINTYPE_BOOLEAN,
-		"opacity"    			= IC_PINTYPE_BOOLEAN,
+		"amount of reagents"	= IC_PINTYPE_NUMBER,
+		"density"				= IC_PINTYPE_BOOLEAN,
+		"opacity"				= IC_PINTYPE_BOOLEAN,
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -341,7 +341,7 @@
 
 /obj/item/integrated_circuit/input/local_locator
 	name = "local locator"
-	desc = "This is needed for certain devices that demand a reference for a target to act upon.  This type only locates something \
+	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type only locates something \
 	that is holding the machine containing it."
 	inputs = list()
 	outputs = list("located ref")
@@ -360,10 +360,10 @@
 
 /obj/item/integrated_circuit/input/adjacent_locator
 	name = "adjacent locator"
-	desc = "This is needed for certain devices that demand a reference for a target to act upon.  This type only locates something \
+	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type only locates something \
 	that is standing a meter away from the machine."
-	extended_desc = "The first pin requires a ref to a kind of object that you want the locator to acquire.  This means that it will \
-	give refs to nearby objects that are similar.  If more than one valid object is found nearby, it will choose one of them at \
+	extended_desc = "The first pin requires a ref to the kind of object that you want the locator to acquire. This means that it will \
+	give refs to nearby objects that are similar. If more than one valid object is found nearby, it will choose one of them at \
 	random."
 	inputs = list("desired type ref")
 	outputs = list("located ref")
@@ -400,11 +400,11 @@
 /obj/item/integrated_circuit/input/advanced_locator_list
 	complexity = 6
 	name = "list advanced locator"
-	desc = "This is needed for certain devices that demand list of names for a targets to act upon.  This type locates something \
+	desc = "This is needed for certain devices that demand list of names for a targets to act upon. This type locates something \
 	that is standing in given radius up to 8 meters"
-	extended_desc = "The first pin requires list a kinds of object that you want the locator to acquire. If  This means that it will \
-	give refs to nearby objects that are similar. It will locate objects by given names and description,given in list. It will give list of all found objects.\
-	.The second pin is a radius"
+	extended_desc = "The first pin requires a list of kinds of objects that you want the locator to acquire. It will locate nearby objects by name and description, \
+	and will then provide a list of all found objects which are similar. \
+	The second pin is a radius."
 	inputs = list("desired type ref" = IC_PINTYPE_LIST, "radius" = IC_PINTYPE_NUMBER)
 	outputs = list("located ref" = IC_PINTYPE_LIST)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
@@ -455,9 +455,9 @@
 	name = "advanced locator"
 	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type locates something \
 	that is standing in given radius up to 8 meters"
-	extended_desc = "The first pin requires a ref to a kind of object that you want the locator to acquire. If  This means that it will \
-	give refs to nearby objects that are similar. If this pin is string, locator will search\
-	 item by matching desired text in name + description. If more than one valid object is found nearby, it will choose one of them at \
+	extended_desc = "The first pin requires a ref to a kind of object that you want the locator to acquire. This means that it will \
+	give refs to nearby objects which are similar. If this pin is string, this locator will search for an \
+	item by matching desired text in it's name and description. If more than one valid object is found nearby, it will choose one of them at \
 	random. The second pin is a radius."
 	inputs = list("desired type" = IC_PINTYPE_ANY, "radius" = IC_PINTYPE_NUMBER)
 	outputs = list("located ref")
@@ -505,10 +505,10 @@
 
 /obj/item/integrated_circuit/input/signaler
 	name = "integrated signaler"
-	desc = "Signals from a signaler can be received with this, allowing for remote control.  Additionally, it can send signals as well."
-	extended_desc = "When a signal is received from another signaler, the 'on signal received' activator pin will be pulsed.  \
-	The two input pins are to configure the integrated signaler's settings.  Note that the frequency should not have a decimal in it.  \
-	Meaning the default frequency is expressed as 1457, not 145.7.  To send a signal, pulse the 'send signal' activator pin."
+	desc = "Signals from a signaler can be received with this, allowing for remote control. Additionally, it can send signals as well."
+	extended_desc = "When a signal is received from another signaler, the 'on signal received' activator pin will be pulsed. \
+	The two input pins are to configure the integrated signaler's settings. Note that the frequency should not have a decimal in it, \
+	meaning the default frequency is expressed as 1457, not 145.7. To send a signal, pulse the 'send signal' activator pin."
 	icon_state = "signal"
 	complexity = 4
 	inputs = list("frequency" = IC_PINTYPE_NUMBER,"code" = IC_PINTYPE_NUMBER)
@@ -583,10 +583,10 @@
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"
-	desc = "Enables the sending and receiving of messages on NTNet with packet data protocol."
-	extended_desc = "Data can be send or received using the \
-	second pin on each side, with additonal data reserved for the third pin.  When a message is received, the second activation pin \
-	will pulse whatever's connected to it.  Pulsing the first activation pin will send a message."
+	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol."
+	extended_desc = "Data can be send or received using the second pin on each side, \
+	with additonal data reserved for the third pin. When a message is received, the second activation pin \
+	will pulse whatever's connected to it. Pulsing the first activation pin will send a message."
 	icon_state = "signal"
 	complexity = 4
 	inputs = list(
@@ -665,7 +665,7 @@
 /obj/item/integrated_circuit/input/microphone
 	name = "microphone"
 	desc = "Useful for spying on people or for voice activated machines."
-	extended_desc = "This will automatically translate most languages it hears to Galactic Common.  \
+	extended_desc = "This will automatically translate most languages it hears to Galactic Common. \
 	The first activation pin is always pulsed when the circuit hears someone talk, while the second one \
 	is only triggered if it hears someone speaking a language other than Galactic Common."
 	icon_state = "recorder"
@@ -696,8 +696,8 @@
 
 /obj/item/integrated_circuit/input/sensor
 	name = "sensor"
-	desc = "Scans and obtains a reference for any objects or persons near you.  All you need to do is shove the machine in their face."
-	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
+	desc = "Scans and obtains a reference for any objects or persons near you. All you need to do is shove the machine in their face."
+	extended_desc = "If the 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
 	icon_state = "recorder"
 	complexity = 12
 	inputs = list("ignore storage" = IC_PINTYPE_BOOLEAN)
@@ -722,8 +722,8 @@
 
 /obj/item/integrated_circuit/input/sensor/ranged
 	name = "ranged sensor"
-	desc = "Scans and obtains a reference for any objects or persons in range.  All you need to do is point the machine towards target."
-	extended_desc = "If 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
+	desc = "Scans and obtains a reference for any objects or persons in range. All you need to do is point the machine towards the target."
+	extended_desc = "If the 'ignore storage' pin is set to true, the sensor will disregard scanning various storage containers such as backpacks."
 	icon_state = "recorder"
 	complexity = 36
 	inputs = list("ignore storage" = IC_PINTYPE_BOOLEAN)
@@ -753,10 +753,10 @@
 	return TRUE
 
 /obj/item/integrated_circuit/input/objscaner
-	name = "scaner"
-	desc = "Scans and obtains a reference for any objects you use on assembly."
-	extended_desc = "If 'put down' pin is set to true, assembly will take scanned object from your hands to it's location.\
-	useful for interaction with grabber. Scaner works only with help intent."
+	name = "scanner"
+	desc = "Scans and obtains a reference for any objects you use on the assembly."
+	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to it's location. \
+	Useful for interaction with the grabber. The scanner only works using the help intent."
 	icon_state = "recorder"
 	complexity = 4
 	inputs = list("put down" = IC_PINTYPE_BOOLEAN)
@@ -782,7 +782,7 @@
 	name = "internal battery monitor"
 	desc = "This monitors the charge level of an internal battery."
 	icon_state = "internalbm"
-	extended_desc = "This circuit will give you values of charge, max charge and percentage of the internal battery on demand."
+	extended_desc = "This circuit will give you values of charge, max charge, and percentage of the internal battery on demand."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 1
 	inputs = list()
@@ -814,7 +814,7 @@
 	name = "external battery monitor"
 	desc = "This can help to watch battery state of any device in view"
 	icon_state = "externalbm"
-	extended_desc = "This circuit will give you values of charge, max charge and percentage of any device or battery in view"
+	extended_desc = "This circuit will give you values of charge, max charge, and percentage of any device or battery in view"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -847,7 +847,7 @@
 
 /obj/item/integrated_circuit/input/ntnetsc
 	name = "NTnet scaner"
-	desc = "This can return NTnet id of component insi given object, if there is any."
+	desc = "This can return NTnet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
