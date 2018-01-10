@@ -232,6 +232,7 @@
 	restraint_check = TRUE
 
 /datum/emote/living/point/run_emote(mob/user, params)
+	message_param = initial(message_param) // reset
 	if(ishuman(user))
 		var/mob/carbon/human/H = user
 		if(H.get_num_arms() == 0)
@@ -240,7 +241,7 @@
 				H.Knockdown(20)
 			else
 				message_param = "bumps their head on the ground trying to motion towards %t."
-				H.brainloss += 5
+				H.adjustBrainLoss(5)
 	..()
 
 /datum/emote/living/pout
