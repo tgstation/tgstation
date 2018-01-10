@@ -14,7 +14,7 @@
 					/obj/item/shield/riot/roman,
 					/obj/item/shield/riot/roman)
 	crate_name = "Counter holy land invasion crate."
-
+	
 /datum/supply_pack/materials/diamond20
 	name = "20 Diamonds"
 	cost = 50000
@@ -38,13 +38,13 @@
 	cost = 5000
 	contains = list(/obj/item/stack/sheet/mineral/titanium/twenty)
 	crate_name = "titanium sheets crate"
-
+	
 /datum/supply_pack/materials/silver20
 	name = "20 Silver Sheets"
 	cost = 2000
 	contains = list(/obj/item/stack/sheet/mineral/silver/twenty)
 	crate_name = "silver sheets crate"
-
+	
 /datum/supply_pack/materials/gold20
 	name = "20 Gold Sheets"
 	cost = 5000
@@ -56,3 +56,12 @@
 	cost = 8000
 	contains = list(/obj/item/stack/sheet/mineral/gold/twenty)
 	crate_name = "uranium sheets crate"
+	
+/datum/supply_pack/science/plasma_canister
+	name = "Plasma Canister"
+	cost = 6000
+	access = ACCESS_ATMOSPHERICS
+	contains = list(/obj/machinery/portable_atmospherics/canister/toxins)
+	crate_name = "plasma canister crate"
+	crate_type = /obj/structure/closet/crate/secure
+	
