@@ -86,13 +86,17 @@
 			return
 		if(user.transferItemToLoc(A, src))
 			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
-			suppressed = A
-			S.oldsound = fire_sound
-			fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-			w_class += A.w_class //so pistols do not fit in pockets when suppressed
-			update_icon()
+			install_suppressor(A)
 			return
 	return 0
+
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
+	// this proc assumes that the suppressor is already inside src
+	suppressed = S
+	S.oldsound = fire_sound
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	update_icon()
 
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
