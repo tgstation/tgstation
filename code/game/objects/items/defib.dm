@@ -273,6 +273,9 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibpaddles"
 	item_state = "defibpaddles"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
@@ -311,6 +314,9 @@
 	item_state = "defibpaddles[wielded]"
 	if(cooldown)
 		icon_state = "defibpaddles[wielded]_cooldown"
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.update_inv_hands()
 
 /obj/item/twohanded/shockpaddles/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -583,8 +589,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 /obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
@@ -606,8 +610,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH
