@@ -150,6 +150,10 @@
 	if(!disabilities[disability])
 		return
 
+	if(!sources) // No defined source cures the disability entirely.
+		disabilities -= disability
+		return
+
 	if(!islist(sources))
 		sources = list(sources)
 
