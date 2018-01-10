@@ -526,8 +526,19 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_with_camera = list()
 	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
 
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, "Game still loading, please hold!")
+		return
+
+	var/log_message
 	if(on_station)
 		dat += "<b>Only checking areas on station z-levels.</b><br><br>"
+		log_message = "station z-levels"
+	else
+		log_message = "all z-levels"
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used the Test Areas debug command checking [log_message].</span>")
+	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
 
 	for(var/area/A in world)
 		if(on_station)
@@ -537,16 +548,18 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		var/area/A = APC.area
-		if(!A) //This is usually an indicator that the machines subsystem hasn't finished initializing.
-			dat += "Skipped over [APC] in invalid location, [APC.loc]. Game likely hasn't finished setting up yet.<br>"
+		if(!A)
+			dat += "Skipped over [APC] in invalid location, [APC.loc]."
 			continue
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 		else if(A.type in areas_all)
 			areas_with_multiple_APCs.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
@@ -555,6 +568,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/requests_console/RC in GLOB.machines)
 		var/area/A = get_area(RC)
@@ -563,6 +577,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/light/L in GLOB.machines)
 		var/area/A = get_area(L)
@@ -571,6 +586,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/light_switch/LS in GLOB.machines)
 		var/area/A = get_area(LS)
@@ -579,6 +595,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/item/device/radio/intercom/I in GLOB.machines)
 		var/area/A = get_area(I)
@@ -587,6 +604,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/camera/C in GLOB.machines)
 		var/area/A = get_area(C)
@@ -595,6 +613,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			continue
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
+		CHECK_TICK
 
 	var/list/areas_without_APC = areas_all - areas_with_APC
 	var/list/areas_without_air_alarm = areas_all - areas_with_air_alarm
@@ -608,41 +627,49 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		dat += "<h1>AREAS WITHOUT AN APC:</h1>"
 		for(var/areatype in areas_without_APC)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_with_multiple_APCs.len)
 		dat += "<h1>AREAS WITH MULTIPLE APCS:</h1>"
 		for(var/areatype in areas_with_multiple_APCs)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_air_alarm.len)
 		dat += "<h1>AREAS WITHOUT AN AIR ALARM:</h1>"
 		for(var/areatype in areas_without_air_alarm)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_RC.len)
 		dat += "<h1>AREAS WITHOUT A REQUEST CONSOLE:</h1>"
 		for(var/areatype in areas_without_RC)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_light.len)
 		dat += "<h1>AREAS WITHOUT ANY LIGHTS:</h1>"
 		for(var/areatype in areas_without_light)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_LS.len)
 		dat += "<h1>AREAS WITHOUT A LIGHT SWITCH:</h1>"
 		for(var/areatype in areas_without_LS)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_intercom.len)
 		dat += "<h1>AREAS WITHOUT ANY INTERCOMS:</h1>"
 		for(var/areatype in areas_without_intercom)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(areas_without_camera.len)
 		dat += "<h1>AREAS WITHOUT ANY CAMERAS:</h1>"
 		for(var/areatype in areas_without_camera)
 			dat += "[areatype]<br>"
+			CHECK_TICK
 
 	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
 		dat += "<b>No problem areas!</b>"
