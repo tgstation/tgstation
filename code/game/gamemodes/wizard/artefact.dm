@@ -121,11 +121,20 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
+	var/xray_granted = FALSE
+
+/obj/item/scrying/equipped(mob/user)
+	if(!xray_granted && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!(H.dna.check_mutation(XRAY)))
+			H.dna.add_mutation(XRAY)
+			xray_granted = TRUE
+	. = ..()
+
 /obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
-	return
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
