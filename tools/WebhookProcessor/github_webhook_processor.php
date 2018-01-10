@@ -2,6 +2,9 @@
 /*
  *	Github webhook In-game PR Announcer and Changelog Generator for /tg/Station13
  *	Author: MrStonedOne
+ *	Errors: JJRcop
+ *	Mistakes: A lot of people make these.
+ *	Remove: lines 5-7
  *	For documentation on the changelog generator see https://tgstation13.org/phpBB/viewtopic.php?f=5&t=5157
  *	To hide prs from being announced in game, place a [s] in front of the title
  *	All runtime errors are echo'ed to the webhook's logs in github
