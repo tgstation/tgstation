@@ -56,7 +56,7 @@
 
 	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
-	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
+	SSblackbox.record_feedback("tally", "nuclear_challenge_mode", 1, "War Ops Declaration")
 
 	qdel(src)
 
