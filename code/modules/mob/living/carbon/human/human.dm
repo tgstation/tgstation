@@ -25,14 +25,11 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-<<<<<<< HEAD
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
-
+	//HIPPIE SHIT?
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 	update_teeth()
-=======
+	//END OF HIPPIE SHIT?
 	
->>>>>>> a47adc94ee... Merge pull request #34195 from tgstation/Cyberboss-patch-1
 	. = ..()
 	
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
