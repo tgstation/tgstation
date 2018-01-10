@@ -42,7 +42,7 @@ set_error_handler(function($severity, $message, $file, $line) {
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
-	file_put_contents('htwebhookerror.log', '['.date(DATE_ATOM).'] '."Error on line {$e->getLine()}: " . $e->getMessage().PHP_EOL, FILE_APPEND);
+	file_put_contents('htwebhookerror.log', "Error on line {$e->getLine()}: " . $e->getMessage(), FILE_APPEND);
 	die();
 });
 $rawPost = NULL;
@@ -172,23 +172,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 	return false;
 }
 
-function set_labels($payload, $labels, $remove) {
-	$existing = get_labels($payload);
-
-	$tags = array();
-
-	$tags = array_merge($labels, $existing);
-	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
-
-	$final = array();
-	foreach($tags as $t)
-		$final[] = $t;
-
-	$url = $payload['pull_request']['issue_url'] . '/labels';
-	echo apisend($url, 'PUT', $final);
-}
-
 //rip bs-12
 function tag_pr($payload, $opened) {
 	//get the mergeable state
@@ -217,11 +200,11 @@ function tag_pr($payload, $opened) {
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else if ($mergeable === FALSE)
+	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
-	$addonlytags = array('icons' => 'Sprites', 'sound' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
+	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL');
+	$addonlytags = array('icons' => 'Sprites', 'sounds' => 'Sound', 'config' => 'Config Update', 'code/controllers/configuration/entries' => 'Config Update', 'tgui' => 'UI');
 	foreach($treetags as $tree => $tag)
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
@@ -232,16 +215,31 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
-		$tags[] = 'Needs Review';
+	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
+		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
 
-	return array($tags, $remove);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+
+	$existing = get_labels($payload);
+
+	$tags = array_merge($tags, $existing);
+	$tags = array_unique($tags);
+	$tags = array_diff($tags, $remove);
+
+	$final = array();
+	foreach($tags as $t)
+		$final[] = $t;
+
+
+	echo apisend($url, 'PUT', $final);
+
+	return $final;
 }
 
 function remove_ready_for_review($payload, $labels = null){
 	if($labels == null)
 		$labels = get_labels($payload);
-	$index = array_search('Needs Review', $labels);
+	$index = array_search('Review Again', $labels);
 	if($index !== FALSE)
 		unset($labels[$index]);
 	$url = $payload['pull_request']['issue_url'] . '/labels';
@@ -257,14 +255,13 @@ function get_reviews($payload){
 	return json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
 }
 
-function check_ready_for_review($payload, $labels = null, $remove = array()){
-	$r4rlabel = 'Needs Review';
+function check_ready_for_review($payload, $labels = null){
+	$r4rlabel = 'Review Again';
 	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
 	if($labels == null)
 		$labels = get_labels($payload);
-	$returned = array($labels, $remove);
 	//if the label is already there we may need to remove it
 	foreach($labels as $L){
 		if(in_array($L, $labels_which_should_not_be_ready))
@@ -274,8 +271,8 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 	}
 	
 	if($has_label_already && $should_not_have_label){
-		$remove[] = $r4rlabel;
-		return $returned;
+		remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;
 	}
 
 	//find all reviews to see if changes were requested at some point
@@ -285,7 +282,7 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 	$dismissed_an_approved_review = false;
 
 	foreach($reviews as $R)
-		if(is_maintainer($payload, $R['user']['login'])){
+		if(is_maintainer($R['user']['login'])){
 			$lower_state = strtolower($R['state']);
 			if($lower_state == 'changes_requested')
 				$reviews_ids_with_changes_requested[] = $R['id'];
@@ -297,8 +294,8 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 
 	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
 		if($has_label_already)
-			$remove[] = $r4rlabel;
-		return $returned;	//no need to be here
+			remove_ready_for_review($payload, $labels);
+		return;	//no need to be here
 	}
 
 	if(count($reviews_ids_with_changes_requested) > 0){
@@ -314,8 +311,8 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 			//review comments which are outdated have a null position
 			if($C['position'] !== null){
 				if($has_label_already)
-					$remove[] = $r4rlabel;
-				return $returned;	//no need to tag
+					remove_ready_for_review($payload, $labels);
+				return;	//no need to tag
 			}
 		}
 	}
@@ -323,8 +320,9 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 	//finally, add it if necessary
 	if(!$has_label_already){
 		$labels[] = $r4rlabel;
+		$url = $payload['pull_request']['issue_url'] . '/labels';
+		apisend($url, 'PUT', $labels);
 	}
-	return $returned;
 }
 
 function check_dismiss_changelog_review($payload){
@@ -361,11 +359,10 @@ function handle_pr($payload) {
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
-			list($labels, $remove) = tag_pr($payload, true);
-			set_labels($payload, $labels, $remove);
+			tag_pr($payload, true);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) <= 0){
+			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
@@ -375,10 +372,9 @@ function handle_pr($payload) {
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
-			list($labels, $remove) = tag_pr($payload, false);
+			$labels = tag_pr($payload, false);
 			if($payload['action'] == 'synchronize')
-				list($labels, $remove) = check_ready_for_review($payload, $labels, $remove);
-			set_labels($payload, $labels, $remove);
+				check_ready_for_review($payload, $labels);
 			return;
 		case 'reopened':
 			$action = $payload['action'];
@@ -456,11 +452,13 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
 		'Priority: CRITICAL' => 5,
+		'Atmospherics' => 4,
 		'Logging' => 1,
 		'Feedback' => 1,
 		'Performance' => 3,
 		'Feature' => -1,
 		'Balance/Rebalance' => -1,
+		'Tweak' => -1,
 		'PRB: Reset' => $startingPRBalance - $oldbalance,
 	);
 
@@ -521,49 +519,35 @@ function update_pr_balance($payload) {
 	fclose($balances_file);
 }
 
-$github_diff = null;
-
-function get_diff($payload) {
-	global $github_diff;
-	if ($github_diff === null) {
-		//go to the diff url
-		$url = $payload['pull_request']['diff_url'];
-		$github_diff = file_get_contents($url);
-	}
-	return $github_diff;
-}
-
 function auto_update($payload){
 	global $enable_live_tracking;
 	global $path_to_script;
 	global $repoOwnerAndName;
 	global $tracked_branch;
-	global $github_diff;
 	if(!$enable_live_tracking || !has_tree_been_edited($payload, $path_to_script) || $payload['pull_request']['base']['ref'] != $tracked_branch)
 		return;
-
-	get_diff($payload);
+	
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
-	$content_diff = "### Diff not available. :slightly_frowning_face:";
-	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
-		$script_diff = matches[1];
-		if($script_diff) {
-			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
-		}
-	}
-	create_comment($payload, "Edit detected. Self updating... \n<details><summary>Here are my changes:</summary>\n\n" . $content_diff . "\n</details>\n<details><summary>Here is my new code:</summary>\n\n``" . "`HTML+PHP\n" . $content . "\n``" . '`\n</details>');
+
+	create_comment($payload, "Edit detected. Self updating... Here is my new code:\n``" . "`HTML+PHP\n" . $content . "\n``" . '`');
 
 	$code_file = fopen(basename($path_to_script), 'w');
 	fwrite($code_file, $content);
 	fclose($code_file);
 }
 
+$github_diff = null;
+
 function has_tree_been_edited($payload, $tree){
 	global $github_diff;
-	get_diff($payload);
+	if ($github_diff === null) {
+		//go to the diff url
+		$url = $payload['pull_request']['diff_url'];
+		$github_diff = file_get_contents($url);
+	}
 	//find things in the _maps/map_files tree
 	//e.g. diff --git a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm
-	return ($github_diff !== FALSE) && (preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m', $github_diff) !== 0);
+	return $github_diff !== FALSE && preg_match('/^diff --git a\/' . preg_quote($tree, '/') . '/m') !== FALSE;
 }
 
 $no_changelog = false;
