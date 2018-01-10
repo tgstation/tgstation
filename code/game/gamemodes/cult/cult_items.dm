@@ -836,7 +836,6 @@
 			break
 		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
-		to_chat(world, "This is Iteration#[i], the base angle is [angle], the current spread is [spread] and the new angle is [set_angle]")
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
 		var/datum/beam/current_beam = new(user,temp_target,time=6,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
 		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
