@@ -18,6 +18,11 @@ if [ "$BUILD_TOOLS" = false ]; then
 		grep '^var/' code/*.dm | echo
 		exit 1
 	fi;
+	if grep -r -i 'centcomm' .; then
+		echo "Misspelling(s) of CENTCOM detected, please remove the extra M(s)."
+		grep -r -i 'centcomm' .
+		exit 1
+	fi;
 
 	#config folder should not be mandatory
 	rm -rf config
