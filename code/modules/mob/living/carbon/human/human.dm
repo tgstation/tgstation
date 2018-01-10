@@ -25,10 +25,10 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-	//HIPPIE SHIT?
+	//hippie start - <unknown, teeth apparently?>
 	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 	update_teeth()
-	//END OF HIPPIE SHIT?
+	// hippie end - <unknown, teeth apparently?>
 	
 	. = ..()
 	
