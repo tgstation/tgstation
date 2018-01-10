@@ -200,7 +200,7 @@ function tag_pr($payload, $opened) {
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
 		$remove[] = 'Merge Conflict';
-	else if ($mergable === FALSE)
+	else if ($mergeable === FALSE)
 		$tags[] = 'Merge Conflict';
 
 	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', '.github' => 'GitHub');
