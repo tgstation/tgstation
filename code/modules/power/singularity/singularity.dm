@@ -251,7 +251,6 @@
 
 
 /obj/singularity/proc/eat()
-	set background = BACKGROUND_ENABLED
 	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
 		if(!T || !isturf(loc))
