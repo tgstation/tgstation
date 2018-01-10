@@ -1,14 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
-<<<<<<< HEAD
-/proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","g17","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "whistle", "battlemage", "immortality", "ghostsword", "special")
-	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic", "bloodcontract")
-=======
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
->>>>>>> 41b06b0c31... Merge pull request #33933 from coiax/wizard-late-joining
 
 GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/e_gun/advtaser,
@@ -164,137 +157,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
-<<<<<<< HEAD
-		to_chat(user, "<B>You summoned [summon_type ? "magic" : "guns"]!</B>")
-		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
-		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.stat == DEAD || !(H.client))
-			continue
-		if(H.mind)
-			if(iswizard(H) || H.mind.special_role == "survivalist")
-				continue
-		if(prob(survivor_probability) && !(H.mind in SSticker.mode.traitors))
-			SSticker.mode.traitors += H.mind
-			if(!summon_type)
-				var/datum/objective/steal_five_of_type/summon_guns/guns = new
-				guns.owner = H.mind
-				H.mind.objectives += guns
-				H.mind.special_role = "survivalist"
-				H.mind.add_antag_datum(/datum/antagonist/auto_custom)
-				to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
-			else
-				var/datum/objective/steal_five_of_type/summon_magic/magic = new
-				magic.owner = H.mind
-				H.mind.objectives += magic
-				H.mind.special_role = "amateur magician"
-				H.mind.add_antag_datum(/datum/antagonist/auto_custom)
-				to_chat(H, "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>")
-			var/datum/objective/survive/survive = new
-			survive.owner = H.mind
-			H.mind.objectives += survive
-			H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
-			H.mind.announce_objectives()
-		var/randomizeguns 			= pick(gunslist)
-		var/randomizemagic 			= pick(magiclist)
-		var/randomizemagicspecial 	= pick(magicspeciallist)
-		if(!summon_type)
-			var/obj/item/gun/G
-			switch (randomizeguns)
-				if("taser")
-					G = new /obj/item/gun/energy/e_gun/advtaser(get_turf(H))
-				if("egun")
-					G = new /obj/item/gun/energy/e_gun(get_turf(H))
-				if("laser")
-					G = new /obj/item/gun/energy/laser(get_turf(H))
-				if("revolver")
-					G = new /obj/item/gun/ballistic/revolver(get_turf(H))
-				if("detective")
-					G = new /obj/item/gun/ballistic/revolver/detective(get_turf(H))
-				if("deagle")
-					G = new /obj/item/gun/ballistic/automatic/pistol/deagle/camo(get_turf(H))
-				if("gyrojet")
-					G = new /obj/item/gun/ballistic/automatic/gyropistol(get_turf(H))
-				if("pulse")
-					G = new /obj/item/gun/energy/pulse(get_turf(H))
-				if("suppressed")
-					G = new /obj/item/gun/ballistic/automatic/pistol(get_turf(H))
-					new /obj/item/suppressor(get_turf(H))
-				if("doublebarrel")
-					G = new /obj/item/gun/ballistic/revolver/doublebarrel(get_turf(H))
-				if("shotgun")
-					G = new /obj/item/gun/ballistic/shotgun(get_turf(H))
-				if("combatshotgun")
-					G = new /obj/item/gun/ballistic/shotgun/automatic/combat(get_turf(H))
-				if("arg")
-					G = new /obj/item/gun/ballistic/automatic/ar(get_turf(H))
-				if("mateba")
-					G = new /obj/item/gun/ballistic/revolver/mateba(get_turf(H))
-				if("boltaction")
-					G = new /obj/item/gun/ballistic/shotgun/boltaction(get_turf(H))
-				if("speargun")
-					G = new /obj/item/gun/ballistic/automatic/speargun(get_turf(H))
-				if("uzi")
-					G = new /obj/item/gun/ballistic/automatic/mini_uzi(get_turf(H))
-				if("cannon")
-					G = new /obj/item/gun/energy/lasercannon(get_turf(H))
-				if("crossbow")
-					G = new /obj/item/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
-				if("nuclear")
-					G = new /obj/item/gun/energy/e_gun/nuclear(get_turf(H))
-				if("sabr")
-					G = new /obj/item/gun/ballistic/automatic/proto(get_turf(H))
-				if("bulldog")
-					G = new /obj/item/gun/ballistic/automatic/shotgun/bulldog(get_turf(H))
-				if("c20r")
-					G = new /obj/item/gun/ballistic/automatic/c20r(get_turf(H))
-				if("saw")
-					G = new /obj/item/gun/ballistic/automatic/l6_saw(get_turf(H))
-				if("car")
-					G = new /obj/item/gun/ballistic/automatic/m90(get_turf(H))
-				if("glock17")
-					G = new /obj/item/gun/ballistic/automatic/pistol/g17(get_turf(H))
-				if("alienpistol")
-					G = new /obj/item/gun/energy/alien(get_turf(H))
-				if("dragnet")
-					G = new /obj/item/gun/energy/e_gun/dragnet(get_turf(H))
-				if("turret")
-					G = new /obj/item/gun/energy/e_gun/turret(get_turf(H))
-				if("pulsecarbine")
-					G = new /obj/item/gun/energy/pulse/carbine(get_turf(H))
-				if("decloner")
-					G = new /obj/item/gun/energy/decloner(get_turf(H))
-				if("mindflayer")
-					G = new /obj/item/gun/energy/mindflayer(get_turf(H))
-				if("hyperkinetic")
-					G = new /obj/item/gun/energy/kinetic_accelerator(get_turf(H))
-				if("advplasmacutter")
-					G = new /obj/item/gun/energy/plasmacutter/adv(get_turf(H))
-				if("wormhole")
-					G = new /obj/item/gun/energy/wormhole_projector(get_turf(H))
-				if("wt550")
-					G = new /obj/item/gun/ballistic/automatic/wt550(get_turf(H))
-				if("bulldog")
-					G = new /obj/item/gun/ballistic/automatic/shotgun(get_turf(H))
-				if("grenadelauncher")
-					G = new /obj/item/gun/ballistic/revolver/grenadelauncher(get_turf(H))
-				if("goldenrevolver")
-					G = new /obj/item/gun/ballistic/revolver/golden(get_turf(H))
-				if("sniper")
-					G = new /obj/item/gun/ballistic/automatic/sniper_rifle(get_turf(H))
-				if("medibeam")
-					G = new /obj/item/gun/medbeam(get_turf(H))
-				if("scatterbeam")
-					G = new /obj/item/gun/energy/laser/scatter(get_turf(H))
-				if("gravgun")
-					G = new /obj/item/gun/energy/gravity_gun(get_turf(H))
-			G.unlock()
-			playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
-=======
 		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
->>>>>>> 41b06b0c31... Merge pull request #33933 from coiax/wizard-late-joining
 
 	if(summon_type == SUMMON_MAGIC)
 		GLOB.summon_magic_triggered = survivor_probability
