@@ -1,5 +1,8 @@
 /datum/admins/key_down(_key, client/user)
 	switch(_key)
+		if("F3")
+			user.cmd_admin_say()
+			return
 		if("F5")
 			user.admin_ghost()
 			return
