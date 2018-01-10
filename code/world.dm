@@ -9,11 +9,7 @@
 	hub = "Exadv1.spacestation13"
 	name = "/tg/ Station 13"
 	fps = 20
-<<<<<<< HEAD
-	visibility = 1
-#ifdef GC_FAILURE_HARD_LOOKUP
-=======
+	visibility = 1 //HIPPIE SHIT WHY?
 #ifdef FIND_REF_NO_CHECK_TICK
->>>>>>> 17c45467da... Fixes FIND_REF_NO_CHECK_TICK not actually disabling world.loop_checks (#34217)
 	loop_checks = FALSE
 #endif
