@@ -231,6 +231,18 @@
 	message_param = "points at %t."
 	restraint_check = TRUE
 
+/datum/emote/living/point/run_emote(mob/user, params)
+	if(ishuman(user))
+		var/mob/carbon/human/H = user
+		if(H.get_num_arms() == 0)
+			if(H.get_num_legs() != 0)
+				message_param = "tries to point at %t with a leg, falling down in the process!"
+				H.Knockdown(20)
+			else
+				message_param = "bumps their head on the ground trying to motion towards %t."
+				H.brainloss += 5
+	..()
+
 /datum/emote/living/pout
 	key = "pout"
 	key_third_person = "pouts"
