@@ -2,6 +2,9 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,GLAND_HUD)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
+
+	death_sound = 'sound/voice/human/death.ogg'
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"

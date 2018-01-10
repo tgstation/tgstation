@@ -72,7 +72,6 @@
 	var/list/loot = list() //list of things spawned at mob's loc when it dies
 	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
 	var/deathmessage = ""
-	var/death_sound = null //The sound played on death
 
 	var/allow_movement_on_non_turfs = FALSE
 
@@ -292,11 +291,8 @@
 			new i(loc)
 	if(dextrous)
 		drop_all_held_items()
-	if(!gibbed)
-		if(death_sound)
-			playsound(get_turf(src),death_sound, 200, 1)
-		if(deathmessage || !del_on_death)
-			emote("deathgasp")
+	if(!gibbed && (deathmessage || !del_on_death))
+		emote("deathgasp")
 	if(del_on_death)
 		..()
 		//Prevent infinite loops if the mob Destroy() is overriden in such
