@@ -1,4 +1,4 @@
-<?php
+<?php 
 //Tool for web based TGUI compilation
 //by Cyberboss
 
