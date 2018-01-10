@@ -693,7 +693,7 @@
 	var/temp = 0
 	var/turf/T = get_turf(target)
 	if(T)
-		for(var/obj/effect/decal/cleanable/blood/B in range(T, 2))
+		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
 			if(B.bloodiness)
 				temp += B.bloodiness/10
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))

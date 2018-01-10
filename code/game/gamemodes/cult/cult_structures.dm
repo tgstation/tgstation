@@ -246,7 +246,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Zealot's Blindfold")
-			pickedtype += /obj/item/clothing/glasses/night/cultblind
+			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")

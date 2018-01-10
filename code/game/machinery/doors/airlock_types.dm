@@ -406,6 +406,7 @@
 	hackProof = TRUE
 	aiControlDisabled = TRUE
 	req_access = list(ACCESS_BLOODCULT)
+	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 
