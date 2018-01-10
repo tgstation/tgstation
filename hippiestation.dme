@@ -2517,6 +2517,7 @@
 #include "hippiestation\code\game\objects\items\implants\implanter.dm"
 #include "hippiestation\code\game\objects\items\stacks\medical.dm"
 #include "hippiestation\code\game\objects\items\stacks\stack.dm"
+#include "hippiestation\code\game\objects\items\stacks\sheets\mineral.dm"
 #include "hippiestation\code\game\objects\items\stacks\sheets\sheet_types.dm"
 #include "hippiestation\code\game\objects\items\stacks\tiles\tile_mineral.dm"
 #include "hippiestation\code\game\objects\items\storage\backpack.dm"
