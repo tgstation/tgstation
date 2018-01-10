@@ -1,5 +1,5 @@
 #define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
-#define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcomm/shuttles marked as escaped
+#define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_GHOSTS "ghosts"						//Ghosts on roundend
 #define POPCOUNT_HUMAN_ESCAPEES "human_escapees"		//Same as escapees but human only
 #define POPCOUNT_HUMAN_SURVIVORS "human_survivors"		//Same as survivors but human only
