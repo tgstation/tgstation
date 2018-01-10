@@ -862,13 +862,13 @@
 	..()
 	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
 		if(uneq_module(held_items[3]))
-			to_chat(src, "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
+			visible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>", "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
 		if(health < 0)
 			if(uneq_module(held_items[2]))
-				to_chat(src, "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
+				visible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>", "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
 			if(health < -maxHealth*0.5)
 				if(uneq_module(held_items[1]))
-					to_chat(src, "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>")
+					visible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>", "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)
