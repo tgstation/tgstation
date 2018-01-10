@@ -1,6 +1,5 @@
 /mob/living/Life(seconds, times_fired)
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob

@@ -19,6 +19,7 @@
 								2 for preloading absolutely everything;
 								*/
 
+<<<<<<< HEAD
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
 
@@ -54,6 +55,15 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
+=======
+//Update this whenever you need to take advantage of more recent byond features
+#define MIN_COMPILER_VERSION 511
+#if DM_VERSION < MIN_COMPILER_VERSION
+//Don't forget to update this part
+#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#error You need version 511 or higher
+#endif
+>>>>>>> 7ccd0f2e9e... Merge pull request #34219 from Cyberboss/RemoveSetBackground
 
 //Additional code for the above flags.
 #ifdef TESTING

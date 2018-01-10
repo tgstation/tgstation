@@ -753,7 +753,6 @@
 		timeout++
 
 /mob/living/carbon/human/interactive/proc/getGoodPath(target,var/maxtries=512)
-	set background = 1
 	var/turf/end = get_turf(target)
 
 	var/turf/current = get_turf(src)
@@ -779,7 +778,6 @@
 	return path
 
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
-	set background = 1
 	if(!target)
 		return 0
 
