@@ -60,6 +60,7 @@
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -79,6 +80,7 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -152,6 +154,7 @@
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
