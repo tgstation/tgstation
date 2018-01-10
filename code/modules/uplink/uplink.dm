@@ -178,26 +178,11 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	telecrystals -= U.cost
 
-	var/atom/A = U.spawn_item(get_turf(user), src, user)
-	if(U.purchase_log_vis && purchase_log)
-		var/obj/item/storage/box/B = A
-		var/list/atom/logging = list()
-		if(istype(B) && B.contents.len > 0)
-			logging |= list(B)
-		else
-			logging |= A
-		for(var/atom/_logging in logging)
-			purchase_log.LogPurchase(_logging, U.cost)
+	U.purchase(user, src)
 
 	if(U.limited_stock > 0)
 		U.limited_stock -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
-	if(ishuman(user) && istype(A, /obj/item))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(A))
-			to_chat(H, "[A] materializes into your hands!")
-		else
-			to_chat(H, "\The [A] materializes onto the floor.")
 	return TRUE
 
