@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Blood cultists will now properly display a \"reverted to their old faith\" message when deconverted."
