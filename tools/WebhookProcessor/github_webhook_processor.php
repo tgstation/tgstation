@@ -546,7 +546,7 @@ function auto_update($payload){
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
 	$content_diff = "### Diff not available. :slightly_frowning_face:";
 	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
-		$script_diff = matches[1];
+		$script_diff = $matches[1];
 		if($script_diff) {
 			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
 		}
