@@ -116,7 +116,9 @@
 "v" = (
 /obj/machinery/disco{
 	anchored = 1;
-	req_access = null
+	max_integrity = 2000;
+	req_access = null;
+	resistance_flags = 51
 	},
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
