@@ -37997,6 +37997,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "bPc" = (
@@ -38135,6 +38138,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bPt" = (
@@ -38265,6 +38271,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "bPG" = (
@@ -38341,6 +38350,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bPM" = (
@@ -38350,6 +38362,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
@@ -40221,6 +40236,9 @@
 	pixel_x = -26;
 	pixel_y = 28
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bUq" = (
@@ -41803,6 +41821,9 @@
 "bYl" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bYm" = (
@@ -42089,6 +42110,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/junction/flip,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bZe" = (
@@ -42484,6 +42508,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -43334,6 +43361,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cbX" = (
@@ -43344,6 +43374,15 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Toxins Lab APC";
+	areastring = "/area/science/mixing";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cbY" = (
@@ -46718,15 +46757,15 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "ckM" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -57122,14 +57161,22 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpG" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpH" = (
 /obj/machinery/power/apc{
+	areastring = "/area/science/circuit";
+	name = "Circuitry Lab APC";
 	pixel_x = 30
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
@@ -57144,6 +57191,9 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpK" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpL" = (
@@ -57160,6 +57210,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpN" = (
@@ -57168,6 +57221,11 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/camera{
+	c_tag = "Circuitry Lab";
+	dir = 8;
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
@@ -57217,6 +57275,9 @@
 /area/science/circuit)
 "QpW" = (
 /obj/machinery/rnd/protolathe/department/science,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "QpX" = (
@@ -57260,6 +57321,50 @@
 /area/science/circuit)
 "Qqf" = (
 /turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqg" = (
+/obj/structure/table/reinforced,
+/obj/item/device/multitool,
+/obj/item/screwdriver,
+/obj/machinery/camera{
+	c_tag = "Circuitry Lab North";
+	network = list("SS13","RD")
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Qqh" = (
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Qqi" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/science/circuit)
+"Qqj" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/science/circuit)
+"Qqk" = (
+/obj/structure/table/reinforced,
+/obj/item/device/radio/intercom{
+	pixel_x = -30
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Qql" = (
+/obj/structure/table/reinforced,
+/obj/item/device/multitool,
+/obj/item/screwdriver,
+/obj/machinery/requests_console{
+	department = "Science";
+	departmentType = 2;
+	name = "Science Requests Console";
+	pixel_y = -30;
+	receive_ore_updates = 1
+	},
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 
 (1,1,1) = {"
@@ -77434,7 +77539,7 @@ aWu
 aYa
 aZD
 aZD
-Qpb
+Qpa
 aZD
 aZD
 bff
@@ -77953,7 +78058,7 @@ baS
 bdS
 bdU
 ckQ
-Qpg
+Qpa
 bjq
 bjr
 bjr
@@ -78976,10 +79081,10 @@ aWz
 aWC
 QoZ
 Qpa
-Qpc
+Qpa
 bcT
-Qpd
-Qpe
+QoZ
+QoZ
 Qpf
 aZE
 bju
@@ -105735,19 +105840,19 @@ bMv
 bNv
 bMv
 QoZ
-Qpg
-Qpk
-Qpq
-Qpu
-Qpy
-QpC
+Qpa
+Qpa
+Qpa
+Qpa
+Qpa
+Qqi
 QpI
 bPb
 bQG
-QpP
-QpT
-QpX
-Qqa
+Qqj
+Qpa
+Qpa
+QoZ
 bQZ
 bQZ
 bQZ
@@ -105998,13 +106103,13 @@ bTo
 bUp
 Qpz
 QpD
-bXs
+Qpn
 bPL
 bQI
-QpQ
-QpU
+bTo
+Qqk
 bQY
-Qqb
+QoZ
 cmo
 cNW
 cOx
@@ -106248,20 +106353,20 @@ bFU
 bMy
 bNx
 bOG
-Qpb
-Qph
+Qpa
+Qqg
 bSk
-Qpr
-Qpv
+Qpn
+Qpn
 QpA
 QpE
-QpJ
+QpE
 bPF
 bQI
-bXs
+Qpn
 QpV
-cbY
-Qqc
+Qql
+QoZ
 cOe
 cNW
 cNW
@@ -106505,20 +106610,20 @@ bFU
 bMA
 bNz
 bOI
-Qpc
+Qpa
 bRa
 Qpm
 bTp
 Qpw
 bVs
 QpF
-bXt
+QpF
 bPM
 bZh
 QpR
-cbe
+Qpm
 QpY
-Qqd
+QoZ
 cOe
 ceS
 cae
@@ -106762,20 +106867,20 @@ bEC
 bEC
 bEC
 bEC
-Qpd
-Qpi
+QoZ
+Qqh
 Qpn
-Qps
-Qpx
+Qpn
+Qpn
 QpB
 QpG
 QpK
 QpM
-bXs
-bXs
-bXs
-bXs
-Qqe
+Qpn
+Qpn
+Qpn
+Qpn
+QoZ
 cOe
 ceR
 cOe
@@ -107019,7 +107124,7 @@ cNW
 bMB
 bNA
 cOe
-Qpe
+QoZ
 bRb
 Qpo
 Qpt
@@ -107032,7 +107137,7 @@ QpO
 QpS
 QpW
 QpZ
-Qqf
+QoZ
 cOx
 cOx
 ckS
@@ -107277,7 +107382,7 @@ cNZ
 cNZ
 cNZ
 Qpf
-Qpj
+Qpf
 bSl
 bTq
 bTq
