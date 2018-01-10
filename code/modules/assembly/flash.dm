@@ -76,17 +76,6 @@
 		return viewers(range, get_turf(target_loc))
 	else
 		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob)))
-	/*
-	var/list/mob/considering = get_hearers_in_view(range, get_turf(target_loc))
-	if(override_vision_checks)
-		return considering
-	var/list/mob/can_see
-	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
-		target_loc = get_turf(target_loc)
-		can_see = viewers(world.view, target_loc)
-	else
-		can_see = typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob)))
-	return considering & can_see*/
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))
@@ -95,12 +84,12 @@
 	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	times_used++
 	flash_recharge()
-	update_icon(flash = TRUE)
+	update_icon(TRUE)
 	if(user && !clown_check(user))
 		return FALSE
 	return TRUE
 
-/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = TRUE, generic_message = FALSE)
+/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
@@ -149,7 +138,7 @@
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
 		return FALSE
-	to_chat(user, "<span class='danger'>Your flash emits a blinding light!</span>")
+	to_chat(user, "<span class='danger'>Your [src] emits a blinding light!</span>")
 
 /obj/item/device/assembly/flash/emp_act(severity)
 	if(!try_use_flash())
