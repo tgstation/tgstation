@@ -80419,7 +80419,7 @@
 /turf/closed/wall,
 /area/science/research/abandoned)
 "dhR" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/science/circuit)
 "dhS" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -82416,8 +82416,6 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dmr" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/super,
 /obj/item/stock_parts/cell/super,
@@ -82450,6 +82448,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dmv" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white/side{
 	dir = 6
 	},
@@ -83225,8 +83224,6 @@
 	pixel_x = -26
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/super,
 /obj/item/stock_parts/cell/super,
@@ -84151,7 +84148,7 @@
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "dpX" = (
-/obj/structure/chair/comfy{
+/obj/structure/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/side{
@@ -84212,14 +84209,14 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
-	dir = 6
+	dir = 8
 	},
 /area/science/circuit)
 "dqe" = (
@@ -105140,10 +105137,10 @@
 /turf/closed/wall,
 /area/science/circuit)
 "ehT" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/science/circuit)
 "ehU" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/science/circuit)
 "ehV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -105154,6 +105151,9 @@
 /turf/closed/wall/r_wall,
 /area/science/circuit)
 "ehX" = (
+/turf/closed/wall,
+/area/science/circuit)
+"ehY" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
 	c_tag = "Science - Experimentation Lab";
@@ -105170,7 +105170,7 @@
 	},
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
-"ehY" = (
+"ehZ" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
 /obj/machinery/airalarm{
@@ -105178,32 +105178,22 @@
 	},
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
-"ehZ" = (
+"eia" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eia" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/science/circuit)
 "eib" = (
-/obj/structure/chair/comfy{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
 /area/science/circuit)
 "eic" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 5
-	},
+/turf/closed/wall,
 /area/science/circuit)
 "eid" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
+/obj/structure/chair/office/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
@@ -105215,30 +105205,46 @@
 	},
 /area/science/circuit)
 "eif" = (
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
 /area/science/circuit)
 "eig" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 5
+	},
+/area/science/circuit)
+"eih" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/science/circuit)
+"eii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eih" = (
+"eij" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eii" = (
+"eik" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
-"eij" = (
+"eil" = (
+/turf/closed/wall,
+/area/science/circuit)
+"eim" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
 /obj/item/device/integrated_electronics/debugger,
@@ -105247,18 +105253,27 @@
 	dir = 10
 	},
 /area/science/circuit)
-"eik" = (
+"ein" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
 /area/science/circuit)
-"eil" = (
+"eio" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Science - Lab Access";
+	dir = 8;
+	name = "science camera";
+	network = list("SS13","RD")
+	},
+/obj/structure/sign/science{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eim" = (
+"eip" = (
 /obj/structure/chair/comfy{
 	dir = 4
 	},
@@ -105267,7 +105282,7 @@
 	dir = 8
 	},
 /area/science/misc_lab)
-"ein" = (
+"eiq" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -105285,7 +105300,10 @@
 	dir = 4
 	},
 /area/science/misc_lab)
-"eio" = (
+"eir" = (
+/turf/closed/wall,
+/area/science/circuit)
+"eis" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
 /obj/item/device/integrated_electronics/debugger,
@@ -105294,39 +105312,49 @@
 	dir = 9
 	},
 /area/science/circuit)
-"eip" = (
+"eit" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
 /area/science/circuit)
-"eiq" = (
+"eiu" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eir" = (
+"eiv" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"eis" = (
+"eiw" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"eix" = (
+/turf/closed/wall,
+/area/science/circuit)
+"eiy" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
+/area/science/circuit)
+"eiz" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
 /area/science/misc_lab)
-"eit" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"eiA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plasteel/white/side{
-	dir = 8
+	dir = 6
 	},
 /area/science/circuit)
-"eiu" = (
+"eiB" = (
+/turf/closed/wall,
+/area/science/circuit)
+"eiC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster{
 	pixel_y = -32
@@ -105335,13 +105363,13 @@
 	dir = 1
 	},
 /area/science/circuit)
-"eiv" = (
+"eiD" = (
 /obj/structure/target_stake,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
 /area/science/circuit)
-"eiw" = (
+"eiE" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -105349,12 +105377,12 @@
 	dir = 1
 	},
 /area/science/circuit)
-"eix" = (
+"eiF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
-"eiy" = (
+"eiG" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -105364,115 +105392,18 @@
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/misc_lab)
-"eiz" = (
-/turf/closed/wall/r_wall,
-/area/science/misc_lab)
-"eiA" = (
-/turf/closed/wall,
-/area/science/misc_lab)
-"eiB" = (
-/turf/closed/wall/r_wall,
-/area/science/misc_lab)
-"eiC" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiD" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiE" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiF" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiG" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
 "eiH" = (
 /turf/closed/wall/r_wall,
-/area/science/circuit)
+/area/science/misc_lab)
 "eiI" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/science/circuit)
 "eiJ" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
+/turf/closed/wall,
+/area/science/misc_lab)
 "eiK" = (
 /turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiL" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/science/circuit)
-"eiM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Science - Lab Access";
-	dir = 8;
-	name = "science camera";
-	network = list("SS13","RD")
-	},
-/obj/structure/sign/science{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"eiN" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiO" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/science/circuit)
-"eiQ" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiR" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiS" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiT" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiU" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiV" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiW" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiX" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiY" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eiZ" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"eja" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"ejb" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
+/area/science/misc_lab)
 
 (1,1,1) = {"
 aaa
@@ -130056,13 +129987,13 @@ cJT
 caE
 caE
 ehS
-ehS
-ehS
-ehS
-ehS
-ehS
-ehS
-ehS
+ehX
+eic
+eil
+eir
+eix
+eiB
+eiI
 dhQ
 dhQ
 dhQ
@@ -130312,14 +130243,14 @@ cEo
 ddO
 cQt
 dgl
-eiC
+ehT
 djn
 dle
 dmr
 dog
 dle
 drz
-eiR
+dhR
 dul
 dvZ
 dxH
@@ -130569,14 +130500,14 @@ cRP
 ddP
 deW
 cKk
-eiD
-ehX
-eib
-eij
-eio
+ehU
+ehY
+eid
+eim
+eis
 dpX
-eiu
-eiS
+eiC
+dhR
 djs
 dlf
 dxI
@@ -130826,14 +130757,14 @@ cMY
 cMY
 cCM
 dgm
-eiE
+dhR
 djp
-eic
+eie
 dmt
 doh
-dmv
+eiy
 drA
-eiT
+dhR
 dum
 dli
 dpZ
@@ -131085,12 +131016,12 @@ cLO
 ehR
 ehV
 djq
-eid
-eik
-eip
-eis
+eif
+ein
+eit
+eiz
 drB
-eiU
+dhR
 dpZ
 dli
 dxJ
@@ -131340,14 +131271,14 @@ dcb
 cMY
 deX
 dgn
-eiF
+dhR
 djr
-eic
-eiL
+eig
+dmv
 doj
-eiP
-eiv
-eiV
+eiA
+eiD
+dhR
 dun
 dli
 dxK
@@ -131597,14 +131528,14 @@ cNd
 cMY
 deX
 dgo
-eiG
-ehY
-eif
+dhR
+ehZ
+eih
 dmw
-eif
+dok
 dqa
 drC
-eiW
+dhR
 duo
 dmu
 dlg
@@ -131854,14 +131785,14 @@ cMY
 cMY
 deY
 cKl
-eiH
+dhR
 djt
-eig
-eig
+eii
+dmx
 dol
 dqb
 drD
-eiX
+dhR
 dup
 dlg
 dxL
@@ -132111,14 +132042,14 @@ dcc
 cMY
 cOD
 cKj
-eiI
+dhR
 dju
 dlj
 dlj
-eiq
+eiu
 dqc
-eiw
-eiY
+eiE
+dhR
 duq
 dlh
 dxM
@@ -132368,14 +132299,14 @@ cRS
 cMY
 deZ
 dgo
-eiJ
+dhR
 djv
 dlj
 dlj
-eiq
+eiv
 dqb
 drE
-eiZ
+dhR
 dur
 dmu
 dxN
@@ -132625,14 +132556,14 @@ dcd
 cMY
 deX
 dgo
-eiK
-ehZ
-eih
-eiM
+dhR
+eia
+eij
+eio
 doo
-eit
+dqd
 drF
-eja
+dhR
 dus
 dwa
 dom
@@ -132883,13 +132814,13 @@ cMY
 dfa
 dgp
 ehW
-ehW
+eib
 dll
-eiN
-eiO
+dhR
+eiw
 dqe
-eiQ
-ejb
+dhR
+dhR
 dut
 dwb
 dxO
@@ -133142,11 +133073,11 @@ dgq
 dhT
 djx
 dlm
-eim
+eip
 dop
 dqf
 drG
-eiA
+eiJ
 dhQ
 dhS
 dhQ
@@ -133398,11 +133329,11 @@ cMY
 cMY
 cMY
 djy
-eii
+eik
 dmA
 doq
 dqg
-eix
+eiF
 dtd
 duu
 djw
@@ -133656,10 +133587,10 @@ cNd
 cMY
 djz
 dln
-ein
+eiq
 dor
 dqh
-eiy
+eiG
 dhT
 duv
 dwc
@@ -133916,8 +133847,8 @@ djA
 djA
 dos
 dqi
-eiz
-eiz
+eiH
+eiK
 djA
 djA
 djA
