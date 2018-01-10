@@ -20,14 +20,8 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
-<<<<<<< HEAD
-		tools/travis/dm.sh -DTRAVISBUILDING hippiestation.dme
-	else
 		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS hippiestation.dme
-=======
-		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
->>>>>>> e35696f6ab... Fixes BUILD_TESTING logic being inverted (#34201)
+		tools/travis/dm.sh -DTRAVISBUILDING hippiestation.dme
 	fi;
 fi;
