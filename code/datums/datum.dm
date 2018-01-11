@@ -1,15 +1,15 @@
 /datum
-    var/gc_destroyed //Time when this object was destroyed.
-    var/list/active_timers  //for SStimer
-    var/list/datum_components //for /datum/components
-    var/use_tag = FALSE
-    var/datum/weakref/weak_reference
+	var/gc_destroyed //Time when this object! was destroyed.
+	var/list/active_timers  //for SStimer
+	var/list/datum_components //for /datum/components
+	var/use_tag = FALSE
+	var/datum/weakref/weak_reference
 	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast
+	var/list/focusers //Only initialized when needed. Contains a list of mobs focusing on this.
 
 #ifdef TESTING
-    var/running_find_references
-    var/last_find_references = 0
+	var/running_find_references
+	var/last_find_references = 0
 #endif
 
 // Default implementation of clean-up code.

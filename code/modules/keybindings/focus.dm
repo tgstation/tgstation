@@ -1,6 +1,3 @@
-/datum
-	var/list/focusers //Only initialized when needed. Contains a list of mobs focusing on this.
-
 /mob
 	var/datum/focus //What receives our keyboard inputs. src by default
 

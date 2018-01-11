@@ -139,7 +139,8 @@
 		if(laststamppos)
 			LAZYSET(hiddenprints, M.key, copytext(hiddenprints[M.key], 1, laststamppos))
 		hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"	//made sure to be existing by if(!LAZYACCESS);else
-	parent.fingerprintslast = M.ckey
+	var/atom/A = parent
+	A.fingerprintslast = M.ckey
 	return TRUE
 
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)

@@ -26,6 +26,7 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
+	var/fingerprintslast
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
