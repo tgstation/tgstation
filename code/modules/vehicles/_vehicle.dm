@@ -86,8 +86,8 @@
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)
-	occupants -= M
 	remove_passenger_actions(M)
+	occupants -= M
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE
