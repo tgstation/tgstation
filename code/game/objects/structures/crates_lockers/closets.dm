@@ -208,6 +208,14 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
+<<<<<<< HEAD
+=======
+	if(!src.tool_interact(W,user))
+		return ..()
+
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+	. = TRUE
+>>>>>>> 307581c195... Merge pull request #34282 from Cyberboss/ClosetFix22
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weldingtool))
@@ -223,14 +231,24 @@
 										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 										"<span class='italics'>You hear welding.</span>")
 						deconstruct(TRUE)
+<<<<<<< HEAD
 					return 0
+=======
+					return
+>>>>>>> 307581c195... Merge pull request #34282 from Cyberboss/ClosetFix22
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
+<<<<<<< HEAD
 				return 0
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return 1
+=======
+				return
+		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+			return
+>>>>>>> 307581c195... Merge pull request #34282 from Cyberboss/ClosetFix22
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
@@ -257,7 +275,10 @@
 	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
+<<<<<<< HEAD
 		return 1
+=======
+>>>>>>> 307581c195... Merge pull request #34282 from Cyberboss/ClosetFix22
 	else
 		return ..()
 
