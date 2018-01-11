@@ -14,7 +14,7 @@
 			organ = organs[organ]
 			organ = new organ
 			organ.Insert(C)
-			log_admin("[key_name_admin(usr)] has added organ [organ.type] to [key_name(C)]")
+			log_admin("[key_name(usr)] has added organ [organ.type] to [key_name(C)]")
 			message_admins("[key_name_admin(usr)] has added organ [organ.type] to [key_name(C)]")
 
 		if("add implant")
@@ -26,7 +26,7 @@
 			organ = organs[organ]
 			organ = new organ
 			organ.implant(C)
-			log_admin("[key_name_admin(usr)] has added implant [organ.type] to [key_name(C)]")
+			log_admin("[key_name(usr)] has added implant [organ.type] to [key_name(C)]")
 			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [key_name(C)]")
 
 		if("drop organ/implant", "remove organ/implant")
@@ -45,7 +45,7 @@
 			var/obj/item/organ/O
 			var/obj/item/implant/I
 
-			log_admin("[key_name_admin(usr)] has removed [organ.type] from [key_name(C)]")
+			log_admin("[key_name(usr)] has removed [organ.type] from [key_name(C)]")
 			message_admins("[key_name_admin(usr)] has removed [organ.type] from [key_name(C)]")
 
 			if(isorgan(organ))
