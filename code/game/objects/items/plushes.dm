@@ -51,7 +51,6 @@
 
 /obj/item/toy/plush/Destroy()
 	QDEL_NULL(grenade)
-
 	//inform next of kin and... acquaintances
 	if(partner)
 		partner.bad_news(src)
@@ -378,100 +377,143 @@
 	name = "ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
-	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
+	var/datum/action_sequence/clash_of_the_plushies/clash_sequence
+
+/obj/item/toy/plush/plushvar/Destroy()
+	QDEL_NULL(clash_sequence)
+	return ..()
 
 /obj/item/toy/plush/plushvar/Moved()
 	. = ..()
-	if(clash_target)
+	if(clash_sequence)
 		return
 	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
-	if(P && istype(P.loc, /turf/open) && !P.clashing)
-		clash_of_the_plushies(P)
+	if(P && !P.clash_sequence && istype(P.loc, /turf/open))
+		new /datum/action_sequence/clash_of_the_plushies(src, P)
+		clash_sequence.Initiate()
 
-/obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
-	clash_target = P
-	P.clashing = TRUE
-	say("YOU.")
-	P.say("Ratvar?!")
-	var/obj/item/toy/plush/a_winnar_is
+/datum/action_sequence/clash_of_the_plushies
+	next_step = .proc/RatvarStrike
+
 	var/victory_chance = 10
-	for(var/i in 1 to 10) //We only fight ten times max
-		if(QDELETED(src))
-			P.clashing = FALSE
-			return
-		if(QDELETED(P))
-			clash_target = null
-			return
-		if(!Adjacent(P))
-			visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
-			clash_target = null
-			P.clashing = FALSE
-			return
-		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(2.4)
-		if(QDELETED(src))
-			P.clashing = FALSE
-			return
-		if(QDELETED(P))
-			clash_target = null
-			return
-		if(prob(victory_chance))
-			a_winnar_is = src
-			break
-		P.SpinAnimation(5, 0)
-		sleep(5)
-		if(QDELETED(src))
-			P.clashing = FALSE
-			return
-		if(QDELETED(P))
-			clash_target = null
-			return
-		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
-		sleep(3.3)
-		if(QDELETED(src))
-			P.clashing = FALSE
-			return
-		if(QDELETED(P))
-			clash_target = null
-			return
-		if(prob(victory_chance))
-			a_winnar_is = P
-			break
-		SpinAnimation(5, 0)
-		victory_chance += 10
-		sleep(5)
-	if(!a_winnar_is)
-		a_winnar_is = pick(src, P)
-	if(a_winnar_is == src)
-		say(pick("DIE.", "ROT."))
-		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
-		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
-		explosion(P, 0, 0, 1)
-		qdel(P)
-		clash_target = null
-	else
-		say("NO! I will not be banished again...")
-		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE, frequency = 2)
-		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
-		explosion(src, 0, 0, 1)
+
+/datum/action_sequence/clash_of_the_plushies/New(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	if(R.clash_sequence)
 		qdel(src)
-		P.clashing = FALSE
+		CRASH("[R] or [N] tried to clash twice")
+	if(N.clash_sequence)
+		qdel(src)
+		CRASH("[R] or [N] tried to clash twice")
+	R.clash_sequence = src
+	N.clash_sequence = src
+
+	SetStandardStep(R, N)
+
+/datum/action_sequence/clash_of_the_plushies/Destroy()
+	ResolveWeakRequires()
+	var/obj/item/toy/plush/plushvar/R = step_requires_weak[1]
+	if(R && R.clash_sequence == src)
+		R.clash_sequence = null
+	var/obj/item/toy/plush/narplush/N = step_requires_weak[2]
+	if(N && N.clash_sequence == src)
+		N.clash_sequence = null
+	return ..()
+
+/datum/action_sequence/clash_of_the_plushies/BeforeStep(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	if((steps_invoked / 4) >= 10)	//ok enough fighting
+		if(prob(50))
+			RatvarWins(R, N)
+		else
+			NarsieWins(R, N)
+		return FALSE
+
+	var/atom/A = step_requires_weak[1]
+	if(!A.Adjacent(step_requires_weak[2]))
+		A.visible_message("<span class='warning'>The two plushies angrily flail at each other before giving up.</span>")
+		return FALSE
+	return ..()
+
+/datum/action_sequence/clash_of_the_plushies/AfterStep(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	SetStandardStep(R, N)
+	return ..()
+
+/datum/action_sequence/clash_of_the_plushies/proc/SetStandardStep(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	client_based_delay = TRUE
+	step_requires_weak = list(R, N)
+
+/datum/action_sequence/clash_of_the_plushies/proc/RatvarStrike(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	R.say("YOU.")
+	N.say("Ratvar?!")
+	playsound(R, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
+
+	next_step = .proc/AfterRatvarStrike
+	delay = 2.4
+
+/datum/action_sequence/clash_of_the_plushies/proc/AfterRatvarStrike(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	if(prob(victory_chance))
+		RatvarWins(R, N)
+		return
+
+	N.SpinAnimation(5, 0)
+
+	next_step = .proc/NarStrike
+	delay = 5
+
+/datum/action_sequence/clash_of_the_plushies/proc/NarStrike(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	playsound(N, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
+
+	next_step = .proc/AfterNarStrike
+	delay = 3.3
+
+/datum/action_sequence/clash_of_the_plushies/proc/AfterNarStrike(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	if(prob(victory_chance))
+		NarsieWins(R, N)
+		return
+
+	R.SpinAnimation(5, 0)
+	victory_chance += 10
+
+	next_step = .proc/RatvarStrike
+	delay = 5
+
+/datum/action_sequence/clash_of_the_plushies/proc/RatvarWins(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	R.say(pick("DIE.", "ROT."))
+	N.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
+	playsound(R, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
+	playsound(N, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
+	explosion(N, 0, 0, 1)
+	qdel(src)
+	qdel(N)
+	
+/datum/action_sequence/clash_of_the_plushies/proc/NarsieWins(obj/item/toy/plush/plushvar/R, obj/item/toy/plush/narplush/N)
+	R.say("NO! I will not be banished again...")
+	N.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
+	playsound(R, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE, frequency = 2)
+	playsound(N, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
+	explosion(N, 0, 0, 1)
+	qdel(src)
+	qdel(R)
 
 /obj/item/toy/plush/narplush
 	name = "nar'sie plushie"
 	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
-	var/clashing
 	gender = FEMALE	//it's canon if the toy is
+	var/datum/action_sequence/clash_of_the_plushies/clash_sequence
+
+/obj/item/toy/plush/narplush/Destroy()
+	QDEL_NULL(clash_sequence)
+	return ..()
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
+	if(clash_sequence)
+		return
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
-	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
-		P.clash_of_the_plushies(src)
+	if(P && istype(P.loc, /turf/open) && !P.clash_sequence)
+		new /datum/action_sequence/clash_of_the_plushies(P, src)
+		clash_sequence.Initiate()
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
