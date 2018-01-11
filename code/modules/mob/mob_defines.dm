@@ -29,8 +29,6 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 
-	var/atom/movable/pulling = null
-	var/grab_state = 0
 
 	var/next_move = null
 	var/notransform = null	//Carbon
