@@ -4,14 +4,11 @@
 /mob/proc/set_focus(datum/new_focus)
 	if(focus == new_focus)
 		return
-
-	if(new_focus)
-		if(!new_focus.focusers) //Set up the new focus
-			new_focus.focusers = list()
-		new_focus.focusers += src
-
-	if(focus)
-		focus.focusers -= src //Tell the old focus we're done with it
-
 	focus = new_focus
 	reset_perspective(focus) //Maybe this should be done manually? You figure it out, reader
+
+//called on Life() to clear the focus var if it's deleted
+/mob/proc/CheckFocus()
+	var/datum/_focus = focus
+	if(_focus != src && QDELETED(_focus))
+		set_focus(src)

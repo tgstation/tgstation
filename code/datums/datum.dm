@@ -5,7 +5,6 @@
 	var/use_tag = FALSE
 	var/datum/weakref/weak_reference
 	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/list/focusers //Only initialized when needed. Contains a list of mobs focusing on this.
 
 #ifdef TESTING
 	var/running_find_references
@@ -38,11 +37,5 @@
 			var/datum/component/C = all_components
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
-
-	var/list/focusers = src.focusers
-	if(focusers)
-		for(var/i in 1 to focusers.len)
-			var/mob/M = focusers[i]
-			M.set_focus(M)
 
 	return QDEL_HINT_QUEUE
