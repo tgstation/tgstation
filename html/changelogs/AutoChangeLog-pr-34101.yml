@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Meta: The UI for the captain's cigarette vendor now works again."
+  - tweak: "Meta: Removed the omnizine filled syndicate cigarettes from the captain's cigarette vendor."
