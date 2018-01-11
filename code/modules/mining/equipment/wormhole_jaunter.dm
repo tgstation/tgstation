@@ -89,15 +89,11 @@
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
+	innate_accuracy_penalty = 6
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
-		return
-
-	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
-		return
-
-	if(do_teleport(M, hard_target, 6))
+	. = ..()
+	if(.)
 		// KERPLUNK
 		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 		if(iscarbon(M))
