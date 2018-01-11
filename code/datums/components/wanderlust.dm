@@ -20,7 +20,6 @@
 	. = ..()
 
 /datum/component/wanderlust/process()
-	var/atom/movable/AM = parent
 	var/current_turf = get_turf(parent)
 	if(last_turf != current_turf)
 		addtimer(CALLBACK(src, .proc/Relocate), rand(minimum_time, maximum_time), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT)
