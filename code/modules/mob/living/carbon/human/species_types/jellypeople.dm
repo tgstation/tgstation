@@ -609,7 +609,7 @@
 		return
 
 	if(message)
-		var/msg = "<i><font color=#23ff40>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
+		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
 		log_talk(H,"SlimeLink: [key_name(H)] : [msg]",LOGSAY)
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
@@ -646,7 +646,7 @@
 	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
 	if(msg)
 		log_talk(H,"SlimeTelepathy: [key_name(H)]->[M.key] : [msg]",LOGSAY)
-		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#23ff40>[msg]</font>")
+		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
 		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")
 		for(var/dead in GLOB.dead_mob_list)
 			if(!isobserver(dead))
