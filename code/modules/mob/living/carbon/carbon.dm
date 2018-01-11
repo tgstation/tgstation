@@ -1,5 +1,6 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
+	var/death_sound
 
 /mob/living/carbon/Initialize()
 	. = ..()
