@@ -245,6 +245,21 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 
 	browse_messages(null, usr.ckey, null, TRUE)
 
+/client/proc/self_playtime()
+	set name = "View tracked playtime."
+	set category = "OOC"
+	set desc = "View the amount of playtime for roles the server has tracked."
+
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
+		return
+
+	var/list/body = list()
+	body += "<html><head><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
+	body += get_exp_report()
+	body += "</BODY></HTML>"
+	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
+
 /client/proc/ignore_key(client)
 	var/client/C = client
 	if(C.key in prefs.ignoring)

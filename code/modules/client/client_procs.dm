@@ -612,6 +612,8 @@ GLOBAL_LIST(external_rsc_urls)
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
 		verbs += /client/proc/self_notes
+	if(CONFIG_GET(flag/use_exp_tracking))
+		verbs += /client/proc/self_playtime
 
 
 #undef TOPIC_SPAM_DELAY
