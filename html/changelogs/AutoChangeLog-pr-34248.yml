@@ -1,0 +1,4 @@
+author: "yorii"
+delete-after: True
+changes: 
+  - spellcheck: "Renamed the ChemMaster eject button to highlight the fact that the buffer does not get cleared"
