@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - refactor: "Information about the properties of z-levels is now less hardcoded than before."
