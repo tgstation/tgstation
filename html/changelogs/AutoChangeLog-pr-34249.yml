@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - spellcheck: "Replaced \"CentComm\" with \"CentCom\" in communications console deadchat announcement."
