@@ -58,11 +58,14 @@
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	var/just_spawned = TRUE
 	var/bypassing = FALSE
-	var/datum/looping_sound/atmos_fire/soundloop
+	var/static/datum/looping_sound/atmos_fire/soundloop
 
 /obj/effect/hotspot/Initialize()
 	. = ..()
-	soundloop = new(list(src), TRUE)
+	if(!soundloop)
+		soundloop = new(list(src), TRUE)
+	else
+		soundloop.output_atoms += src
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
@@ -158,7 +161,9 @@
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
 	DestroyTurf()
-	QDEL_NULL(soundloop)
+	soundloop.output_atoms -= src
+	if(!LAZYLEN(soundloop.output_atoms))
+		QDEL_NULL(soundloop)
 	return ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
