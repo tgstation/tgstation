@@ -284,7 +284,7 @@
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount("stimulum")
-			H.reagents.add_reagent("stimulum",max(0, 5 - existing))
+			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
