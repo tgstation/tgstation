@@ -1,7 +1,3 @@
-/datum
-	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast = null
-
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 

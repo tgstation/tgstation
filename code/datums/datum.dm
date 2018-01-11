@@ -2,9 +2,11 @@
     var/gc_destroyed //Time when this object was destroyed.
     var/list/active_timers  //for SStimer
     var/list/datum_components //for /datum/components
-    var/ui_screen = "home"  //for tgui
+	var/ui_screen = "home"
     var/use_tag = FALSE
     var/datum/weakref/weak_reference
+	var/var_edited = FALSE //Warrenty void if seal is broken
+	var/fingerprintslast
 
 #ifdef TESTING
     var/running_find_references
