@@ -1174,7 +1174,7 @@
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	current_cycle++
-	holder.remove_reagent(id, 0.99)		Gives time for the next tick of life().
+	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
 	. = TRUE //Update status effects.
 
 /datum/reagent/nitryl
