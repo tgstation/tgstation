@@ -1166,7 +1166,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = FALSE
 					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
@@ -1178,7 +1178,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = TRUE
 					message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] able to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
