@@ -37,7 +37,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 0
 	throwforce = 5
-	stunforce = 100
+	stunforce = 70
 	hitcost = 100
 	throw_hit_chance = 20
 	attack_verb = list("poked")
