@@ -568,7 +568,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	for(var/obj/machinery/camera/C in GLOB.machines)
 		var/area/A = get_area(C)
-		if(!(A.type in areas_with_camera))
+		if(A && !(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
 
 	var/list/areas_without_APC = areas_all - areas_with_APC
@@ -580,44 +580,28 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
 	if(areas_without_APC.len)
-		to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
-		for(var/areatype in areas_without_APC)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT AN APC:</b><BR>* [areas_without_APC.Join("<BR>* ")]")
 
 	if(areas_with_multiple_APCs.len)
-		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b>")
-		for(var/areatype in areas_with_multiple_APCs)
-			to_chat(world,"* [areatype]")
+		to_chat(world, "<b>AREAS WITH MULTIPLE APCS:</b><BR>* [areas_with_multiple_APCs.Join("<BR>* ")]")
 
 	if(areas_without_air_alarm.len)
-		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
-		for(var/areatype in areas_without_air_alarm)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b><BR>* [areas_without_air_alarm.Join("<BR>* ")]")
 
 	if(areas_without_RC.len)
-		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
-		for(var/areatype in areas_without_RC)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b><BR>* [areas_without_RC.Join("<BR>* ")]")
 
 	if(areas_without_light.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
-		for(var/areatype in areas_without_light)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b><BR>* [areas_without_light.Join("<BR>* ")]")
 
 	if(areas_without_LS.len)
-		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
-		for(var/areatype in areas_without_LS)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b><BR>* [areas_without_LS.Join("<BR>* ")]")
 
 	if(areas_without_intercom.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
-		for(var/areatype in areas_without_intercom)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b><BR>* [areas_without_intercom.Join("<BR>* ")]")
 
 	if(areas_without_camera.len)
-		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
-		for(var/areatype in areas_without_camera)
-			to_chat(world, "* [areatype]")
+		to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b><BR>* [areas_without_camera.Join("<BR>* ")]")
 
 	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
 		to_chat(world, "<b>No problem areas!</b>")
