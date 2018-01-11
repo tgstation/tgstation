@@ -44,7 +44,8 @@
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
-	H.update_action_buttons_icon()
+	if(regenerate_limbs)
+		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
@@ -440,8 +441,11 @@
 	else
 		button_icon_state = "slimeeject"
 	..()
+
+/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button)
+	..()
 	if(species && species.current_extract)
-		button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
+		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/integrate_extract/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -492,10 +496,10 @@
 			return TRUE
 		return FALSE
 
-/datum/action/innate/use_extract/UpdateButtonIcon()
+/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button)
 	..()
 	if(species && species.current_extract)
-		button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
+		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/use_extract/Activate()
 	var/mob/living/carbon/human/H = owner
