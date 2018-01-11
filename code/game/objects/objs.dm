@@ -28,6 +28,8 @@
 	var/list/unique_reskin //List of options to reskin.
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
+
+
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
 		if("dangerous_possession")
@@ -62,6 +64,7 @@
 	if(flags_2 & FROZEN_2)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
+
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
