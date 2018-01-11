@@ -17,8 +17,8 @@
 	var/harvest_message_high = "You harvest and collect shavings from several mushroom caps."
 	var/harvested = FALSE
 	var/base_icon
-	var/regrowth_time_low = 4800
-	var/regrowth_time_high = 8400
+	var/regrowth_time_low = 8 MINUTES
+	var/regrowth_time_high = 16 MINUTES
 
 /obj/structure/flora/ash/Initialize()
 	. = ..()
