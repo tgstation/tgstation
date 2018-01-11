@@ -37,10 +37,12 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/mask/gas{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/mask/gas,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/listeningstation)
 "ag" = (
@@ -78,7 +80,9 @@
 "al" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/device/flashlight,
+/obj/item/device/flashlight{
+	pixel_y = -12
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
