@@ -19323,7 +19323,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "aWD" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
@@ -19816,7 +19816,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "aXF" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault{
@@ -19850,7 +19850,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "aXK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20003,7 +20003,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "aYd" = (
 /obj/structure/chair/office/dark,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -20591,7 +20591,7 @@
 "aZF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "aZG" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -20617,7 +20617,7 @@
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/rods/fifty,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aZJ" = (
 /obj/structure/table/wood,
 /obj/item/device/camera/detective,
@@ -21037,7 +21037,7 @@
 /area/hallway/primary/starboard)
 "baS" = (
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "baT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -21076,7 +21076,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "baZ" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -21229,7 +21229,7 @@
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bbu" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -21380,7 +21380,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bbQ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
@@ -21398,7 +21398,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bbT" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
@@ -21662,13 +21662,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcG" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
@@ -21690,7 +21690,7 @@
 	},
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcK" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -21741,7 +21741,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -21751,13 +21751,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bcU" = (
 /obj/item/stack/tile/plasteel,
 /turf/open/space,
@@ -22129,7 +22129,7 @@
 "bdS" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bdT" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -22148,7 +22148,7 @@
 "bdU" = (
 /obj/structure/closet/crate/medical,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bdV" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless,
@@ -22405,7 +22405,7 @@
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bey" = (
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
@@ -22447,7 +22447,7 @@
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "beE" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
@@ -22691,7 +22691,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/stack/sheet/cardboard,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bfh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22702,7 +22702,7 @@
 "bfi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bfj" = (
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
@@ -23153,7 +23153,7 @@
 	dir = 9
 	},
 /turf/closed/wall,
-/area/maintenance/port)
+/area/quartermaster/warehouse)
 "bgz" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -23162,7 +23162,7 @@
 "bgA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bgB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -23760,7 +23760,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "bhX" = (
 /obj/structure/disposalpipe/sorting/wrap{
 	dir = 1
@@ -46793,7 +46793,7 @@
 "ckQ" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "ckS" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating,
@@ -52719,7 +52719,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "cBj" = (
 /obj/structure/table,
 /obj/item/folder/blue,
@@ -57013,6 +57013,47 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"QoZ" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpa" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Cargo Warehouse APC";
+	areastring = "/area/quartermaster/warehouse";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"Qpc" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpd" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpe" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpf" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpg" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qph" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 
 (1,1,1) = {"
 aaa
@@ -77186,7 +77227,7 @@ aWu
 aYa
 aZD
 aZD
-aZD
+Qpb
 aZD
 aZD
 bff
@@ -77705,7 +77746,7 @@ baS
 bdS
 bdU
 ckQ
-aZE
+Qpg
 bjq
 bjr
 bjr
@@ -78219,7 +78260,7 @@ bcR
 bcE
 baS
 bex
-bhY
+aZF
 bgu
 bic
 bku
@@ -78476,7 +78517,7 @@ bcS
 bbt
 bfi
 beD
-aZE
+Qph
 aZE
 biA
 bmg
@@ -78726,13 +78767,13 @@ aTH
 aPK
 aWz
 aWC
-aZE
-aZE
-aZE
+QoZ
+Qpa
+Qpc
 bcT
-aZE
-aZE
-aZE
+Qpd
+Qpe
+Qpf
 aZE
 bju
 biv

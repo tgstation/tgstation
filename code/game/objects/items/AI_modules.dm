@@ -398,8 +398,8 @@ AI MODULES
 /obj/item/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/aiModule/core/full/custom/New()
-	..()
+/obj/item/aiModule/core/full/custom/Initialize()
+	. = ..()
 	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue
@@ -408,9 +408,8 @@ AI MODULES
 
 		laws += line
 
-	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
-		qdel(src)
+	if(!laws.len)
+		return INITIALIZE_HINT_QDEL
 
 
 /****************** T.Y.R.A.N.T. *****************/

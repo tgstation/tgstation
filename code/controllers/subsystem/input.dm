@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(input)
 		"North", "East", "South", "West",
 		"Northeast", "Southeast", "Northwest", "Southwest",
 		"Insert", "Delete", "Ctrl", "Alt",
-		"F1", "F2", "F5", "F6", "F7", "F8", "F12",
+		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
 		)
 
 	for(var/i in 1 to oldmode_keys.len)
