@@ -146,12 +146,15 @@
 		countdown = null
 	for(var/mob/L in GLOB.player_list)
 		if(L.z == z)
-			L.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
+			var/atom/movable/target = L
+			if(isobj(L.loc))
+				target = L.loc
+			target.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
 			L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
-		L.clear_fullscreen("flash", 30)
-		if(isliving(L))
-			var/mob/living/LI = L
-			LI.Stun(50)
+			L.clear_fullscreen("flash", 30)
+			if(isliving(L))
+				var/mob/living/LI = L
+				LI.Stun(50)
 	for(var/obj/effect/clockwork/city_of_cogs_rift/R in GLOB.all_clockwork_objects)
 		qdel(R)
 	if(GLOB.ark_of_the_clockwork_justiciar == src)
