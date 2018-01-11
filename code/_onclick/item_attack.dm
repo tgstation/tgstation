@@ -22,6 +22,8 @@
 			return target.wrench_act(user, src)
 		if(TOOL_WIRECUTTER)
 			return target.wirecutter_act(user, src)
+		if(TOOL_MININGDRILL)
+			return target.miningdrill_act(user, src)
 
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.

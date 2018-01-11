@@ -50,6 +50,7 @@
 	icon_state = "handdrill"
 	item_state = "jackhammer"
 	slot_flags = SLOT_BELT
+	tool_behaviour = TOOL_MININGDRILL
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
@@ -64,18 +65,21 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
+	toolspeed = 0.75
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
 	digspeed = 7
+	toolspeed = 0.75
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	toolspeed = 0.65
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."

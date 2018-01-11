@@ -21,6 +21,7 @@ FLOOR SAFES
 	var/dial = 0		//where is the dial pointing?
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	var/lockbroken = FALSE //is the lock broken?
 
 
 /obj/structure/safe/New()
@@ -54,7 +55,9 @@ FLOOR SAFES
 			to_chat(user, "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user)
-			visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
+			audible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
+		return TRUE
+	else if(lockbroken)
 		return TRUE
 	return FALSE
 
@@ -106,7 +109,7 @@ FLOOR SAFES
 		canhear = TRUE
 
 	if(href_list["open"])
-		if(check_unlocked())
+		if(lockbroken || check_unlocked())
 			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 			open = !open
 			update_icon()
@@ -118,6 +121,9 @@ FLOOR SAFES
 
 	if(href_list["decrement"])
 		dial = decrement(dial)
+		if(lockbroken)
+			updateUsrDialog()
+			return
 		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
 			tumbler_1_pos = decrement(tumbler_1_pos)
 			if(canhear)
@@ -132,6 +138,9 @@ FLOOR SAFES
 
 	if(href_list["increment"])
 		dial = increment(dial)
+		if(lockbroken)
+			updateUsrDialog()
+			return
 		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
 			tumbler_1_pos = increment(tumbler_1_pos)
 			if(canhear)
@@ -174,6 +183,14 @@ FLOOR SAFES
 	else
 		return ..()
 
+/obj/structure/safe/miningdrill_act(mob/user, obj/item/tool)
+	if(!open && !lockbroken)
+		to_chat(user, "<span class='notice'>You begin drilling [src] open.</span>")
+		playsound(src, pick(digsound),50,1)
+		if(do_after(user, 1200 * tool.toolspeed, target = src))
+			to_chat(user, "<span class='notice'>You drilled [src] open.</span>")
+			lockbroken = TRUE
+		return TRUE
 
 /obj/structure/safe/handle_atom_del(atom/A)
 	updateUsrDialog()
