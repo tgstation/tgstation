@@ -56,7 +56,7 @@
 /obj/item/stock_parts/cell/update_icon()
 	cut_overlays()
 	if(grown_battery)
-		add_overlay("grown_wires")
+		add_overlay(image('icons/obj/power.dmi',"grown_wires"))
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
