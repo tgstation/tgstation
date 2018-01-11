@@ -456,6 +456,7 @@
 #include "code\game\area\areas\ruins\_ruins.dm"
 #include "code\game\area\areas\ruins\lavaland.dm"
 #include "code\game\area\areas\ruins\space.dm"
+#include "code\game\area\areas\ruins\templates.dm"
 #include "code\game\gamemodes\antag_hud.dm"
 #include "code\game\gamemodes\antag_spawner.dm"
 #include "code\game\gamemodes\antag_team.dm"

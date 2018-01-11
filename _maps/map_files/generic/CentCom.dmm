@@ -14348,7 +14348,6 @@
 /obj/machinery/button/door{
 	id = "smindicate";
 	name = "external door control";
-	pixel_x = 0;
 	pixel_y = 26;
 	req_access_txt = "150"
 	},
