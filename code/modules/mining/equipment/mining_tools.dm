@@ -52,7 +52,9 @@
 	slot_flags = SLOT_BELT
 	tool_behaviour = TOOL_MININGDRILL
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
+	toolspeed = 1
 	digsound = list('sound/weapons/drill.ogg')
+	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
@@ -81,6 +83,7 @@
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
 	toolspeed = 0.65
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 

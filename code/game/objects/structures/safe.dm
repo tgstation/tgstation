@@ -48,6 +48,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
+	if(lockbroken)
+		return TRUE
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
 			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
@@ -56,8 +58,6 @@ FLOOR SAFES
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user)
 			audible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
-		return TRUE
-	else if(lockbroken)
 		return TRUE
 	return FALSE
 
@@ -186,7 +186,7 @@ FLOOR SAFES
 /obj/structure/safe/miningdrill_act(mob/user, obj/item/tool)
 	if(!open && !lockbroken)
 		to_chat(user, "<span class='notice'>You begin drilling [src] open.</span>")
-		playsound(src, pick(digsound),50,1)
+		playsound(src, tool.usesound,50,1)
 		if(do_after(user, 1200 * tool.toolspeed, target = src))
 			to_chat(user, "<span class='notice'>You drilled [src] open.</span>")
 			lockbroken = TRUE
