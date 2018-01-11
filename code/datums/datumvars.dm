@@ -2,13 +2,10 @@
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	switch(var_name)
-		if ("vars")
-			return FALSE
-		if ("var_edited")
-			return FALSE
-	var_edited = TRUE
+	if(var_name == NAMEOF(src, vars) || (var_name == NAMEOF(src, datum_flags) && (!isnum(var_value) || (!(var_value & DF_VAR_EDITED) && (datum_flags & DF_VAR_EDITED)))))
+		return FALSE
 	vars[var_name] = var_value
+	datum_flags |= DF_VAR_EDITED
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
@@ -105,7 +102,7 @@
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
-	if(!islist && D.var_edited)
+	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
 	var/list/dropdownoptions = list()

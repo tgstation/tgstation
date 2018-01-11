@@ -1,5 +1,5 @@
 /mob
-	use_tag = TRUE
+	datum_flags = DF_USE_TAG
 
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
