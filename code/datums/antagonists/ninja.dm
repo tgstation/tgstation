@@ -4,8 +4,16 @@
 	job_rank = ROLE_NINJA
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
+	var/give_equipment = TRUE
 
-	
+
+/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_ninja_icons_added(M)
+
+/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_ninja_icons_removed(M)	
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
@@ -106,6 +114,13 @@
 	if(give_objectives)
 		addObjectives()
 	addMemories()
+	if(give_equipment)
+		equip_space_ninja(owner.current)
+	SSticker.mode.traitors |= owner //remove with check_antags refactor
+
+/datum/antagonist/ninja/on_removal()
+	SSticker.mode.traitors -= owner
+	. = ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
 	var/adj
@@ -124,6 +139,20 @@
 			adj = "objectiveless"
 		else
 			return
+	new_owner.assigned_role = "Space Ninja"
+	new_owner.special_role = "Space Ninja"
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")
+
+
+
+/datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
+	ninjahud.join_hud(ninja)
+	set_antag_hud(ninja, "ninja")
+
+/datum/antagonist/ninja/proc/update_ninja_icons_removed(var/mob/living/carbon/human/ninja)
+	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
+	ninjahud.leave_hud(ninja)
+	set_antag_hud(ninja, null)
