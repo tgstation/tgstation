@@ -81954,6 +81954,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/chair/comfy,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -83280,14 +83281,14 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "dop" = (
-/obj/structure/chair/comfy{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/structure/chair/comfy{
+	dir = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -105274,10 +105275,8 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "eip" = (
-/obj/structure/chair/comfy{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -105380,6 +105379,7 @@
 "eiF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
 "eiG" = (

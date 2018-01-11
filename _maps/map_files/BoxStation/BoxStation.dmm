@@ -57160,7 +57160,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants/photosynthetic,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "QpA" = (
