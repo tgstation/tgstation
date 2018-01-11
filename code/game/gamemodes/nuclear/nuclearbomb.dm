@@ -528,6 +528,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	..()
 	GLOB.poi_list |= src
 	set_stationloving(TRUE, inform_admins=TRUE)
+	AddComponent(/datum/component/wanderlust)
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander))
