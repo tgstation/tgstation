@@ -494,6 +494,7 @@
 #include "code\game\gamemodes\bloodsucker\powers\bs_invis.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_recover.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_senses.dm"
+#include "code\game\gamemodes\bloodsucker\powers\bs_subtlety.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_torpor.dm"
 #include "code\game\gamemodes\bloodsucker\powers\bs_veil.dm"
 #include "code\game\gamemodes\brother\traitor_bro.dm"

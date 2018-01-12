@@ -38,6 +38,7 @@
 
 
 /obj/effect/proc_holder/spell/bloodsucker
+	var/helptext = "" // for UI to advise player
 	invocation = ""
 	school = "vampiric"
 	//action_icon = 'icons/obj/bloodpack.dmi'			// File containing icon
@@ -51,13 +52,14 @@
 	clothes_req = 0
 	still_recharging_msg = "That power is not ready yet."
 	//BS_background_state_enabled = "bg_alien"	// Background: Selected
+	var/vamplevel_req = 0			// Min rank to buy this power.
 	var/bloodcost = 0				// Cost to use this power.
 	var/bloodcost_constant = 0		// Cost to keep this power on.
 	var/amToggleable = FALSE						// When used, does this power flip its background ON and OFF to match its ACTIVE state?
 	var/amTargetted = FALSE							// When used, does this power require you to click a target? Forces this to use InterceptClickOn().
 	var/targetmessage_ON =  "<span class='notice'>The power of your blood flares forth!</span>"
 	var/targetmessage_OFF = "<span class='notice'>Your power subsides...</span>"
-
+	var/give_on_start = FALSE		// Used by UI to know not to show this power if we started with it.
 
 
 	// REFERENCE: Base Variables
@@ -348,16 +350,79 @@
 
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//											POWER PURCHASING
+
+
+// Look at external.dm for base UI procs
+// cellular_emporium.dm, chem_master.dm, and chem_heater.dm are examples of use.
+
+/datum/bloodsucker_powers
+	var/name = "bloodsucker powers"
+	var/datum/antagonist/bloodsucker/bloodsucker
 
 
 
+/datum/bloodsucker_powers/New(bloodsuckerdatum)
+	. = ..()
+	bloodsucker = bloodsuckerdatum
+
+/datum/bloodsucker_powers/Destroy()
+	bloodsucker = null
+	. = ..()
+
+// START: Create UI Object
+/datum/bloodsucker_powers/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state) // NOTE: Only cellular_emporim uses always_state
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open) // This is identical in each ui_interact
+	if(!ui)
+		ui = new(user, src, ui_key, "bloodsucker_powers", name, 900, 480, master_ui, state)
+		ui.open()
 
 
+// Populate UI with details (send this info to TGUI)
+/datum/bloodsucker_powers/ui_data(mob/user)
+	var/list/data = list()
+
+	// Setup Vars
+
+	// Populate with Powers (Active)
+	for(var/pickedpower in typesof(/obj/effect/proc_holder/spell/bloodsucker))
+		var/obj/effect/proc_holder/spell/bloodsucker/bs_power = pickedpower
+
+		// Starter Power? Skip.
+		if(initial(bs_power.give_on_start))
+			continue
+
+		data["powers_active"] += list(
+			"name" = initial(bs_power.name),
+			"desc" = initial(bs_power.desc),
+			"helptext" = initial(bs_power.helptext),
+			"owned" = (bs_power in bloodsucker.powers),
+			"blood_cost" =  initial(bs_power.bloodcost),
+			"blood_cost_constant" =  initial(bs_power.bloodcost_constant),
+			"can_purchase" = initial(bs_power.vamplevel_req) <= bloodsucker.vamplevel
+		)
 
 
+	// Populate with Powers (Passive)
+	//var/list/powers_passive = list()
+	// for ()
+	//data["powers_passive"] = powers_passive
+
+	return data
 
 
+// When you click in the UI, it sends the action and parameters here.
+/datum/bloodsucker_powers/ui_act(action, params)
+	if(..())
+		return
 
+	switch(action)
+		if("learn")
+			message_admins("DEBUG: Click() [action] in [name]")
 
 
 

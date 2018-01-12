@@ -17,7 +17,7 @@
 	stat_allowed = DEAD
 	charge_max = 100
 	action_icon_state = "power_torpor"				// State for that image inside icon
-
+	give_on_start = TRUE
 
 // CAST CHECK //	// USE THIS WHEN CLICKING ON THE ICON //
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cast_check(skipcharge = 0,mob/living/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell

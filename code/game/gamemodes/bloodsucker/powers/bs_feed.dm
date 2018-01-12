@@ -10,6 +10,7 @@
 	desc = "Draw the heartsblood of the living."
 	amToggleable = TRUE
 	action_icon_state = "power_feed"				// State for that image inside icon
+	give_on_start = TRUE
 
 	//charge_max = 10
 

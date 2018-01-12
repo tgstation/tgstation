@@ -2,6 +2,16 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+// 			TO-DO:  Look at miscellaneous.dm   and /obj/item/clothing/shoes/bhop  inside it
+//					This is a power that lets you jump toward a point. Maybe learn how to
+//					leap over objects such as counters?
+
+
+
+
+
 /obj/effect/proc_holder/spell/bloodsucker/haste
 	name = "Immortal Haste"
 	desc = "Select a person or location to sprint there in the blink of an eye. Your target may be knocked to the floor."// While active, your running speed will also increase."

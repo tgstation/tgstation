@@ -6,7 +6,7 @@
 	name = "Terrible Brawn"
 	desc = "Target a door or locker to wrench it open, or target a person to throw them violently away. Can also destroy your bonds."
 	bloodcost = 15
-	charge_max = 100
+	charge_max = 80
 	amToggleable = TRUE
 	amTargetted = TRUE
 	action_icon_state = "power_strength"				// State for that image inside icon

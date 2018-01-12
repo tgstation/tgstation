@@ -26,6 +26,7 @@
 	var/nextLevelTick					// When will I be qualified to level up next? Every Level incr
 	var/timeToLevel	= 6000				// Time (seconds) until you get the prompt to level up. 6000 = 10 min.
 	var/levelToTurnReq = 3				// At what level are you able to turn new vamps?
+	var/datum/bloodsucker_powers/powers_ui		// For leveling up. Changeling has a dedicated menu, so we probably should...likely so you dont open multiple windows and cheat.
 
 	var/bloodTakenLifetime = 0			// Total blood ever fed from humans.
 	var/vampsMade = 0					// Total bloodsuckers created from victims.
@@ -48,6 +49,15 @@
 	var/badfood	= 0						// When eating human food or drink, keep track of how much we've had so we can purge it at once.
 	var/frenzy_state=0					// 0 = fine. 1 = in a dangerous state. 2 = Actually in frenzy!
 	var/frenzy_buffer=0					// When I come out of frenzy, I can't go back in for a bit.
+
+
+/datum/antagonist/bloodsucker/New()
+	. = ..()
+	powers_ui = new (src) 	// Create new Level-Up UI
+
+/datum/antagonist/bloodsucker/Destroy()
+	QDEL_NULL(powers_ui)	// Remove Level-Up UI
+
 
 //Proc called when the datum is given to a mind.
 /datum/antagonist/bloodsucker/on_gain()
@@ -359,10 +369,10 @@ datum/antagonist/bloodsucker/proc/AssignStarterPowersAndStats()
 
 	// Soul
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
-	owner.isholy = FALSE 		//is this person a chaplain or admin role allowed to use bibles
+	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 
 	// Update Health
-	owner.current.setMaxHealth(125) // 150
+	owner.current.setMaxHealth(120) // 150
 
 	// Other Cool Stuff
 	vampify_eyes() // in bloodsucker_life.dm
@@ -414,14 +424,18 @@ datum/antagonist/bloodsucker/proc/ClearAllPowersAndStats()
 
 
 datum/antagonist/bloodsucker/proc/LevelUp()
+
+	//powers_ui.ui_interact(owner.current) //  Make sure it points to a MOB, not a mind!)
+	//return
+
 	// Purchase Power Prompt
 	var/list/options = list() // Taken from gasmask.dm, for Clown Masks.
 	for(var/pickedpower in typesof(/obj/effect/proc_holder/spell/bloodsucker))
 		var/obj/effect/proc_holder/spell/bloodsucker/power = pickedpower
 		if (!(locate(power) in powers))
-			var/obj/effect/proc_holder/spell/bloodsucker/temp_power = new power() // Create temporary power (to read its name + description, etc)
-			options[temp_power.name] = power
-			qdel(temp_power)
+			//var/obj/effect/proc_holder/spell/bloodsucker/temp_power = new power() // Create temporary power (to read its name + description, etc)
+			options[initial(power.name)] = power // TESTING: After working with TGUI, it seems you can use initial() to view the variables inside a path?
+			//qdel(temp_power)
 	options["\[Not Now\]"] = null
 
 	// Abort?
@@ -447,11 +461,11 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 		S.punchdamagelow += 1
 		S.punchdamagehigh += 1      // NOTE: This affects the hitting power of Brawn.
 	// More Health
-	owner.current.setMaxHealth(owner.current.maxHealth + 10)
+	owner.current.setMaxHealth(owner.current.maxHealth + 5)
 	// Vamp Stats
-	regenRate += 0.1			// Points of brute healed (starts at 0.4)
-	feedAmount += 5				// Increase how quickly I munch down vics
-	maxBloodVolume += 50		// Increase my max blood
+	regenRate += 0.05			// Points of brute healed (starts at 0.4)
+	feedAmount += 2				// Increase how quickly I munch down vics
+	maxBloodVolume += 25		// Increase my max blood
 
 	to_chat(owner.current, "<span class='userdanger'>Your blood thickens as you take another step toward true immortality. You are now a Rank [vamplevel] Bloodsucker!</span>")
 	to_chat(owner.current, "<span class='boldannounce'>Your weakness to Burning has increased. However, your health and healing are better, you Feed more quickly, you store more blood, and you deal more damage than before.</span>")

@@ -12,6 +12,7 @@
 	targetmessage_OFF = "<span class='notice'>The wound on your wrist heals instantly.</span>"
 	//charge_max = 10
 	action_icon_state = "power_bleed"				// State for that image inside icon
+	give_on_start = TRUE
 
 
 // TARGET VALID? //	// USE THIS TO DETERMINE IF TARGET IS VALID //

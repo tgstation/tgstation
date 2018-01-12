@@ -12,14 +12,9 @@ Clowno	=	Fulp Crew
 fulpstation	=	Fulp Crew
 tomamoto	=	Host
 Grupert87	=	Moderator
-90sSitcomWriter	=	Moderator
-Someone_unkown	=	Administrator
 Krinkels	=	Game Master
 Rumpelgeist	=	SeniorAdmin
 ImpendingRiot	=	Moderator
-falconhoof	=	Game Master
-spazkidin3d =   Game Master
-mwelsh	=	Moderator
 Oney	=	Fulp Crew
 FaKanza		=	Game Master
 Trickytyfly		=	Game Master
@@ -42,4 +37,6 @@ Bricksqwad	=	Administrator
 Ishiro	=	Administrator
 
 #TRIAL ADMINS
-
+Wicker0	=	Trial Admin
+hiimchros	=	Trial Admin
+InkPacket	=	Trial Admin
