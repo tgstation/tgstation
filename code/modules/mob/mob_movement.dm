@@ -266,24 +266,6 @@
 /mob/proc/mob_negates_gravity()
 	return FALSE
 
-//moves the mob/object we're pulling
-/mob/proc/Move_Pulled(atom/A)
-	if(!pulling)
-		return
-	if(pulling.anchored || !pulling.Adjacent(src))
-		stop_pulling()
-		return
-	if(isliving(pulling))
-		var/mob/living/L = pulling
-		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
-			stop_pulling()
-			return
-	if(A == loc && pulling.density)
-		return
-	if(!Process_Spacemove(get_dir(pulling.loc, A)))
-		return
-	step(pulling, get_dir(pulling.loc, A))
-
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return

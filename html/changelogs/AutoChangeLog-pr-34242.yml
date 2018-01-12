@@ -1,4 +1,0 @@
-author: "Someguynamedpie"
-delete-after: True
-changes: 
-  - bugfix: "Use world.timeofday instead of world.realtime"

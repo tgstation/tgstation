@@ -38,6 +38,7 @@
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
+	check_pulling()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -376,6 +377,13 @@
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+/obj/item/device/electronic_assembly/stop_pulling()
+	..()
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.stop_pulling()
+
+
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
@@ -393,8 +401,7 @@
 	return acting_object.drop_location()
 
 /obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
-	name = "type-a electronic assembly"
-
+  name = "type-a electronic assembly"
 
 /obj/item/device/electronic_assembly/calc
 	name = "type-b electronic assembly"
