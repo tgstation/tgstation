@@ -1,3 +1,5 @@
+#define MAX_EMAG_ROCKETS 8
+
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package for double the price,\
@@ -48,35 +50,22 @@
 		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	
 	data["message"] = message
-
-	if (emagged)  
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-			if (P.name == "Toy Crate")//Can only order toys if emagged. You gotta spend 10K points to crash a droppod somewhere on the station
-				data["supplies"][P.group] = list(
-							"name" = P.group,
-							"packs" = list()
-						)
-				data["supplies"][P.group]["packs"] += list(list(
-						"name" = P.name,
-						"cost" = P.cost * 2, //displays twice the normal cost
-						"id" = pack
-					))		
-	else
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-			if(!data["supplies"][P.group])
-				data["supplies"][P.group] = list(
-					"name" = P.group,
-					"packs" = list()
-				)
-			if((P.hidden) || (P.contraband) || (P.special))//no fun allowed
-				continue
-			data["supplies"][P.group]["packs"] += list(list(
-				"name" = P.name,
-				"cost" = P.cost * 2, //displays twice the normal cost
-				"id" = pack
-			))
+	for(var/pack in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+		if(!data["supplies"][P.group])
+			data["supplies"][P.group] = list(
+				"name" = P.group,
+				"packs" = list()
+			)
+		if((P.hidden) || (P.special))//no fun allowed
+			continue
+		if(!emagged && P.contraband)
+			continue
+		data["supplies"][P.group]["packs"] += list(list(
+			"name" = P.name,
+			"cost" = P.cost * 2, //displays twice the normal cost
+			"id" = pack
+		))
 				
 	return data
 
@@ -98,28 +87,35 @@
 				name = usr.real_name
 				rank = "Silicon"
 			var/reason = ""
-
-			
+			var/list/empty_turfs
+			var/area/landingzone
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
-			if(SO.pack.cost* 2 <= SSshuttle.points) //If you can afford it, then begin the delivery
-				SO.generateRequisition(get_turf(src))
-				SSshuttle.points -= SO.pack.cost * 2//twice the normal cost
-
-				var/list/empty_turfs = list()
-				var/area/landingzone
-
-				if (!emagged) 
+			if(!emagged)
+				if(SO.pack.cost * 2 <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
-				else 
+					for(var/turf/open/floor/T in landingzone.contents)
+						if(is_blocked_turf(T))
+							continue
+						LAZYADD(empty_turfs, T)
+					if(empty_turfs && empty_turfs.len)
+						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
+						SSshuttle.points -= SO.pack.cost * 2
+						new /obj/effect/BDPtarget(LZ, SO)
+						. = TRUE
+						update_icon()
+			else
+				if(SO.pack.cost * (1.2*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas
-
-				for(var/turf/open/floor/T in landingzone.contents) //get all the turfs in cargo bay
-					if(is_blocked_turf(T))//wont land on a blocked turf
-						continue
-					empty_turfs.Add(T)
-
-				if (empty_turfs.len != 0 )
-					var/LZ = empty_turfs[rand(empty_turfs.len-1)]//pick a random turf
-					new /obj/effect/BDPtarget(LZ, SO)//where the magic happens. this temp visual makes the actual droppod after a pause
-				. = TRUE
-				update_icon()
+					for(var/turf/open/floor/T in landingzone.contents)
+						if(is_blocked_turf(T))
+							continue
+						LAZYADD(empty_turfs, T)
+					if(empty_turfs && empty_turfs.len)
+						SSshuttle.points -= SO.pack.cost * (1.2*MAX_EMAG_ROCKETS)
+						SO.generateRequisition(get_turf(src))
+						for(var/i in 1 to MAX_EMAG_ROCKETS)
+							var/LZ = empty_turfs[rand(empty_turfs.len-1)]
+							LAZYREMOVE(empty_turfs, LZ)
+							new /obj/effect/BDPtarget(LZ, SO)
+							. = TRUE
+							update_icon()
