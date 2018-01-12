@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - code_imp: "Removes some links intended for admins from game logs."
