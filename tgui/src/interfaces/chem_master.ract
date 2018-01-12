@@ -4,7 +4,7 @@
 			style='{{data.isBeakerLoaded ? "selected" : null}}'
 			state='{{data.isBeakerLoaded ? null : "disabled"}}'
 			action='eject'
-			>{{data.isBeakerLoaded ? "Eject and Clear Buffer" : "No beaker"}}
+			>{{data.isBeakerLoaded ? "Eject" : "No beaker"}}
 		</ui-button>
 			
 		<ui-section>
