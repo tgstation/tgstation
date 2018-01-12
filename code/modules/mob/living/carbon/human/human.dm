@@ -26,7 +26,6 @@
 
 	handcrafting = new()
 	//hippie start - <unknown, teeth apparently?>
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
 	update_teeth()
 	// hippie end - <unknown, teeth apparently?>
 	
