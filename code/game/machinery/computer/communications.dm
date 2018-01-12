@@ -289,7 +289,7 @@
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				log_talk(usr,"[key_name(usr)] has made a CentCom announcement: [input]",LOGSAY)
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged CentComm:</b> [input]</span>", usr)
+				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged CentCom:</b> [input]</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		// OMG SYNDICATE ...LETTERHEAD

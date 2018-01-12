@@ -45,7 +45,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/start_line_profiling,
 	/client/proc/stop_line_profiling,
 	/client/proc/show_line_profiling,
-	/client/proc/create_mapping_job_icons
+	/client/proc/create_mapping_job_icons,
+	/client/proc/debug_z_levels,
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -293,3 +294,63 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
+
+/client/proc/debug_z_levels()
+	set name = "Debug Z-Levels"
+	set category = "Mapping"
+
+	var/list/z_list = SSmapping.z_list
+	var/list/messages = list()
+	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br>"
+
+	var/list/linked_levels = list()
+	var/min_x = INFINITY
+	var/min_y = INFINITY
+	var/max_x = -INFINITY
+	var/max_y = -INFINITY
+
+	for(var/z in 1 to max(world.maxz, z_list.len))
+		if (z > z_list.len)
+			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
+			continue
+		var/datum/space_level/S = z_list[z]
+		if (!S)
+			messages += "<b>[z]</b>: Unmanaged (null)<br>"
+			continue
+		var/linkage
+		switch (S.linkage)
+			if (UNAFFECTED)
+				linkage = "no linkage"
+			if (SELFLOOPING)
+				linkage = "self-looping"
+			if (CROSSLINKED)
+				linkage = "linked at ([S.xi], [S.yi])"
+				linked_levels += S
+				min_x = min(min_x, S.xi)
+				min_y = min(min_y, S.yi)
+				max_x = max(max_x, S.xi)
+				max_y = max(max_y, S.yi)
+			else
+				linkage = "unknown linkage '[S.linkage]'"
+
+		messages += "<b>[z]</b>: [S.name], [linkage], traits: [json_encode(S.traits)]<br>"
+		if (S.z_value != z)
+			messages += "-- z_value is [S.z_value], should be [z]<br>"
+		if (S.name == initial(S.name))
+			messages += "-- name not set<br>"
+		if (z > world.maxz)
+			messages += "-- exceeds max z"
+
+	var/grid[max_x - min_x + 1][max_y - min_y + 1]
+	for(var/datum/space_level/S in linked_levels)
+		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
+
+	messages += "<table border='1'>"
+	for(var/y in max_y to min_y step -1)
+		var/list/part = list()
+		for(var/x in min_x to max_x)
+			part += "[grid[x - min_x + 1][y - min_y + 1]]"
+		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
+	messages += "</table>"
+
+	to_chat(src, messages.Join(""))

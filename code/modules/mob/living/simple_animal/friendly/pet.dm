@@ -3,6 +3,7 @@
 	mob_size = MOB_SIZE_SMALL
 	var/obj/item/clothing/neck/petcollar/pcollar
 	var/collar_type
+	var/unique_pet = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
@@ -12,7 +13,7 @@
 			pcollar = P.type
 			regenerate_icons()
 			to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
-			if(P.tagname)
+			if(P.tagname && !unique_pet)
 				real_name = "\proper [P.tagname]"
 				name = real_name
 			qdel(P)
