@@ -17,7 +17,7 @@
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
 	if(station_lock_override)
-		z_lock = GLOB.station_z_levels.Copy()
+		z_lock = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"

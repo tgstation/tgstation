@@ -213,7 +213,9 @@
 						continue
 					else
 						var/temp = fuck[1]
-						to_chat(usr, "[src] can't process [temp]!")
+						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
+						to_chat(usr, "<span class ='danger'>[src] cannot find Chemical ID: <b>[temp]</b>!</span>")
+						playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
 						return
 				saved_recipes += list(list("recipe_name" = name, "contents" = recipe))
 

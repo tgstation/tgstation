@@ -1,0 +1,5 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - tweak: "Cyborgs that take enough damage to have a module disabled will now automatically announce that they've had a module disabled to anybody nearby. Now if you want to stop a cyborg from interfering with your business but don't want to kill it, you can simply bash until you see the CRITICAL ERROR message."
+  - soundadd: "Borgs will play an alarm sound in addition to displaying this message as they have their modules disabled."
