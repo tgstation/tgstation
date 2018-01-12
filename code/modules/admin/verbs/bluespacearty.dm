@@ -8,6 +8,12 @@
 		to_chat(usr, "This can only be used on instances of type /mob/living")
 		return
 
+	bluespace_shell(target)
+
+/proc/bluespace_shell(mob/living/target)
+	if(!target || !isliving(target))
+		return
+
 	explosion(target.loc, 0, 0, 0, 0)
 
 	var/turf/open/floor/T = get_turf(target)
@@ -23,4 +29,3 @@
 		target.adjustBruteLoss(min(99,(target.health - 1)))
 		target.Knockdown(400)
 		target.stuttering = 20
-
