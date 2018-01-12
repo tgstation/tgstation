@@ -60,7 +60,7 @@
 	// Deep Space FLW
 	var/list/parts = list()
 	//TODO Should probably be a span on top instead th
-	parts += ""<table cellspacing=5><tr><th>[antag_listing_name()]</th><th></th><th></th></tr>"
+	parts += "<table cellspacing=5><tr><th>[antag_listing_name()]</th><th></th><th></th></tr>"
 	for(var/datum/antagonist/A in get_team_antags())
 		parts += A.antag_listing_entry()
 	parts += "</table>"
