@@ -31319,7 +31319,7 @@
 	desc = "Used for watching the RD's goons from the safety of your own office.";
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_y = 2
+	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -38000,6 +38000,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "bPc" = (
@@ -38813,6 +38814,13 @@
 "bQY" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_circuit_printer/upgraded,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 4;
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bQZ" = (

@@ -81017,6 +81017,13 @@
 /obj/structure/table/reinforced,
 /obj/item/device/multitool,
 /obj/item/screwdriver,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 4;
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/white/corner,
 /area/science/circuit)
 "djo" = (
@@ -81901,7 +81908,6 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dle" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer/upgraded,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -84930,6 +84936,13 @@
 /obj/structure/table/reinforced,
 /obj/item/device/multitool,
 /obj/item/screwdriver,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 4;
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -105169,6 +105182,7 @@
 	pixel_y = 32;
 	receive_ore_updates = 1
 	},
+/obj/item/device/integrated_circuit_printer/upgraded,
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
 "ehZ" = (
@@ -105358,6 +105372,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
+/obj/item/device/integrated_circuit_printer/upgraded,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},

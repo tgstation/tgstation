@@ -60005,11 +60005,17 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cud" = (
-/obj/structure/closet,
-/obj/item/storage/toolbox/emergency,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "cue" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -61001,22 +61007,25 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cwb" = (
-/obj/item/device/multitool,
-/obj/item/screwdriver,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "cwc" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cwd" = (
-/obj/structure/closet/crate,
-/obj/item/coin/silver,
-/obj/item/device/flashlight/seclite,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "cwe" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -61496,11 +61505,7 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "cwZ" = (
-/obj/item/device/integrated_electronics/analyzer,
-/obj/item/device/integrated_electronics/debugger,
-/obj/item/device/integrated_electronics/wirer,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "cxa" = (
 /obj/item/stack/cable_coil,
@@ -61852,17 +61857,18 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cxN" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "cxO" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cxP" = (
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cxQ" = (
@@ -62271,8 +62277,8 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "cyM" = (
-/obj/machinery/rnd/protolathe/department/science,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "cyN" = (
 /obj/machinery/firealarm{
@@ -63300,6 +63306,9 @@
 /area/science/mixing)
 "cAK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cAL" = (
@@ -64185,6 +64194,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCE" = (
@@ -64195,9 +64207,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/science/mixing)
 "cCF" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -79630,14 +79639,13 @@
 	},
 /area/maintenance/port/aft)
 "dyp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
-/obj/item/stack/sheet/metal/fifty,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "dyw" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -80635,6 +80643,20 @@
 /area/maintenance/starboard/aft)
 "Ljy" = (
 /obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/science/circuit)
+"Ljz" = (
+/obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -80643,13 +80665,32 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"Ljz" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjA" = (
+/obj/structure/target_stake,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjB" = (
+/obj/structure/closet/crate,
+/obj/item/target/alien,
+/obj/item/target/alien,
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/syndicate,
+/obj/item/target/syndicate,
+/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjC" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"LjA" = (
+"LjD" = (
 /obj/structure/reagent_dispensers/beerkeg{
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
 	icon = 'icons/obj/machines/nuke.dmi';
@@ -80660,40 +80701,29 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"LjB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/maintenance/starboard/aft)
-"LjC" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
-"LjD" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "LjE" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/space)
 "LjF" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Experimentation Lab Maintenance";
-	req_access_txt = "8"
-	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"LjG" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
+"LjH" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/research/glass{
+	name = "Circuitry Lab";
+	req_access_txt = "47"
 	},
-/area/science/circuit)
-"LjG" = (
-/turf/closed/wall,
-/area/science/circuit)
-"LjH" = (
-/turf/closed/wall,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "LjI" = (
 /turf/closed/wall,
@@ -80708,147 +80738,184 @@
 /turf/closed/wall,
 /area/science/circuit)
 "LjM" = (
-/obj/item/device/integrated_circuit_printer/upgraded,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
+/turf/closed/wall,
 /area/science/circuit)
 "LjN" = (
+/turf/closed/wall,
+/area/science/circuit)
+"LjO" = (
+/turf/closed/wall,
+/area/science/circuit)
+"LjP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"LjQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"LjR" = (
+/obj/machinery/airalarm{
+	pixel_y = 32
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjS" = (
 /obj/item/device/multitool,
+/obj/item/screwdriver,
+/obj/structure/table/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjT" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/requests_console{
+	department = "Science";
+	departmentType = 2;
+	dir = 2;
+	name = "Science Requests Console";
+	pixel_y = 30;
+	receive_ore_updates = 1
+	},
+/obj/item/device/integrated_electronics/debugger,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjU" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal/fifty,
+/obj/structure/table/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of your own office.";
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjV" = (
 /obj/item/screwdriver,
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjO" = (
-/obj/item/device/integrated_circuit_printer/upgraded,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjP" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjR" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LjS" = (
-/obj/machinery/light{
-	dir = 1
-	},
+"LjW" = (
 /obj/machinery/power/apc{
+	dir = 1;
 	name = "Circuitry lab area power controller";
 	pixel_y = 30
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjT" = (
-/obj/structure/closet/crate,
-/obj/item/target/alien,
-/obj/item/target/alien,
-/obj/item/target/clown,
-/obj/item/target/clown,
-/obj/item/target/syndicate,
-/obj/item/target/syndicate,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjU" = (
-/obj/structure/target_stake,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"LjV" = (
-/turf/closed/wall,
-/area/science/circuit)
-"LjW" = (
 /obj/structure/table/reinforced,
+/obj/item/device/multitool,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "LjX" = (
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal/fifty,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of your own office.";
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LjY" = (
+/turf/closed/wall,
+/area/science/circuit)
+"LjZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"Lka" = (
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"Lkb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"Lkc" = (
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lkd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lke" = (
+/obj/structure/table/reinforced,
+/obj/item/device/integrated_circuit_printer/upgraded,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lkf" = (
 /obj/effect/landmark/start/scientist,
 /obj/structure/chair/office/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LjY" = (
+"Lkg" = (
+/obj/item/device/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LjZ" = (
+"Lkh" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lki" = (
 /obj/structure/chair/office/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Lka" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
+"Lkj" = (
+/obj/item/device/integrated_electronics/analyzer,
+/obj/item/device/integrated_electronics/debugger,
+/obj/item/device/integrated_electronics/wirer,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Lkb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lkd" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lke" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lkf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lkg" = (
+"Lkk" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/science/circuit)
-"Lkh" = (
+"Lkl" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -80856,133 +80923,121 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Lki" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkj" = (
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkk" = (
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
 "Lkm" = (
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "Lkn" = (
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lko" = (
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"Lkp" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/device/integrated_electronics/analyzer,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lko" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lkp" = (
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lkq" = (
+/obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/device/integrated_circuit_printer/upgraded,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lkr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Lks" = (
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Lkq" = (
+"Lkt" = (
 /turf/closed/wall,
 /area/science/circuit)
-"Lkr" = (
+"Lku" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"Lks" = (
+"Lkv" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"Lkt" = (
+"Lkw" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"Lku" = (
-/obj/machinery/vending/assist,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
-"Lkw" = (
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
 "Lkx" = (
-/obj/machinery/libraryscanner,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Lky" = (
-/obj/machinery/bookbinder,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Lkz" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "LkA" = (
-/turf/open/floor/plasteel,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/science/circuit)
 "LkB" = (
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"LkC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Science - Lab Access";
-	dir = 8;
-	name = "science camera";
-	network = list("SS13","RD")
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"LkD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/science/circuit)
-"LkE" = (
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"LkF" = (
+"LkC" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"LkG" = (
+"LkD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"LkH" = (
+"LkE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -80990,76 +81045,92 @@
 	name = "Circuitry Lab";
 	req_access_txt = "47"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"LkI" = (
+"LkF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LkJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
+"LkG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LkK" = (
+"LkH" = (
 /obj/machinery/light,
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LkL" = (
+"LkI" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = -26;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LkJ" = (
 /obj/item/device/radio/intercom{
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"LkM" = (
-/obj/machinery/firealarm{
+"LkK" = (
+/obj/machinery/camera{
+	c_tag = "Research Division Circuitry Lab";
 	dir = 1;
-	pixel_x = -24;
-	pixel_y = -24
+	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"LkL" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"LkM" = (
+/obj/machinery/bookbinder,
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "LkN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/libraryscanner,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "LkO" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light,
-/turf/open/floor/plasteel,
+/obj/machinery/rnd/protolathe/department/science,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "LkP" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "LkQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"LkR" = (
 /turf/closed/wall,
 /area/science/circuit)
-"LkS" = (
+"LkR" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"LkT" = (
+"LkS" = (
 /turf/closed/wall,
 /area/science/circuit)
-"LkU" = (
+"LkT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/turf/closed/wall,
+/area/science/circuit)
+"LkU" = (
 /turf/closed/wall,
 /area/science/circuit)
 "LkV" = (
@@ -81096,8 +81167,9 @@
 /turf/closed/wall,
 /area/science/circuit)
 "Llg" = (
-/turf/closed/wall,
-/area/science/circuit)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "Llh" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -81107,13 +81179,10 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "Llj" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
-"Llk" = (
+/obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"Lll" = (
+"Llk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -81122,6 +81191,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"Lll" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "Llm" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -81131,27 +81204,23 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "Llo" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
-"Llp" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"Llq" = (
+"Llp" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"Llr" = (
+"Llq" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Lls" = (
+"Llr" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -81160,7 +81229,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Llt" = (
+"Lls" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
@@ -115768,13 +115837,13 @@ dwL
 dwL
 dwL
 dwL
-Lkr
-LkE
+Lku
+LkB
 cAI
 cBD
 cCD
-Llk
-Llp
+Llj
+Llo
 dvY
 cEz
 dxQ
@@ -116024,10 +116093,10 @@ cub
 cJa
 cJa
 cJa
-Lkh
-Lks
-LkF
-LkS
+Lkl
+Lkv
+LkC
+LkR
 cBE
 cAJ
 cCE
@@ -116282,17 +116351,17 @@ cuY
 cwa
 dzQ
 dwL
-Lkt
-LkG
+Lkw
+LkD
 cAK
 cBF
 cCF
-Lll
-Llq
+Llk
+Llp
 dvY
 dww
+Llq
 Llr
-Lls
 cJa
 cPx
 cJb
@@ -116540,8 +116609,8 @@ cuZ
 cuZ
 cuZ
 cuZ
-LkH
-LkT
+LkE
+LkS
 czD
 cAL
 cBG
@@ -116794,11 +116863,11 @@ dwL
 dxQ
 cuZ
 cwb
-LjW
-Lki
-Lku
-LkI
-LkU
+LjZ
+Lkm
+Lkx
+LkF
+LkT
 czD
 cQC
 cBH
@@ -117050,12 +117119,12 @@ cgq
 dwL
 dxQ
 cuZ
-LjM
-LjX
-Lkj
-Lkv
-LkJ
-LkV
+LjP
+Lka
+cwZ
+Lky
+LkG
+LkU
 cQv
 cAN
 cBI
@@ -117309,10 +117378,10 @@ cuc
 cuZ
 dyp
 cwZ
-Lkk
+cwZ
 cyM
-LkK
-LkW
+LkH
+LkV
 czF
 cAN
 cBJ
@@ -117335,7 +117404,7 @@ aaa
 aaf
 aaa
 aaa
-Llt
+Lls
 aaa
 aaf
 aaa
@@ -117562,14 +117631,14 @@ dvY
 dvY
 dvY
 dvY
-ceZ
+Ljy
 cuZ
-LjN
-LjY
+LjQ
+Lkb
 cxN
-Lkw
+Lkz
 cxO
-LkX
+LkW
 czG
 cAN
 cBK
@@ -117819,14 +117888,14 @@ cpH
 cqX
 cpH
 dvY
-ceZ
+cud
 cuZ
-LjO
-LjZ
+LjR
+Lkc
 cxO
 cxO
-cxO
-LkY
+LkI
+LkX
 cQB
 cAO
 cBL
@@ -118076,14 +118145,14 @@ cpI
 cqY
 crY
 dvY
-ceZ
-cuZ
-dyp
-cwZ
+Ljz
+LjH
+cwd
+Lkd
 cxP
-Lkx
-LkL
-LkZ
+cxO
+LkJ
+LkY
 czI
 cAP
 cAP
@@ -118333,14 +118402,14 @@ cpJ
 cqZ
 dvY
 dvY
-Ljy
-LjF
-LjP
-Lka
-Lkl
-Lky
+LjA
+LjI
+LjS
+Lke
+Lkn
 cxO
-Lla
+LkK
+LkZ
 aaf
 aaf
 aaf
@@ -118590,14 +118659,14 @@ dxh
 clY
 crZ
 dvY
-Ljz
-LjG
-LjQ
-Lkb
+LjB
+LjJ
+LjT
+Lkf
+Lko
 cxO
-cxO
-LkM
-Llb
+LkL
+Lla
 aaf
 aaa
 aaf
@@ -118847,14 +118916,14 @@ cnb
 cra
 csa
 dvY
-LjA
-LjH
-LjR
-Lkc
-Lkm
-Lkz
-LkN
-Llc
+LjC
+LjK
+LjU
+Lkg
+Lkp
+cxO
+LkM
+Llb
 aaa
 aaa
 aaa
@@ -119104,14 +119173,14 @@ dwN
 cou
 csb
 dvY
-LjB
-LjI
-LjS
-Lkd
-Lkn
-LkA
-LkO
-Lld
+LjD
+LjL
+LjV
+Lkh
+Lkq
+cxO
+LkN
+Llc
 aaa
 aaa
 aaa
@@ -119361,14 +119430,14 @@ dwN
 cgs
 csc
 dvY
-LjC
-LjJ
-LjT
-Lke
-Lko
-LkB
-LkP
-Lle
+LjE
+LjM
+LjW
+Lki
+Lkr
+cxO
+LkO
+Lld
 aaa
 aaa
 aaa
@@ -119618,14 +119687,14 @@ cpK
 dwN
 csc
 dvY
-LjD
-LjK
-LjU
-Lkf
-Lkp
-LkC
-LkQ
-Llf
+LjF
+LjN
+LjX
+Lkj
+Lks
+cxO
+LkP
+Lle
 aaa
 aaa
 aaa
@@ -119875,14 +119944,14 @@ cpL
 crb
 csd
 dvY
-LjE
-LjL
-LjV
-Lkg
-Lkq
-LkD
-LkR
-Llg
+LjG
+LjO
+LjY
+Lkk
+Lkt
+LkA
+LkQ
+Llf
 aaa
 aaa
 aaa
@@ -120398,8 +120467,8 @@ aaf
 aaf
 aaf
 aaf
-Llh
-Llm
+Llg
+Lll
 aaf
 aaa
 aaf
@@ -122711,8 +122780,8 @@ aaa
 aaa
 aaf
 aaf
-Lli
-Lln
+Llh
+Llm
 aaf
 aaf
 aaa
@@ -125538,8 +125607,8 @@ aaa
 aaf
 aaf
 aaf
-Llj
-Llo
+Lli
+Lln
 aaf
 aaf
 aaa
