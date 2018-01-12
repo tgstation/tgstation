@@ -17,7 +17,7 @@
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
 	if(station_lock_override)
-		z_lock = GLOB.station_z_levels.Copy()
+		z_lock = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
@@ -282,6 +282,9 @@
 /obj/machinery/computer/camera_advanced/ratvar/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
+		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
 		return
 	. = ..()
 

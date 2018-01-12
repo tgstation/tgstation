@@ -19,56 +19,6 @@
 								2 for preloading absolutely everything;
 								*/
 
-#define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
-								// 1 will enable set background. 0 will disable set background.
-
-//ADMIN STUFF
-#define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
-
-#define SPAM_TRIGGER_WARNING	5	//Number of identical messages required before the spam-prevention will warn you to stfu
-#define SPAM_TRIGGER_AUTOMUTE	10	//Number of identical messages required before the spam-prevention will automute you
-
-//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN			1024
-#define MAX_NAME_LEN			42
-#define MAX_BROADCAST_LEN		512
-#define MAX_CHARTER_LEN			80
-
-//MINOR TWEAKS/MISC
-#define AGE_MIN				17	//youngest a character can be
-#define AGE_MAX				85	//oldest a character can be
-#define WIZARD_AGE_MIN		30	//youngest a wizard can be
-#define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
-#define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
-#define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
-#define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
-
-#define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
-#define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
-#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
-
-#define MAX_STACK_AMOUNT_METAL	50
-#define MAX_STACK_AMOUNT_GLASS	50
-#define MAX_STACK_AMOUNT_RODS	60
-
-// AI Toggles
-#define AI_CAMERA_LUMINOSITY	5
-#define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
-
-//Additional code for the above flags.
-#ifdef TESTING
-#warn compiling in TESTING mode. testing() debug messages will be visible.
-#endif
-
-
-#ifdef GC_FAILURE_HARD_LOOKUP
-#define FIND_REF_NO_CHECK_TICK
-#endif
-
-#ifdef TRAVISTESTING
-#define TESTING
-#endif
-
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 511
 #if DM_VERSION < MIN_COMPILER_VERSION
@@ -77,7 +27,15 @@
 #error You need version 511 or higher
 #endif
 
-//Update this whenever the db schema changes
-//make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 0
+//Additional code for the above flags.
+#ifdef TESTING
+#warn compiling in TESTING mode. testing() debug messages will be visible.
+#endif
+
+#ifdef GC_FAILURE_HARD_LOOKUP
+#define FIND_REF_NO_CHECK_TICK
+#endif
+
+#ifdef TRAVISTESTING
+#define TESTING
+#endif

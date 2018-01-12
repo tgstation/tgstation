@@ -18,12 +18,14 @@
 	dissipate_delay = 5
 	dissipate_strength = 1
 	var/list/orbiting_balls = list()
+	var/miniball = FALSE
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	. = ..()
+	miniball = is_miniball
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -42,9 +44,10 @@
 	. = ..()
 
 /obj/singularity/energy_ball/admin_investigate_setup()
-	if(istype(loc, /obj/singularity/energy_ball))
-		return
+	if(miniball)
+		return //don't annnounce miniballs
 	..()
+
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -144,6 +147,10 @@
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(L.incorporeal_move)
+			return
 	if(!iscarbon(A))
 		return
 	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
