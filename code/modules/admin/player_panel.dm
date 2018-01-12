@@ -321,7 +321,7 @@
 		dat += "<B>Emergency shuttle</B><BR>"
 		if(EMERGENCY_IDLE_OR_RECALLED)
 			dat += "<a href='?_src_=holder;[HrefToken()];call_shuttle=1'>Call Shuttle</a><br>"
-		else
+		else if (SSshuttle.emergency)
 			var/timeleft = SSshuttle.emergency.timeLeft()
 			if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 				dat += "ETA: <a href='?_src_=holder;[HrefToken()];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
