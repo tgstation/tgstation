@@ -5,9 +5,9 @@
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
+//if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer, and rturns the id of the existing timer
 #define TIMER_UNIQUE		0x1
 //For unique timers: Replace the old timer rather then not start this one
-//if the argumentss to addtimer are the same as an existing timer, it doesn't create a new timer, and returns the id of the existing timer
 #define TIMER_OVERRIDE		0x2
 //Timing should be based on how timing progresses on clients, not the sever.
 //	tracking this is more expensive,
