@@ -539,3 +539,6 @@
 
 /atom/proc/wirecutter_act(mob/user, obj/item/tool)
 	return
+
+/atom/proc/miningdrill_act(mob/user, obj/item/tool)
+	return
