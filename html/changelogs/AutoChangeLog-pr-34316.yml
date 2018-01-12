@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the original poker tables not being deleted after Narsie converted them to a wooden table"
