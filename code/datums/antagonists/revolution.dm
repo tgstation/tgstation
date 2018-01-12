@@ -153,6 +153,9 @@
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
+/datum/antagonist/rev/head/antag_listing_name()
+	return ..() + "(Leader)"
+
 /datum/antagonist/rev/proc/update_rev_icons_added(mob/living/M)
 	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
 	revhud.join_hud(M)
@@ -344,3 +347,21 @@
 	result += "</div>"
 
 	return result.Join()
+
+/datum/team/revolution/antag_listing_entry()
+	var/common_part = ..()
+
+	var/heads_report = "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
+	for(var/datum/mind/N in SSjob.get_living_heads())
+		var/mob/M = N.current
+		if(M)
+			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			heads_report += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+			heads_report += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+			var/turf/mob_loc = get_turf(M)
+			heads_report += "<td>[mob_loc.loc]</td></tr>"
+		else
+			heads_report += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
+			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+	heads_report += "</table>"
+	return common_part + heads_report

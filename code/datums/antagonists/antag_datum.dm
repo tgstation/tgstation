@@ -228,6 +228,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 			already_registered_objectives |= A.objectives
 	objectives = owner.objectives - already_registered_objectives
 
+/datum/antagonist/auto_custom/antag_listing_name()
+	return ..() + "([name])"
+
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
@@ -239,3 +242,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+/datum/antagonist/custom/antag_listing_name()
+	return ..() + "([name])"

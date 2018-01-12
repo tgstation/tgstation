@@ -138,6 +138,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	message_admins("[key_name_admin(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
 	log_admin("[key_name(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
 
+/datum/antagonist/devil/antag_listing_name()
+	return ..() + "([truename])"
+
 /proc/devilInfo(name)
 	if(GLOB.allDevils[lowertext(name)])
 		return GLOB.allDevils[lowertext(name)]

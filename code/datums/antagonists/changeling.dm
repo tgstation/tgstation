@@ -530,3 +530,6 @@
 		parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")
+
+/datum/antagonist/changeling/antag_listing_name()
+	return ..() + "([changelingID])"
