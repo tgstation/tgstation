@@ -328,6 +328,7 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\wanderlust.dm"
 #include "code\datums\components\decals\blood.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
