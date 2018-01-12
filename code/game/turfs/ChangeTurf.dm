@@ -193,6 +193,8 @@
 	newT.baseturfs = new_baseturfs
 	return newT
 
+
+//If you modify this function, ensure it works correctly with lateloaded map templates.
 /turf/proc/AfterChange(flags) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
 	CalculateAdjacentTurfs()
