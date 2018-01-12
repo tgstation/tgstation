@@ -42,3 +42,5 @@
 #_maps/RandomRuins/SpaceRuins/bus.dmm
 #_maps/RandomRuins/SpaceRuins/miracle.dmm
 #_maps/RandomRuins/SpaceRuins/oldstation.dmm
+#code/white/hule/jungle/asteroidj.dmm
+#code/white/hule/bearcat/bearcat2.dmm

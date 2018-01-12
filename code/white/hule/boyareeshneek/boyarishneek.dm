@@ -36,25 +36,25 @@
 	shot_glass_icon_state = "shotglassclear"
 
 /datum/reagent/consumable/ethanol/boyarka/on_mob_life(mob/living/M)
-	if(prob(7.5))
+	if(prob(5))
 		M.adjustToxLoss(2*REM, 0)
 		M.blur_eyes(35)
 		M.set_eye_damage(50)
 		. = 1
 	..()
 
-	if(prob(5))
+	if(prob(2))
 		M.set_drugginess(50)
 		M.adjustBrainLoss(2*REM, 50)
 	..()
 
-	if(prob(5))
+	if(prob(2))
 		M.hallucination += 4
 		M.adjustToxLoss(5*REM, 0)
 		M.Sleeping(40, 0)
 	 ..()
 
-	if(prob(4))
+	if(prob(2))
 		M.set_eye_damage(100)
 		M.Sleeping(300, 0)
 	 ..()
@@ -71,7 +71,7 @@
 				H.adjustOxyLoss(rand(5,25), 0)
 				. = 1
 
-	if(prob(4))
+	if(prob(2))
 		M.damageoverlaytemp = 60
 		M.update_damage_hud()
 		M.blur_eyes(3)
@@ -121,7 +121,7 @@
 		..()
 		. = 1
 
-	if(prob(0.1))
+	if(prob(0.3))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
