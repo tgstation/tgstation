@@ -117,6 +117,7 @@
 	if(give_equipment)
 		equip_space_ninja(owner.current)
 	SSticker.mode.traitors |= owner //remove with check_antags refactor
+	. = ..()
 
 /datum/antagonist/ninja/on_removal()
 	SSticker.mode.traitors -= owner
