@@ -157,6 +157,17 @@ FLOOR SAFES
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
+		if(istype(I, /obj/item/disk/nuclear) && iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.mind && C.mind.assigned_role == "Captain")
+				to_chat(C, "<span class='userdanger italic'>I'm sorry Dave. I'm afraid I can't let you do that.</span>")
+				priority_announce("Bluespace disturbance detected in \the [get_area_name(C)]! Please ensure that all sensitive equipment is properly secured!", "Bluespace Artillery Alert",'sound/ai/commandreport.ogg')
+				bluespace_shell(C)
+				return
+			else
+				to_chat(C, "<span class='userdanger'>You feel strangely compelled not to place [I] inside...</span>")
+				return
+
 		. = 1 //no afterattack
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
