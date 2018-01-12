@@ -97,6 +97,7 @@
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)
+						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
 						SSshuttle.points -= SO.pack.cost * 2
@@ -110,6 +111,7 @@
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)
+						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						SSshuttle.points -= SO.pack.cost * (1.2*MAX_EMAG_ROCKETS)
 						SO.generateRequisition(get_turf(src))
@@ -119,3 +121,4 @@
 							new /obj/effect/BDPtarget(LZ, SO)
 							. = TRUE
 							update_icon()
+							CHECK_TICK
