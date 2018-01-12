@@ -537,7 +537,10 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-	var/obj/effect/timestop/T = new(get_turf(holder.my_atom), 2, 100, list(get_mob_by_key(holder.my_atom.fingerprintslast)))
+	var/obj/effect/timestop/T = new /obj/effect/timestop
+	T.forceMove(get_turf(holder.my_atom))
+	T.immune += get_mob_by_key(holder.my_atom.fingerprintslast)
+	T.timestop()
 	..()
 
 /datum/chemical_reaction/slime/slimecamera
