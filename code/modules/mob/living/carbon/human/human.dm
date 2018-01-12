@@ -25,9 +25,7 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-	//hippie start - <unknown, teeth apparently?>
-	update_teeth()
-	// hippie end - <unknown, teeth apparently?>
+	update_teeth()	//hippie - unknown, teeth releated apparently?
 	
 	. = ..()
 	
