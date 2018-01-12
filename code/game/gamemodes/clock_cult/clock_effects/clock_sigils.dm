@@ -278,6 +278,7 @@
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
+	var/consumed_vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src) && !L.buckled)
 		sigil_active = TRUE
 		if(animation_number >= 4)
@@ -286,7 +287,8 @@
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
-			if(L.stat == DEAD)
+			if(L.stat == DEAD && !consumed_vitality)
+				consumed_vitality = TRUE //Prevent the target from being consumed multiple times
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)

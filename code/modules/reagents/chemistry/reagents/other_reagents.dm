@@ -219,7 +219,7 @@
 	if(data >= 75)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
-				SSticker.mode.remove_cultist(M.mind, 1, 1)
+				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
 			M.jitteriness = 0

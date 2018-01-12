@@ -816,7 +816,9 @@
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a> | "
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=teamantags;jobban4=[REF(M)]'>Team Antagonists</a></th>"
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=convertantags;jobban4=[REF(M)]'>Conversion Antagonists</a></th></tr><tr align='center'>"
 
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
@@ -934,6 +936,10 @@
 					joblist += jobPos
 			if("ghostroles")
 				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland")
+			if("teamantags")
+				joblist += list("operative", "revolutionary", "cultist", "servant of Ratvar", "abductor", "alien candidate")
+			if("convertantags")
+				joblist += list("revolutionary", "cultist", "servant of Ratvar", "alien candidate")
 			else
 				joblist += href_list["jobban3"]
 

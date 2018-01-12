@@ -150,7 +150,7 @@
 	if(!disabilities[disability])
 		return
 
-	if (!sources) // FULPSTATION: If you never specified a source, then you must want to remove ALL sources, such as in fully_heal()
+	if(!sources) // No defined source cures the disability entirely.
 		disabilities -= disability
 		return
 

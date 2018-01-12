@@ -2,6 +2,16 @@
 /////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////
+/datum/design/cargo_express
+	name = "Computer Design (Express Supply Console)"//shes beautiful
+	desc = "Allows for the construction of circuit boards used to build an Express Supply Console."//who?
+	id = "cargoexpress"//the coder reading this
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 1000)
+	reagents_list = list("sacid" = 20)
+	build_path = /obj/item/circuitboard/computer/cargo/express
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/drill
 	name = "Mining Drill"

@@ -13,14 +13,16 @@
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
+	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
-		M.forceMove(loc)
+		M.forceMove(Tsec)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
+	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
 			for(var/X in internal_organs)
@@ -35,7 +37,7 @@
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
 				if(org_zone == "chest")
 					O.Remove(src)
-					O.forceMove(get_turf(src))
+					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)
@@ -47,7 +49,7 @@
 				qdel(I)
 				continue
 			I.Remove(src)
-			I.forceMove(get_turf(src))
+			I.forceMove(Tsec)
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
 

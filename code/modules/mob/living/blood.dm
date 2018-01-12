@@ -16,7 +16,7 @@
 
 
 /mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.2 // regenerate blood VERY slowly	// FULPSTATION: Let's double it, why not?
@@ -31,7 +31,7 @@
 	if (AmBloodsucker(1)) // FULPSTATION: Bloodsuckers without Mortal Disguise don't need to be here.
 		return
 
-	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))

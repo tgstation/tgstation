@@ -130,7 +130,6 @@
 			if(authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-				deadchat_broadcast("<span class='deadsay bold'>[usr.name] made an priority announcement.</span>", usr)
 
 		if("crossserver")
 			if(authenticated==2)
@@ -290,7 +289,7 @@
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				log_talk(usr,"[key_name(usr)] has made a CentCom announcement: [input]",LOGSAY)
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged CentComm:</b> [input]</span>", usr)
+				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged CentCom:</b> [input]</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		// OMG SYNDICATE ...LETTERHEAD
@@ -702,6 +701,7 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
+	deadchat_broadcast("<span class='deadsay bold'>[user.name] made an priority announcement.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 

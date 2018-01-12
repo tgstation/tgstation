@@ -11,11 +11,11 @@
 	slot_flags = SLOT_BELT
 	var/usability = 0
 
-	var/reusable = TRUE
+	var/old_shard = FALSE
 	var/spent = FALSE
 
 /obj/item/device/soulstone/proc/was_used()
-	if(!reusable)
+	if(old_shard)
 		spent = TRUE
 		name = "dull [name]"
 		desc = "A fragment of the legendary treasure known simply as \
@@ -27,7 +27,7 @@
 
 /obj/item/device/soulstone/anybody/chaplain
 	name = "mysterious old shard"
-	reusable = FALSE
+	old_shard = TRUE
 
 /obj/item/device/soulstone/pickup(mob/living/user)
 	..()
@@ -38,7 +38,10 @@
 /obj/item/device/soulstone/examine(mob/user)
 	..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
+		if (old_shard)
+			to_chat(user, "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>")
+		else
+			to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
 		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
 		if(spent)
 			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
@@ -151,7 +154,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				if(T.stat != CONSCIOUS)
+				if((!old_shard && T.stat != CONSCIOUS) || (old_shard && T.stat == DEAD))
 					if(T.client == null)
 						to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back...")
 						getCultGhost(T,user)

@@ -108,7 +108,7 @@
 			//if (rand(0,2) == 0)
 				//playsound(get_turf(newtarget), "sound/weapons/punch[rand(1,4)].ogg", 15, 1, -1)
 				//newtarget.Knockdown(10)
-			newtarget.Stun(10)
+			newtarget.Stun(5)
 			if(newtarget.IsStun())
 				newtarget.spin(10,1)
 

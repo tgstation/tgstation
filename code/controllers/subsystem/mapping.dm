@@ -22,12 +22,15 @@ SUBSYSTEM_DEF(mapping)
 
 	var/loading_ruins = FALSE
 
+	// Z-manager stuff
+	var/list/z_list
+
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
 #else
-		config = new
+		config = new(error_if_missing = FALSE)
 #endif
 	return ..()
 
@@ -39,28 +42,34 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
+
+	// Create space levels
+	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
+		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
+	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", CROSSLINKED, list())  // no ruins
+	add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
+
 	// Pick a random away mission.
 	createRandomZlevel()
-	// Generate mining.
+	if (z_list.len < world.maxz)
+		add_new_zlevel("Away Mission", UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
+
+	// Generate mining ruins
 	loading_ruins = TRUE
-	var/mining_type = config.minetype
-	if (mining_type == "lavaland")
-		seedRuins(list(ZLEVEL_LAVALAND), CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
-		spawn_rivers()
+	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
+	if (lava_ruins.len)
+		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
+		for (var/lava_z in lava_ruins)
+			spawn_rivers(lava_z)
 
-	// deep space ruins
-	var/space_zlevels = list()
-	for(var/i in ZLEVEL_SPACEMIN to ZLEVEL_SPACEMAX)
-		switch(i)
-			if(ZLEVEL_MINING, ZLEVEL_LAVALAND, ZLEVEL_EMPTY_SPACE, ZLEVEL_TRANSIT, ZLEVEL_CITYOFCOGS)
-				continue
-			else
-				space_zlevels += i
-
-	seedRuins(space_zlevels, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
+	// Generate deep space ruins
+	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
+	if (space_ruins.len)
+		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
+
 	repopulate_sorted_areas()
-	// Set up Z-level transistions.
+	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
 	..()
@@ -98,6 +107,8 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
+	z_list = SSmapping.z_list
+
 /datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
 	if(!loader)
@@ -106,11 +117,6 @@ SUBSYSTEM_DEF(mapping)
 		errorList |= filename
 	if(last)
 		QDEL_NULL(loader)
-
-/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
-	while(world.maxz < MaxZLevel)
-		++world.maxz
-		CHECK_TICK
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -121,6 +127,7 @@ SUBSYSTEM_DEF(mapping)
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
+	InitializeDefaultZLevels()
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
@@ -128,8 +135,6 @@ SUBSYSTEM_DEF(mapping)
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
-
-	CreateSpace(ZLEVEL_SPACEMAX)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"

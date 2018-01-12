@@ -193,7 +193,7 @@
 	for (var/area/A in GLOB.sortedAreas)
 		var/turf/T = locate(/turf) in A
 		// Is Station
-		if (T && (T.z in GLOB.station_z_levels)) // && locate(A.type) in As) // NOTE : Cannot do this. If an area's type is /area/library/special then it does NOT appear in As.
+		if (T && is_station_level(T.z)) //(T.z in GLOB.station_z_levels)) // && locate(A.type) in As) // NOTE : Cannot do this. If an area's type is /area/library/special then it does NOT appear in As.
 			//message_admins("[owner] Checking [A] with turf [T] / [T.z]")
 			// Does this type appear in our list?
 			for (var/check_type in As)

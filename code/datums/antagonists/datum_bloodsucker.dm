@@ -43,7 +43,7 @@
 	var/poweron_humandisguise = 0		// Am I masquerading?
 
 	// Values
-	var/regenRate = 0.4					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
+	var/regenRate = 0.3					// How many points of Brute do I heal per tick? Note: Fire never changes its rate (0.1)
 	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
 	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding.
 	var/badfood	= 0						// When eating human food or drink, keep track of how much we've had so we can purge it at once.
@@ -449,6 +449,7 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 
 	// Advance Level + Timer
 	vamplevel ++
+	timeToLevel += 1200			// Tack on another 2 minutes. Make it harder to level.
 	nextLevelTick = world.time + timeToLevel
 	update_hud(TRUE)
 
