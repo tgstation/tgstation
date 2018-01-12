@@ -158,6 +158,9 @@ FLOOR SAFES
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
 		. = 1 //no afterattack
+		if(istype(I, /obj/item/disk/nuclear))
+			to_chat(user, "<span class='warning'>For what you are sure are entirely plausible and immersive reasons, you can't put that in there.</span>")
+			return
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
 			if(!user.transferItemToLoc(I, src))
