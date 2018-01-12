@@ -19755,8 +19755,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "mix_in";
-	name = "distro out"
+	id_tag = "mix_out";
+	name = "mix out"
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -20234,7 +20234,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /obj/machinery/light{
