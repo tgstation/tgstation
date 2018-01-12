@@ -1,11 +1,11 @@
 //I wish we had interfaces sigh, and i'm not sure giving team and antag common root is a better solution here
 
 //Name shown on antag list
-/datum/antagonist/proc/antag_listing_name(datum/mind/owner)
+/datum/antagonist/proc/antag_listing_name()
 	if(!owner)
 		return "Unassigned"
 	if(owner.current)
-		return "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(owner.current)]>[owner.current.real_name]</a>"
+		return "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(owner.current)]'>[owner.current.real_name]</a>"
 	else
 		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(owner)]'>[owner.name]</a>"
 
@@ -14,7 +14,6 @@
 /datum/antagonist/proc/antag_listing_status()
 	if(!owner)
 		return "(Unassigned)"
-	
 	if(!owner.current)
 		return "<font color=red>(Body destroyed)</font>"
 	else
@@ -29,10 +28,10 @@
 	if(!owner)
 		return
 	var/list/parts = list()
-	parts += "<a href='?priv_msg=[owner.key]'>PM</a>"
+	parts += "<a href='?priv_msg=[ckey(owner.key)]'>PM</a>"
 	if(owner.current) //There's body to follow
 		parts += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(owner.current)]'>FLW</a>"
-	parts += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(owner)]'>TP</a>"
+	parts += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(owner)]'>Show Objective</a>"
 	return parts.Join(" ")
 
 //Builds table row for the antag
@@ -72,7 +71,6 @@
 
 /datum/team/proc/antag_listing_footer()
 	return
-
 
 //Moves them to the top of the list if TRUE
 /datum/antagonist/proc/is_gamemode_hero()
@@ -114,7 +112,7 @@
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
-			current_section += "<table cellspacing=5><tr><td><B>[current_category]</B></td><td></td></tr>"
+			current_section += "<table cellspacing=5><tr><td><B>[capitalize(current_category)]</B></td><td></td></tr>"
 		current_section += current_antag.antag_listing_entry() // Name - (Traitor) - FLW | PM | TP
 
 		if(!next_antag || next_antag.roundend_category != current_antag.roundend_category) //End of section
@@ -203,6 +201,9 @@
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 		dat += "<BR>"
 
+		dat += buildit()
+
+		/*
 		var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
 		if(nukeops.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
@@ -459,7 +460,7 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(eek)]'>[eek.name]([eek.key])</a><i>Monkey not found!</i></td>"
 					dat += "<td><A href='?priv_msg=[eek.key]'>PM</A></td></tr>"
 			dat += "</table>"
-
+		*/
 
 		dat += "</body></html>"
 		usr << browse(dat, "window=roundstatus;size=420x500")
