@@ -7,7 +7,7 @@
 	if(owner.current)
 		return "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(owner.current)]>[owner.current.real_name]</a>"
 	else
-		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(traitor)]'>[owner.name]</a>"
+		return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(owner)]'>[owner.name]</a>"
 
 //Whatever interesting things happened to the antag admins should know about
 //Include additional information about antag in this part
@@ -103,9 +103,6 @@
 		else
 			priority_sections += T.antag_listing_entry()
 
-	var/currrent_category
-	var/datum/antagonist/previous_category
-
 	sortTim(all_antagonists, /proc/cmp_antag_category)
 
 	var/current_category
@@ -122,7 +119,7 @@
 
 		if(!next_antag || next_antag.roundend_category != current_antag.roundend_category) //End of section
 			current_section += "</table>"
-			if(hero)
+			if(current_antag.is_gamemode_hero())
 				priority_sections += current_section.Join()
 			else
 				sections += current_section.Join()
