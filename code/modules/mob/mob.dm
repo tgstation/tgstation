@@ -1,6 +1,3 @@
-/mob
-	use_tag = TRUE
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
