@@ -254,7 +254,7 @@
 /mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
-	return
+	SendSignal(COMSIG_UNARMED_ATTACK, A, src, proximity_flag)
 
 /*
 	Ranged unarmed attack:
