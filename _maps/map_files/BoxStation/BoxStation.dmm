@@ -24333,6 +24333,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bjr" = (
@@ -28699,8 +28700,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "btB" = (
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/plasteel/blue/side{
 	dir = 9
 	},
@@ -28718,6 +28718,9 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "btE" = (
@@ -47134,6 +47137,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/rnd/circuit_imprinter/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "clJ" = (
@@ -57054,6 +57058,29 @@
 "Qph" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"Qpi" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/rnd/circuit_imprinter/department/service,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
+"Qpj" = (
+/obj/machinery/rnd/circuit_imprinter/department/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+"Qpk" = (
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
+/turf/closed/wall,
+/area/medical/medbay/central)
+"Qpl" = (
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
+/turf/closed/wall,
+/area/medical/medbay/central)
+"Qpm" = (
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
+/turf/closed/wall,
+/area/medical/medbay/central)
 
 (1,1,1) = {"
 aaa
@@ -77746,7 +77773,7 @@ baS
 bdS
 bdU
 ckQ
-Qpg
+QoZ
 bjq
 bjr
 bjr
@@ -78517,7 +78544,7 @@ bcS
 bbt
 bfi
 beD
-Qph
+QoZ
 aZE
 biA
 bmg
@@ -78768,12 +78795,12 @@ aPK
 aWz
 aWC
 QoZ
-Qpa
-Qpc
+QoZ
+QoZ
 bcT
-Qpd
-Qpe
-Qpf
+QoZ
+QoZ
+QoZ
 aZE
 bju
 biv
@@ -83664,7 +83691,7 @@ bmo
 bnR
 bpe
 bqB
-bqq
+Qpi
 btD
 buO
 bwk
@@ -94468,7 +94495,7 @@ bAv
 bvj
 bCO
 bDR
-bDR
+Qpj
 bDR
 bIn
 bJC
@@ -94982,7 +95009,7 @@ bvj
 bvj
 bCQ
 bEd
-bof
+Qpk
 bof
 bof
 bJE
@@ -95239,7 +95266,7 @@ bhh
 bhh
 bzX
 bBm
-bof
+Qpl
 bGT
 bIo
 bof
@@ -95496,7 +95523,7 @@ bhh
 bhh
 bhh
 btV
-bof
+Qpm
 bGV
 bIp
 bof

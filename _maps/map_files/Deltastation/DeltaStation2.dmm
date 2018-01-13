@@ -17203,6 +17203,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/rnd/circuit_imprinter/department/service,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -21801,6 +21802,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -28980,6 +28982,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/machinery/rnd/circuit_imprinter/department/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -105051,6 +105054,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/machinery/rnd/circuit_imprinter/department/medical,
 /turf/open/floor/plasteel/cmo,
 /area/medical/storage)
 "ehM" = (
