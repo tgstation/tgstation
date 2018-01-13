@@ -84,7 +84,7 @@
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
-	name = "BZ canister"
+	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = /datum/gas/bz
@@ -383,7 +383,7 @@
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
 					name = initial(replacement.name)
-					desc = initial(replacement.name)
+					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 		if("restricted")
 			restricted = !restricted

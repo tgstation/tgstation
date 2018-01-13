@@ -1,22 +1,61 @@
-/mob/living/carbon/proc/dream()
-	set waitfor = 0
-	var/list/dreams = GLOB.dream_strings.Copy()
-	for(var/obj/item/bedsheet/sheet in loc)
-		dreams += sheet.dream_messages
-	var/list/dream_images = list()
-	for(var/i in 1 to rand(3, rand(5, 10)))
-		dream_images += pick_n_take(dreams)
-		dreaming++
-	for(var/i in 1 to dream_images.len)
-		addtimer(CALLBACK(src, .proc/experience_dream, dream_images[i]), ((i - 1) * rand(30,60)))
-	return 1
-
 /mob/living/carbon/proc/handle_dreams()
-	if(prob(5) && !dreaming)
+	if(prob(10) && !dreaming)
 		dream()
 
-/mob/living/carbon/proc/experience_dream(dream_image)
-	dreaming--
-	if(stat != UNCONSCIOUS || InCritical())
+/mob/living/carbon/proc/dream()
+	set waitfor = FALSE
+	var/list/dream_fragments = list()
+	var/fragment = ""
+
+	dream_fragments += "you see"
+
+	//Subject
+	fragment += pick(GLOB.dream_strings)
+	if(prob(50))
+		fragment = replacetext(fragment, "%ADJECTIVE%", pick(GLOB.adjectives))
+	else
+		fragment = replacetext(fragment, "%ADJECTIVE% ", "")
+	if(findtext(fragment, "%A% "))
+		fragment = "\a [replacetext(fragment, "%A% ", "")]"
+	dream_fragments += fragment
+
+	//Verb
+	fragment = ""
+	if(prob(50))
+		if(prob(35))
+			fragment += "[pick(GLOB.adverbs)] "
+		fragment += pick(GLOB.ing_verbs)
+	else
+		fragment += "will "
+		fragment += pick(GLOB.verbs)
+	dream_fragments += fragment
+
+	if(prob(25))
+		dream_sequence(dream_fragments)
 		return
-	to_chat(src, "<span class='notice'><i>... [dream_image] ...</i></span>")
+
+	//Object
+	fragment = ""
+	fragment += pick(GLOB.dream_strings)
+	if(prob(50))
+		fragment = replacetext(fragment, "%ADJECTIVE%", pick(GLOB.adjectives))
+	else
+		fragment = replacetext(fragment, "%ADJECTIVE% ", "")
+	if(findtext(fragment, "%A% "))
+		fragment = "\a [replacetext(fragment, "%A% ", "")]"
+	dream_fragments += fragment
+
+	dreaming = TRUE
+	dream_sequence(dream_fragments)
+
+/mob/living/carbon/proc/dream_sequence(list/dream_fragments)
+	if(stat != UNCONSCIOUS || InCritical())
+		dreaming = FALSE
+		return
+	var/next_message = dream_fragments[1]
+	dream_fragments.Cut(1,2)
+	to_chat(src, "<span class='notice'><i>... [next_message] ...</i></span>")
+	if(LAZYLEN(dream_fragments))
+		addtimer(CALLBACK(src, .proc/dream_sequence, dream_fragments), rand(10,30))
+	else
+		dreaming = FALSE

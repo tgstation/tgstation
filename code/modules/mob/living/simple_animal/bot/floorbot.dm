@@ -375,7 +375,7 @@
 		empty_tiles()
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)
 	T.amount = 1

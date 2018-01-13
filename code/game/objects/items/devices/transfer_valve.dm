@@ -56,7 +56,7 @@
 
 		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
-		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		log_game("[key_name(user)] attached a [item] to a transfer valve.")
 		attacher = user
 	return
 

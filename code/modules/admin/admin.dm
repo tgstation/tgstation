@@ -20,7 +20,7 @@
 		return
 
 	if(!isobserver(usr))
-		log_game("[key_name_admin(usr)] checked the player panel while in game.")
+		log_game("[key_name(usr)] checked the player panel while in game.")
 
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
