@@ -3,6 +3,14 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/effect/decal/Initialize()
+	. = ..()
+	if(!isturf(loc) || NeverShouldHaveComeHere(loc))
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
+	return isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)
+
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
 
@@ -12,7 +20,7 @@
 
 /obj/effect/decal/HandleTurfChange(turf/T)
 	..()
-	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)))
+	if(T == loc && NeverShouldHaveComeHere(T))
 		qdel(src)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

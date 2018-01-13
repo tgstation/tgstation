@@ -72,7 +72,7 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
-	var/beacon_freq = 1445		// navigation beacon frequency
+	var/beacon_freq = FREQ_NAV_BEACON
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
@@ -88,6 +88,7 @@
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
+	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
@@ -131,7 +132,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.subspace_transmission = 1
+	Radio.subspace_transmission = TRUE
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
@@ -225,7 +226,6 @@
 	return //we use a different hud
 
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
-	set background = BACKGROUND_ENABLED
 	diag_hud_set_botmode()
 
 	if (ignorelistcleanuptimer % 300 == 0) // Every 300 actions, clean up the ignore list from old junk
@@ -368,6 +368,20 @@
 	if(message_mode in GLOB.radiochannels)
 		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
+
+/mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
+	var/dropped_item = new drop_item(dropzone)
+	drop_item = null
+
+	if(istype(dropped_item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/dropped_cell = dropped_item
+		dropped_cell.charge = 0
+		dropped_cell.update_icon()
+
+	else if(istype(dropped_item, /obj/item/gun/energy))
+		var/obj/item/gun/energy/dropped_gun = dropped_item
+		dropped_gun.cell.charge = 0
+		dropped_gun.update_icon()
 
 //Generalized behavior code, override where needed!
 

@@ -21,7 +21,7 @@
 		grant_controller_actions(i)	//refresh
 
 /obj/vehicle/proc/grant_action_type_to_mob(actiontype, mob/m)
-	if(!occupants[m] || !actiontype)
+	if(isnull(occupants[m]) || !actiontype)
 		return FALSE
 	LAZYINITLIST(occupant_actions[m])
 	if(occupant_actions[m][actiontype])
@@ -32,7 +32,7 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_action_type_from_mob(actiontype, mob/m)
-	if(!occupants[m] || !actiontype)
+	if(isnull(occupants[m]) || !actiontype)
 		return FALSE
 	LAZYINITLIST(occupant_actions[m])
 	if(occupant_actions[m][actiontype])
@@ -50,7 +50,7 @@
 		remove_action_type_from_mob(v, M)
 
 /obj/vehicle/proc/grant_controller_actions(mob/M)
-	if(!istype(M) || !occupants[M])
+	if(!istype(M) || isnull(occupants[M]))
 		return FALSE
 	for(var/i in GLOB.bitflags)
 		if(occupants[M] & i)
@@ -58,21 +58,21 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_controller_actions(mob/M)
-	if(!istype(M) || !occupants[M])
+	if(!istype(M) || isnull(occupants[M]))
 		return FALSE
 	for(var/i in GLOB.bitflags)
 		remove_controller_actions_by_flag(M, i)
 	return TRUE
 
 /obj/vehicle/proc/grant_controller_actions_by_flag(mob/M, flag)
-	if(!istype(M) || !autogrant_actions_controller["[flag]"])
+	if(!istype(M))
 		return FALSE
 	for(var/v in autogrant_actions_controller["[flag]"])
 		grant_action_type_to_mob(v, M)
 	return TRUE
 
 /obj/vehicle/proc/remove_controller_actions_by_flag(mob/M, flag)
-	if(!istype(M) || autogrant_actions_controller["[flag]"])
+	if(!istype(M))
 		return FALSE
 	for(var/v in autogrant_actions_controller["[flag]"])
 		remove_action_type_from_mob(v, M)
@@ -81,11 +81,11 @@
 /obj/vehicle/proc/cleanup_actions_for_mob(mob/M)
 	if(!istype(M))
 		return FALSE
-	LAZYINITLIST(occupant_actions[M])
 	for(var/path in occupant_actions[M])
 		stack_trace("Leftover action type [path] in vehicle type [type] for mob type [M.type] - THIS SHOULD NOT BE HAPPENING!")
-		var/datum/action/action = occupant_actions[M]
+		var/datum/action/action = occupant_actions[M][path]
 		action.Remove(M)
+		occupant_actions[M] -= path
 	occupant_actions -= M
 	return TRUE
 

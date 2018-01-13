@@ -13,7 +13,7 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
 	if(T)
@@ -34,7 +34,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
@@ -422,7 +422,7 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	ADD_GAS(/datum/gas/plasma, GM.gases)
+	GM.add_gas(/datum/gas/plasma)
 	if(prob(10))
 		GM.gases[/datum/gas/plasma][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire

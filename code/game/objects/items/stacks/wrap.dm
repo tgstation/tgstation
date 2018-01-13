@@ -27,6 +27,7 @@
 
 /obj/item/stack/packageWrap
 	name = "package wrapper"
+	singular_name = "wrapping sheet"
 	desc = "You can use this to wrap items in."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "deliveryPaper"

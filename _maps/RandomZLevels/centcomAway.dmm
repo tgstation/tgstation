@@ -1513,7 +1513,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/courtroom)
 "fG" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "32"
 	},
@@ -1600,7 +1600,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/courtroom)
 "fU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
 	req_access_txt = "9"
 	},
@@ -1803,7 +1803,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "gF" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -2615,7 +2615,7 @@
 /area/awaymission/centcomAway/general)
 "jr" = (
 /obj/structure/table,
-/obj/item/firstaid_arm_assembly,
+/obj/item/bot_assembly/medbot,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "js" = (

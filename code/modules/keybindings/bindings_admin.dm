@@ -1,5 +1,8 @@
 /datum/admins/key_down(_key, client/user)
 	switch(_key)
+		if("F3")
+			user.cmd_admin_say()
+			return
 		if("F5")
 			user.admin_ghost()
 			return
@@ -7,9 +10,12 @@
 			player_panel_new()
 			return
 		if("F7")
-			user.cmd_admin_pm_panel()
+			user.togglebuildmodeself()
 			return
 		if("F8")
-			user.invisimin()
+			if(user.keys_held["Ctrl"])
+				user.stealth()
+			else
+				user.invisimin()
 			return
 	..()

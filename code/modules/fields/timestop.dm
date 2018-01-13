@@ -72,6 +72,9 @@
 		freeze_projectile(A)
 	else
 		return FALSE
+
+	into_the_negative_zone(A)
+
 	return TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_all()
@@ -106,6 +109,7 @@
 	return ..()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_projectile(obj/item/projectile/P)
+	escape_the_negative_zone(P)
 	frozen_projectiles -= P
 	P.paused = FALSE
 
@@ -123,9 +127,18 @@
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
+	escape_the_negative_zone(L)
 	L.AdjustStun(-20, 1, 1)
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
 		H.toggle_ai(initial(H.AIStatus))
+
+//you don't look quite right, is something the matter?
+/datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
+	A.add_atom_colour(list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0), TEMPORARY_COLOUR_PRIORITY)
+
+//let's put some colour back into your cheeks
+/datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)
+	A.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

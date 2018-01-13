@@ -109,10 +109,10 @@
 		if(prob(I.force * 20 - 25))
 			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
 							"<span class='danger'>You smash through [src] with [I]!</span>")
-			ChangeTurf(baseturf)
+			ScrapeAway()
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
 /turf/open/floor/plating/foam/ex_act()
 	..()
-	ChangeTurf(baseturf)
+	ScrapeAway()

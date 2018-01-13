@@ -5,12 +5,12 @@
 	anchored = TRUE
 	density = TRUE
 	var/question = "Travel back?"
-	var/list/zlevels = list()
+	var/list/zlevels
 
 /obj/structure/signpost/New()
 	. = ..()
 	set_light(2)
-	zlevels = GLOB.station_z_levels
+	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 /obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
@@ -44,6 +44,6 @@
 	zlevels = list()
 	for(var/i in 1 to world.maxz)
 		zlevels += i
-	zlevels -= ZLEVEL_CENTCOM // no easy victory, even with meme signposts
+	zlevels -= SSmapping.levels_by_trait(ZTRAIT_CENTCOM) // no easy victory, even with meme signposts
 	// also, could you think of the horror if they ended up in a holodeck
 	// template or something

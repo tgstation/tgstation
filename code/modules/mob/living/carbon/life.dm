@@ -1,6 +1,5 @@
 /mob/living/carbon/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if(notransform)
 		return
@@ -14,6 +13,9 @@
 
 	if(..()) //not dead
 		handle_blood()
+
+	if(stat != DEAD)
+		handle_brain_damage()
 
 	if(stat != DEAD)
 		handle_liver()
@@ -175,7 +177,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
-		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjustToxLoss(CLAMP(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
@@ -387,15 +389,15 @@
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = 310.15 - bodytemperature
+	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
-		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //BODYTEMP_COLD_DAMAGE_LIMIT is BODYTEMP_NORMAL(310.15) - 50, the temperature where you start to feel effects.
 			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(260.15 to 310.15)
+		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
 			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(310.15 to 360.15)
+		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY) //BODYTEMP_HEAT_DAMAGE_LIMIT is BODYTEMP_NORMAL(310.15) + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 /////////
@@ -437,3 +439,20 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
+
+////////////////
+//BRAIN DAMAGE//
+////////////////
+
+/mob/living/carbon/proc/handle_brain_damage()
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
+		BT.on_life()
+
+	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
+		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
+		death()
+		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+		if(B)
+			B.damaged_brain = TRUE

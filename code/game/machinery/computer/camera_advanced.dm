@@ -17,7 +17,7 @@
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
 	if(station_lock_override)
-		z_lock = GLOB.station_z_levels.Copy()
+		z_lock = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
@@ -83,12 +83,23 @@
 
 	if(!eyeobj.eye_initialized)
 		var/camera_location
-		for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-			if(!C.can_use() || z_lock.len && !(C.z in z_lock))
-				continue
-			if(C.network & networks)
-				camera_location = get_turf(C)
-				break
+		var/turf/myturf = get_turf(src)
+		if(eyeobj.use_static)
+			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
+				camera_location = myturf
+			else
+				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+					if(!C.can_use() || z_lock.len && !(C.z in z_lock))
+						continue
+					var/list/network_overlap = networks & C.network
+					if(network_overlap.len)
+						camera_location = get_turf(C)
+						break
+		else
+			camera_location = myturf
+			if(z_lock.len && !(myturf.z in z_lock))
+				camera_location = locate(round(world.maxx/2), round(world.maxy/2), z_lock[1])
+
 		if(camera_location)
 			eyeobj.eye_initialized = TRUE
 			give_eye_control(L)
@@ -154,7 +165,10 @@
 		if(!isturf(eye_user.loc))
 			return
 		T = get_turf(T)
-		loc = T
+		if (T)
+			forceMove(T)
+		else
+			moveToNullspace()
 		if(use_static)
 			GLOB.cameranet.visibility(src)
 		if(visible_icon)
@@ -269,6 +283,9 @@
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
+		return
 	. = ..()
 
 /datum/action/innate/servant_warp
@@ -289,13 +306,16 @@
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
 	var/turf/T = get_turf(remote_eye)
-	if(user.z != ZLEVEL_CITYOFCOGS || !(T.z in GLOB.station_z_levels))
+	if(!is_reebe(user.z) || !is_station_level(T.z))
 		return
 	if(isclosedturf(T))
 		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")
 		return
 	else if(isspaceturf(T))
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
+		return
+	else if(T.flags_1 & NOJAUNT_1)
+		to_chat(user, "<span class='sevtug_small'>This tile is blessed by holy water and deflects the warp.</span>")
 		return
 	var/area/AR = get_area(T)
 	if(!AR.clockwork_warp_allowed)

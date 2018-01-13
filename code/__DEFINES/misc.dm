@@ -485,6 +485,12 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define RIDING_OFFSET_ALL "ALL"
 
+//text files
+#define BRAIN_DAMAGE_FILE "traumas.json"
+
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+#define SUMMON_GUNS "guns"
+#define SUMMON_MAGIC "magic"

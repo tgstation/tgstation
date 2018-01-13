@@ -25,7 +25,7 @@
 				return
 			mob.control_object.setDir(direct)
 		else
-			mob.control_object.loc = get_step(mob.control_object,direct)
+			mob.control_object.forceMove(get_step(mob.control_object,direct))
 	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
@@ -114,7 +114,7 @@
 	if(LAZYLEN(mob.user_movement_hooks))
 		for(var/obj/O in mob.user_movement_hooks)
 			O.intercept_user_move(direct, mob, n, oldloc)
-	
+
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.dir = turn(mob.dir, 180)
@@ -265,24 +265,6 @@
 
 /mob/proc/mob_negates_gravity()
 	return FALSE
-
-//moves the mob/object we're pulling
-/mob/proc/Move_Pulled(atom/A)
-	if(!pulling)
-		return
-	if(pulling.anchored || !pulling.Adjacent(src))
-		stop_pulling()
-		return
-	if(isliving(pulling))
-		var/mob/living/L = pulling
-		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
-			stop_pulling()
-			return
-	if(A == loc && pulling.density)
-		return
-	if(!Process_Spacemove(get_dir(pulling.loc, A)))
-		return
-	step(pulling, get_dir(pulling.loc, A))
 
 
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)

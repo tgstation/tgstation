@@ -222,7 +222,7 @@
 	component_parts = null
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
-	new /obj/item/stack/sheet/mineral/wood(loc, 10)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	..()
 
 /obj/machinery/smartfridge/drying_rack/RefreshParts()
@@ -297,18 +297,18 @@
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
-	for(var/obj/item/reagent_containers/food/snacks/S in contents)
+	for(var/obj/item/reagent_containers/food/snacks/S in src)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = TRUE
-			S.loc = get_turf(src)
+			S.forceMove(drop_location())
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(drop_location())
 			qdel(S)
 		return TRUE
-	for(var/obj/item/stack/sheet/wetleather/WL in contents)
-		var/obj/item/stack/sheet/leather/L = new(loc)
+	for(var/obj/item/stack/sheet/wetleather/WL in src)
+		var/obj/item/stack/sheet/leather/L = new(drop_location())
 		L.amount = WL.amount
 		qdel(WL)
 		return TRUE

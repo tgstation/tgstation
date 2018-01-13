@@ -77,9 +77,8 @@
 	..()
 	var/obj/item/gun/G = locate(/obj/item/gun) in contents
 	if(G)
-		G.loc = loc
-		qdel(G.pin)
-		G.pin = null
+		G.forceMove(loc)
+		QDEL_NULL(G.pin)
 		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
@@ -106,7 +105,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(src, "gun_dry_fire", 30, 1)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -154,10 +153,10 @@
 			return
 
 
-	//Exclude lasertag guns from the CLUMSY check.
+	//Exclude lasertag guns from the DISABILITY_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.disabilities & CLUMSY && prob(40))
+			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user,user,0,params, zone_override = shot_leg)
@@ -204,7 +203,7 @@
 /obj/item/gun/proc/recharge_newshot()
 	return
 
-/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params, zone_override, sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!user || !firing_burst)
 		firing_burst = FALSE
 		return FALSE
@@ -237,7 +236,7 @@
 	update_icon()
 	return TRUE
 
-/obj/item/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = TRUE, params, zone_override, bonus_spread = 0)
+/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -399,7 +398,8 @@
 
 /obj/item/gun/dropped(mob/user)
 	..()
-	zoom(user,FALSE)
+	if(zoomed)
+		zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
 	if(alight)
@@ -497,7 +497,7 @@
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.change_view(world.view)
+		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed

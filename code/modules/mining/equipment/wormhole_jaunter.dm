@@ -20,7 +20,7 @@
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_TRANSIT)
+	if(!device_turf || is_centcom_level(device_turf.z) || is_transit_level(device_turf.z))
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
@@ -40,7 +40,7 @@
 
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
-		if(T.z in GLOB.station_z_levels)
+		if(is_station_level(T.z))
 			destinations += B
 
 	return destinations
@@ -89,15 +89,11 @@
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
+	innate_accuracy_penalty = 6
 
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
-		return
-
-	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
-		return
-
-	if(do_teleport(M, hard_target, 6))
+	. = ..()
+	if(.)
 		// KERPLUNK
 		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 		if(iscarbon(M))

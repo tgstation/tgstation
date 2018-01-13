@@ -53,9 +53,9 @@
 			new /obj/item/pipe_meter(loc)
 			wait = world.time + 15
 	if(href_list["layer_up"])
-		piping_layer = Clamp(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = CLAMP(++piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if(href_list["layer_down"])
-		piping_layer = Clamp(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		piping_layer = CLAMP(--piping_layer, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
@@ -154,11 +154,8 @@
 				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
 				qdel(C)
 				return
-
-
 			if(href_list["dir"])
 				C.setDir(text2num(href_list["dir"]))
-
 			C.add_fingerprint(usr)
 			C.update_icon()
 			wait = world.time + 15

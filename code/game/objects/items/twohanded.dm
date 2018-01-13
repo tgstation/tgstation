@@ -43,6 +43,8 @@
 	update_icon()
 	if(user.get_item_by_slot(slot_back) == src)
 		user.update_inv_back()
+	else
+		user.update_inv_hands()
 	if(show_message)
 		if(iscyborg(user))
 			to_chat(user, "<span class='notice'>You free up your module.</span>")
@@ -119,8 +121,22 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | NODROP_1
+	flags_1 = ABSTRACT_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/twohanded/offhand/Destroy()
+	wielded = FALSE
+	return ..()
+
+/obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	var/obj/I = user.get_active_held_item()
+	if(I && istype(I, /obj/item/twohanded))
+		var/obj/item/twohanded/thw = I
+		thw.unwield(user, show_message)
+		if(istype(thw, /obj/item/twohanded/required))
+			user.dropItemToGround(thw)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
@@ -293,7 +309,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -302,7 +318,7 @@
 			unwield()
 			return
 	..()
-	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -429,6 +445,10 @@
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
+
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
 	if(explosive)
@@ -447,7 +467,7 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.loc = AM
+		explosive.forceMove(AM)
 		explosive.prime()
 		qdel(src)
 
@@ -653,7 +673,8 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		return 1
+		W.ScrapeAway()
+		return
 	..()
 
 //HF blade

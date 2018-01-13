@@ -15,12 +15,16 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+/obj/item/clothing/shoes/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
+
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		var/bloody = 0
-		if(blood_DNA)
-			bloody = 1
+		var/bloody = FALSE
+		IF_HAS_BLOOD_DNA(src)
+			bloody = TRUE
 		else
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
@@ -53,8 +57,9 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/clean_blood()
-	..()
+/obj/item/clothing/shoes/proc/clean_blood(strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))
@@ -62,4 +67,4 @@
 		M.update_inv_shoes()
 
 /obj/item/proc/negates_gravity()
-	return 0
+	return FALSE

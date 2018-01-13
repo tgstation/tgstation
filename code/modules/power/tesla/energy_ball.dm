@@ -18,12 +18,14 @@
 	dissipate_delay = 5
 	dissipate_strength = 1
 	var/list/orbiting_balls = list()
+	var/miniball = FALSE
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	. = ..()
+	miniball = is_miniball
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -42,9 +44,10 @@
 	. = ..()
 
 /obj/singularity/energy_ball/admin_investigate_setup()
-	if(istype(loc, /obj/singularity/energy_ball))
-		return
+	if(miniball)
+		return //don't annnounce miniballs
 	..()
+
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -62,7 +65,7 @@
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
-			var/range = rand(1, Clamp(orbiting_balls.len, 3, 7))
+			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range, TRUE)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
@@ -144,6 +147,10 @@
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(L.incorporeal_move)
+			return
 	if(!iscarbon(A))
 		return
 	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
@@ -268,7 +275,7 @@
 		closest_grounding_rod.tesla_act(power, explosive, stun_mobs)
 
 	else if(closest_mob)
-		var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
+		var/shock_damage = CLAMP(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = stun_mobs)
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob

@@ -37,7 +37,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -184,10 +184,10 @@
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
-    . = ..()
-    turret = loc
-    if(!istype(turret))
-        return INITIALIZE_HINT_QDEL
+	. = ..()
+	turret = loc
+	if(!istype(turret))
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun_control/Destroy()
 	turret = null

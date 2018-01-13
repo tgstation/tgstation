@@ -194,7 +194,7 @@
 	id = "cargorequest"
 	build_path = /obj/item/circuitboard/computer/cargo/request
 	category = list("Computer Boards")
-
+	
 /datum/design/board/stockexchange
 	name = "Computer Design (Stock Exchange Console)"
 	desc = "Allows for the construction of circuit boards used to build a Stock Exchange Console."

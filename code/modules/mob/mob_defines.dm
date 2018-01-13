@@ -5,6 +5,7 @@
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	use_tag = TRUE
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -28,10 +29,7 @@
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/disabilities = 0	//Carbon
 
-	var/atom/movable/pulling = null
-	var/grab_state = 0
 
 	var/next_move = null
 	var/notransform = null	//Carbon
@@ -40,6 +38,7 @@
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
+	var/derpspeech = 0      //Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon
@@ -55,7 +54,7 @@
 	var/timeofdeath = 0//Living
 	var/cpr_time = 1//Carbon
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon

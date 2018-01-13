@@ -345,9 +345,6 @@
 		add_overlay("[icon_state]_broken")
 	else
 		add_overlay(icon_screen)
-	if(currentdir > -1)
-		setDir(angle2dir(currentdir))
-		add_overlay(mutable_appearance(icon, "solcon-o", FLY_LAYER))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -375,25 +372,23 @@
 	if(..())
 		return
 	switch(action)
-		if("direction")
+		if("angle")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				currentdir = Clamp((360 + adjust + currentdir) % 360, 0, 359)
+				currentdir = CLAMP((360 + adjust + currentdir) % 360, 0, 359)
 				targetdir = currentdir
 				set_panels(currentdir)
 				. = TRUE
 		if("rate")
 			var/adjust = text2num(params["adjust"])
 			if(adjust)
-				trackrate = Clamp(trackrate + adjust, -7200, 7200)
+				trackrate = CLAMP(trackrate + adjust, -7200, 7200)
 				if(trackrate)
 					nexttime = world.time + 36000 / abs(trackrate)
 				. = TRUE
 		if("tracking")
 			var/mode = text2num(params["mode"])
-			if(mode)
-				track = mode
-				. = TRUE
+			track = mode
 			if(mode == 2 && connected_tracker)
 				connected_tracker.set_angle(SSsun.angle)
 				set_panels(currentdir)
@@ -402,6 +397,7 @@
 				if(trackrate)
 					nexttime = world.time + 36000 / abs(trackrate)
 				set_panels(targetdir)
+			. = TRUE
 		if("refresh")
 			search_for_connected()
 			if(connected_tracker && track == 2)
@@ -419,7 +415,7 @@
 				new /obj/item/shard( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.forceMove(drop_location())
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
@@ -430,7 +426,7 @@
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
-					C.loc = src.loc
+					C.forceMove(drop_location())
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"

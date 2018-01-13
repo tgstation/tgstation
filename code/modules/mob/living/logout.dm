@@ -1,4 +1,5 @@
 /mob/living/Logout()
+	update_z(null)
 	if(ranged_ability && client)
 		ranged_ability.remove_mousepointer(client)
 	..()
