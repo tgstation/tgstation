@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 /datum/explosion
 	var/explosion_id
+	var/atom/explosion_source
 	var/started_at
 	var/running = TRUE
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
@@ -37,6 +38,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/id = ++id_counter
 	explosion_id = id
+	explosion_source = epicenter
 
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
