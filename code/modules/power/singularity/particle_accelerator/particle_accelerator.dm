@@ -89,7 +89,7 @@
 	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
@@ -152,7 +152,7 @@
 	qdel(src)
 
 /obj/structure/particle_accelerator/Move()
-	..()
+	. = ..()
 	if(master && master.active)
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.", INVESTIGATE_SINGULO)

@@ -6,9 +6,9 @@
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/human(get_turf(src), dna, get_static_viruses())
+		new /obj/effect/gibspawner/human(drop_location(), dna, get_static_viruses())
 	else
-		new /obj/effect/gibspawner/humanbodypartless(get_turf(src), dna, get_static_viruses())
+		new /obj/effect/gibspawner/humanbodypartless(drop_location(), dna, get_static_viruses())
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)
@@ -48,7 +48,7 @@
 
 
 /mob/living/carbon/proc/Drain()
-	become_husk()
-	disabilities |= NOCLONE
+	become_husk(CHANGELING_DRAIN)
+	add_disability(DISABILITY_NOCLONE, CHANGELING_DRAIN)
 	blood_volume = 0
 	return 1

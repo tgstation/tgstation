@@ -63,11 +63,11 @@
 	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
-	if(z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
@@ -120,11 +120,11 @@
 	if(!mapload)
 		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
 		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
-	if(z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9

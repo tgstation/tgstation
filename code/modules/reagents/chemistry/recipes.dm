@@ -29,9 +29,9 @@
 			for (var/T in typesof(/mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = T
 				switch(initial(SA.gold_core_spawnable))
-					if(1)
+					if(HOSTILE_SPAWN)
 						chemical_mob_spawn_meancritters += T
-					if(2)
+					if(FRIENDLY_SPAWN)
 						chemical_mob_spawn_nicecritters += T
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)

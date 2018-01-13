@@ -20,7 +20,7 @@ Buildable meters
 	w_class = WEIGHT_CLASS_NORMAL
 	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
-	var/RPD_type //TEMP: kill this once RPDs get a rewrite pls
+	var/RPD_type
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY

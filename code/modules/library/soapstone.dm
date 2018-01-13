@@ -136,13 +136,13 @@
 
 	if(!good_chisel_message_location(T))
 		persists = FALSE
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
-	realdate = world.timeofday
+	realdate = world.realtime
 	map = SSmapping.config.map_name
 	update_icon()
 

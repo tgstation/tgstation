@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
@@ -201,7 +201,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -252,7 +252,7 @@
 	},
 /area/shuttle/abandoned)
 "aA" = (
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -584,10 +584,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Dormitory";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
@@ -722,10 +720,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Crew Quarters";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Crew Quarters"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -786,7 +782,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "by" = (
 /obj/effect/decal/cleanable/dirt{
@@ -805,7 +802,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/black,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bA" = (
 /obj/structure/table/optable,
@@ -846,7 +844,8 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/suit/armor/vest,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bE" = (
 /obj/effect/decal/cleanable/dirt{
@@ -858,7 +857,8 @@
 	},
 /obj/structure/table,
 /obj/item/gun/energy/e_gun/mini,
-/turf/open/floor/plasteel/bot,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bF" = (
 /obj/machinery/light/small{
@@ -1014,7 +1014,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -1295,7 +1295,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage"
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1409,7 +1409,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -1614,7 +1614,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
 	welded = 1
 	},

@@ -108,8 +108,10 @@
 
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	var/mob/living/old_current = current
+	if(current)
+		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself
+	new_character.mind = src							//and associate our new body with ourself		
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -144,7 +146,7 @@
 		return
 	LAZYADD(antag_datums, A)
 	A.create_team(team)
-	var/datum/objective_team/antag_team = A.get_team()
+	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
 	A.on_gain()
@@ -180,12 +182,6 @@
 	objectives, uplinks, powers etc are all handled.
 */
 
-/datum/mind/proc/remove_objectives()
-	if(objectives.len)
-		for(var/datum/objective/O in objectives)
-			objectives -= O
-			qdel(O)
-
 /datum/mind/proc/remove_changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(C)
@@ -203,12 +199,10 @@
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
-	if(src in SSticker.mode.syndicates)
-		SSticker.mode.syndicates -= src
-		SSticker.mode.update_synd_icons_removed(src)
-	special_role = null
-	remove_objectives()
-	remove_antag_equip()
+	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(nuke)
+		remove_antag_datum(nuke.type)
+		special_role = null
 
 /datum/mind/proc/remove_wizard()
 	remove_antag_datum(/datum/antagonist/wizard)
@@ -218,7 +212,6 @@
 	if(src in SSticker.mode.cult)
 		SSticker.mode.remove_cultist(src, 0, 0)
 	special_role = null
-	remove_objectives()
 	remove_antag_equip()
 
 /datum/mind/proc/remove_rev()
@@ -295,9 +288,7 @@
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		var/obj/item/device/uplink/U = new(uplink_loc)
-		U.owner = "[traitor_mob.key]"
-		uplink_loc.hidden_uplink = U
+		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
@@ -327,14 +318,19 @@
 		SSticker.mode.add_cultist(src)
 
 	else if(is_revolutionary(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev)
+		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
 
 	else if(is_servant_of_ratvar(creator))
 		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
-		make_Nuke(null, null, 0, FALSE)
+		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+		var/datum/antagonist/nukeop/N = new(src)
+		N.send_to_spawnpoint = FALSE
+		N.nukeop_outfit = null
+		add_antag_datum(N,converter.nuke_team)
+
 
 	enslaved_to = creator
 
@@ -462,20 +458,27 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
-			text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <b>HUMAN</b> | other"
+			if(is_monkey_leader(src))
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <b>HUMAN</b> | other"
 		else if(ismonkey(current))
 			var/found = FALSE
 			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
 				found = TRUE
 				break
 
-			if(found)
-				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			var/isLeader = is_monkey_leader(src)
+
+			if(isLeader)
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <a href='?src=[REF(src)];monkey=infected'>infected</a> <b>LEADER</b> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+			else if(found)
+				text += "<a href='?src=[REF(src)];monkey=healthy'>healthy</a> | <b>INFECTED</b> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 			else
-				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
+				text += "<b>HEALTHY</b> | <a href='?src=[REF(src)];monkey=infected'>infected</a> | <a href='?src=[REF(src)];monkey=leader'>leader</a> | <a href='?src=[REF(src)];monkey=human'>human</a> | other"
 
 		else
-			text += "healthy | infected | human | <b>OTHER</b>"
+			text += "healthy | infected | leader | human | <b>OTHER</b>"
 
 		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
 			text += " | Enabled in Prefs"
@@ -491,7 +494,8 @@
 		if (SSticker.mode.config_tag=="nuclear")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.syndicates)
+		var/datum/antagonist/nukeop/N = has_antag_datum(/datum/antagonist/nukeop,TRUE)
+		if(N)
 			text += "<b>OPERATIVE</b> | <a href='?src=[REF(src)];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=[REF(src)];nuclear=lair'>To shuttle</a>, <a href='?src=[REF(src)];common=undress'>undress</a>, <a href='?src=[REF(src)];nuclear=dressup'>dress up</a>."
 			var/code
@@ -545,7 +549,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I.current
-				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
+				if(M && is_station_level(M.z) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"
@@ -711,9 +715,9 @@
 			out += sections[i]+"<br>"
 
 
-	if(((src in SSticker.mode.traitors) || (src in SSticker.mode.syndicates)) && ishuman(current))
+	if(((src in SSticker.mode.traitors) || is_nuclear_operative(current)) && ishuman(current))
 		text = "Uplink: <a href='?src=[REF(src)];common=uplink'>give</a>"
-		var/obj/item/device/uplink/U = find_syndicate_uplink()
+		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			text += " | <a href='?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
@@ -767,17 +771,44 @@
 		var/objective_pos
 		var/def_value
 
+
+
+		var/datum/antagonist/target_antag
+
 		if (href_list["obj_edit"])
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
-			objective_pos = objectives.Find(objective)
+
+			for(var/datum/antagonist/A in antag_datums)
+				if(objective in A.objectives)
+					target_antag = A
+					objective_pos = A.objectives.Find(objective)
+					break
+
+			if(!target_antag) //Shouldn't happen
+				stack_trace("objective without antagonist found")
+				objective_pos = objectives.Find(objective)
 
 			//Text strings are easy to manipulate. Revised for simplicity.
 			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
 			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
+		else
+			switch(antag_datums.len)
+				if(0)
+					target_antag = add_antag_datum(/datum/antagonist/custom)
+				if(1)
+					target_antag = antag_datums[1]
+				else
+					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
+					if (QDELETED(target))
+						return
+					else if(target == "(new custom antag)")
+						target_antag = add_antag_datum(/datum/antagonist/custom)
+					else
+						target_antag = target
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
@@ -871,7 +902,7 @@
 				switch(new_obj_type)
 					if("download")
 						new_objective = new /datum/objective/download
-						new_objective.explanation_text = "Download [target_number] research levels."
+						new_objective.explanation_text = "Download [target_number] research node\s."
 					if("capture")
 						new_objective = new /datum/objective/capture
 						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."
@@ -893,11 +924,15 @@
 			return
 
 		if (objective)
+			if(target_antag)
+				target_antag.objectives -= objective
 			objectives -= objective
-			objectives.Insert(objective_pos, new_objective)
+			target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 		else
+			if(target_antag)
+				target_antag.objectives += new_objective
 			objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
@@ -906,6 +941,11 @@
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
+
+		for(var/datum/antagonist/A in antag_datums)
+			if(objective in A.objectives)
+				A.objectives -= objective
+				break
 		objectives -= objective
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")
@@ -988,11 +1028,13 @@
 					message_admins("[key_name_admin(usr)] has cult'ed [current].")
 					log_admin("[key_name(usr)] has cult'ed [current].")
 			if("tome")
-				if (!SSticker.mode.equip_cultist(current,1))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current,1))
 					to_chat(usr, "<span class='danger'>Spawning tome failed!</span>")
 
 			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
+				var/datum/antagonist/cult/C = has_antag_datum(/datum/antagonist/cult,TRUE)
+				if (C.equip_cultist(current))
 					to_chat(usr, "<span class='danger'>Spawning amulet failed!</span>")
 
 	else if(href_list["clockcult"])
@@ -1063,36 +1105,14 @@
 				message_admins("[key_name_admin(usr)] has de-nuke op'ed [current].")
 				log_admin("[key_name(usr)] has de-nuke op'ed [current].")
 			if("nuclear")
-				if(!(src in SSticker.mode.syndicates))
-					SSticker.mode.syndicates += src
-					SSticker.mode.update_synd_icons_added(src)
-					if (SSticker.mode.syndicates.len==1)
-						SSticker.mode.prepare_syndicate_leader(src)
-					else
-						current.real_name = "[syndicate_name()] Operative #[SSticker.mode.syndicates.len-1]"
+				if(!has_antag_datum(/datum/antagonist/nukeop,TRUE))
+					add_antag_datum(/datum/antagonist/nukeop)
 					special_role = "Syndicate"
 					assigned_role = "Syndicate"
-					to_chat(current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
-					SSticker.mode.forge_syndicate_objectives(src)
-					SSticker.mode.greet_syndicate(src)
 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
 					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
 				current.forceMove(pick(GLOB.nukeop_start))
-			if("dressup")
-				var/mob/living/carbon/human/H = current
-				qdel(H.belt)
-				qdel(H.back)
-				qdel(H.ears)
-				qdel(H.gloves)
-				qdel(H.head)
-				qdel(H.shoes)
-				qdel(H.wear_id)
-				qdel(H.wear_suit)
-				qdel(H.w_uniform)
-
-				if (!SSticker.mode.equip_syndicate(current))
-					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
 			if("tellcode")
 				var/code
 				for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
@@ -1147,7 +1167,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = FALSE
 					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
@@ -1159,7 +1179,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = TRUE
 					message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] able to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
@@ -1233,11 +1253,17 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
-							D.cure(0)
+							D.cure(FALSE)
+			if("leader")
+				if(check_rights(R_ADMIN, 0))
+					add_monkey_leader(src)
+					log_admin("[key_name(usr)] made [key_name(current)] a monkey leader!")
+					message_admins("[key_name_admin(usr)] made [key_name_admin(current)] a monkey leader!")
 			if("infected")
-				if (check_rights(R_ADMIN, 0))
+				if(check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
+					add_monkey(src)
 					if (istype(H))
 						log_admin("[key_name(usr)] attempting to monkeyize and infect [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to monkeyize and infect [key_name_admin(current)]</span>")
@@ -1255,6 +1281,7 @@
 						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
 							JF.cure(0)
 							stoplag() //because deleting of virus is doing throught spawn(0) //What
+						remove_monkey(src)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
@@ -1296,7 +1323,7 @@
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN, 0))
-					var/obj/item/device/uplink/U = find_syndicate_uplink()
+					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.telecrystals) as null | num
 						if(!isnull(crystals))
@@ -1325,65 +1352,20 @@
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.GetAllContents()
-	for (var/obj/item/I in L)
-		if (I.hidden_uplink)
-			return I.hidden_uplink
-	return null
+	for (var/i in L)
+		var/atom/movable/I = i
+		. = I.GetComponent(/datum/component/uplink)
+		if(.)
+			break
 
 /datum/mind/proc/take_uplink()
-	var/obj/item/device/uplink/H = find_syndicate_uplink()
-	if(H)
-		qdel(H)
+	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/T = new(src)
 		T.should_specialise = TRUE
 		add_antag_datum(T)
-
-
-/datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
-	if(!(src in SSticker.mode.syndicates))
-		SSticker.mode.syndicates += src
-		SSticker.mode.update_synd_icons_added(src)
-		assigned_role = "Syndicate"
-		special_role = "Syndicate"
-		SSticker.mode.forge_syndicate_objectives(src)
-		SSticker.mode.greet_syndicate(src)
-		current.faction |= "syndicate"
-
-		if(spawnloc)
-			current.forceMove(spawnloc)
-
-		if(ishuman(current))
-			var/mob/living/carbon/human/H = current
-			qdel(H.belt)
-			qdel(H.back)
-			qdel(H.ears)
-			qdel(H.gloves)
-			qdel(H.head)
-			qdel(H.shoes)
-			qdel(H.wear_id)
-			qdel(H.wear_suit)
-			qdel(H.w_uniform)
-
-			SSticker.mode.equip_syndicate(current, telecrystals)
-
-		if (nuke_code)
-			store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			to_chat(current, "The nuclear authorization code is: <B>[nuke_code]</B>")
-		else
-			var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
-			if(nuke)
-				store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke.r_code]", 0, 0)
-				to_chat(current, "The nuclear authorization code is: <B>nuke.r_code</B>")
-			else
-				to_chat(current, "You were not provided with a nuclear code. Trying asking your team leader or contacting syndicate command.</B>")
-
-		if (leader)
-			SSticker.mode.prepare_syndicate_leader(src,nuke_code)
-		else
-			current.real_name = "[syndicate_name()] Operative #[SSticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
@@ -1400,16 +1382,11 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.add_cultist(src,FALSE)
+	if(!has_antag_datum(/datum/antagonist/cult,TRUE))
+		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/antagonist/cult/C
-		C.cult_memorization(src)
-	var/mob/living/carbon/human/H = current
-	if (!SSticker.mode.equip_cultist(current))
-		to_chat(H, "Spawning an amulet from your Master failed.")
 
 /datum/mind/proc/make_Rev()
 	var/datum/antagonist/rev/head/head = new(src)

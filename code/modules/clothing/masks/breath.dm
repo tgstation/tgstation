@@ -12,7 +12,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)

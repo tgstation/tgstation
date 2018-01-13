@@ -239,3 +239,18 @@
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
+
+/obj/item/reagent_containers/food/snacks/butterdog
+	name = "butterdog"
+	desc = "Made from exotic butters."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterdog"
+	bitesize = 1
+	filling_color = "#F1F49A"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	tastes = list("butter", "exotic butter")
+
+/obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)

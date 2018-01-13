@@ -4,19 +4,17 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
+	roundend_category  = "changelings"
 	job_rank = ROLE_CHANGELING
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
-	var/list/objectives = list()
 	var/team_mode = FALSE //Should assign team objectives ?
 
 	//Changeling Stuff
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	//var/list/absorbed_dna = list()
-	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
@@ -179,7 +177,7 @@
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
 		canrespec = 0
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
@@ -225,7 +223,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+	if((target.has_disability(DISABILITY_NOCLONE)) || (target.has_disability(DISABILITY_NOCLONE)))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
@@ -279,7 +277,7 @@
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-	
+
 	if(!first_prof)
 		first_prof = prof
 
@@ -480,4 +478,35 @@
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
 	give_objectives = FALSE
+	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+
+/datum/antagonist/changeling/roundend_report()
+	var/list/parts = list()
+
+	var/changelingwin = 1
+	if(!owner.current)
+		changelingwin = 0
+
+	parts += printplayer(owner)
+
+	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+	parts += "<b>Changeling ID:</b> [changelingID]."
+	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
+	parts += " "
+	if(objectives.len)
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			else
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				changelingwin = 0
+			count++
+
+	if(changelingwin)
+		parts += "<span class='greentext'>The changeling was successful!</span>"
+	else
+		parts += "<span class='redtext'>The changeling has failed.</span>"
+
+	return parts.Join("<br>")

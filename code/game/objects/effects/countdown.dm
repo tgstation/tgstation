@@ -24,7 +24,7 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	loc = get_turf(A)
+	forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -154,3 +154,9 @@
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
+
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return

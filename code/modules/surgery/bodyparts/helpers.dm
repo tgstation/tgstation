@@ -89,10 +89,7 @@
 	return TRUE
 
 /mob/living/carbon/human/get_leg_ignore()
-	if(movement_type & FLYING)
-		return TRUE
-	var/obj/item/tank/jetpack/J = get_jetpack()
-	if(J && J.on && !has_gravity())
+	if((movement_type & FLYING) || floating)
 		return TRUE
 	return FALSE
 
@@ -121,7 +118,7 @@
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
-			I.loc = T
+			I.forceMove(T)
 
 	clear_alert("embeddedobject")
 

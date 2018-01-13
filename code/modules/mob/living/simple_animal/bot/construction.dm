@@ -1,79 +1,80 @@
 //Bot Construction
 
-//Cleanbot assembly
-/obj/item/bucket_sensor
-	desc = "It's a bucket. With a sensor attached."
-	name = "proxy bucket"
+/obj/item/bot_assembly
 	icon = 'icons/mob/aibots.dmi'
-	icon_state = "bucket_proxy"
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
-	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
-	var/created_name = "Cleanbot"
+	var/created_name
+	var/build_step = ASSEMBLY_FIRST_STEP
+	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
-/obj/item/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
+/obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/pen))
+		rename_bot()
+		return
+
+/obj/item/bot_assembly/proc/rename_bot()
+	var/t = stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN)
+	if(!t)
+		return
+	if(!in_range(src, usr) && loc != usr)
+		return
+	created_name = t
+
+
+//Cleanbot assembly
+/obj/item/bot_assembly/cleanbot
+	desc = "It's a bucket with a sensor attached."
+	name = "incomplete cleanbot assembly"
+	icon_state = "bucket_proxy"
+	throwforce = 5
+	created_name = "Cleanbot"
+
+/obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user as mob, params)
 	..()
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			return
-		qdel(W)
-		var/turf/T = get_turf(loc)
-		var/mob/living/simple_animal/bot/cleanbot/A = new /mob/living/simple_animal/bot/cleanbot(T)
+		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location())
 		A.name = created_name
-		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
+		A.robot_arm = W.type
+		to_chat(user, "<span class='notice'>You add [W] to [src]. Beep boop!</span>")
+		qdel(W)
 		qdel(src)
 
-	else if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
 
 //Edbot Assembly
-
-/obj/item/ed209_assembly
-	name = "\improper ED-209 assembly"
+/obj/item/bot_assembly/ed209
+	name = "incomplete ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "ed209_frame"
 	item_state = "ed209_frame"
-	var/build_step = 0
-	var/created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
+	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
+	var/vest_type = /obj/item/clothing/suit/armor/vest
 
-/obj/item/ed209_assembly/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/ed209/attackby(obj/item/W, mob/user, params)
 	..()
-
-	if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
-		return
-
 	switch(build_step)
-		if(0,1)
+		if(ASSEMBLY_FIRST_STEP, ASSEMBLY_SECOND_STEP)
 			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
+				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 				qdel(W)
-				build_step++
-				to_chat(user, "<span class='notice'>You add the robot leg to [src].</span>")
 				name = "legs/frame assembly"
-				if(build_step == 1)
+				if(build_step == ASSEMBLY_FIRST_STEP)
 					item_state = "ed209_leg"
 					icon_state = "ed209_leg"
 				else
 					item_state = "ed209_legs"
 					icon_state = "ed209_legs"
+				build_step++
 
-		if(2)
+		if(ASSEMBLY_THIRD_STEP)
 			var/newcolor = ""
 			if(istype(W, /obj/item/clothing/suit/redtag))
 				newcolor = "r"
@@ -83,21 +84,23 @@
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				lasercolor = newcolor
+				vest_type = W.type
+				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 				qdel(W)
-				build_step++
-				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
 				name = "vest/legs/frame assembly"
 				item_state = "[lasercolor]ed209_shell"
 				icon_state = "[lasercolor]ed209_shell"
+				build_step++
 
-		if(3)
+		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
 				var/obj/item/weldingtool/WT = W
 				if(WT.remove_fuel(0,user))
-					build_step++
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
-		if(4)
+					build_step++
+
+		if(ASSEMBLY_FIFTH_STEP)
 			switch(lasercolor)
 				if("b")
 					if(!istype(W, /obj/item/clothing/head/helmet/bluetaghelm))
@@ -113,20 +116,20 @@
 
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
+			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			qdel(W)
-			build_step++
-			to_chat(user, "<span class='notice'>You add the helmet to [src].</span>")
 			name = "covered and shielded frame assembly"
 			item_state = "[lasercolor]ed209_hat"
 			icon_state = "[lasercolor]ed209_hat"
+			build_step++
 
 		if(5)
 			if(isprox(W))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				qdel(W)
 				build_step++
-				to_chat(user, "<span class='notice'>You add the prox sensor to [src].</span>")
+				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
+				qdel(W)
 				name = "covered, shielded and sensored frame assembly"
 				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
@@ -141,9 +144,9 @@
 				if(do_after(user, 40, target = src))
 					if(coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
-						build_step = 7
-						to_chat(user, "<span class='notice'>You wire the ED-209 assembly.</span>")
+						to_chat(user, "<span class='notice'>You wire [src].</span>")
 						name = "wired ED-209 assembly"
+						build_step++
 
 		if(7)
 			var/newname = ""
@@ -165,56 +168,57 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			name = newname
-			build_step++
 			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			item_state = "[lasercolor]ed209_taser"
 			icon_state = "[lasercolor]ed209_taser"
 			qdel(W)
+			build_step++
 
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
 				playsound(loc, W.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(do_after(user, 40*W.toolspeed, 0, src, 1))
-					build_step++
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
+					build_step++
 
 		if(9)
 			if(istype(W, /obj/item/stock_parts/cell))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				build_step++
+				var/mob/living/simple_animal/bot/ed209/B = new(drop_location(),created_name,lasercolor)
 				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
-				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/bot/ed209(T,created_name,lasercolor)
+				B.cell_type = W.type
 				qdel(W)
+				B.vest_type = vest_type
 				qdel(src)
 
+
 //Floorbot assemblies
-/obj/item/toolbox_tiles
+/obj/item/bot_assembly/floorbot
 	desc = "It's a toolbox with tiles sticking out the top."
 	name = "tiles and toolbox"
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3
 	throwforce = 10
-	throw_speed = 2
-	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
-	var/created_name = "Floorbot"
+	created_name = "Floorbot"
 
-/obj/item/toolbox_tiles_sensor
-	desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
-	name = "tiles, toolbox and sensor arrangement"
-	icon = 'icons/mob/aibots.dmi'
-	icon_state = "toolbox_tiles_sensor"
-	force = 3
-	throwforce = 10
-	throw_speed = 2
-	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
-	var/created_name = "Floorbot"
+/obj/item/bot_assembly/floorbot/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/bot_assembly/floorbot/update_icon()
+	..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			desc = initial(desc)
+			name = initial(name)
+			icon_state = initial(icon_state)
+
+		if(ASSEMBLY_SECOND_STEP)
+			desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
+			name = "incomplete floorbot assembly"
+			icon_state = "toolbox_tiles_sensor"
 
 /obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
@@ -226,63 +230,45 @@
 	if(T.use(10))
 		if(user.s_active)
 			user.s_active.close(user)
-		var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+		var/obj/item/bot_assembly/floorbot/B = new
 		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>")
+		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
 		return
 
-/obj/item/toolbox_tiles/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
 	..()
-	if(isprox(W))
-		qdel(W)
-		var/obj/item/toolbox_tiles_sensor/B = new /obj/item/toolbox_tiles_sensor()
-		B.created_name = created_name
-		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You add the sensor to the toolbox and tiles.</span>")
-		qdel(src)
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(isprox(W))
+				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
+				qdel(W)
+				build_step++
+				update_icon()
 
-	else if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
+		if(ASSEMBLY_SECOND_STEP)	
+			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location())
+				A.name = created_name
+				A.robot_arm = W.type
+				to_chat(user, "<span class='notice'>You add [W] to [src]. Boop beep!</span>")
+				qdel(W)
+				qdel(src)
 
-		created_name = t
-
-/obj/item/toolbox_tiles_sensor/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
-		qdel(W)
-		var/turf/T = get_turf(user.loc)
-		var/mob/living/simple_animal/bot/floorbot/A = new /mob/living/simple_animal/bot/floorbot(T)
-		A.name = created_name
-		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly. Boop beep!</span>")
-		qdel(src)
-	else if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-
-		created_name = t
 
 //Medbot Assembly
-/obj/item/firstaid_arm_assembly
+/obj/item/bot_assembly/medbot
 	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "firstaid_arm"
-	var/build_step = 0
-	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
+	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = WEIGHT_CLASS_NORMAL
+	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/firstaid = /obj/item/storage/firstaid
 
-/obj/item/firstaid_arm_assembly/Initialize()
+/obj/item/bot_assembly/medbot/Initialize()
 	. = ..()
 	spawn(5)
 		if(skin)
@@ -298,7 +284,7 @@
 		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
 		return
 
-	var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly
+	var/obj/item/bot_assembly/medbot/A = new
 	if(istype(src, /obj/item/storage/firstaid/fire))
 		A.skin = "ointment"
 	else if(istype(src, /obj/item/storage/firstaid/toxin))
@@ -307,169 +293,153 @@
 		A.skin = "o2"
 	else if(istype(src, /obj/item/storage/firstaid/brute))
 		A.skin = "brute"
-
-	qdel(S)
 	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add the robot arm to the first aid kit.</span>")
+	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
+	A.robot_arm = S.type
+	A.firstaid = type
+	qdel(S)
 	qdel(src)
 
 
-/obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
-	else
-		switch(build_step)
-			if(0)
-				if(istype(W, /obj/item/device/healthanalyzer))
-					if(!user.temporarilyRemoveItemFromInventory(W))
-						return
-					qdel(W)
-					build_step++
-					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
-					name = "First aid/robot arm/health analyzer assembly"
-					add_overlay("na_scanner")
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(istype(W, /obj/item/device/healthanalyzer))
+				if(!user.temporarilyRemoveItemFromInventory(W))
+					return
+				healthanalyzer = W.type
+				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
+				qdel(W)
+				name = "First aid/robot arm/health analyzer assembly"
+				add_overlay("na_scanner")
+				build_step++
 
-			if(1)
-				if(isprox(W))
-					if(!user.temporarilyRemoveItemFromInventory(W))
-						return
-					qdel(W)
-					build_step++
-					to_chat(user, "<span class='notice'>You complete the Medibot. Beep boop!</span>")
-					var/turf/T = get_turf(src)
-					var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T, skin)
-					S.name = created_name
-					qdel(src)
+		if(ASSEMBLY_SECOND_STEP)
+			if(isprox(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
+					return
+				qdel(W)
+				var/mob/living/simple_animal/bot/medbot/S = new(drop_location(), skin)
+				to_chat(user, "<span class='notice'>You complete the Medbot. Beep boop!</span>")
+				S.name = created_name
+				S.firstaid = firstaid
+				S.robot_arm = robot_arm
+				S.healthanalyzer = healthanalyzer
+				qdel(src)
 
 
 //Honkbot Assembly
-/obj/item/honkbot_assembly
+/obj/item/bot_assembly/honkbot
 	name = "incomplete honkbot assembly"
 	desc = "The clown's up to no good once more"
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "honkbot_arm"
-	var/build_step = ASSEMBLY_FIRST_STEP
-	var/created_name = "Honkbot"
+	created_name = "Honkbot"
 
-/obj/item/honkbot_assembly/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/honkbot/attackby(obj/item/I, mob/user, params)
+	..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(isprox(I))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You add the [I] to [src]!</span>")
+				icon_state = "honkbot_proxy"
+				name = "incomplete Honkbot assembly"
+				qdel(I)
+				build_step++
 
-	if(isprox(I) && (build_step == ASSEMBLY_FIRST_STEP))
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		build_step++
-		to_chat(user, "<span class='notice'>You add the [I] to [src]!</span>")
-		icon_state = "honkbot_proxy"
-		name = "incomplete Honkbot assembly"
-		qdel(I)
+		if(ASSEMBLY_SECOND_STEP)
+			if(istype(I, /obj/item/bikehorn))
+				if(istype(loc, /obj/item/storage/backpack)) //don't build them in your backpacks!
+					return
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
+				var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
+				S.name = created_name
+				S.spam_flag = TRUE // only long enough to hear the first ping.
+				addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
+				S.bikehorn = I.type
+				qdel(I)
+				qdel(src)
 
-	else if(istype(I, /obj/item/bikehorn) && (build_step == ASSEMBLY_SECOND_STEP))
-		if(istype(loc, /obj/item/storage/backpack)) //don't build them in your backpacks!
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
-		var/T = get_turf(loc) //important to spawn on turf.
-		var/mob/living/simple_animal/bot/honkbot/S = new(drop_location(T))
-		S.name = created_name
-		S.spam_flag = TRUE // only long enough to hear the first ping.
-		addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
-		qdel(I)
-		qdel(src)
-
-	else if(istype(I, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
-
-	else return ..()
 
 //Secbot Assembly
-/obj/item/secbot_assembly
+/obj/item/bot_assembly/secbot
 	name = "incomplete securitron assembly"
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
-	icon = 'icons/mob/aibots.dmi'
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
-	var/build_step = 0
-	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
+	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
-/obj/item/secbot_assembly/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weldingtool))
-		if(!build_step)
-			var/obj/item/weldingtool/WT = I
-			if(WT.remove_fuel(0, user))
+	var/atom/Tsec = drop_location()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(istype(I, /obj/item/weldingtool))
+				var/obj/item/weldingtool/WT = I
+				if(WT.remove_fuel(0, user))
+					add_overlay("hs_hole")
+					to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
+					build_step++
+
+			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+				new /obj/item/device/assembly/signaler(Tsec)
+				new /obj/item/clothing/head/helmet/sec(Tsec)
+				to_chat(user, "<span class='notice'>You disconnect the signaler from the helmet.</span>")
+				qdel(src)
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(isprox(I))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You add [I] to [src]!</span>")
+				add_overlay("hs_eye")
+				name = "helmet/signaler/prox sensor assembly"
+				qdel(I)
 				build_step++
-				add_overlay("hs_hole")
-				to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
-		else if(build_step == 1)
-			var/obj/item/weldingtool/WT = I
-			if(WT.remove_fuel(0, user))
+
+			else if(istype(I, /obj/item/weldingtool)) //deconstruct
+				var/obj/item/weldingtool/WT = I
+				if(WT.remove_fuel(0, user))
+					cut_overlay("hs_hole")
+					to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
+					build_step--
+
+		if(ASSEMBLY_THIRD_STEP)
+			if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You add [I] to [src]!</span>")
+				name = "helmet/signaler/prox sensor/robot arm assembly"
+				add_overlay("hs_arm")
+				robot_arm = I.type
+				qdel(I)
+				build_step++
+
+			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+				cut_overlay("hs_eye")
+				new /obj/item/device/assembly/prox_sensor(Tsec)
+				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
 				build_step--
-				cut_overlay("hs_hole")
-				to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
 
-	else if(isprox(I) && (build_step == 1))
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		build_step++
-		to_chat(user, "<span class='notice'>You add the prox sensor to [src]!</span>")
-		add_overlay("hs_eye")
-		name = "helmet/signaler/prox sensor assembly"
-		qdel(I)
+		if(ASSEMBLY_FOURTH_STEP)
+			if(istype(I, /obj/item/melee/baton))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user, "<span class='notice'>You complete the Securitron! Beep boop.</span>")
+				var/mob/living/simple_animal/bot/secbot/S = new(Tsec)
+				S.name = created_name
+				S.baton_type = I.type
+				S.robot_arm = robot_arm
+				qdel(I)
+				qdel(src)
 
-	else if(((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot))) && (build_step == 2))
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		build_step++
-		to_chat(user, "<span class='notice'>You add the robot arm to [src]!</span>")
-		name = "helmet/signaler/prox sensor/robot arm assembly"
-		add_overlay("hs_arm")
-		qdel(I)
-
-	else if((istype(I, /obj/item/melee/baton)) && (build_step >= 3))
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		build_step++
-		to_chat(user, "<span class='notice'>You complete the Securitron! Beep boop.</span>")
-		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot(get_turf(src))
-		S.name = created_name
-		S.baton_type = I.type
-		qdel(I)
-		qdel(src)
-
-	else if(istype(I, /obj/item/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
-
-	else if(istype(I, /obj/item/screwdriver))
-		if(!build_step)
-			new /obj/item/device/assembly/signaler(get_turf(src))
-			new /obj/item/clothing/head/helmet/sec(get_turf(src))
-			to_chat(user, "<span class='notice'>You disconnect the signaler from the helmet.</span>")
-			qdel(src)
-
-		else if(build_step == 2)
-			cut_overlay("hs_eye")
-			new /obj/item/device/assembly/prox_sensor(get_turf(src))
-			to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
-			build_step--
-
-		else if(build_step == 3)
-			cut_overlay("hs_arm")
-			new /obj/item/bodypart/l_arm/robot(get_turf(src))
-			to_chat(user, "<span class='notice'>You remove the robot arm from [src].</span>")
-			build_step--
+			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+				cut_overlay("hs_arm")
+				var/obj/item/bodypart/dropped_arm = new robot_arm(Tsec)
+				robot_arm = null
+				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
+				build_step--

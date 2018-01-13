@@ -22,7 +22,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
-	gold_core_spawnable = 1 //are you sure about this??
+	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -32,7 +32,7 @@
 	else if(mind) // Let's make this a feature
 		egg.origin = mind
 	for(var/obj/item/organ/I in src)
-		I.loc = egg
+		I.forceMove(egg)
 	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 	egg_lain = 1
@@ -53,7 +53,6 @@
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
-	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
 	var/datum/mind/origin
 	var/time
 

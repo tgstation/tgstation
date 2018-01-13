@@ -98,7 +98,7 @@
 		else
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I
-				if(RC.container_type & OPENCONTAINER_1)
+				if(RC.is_drainable())
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
 						.[A.type] += A.volume
 			.[I.type] += 1
@@ -137,7 +137,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					SSblackbox.add_details("object_crafted","[I.type]")
+					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 				return 0
 			return "."
 		return ", missing tool."

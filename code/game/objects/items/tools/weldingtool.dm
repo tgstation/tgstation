@@ -22,7 +22,6 @@
 	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -52,7 +51,7 @@
 	cut_overlays()
 	if(change_icons)
 		var/ratio = get_fuel() / max_fuel
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 		add_overlay("[initial(icon_state)][ratio]")
 	update_torch()
 	return
@@ -121,7 +120,7 @@
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity)
 		return
-	if(!status && istype(O, /obj/item/reagent_containers) && O.is_open_container())
+	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
@@ -242,7 +241,7 @@
 		container_type = NONE
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER_1
+		container_type = OPENCONTAINER
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -271,7 +270,6 @@
 	icon_state = "indwelder"
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2;plasmatech=2"
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -302,7 +300,6 @@
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -316,7 +313,6 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -325,7 +321,6 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1

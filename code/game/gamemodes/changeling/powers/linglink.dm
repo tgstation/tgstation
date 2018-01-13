@@ -50,14 +50,14 @@
 				to_chat(target, "<span class='userdanger'>A migraine throbs behind your eyes, you hear yourself screaming - but your mouth has not opened!</span>")
 				for(var/mi in GLOB.mob_list)
 					var/mob/M = mi
-					if(M.lingcheck() == 2)
+					if(M.lingcheck() == LINGHIVE_LING)
 						to_chat(M, "<i><font color=#800080>We can sense a foreign presence in the hivemind...</font></i>")
 				target.mind.linglink = 1
 				target.say(":g AAAAARRRRGGGGGHHHHH!!")
 				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
-		SSblackbox.add_details("changeling_powers","Hivemind Link|[i]")
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 		if(!do_mob(user, target, 20))
 			to_chat(user, "<span class='warning'>Our link with [target] has ended!</span>")
 			changeling.islinking = 0

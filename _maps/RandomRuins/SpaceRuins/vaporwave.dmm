@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "c" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/airless,

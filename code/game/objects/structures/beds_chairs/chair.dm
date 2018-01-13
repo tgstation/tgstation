@@ -6,7 +6,7 @@
 	anchored = TRUE
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 25
 	var/buildstacktype = /obj/item/stack/sheet/metal
@@ -91,11 +91,15 @@
 		layer = OBJ_LAYER
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	handle_layer()
+
+/obj/structure/chair/post_unbuckle_mob()
+	. = ..()
 	handle_layer()
 
 /obj/structure/chair/proc/spin()
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 
 /obj/structure/chair/setDir(newdir)
 	..()
@@ -167,12 +171,18 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	..()
+	. = ..()
+	update_armrest()
+
+/obj/structure/chair/comfy/proc/update_armrest()
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
 		cut_overlay(armrest)
 
+/obj/structure/chair/comfy/post_unbuckle_mob()
+	. = ..()
+	update_armrest()
 
 /obj/structure/chair/comfy/brown
 	color = rgb(255,113,0)
@@ -193,6 +203,12 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+
+
+/obj/structure/chair/office/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, 1)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"

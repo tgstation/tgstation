@@ -16,7 +16,7 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
-	origin_tech = "materials=1;engineering=1"
+
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -54,10 +54,6 @@
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
-		C.handcuffed = null
-		if(C.buckled && C.buckled.buckle_requires_restraints)
-			C.buckled.unbuckle_mob(C)
-		C.update_handcuffed()
 		return
 	else
 		..()
@@ -81,7 +77,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
 	toolspeed = 0.1
-	origin_tech = "materials=5;engineering=4;abductor=3"
+
 	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
@@ -94,7 +90,7 @@
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
-	origin_tech = "materials=2;engineering=2"
+
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.25
@@ -117,3 +113,11 @@
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
+	
+/obj/item/wirecutters/power/attack(mob/living/carbon/C, mob/user)
+	if(istype(C) && C.handcuffed)
+		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
+		qdel(C.handcuffed)
+		return
+	else
+		..()

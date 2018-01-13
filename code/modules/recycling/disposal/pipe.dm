@@ -289,8 +289,8 @@
 		else
 			var/obj/machinery/disposal/D = linked
 			D.expel(H)	// expel at disposal
-	else
-		expel(H, get_turf(src), 0)	// expel at turf
+
+	// Returning null without expelling holder makes the holder expell itself
 	return null
 
 /obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/H)

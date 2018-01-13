@@ -49,6 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+	interact_open = TRUE
 
 	var/lon_range = 1.5
 	var/area/area
@@ -88,6 +89,7 @@
 	var/auto_name = 0
 	var/failure_timer = 0
 	var/force_update = 0
+	var/emergency_lights = FALSE
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
@@ -151,7 +153,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -657,7 +659,7 @@
 		wires.interact(user)
 	else
 		return ..()
-		
+
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
@@ -665,7 +667,7 @@
 		return
 	else
 		togglelock(user)
-		
+
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(emagged)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
@@ -759,6 +761,7 @@
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
+		"emergencyLights" = !emergency_lights,
 
 		"powerChannels" = list(
 			list(
@@ -898,6 +901,14 @@
 			failure_timer = 0
 			update_icon()
 			update()
+		if("emergency_lighting")
+			emergency_lights = !emergency_lights
+			for(var/area/A in area.related)
+				for(var/obj/machinery/light/L in A)
+					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+						L.no_emergency = emergency_lights
+						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					CHECK_TICK
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -930,7 +941,7 @@
 	if(!malf.can_shunt)
 		to_chat(malf, "<span class='warning'>You cannot shunt!</span>")
 		return
-	if(!(src.z in GLOB.station_z_levels))
+	if(!is_station_level(z))
 		return
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
@@ -961,7 +972,7 @@
 	else
 		to_chat(occupier, "<span class='danger'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
-			occupier.loc = src.loc
+			occupier.forceMove(drop_location())
 			occupier.death()
 			occupier.gib()
 			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
@@ -1052,15 +1063,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)
@@ -1251,7 +1253,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)

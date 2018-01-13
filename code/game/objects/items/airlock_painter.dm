@@ -8,7 +8,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=2"
 
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
@@ -120,7 +119,7 @@
 /obj/item/airlock_painter/attack_self(mob/user)
 	if(ink)
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		ink.loc = user.loc
+		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
 		ink = null

@@ -11,8 +11,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	origin_tech = "biotech=3"
-	container_type = INJECTABLE_1
+	container_type = INJECTABLE | DRAWABLE
+	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -29,6 +29,10 @@
 /obj/item/slime_extract/Initialize()
 	. = ..()
 	create_reagents(100)
+
+/obj/item/slime_extract/on_grind()
+	if(Uses)
+		grind_results["slimejelly"] = 20
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -124,7 +128,6 @@
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=4"
 
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	if (istype(target))
@@ -162,7 +165,6 @@
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpink"
-	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -197,18 +199,29 @@
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		SM.copy_known_languages_from(user, TRUE)
+		after_success(user, SM)
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>")
 		being_used = 0
 		..()
 
+/obj/item/slimepotion/sentience/proc/after_success(mob/living/user, mob/living/simple_animal/SM)
+	return
+
+/obj/item/slimepotion/sentience/nuclear
+	name = "syndicate intelligence potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target."
+
+/obj/item/slimepotion/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
+	var/obj/item/implant/radio/imp = new(src)
+	imp.implant(SM, user)
+
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potorange"
-	origin_tech = "biotech=6"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
@@ -294,7 +307,7 @@
 		return ..()
 
 	to_chat(user, "<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>")
-	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance-15,0,100)
 	qdel(src)
 
 /obj/item/slimepotion/mutator
@@ -318,7 +331,7 @@
 		return ..()
 
 	to_chat(user, "<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>")
-	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance+12,0,100)
 	M.mutator_used = TRUE
 	qdel(src)
 
@@ -327,7 +340,6 @@
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potyellow"
-	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
@@ -343,8 +355,8 @@
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
-		var/datum/riding/R = V.riding_datum
-		if(V.riding_datum)
+		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
+		if(R)
 			if(R.vehicle_move_delay <= 0 )
 				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 				return ..()
@@ -355,13 +367,11 @@
 	C.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
-
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potblue"
-	origin_tech = "biotech=5"
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
@@ -509,14 +519,14 @@
 
 /obj/item/areaeditor/blueprints/slime
 	name = "cerulean prints"
-	desc = "A one use yet of blueprints made of jelly like organic material. Renaming an area to 'Xenobiology Lab' will extend the reach of the management console."
+	desc = "A one use yet of blueprints made of jelly like organic material. Extends the reach of the management console."
 	color = "#2956B2"
 
 /obj/item/areaeditor/blueprints/slime/edit_area()
-	var/success = ..()
+	..()
 	var/area/A = get_area(src)
-	if(success)
-		for(var/turf/T in A)
-			T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-		qdel(src)
+	for(var/turf/T in A)
+		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+	A.xenobiology_compatible = TRUE
+	qdel(src)

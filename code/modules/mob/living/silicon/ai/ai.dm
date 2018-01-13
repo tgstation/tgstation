@@ -25,6 +25,7 @@
 	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
+	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
@@ -32,7 +33,6 @@
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
@@ -89,8 +89,7 @@
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
-		qdel(src)//Delete AI.
-		return
+		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
@@ -118,7 +117,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.loc = src.loc
+	eyeobj.forceMove(src.loc)
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -172,7 +171,6 @@
 	if(incapacitated())
 		return
 
-		//if(icon_state == initial(icon_state))
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
@@ -238,9 +236,6 @@
 		icon_state = "ai-gentoo"
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
-	//else
-			//to_chat(usr, "You can only change your display once!")
-			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -435,20 +430,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
+	if(QDELETED(C))
+		return FALSE
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
-		return FALSE
-
-	if(!src.eyeobj)
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
@@ -808,7 +800,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(control_disabled || incapacitated())
 		return FALSE
 	if(be_close && !in_range(M, src))
@@ -822,7 +814,8 @@
 		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have x-ray vision so just use get_dist
-	return get_dist(src, A) <= client.view
+	var/list/viewscale = getviewsize(client.view)
+	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)

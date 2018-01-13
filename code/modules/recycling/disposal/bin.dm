@@ -29,7 +29,7 @@
 
 	if(make_from)
 		setDir(make_from.dir)
-		make_from.loc = null
+		make_from.moveToNullspace()
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
@@ -213,6 +213,8 @@
 
 // called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
+	H.active = FALSE
+
 	var/turf/T = get_turf(src)
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
@@ -295,7 +297,7 @@
 	data["full_pressure"] = full_pressure
 	data["pressure_charging"] = pressure_charging
 	data["panel_open"] = panel_open
-	var/per = Clamp(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
+	var/per = CLAMP(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
 	data["per"] = round(per, 1)
 	data["isai"] = isAI(user)
 	return data
@@ -374,7 +376,6 @@
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
-	SSblackbox.inc("disposal_auto_flush")
 	flush()
 
 //timed process
@@ -470,7 +471,7 @@
 
 	if(isobj(AM))
 		var/obj/O = AM
-		O.loc = src
+		O.forceMove(src)
 	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops

@@ -9,8 +9,6 @@
 
 /mob/living/simple_animal/slime/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
 	if(..())
@@ -112,7 +110,6 @@
 	if(!environment)
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
 	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)

@@ -212,7 +212,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath/burn()
 	visible_message("[src] finishes cooking!")
-	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath/(loc)
+	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat

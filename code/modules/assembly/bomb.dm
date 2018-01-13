@@ -12,7 +12,6 @@
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
-	origin_tech = "materials=1;engineering=1"
 
 
 /obj/item/device/onetankbomb/examine(mob/user)
@@ -116,13 +115,16 @@
 	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
 	air_contents.garbage_collect()
-
+	var/datum/gas_mixture/bomb_mixture = air_contents.copy()
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)
-	loc = null
 
-	if(air_contents.temperature > (T0C + 400))
+	if(master)
+		qdel(master)
+	qdel(src)
+
+	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=1)
@@ -132,10 +134,10 @@
 		else if(strength >=0.2)
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
-			ground_zero.assume_air(air_contents)
+			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(air_contents.temperature > (T0C + 250))
+	else if(bomb_mixture.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
@@ -143,26 +145,23 @@
 		else if (strength >=0.5)
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
-			ground_zero.assume_air(air_contents)
+			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(air_contents.temperature > (T0C + 100))
+	else if(bomb_mixture.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
 
 		if (strength >=1)
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
-			ground_zero.assume_air(air_contents)
+			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
 	else
-		ground_zero.assume_air(air_contents)
+		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
 
-	air_update_turf()
-	if(master)
-		qdel(master)
-	qdel(src)
+	ground_zero.air_update_turf()
 
 /obj/item/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())

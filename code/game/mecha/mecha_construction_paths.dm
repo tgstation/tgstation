@@ -304,13 +304,6 @@
 				holder.icon_state = "ripley14"
 	return TRUE
 
-/datum/construction/reversible/mecha/ripley/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_ripley_created",1)
-	return
-
-
-
 /datum/construction/mecha/gygax_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/gygax_torso), //1
 					 list("key"=/obj/item/mecha_parts/part/gygax_left_arm), //2
@@ -531,7 +524,7 @@
 			else
 				user.visible_message("[user] removes the advanced scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(get_turf(holder))
 				holder.icon_state = "gygax10"
 		if(11)
 			if(diff==FORWARD)
@@ -549,7 +542,7 @@
 			else
 				user.visible_message("[user] removes the  capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "gygax12"
 		if(9)
 			if(diff==FORWARD)
@@ -616,11 +609,6 @@
 				user.visible_message("[user] unfastens Gygax Armor Plates.", "<span class='notice'>You unfasten Gygax Armor Plates.</span>")
 				holder.icon_state = "gygax20"
 	return TRUE
-
-/datum/construction/reversible/mecha/gygax/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_gygax_created",1)
-	return
 
 /datum/construction/mecha/firefighter_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/ripley_torso), //1
@@ -866,13 +854,6 @@
 				holder.icon_state = "fireripley15"
 	return TRUE
 
-/datum/construction/reversible/mecha/firefighter/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_firefighter_created",1)
-	return
-
-
-
 /datum/construction/mecha/honker_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/honker_torso), //1
 					 list("key"=/obj/item/mecha_parts/part/honker_left_arm), //2
@@ -952,10 +933,6 @@
 			user.visible_message("[user] puts clown boots on the [holder].", "<span class='notice'>You put clown boots on the [holder].</span>")
 			qdel(used_atom)
 	return TRUE
-
-/datum/construction/mecha/honker/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_honker_created",1)
 
 /datum/construction/mecha/durand_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/durand_torso), //1
@@ -1178,7 +1155,7 @@
 			else
 				user.visible_message("[user] removes the scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "durand10"
 		if(11)
 			if(diff==FORWARD)
@@ -1196,7 +1173,7 @@
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "durand12"
 		if(9)
 			if(diff==FORWARD)
@@ -1263,10 +1240,6 @@
 				user.visible_message("[user] unfastens Durand Armor Plates.", "<span class='notice'>You unfasten Durand Armor Plates.</span>")
 				holder.icon_state = "durand20"
 	return TRUE
-
-/datum/construction/reversible/mecha/durand/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_durand_created",1)
 
 //PHAZON
 
@@ -1507,7 +1480,7 @@
 			else
 				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the scanner module from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/scanning_module) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "phazon10"
 		if(15)
 			if(diff==FORWARD)
@@ -1525,7 +1498,7 @@
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the capacitor from the [holder].</span>")
 				var/obj/item/I = locate(/obj/item/stock_parts/capacitor) in holder
-				I.loc = get_turf(holder)
+				I.forceMove(holder.drop_location())
 				holder.icon_state = "phazon12"
 		if(13)
 			if(diff==FORWARD)
@@ -1619,10 +1592,6 @@
 				qdel(used_atom)
 				spawn_mecha_result()
 	return TRUE
-
-/datum/construction/reversible/mecha/phazon/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_phazon_created",1)
 
 //ODYSSEUS
 
@@ -1857,7 +1826,3 @@
 				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
 				holder.icon_state = "odysseus14"
 	return TRUE
-
-/datum/construction/reversible/mecha/odysseus/spawn_mecha_result()
-	..()
-	SSblackbox.inc("mecha_odysseus_created",1)

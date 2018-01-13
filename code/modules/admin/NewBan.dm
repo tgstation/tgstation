@@ -146,7 +146,6 @@ GLOBAL_PROTECT(Banlist)
 		ban_unban_log_save("[key_name(usr)] unbanned [key]")
 		log_admin_private("[key_name(usr)] unbanned [key]")
 		message_admins("[key_name_admin(usr)] unbanned: [key]")
-		SSblackbox.inc("ban_unban",1)
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)
 	for (var/A in GLOB.Banlist.dir)
 		GLOB.Banlist.cd = "/base/[A]"
@@ -175,7 +174,6 @@ GLOBAL_PROTECT(Banlist)
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	GLOB.Banlist.cd = "/base"
 	for (var/A in GLOB.Banlist.dir)
 		count++
@@ -235,4 +233,3 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist.cd = "/base"
 	for (var/A in GLOB.Banlist.dir)
 		RemoveBan(A)
-

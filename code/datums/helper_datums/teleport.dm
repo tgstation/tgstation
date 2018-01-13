@@ -119,6 +119,9 @@
 			playSpecials(destturf,effectout,soundout)
 			if(ismegafauna(teleatom))
 				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+	if(ismob(teleatom))
+		var/mob/M = teleatom
+		M.cancel_camera()
 	return 1
 
 /datum/teleport/proc/teleport()
@@ -163,9 +166,12 @@
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
-		zlevels = list(zlevel)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO

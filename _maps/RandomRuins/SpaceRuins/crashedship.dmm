@@ -68,7 +68,7 @@
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "ap" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/BMPship/Midship)
 "aq" = (
 /turf/closed/wall/mineral/titanium,
@@ -1149,9 +1149,10 @@
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
 "dO" = (
-/turf/open/floor/plasteel/loadingarea/dirtydirty{
+/obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/turf/open/floor/plasteel/floorgrime,
 /area/awaymission/BMPship/Midship)
 "dP" = (
 /obj/machinery/conveyor{
@@ -1628,11 +1629,6 @@
 "fg" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/bar,
-/area/awaymission/BMPship/Midship)
-"fh" = (
-/turf/open/floor/plasteel/loadingarea/dirty{
-	dir = 4
-	},
 /area/awaymission/BMPship/Midship)
 "fi" = (
 /obj/machinery/conveyor{
@@ -2313,6 +2309,27 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
+"hy" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hz" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hA" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hB" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hC" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hD" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hE" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
 
 (1,1,1) = {"
 aa
@@ -2688,8 +2705,8 @@ aa
 aa
 aa
 aa
-cF
-aT
+aI
+hD
 bV
 hx
 ee
@@ -2739,7 +2756,7 @@ aa
 aa
 aa
 aI
-aH
+hC
 bV
 bV
 dH
@@ -2789,7 +2806,7 @@ aa
 aa
 aa
 aI
-aT
+hB
 bV
 bV
 bV
@@ -2838,8 +2855,8 @@ aH
 aQ
 bl
 bt
-aT
-aT
+hy
+hA
 bV
 bV
 cY
@@ -2853,7 +2870,7 @@ bI
 fv
 fJ
 aH
-aH
+hE
 aQ
 gF
 gR
@@ -2991,7 +3008,7 @@ aH
 aT
 aT
 aT
-aT
+hz
 bW
 co
 cH
@@ -3818,7 +3835,7 @@ ce
 ce
 ce
 ce
-fh
+dO
 ce
 dh
 ce

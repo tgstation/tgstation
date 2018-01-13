@@ -68,7 +68,7 @@ Chaplain
 			B.name = "Guys Gone Wild"
 		if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "meme", "memes")
 			B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-			H.setBrainLoss(100) // starts off retarded as fuck
+			H.adjustBrainLoss(100) // starts off retarded as fuck
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		else
@@ -80,8 +80,8 @@ Chaplain
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
-	SSblackbox.set_details("religion_name","[new_religion]")
-	SSblackbox.set_details("religion_deity","[new_deity]")
+	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
+	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"

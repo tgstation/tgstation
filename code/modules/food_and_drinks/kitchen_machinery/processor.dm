@@ -65,7 +65,7 @@
 		for(var/i in 1 to (C+rating_amount-1))
 			var/atom/movable/item = new S.coretype(drop_location())
 			adjust_item_drop_location(item)
-			SSblackbox.add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
 	..()
 
 
@@ -178,9 +178,9 @@
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	for (var/mob/M in src)
-		M.loc = src.loc
+		M.forceMove(drop_location())
 	return
 
 /obj/machinery/processor/slime

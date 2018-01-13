@@ -21,10 +21,10 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/M)
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
@@ -44,7 +44,7 @@
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.disabilities = 0
+	M.remove_all_disabilities()
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
@@ -59,6 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	M.cure_all_traumas(TRUE, TRUE)
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.severity == VIRUS_SEVERITY_POSITIVE)
@@ -651,16 +652,16 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.disabilities & BLIND)
+	if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
-			M.cure_blind()
-			M.cure_nearsighted()
+			M.cure_blind(EYE_DAMAGE)
+			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.disabilities & NEARSIGHT)
+	else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
-		M.cure_nearsighted()
+		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
@@ -749,7 +750,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.disabilities & NOCLONE) && !M.hellbound)
+		if(!M.suiciding && !(M.has_disability(DISABILITY_NOCLONE)) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
@@ -777,7 +778,13 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(-3*REM)
+	M.adjustBrainLoss(-2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
+			C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
+		if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
+			C.cure_trauma_type(BRAIN_TRAUMA_MILD)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1001,7 +1008,7 @@
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
@@ -1032,7 +1039,7 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()
 	. = 1

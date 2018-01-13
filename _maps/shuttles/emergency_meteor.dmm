@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral,
 /area/shuttle/escape{
@@ -86,7 +86,7 @@
 	dwidth = 20;
 	height = 40;
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
-	name = "a meteor with engines strapped to it";
+	name = "\proper a meteor with engines strapped to it";
 	timid = 1;
 	width = 40
 	},

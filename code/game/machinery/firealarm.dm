@@ -70,10 +70,9 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z in GLOB.station_z_levels)
+		if(is_station_level(z))
 			add_overlay("overlay_[GLOB.security_level]")
 		else
-			//var/green = SEC_LEVEL_GREEN
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
 
 		if(detecting)
@@ -125,7 +124,7 @@
 	var/list/data = list()
 	data["emagged"] = emagged
 
-	if(src.z in GLOB.station_z_levels)
+	if(is_station_level(z))
 		data["seclevel"] = get_security_level()
 	else
 		data["seclevel"] = "green"
@@ -238,7 +237,7 @@
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
-					frame.loc = user.loc
+					frame.forceMove(user.drop_location())
 					playsound(src.loc, W.usesound, 50, 1)
 					qdel(src)
 					return

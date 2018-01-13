@@ -59,8 +59,11 @@
 	obj_integrity = myseed.endurance
 	max_integrity = myseed.endurance
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-	if(G)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
+		myseed.genes -= G
+		G = new G
+		myseed.genes += G
+	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)

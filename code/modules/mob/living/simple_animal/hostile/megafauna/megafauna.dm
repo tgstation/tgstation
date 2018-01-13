@@ -63,7 +63,7 @@
 			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
 				spawn_crusher_loot()
 		if(!admin_spawned)
-			SSblackbox.set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.record_feedback("tally", "megafauna_kills", 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
@@ -101,7 +101,7 @@
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	if(!(z in GLOB.station_z_levels) || client) //NPC monsters won't heal while on station
+	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 

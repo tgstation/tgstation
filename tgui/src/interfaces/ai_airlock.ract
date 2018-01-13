@@ -66,14 +66,6 @@ component.exports = {
 	</ui-section>
 </ui-display>
 <ui-display title='Access & Door Control'>
-	<ui-section label='Open'>
-		{{#if data.welded}}
-			[ <span class="bad">Door has been welded</span> ]
-		{{/if}}
-		<div style='float:right'>
-			<ui-button icon='sign-out' action='open-close' style='{{data.density ? "selected" : ""}}'>Toggle</ui-button>
-		</div>
-	</ui-section>
 	<ui-section label='ID Scan'>
 		{{#if !data.wires.id_scanner}}
 			[ <span class="bad">Wires have been cut</span> ]
@@ -124,6 +116,16 @@ component.exports = {
 		<div style='float:right'>
 			<ui-button state='{{!data.wires.timing}}' icon='power-off' action='speed-on' style='{{data.speed ? "selected" : ""}}'>Enabled</ui-button>
 			<ui-button state='{{!data.wires.timing}}' icon='close' action='speed-off' style='{{data.speed ? "" : "selected"}}'>Disabled</ui-button>
+		</div>
+	</ui-section>
+	<br />
+	<ui-section label='Door control'>
+		{{#if data.locked || data.welded}}
+			[ <span class="bad">Door is {{(data.locked ? "bolted" : "") + (data.locked && data.welded ? " and " : "") + (data.welded ? "welded" : "")}}</span> ]
+		{{/if}}
+		<div style='float:right'>
+			<ui-button state='{{(data.locked || data.welded) || (data.opened && "disabled")}}' icon='sign-out' action='open-close'>Open door</ui-button>
+			<ui-button state='{{(data.locked || data.welded) || (!data.opened && "disabled")}}' icon='sign-in' action='open-close'>Close door</ui-button>
 		</div>
 	</ui-section>
 </ui-display>

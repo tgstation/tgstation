@@ -360,7 +360,7 @@
 					if(isdrone(M))
 						drones++
 						continue
-					if(M.z == ZLEVEL_CENTCOM)
+					if(is_centcom_level(M.z))
 						living_skipped++
 						continue
 					living_players++
@@ -384,9 +384,10 @@
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 		dat += "<BR>"
 
-		if(SSticker.mode.syndicates.len)
+		var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
+		if(nukeops.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.syndicates)
+			for(var/datum/mind/N in nukeops)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -523,7 +524,7 @@
 
 		if(SSticker.mode.brother_teams.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Brothers</B></td><td></td><td></td></tr>"
-			for(var/datum/objective_team/brother_team/team in SSticker.mode.brother_teams)
+			for(var/datum/team/brother_team/team in SSticker.mode.brother_teams)
 				for(var/datum/mind/brother in team.members)
 					var/mob/M = brother.current
 					if(M)
@@ -610,7 +611,7 @@
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		
+
 		var/list/pirates = get_antagonists(/datum/antagonist/pirate)
 		if(pirates.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Pirates</B></td><td></td></tr>"

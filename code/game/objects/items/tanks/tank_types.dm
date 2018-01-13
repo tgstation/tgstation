@@ -21,7 +21,7 @@
 
 /obj/item/tank/internals/oxygen/New()
 	..()
-	ASSERT_GAS(/datum/gas/oxygen, air_contents)
+	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -87,7 +87,7 @@
 
 /obj/item/tank/internals/plasma/New()
 	..()
-	ASSERT_GAS(/datum/gas/plasma, air_contents)
+	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -124,7 +124,7 @@
 
 /obj/item/tank/internals/plasmaman/New()
 	..()
-	ASSERT_GAS(/datum/gas/plasma, air_contents)
+	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -166,7 +166,7 @@
 
 /obj/item/tank/internals/emergency_oxygen/New()
 	..()
-	ASSERT_GAS(/datum/gas/oxygen, air_contents)
+	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -177,5 +177,5 @@
 
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
-	icon_state = "emergency_engi"
+	icon_state = "emergency_double"
 	volume = 10

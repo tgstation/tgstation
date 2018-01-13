@@ -138,42 +138,6 @@
 
 // This is the define used to calculate falloff.
 
-/*
-/datum/light_source/proc/apply_lum()
-	var/static/update_gen = 1
-	applied = 1
-
-	// Keep track of the last applied lum values so that the lighting can be reversed
-	var/thing
-	var/datum/lighting_corner/C
-	var/corners = list()
-	LAZYINITLIST(effect_str)
-	FOR_DVIEW(var/turf/T, light_range+1, source_turf, INVISIBILITY_LIGHTING)
-		var/list/turf_corners = T.get_corners()
-
-		for (thing in turf_corners)
-			C = thing
-			if (C.update_gen == update_gen)
-				continue
-
-			C.update_gen = update_gen
-			LAZYADD(C.affecting,src)
-
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-
-			APPLY_CORNER(C)
-
-		LAZYADD(T.affecting_lights, src)
-		LAZYADD(affecting_turfs, T)
-	FOR_DVIEW_END
-	update_gen++
-	applied_lum_r = lum_r
-	applied_lum_g = lum_g
-	applied_lum_b = lum_b
-*/
-
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
 	var/thing
@@ -268,8 +232,8 @@
 	var/turf/T
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = Ceiling(light_range)
-		for(T in view(Ceiling(light_range), source_turf))
+		source_turf.luminosity = CEILING(light_range, 1)
+		for(T in view(CEILING(light_range, 1), source_turf))
 			for (thing in T.get_corners(source_turf))
 				C = thing
 				corners[C] = 0

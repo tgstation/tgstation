@@ -10,7 +10,6 @@
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=1"
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
 	var/obj/item/device/assembly_holder/nadeassembly = null
@@ -56,6 +55,7 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
+			target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -64,7 +64,6 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-		location.ex_act(2, target)
 	if(ismob(target))
 		var/mob/M = target
 		M.gib()
@@ -88,7 +87,7 @@
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = Clamp(newtime, 10, 60000)
+		newtime = CLAMP(newtime, 10, 60000)
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
@@ -205,7 +204,7 @@
 /obj/item/grenade/plastic/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = Clamp(newtime, 10, 60000)
+		newtime = CLAMP(newtime, 10, 60000)
 		timer = newtime
 		to_chat(user, "Timer set for [timer] seconds.")
 
@@ -248,10 +247,10 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
+			target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)
-		location.ex_act(2, target)
 		explosion(location,0,0,3)
 	qdel(src)
 

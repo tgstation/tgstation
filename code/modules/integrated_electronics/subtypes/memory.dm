@@ -11,12 +11,12 @@
 	power_draw_per_use = 1
 	var/number_of_pins = 1
 
-/obj/item/integrated_circuit/memory/New()
+/obj/item/integrated_circuit/memory/Initialize()
 	for(var/i = 1 to number_of_pins)
 		inputs["input [i]"] = IC_PINTYPE_ANY // This is just a string since pins don't get built until ..() is called.
 		outputs["output [i]"] = IC_PINTYPE_ANY
 	complexity = number_of_pins
-	..()
+	. = ..()
 
 /obj/item/integrated_circuit/memory/examine(mob/user)
 	..()
@@ -58,7 +58,6 @@
 	name = "large memory circuit"
 	desc = "This big circuit can hold eight pieces of data."
 	icon_state = "memory8"
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3)
 	power_draw_per_use = 4
 	number_of_pins = 8
 
@@ -68,7 +67,6 @@
 	icon_state = "memory16"
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 4)
 	power_draw_per_use = 8
 	number_of_pins = 16
 

@@ -2,6 +2,7 @@
 	gender = MALE
 	pressure_resistance = 15
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
 	var/list/stomach_contents		= list()
 	var/list/internal_organs		= list()	//List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot= list() //Same as above, but stores "slot ID" - "organ" pairs for easy access.
@@ -49,3 +50,10 @@
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
+
+	//halucination vars
+	var/image/halimage
+	var/image/halbody
+	var/obj/halitem
+	var/hal_screwyhud = SCREWYHUD_NONE
+	var/next_hallucination = 0

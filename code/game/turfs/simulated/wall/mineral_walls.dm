@@ -13,8 +13,6 @@
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	//var/electro = 1
-	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
 
@@ -24,8 +22,6 @@
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	//var/electro = 0.75
-	//var/shocked = null
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
 /turf/closed/wall/mineral/diamond

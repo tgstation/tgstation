@@ -128,7 +128,8 @@
 			return
 
 		update_item(picked_item)
-		update_item_icon()
+		var/obj/item/thing = target
+		thing.update_slot_icon()
 	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
@@ -166,36 +167,6 @@
 		return
 	random_look(owner)
 
-/datum/action/item_action/chameleon/change/proc/update_item_icon()
-	var/obj/item/I = target
-	var/mob/living/M = owner
-
-	var/flags = I.slot_flags
-	if(flags & SLOT_OCLOTHING)
-		M.update_inv_wear_suit()
-	if(flags & SLOT_ICLOTHING)
-		M.update_inv_w_uniform()
-	if(flags & SLOT_GLOVES)
-		M.update_inv_gloves()
-	if(flags & SLOT_EYES)
-		M.update_inv_glasses()
-	if(flags & SLOT_EARS)
-		M.update_inv_ears()
-	if(flags & SLOT_MASK)
-		M.update_inv_wear_mask()
-	if(flags & SLOT_HEAD)
-		M.update_inv_head()
-	if(flags & SLOT_FEET)
-		M.update_inv_shoes()
-	if(flags & SLOT_ID)
-		M.update_inv_wear_id()
-	if(flags & SLOT_BELT)
-		M.update_inv_belt()
-	if(flags & SLOT_BACK)
-		M.update_inv_back()
-	if(flags & SLOT_NECK)
-		M.update_inv_neck()
-
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
@@ -203,10 +174,10 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	origin_tech = "syndicate=2"
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
-	random_sensor = 0
-	resistance_flags = 0
+	random_sensor = FALSE
+	resistance_flags = NONE
+	can_adjust = FALSE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -235,8 +206,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	origin_tech = "syndicate=2"
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -257,8 +227,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
-	origin_tech = "syndicate=2"
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -280,7 +249,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -302,7 +271,7 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -338,7 +307,7 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
@@ -392,8 +361,7 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	flags_1 = NOSLIP_1
-	origin_tech = "syndicate=2"
-	resistance_flags = 0
+	resistance_flags = NONE
 	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 

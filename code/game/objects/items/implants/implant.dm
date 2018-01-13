@@ -2,7 +2,6 @@
 	name = "implant"
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
-	origin_tech = "materials=2;biotech=3;programming=2"
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
@@ -13,6 +12,9 @@
 
 
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
+	return
+
+/obj/item/implant/proc/on_death(emote, mob/living/carbon/source)
 	return
 
 /obj/item/implant/proc/activate()
@@ -56,7 +58,7 @@
 				else
 					return 0
 
-	src.loc = target
+	forceMove(target)
 	imp_in = target
 	target.implants += src
 	if(activated)
@@ -73,7 +75,7 @@
 	return 1
 
 /obj/item/implant/proc/removed(mob/living/source, silent = 0, special = 0)
-	src.loc = null
+	moveToNullspace()
 	imp_in = null
 	source.implants -= src
 	for(var/X in actions)

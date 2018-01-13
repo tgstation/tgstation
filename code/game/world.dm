@@ -1,4 +1,7 @@
+#define RESTART_COUNTER_PATH "data/round_counter.txt"
+
 GLOBAL_VAR(security_mode)
+GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
 /world/New()
@@ -30,6 +33,13 @@ GLOBAL_PROTECT(security_mode)
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
+	if(fexists(RESTART_COUNTER_PATH))
+		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
+		fdel(RESTART_COUNTER_PATH)
+	
+	if("no-init" in params)
+		return
+
 	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
@@ -53,15 +63,15 @@ GLOBAL_PROTECT(security_mode)
 				var/db_major = text2num(query_db_version.item[1])
 				var/db_minor = text2num(query_db_version.item[2])
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					var/which = "behind"
-					if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
-						which = "ahead of"
-					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else
 				message_admins("Could not get schema version from database")
+				log_sql("Could not get schema version from database")
 		else
-			log_world("Your server failed to establish a connection with the database.")
+			log_sql("Your server failed to establish a connection with the database.")
+	else
+		log_sql("Database is not enabled in configuration.")
 
 /world/proc/SetRoundID()
 	if(CONFIG_GET(flag/sql_enabled))
@@ -115,6 +125,9 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
+
+	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
+
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)
@@ -126,8 +139,6 @@ GLOBAL_PROTECT(security_mode)
 
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
-
-	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	if(!handler)
 		return
@@ -159,6 +170,27 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(SERVER_TOOLS_PRESENT)
+		var/do_hard_reboot
+		// check the hard reboot counter
+		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
+		switch(ruhr)
+			if(-1)
+				do_hard_reboot = FALSE
+			if(0)
+				do_hard_reboot = TRUE
+			else
+				if(GLOB.restart_counter >= ruhr)
+					do_hard_reboot = TRUE
+				else
+					text2file("[++GLOB.restart_counter]", RESTART_COUNTER_PATH)
+					do_hard_reboot = FALSE
+
+		if(do_hard_reboot)
+			log_world("World hard rebooted at [time_stamp()]")
+			SERVER_TOOLS_REBOOT_BYOND
+
 	log_world("World rebooted at [time_stamp()]")
 	..()
 
@@ -221,3 +253,4 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+

@@ -25,8 +25,10 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-
+	
 	. = ..()
+	
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -678,18 +680,17 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/clean_blood()
-	var/mob/living/carbon/human/H = src
-	if(H.gloves)
-		if(H.gloves.clean_blood())
-			H.update_inv_gloves()
+/mob/living/carbon/human/proc/clean_blood(strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
+	if(gloves)
+		if(gloves.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+			update_inv_gloves()
 	else
-		..() // Clear the Blood_DNA list
-		if(H.bloody_hands)
-			H.bloody_hands = 0
-			H.update_inv_gloves()
+		if(bloody_hands)
+			bloody_hands = 0
+			update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
-
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
@@ -717,7 +718,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated() || lying )
 		return
 	if(!Adjacent(M) && (M.loc != src))
@@ -842,7 +843,8 @@
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	override = dna.species.override_float
+	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+		override = dna.species.override_float
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
@@ -885,8 +887,11 @@
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	if(!riding_datum)
-		riding_datum = new /datum/riding/human(src)
+	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
+	riding_datum.ride_check_rider_incapacitated = TRUE
+	riding_datum.ride_check_ridden_incapacitated = TRUE
+	riding_datum.ride_check_rider_restrained = TRUE
+	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
 	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
@@ -902,13 +907,6 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-
-/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
-	if(iscarbon(M))
-		if(riding_datum)
-			riding_datum.unequip_buckle_inhands(M)
-			riding_datum.restore_position(M)
-	. = ..(M, force)
 
 /mob/living/carbon/human/species
 	var/race = null

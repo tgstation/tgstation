@@ -6,7 +6,6 @@
 	icon_state = "boris"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 50, MAT_GLASS = 300)
-	origin_tech = "engineering=4"
 	var/recharging = FALSE
 	var/circuits = 5 //How many circuits the pseudocircuit has left
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
@@ -30,7 +29,7 @@
 		to_chat(R, "<span class='warning'>You need a power cell installed for that.</span>")
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, "<span class='warning'>You don't have the power for that (you need [DisplayPower(circuit_cost)].)</span>")
+		to_chat(R, "<span class='warning'>You don't have the energy for that (you need [DisplayEnergy(circuit_cost)].)</span>")
 		return
 	if(recharging)
 		to_chat(R, "<span class='warning'>[src] needs some time to recharge first.</span>")

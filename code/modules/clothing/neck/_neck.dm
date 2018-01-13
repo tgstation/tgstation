@@ -12,7 +12,7 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(blood_DNA)
+			IF_HAS_BLOOD_DNA(src)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
@@ -71,6 +71,9 @@
 					lung_strength = "<span class='danger'>strained</span>"
 					if(!(M.failed_last_breath || M.losebreath))
 						lung_strength = "healthy"
+
+			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
+				heart_strength = "<span class='boldannounce'>a faint, fluttery</span>"
 
 			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
 			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")

@@ -244,7 +244,7 @@
 			owner.client.change_view(12)
 			SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg',volume=50))
 		else
-			owner.client.change_view(world.view) //world.view - default mob view size
+			owner.client.change_view(CONFIG_GET(string/default_view)) //world.view - default mob view size
 		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype

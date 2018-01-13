@@ -42,7 +42,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	SSblackbox.set_details("chaplain_weapon","[choice]")
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -228,6 +228,9 @@
 	attack_verb = list("chopped", "sliced", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
+
+/obj/item/nullrod/scythe/talking/relaymove(mob/user)
+	return //stops buckled message spam for the ghost.
 
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)

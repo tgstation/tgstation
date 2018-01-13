@@ -12,7 +12,6 @@
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
-	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -57,7 +56,7 @@
 
 		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
-		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		log_game("[key_name(user)] attached a [item] to a transfer valve.")
 		attacher = user
 	return
 
