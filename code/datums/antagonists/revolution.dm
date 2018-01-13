@@ -350,8 +350,8 @@
 
 /datum/team/revolution/antag_listing_entry()
 	var/common_part = ..()
-
-	var/heads_report = "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
+	var/heads_report = "<b>Heads of Staff</b><br>"
+	heads_report += "<table cellspacing=5>"
 	for(var/datum/mind/N in SSjob.get_living_heads())
 		var/mob/M = N.current
 		if(M)

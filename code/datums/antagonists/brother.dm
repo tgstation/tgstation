@@ -148,3 +148,6 @@
 			add_objective(new/datum/objective/assassinate, TRUE)
 	else
 		add_objective(new/datum/objective/steal, TRUE)
+
+/datum/team/brother_team/antag_listing_name()
+	return "[name] blood brothers"

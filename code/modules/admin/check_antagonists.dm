@@ -58,8 +58,8 @@
 	//Disk:
 	// Deep Space FLW
 	var/list/parts = list()
-	//TODO Should probably be a span on top instead th
-	parts += "<table cellspacing=5><tr><td>[antag_listing_name()]</td></tr>"
+	parts += "<b>[antag_listing_name()]</b><br>"
+	parts += "<table cellspacing=5>"
 	for(var/datum/antagonist/A in get_team_antags())
 		parts += A.antag_listing_entry()
 	parts += "</table>"
@@ -112,7 +112,8 @@
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
-			current_section += "<table cellspacing=5><tr><td><B>[capitalize(current_category)]</B></td><td></td></tr>"
+			current_section += "<b>[capitalize(current_category)]</b><br>"
+			current_section += "<table cellspacing=5>"
 		current_section += current_antag.antag_listing_entry() // Name - (Traitor) - FLW | PM | TP
 
 		if(!next_antag || next_antag.roundend_category != current_antag.roundend_category) //End of section
@@ -204,6 +205,6 @@
 		dat += buildit()
 
 		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=420x500")
+		usr << browse(dat, "window=roundstatus;size=500x500")
 	else
 		alert("The game hasn't started yet!")

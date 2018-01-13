@@ -346,8 +346,15 @@
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
+/datum/team/nuclear/antag_listing_name()
+	if(syndicate_name)
+		return "[syndicate_name] Syndicates"
+	else
+		return "Syndicates"
+
 /datum/team/nuclear/antag_listing_entry()
-	var/disk_report = "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
+	var/disk_report = "<br><b>Nuclear Disk(s)</b><br>"
+	disk_report += "<table cellspacing=5>"
 	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
 		disk_report += "<tr><td>[N.name], "
 		var/atom/disk_loc = N.loc
@@ -360,5 +367,6 @@
 				disk_report += "in \a [O.name] "
 			disk_loc = disk_loc.loc
 		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
+	disk_report += "</table>"
 	var/common_part = ..()
 	return common_part + disk_report
