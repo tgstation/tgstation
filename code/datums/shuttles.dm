@@ -5,10 +5,6 @@
 	var/port_id
 	var/shuttle_id
 
-	// If counter is non-0, it's incremented and added to the shuttle_id when
-	// the template is imported. Used for pods eg, pod1, pod2, pod3
-	var/counter = 0
-
 	var/description
 	var/prerequisites
 	var/admin_notes

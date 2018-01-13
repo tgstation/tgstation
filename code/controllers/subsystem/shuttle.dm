@@ -19,10 +19,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
 
-	// special map objects add templates to this list, which are loaded and docked when
-	// the subsystem is initialized
-	var/list/shuttle_templates_to_load = list()
-
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/arrivals/arrivals
