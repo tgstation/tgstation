@@ -88,6 +88,7 @@
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
+	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
@@ -368,6 +369,20 @@
 	if(message_mode in GLOB.radiochannels)
 		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
+
+/mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
+	var/dropped_item = new drop_item(dropzone)
+	drop_item = null
+
+	if(istype(dropped_item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/dropped_cell = dropped_item
+		dropped_cell.charge = 0
+		dropped_cell.update_icon()
+
+	else if(istype(dropped_item, /obj/item/gun/energy))
+		var/obj/item/gun/energy/dropped_gun = dropped_item
+		dropped_gun.cell.charge = 0
+		dropped_gun.update_icon()
 
 //Generalized behavior code, override where needed!
 
