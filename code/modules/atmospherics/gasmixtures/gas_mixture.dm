@@ -384,6 +384,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//thermal energy of the system (self and sharer) is unchanged
 
 /datum/gas_mixture/compare(datum/gas_mixture/sample)
+	if (!sample) // FULPSTATION: Make this error go away.
+		return ""
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
