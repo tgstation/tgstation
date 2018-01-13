@@ -463,9 +463,8 @@
 /////////////////////////////////////
 
 /mob/living/carbon/proc/can_heartattack()
-	if(dna && dna.species) //not all carbons have species!
-		if(NOBLOOD in dna.species.species_traits)
-			return FALSE
+	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
