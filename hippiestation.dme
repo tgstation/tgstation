@@ -2506,6 +2506,7 @@
 #include "hippiestation\code\game\objects\items\devices\meeseeks_box.dm"
 #include "hippiestation\code\game\objects\items\devices\multitool.dm"
 #include "hippiestation\code\game\objects\items\devices\powersink.dm"
+#include "hippiestation\code\game\objects\items\devices\scanners.dm"
 #include "hippiestation\code\game\objects\items\grenades\chem_grenade.dm"
 #include "hippiestation\code\game\objects\items\grenades\clusterbuster.dm"
 #include "hippiestation\code\game\objects\items\grenades\spawnergrenade.dm"
