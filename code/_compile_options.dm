@@ -19,9 +19,6 @@
 								2 for preloading absolutely everything;
 								*/
 
-#define BACKGROUND_ENABLED FALSE    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
-								// 1 will enable set background. 0 will disable set background.
-
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 511
 #if DM_VERSION < MIN_COMPILER_VERSION

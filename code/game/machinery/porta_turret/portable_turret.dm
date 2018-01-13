@@ -335,8 +335,6 @@
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	set background = BACKGROUND_ENABLED
-
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
 			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
