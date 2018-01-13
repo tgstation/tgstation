@@ -383,12 +383,12 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(310, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 

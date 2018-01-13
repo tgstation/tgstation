@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 	return ..()
 
 /proc/generateMapList(filename)
-	var/list/potentialMaps = list()
+	. = list()
 	var/list/Lines = world.file2list(filename)
 
 	if(!Lines.len)
@@ -58,6 +58,4 @@ GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/away
 		if (!name)
 			continue
 
-		potentialMaps.Add(t)
-
-	return potentialMaps
+		. += t

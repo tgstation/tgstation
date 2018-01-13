@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(mapping)
 #ifdef FORCE_MAP
 		config = new(FORCE_MAP)
 #else
-		config = new
+		config = new(error_if_missing = FALSE)
 #endif
 	return ..()
 
