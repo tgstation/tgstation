@@ -435,15 +435,15 @@
 		name = "Eject Extract"
 		desc = "Eject your current slime extract."
 
-/datum/action/innate/integrate_extract/UpdateButtonIcon()
+/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
 	if(!species || !species.current_extract)
 		button_icon_state = "slimeconsume"
 	else
 		button_icon_state = "slimeeject"
 	..()
 
-/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button)
-	..()
+/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+	..(current_button, TRUE)
 	if(species && species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
@@ -496,8 +496,8 @@
 			return TRUE
 		return FALSE
 
-/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button)
-	..()
+/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+	..(current_button, TRUE)
 	if(species && species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
