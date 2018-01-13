@@ -147,3 +147,14 @@
 			return FALSE
 
 	return .
+
+/mob/living/carbon/human/proc/is_fully_augumented()
+	. = TRUE
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		if(O.status != BODYPART_ROBOTIC)
+			. = FALSE
+
+/mob/living/carbon/human/proc/should_be_droid_check()
+	if(is_fully_augumented() && !is_species(src, /datum/species/android))
+		set_species(/datum/species/android)

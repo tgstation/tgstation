@@ -65,6 +65,9 @@
 		target.updatehealth()
 		target.update_hair()
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.should_be_droid_check()
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return 1
+	return TRUE
