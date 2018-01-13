@@ -533,3 +533,6 @@
 
 /datum/antagonist/changeling/antag_listing_name()
 	return ..() + "([changelingID])"
+
+/datum/antagonist/changeling/xenobio/antag_listing_name()
+	return ..() + "(Xenobio)"

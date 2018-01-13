@@ -97,9 +97,9 @@
 			if(X.get_team() == T)
 				all_antagonists -= X
 		if(T.is_gamemode_hero())
-			sections += T.antag_listing_entry()
-		else
 			priority_sections += T.antag_listing_entry()
+		else
+			sections += T.antag_listing_entry()
 
 	sortTim(all_antagonists, /proc/cmp_antag_category)
 
@@ -108,7 +108,7 @@
 	for(var/i in 1 to all_antagonists.len)
 		var/datum/antagonist/current_antag = all_antagonists[i]
 		var/datum/antagonist/next_antag 
-		if(i < all_antagonists.len - 1)
+		if(i < all_antagonists.len)
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
@@ -124,8 +124,8 @@
 				sections += current_section.Join()
 			current_section.Cut()
 			current_category = null
-
-	return priority_sections.Join("<br>") + sections.Join("<br>")
+	var/list/all_sections = priority_sections + sections
+	return all_sections.Join("<br>")
 
 /datum/admins/proc/check_antagonists()
 	if (SSticker.HasRoundStarted())

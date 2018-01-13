@@ -9,8 +9,6 @@
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
-	
-
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
@@ -365,3 +363,6 @@
 			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 	heads_report += "</table>"
 	return common_part + heads_report
+
+/datum/team/revolution/is_gamemode_hero()
+	return SSticker.mode.name == "revolution"

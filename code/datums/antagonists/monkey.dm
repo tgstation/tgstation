@@ -14,6 +14,9 @@
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
 
+/datum/antagonist/monkey/get_team()
+	return monkey_team
+
 /datum/antagonist/monkey/on_gain()
 	. = ..()
 	SSticker.mode.ape_infectees += owner

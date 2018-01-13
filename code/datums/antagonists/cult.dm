@@ -324,3 +324,6 @@
 		parts += printplayerlist(members)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/team/cult/is_gamemode_hero()
+	return SSticker.mode.name == "cult"

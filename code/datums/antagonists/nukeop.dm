@@ -353,7 +353,7 @@
 		return "Syndicates"
 
 /datum/team/nuclear/antag_listing_entry()
-	var/disk_report = "<br><b>Nuclear Disk(s)</b><br>"
+	var/disk_report = "<b>Nuclear Disk(s)</b><br>"
 	disk_report += "<table cellspacing=5>"
 	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
 		disk_report += "<tr><td>[N.name], "
@@ -370,3 +370,6 @@
 	disk_report += "</table>"
 	var/common_part = ..()
 	return common_part + disk_report
+
+/datum/team/nuclear/is_gamemode_hero()
+	return SSticker.mode.name == "nuclear emergency"

@@ -47,7 +47,6 @@
 		if(mind)
 			if(!mind.special_role)
 				mind.special_role = "traitor"
-				SSticker.mode.traitors += mind
 				mind.add_antag_datum(/datum/antagonist/auto_custom) // ????
 
 

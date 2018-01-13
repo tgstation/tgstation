@@ -345,3 +345,6 @@
 /datum/antagonist/traitor/roundend_report_footer()
 	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
 		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+
+/datum/antagonist/traitor/is_gamemode_hero()
+	return SSticker.mode.name == "traitor"

@@ -116,11 +116,6 @@
 	addMemories()
 	if(give_equipment)
 		equip_space_ninja(owner.current)
-	SSticker.mode.traitors |= owner //remove with check_antags refactor
-	. = ..()
-
-/datum/antagonist/ninja/on_removal()
-	SSticker.mode.traitors -= owner
 	. = ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
@@ -146,7 +141,8 @@
 	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")
 
-
+/datum/antagonist/ninja/antag_listing_name()
+	return ..() + "(Ninja)"
 
 /datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
 	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
