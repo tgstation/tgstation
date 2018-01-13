@@ -207,11 +207,14 @@
 		return FALSE
 
 	// If the item is a stack and we're already holding a stack then merge
-	if (merge_stacks)
-		if (istype(I, /obj/item/stack))
-			var/obj/item/stack/I_stack = I
-			var/obj/item/stack/active_stack = get_active_held_item()
+	if (istype(I, /obj/item/stack))
+		var/obj/item/stack/I_stack = I
+		var/obj/item/stack/active_stack = get_active_held_item()
 
+		if (I_stack.zero_amount())
+			return FALSE
+
+		if (merge_stacks)
 			if (istype(active_stack) && istype(I_stack, active_stack.merge_type))
 				if (I_stack.merge(active_stack))
 					to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
