@@ -253,13 +253,10 @@
 	
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
 	var/datum/explosion/acted_explosion = null
-	log_game("Explosive wall exploded")
 	for(var/datum/explosion/E in GLOB.explosions)
 		if(E.explosion_id == explosion_id)
 			acted_explosion = E
 			break
-	if(acted_explosion)
-		log_game("Found explosion, triggered by [acted_explosion.explosion_source]")
 	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
 		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
 		bombcore.detonate()
