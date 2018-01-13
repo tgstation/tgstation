@@ -39,8 +39,6 @@
 		var/our_color = pick(wirecutter_colors)
 		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
-	if(prob(75))
-		pixel_y = rand(0, 16)
 
 /obj/item/wirecutters/update_icon()
 	if(!random_color) //icon override
@@ -113,7 +111,7 @@
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
-	
+
 /obj/item/wirecutters/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed)
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
