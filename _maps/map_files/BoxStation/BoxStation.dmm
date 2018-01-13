@@ -19309,6 +19309,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aWB" = (
@@ -19870,6 +19873,9 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Warehouse Maintenance";
 	req_access_txt = "31"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -20493,7 +20499,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aZq" = (
 /obj/machinery/button/door{
 	id = "heads_meeting";
@@ -57033,27 +57039,18 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "QoZ" = (
-/turf/closed/wall/r_wall,
-/area/science/circuit)
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 "Qpa" = (
 /turf/closed/wall,
-/area/science/circuit)
+/area/quartermaster/warehouse)
 "Qpb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Warehouse APC";
-	areastring = "/area/quartermaster/warehouse";
-	pixel_x = 26
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
 /area/maintenance/port)
 "Qpc" = (
 /turf/closed/wall,
@@ -57065,6 +57062,53 @@
 /turf/closed/wall,
 /area/quartermaster/warehouse)
 "Qpf" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpg" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qph" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"Qpi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Warehouse APC";
+	areastring = "/area/quartermaster/warehouse";
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/quartermaster/warehouse)
+"Qpj" = (
+/turf/closed/wall/r_wall,
+/area/quartermaster/warehouse)
+"Qpk" = (
+/turf/closed/wall/r_wall,
+/area/quartermaster/warehouse)
+"Qpl" = (
+/turf/closed/wall/r_wall,
+/area/quartermaster/warehouse)
+"Qpm" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qpn" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qpo" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qpp" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qpq" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qpr" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qps" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -57072,16 +57116,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
-"Qpg" = (
+"Qpt" = (
 /turf/closed/wall,
-/area/quartermaster/warehouse)
-"Qph" = (
-/obj/structure/table/reinforced,
-/obj/item/device/multitool,
-/obj/item/screwdriver,
-/turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpi" = (
+"Qpu" = (
 /obj/structure/table/reinforced,
 /obj/item/device/multitool,
 /obj/item/screwdriver,
@@ -57091,102 +57129,122 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpj" = (
+"Qpv" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpk" = (
+"Qpw" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qpx" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qpy" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpl" = (
+"Qpz" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
 /obj/item/device/integrated_electronics/debugger,
 /obj/item/device/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpm" = (
+"QpA" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpn" = (
+"QpB" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpo" = (
+"QpC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/space/basic,
 /area/space)
-"Qpp" = (
+"QpD" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QpE" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpq" = (
+"QpF" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpr" = (
+"QpG" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qps" = (
+"QpH" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QpI" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpt" = (
+"QpJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpu" = (
+"QpK" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpv" = (
+"QpL" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QpM" = (
 /obj/machinery/light_switch{
 	pixel_x = -20
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qpw" = (
+"QpN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"Qpx" = (
+"QpO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"Qpy" = (
+"QpP" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/science/circuit)
-"Qpz" = (
+"QpQ" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpA" = (
+"QpR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpB" = (
+"QpS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpC" = (
+"QpT" = (
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpD" = (
+"QpU" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
 	name = "Circuitry Lab APC";
@@ -57200,23 +57258,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpE" = (
+"QpV" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/circuit)
-"QpF" = (
+"QpW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpG" = (
+"QpX" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpH" = (
+"QpY" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -57225,7 +57283,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpI" = (
+"QpZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -57235,7 +57293,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpJ" = (
+"Qqa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -57249,49 +57307,55 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"QpK" = (
+"Qqb" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpL" = (
+"Qqc" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/science/circuit)
-"QpM" = (
+"Qqd" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpN" = (
+"Qqe" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpO" = (
+"Qqf" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qqg" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpP" = (
+"Qqh" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpQ" = (
+"Qqi" = (
 /obj/machinery/rnd/protolathe/department/science,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpR" = (
+"Qqj" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qqk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
 /obj/item/stock_parts/cell/super,
@@ -57299,7 +57363,7 @@
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QpS" = (
+"Qql" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
 /obj/item/target/alien,
@@ -57310,6 +57374,24 @@
 /obj/item/gun/energy/laser/practice,
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
+/area/science/circuit)
+"Qqm" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqn" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqo" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqp" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqq" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"Qqr" = (
+/turf/closed/wall/r_wall,
 /area/science/circuit)
 
 (1,1,1) = {"
@@ -77484,7 +77566,7 @@ aWu
 aYa
 aZD
 aZD
-Qpa
+Qpb
 aZD
 aZD
 bff
@@ -78767,14 +78849,14 @@ aPK
 aPK
 aWA
 aXM
-bfi
+Qpi
 cBi
 bbS
 bcS
 bbt
 bfi
 beD
-Qph
+Qpa
 aZE
 biA
 bmg
@@ -79024,13 +79106,13 @@ aTH
 aPK
 aWz
 aWC
-QoZ
+Qpj
 Qpa
 Qpa
 bcT
-QoZ
-QoZ
-Qpf
+Qpk
+Qpl
+Qpa
 aZE
 bju
 biv
@@ -105784,20 +105866,20 @@ bEC
 bMv
 bNv
 bMv
-QoZ
-Qpa
-Qpa
-Qpa
-Qpa
-Qpa
-Qpy
-QpE
+Qpm
+Qpt
+Qpx
+QpD
+QpH
+QpL
+QpP
+QpV
 bPb
 bQG
-QpL
-Qpa
-Qpa
-QoZ
+Qqc
+Qqf
+Qqj
+Qqm
 bQZ
 bQZ
 bQZ
@@ -106041,20 +106123,20 @@ bLi
 bMz
 bNy
 bOH
-Qpa
+Qpn
 bQY
-Qpk
+Qpy
 bTo
 bUp
-Qpv
-Qpz
+QpM
+QpQ
 bXs
 bPL
 bQI
 bTo
-QpO
+Qqg
 bQY
-QoZ
+Qqn
 cmo
 cNW
 cOx
@@ -106298,20 +106380,20 @@ bFU
 bMy
 bNx
 bOG
-Qpa
-Qpi
+Qpo
+Qpu
 bSk
-Qpp
-Qps
-Qpw
-QpA
-QpF
+QpE
+QpI
+QpN
+QpR
+QpW
 bPF
 bQI
 bXs
-QpP
+Qqh
 cbY
-QoZ
+Qqo
 cOe
 cNW
 cNW
@@ -106555,20 +106637,20 @@ bFU
 bMA
 bNz
 bOI
-Qpa
+Qpp
 bRa
-Qpl
+Qpz
 bTp
-Qpt
+QpJ
 bVs
-QpB
+QpS
 bXt
 bPM
 bZh
-QpM
+Qqd
 cbe
-QpR
-QoZ
+Qqk
+Qqp
 cOe
 ceS
 cae
@@ -106812,20 +106894,20 @@ bEC
 bEC
 bEC
 bEC
-QoZ
-Qpj
-Qpm
 Qpq
-Qpu
-Qpx
-QpC
-QpG
-QpI
+Qpv
+QpA
+QpF
+QpK
+QpO
+QpT
+QpX
+QpZ
 bXs
 bXs
 bXs
 bXs
-QoZ
+Qqq
 cOe
 ceR
 cOe
@@ -107069,20 +107151,20 @@ cNW
 bMB
 bNA
 cOe
-QoZ
-bRb
-Qpn
 Qpr
+bRb
+QpB
+QpG
 bUq
 bVt
-QpD
-QpH
-QpJ
-QpK
-QpN
-QpQ
-QpS
-QoZ
+QpU
+QpY
+Qqa
+Qqb
+Qqe
+Qqi
+Qql
+Qqr
 cOx
 cOx
 ckS
@@ -107326,8 +107408,8 @@ cNX
 cNZ
 cNZ
 cNZ
-Qpf
-Qpf
+Qps
+Qpw
 bSl
 bTq
 bTq
@@ -108099,7 +108181,7 @@ bNC
 cOe
 cOe
 cNW
-Qpo
+QpC
 aaa
 aaf
 cNW
