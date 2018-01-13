@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 				var/obj/item/pipe/P = new pipe_item_type(A, queued_p_type, queued_p_dir)
 
-				if(queued_p_flipped)
+				if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
 					var/obj/item/pipe/trinary/flippable/F = P
 					F.flipped = queued_p_flipped
 
