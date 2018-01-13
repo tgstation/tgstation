@@ -140,6 +140,9 @@
 			hierophant_message("<span class='large_brass bold'>With the conversion of a new servant the Ark's power grows. Application scriptures are now available.</span>")
 	if(add_servant_of_ratvar(L))
 		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+		if(iscarbon(L))
+			var/mob/living/carbon/M = L
+			M.uncuff()
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L

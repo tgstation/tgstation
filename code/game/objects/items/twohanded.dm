@@ -43,6 +43,8 @@
 	update_icon()
 	if(user.get_item_by_slot(slot_back) == src)
 		user.update_inv_back()
+	else
+		user.update_inv_hands()
 	if(show_message)
 		if(iscyborg(user))
 			to_chat(user, "<span class='notice'>You free up your module.</span>")
@@ -119,12 +121,22 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | NODROP_1
+	flags_1 = ABSTRACT_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
 	wielded = FALSE
 	return ..()
+
+/obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	var/obj/I = user.get_active_held_item()
+	if(I && istype(I, /obj/item/twohanded))
+		var/obj/item/twohanded/thw = I
+		thw.unwield(user, show_message)
+		if(istype(thw, /obj/item/twohanded/required))
+			user.dropItemToGround(thw)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
@@ -661,7 +673,8 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		return 1
+		W.ScrapeAway()
+		return
 	..()
 
 //HF blade

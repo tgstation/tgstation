@@ -138,7 +138,7 @@
 		APC.interact(usr, GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
-		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
+		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		if(APC.locked)
 			APC.say("Remote access detected. Interface unlocked.")
 			playsound(APC, 'sound/machines/boltsup.ogg', 25, 0)
@@ -196,7 +196,7 @@
 	if(emagged)
 		return
 	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-	log_game("[key_name_admin(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+	log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
 	playsound(src, "sparks", 50, 1)
 	emagged = TRUE
 
