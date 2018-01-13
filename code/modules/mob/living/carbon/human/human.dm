@@ -25,11 +25,11 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
-
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-	update_teeth()
+	update_teeth()	//hippie - unknown, teeth releated apparently?
+	
 	. = ..()
+	
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
