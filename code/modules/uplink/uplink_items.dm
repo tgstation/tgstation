@@ -1283,6 +1283,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+	
+/datum/uplink_item/role_restricted/botkudzu
+	name = "Kudzu Seed"
+	desc = "A single seed that, when used, will plant Kudzu vines."
+	item = /obj/item/seeds/kudzu
+	cost = 5 //you can already grow kudzu yourself, this is just for lazy people
+	surplus = 20
+	restricted_roles = list("Botanist")
 
 // Pointless
 /datum/uplink_item/badass
