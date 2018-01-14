@@ -94,7 +94,9 @@
 	available = FALSE
 	STOP_PROCESSING(SSprocessing, src)
 	icon_state = "interdiction_lens_active"
-	hierophant_message("<span class='big bold brass'>The beacon's activation has given your team great power! Many of your objects are permanently empowered!</span>")
+	adjust_clockwork_power(10000)
+	hierophant_message("<span class='bold brass'>The beacon's activation has given your team great power! Many of your objects are permanently empowered!</span>")
+	hierophant_message("<span class='big neovgre'>Due to the power surge, you cannot warp to the station until the consoles have had time to recharge in several minutes.</span>")
 	for(var/mob/living/simple_animal/hostile/clockwork/C in GLOB.all_clockwork_mobs)
 		if(C.stat == DEAD)
 			continue
@@ -104,6 +106,10 @@
 		if(is_servant_of_ratvar(H))
 			to_chat(H, "<span class='bold alloy'>The beacon's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
 			H.set_species(/datum/species/golem/clockwork/no_scrap)
+		if(!is_reebe(H.z))
+			H.forceMove(get_turf(src))
+	for(var/obj/machinery/computer/camera_advanced/ratvar/R in SSmachines.processing)
+		R.disable_teleport(3000)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	G.grace_period = FALSE //no grace period if we've declared war
 	G.recalls_remaining++
