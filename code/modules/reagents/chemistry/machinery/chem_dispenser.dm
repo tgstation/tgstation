@@ -38,7 +38,6 @@
 		"water",
 		"ethanol",
 		"sugar",
-		"sacid",
 		"welding_fuel",
 		"silver",
 		"iodine",
@@ -288,7 +287,6 @@
 		list(
 			"lithium",
 			"sugar",
-			"sacid",
 			"copper",
 			"mercury",
 			"sodium",
