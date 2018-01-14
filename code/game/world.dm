@@ -203,12 +203,10 @@ GLOBAL_PROTECT(security_mode)
 	var/s = ""
 	var/hostedby
 	var/forumurl
-	var/githuburl
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		hostedby = CONFIG_GET(string/hostedby)
 		forumurl = CONFIG_GET(string/forumurl)
-		githuburl = CONFIG_GET(string/githuburl)
 		if (server_name)
 			s += "<a href=\"[forumurl]\"><big><b>[server_name]</b> &#8212; [station_name()]</big></a>"
 	if(SSticker)
