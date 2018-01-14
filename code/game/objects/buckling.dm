@@ -55,10 +55,11 @@
 	if(M.pulledby && buckle_prevents_pull)
 		M.pulledby.stop_pulling()
 
+	M.buckled = src
+
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
 
-	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
