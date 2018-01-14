@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - spellcheck: "Activating internals via the right-side button produces better messages on success."

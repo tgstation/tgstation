@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes: 
-  - bugfix: "The NES Port emergency shuttle will no longer drain the CentComm emergency dock of air"

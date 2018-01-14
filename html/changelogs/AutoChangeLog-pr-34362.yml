@@ -1,5 +1,0 @@
-author: "Leshana"
-delete-after: True
-changes: 
-  - bugfix: "Fix attempt to use `in` on a non-list. Pretty sure bitfields do not work that way."
-  - admin: "SS_NO_FIRE subsystems will no longer display pointless cost statistics in MC panel"
