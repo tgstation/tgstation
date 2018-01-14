@@ -24,12 +24,6 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-/obj/machinery/space_heater/update_icon()
-	if(on)
-		icon_state = "sheater-[mode]"
-	else
-		icon_state = "sheater-off"
-
 /obj/machinery/space_heater/get_cell()
 	return cell
 
@@ -58,6 +52,13 @@
 		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
 		to_chat(user, "There is no power cell installed.")
+
+/obj/machinery/space_heater/update_icon()
+	if(on)
+		icon_state = "sheater-[mode]"
+	else
+		icon_state = "sheater-off"
+
 	cut_overlays()
 	if(panel_open)
 		add_overlay("sheater-open")
