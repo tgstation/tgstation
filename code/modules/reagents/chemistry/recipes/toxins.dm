@@ -111,5 +111,5 @@
 /datum/chemical_reaction/acid
 	name = "Sulphuric Acid"
 	id = "sacid"
-	result = list("sacid" = 2"
-	required_reagents = list("sulphur" = 1, "oxygen" = 1, "hydrogen" = 1)
+	result = list("sacid" = 2")
+	required_reagents = list("sulfur" = 1, "oxygen" = 1, "hydrogen" = 1)
