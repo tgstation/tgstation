@@ -4,12 +4,20 @@
 	desc = "A faintly glowing image of an arrow on the ground. Convenient!"
 	icon_state = "servant_blocker"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	density = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
+
+/obj/effect/clockwork/servant_blocker/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/effect/clockwork/servant_blocker/Destroy(force)
 	if(!force)
 		return
+	var/turf/T = get_turf(src)
 	. = ..()
+	T.air_update_turf(TRUE)
 
 /obj/effect/clockwork/servant_blocker/CanPass(atom/movable/M, turf/target)
 	var/list/target_contents = M.GetAllContents() + M
