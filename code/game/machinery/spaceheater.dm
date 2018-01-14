@@ -8,8 +8,17 @@
 	interact_open = TRUE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
-	name = "space heater"
-	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. It has a little warning label on the side that says: 'This heating/cooling device is not designed for applications requiring high cooling capacity, such as removing excess heat from a supermatter engine'"
+	name = "space heater"round(cell.percent(), 1) : 0]%.")
+	else
+		to_chat(user, "There is no power cell installed.")
+
+/obj/machinery/space_heater/update_icon()
+	if(on)
+		icon_state = "sheater-[mode]"
+	else
+		icon_state = "sheater-off"
+
+	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warrenty void if used in engines.
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
@@ -49,16 +58,7 @@
 	..()
 	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
 	if(cell)
-		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
-	else
-		to_chat(user, "There is no power cell installed.")
-
-/obj/machinery/space_heater/update_icon()
-	if(on)
-		icon_state = "sheater-[mode]"
-	else
-		icon_state = "sheater-off"
-
+		to_chat(user, "The charge meter reads [cell ? 
 	cut_overlays()
 	if(panel_open)
 		add_overlay("sheater-open")
