@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Some areas will no longer present themselves at \"ÿUnexplored Area\""
