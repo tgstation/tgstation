@@ -35,8 +35,7 @@
 						chemical_mob_spawn_nicecritters += T
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
-		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occurred in [my_area.name] [ADMIN_COORDJMP(T)]"
+		var/message = "A [reaction_name] reaction has occurred in [get_area_name(T)] [ADMIN_COORDJMP(T)]"
 		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
