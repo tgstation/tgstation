@@ -41,6 +41,14 @@
 		CRASH("Turf decal initialized in an object/nullspace")
 	T.AddComponent(/datum/component/decal, icon, icon_state, dir)
 
+/obj/effect/turf_decal/weather
+	name = "sandy floor"
+	icon_state = "sandyfloor"
+
+/obj/effect/turf_decal/weather/snow
+	name = "snowy floor"
+	icon_state = "snowyfloor"
+
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"
 

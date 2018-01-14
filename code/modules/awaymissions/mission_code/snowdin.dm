@@ -4,38 +4,89 @@
 	name = "Snowdin Tundra Plains"
 	icon_state = "awaycontent1"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/awaymission/snowdin/post
 	name = "Snowdin Outpost"
-	requires_power = TRUE
 	icon_state = "awaycontent2"
+	requires_power = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowdin/post/medbay
+	name = "Snowdin Outpost - Medbay"
+	icon_state = "awaycontent3"
+
+/area/awaymission/snowdin/post/secpost
+	name = "Snowdin Outpost - Security Checkpoint"
+	icon_state = "awaycontent4"
+
+/area/awaymission/snowdin/post/hydro
+	name = "Snowdin Outpost - Hydroponics"
+	icon_state = "awaycontent5"
+
+/area/awaymission/snowdin/post/messhall
+	name = "Snowdin Outpost - Mess Hall"
+	icon_state = "awaycontent6"
+
+/area/awaymission/snowdin/post/gateway
+	name = "Snowdin Outpost - Gateway"
+	icon_state = "awaycontent7"
+
+/area/awaymission/snowdin/post/dorm
+	name = "Snowdin Outpost - Dorms"
+	icon_state = "awaycontent8"
+
+/area/awaymission/snowdin/post/kitchen
+	name = "Snowdin Outpost - Kitchen"
+	icon_state = "awaycontent9"
+
+/area/awaymission/snowdin/post/engineering
+	name = "Snowdin Outpost - Engineering"
+	icon_state = "awaycontent10"
+
+/area/awaymission/snowdin/post/custodials
+	name = "Snowdin Outpost - Custodials"
+	icon_state = "awaycontent11"
+
+/area/awaymission/snowdin/post/research
+	name = "Snowdin Outpost - Research Area"
+	icon_state = "awaycontent12"
+
+/area/awaymission/snowdin/post/garage
+	name = "Snowdin Outpost - Garage"
+	icon_state = "awaycontent13"
 
 /area/awaymission/snowdin/igloo
 	name = "Snowdin Igloos"
-	icon_state = "awaycontent3"
+	icon_state = "awaycontent14"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
-	icon_state = "awaycontent4"
+	icon_state = "awaycontent15"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
-	icon_state = "awaycontent5"
+	icon_state = "awaycontent16"
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	requires_power = TRUE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
-	icon_state = "awaycontent6"
+	icon_state = "awaycontent17"
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"
-	icon_state = "awaycontent7"
+	icon_state = "awaycontent18"
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	requires_power = TRUE
 
 
 
 ///////////	papers
+
 
 /obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice
 	name = "scribbled note"
@@ -47,7 +98,7 @@
 /obj/item/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
 	info = {"Holy shit, what a rush! Those Nanotrasen bastards didn't even know what hit 'em! All five of us dropped in right on the captain, didn't even have time to yell! We were in and out with that disk in mere minutes!
-	Crew didn't even know what was happening till the delta alert went down and by then were were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
+	Crew didn't even know what was happening till the delta alert went down and by then we were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/keys
 	name = "scribbled note"
@@ -79,6 +130,41 @@
 	base to be decyphered. Probably some drunk russians or something equally stupid.<br><br><b>November 24th</b><br>We've lost communications with the northern base after recieving the last
 	shipment of supplies. The snow has really kicked up recently, shits almost like a constant blizzard right now. Maybe it'll drop down soon so we can get a word in.<br><br>
 	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
+
+//profile of each of the old crewmembers for the outpost
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/overseer
+	name = "Personnel Record AOP#01"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Caleb Reed<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Overseer<br><br><center><b>Infomation</b></center><br><center>Caleb Reed lead several expeditions
+	 among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
+	 expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/sec1
+	name = "Personnel Record AOP#02"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>James Reed<br><b>Age:</b>43<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Security<br><br><center><b>Infomation</b></center><br><center>James Reed has been a part
+	 of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
+	  when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/hydro1
+	name = "Personnel Record AOP#03"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Katherine Esterdeen<br><b>Age:</b>27<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Botanist<br><br><center><b>Infomation</b></center><br><center>Katherine Esterdeen is a recent
+	 graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/engi1
+	name = "Personnel Record AOP#04"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Rachel Migro<br><b>Age:</b>35<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Engineer<br><br><center><b>Infomation</b></center><br><center>"}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/research1
+	name = "Personnel Record AOP#05"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jacob Ullman<br><b>Age:</b>27<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/research2
+	name = "Personnel Record AOP#06"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Elizabeth Queef<br><b>Age:</b>28<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
+
+/obj/item/paper/fluff/awaymissions/snowdin/profile/research3
+	name = "Personnel Record AOP#07"
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Jouslen McGee<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Researcher<br><br><center><b>Infomation</b></center><br><center>"}
 
 /obj/item/paper/fluff/awaymissions/snowdin/secnotice
 	name = "Security Notice"
@@ -263,5 +349,49 @@
 /obj/structure/flora/rock/pile/icy
 	name = "icey rocks"
 	color = rgb(114,228,250)
+
+//decals//--
+/obj/effect/turf_decal/snowdin_station_sign
+	icon_state = "AOP1"
+
+/obj/effect/turf_decal/snowdin_station_sign/two
+	icon_state = "AOP2"
+
+/obj/effect/turf_decal/snowdin_station_sign/three
+	icon_state = "AOP3"
+
+/obj/effect/turf_decal/snowdin_station_sign/four
+	icon_state = "AOP4"
+
+/obj/effect/turf_decal/snowdin_station_sign/five
+	icon_state = "AOP5"
+
+/obj/effect/turf_decal/snowdin_station_sign/six
+	icon_state = "AOP6"
+
+/obj/effect/turf_decal/snowdin_station_sign/seven
+	icon_state = "AOP7"
+
+/obj/effect/turf_decal/snowdin_station_sign/up
+	icon_state = "AOPU1"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/two
+	icon_state = "AOPU2"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/three
+	icon_state = "AOPU3"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/four
+	icon_state = "AOPU4"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/five
+	icon_state = "AOPU5"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/six
+	icon_state = "AOPU6"
+
+/obj/effect/turf_decal/snowdin_station_sign/up/seven
+	icon_state = "AOPU7"
+
 
 
