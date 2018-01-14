@@ -107,3 +107,10 @@
 	id = "anacea"
 	results = list("anacea" = 3)
 	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)
+	
+/datum/chemical_reaction/acid
+	name = "Sulphuric Acid"
+	id = "sacid"
+	results = list("sacid" = 2)
+	required_reagents = list("sulfur" = 1, "oxygen" = 1, "hydrogen" = 1)
+	mix_message = "<span class='danger'>The mixture fizzles and an aura of burning comes from it.</span>"
