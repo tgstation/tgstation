@@ -169,9 +169,8 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
-	var/area/A = get_area(src)
 	if(name == initial(name))
-		name = "[A.name] Air Alarm"
+		name = "[get_area_name(src)] Air Alarm"
 
 	update_icon()
 
@@ -624,10 +623,8 @@
 	if(!frequency)
 		return
 
-	var/area/A = get_area(src)
-
 	var/datum/signal/alert_signal = new(list(
-		"zone" = A.name,
+		"zone" = get_area_name(src),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)

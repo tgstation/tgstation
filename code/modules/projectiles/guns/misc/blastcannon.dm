@@ -85,8 +85,7 @@
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
-	var/area/A = get_area(user)
-	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([A.name]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
 	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
