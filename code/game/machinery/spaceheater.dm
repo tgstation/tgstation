@@ -9,7 +9,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
-	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. It has a little warning label on the side that says: 'This heating/cooling device is not designed for applications requiring high cooling capacity, such as removing excess heat from a supermatter engine'"
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
