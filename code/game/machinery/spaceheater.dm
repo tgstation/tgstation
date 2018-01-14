@@ -9,13 +9,6 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
-
-/obj/machinery/space_heater/update_icon()
-	if(on)
-		icon_state = "sheater-[mode]"
-	else
-		icon_state = "sheater-off"
-
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warrenty void if used in engines.
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
@@ -30,6 +23,12 @@
 	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
+
+/obj/machinery/space_heater/update_icon()
+	if(on)
+		icon_state = "sheater-[mode]"
+	else
+		icon_state = "sheater-off"
 
 /obj/machinery/space_heater/get_cell()
 	return cell
