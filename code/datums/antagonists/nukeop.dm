@@ -230,6 +230,10 @@
 			stack_trace("Station self destruct ot found during lone op team creation.")
 			nuke_team.memorized_code = null
 
+/datum/antagonist/nukeop/reinforcement
+	send_to_spawnpoint = FALSE
+	nukeop_outfit = /datum/outfit/syndicate/no_crystals
+
 /datum/team/nuclear
 	var/syndicate_name
 	var/obj/machinery/nuclearbomb/tracked_nuke
