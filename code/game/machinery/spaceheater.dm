@@ -8,9 +8,7 @@
 	interact_open = TRUE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
-	name = "space heater"round(cell.percent(), 1) : 0]%.")
-	else
-		to_chat(user, "There is no power cell installed.")
+	name = "space heater"
 
 /obj/machinery/space_heater/update_icon()
 	if(on)
@@ -58,7 +56,9 @@
 	..()
 	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
 	if(cell)
-		to_chat(user, "The charge meter reads [cell ? 
+		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+	else
+		to_chat(user, "There is no power cell installed.")
 	cut_overlays()
 	if(panel_open)
 		add_overlay("sheater-open")
