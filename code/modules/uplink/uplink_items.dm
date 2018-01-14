@@ -1288,7 +1288,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Kudzu Seed"
 	desc = "A single seed that, when used, will plant Kudzu vines."
 	item = /obj/item/seeds/kudzu
-	cost = 5 //you can already grow kudzu yourself, this is just for lazy people
+	cost = 10 
 	surplus = 20
 	restricted_roles = list("Botanist")
 
