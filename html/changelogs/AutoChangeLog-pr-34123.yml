@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - admin: "There are 3 new helpers in the secrets menu for messing with movement controls"
