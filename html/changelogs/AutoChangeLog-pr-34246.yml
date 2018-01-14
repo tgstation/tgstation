@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - rscadd: "Roundend traitor purchase logs now have tooltips showing the name, cost, and description of the items."
