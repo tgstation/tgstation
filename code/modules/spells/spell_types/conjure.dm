@@ -75,6 +75,7 @@
 	include_user = 1
 	range = -1
 	clothes_req = 0
+	var/only_one = TRUE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
 	school = "conjuration"
@@ -82,19 +83,18 @@
 	cooldown_min = 10
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item && !QDELETED(item))
-		qdel(item)
-		item = null
+	if(only_one && item && !QDELETED(item))
+		QDEL_NULL(item)
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.dropItemToGround(C.get_active_held_item()))
-				C.put_in_hands(make_item(), TRUE)
+				C.put_in_hands(make_item(user), TRUE)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
-	if(item)
+	if(item && only_one)
 		qdel(item)
 	return ..()
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
-	item = new item_type
+/obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item(mob/user)
+	item = new item_type(get_turf(user))
 	return item
