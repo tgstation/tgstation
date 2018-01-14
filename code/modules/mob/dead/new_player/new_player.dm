@@ -36,16 +36,23 @@
 	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		switch(ready)
-			if(PLAYER_NOT_READY)
-				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_PLAY)
-				output += "<p>\[ <b>Ready</b> | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_OBSERVE)
-				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
+		if(is_softbanned(src))
+			switch(ready)
+				if(PLAYER_READY_TO_OBSERVE)
+					output += "<p>\[ <s><font color='red'>Ready</font></s> | <b> Observe </b> \]</p>"
+				else
+					output += "<p>\[ <s><font color='red'>Ready</font></s> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
+		else
+			switch(ready)
+				if(PLAYER_READY_TO_OBSERVE)
+					output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
+				if(PLAYER_NOT_READY)
+					output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
+				if(PLAYER_READY_TO_PLAY)
+					output += "<p>\[ <b>Ready</b> | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
 	else
 		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
-		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
+		output += "<p>[is_softbanned(src) ? "<s><font color='red'>Ready</font></s>" : "<a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a>"]</p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
 	if(!IsGuestKey(src.key))
@@ -95,6 +102,10 @@
 		return 1
 
 	if(href_list["ready"])
+		if(is_softbanned(usr))
+			to_chat(usr, "<span class='danger'>You're softbanned, you can't ready!</span>")
+			return
+
 		var/tready = text2num(href_list["ready"])
 		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
 		//This is likely not an actual issue but I don't have time to prove that this
@@ -112,6 +123,10 @@
 		new_player_panel()
 
 	if(href_list["late_join"])
+		if(is_softbanned(usr))
+			to_chat(usr, "<span class='danger'>You're softbanned, you can't latejoin!</span>")
+			return
+
 		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
@@ -141,6 +156,10 @@
 
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+			return
+
+		if(is_softbanned(usr))
+			to_chat(usr, "<span class='danger'>You're softbanned, you can't enter the game!</span>")
 			return
 
 		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))

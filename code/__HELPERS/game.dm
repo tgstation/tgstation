@@ -476,8 +476,10 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
+			if(jobban_isbanned(M, jobbanType) || antag_banned(M))
 				continue
+		else if(!jobbanType && is_softbanned(M))
+			continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)

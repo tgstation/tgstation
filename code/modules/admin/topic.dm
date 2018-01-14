@@ -423,12 +423,22 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		var/delmob = 0
+		if(is_softbanned(M) && istype(M, /mob/dead))
+			if(!check_rights_for(usr.client, R_BAN))
+				return FALSE
+			switch(alert("[M.ckey] is softbanned, are you sure you want to put them into a mob?",,"Yes","No"))
+				if("Yes")
+					log_admin("[key_name(usr)] put a softbanned user, [M.ckey], into a [href_list["simplemake"]] via rudimentary transformation.")
+					message_admins("[key_name(usr)] put a softbanned user, [M.ckey], into a [href_list["simplemake"]] via rudimentary transformation.")
+				else
+					return FALSE
+
+		var/delmob = FALSE
 		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
 			if("Cancel")
 				return
 			if("Yes")
-				delmob = 1
+				delmob = TRUE
 
 		switch(href_list["simplemake"])
 			if("observer")
