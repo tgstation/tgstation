@@ -219,11 +219,6 @@ GLOBAL_PROTECT(security_mode)
 	if (hostedby)
 		s += "<br>Hosted by <b>[hostedby]</b>."
 	s += "<img src=\"https://i.imgur.com/xfWVypg.png\">" //Banner image
-	s += "<br>("
-	s += "<a href=\"[githuburl]\">"
-	s += "Github"
-	s += "</a>"
-	s += ") "
 
 	status = s
 
