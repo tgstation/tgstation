@@ -52423,10 +52423,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "ceM" = (
-/obj/machinery/autolathe{
-	icon_state = "autolathe";
-	name = "public autolathe"
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 2
 	},
@@ -52444,7 +52440,8 @@
 /area/science/research)
 "ceO" = (
 /obj/structure/table,
-/obj/item/device/paicard,
+/obj/item/stock_parts/cell/potato,
+/obj/machinery/light,
 /obj/machinery/newscaster{
 	pixel_x = -1;
 	pixel_y = -29
@@ -53646,6 +53643,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/noticeboard{
+	desc = "A board for pinning important notices upon.";
+	name = "notice board";
+	pixel_y = 31
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "chj" = (
@@ -53674,10 +53676,6 @@
 	},
 /area/science/lab)
 "chm" = (
-/obj/structure/chair/office/light{
-	dir = 1;
-	pixel_y = 3
-	},
 /obj/machinery/button/door{
 	id = "research_shutters";
 	name = "research shutters control";
@@ -80624,6 +80622,46 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
+"QsX" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/obj/machinery/door/window/eastright{
+	dir = 2;
+	name = "Research and Development Desk";
+	req_access_txt = "7"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "research_shutters";
+	name = "research shutters"
+	},
+/turf/open/floor/plating,
+/area/science/lab)
+"QsY" = (
+/obj/structure/table,
+/obj/item/device/paicard,
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 2
+	},
+/area/science/research)
+"QsZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 2
+	},
+/area/science/research)
+"Qta" = (
+/obj/structure/chair/office/light{
+	dir = 1;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 1
+	},
+/area/science/lab)
 
 (1,1,1) = {"
 aaa
@@ -108786,7 +108824,7 @@ bZj
 cat
 ccd
 ccd
-ceM
+ceN
 cgd
 chi
 ciB
@@ -109043,7 +109081,7 @@ bZk
 cau
 cce
 ccd
-ceN
+QsY
 cgd
 chj
 ciC
@@ -109557,9 +109595,9 @@ bZl
 caw
 ccg
 cdJ
-ceP
-cgd
-chl
+ceQ
+cge
+chk
 ciE
 cka
 clC
@@ -109814,9 +109852,9 @@ bZm
 cax
 cch
 cdK
-ceQ
-cge
-chk
+QsZ
+cgf
+Qta
 ciF
 ckb
 clD
@@ -110072,7 +110110,7 @@ cay
 cci
 cdL
 ceR
-cgf
+QsX
 chm
 ciG
 ckc
