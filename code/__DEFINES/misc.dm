@@ -55,7 +55,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
 #define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
 #define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define ARMS_LAYER				20		//that's only a thing because pirate suit
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
@@ -87,7 +86,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
 #define UNDER_MUTATIONS_LAYER		MUTATIONS_LAYER+1
 #define UNDER_BODYPARTS_LAYER		BODYPARTS_LAYER+1
-#define UNDER_ARMS_LAYER			ARMS_LAYER+1
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
@@ -115,7 +113,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
 #define ABOVE_MUTATIONS_LAYER		MUTATIONS_LAYER-1
 #define ABOVE_BODYPARTS_LAYER		BODYPARTS_LAYER-1
-#define ABOVE_ARMS_LAYER			ARMS_LAYER-1
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1

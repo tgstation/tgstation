@@ -11,7 +11,6 @@
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
-	var/body_layer = BODYPARTS_LAYER
 	var/aux_zone // used for hands
 	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
@@ -299,7 +298,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
-	var/image/limb = image(layer = -body_layer, dir = image_dir)
+	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	. += limb
 
 	if(animal_origin)
