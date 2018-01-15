@@ -345,6 +345,45 @@
 /obj/item/clothing/suit/armor/reactive/table/emp_act()
 	return
 
+/obj/item/clothing/suit/armor/reactive/trash
+	name = "reactive trash armor"
+	desc = "Standard armor for catpeople."
+	var/tele_range = 10
+
+/obj/item/clothing/suit/armor/reactive/trash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(!active)
+		return FALSE
+	if(prob(hit_reaction_chance))
+		var/mob/living/carbon/human/H = owner
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>The reactive trash armor's fabricators are still on cooldown!</span>")
+			return
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and throws them into a fabricated trash bin!</span>")
+		owner.visible_message("<font color='red' size='3'>[H] GOES IN THE TRASH!!!</font>")
+		owner.Knockdown(40)
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(tele_range, H))
+			if(T.density)
+				continue
+			if(T.x>world.maxx-tele_range || T.x<tele_range)
+				continue
+			if(T.y>world.maxy-tele_range || T.y<tele_range)
+				continue
+			turfs += T
+		if(!turfs.len)
+			turfs += pick(/turf in orange(tele_range, H))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked))
+			return
+		var/obj/structure/closet/crate/bin/trash_can = new(picked)
+		H.forceMove(trash_can)
+		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+		return TRUE
+	return FALSE
+
+/obj/item/clothing/suit/armor/reactive/trash/emp_act()
+	return
+
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom
