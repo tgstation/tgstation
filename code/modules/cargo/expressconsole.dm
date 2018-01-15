@@ -36,19 +36,18 @@
 	packin_up()
 	
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
-	LAZYINITLIST(meme_pack_data) // sorry for what?
-	LAZYCLEARLIST(meme_pack_data) // our quartermaster taught us not to be ashamed of our supply packs
-	for(var/pack in SSshuttle.supply_packs) // specially since they're such a good price and all
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack] // yeah, I see that, your quartermaster gave you good advice
-		if(!meme_pack_data[P.group]) // it gets cheaper when I return it
-			meme_pack_data[P.group] = list( // mmhm
-				"name" = P.group, // sometimes, I return it so much, I rip the manifest
-				"packs" = list() // see, my quartermaster taught me a few things too
-			) // like, how not to rip the manifest
-		if((P.hidden) || (P.special)) // by using someone else's crate
-			continue // will you show me?
-		if(!emagged && P.contraband) // i'd be right happy to
-			continue
+	meme_pack_data = list() // sorry for what?
+	for(var/pack in SSshuttle.supply_packs) // our quartermaster taught us not to be ashamed of our supply packs
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]  // specially since they're such a good price and all
+		if(!meme_pack_data[P.group]) // yeah, I see that, your quartermaster gave you good advice
+			meme_pack_data[P.group] = list( // it gets cheaper when I return it
+				"name" = P.group, // mmhm
+				"packs" = list()  // sometimes, I return it so much, I rip the manifest
+			) // see, my quartermaster taught me a few things too
+		if((P.hidden) || (P.special)) // like, how not to rip the manifest
+			continue// by using someone else's crate
+		if(!emagged && P.contraband) // will you show me?
+			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost * 2, //displays twice the normal cost
@@ -77,8 +76,8 @@
 	
 	data["message"] = message
 	if(!meme_pack_data)
-	   packing_up()
-	   stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
+		packing_up()
+		stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
 	data["supplies"] = meme_pack_data
 				
 	return data
