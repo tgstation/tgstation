@@ -13,6 +13,10 @@
 	var/locked = TRUE
 	var/list/meme_pack_data
 	
+/obj/machinery/computer/cargo/express/Initialize()
+	..()
+	oh_shit_im_sorry()
+
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
 	..()
