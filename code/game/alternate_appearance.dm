@@ -136,10 +136,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/blessedAware/mobShouldSee(mob/M)
 	if(M.mind && (M.mind.assigned_role == "Chaplain"))
 		return TRUE
-	if(isrevenant(M))
+	if(isrevenant(M) || iseminence(M) || iswizard(M))
 		return TRUE
-	if(iseminence(M))
-		return TRUE
-	if(iswizard(M))
-		return TRUE	
 	return FALSE
