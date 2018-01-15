@@ -5,6 +5,7 @@
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	use_tag = TRUE
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -29,8 +30,6 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 
-	var/atom/movable/pulling = null
-	var/grab_state = 0
 
 	var/next_move = null
 	var/notransform = null	//Carbon

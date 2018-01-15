@@ -1,5 +1,5 @@
 #define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
-#define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcomm/shuttles marked as escaped
+#define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
@@ -382,6 +382,7 @@
 			if(X.get_team() == T)
 				all_antagonists -= X
 		result += " "//newline between teams
+		CHECK_TICK
 
 	var/currrent_category
 	var/datum/antagonist/previous_category
@@ -401,6 +402,7 @@
 			previous_category = A
 		result += A.roundend_report()
 		result += "<br><br>"
+		CHECK_TICK
 
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]

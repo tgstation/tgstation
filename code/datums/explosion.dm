@@ -1,6 +1,4 @@
 #define EXPLOSION_THROW_SPEED 4
-#define CITYOFCOGS_CAP_MULTIPLIER 0.5
-#define MINING_CAP_MULTIPLIER 3
 
 GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
@@ -54,17 +52,14 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/orig_dev_range = devastation_range
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
-	
+
 	var/orig_max_distance = max(devastation_range, heavy_impact_range, light_impact_range, flash_range, flame_range)
-	
+
 	//Zlevel specific bomb cap multiplier
-	var/cap_multiplier = 1
-	switch(epicenter.z)
-		if(ZLEVEL_CITYOFCOGS)
-			cap_multiplier = CITYOFCOGS_CAP_MULTIPLIER
-		if(ZLEVEL_MINING)
-			cap_multiplier = MINING_CAP_MULTIPLIER
-	
+	var/cap_multiplier = SSmapping.level_trait(epicenter.z, ZTRAIT_BOMBCAP_MULTIPLIER)
+	if (isnull(cap_multiplier))
+		cap_multiplier = 1
+
 	if(!ignorecap)
 		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
 		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
@@ -91,11 +86,11 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area: [epi_area] [ADMIN_COORDJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z])")
-	
+
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 	var/z0 = epicenter.z
-	
+
 	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flash" = flash_range, "flame" = flame_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = epi_area.type))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
@@ -199,7 +194,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		//------- EX_ACT AND TURF FIRES -------
 
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/items = list() 
+			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
 				items += A.GetAllContents()
@@ -418,6 +413,3 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
-
-#undef CITYOFCOGS_CAP_MULTIPLIER
-#undef MINING_CAP_MULTIPLIER

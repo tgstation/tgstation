@@ -1,4 +1,4 @@
-// DISCO DANCE MACHINE - For engineering power optimization incentive nurturing test system (POINTS)
+// DISCO DANCE MACHINE - For admin, engineering and shuttle memes/abuse.
 
 /obj/machinery/disco
 	name = "radiant dance machine mark IV"
@@ -22,6 +22,14 @@
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
+
+/obj/machinery/disco/indestructible
+	name = "radiant dance machine mark V"
+	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
+	req_access = null
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
 
 /datum/track
 	var/song_name = "generic"
@@ -59,7 +67,7 @@
 	return ..()
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
-	if(!active)
+	if(!active && !(flags_1 & NODECONSTRUCT_1))
 		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")

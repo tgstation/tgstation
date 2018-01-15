@@ -110,7 +110,7 @@
 
 	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
 	if(!result)
-		to_chat(owner, "<span class='warning'>Your [src] fails to activate!</span>")
+		to_chat(owner, "<span class='warning'>Your [name] fails to activate!</span>")
 		return
 
 	// Activate the hand that now holds our item.

@@ -79462,7 +79462,7 @@
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "dfM" = (
-/obj/item/firstaid_arm_assembly,
+/obj/item/bot_assembly/medbot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8

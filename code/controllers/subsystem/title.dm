@@ -26,19 +26,12 @@ SUBSYSTEM_DEF(title)
 		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
 			title_screens += S
 
-	for(var/S in title_screens)
-		var/list/L = splittext(S,".")
-		if(L.len != 2)
-			continue
-		title_screens -= S
-		break
-		
 	if(length(title_screens))
 		file_path = "config/title_screens/images/[pick(title_screens)]"
-	
+
 	if(!file_path)
 		file_path = "icons/default_title.dmi"
-	
+
 	ASSERT(fexists(file_path))
 
 	icon = new(fcopy_rsc(file_path))

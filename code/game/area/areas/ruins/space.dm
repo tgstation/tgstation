@@ -435,3 +435,10 @@
 
 	name = "Abandoned Ship"
 	icon_state = "red"
+
+
+//SYNDICATE LISTENING POST STATION
+
+/area/ruin/space/has_grav/listeningstation
+	name = "Listening Post"
+	icon_state = "yellow"
