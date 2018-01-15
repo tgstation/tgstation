@@ -162,15 +162,6 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/mode = ATMOS_MODE
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
-	var/list/paint_colors = list(
-		"Grey"		= rgb(255,255,255),
-		"Red"		= rgb(255,0,0),
-		"Blue"		= rgb(0,0,255),
-		"Cyan"		= rgb(0,256,249),
-		"Green"		= rgb(30,255,0),
-		"Yellow"	= rgb(255,198,0),
-		"Purple"	= rgb(130,43,255)
-	)
 	var/paint_color="Grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -237,8 +228,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	data["paint_colors"] = list()
-	for(var/c in paint_colors)
-		data["paint_colors"] += list(list("color_name" = c, "color_hex" = paint_colors[c], "selected" = (c == paint_color)))
+	for(var/c in GLOB.pipe_paint_colors)
+		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
 
 	return data
 
@@ -308,7 +299,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.paint(paint_colors[paint_color])
+			P.paint(GLOB.pipe_paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			return
 
@@ -344,7 +335,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 					P.setPipingLayer(temp_piping_layer)
 				else
 					P.setPipingLayer(piping_layer)
-				P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 		if(METER_MODE) //Making pipe meters
 			if(!can_make_pipe)
