@@ -161,8 +161,11 @@ As a Servant, Abscond also brings anyone you're dragging to Reebe at the cost of
 As a Servant, wraith spectacles let you see everything through walls at virtually no drawback. Just take them off if someone might see you!
 As a Servant, declaring war empowers a huge amount of your tools and constructs, and makes you into a spaceproof, armored clockwork automaton.
 As a Servant, converting or sabotaging Science and Genetics can make defending the Ark much easier.
-As a Servant, the Clockwork Arnaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
+As a Servant, the Clockwork Armaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
+Tiles sprayed with holy water will permanently block Servants of Ratvar from teleporting onto them.
+The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
+The Chaplain's holy weapon will kill clockwork marauders in two hits.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.
 As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
@@ -185,4 +188,4 @@ As a Ghost, you can see the inside of a container on the ground by clicking on i
 As a Ghost, you can double click on people, bots, or the singularity to follow them.
 As a Devil, you gain power for every three souls you control, however you also become more obvious.
 As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
-At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
+At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth.
