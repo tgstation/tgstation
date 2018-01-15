@@ -124,3 +124,22 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/New()
+	..()
+	for(var/mob in GLOB.mob_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/mobShouldSee(mob/M)
+	if(M.mind && (M.mind.assigned_role == "Chaplain"))
+		return TRUE
+	if(isrevenant(M))
+		return TRUE
+	if(iseminence(M))
+		return TRUE
+	if(iswizard(M))
+		return TRUE	
+	return FALSE

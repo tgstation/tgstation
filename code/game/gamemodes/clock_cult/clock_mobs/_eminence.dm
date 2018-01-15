@@ -26,7 +26,7 @@
 	var/OldLoc = loc
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
 		var/turf/T = get_turf(NewLoc)
-		if(T.flags_1 & NOJAUNT_1)
+		for(var/obj/effect/blessing/B in T)
 			if(last_failed_turf != T)
 				T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", ignore_mob = src)
 				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
