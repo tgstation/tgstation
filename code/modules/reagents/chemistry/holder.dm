@@ -158,7 +158,7 @@
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -181,14 +181,14 @@
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
-	if(!target)
+	if(!target || !total_volume)
 		return
 
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 

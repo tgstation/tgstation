@@ -187,7 +187,7 @@
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
-		M.bodytemperature -= 15
+		M.bodytemperature = max(M.bodytemperature - 15,0)
 	..()
 
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
