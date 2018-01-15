@@ -69,6 +69,14 @@
 	update_icon()
 	return
 
+/obj/machinery/computer/attack_hand(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.gloves && istype(H.gloves, /obj/item/clothing/gloves/boxing))
+			to_chat(H, "<span class = 'warning'>You can't type with boxing gloves on. Are you stupid?"</span>")
+			return FALSE
+
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, I.usesound, 50, 1)
