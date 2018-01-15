@@ -38264,7 +38264,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPF" = (
-/turf/open/floor/plasteel,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -38277,7 +38276,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "bPG" = (
 /obj/machinery/chem_master,
@@ -38360,7 +38359,6 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "bPM" = (
-/turf/open/floor/plasteel,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -38371,7 +38369,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "bPN" = (
 /turf/closed/wall,
@@ -40682,15 +40680,13 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bVs" = (
-/turf/open/floor/plasteel,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "bVt" = (
-/turf/open/floor/plasteel,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -40699,7 +40695,7 @@
 	dir = 5
 	},
 /obj/structure/target_stake,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "bVu" = (
 /obj/structure/lattice,
@@ -41504,9 +41500,8 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "bXt" = (
-/turf/open/floor/plasteel,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "bXu" = (
 /obj/structure/disposalpipe/segment,
@@ -57281,18 +57276,16 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "QpQ" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpR" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpS" = (
 /turf/closed/wall,
@@ -57307,26 +57300,22 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "QpU" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpV" = (
-/turf/open/floor/plasteel,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpW" = (
-/turf/open/floor/plasteel,
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpX" = (
-/turf/open/floor/plasteel,
 /obj/machinery/power/apc{
 	areastring = "/turf/open/floor/circuit";
 	name = "Circuitry Lab APC";
@@ -57338,7 +57327,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "QpY" = (
 /turf/open/floor/plating,
@@ -57346,31 +57335,27 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "QpZ" = (
-/turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Qqa" = (
-/turf/open/floor/plasteel,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Qqb" = (
-/turf/open/floor/plasteel,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Qqc" = (
-/turf/open/floor/plasteel,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -57378,10 +57363,9 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Qqd" = (
-/turf/open/floor/plasteel,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -57393,7 +57377,7 @@
 	dir = 8;
 	network = list("SS13","RD")
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel,
 /area/science/circuit)
 "Qqe" = (
 /turf/open/floor/plasteel/white,
