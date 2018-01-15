@@ -4075,6 +4075,7 @@
 	},
 /area/security/main)
 "alH" = (
+/obj/machinery/rnd/circuit_imprinter/department/security,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "alI" = (
@@ -12243,6 +12244,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aEN" = (
@@ -51453,6 +51455,19 @@
 "cDn" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"cDo" = (
+/obj/machinery/rnd/circuit_imprinter/department/service,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
+"cDp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"cDq" = (
+/obj/machinery/rnd/circuit_imprinter/department/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 
 (1,1,1) = {"
 aaa
@@ -78325,7 +78340,7 @@ bBa
 bCj
 bsA
 bEw
-bkh
+cDq
 bkh
 bId
 bFO
@@ -79841,7 +79856,7 @@ aRN
 aRN
 aZZ
 bbf
-cCD
+aRN
 aRN
 beo
 aRN
@@ -84444,7 +84459,7 @@ aAG
 aBA
 aCQ
 aDS
-aCS
+cDo
 aAH
 aGu
 aHh
@@ -90878,10 +90893,10 @@ aJm
 aKg
 cDa
 aMo
-cDd
-cDf
-cDg
-cDh
+cDa
+cDa
+cDa
+cDa
 aLg
 aTj
 aUu
@@ -91909,8 +91924,8 @@ aMs
 aNO
 aPb
 aQe
-cDi
-cDj
+cDa
+cDa
 aTn
 aUx
 aVA
@@ -92167,7 +92182,7 @@ aNP
 aPb
 aNO
 aNP
-cDk
+cDa
 aTo
 aSk
 aTm
@@ -92424,14 +92439,14 @@ aNO
 aPc
 aQf
 aRq
-cDl
+cDa
 aTp
 aSk
 aTm
 aTm
 cCB
 aYA
-aZt
+cDp
 aZp
 bbK
 bcF
@@ -92681,7 +92696,7 @@ aNQ
 aNO
 aQg
 aNP
-cDm
+cDa
 aTq
 aSk
 aVB
@@ -92932,13 +92947,13 @@ aEd
 aEd
 aEd
 cCX
-cDb
-cDc
-cDe
+cDa
+cDa
+cDa
 coL
 coL
 coL
-cDn
+cDa
 aTr
 aUy
 aPd

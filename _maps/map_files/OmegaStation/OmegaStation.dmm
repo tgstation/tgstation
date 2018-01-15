@@ -6707,6 +6707,7 @@
 /area/quartermaster/storage)
 "amz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
 "amA" = (
@@ -6809,6 +6810,7 @@
 	dir = 4;
 	network = list("MINE")
 	},
+/obj/machinery/rnd/circuit_imprinter/department/security,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
@@ -7969,6 +7971,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/rnd/circuit_imprinter/department/service,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar/atrium)
 "aoS" = (
@@ -26739,8 +26742,10 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/rnd/protolathe/department/medical,
 /obj/effect/turf_decal/stripes/box,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "bav" = (
@@ -27157,6 +27162,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -27175,9 +27183,7 @@
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/zone3)
 "bbs" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/rnd/circuit_imprinter/department/medical,
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/zone3)
 "bbt" = (
@@ -35973,6 +35979,10 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"sPZ" = (
+/obj/machinery/rnd/protolathe/department/medical,
+/turf/open/floor/plasteel/whiteblue/corner,
+/area/medical/medbay/zone3)
 
 (1,1,1) = {"
 aaa
@@ -75687,7 +75697,7 @@ aXX
 aYQ
 aZM
 baD
-bbr
+sPZ
 aWK
 bda
 bdX

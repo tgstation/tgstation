@@ -17,6 +17,26 @@
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SCIENCE
 	department_tag = "Science"
 
+/obj/machinery/rnd/circuit_imprinter/department/cargo
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_CARGO
+	department_tag = "Cargo"
+
+/obj/machinery/rnd/circuit_imprinter/department/engineering
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_ENGINEERING
+	department_tag = "Engineering"
+
+/obj/machinery/rnd/circuit_imprinter/department/service
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SERVICE
+	department_tag = "Service"
+
+/obj/machinery/rnd/circuit_imprinter/department/medical
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_MEDICAL
+	department_tag = "Medical"
+
+/obj/machinery/rnd/circuit_imprinter/department/security
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SECURITY
+	department_tag = "Security"
+
 /obj/machinery/rnd/circuit_imprinter/department/Initialize()
 	. = ..()
 	stored_research = new

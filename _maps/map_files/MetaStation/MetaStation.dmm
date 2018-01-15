@@ -8890,6 +8890,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
+/obj/machinery/rnd/circuit_imprinter/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "asL" = (
@@ -21998,6 +21999,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+/obj/machinery/rnd/circuit_imprinter/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUh" = (
@@ -34354,6 +34356,7 @@
 	pixel_x = -25;
 	pixel_y = 5
 	},
+/obj/machinery/rnd/circuit_imprinter/department/service,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsN" = (
@@ -51009,8 +51012,8 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/reagent_containers/glass/beaker/synthflesh,
+/obj/machinery/rnd/circuit_imprinter/department/medical,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -51786,6 +51789,7 @@
 /area/medical/storage)
 "cdu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -75606,6 +75610,7 @@
 /obj/machinery/keycard_auth{
 	pixel_x = 26
 	},
+/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "dbg" = (
@@ -80568,9 +80573,8 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "EDw" = (
-/obj/machinery/rnd/protolathe/department/service,
 /obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/hydroponics)
 "EDx" = (
 /turf/closed/wall/mineral/plastitanium,
