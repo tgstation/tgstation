@@ -40245,11 +40245,6 @@
 /area/science/misc_lab)
 "bUp" = (
 /turf/open/floor/plasteel/white,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26;
-	pixel_y = 28
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -57214,6 +57209,10 @@
 "QpC" = (
 /turf/open/floor/plasteel/white,
 /obj/structure/table/reinforced,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/circuit,
 /area/science/circuit)
 "QpD" = (

@@ -81108,8 +81108,8 @@
 "Qum" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = -26;
-	pixel_y = -26
+	pixel_x = 0;
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
