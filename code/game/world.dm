@@ -44,7 +44,7 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	GLOB.external_rsc_urls = world.file2list("[GLOB.config_dir]/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=GLOB.external_rsc_urls.len)
 		if(GLOB.external_rsc_urls[i])
@@ -195,7 +195,7 @@ GLOBAL_PROTECT(security_mode)
 	..()
 
 /world/proc/load_motd()
-	GLOB.join_motd = file2text("[GLOB.config_dir]/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
+	GLOB.join_motd = file2text("[global.config.directory]/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
 

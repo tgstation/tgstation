@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(title)
 			previous_icon = new(previous_icon)
 	fdel("data/previous_title.dat")
 
-	var/list/provisional_title_screens = flist("[GLOB.config_dir]/title_screens/images/")
+	var/list/provisional_title_screens = flist("[global.config.directory]/title_screens/images/")
 	var/list/title_screens = list()
 	var/use_rare_screens = prob(1)
 
@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(title)
 			title_screens += S
 
 	if(length(title_screens))
-		file_path = "[GLOB.config_dir]/title_screens/images/[pick(title_screens)]"
+		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
 	
 	if(!file_path)
 		file_path = "icons/default_title.dmi"

@@ -1,8 +1,7 @@
-GLOBAL_VAR_INIT(config_dir, "config")
-GLOBAL_PROTECT(config_dir)
-
 /datum/controller/configuration
 	name = "Configuration"
+
+	var/directory = "config"
 
 	var/hiding_entries_by_type = TRUE	//Set for readability, admins can set this to FALSE if they want to debug it
 	var/list/entries
@@ -128,10 +127,11 @@ GLOBAL_PROTECT(config_dir)
 	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
-	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
+	return (var_name != NAMEOF(src, entries_by_type) || !hiding_entries_by_type) && ..()
 
 /datum/controller/configuration/vv_edit_var(var_name, var_value)
-	return !(var_name in list("entries_by_type", "entries")) && ..()
+	var/list/banned_edits = list(NAMEOF(src, entries_by_type), NAMEOF(src, entries), NAMEOF(src, directory))
+	return !(var_name in banned_edits) && ..()
 
 /datum/controller/configuration/stat_entry()
 	if(!statclick)
