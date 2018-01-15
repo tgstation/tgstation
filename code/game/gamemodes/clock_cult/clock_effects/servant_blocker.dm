@@ -6,7 +6,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	density = TRUE
-	heat_proof = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/effect/clockwork/servant_blocker/Initialize()
@@ -30,6 +29,9 @@
 		var/obj/item/I = M
 		if(is_servant_of_ratvar(I.thrownby)) //nice try!
 			return
+	return TRUE
+
+/obj/effect/clockwork/servant_blocker/BlockSuperconductivity()
 	return TRUE
 
 /obj/effect/clockwork/servant_blocker/singularity_act()
