@@ -32,10 +32,26 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
+	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 
 /obj/machinery/door/examine(mob/user)
 	..()
+	if(red_alert_access)
+		if(GLOB.security_level >= SEC_LEVEL_RED)
+			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
+		else
+			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
 	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+
+/obj/machinery/door/check_access(access)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
+
+/obj/machinery/door/check_access_list(list/access_list)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
 
 /obj/machinery/door/New()
 	..()

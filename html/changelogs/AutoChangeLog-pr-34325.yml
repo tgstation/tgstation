@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Mining base walls when broken turn into plating which in turn breaks down to the basalt surface."

@@ -126,9 +126,9 @@
 	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/New()
+/obj/item/clothing/suit/space/hardsuit/Initialize()
 	MakeHelmet()
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)

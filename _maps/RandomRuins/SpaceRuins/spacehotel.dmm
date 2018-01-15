@@ -3447,7 +3447,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/security)
 "jq" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Hotel Security Checkpoint";
 	req_access_txt = "203"
 	},
@@ -4059,14 +4059,10 @@
 /area/ruin/space/has_grav/hotel/pool)
 "li" = (
 /obj/effect/light_emitter,
-/turf/open/floor/plating/beach/water{
-	baseturf = /turf/open/space
-	},
+/turf/open/floor/plating/beach/water,
 /area/ruin/space/has_grav/hotel/pool)
 "lj" = (
-/turf/open/floor/plating/beach/water{
-	baseturf = /turf/open/space
-	},
+/turf/open/floor/plating/beach/water,
 /area/ruin/space/has_grav/hotel/pool)
 "lk" = (
 /obj/structure/chair{
@@ -4201,7 +4197,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lF" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Hotel Security Checkpoint";
 	req_access_txt = "203"
 	},
@@ -4274,9 +4270,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "lP" = (
 /obj/item/bikehorn/rubberducky,
-/turf/open/floor/plating/beach/water{
-	baseturf = /turf/open/space
-	},
+/turf/open/floor/plating/beach/water,
 /area/ruin/space/has_grav/hotel/pool)
 "lQ" = (
 /obj/structure/table,
@@ -4655,6 +4649,10 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
+"mW" = (
+/obj/effect/baseturf_helper/space,
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/pool)
 
 (1,1,1) = {"
 aa
@@ -7090,7 +7088,7 @@ ih
 fi
 cJ
 jt
-jQ
+mW
 jQ
 jQ
 jQ

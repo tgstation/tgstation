@@ -1,18 +1,6 @@
-//This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
-
-GLOBAL_LIST_EMPTY(z_levels_list)
-
-/datum/space_level
-	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"
-	var/list/neigbours = list()
-	var/z_value = 1 //actual z placement
-	var/linked = SELFLOOPING
-	var/xi
-	var/yi   //imaginary placements on the grid
-
-/datum/space_level/New(transition_type)
-	linked = transition_type
-	if(linked == SELFLOOPING)
+/datum/space_level/proc/set_linkage(new_linkage)
+	linkage = new_linkage
+	if(linkage == SELFLOOPING)
 		neigbours = list()
 		var/list/L = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
 		for(var/A in L)
@@ -69,21 +57,15 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 	if(y-1 >= 1)
 		neigbours |= grid[x][y-1]
 
-/proc/setup_map_transitions() //listamania
+/datum/controller/subsystem/mapping/proc/setup_map_transitions() //listamania
 	var/list/SLS = list()
-	var/datum/space_level/D
-	var/list/cached_transitions = SSmapping.config.transition_config
-	var/conf_set_len = cached_transitions.len
-	var/k = 1
-	for(var/A in cached_transitions)
-		D = new(cached_transitions[A])
-		D.name = A
-		D.z_value = k
-		if(D.linked != CROSSLINKED)
-			GLOB.z_levels_list["[D.z_value]"] = D
-		else
+	var/list/cached_z_list = z_list
+	var/conf_set_len = 0
+	for(var/A in cached_z_list)
+		var/datum/space_level/D = A
+		if (D.linkage == CROSSLINKED)
 			SLS.Add(D)
-		k++
+		conf_set_len++
 	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
 	var/list/grid = list()
 	var/datum/space_transition_point/P
@@ -99,7 +81,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 	var/list/used_points = list()
 	grid.Cut()
 	while(SLS.len)
-		D = pick_n_take(SLS)
+		var/datum/space_level/D = pick_n_take(SLS)
 		D.xi = P.x
 		D.yi = P.y
 		P.spl = D
@@ -108,10 +90,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 		possible_points.Remove(used_points)
 		D.set_neigbours(used_points)
 		P = pick(possible_points)
-		grid["[D.z_value]"] = D
-
-	for(var/A in GLOB.z_levels_list)
-		grid[A] = GLOB.z_levels_list[A]
+		CHECK_TICK
 
 	//Lists below are pre-calculated values arranged in the list in such a way to be easily accessable in the loop by the counter
 	//Its either this or madness with lotsa math
@@ -123,13 +102,12 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)		//values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
 	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2, 1, 1)		//values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
 
-	for(var/zlevelnumber = 1, zlevelnumber<=grid.len, zlevelnumber++)
-		D = grid["[zlevelnumber]"]
-		if(!D)
-			CRASH("[zlevelnumber] position has no space level datum.")
-		if(!(D.neigbours.len))
+	for(var/I in cached_z_list)
+		var/datum/space_level/D = I
+		if(!D.neigbours.len)
 			continue
-		for(var/side = 1, side<5, side++)
+		var/zlevelnumber = D.z_value
+		for(var/side in 1 to 4)
 			var/turf/beginning = locate(x_pos_beginning[side], y_pos_beginning[side], zlevelnumber)
 			var/turf/ending = locate(x_pos_ending[side], y_pos_ending[side], zlevelnumber)
 			var/list/turfblock = block(beginning, ending)
@@ -143,12 +121,8 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 				while(D.neigbours["[dirside]"] && D.neigbours["[dirside]"] != D)
 					D = D.neigbours["[dirside]"]
 				zdestination = D.z_value
-			D = grid["[zlevelnumber]"]
+			D = I
 			for(var/turf/open/space/S in turfblock)
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
 				S.destination_z = zdestination
-				//S.maptext = "[zdestination]" // for debugging
-
-	for(var/A in grid)
-		GLOB.z_levels_list[A] = grid[A]

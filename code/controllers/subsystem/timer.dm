@@ -303,6 +303,7 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/prev
 
 /datum/timedevent/New(datum/callback/callBack, timeToRun, flags, hash)
+	var/static/nextid = 1
 	id = TIMER_ID_NULL
 	src.callBack = callBack
 	src.timeToRun = timeToRun
@@ -313,7 +314,11 @@ SUBSYSTEM_DEF(timer)
 		SStimer.hashes[hash] = src
 
 	if (flags & TIMER_STOPPABLE)
-		id = GUID()
+		id = num2text(nextid, 100)
+		if (nextid >= SHORT_REAL_LIMIT)
+			nextid += min(1, 2**round(nextid/SHORT_REAL_LIMIT))
+		else
+			nextid++
 		SStimer.timer_id_dict[id] = src
 
 	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"

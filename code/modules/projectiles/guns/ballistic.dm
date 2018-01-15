@@ -86,13 +86,17 @@
 			return
 		if(user.transferItemToLoc(A, src))
 			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
-			suppressed = A
-			S.oldsound = fire_sound
-			fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-			w_class += A.w_class //so pistols do not fit in pockets when suppressed
-			update_icon()
+			install_suppressor(A)
 			return
 	return 0
+
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
+	// this proc assumes that the suppressor is already inside src
+	suppressed = S
+	S.oldsound = fire_sound
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	update_icon()
 
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
@@ -164,7 +168,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				user_dna = C.dna
-				B.add_blood(user_dna)
+				B.add_blood_DNA(user_dna)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)

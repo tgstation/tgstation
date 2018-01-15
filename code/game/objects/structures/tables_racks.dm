@@ -248,8 +248,9 @@
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
 
-/obj/structure/table/wood/narsie_act()
-	return
+/obj/structure/table/wood/narsie_act(total_override = TRUE)
+	if(!total_override)
+		..()
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -259,7 +260,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 
 /obj/structure/table/wood/poker/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"

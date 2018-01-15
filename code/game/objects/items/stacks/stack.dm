@@ -321,7 +321,7 @@
 	var/obj/item/stack/F = new type(user, amount, FALSE)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
+	user.put_in_hands(F, merge_stacks=FALSE)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)
@@ -336,10 +336,10 @@
 	else
 		. = ..()
 
-/obj/item/stack/proc/copy_evidences(obj/item/stack/from as obj)
-	blood_DNA = from.blood_DNA
-	fingerprints  = from.fingerprints
-	fingerprintshidden  = from.fingerprintshidden
+/obj/item/stack/proc/copy_evidences(obj/item/stack/from)
+	add_blood_DNA(from.return_blood_DNA())
+	add_fingerprint_list(from.return_fingerprints())
+	add_hiddenprint_list(from.return_hiddenprints())
 	fingerprintslast  = from.fingerprintslast
 	//TODO bloody overlay
 

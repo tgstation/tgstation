@@ -146,6 +146,10 @@
 				P.firer = src
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x
+				var/new_angle_s = P.Angle + rand(120,240)
+				while(new_angle_s > 180)	// Translate to regular projectile degrees
+					new_angle_s -= 360
+				P.setAngle(new_angle_s)
 
 			return -1 // complete projectile permutation
 
@@ -314,6 +318,11 @@
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.dna && H.dna.species)
+				if(NODISMEMBER in H.dna.species.species_traits)
+					return ..()		//ATTACK!
 		var/mob/living/carbon/C = target
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0

@@ -68,7 +68,7 @@
 		var/obj/item/stack/sheet/metal/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
-				var/obj/item/ed209_assembly/B = new /obj/item/ed209_assembly
+				var/obj/item/bot_assembly/ed209/B = new
 				B.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				var/holding_this = user.get_inactive_held_item()==src

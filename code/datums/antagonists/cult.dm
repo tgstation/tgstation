@@ -243,7 +243,7 @@
 	return sacced || completed
 
 /datum/objective/sacrifice/update_explanation_text()
-	if(target && !sacced)
+	if(target)
 		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
@@ -257,7 +257,7 @@
 	var/sanity = 0
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
 		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
-		if(summon && (summon.z in GLOB.station_z_levels) && summon.valid_territory)
+		if(summon && is_station_level(summon.z) && summon.valid_territory)
 			summon_spots += summon
 		sanity++
 	update_explanation_text()

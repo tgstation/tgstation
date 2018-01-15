@@ -1,6 +1,19 @@
 /obj/item/restraints
 	breakouttime = 600
 
+/obj/item/restraints/Destroy()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.handcuffed == src)
+			M.handcuffed = null
+			M.update_handcuffed()
+			if(M.buckled && M.buckled.buckle_requires_restraints)
+				M.buckled.unbuckle_mob(M)
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.update_inv_legcuffed()
+	return ..()
+
 //Handcuffs
 
 /obj/item/restraints/handcuffs
@@ -26,7 +39,7 @@
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(!istype(C))
 		return
-	if(user.has_disability(CLUMSY) && prob(50))
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
