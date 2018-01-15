@@ -161,7 +161,7 @@ As a Servant, Abscond also brings anyone you're dragging to Reebe at the cost of
 As a Servant, wraith spectacles let you see everything through walls at virtually no drawback. Just take them off if someone might see you!
 As a Servant, declaring war empowers a huge amount of your tools and constructs, and makes you into a spaceproof, armored clockwork automaton.
 As a Servant, converting or sabotaging Science and Genetics can make defending the Ark much easier.
-As a Servant, the Clockwork Arnaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
+As a Servant, the Clockwork Armaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
 Tiles sprayed with holy water will permanently block Servants of Ratvar from teleporting onto them.
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
