@@ -125,6 +125,11 @@
 	tastes = list("brains" = 1, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+	icon_state = "mothmeat"
+	desc = "Nothing says 'I hate insects' like eating the flesh from one! Oh wait..."
+	filling_color = "#BF896B"
+	tastes = list("insects" = 1)
 
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////

@@ -241,3 +241,6 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 				. += "."
 			else
 				. += ", "
+
+/proc/moth_name()
+	return "[pick(GLOB.moth_names)]"
