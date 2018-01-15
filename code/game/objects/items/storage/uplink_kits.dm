@@ -308,3 +308,18 @@
 
 /obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
 	new /obj/item/implanter/radio(src)
+
+/obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/device/radio/headset/headset_cent/empty(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/storage/backpack/satchel(src)
+	new /obj/item/device/pda/heads(src)
+	new /obj/item/clipboard(src)
+
+/obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
+	. = ..()
+	for(var/obj/item/I in contents)
+		I.AddComponent(/datum/component/constant_emp)
