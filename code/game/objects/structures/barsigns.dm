@@ -292,10 +292,6 @@
 	icon = "maidcafe"
 	desc = "Welcome back, master!"
 
-/datum/barsign/the_lightbulb
-	name = "The Lightbulb"
-	icon = "the_lightbulb"
-	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -323,3 +319,4 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
+
