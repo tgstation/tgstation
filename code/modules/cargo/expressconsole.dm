@@ -15,7 +15,7 @@
 	
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
-	oh_shit_im_sorry()
+	packin_up()
 
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
@@ -33,21 +33,21 @@
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.emagged = TRUE
-	oh_shit_im_sorry()
+	packin_up()
 	
-/obj/machinery/computer/cargo/express/proc/oh_shit_im_sorry()
-	LAZYINITLIST(meme_pack_data)
-	LAZYCLEARLIST(meme_pack_data)
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!meme_pack_data[P.group])
-			meme_pack_data[P.group] = list(
-				"name" = P.group,
-				"packs" = list()
-			)
-		if((P.hidden) || (P.special))//no fun allowed
-			continue
-		if(!emagged && P.contraband)
+/obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
+	LAZYINITLIST(meme_pack_data) // sorry for what?
+	LAZYCLEARLIST(meme_pack_data) // our quartermaster taught us not to be ashamed of our supply packs
+	for(var/pack in SSshuttle.supply_packs) // specially since they're such a good price and all
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack] // yeah, I see that, your quartermaster gave you good advice
+		if(!meme_pack_data[P.group]) // it gets cheaper when I return it
+			meme_pack_data[P.group] = list( // mmhm
+				"name" = P.group, // sometimes, I return it so much, I rip the manifest
+				"packs" = list() // see, my quartermaster taught me a few things too
+			) // like, how not to rip the manifest
+		if((P.hidden) || (P.special)) // by using someone else's crate
+			continue // will you show me?
+		if(!emagged && P.contraband) // i'd be right happy to
 			continue
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -79,7 +79,7 @@
 	if(meme_pack_data)
 		data["supplies"] = meme_pack_data
 	else
-		oh_shit_im_sorry()
+		packin_up()
 		data["supplies"] = meme_pack_data
 				
 	return data
