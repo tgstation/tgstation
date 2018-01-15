@@ -420,7 +420,6 @@
 /datum/status_effect/fleshmend
 	id = "fleshmend"
 	duration = 100
-	examine_text = "<span class='warning'>SUBJECTPRONOUN has skin rippling like liquid!</span>"
 	alert_type = /obj/screen/alert/status_effect/fleshmend
 
 /datum/status_effect/fleshmend/tick()
