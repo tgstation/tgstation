@@ -11,6 +11,7 @@
 	req_access = list(ACCESS_QM)
 	var/message
 	var/locked = TRUE
+	var/list/meme_pack_data
 	
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
@@ -28,6 +29,27 @@
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.emagged = TRUE
+	oh_shit_im_sorry()
+	
+/obj/machinery/computer/cargo/express/proc/oh_shit_im_sorry()
+	LAZYINITLIST(meme_pack_data)
+	LAZYCLEARLIST(meme_pack_data)
+	for(var/pack in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+		if(!meme_pack_data[P.group])
+			meme_pack_data[P.group] = list(
+				"name" = P.group,
+				"packs" = list()
+			)
+		if((P.hidden) || (P.special))//no fun allowed
+			continue
+		if(!emagged && P.contraband)
+			continue
+		meme_pack_data[P.group]["packs"] += list(list(
+			"name" = P.name,
+			"cost" = P.cost * 2, //displays twice the normal cost
+			"id" = pack
+		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -50,22 +72,11 @@
 		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	
 	data["message"] = message
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
-			)
-		if((P.hidden) || (P.special))//no fun allowed
-			continue
-		if(!emagged && P.contraband)
-			continue
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.cost * 2, //displays twice the normal cost
-			"id" = pack
-		))
+	if(meme_pack_data)
+		data["supplies"] = meme_pack_data
+	else
+		oh_shit_im_sorry()
+		data["supplies"] = meme_pack_data
 				
 	return data
 
