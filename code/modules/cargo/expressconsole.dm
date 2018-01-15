@@ -76,11 +76,10 @@
 		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	
 	data["message"] = message
-	if(meme_pack_data)
-		data["supplies"] = meme_pack_data
-	else
-		packin_up()
-		data["supplies"] = meme_pack_data
+	if(!meme_pack_data)
+	   packing_up()
+	   stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
+	data["supplies"] = meme_pack_data
 				
 	return data
 
