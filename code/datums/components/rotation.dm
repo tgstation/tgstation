@@ -13,6 +13,9 @@
 	//flipping ?
 
 /datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
+	if(!ismovableatom(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	src.rotation_flags = rotation_flags
 
 	if(can_user_rotate)
