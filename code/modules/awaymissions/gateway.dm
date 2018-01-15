@@ -89,6 +89,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	density = TRUE
 	icon_state = "offcenter"
 	use_power = IDLE_POWER_USE
+	req_one_access = list(ACCESS_CAPTAIN, ACCESS_CENT_GENERAL)
+	var/safeguards = TRUE
 
 	//warping vars
 	var/wait = 0				//this just grabs world.time at world start
@@ -121,6 +123,12 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	if(world.time < wait)
 		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
 		return
+	if(!allowed(user) && safeguards)
+		if (GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA)
+			to_chat(user, "<span class='notice'>Emergency situation detected, overriding authentication protocol!</span>")
+		else
+			to_chat(user, "<span class='notice'>Error: You require Captain or CentCom level authentication to engage the gateway.</span>")
+			return
 
 	for(var/obj/machinery/gateway/G in linked)
 		G.active = 1
@@ -136,6 +144,14 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	if(!awaygate || QDELETED(awaygate))
 		return
+
+	if (ismob(AM) && safeguards)
+		var/mob/M = AM
+		var/list/head_roles = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+		if(isliving(M) && M.mind && (M.mind.assigned_role in head_roles))
+			if (GLOB.security_level != SEC_LEVEL_RED && GLOB.security_level != SEC_LEVEL_DELTA) 
+				to_chat(M, "<span class='notice'>Error: Your duty is to the station and it's crew, you can't abandon them.</span>")
+				return	
 
 	if(awaygate.calibrated)
 		AM.forceMove(get_step(awaygate.loc, SOUTH))
@@ -200,7 +216,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 /obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/L)
-	for(var/obj/item/implant/exile/E in L.implants)//Checking that there is an exile implant
+	for(var/obj/item/implant/exile/E in L.implants) //Checking that there is an exile implant
 		to_chat(L, "\black The station gate has detected your exile implant and is blocking your entry.")
 		return TRUE
 	return FALSE
