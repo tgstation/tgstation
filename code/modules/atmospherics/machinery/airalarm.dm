@@ -697,7 +697,7 @@
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
-						locked = TRUE
+						locked = FALSE
 						mode = 1
 						shorted = 0
 						post_alert(0)
