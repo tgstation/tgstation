@@ -1240,6 +1240,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Research Division"
 	icon_state = "medresearch"
 
+/area/science/circuit
+	name = "Circuitry Lab"
+	icon_state = "cir_lab"
+
 /area/science/research/lobby
 	name = "Research Division Lobby"
 	icon_state = "medresearch"
