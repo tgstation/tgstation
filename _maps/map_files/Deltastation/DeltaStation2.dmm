@@ -105105,6 +105105,10 @@
 	},
 /turf/open/floor/plating,
 /area/science/lab)
+"QNg" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/whitepurple/corner,
+/area/science/research)
 
 (1,1,1) = {"
 aaa
@@ -142531,7 +142535,7 @@ cSv
 cUk
 cQJ
 cXz
-QNf
+cZo
 daT
 dcH
 deg
@@ -143044,8 +143048,8 @@ cQQ
 cSw
 cUl
 cQP
-cXA
-cZo
+QNg
+QNf
 daV
 dcJ
 dei
