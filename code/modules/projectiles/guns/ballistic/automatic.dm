@@ -38,7 +38,7 @@
 				if(oldmag)
 					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
 					oldmag.dropped()
-					oldmag.forceMove(get_turf(src.loc))
+					oldmag.forceMove(get_turf(loc))
 					oldmag.update_icon()
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
@@ -77,7 +77,7 @@
 
 /obj/item/gun/ballistic/automatic/proc/empty_alarm()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
 	return

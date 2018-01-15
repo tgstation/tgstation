@@ -89,7 +89,7 @@
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
 			var/obj/item/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
 					if(!W.isOn())
@@ -236,7 +236,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
 			stored.forceMove(T)
-			src.transfer_fingerprints_to(stored)
+			transfer_fingerprints_to(stored)
 			stored.anchored = FALSE
 			stored.density = TRUE
 			stored.update_icon()

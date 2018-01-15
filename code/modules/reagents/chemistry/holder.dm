@@ -158,11 +158,11 @@
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents || total_volume<=0)
 			return
 		R = target.reagents
-	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
-	var/part = amount / src.total_volume
+	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
+	var/part = amount / total_volume
 	var/trans_data = null
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
@@ -176,7 +176,7 @@
 	R.update_total()
 	if(!no_react)
 		R.handle_reactions()
-		src.handle_reactions()
+		handle_reactions()
 	return amount
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
@@ -188,7 +188,7 @@
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents || total_volume<=0)
 			return
 		R = target.reagents
 
@@ -204,24 +204,24 @@
 			trans_data = T.data
 		R.add_reagent(T.id, copy_amount * multiplier, trans_data)
 
-	src.update_total()
+	update_total()
 	R.update_total()
 	R.handle_reactions()
-	src.handle_reactions()
+	handle_reactions()
 	return amount
 
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
-	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if (!target.reagents || total_volume<=0 || !get_reagent_amount(reagent))
 		return
 	if(amount < 0)
 		return
 
 	var/datum/reagents/R = target.reagents
-	if(src.get_reagent_amount(reagent)<amount)
-		amount = src.get_reagent_amount(reagent)
+	if(get_reagent_amount(reagent)<amount)
+		amount = get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	for (var/CR in cached_reagents)
@@ -229,11 +229,11 @@
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp)
+			R.add_reagent(current_reagent.id, amount, trans_data, chem_temp)
 			remove_reagent(current_reagent.id, amount, 1)
 			break
 
-	src.update_total()
+	update_total()
 	R.update_total()
 	R.handle_reactions()
 	return amount

@@ -232,7 +232,7 @@
 			user.s_active.close(user)
 		var/obj/item/bot_assembly/floorbot/B = new
 		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
+		to_chat(user, "<span class='notice'>You add the tiles into the empty [name]. They protrude from the top.</span>")
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
@@ -248,7 +248,7 @@
 				build_step++
 				update_icon()
 
-		if(ASSEMBLY_SECOND_STEP)	
+		if(ASSEMBLY_SECOND_STEP)
 			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location())
 				A.name = created_name

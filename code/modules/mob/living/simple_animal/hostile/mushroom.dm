@@ -63,7 +63,7 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
-	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object)) 
+	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object))
 		return FALSE
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
@@ -150,7 +150,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)
-		src.visible_message("The [src.name] was bruised!")
+		visible_message("The [src.name] was bruised!")
 		bruised = 1
 
 /mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
@@ -184,7 +184,7 @@
 /mob/living/simple_animal/hostile/mushroom/harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
-		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)
+		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(loc)
 		S.reagents.add_reagent("mushroomhallucinogen", powerlevel)
 		S.reagents.add_reagent("omnizine", powerlevel)
 		S.reagents.add_reagent("synaptizine", powerlevel)

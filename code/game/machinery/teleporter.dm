@@ -184,10 +184,10 @@
 		return ..()
 
 /obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
+	attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+	attack_hand()
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	if(!panel_open)
@@ -200,14 +200,14 @@
 		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
 			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
-			src.engaged = !src.engaged
+			engaged = !engaged
 			use_power(5000)
 			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
 		visible_message("<span class='alert'>No target detected.</span>")
-		src.engaged = 0
+		engaged = 0
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/teleport/station/power_change()

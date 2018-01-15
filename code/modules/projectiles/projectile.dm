@@ -165,8 +165,8 @@
 	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
-	if(src.damage)
-		return CLAMP((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 100
+	if(damage)
+		return CLAMP((damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 100
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
@@ -442,7 +442,7 @@
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
-	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
+	if(isliving(AM) && (AM.density || AM == original) && !(pass_flags & PASSMOB))
 		Collide(AM)
 
 /obj/item/projectile/Destroy()

@@ -168,7 +168,7 @@
 
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open(1)
 	return
 

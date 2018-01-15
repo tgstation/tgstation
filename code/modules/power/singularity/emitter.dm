@@ -82,10 +82,10 @@
 
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	if (src.anchored)
+	if (anchored)
 		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
-	src.setDir(turn(src.dir, 270))
+	setDir(turn(dir, 270))
 	return 1
 
 /obj/machinery/power/emitter/AltClick(mob/user)
@@ -115,23 +115,23 @@
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "<span class='warning'>The emitter isn't connected to a wire!</span>")
 			return 1
-		if(!src.locked)
-			if(src.active==1)
-				src.active = 0
+		if(!locked)
+			if(active==1)
+				active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
 				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
 				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
-				src.shot_number = 0
-				src.fire_delay = maximum_fire_delay
+				shot_number = 0
+				fire_delay = maximum_fire_delay
 				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			update_icon()
 		else
@@ -159,10 +159,10 @@
 	if(stat & (BROKEN))
 		return
 	if(src.state != 2 || (!powernet && active_power_usage))
-		src.active = 0
+		active = 0
 		update_icon()
 		return
-	if(src.active == 1)
+	if(active == 1)
 		if(!active_power_usage || avail(active_power_usage))
 			add_load(active_power_usage)
 			if(!powered)
@@ -183,7 +183,7 @@
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/check_delay()
-	if((src.last_shot + src.fire_delay) <= world.time)
+	if((last_shot + fire_delay) <= world.time)
 		return TRUE
 	return FALSE
 
@@ -249,7 +249,7 @@
 			return
 		switch(state)
 			if(EM_UNSECURED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
 				if(WT.remove_fuel(0,user))
 					playsound(loc, WT.usesound, 50, 1)
@@ -279,7 +279,7 @@
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+				to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 			else
 				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else

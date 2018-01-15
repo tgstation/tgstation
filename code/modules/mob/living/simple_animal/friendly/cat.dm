@@ -188,7 +188,7 @@
 				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
 	//MICE!
-	if((src.loc) && isturf(src.loc))
+	if((loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat && Adjacent(M))

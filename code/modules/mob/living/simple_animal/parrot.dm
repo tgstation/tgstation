@@ -208,10 +208,10 @@
 					if(ears)
 						if(!stat)
 							if(available_channels.len)
-								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+								say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 							else
-								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-						ears.forceMove(src.loc)
+								say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+						ears.forceMove(loc)
 						ears = null
 						for(var/possible_phrase in speak)
 							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
@@ -244,7 +244,7 @@
 
 						if(!usr.transferItemToLoc(headset_to_add, src))
 							return
-						src.ears = headset_to_add
+						ears = headset_to_add
 						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
 
 						clearlist(available_channels)
@@ -387,13 +387,13 @@
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
-	if(!isturf(src.loc) || !canmove || buckled)
+	if(!isturf(loc) || !canmove || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)
-		if(parrot_perch && parrot_perch.loc != src.loc) //Make sure someone hasnt moved our perch on us
+		if(parrot_perch && parrot_perch.loc != loc) //Make sure someone hasnt moved our perch on us
 			if(parrot_perch in view(src))
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
 				icon_state = icon_living
@@ -414,7 +414,7 @@
 			if(speak.len)
 				var/list/newspeak = list()
 
-				if(available_channels.len && src.ears)
+				if(available_channels.len && ears)
 					for(var/possible_phrase in speak)
 
 						//50/50 chance to not use the radio at all
@@ -609,7 +609,7 @@
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors
 	if(parrot_lastmove)
-		if(parrot_lastmove == src.loc)
+		if(parrot_lastmove == loc)
 			if(parrot_stuck_threshold >= ++parrot_stuck) //If it has been stuck for a while, go back to wander.
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
@@ -618,7 +618,7 @@
 		else
 			parrot_lastmove = null
 	else
-		parrot_lastmove = src.loc
+		parrot_lastmove = loc
 	return 0
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
@@ -744,7 +744,7 @@
 	if(stat)
 		return
 
-	src.drop_held_item()
+	drop_held_item()
 
 	return
 
@@ -799,7 +799,7 @@
 		for(var/atom/movable/AM in view(src,1))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
-					src.forceMove(AM.loc)
+					forceMove(AM.loc)
 					icon_state = icon_sit
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")

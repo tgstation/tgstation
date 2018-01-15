@@ -156,7 +156,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage_amount >= 10)
@@ -247,8 +247,8 @@
 	materials = list(MAT_METAL=100)
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc, /turf))
-		new/obj/machinery/am_shielding(src.loc)
+	if(istype(I, /obj/item/device/multitool) && istype(loc, /turf))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 	else
 		return ..()

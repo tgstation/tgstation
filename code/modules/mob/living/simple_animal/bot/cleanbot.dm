@@ -241,7 +241,7 @@
 				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 			say(phrase)
 			victim.emote("scream")
-			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 			victim.acid_act(5, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))

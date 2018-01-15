@@ -48,10 +48,10 @@
 		AM.forceMove(src)
 		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
 			var/obj/structure/bigDelivery/T = AM
-			src.destinationTag = T.sortTag
+			destinationTag = T.sortTag
 		if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 			var/obj/item/smallDelivery/T = AM
-			src.destinationTag = T.sortTag
+			destinationTag = T.sortTag
 
 
 // start the movement process
@@ -114,7 +114,7 @@
 		return
 	for(var/mob/M in range(5, get_turf(src)))
 		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
-	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
+	playsound(loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(turf/T)

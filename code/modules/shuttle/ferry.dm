@@ -12,7 +12,7 @@
 	return ((aiControlDisabled != 1));
 
 /obj/machinery/computer/shuttle/ferry/attack_ai(mob/user)
-	if(!src.canAIControl(user))
+	if(!canAIControl(user))
 		return
 
 /obj/machinery/computer/shuttle/ferry/request

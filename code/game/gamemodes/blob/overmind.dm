@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
-	
+
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
 	if((A && !A.blob_allowed) || !T || !is_station_level(T.z) || isspaceturf(T))
@@ -186,11 +186,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if (!message)
 		return
 
-	if (src.client)
+	if (client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if (stat)

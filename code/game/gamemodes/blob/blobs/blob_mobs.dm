@@ -102,7 +102,7 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
-	if(!is_zombie && isturf(src.loc))
+	if(!is_zombie && isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == DEAD)
 				Zombify(H)

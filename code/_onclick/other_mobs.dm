@@ -53,7 +53,7 @@
 		HM.on_ranged_attack(src, A, mouseparams)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
-		src.Move_Pulled(A)
+		Move_Pulled(A)
 
 /*
 	Animals & All Unspecified

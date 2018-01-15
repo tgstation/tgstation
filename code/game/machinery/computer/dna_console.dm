@@ -42,12 +42,12 @@
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
-		if (!src.diskette)
+		if (!diskette)
 			if (!user.transferItemToLoc(I,src))
 				return
-			src.diskette = I
+			diskette = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 	else
 		return ..()

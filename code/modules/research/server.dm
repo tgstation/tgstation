@@ -128,7 +128,7 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-	if(!src.allowed(usr) && !emagged)
+	if(!allowed(usr) && !emagged)
 		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
 		return
 
@@ -160,7 +160,7 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
 	. = ..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(emagged)

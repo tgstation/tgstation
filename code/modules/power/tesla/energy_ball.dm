@@ -55,7 +55,7 @@
 
 		move_the_basket_ball(4 + orbiting_balls.len * 1.5)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
+		playsound(loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -80,7 +80,7 @@
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around 
+		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -96,7 +96,7 @@
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
+		playsound(loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
 		addtimer(CALLBACK(src, .proc/new_mini_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)

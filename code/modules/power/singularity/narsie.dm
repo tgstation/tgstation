@@ -93,7 +93,7 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 
 /obj/singularity/narsie/process()
@@ -125,7 +125,7 @@
 	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
+				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [name]...</span>")
 				M.apply_effect(60, STUN)
 
 
