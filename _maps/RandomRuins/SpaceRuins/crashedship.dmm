@@ -1997,7 +1997,6 @@
 /area/awaymission/BMPship/Midship)
 "gt" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2100,7 +2099,6 @@
 /area/awaymission/BMPship/Fore)
 "gL" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2183,7 +2181,6 @@
 /area/template_noop)
 "ha" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "panelscorched"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2223,7 +2220,6 @@
 /area/awaymission/BMPship/Aft)
 "hg" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/BMPship/Midship)
