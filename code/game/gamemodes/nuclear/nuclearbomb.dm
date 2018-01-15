@@ -527,9 +527,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
-	if(!fake)
+	var/tell_the_admins
+	// Only tell the admins if a REAL nuke disk is relocated
+	if(fake)
+		tell_the_admins = FALSE
+	else
 		GLOB.poi_list |= src
-	set_stationloving(TRUE, inform_admins=TRUE)
+		tell_the_admins = TRUE
+
+	set_stationloving(TRUE, inform_admins=tell_the_admins)
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
