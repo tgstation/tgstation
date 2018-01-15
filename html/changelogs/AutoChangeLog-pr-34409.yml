@@ -1,6 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Monkey Leaders should now properly get Jungle Fever"
-  - bugfix: "Monkeymode roundend report should now properly show Major/Minor victory"
-  - bugfix: "Monkeys should now get the jungle fever objective in monkeymode"
