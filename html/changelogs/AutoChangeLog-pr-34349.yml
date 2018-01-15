@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "MMIs in mechs or held by humans wearing fireproof suits are no longer burnt by ash storms."
