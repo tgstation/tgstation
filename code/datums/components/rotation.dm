@@ -5,14 +5,14 @@
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
 	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
-	var/datum/callback/on_rotation     //Additional stuff to do after rotation
+	var/datum/callback/after_rotation     //Additional stuff to do after rotation
 	
 	var/rotation_flags = NONE
 
 	//verbs ? 
 	//flipping ?
 
-/datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,on_rotation)
+/datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
 	src.rotation_flags = rotation_flags
 
 	if(can_user_rotate)
@@ -25,10 +25,10 @@
 	else
 		src.can_be_rotated = CALLBACK(src,.proc/default_can_be_rotated)
 
-	if(on_rotation)
-		src.on_rotation = on_rotation
+	if(after_rotation)
+		src.after_rotation = after_rotation
 	else
-		src.on_rotation = CALLBACK(src,.proc/default_on_rotation)
+		src.after_rotation = CALLBACK(src,.proc/default_after_rotation)
 
 	if(src.rotation_flags & ROTATION_ALTCLICK)
 		RegisterSignal(COMSIG_CLICK_ALT, .proc/HandRot)
@@ -50,7 +50,7 @@
 /datum/component/simple_rotation/proc/BaseRot(mob/user)
 	var/atom/movable/AM = parent
 	AM.setDir(turn(AM.dir,rotation_flags & ROTATION_CLOCKWISE ? 90 : -90))
-	on_rotation.Invoke(user)
+	after_rotation.Invoke(user)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user)
 	if(!istype(user) || !user.Adjacent(parent) || user.incapacitated())
@@ -62,5 +62,5 @@
 	var/atom/movable/AM = parent
 	return !AM.anchored
 
-/datum/component/simple_rotation/proc/default_on_rotation(mob/user)
+/datum/component/simple_rotation/proc/default_after_rotation(mob/user)
 	to_chat(user,"<span class='notice>You rotate [parent]</span>")
