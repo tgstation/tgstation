@@ -1,5 +1,5 @@
 // How much "space" we give the edge of the map
-GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[GLOB.config_dir]/awaymissionconfig.txt"))
 
 /proc/createRandomZlevel()
 	if(GLOB.awaydestinations.len)	//crude, but it saves another var!

@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(config_dir, "config/")
+GLOBAL_VAR_INIT(config_dir, "config")
 GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration
@@ -22,7 +22,7 @@ GLOBAL_PROTECT(config_dir)
 	config = src
 	InitEntries()
 	LoadModes()
-	if(fexists("config/config.txt") && LoadEntries("config.txt") <= 1)
+	if(fexists("[GLOB.config_dir]/config.txt") && LoadEntries("config.txt") <= 1)
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
 		LoadEntries("game_options.txt")
 		LoadEntries("dbconfig.txt")
@@ -71,7 +71,7 @@ GLOBAL_PROTECT(config_dir)
 	stack = stack + filename_to_test
 
 	log_config("Loading config file [filename]...")
-	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
+	var/list/lines = world.file2list("[GLOB.config_dir]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		if(!L)
@@ -194,7 +194,7 @@ GLOBAL_PROTECT(config_dir)
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
-	filename = "[GLOB.config_dir][filename]"
+	filename = "[GLOB.config_dir]/[filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null
