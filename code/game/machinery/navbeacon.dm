@@ -91,9 +91,9 @@
 
 	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/device/pda))
 		if(open)
-			if (src.allowed(user))
-				src.locked = !src.locked
-				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
+			if (allowed(user))
+				locked = !locked
+				to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 			updateDialog()

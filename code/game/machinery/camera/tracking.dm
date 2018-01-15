@@ -8,7 +8,7 @@
 	var/list/T = list()
 
 	for (var/obj/machinery/camera/C in L)
-		var/list/tempnetwork = C.network&src.network
+		var/list/tempnetwork = C.network&network
 		if (tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 

@@ -142,7 +142,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
-		playsound(src.loc, W.usesound, 100, 1)
+		playsound(loc, W.usesound, 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
@@ -168,11 +168,11 @@
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = TRUE
 		else if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(loc, W.usesound, 100, 1)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
@@ -276,7 +276,7 @@
 			if(fields)
 				active = ACTIVE_HASFIELDS
 		if(!power)
-			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
+			visible_message("<span class='danger'>The [name] shuts down due to lack of power!</span>", \
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			active = FALSE
@@ -345,7 +345,7 @@
 	else if(W.GetID())
 		if(allowed(user) && !emagged)
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 		else if(emagged)
 			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else

@@ -261,7 +261,7 @@ All ShuttleMove procs go here
 
 /obj/machinery/power/terminal/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
 
@@ -297,7 +297,7 @@ All ShuttleMove procs go here
 			var/turf/target = get_edge_target_turf(src, throw_dir)
 			var/range = movement_force["THROW"]
 			var/speed = range/5
-			src.throw_at(target, range, speed)
+			throw_at(target, range, speed)
 		if(movement_force["KNOCKDOWN"])
 			Knockdown(movement_force["KNOCKDOWN"])
 

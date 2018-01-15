@@ -9,13 +9,13 @@ Configuration:
 - Set file to the correct path for the .html file (remember to actually place the html file)
 - Attach the datum to the user client on login, e.g.
 	/client/New()
-		src.tooltips = new /datum/tooltip(src)
+		tooltips = new /datum/tooltip(src)
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
 	/obj/screen/hud
 		MouseEntered(location, control, params)
-			usr.client.tooltip.show(params, title = src.name, content = src.desc)
+			usr.client.tooltip.show(params, title = name, content = src.desc)
 
 		MouseExited()
 			usr.client.tooltip.hide()

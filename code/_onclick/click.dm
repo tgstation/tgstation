@@ -376,7 +376,7 @@
 	return
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+	pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

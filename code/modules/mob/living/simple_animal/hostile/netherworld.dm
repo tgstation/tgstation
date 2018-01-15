@@ -88,7 +88,7 @@
 
 /mob/living/simple_animal/hostile/spawner/nether/Life()
 	..()
-	var/list/C = src.get_contents()
+	var/list/C = get_contents()
 	for(var/mob/living/M in C)
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, 1)
@@ -99,5 +99,5 @@
 				blank = new(loc)
 				blank.name = "[M]"
 				blank.desc = "It's [M], but their flesh has an ashy texture, and their face is featureless save an eerie smile."
-				src.visible_message("<span class='warning'>[M] reemerges from the link!</span>")
+				visible_message("<span class='warning'>[M] reemerges from the link!</span>")
 				qdel(M)

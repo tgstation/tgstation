@@ -692,7 +692,7 @@
 		control_area = get_area_instance_from_text(control_area)
 		if(control_area == null)
 			control_area = get_area(src)
-			stack_trace("Bad control_area path for [src], [src.control_area]")
+			stack_trace("Bad control_area path for [src], [control_area]")
 	else if(!control_area)
 		control_area = get_area(src)
 
@@ -728,7 +728,7 @@
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
-					src.attack_hand(user)
+					attack_hand(user)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 

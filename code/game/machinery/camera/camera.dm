@@ -64,7 +64,7 @@
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(assembly)
 	if(bug)
-		bug.bugged_cameras -= src.c_tag
+		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
@@ -115,7 +115,7 @@
 	..()
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
-	src.view_range = num
+	view_range = num
 	GLOB.cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
@@ -136,7 +136,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, W.usesound, 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		return
 
 	if(panel_open)
@@ -225,12 +225,12 @@
 			return
 		if(bug)
 			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
-			bug.bugged_cameras -= src.c_tag
+			bug.bugged_cameras -= c_tag
 			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			bug = W
-			bug.bugged_cameras[src.c_tag] = src
+			bug.bugged_cameras[c_tag] = src
 		return
 
 	else if(istype(W, /obj/item/pai_cable))
@@ -300,7 +300,7 @@
 		else
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
 
-		playsound(src.loc, 'sound/items/wirecutter.ogg', 100, 1)
+		playsound(loc, 'sound/items/wirecutter.ogg', 100, 1)
 	update_icon()
 
 	// now disconnect anyone using the camera
@@ -371,7 +371,7 @@
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
+	playsound(loc, WT.usesound, 50, 1)
 	busy = TRUE
 	if(do_after(user, 100*WT.toolspeed, target = src))
 		busy = FALSE

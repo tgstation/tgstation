@@ -113,7 +113,7 @@
 							G.use(2)
 							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 							state = 4
-							src.icon_state = "4"
+							icon_state = "4"
 				return
 		if(4)
 			if(istype(P, /obj/item/crowbar))

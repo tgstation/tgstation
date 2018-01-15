@@ -230,7 +230,7 @@
 /obj/item/briefcase_launchpad/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/launchpad_remote))
 		var/obj/item/device/launchpad_remote/L = I
-		L.pad = src.pad
+		L.pad = pad
 		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
 	else
 		return ..()

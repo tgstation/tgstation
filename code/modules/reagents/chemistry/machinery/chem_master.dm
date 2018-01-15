@@ -91,7 +91,7 @@
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		. = 1 // no afterattack
 		if(panel_open)
-			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
+			to_chat(user, "<span class='warning'>You can't use the [name] while its panel is opened!</span>")
 			return
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
@@ -101,7 +101,7 @@
 
 		beaker = I
 		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 		update_icon()
 
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
@@ -113,7 +113,7 @@
 
 		bottle = I
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 	else
 		return ..()
 

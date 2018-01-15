@@ -235,16 +235,11 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
-	spawn(1)
-		setup_field(1)
-	spawn(2)
-		setup_field(2)
-	spawn(3)
-		setup_field(4)
-	spawn(4)
-		setup_field(8)
-	spawn(5)
-		active = FG_ONLINE
+	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
+	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
+	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
+	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)

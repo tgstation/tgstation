@@ -106,7 +106,7 @@
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
-		src.data |= data.Copy()
+		data |= data.Copy()
 
 /datum/reagent/water
 	name = "Water"
@@ -265,7 +265,7 @@
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
@@ -280,7 +280,7 @@
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5, 150)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
