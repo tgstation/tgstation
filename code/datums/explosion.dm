@@ -325,6 +325,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(stopped < 2)	//wait for main thread and spiral_range thread
 		return QDEL_HINT_IWILLGC
 	GLOB.explosions -= src
+	explosion_source = null
 	return ..()
 
 /client/proc/check_bomb_impacts()
