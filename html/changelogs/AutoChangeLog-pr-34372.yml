@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Players are immune to their own slime time stops again"
