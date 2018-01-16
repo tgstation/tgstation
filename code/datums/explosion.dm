@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 /datum/explosion
 	var/explosion_id
+	var/atom/explosion_source
 	var/started_at
 	var/running = TRUE
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
@@ -39,6 +40,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/id = ++id_counter
 	explosion_id = id
+	explosion_source = epicenter
 
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
@@ -328,6 +330,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(stopped < 2)	//wait for main thread and spiral_range thread
 		return QDEL_HINT_IWILLGC
 	GLOB.explosions -= src
+	explosion_source = null
 	return ..()
 
 /client/proc/check_bomb_impacts()
