@@ -364,7 +364,7 @@
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/coin/clown
+/obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
