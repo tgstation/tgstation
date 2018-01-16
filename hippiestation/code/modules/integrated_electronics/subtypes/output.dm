@@ -21,7 +21,7 @@
 	var/obj/item/device/radio/headset/integrated/radio
 
 /obj/item/integrated_circuit/output/text_to_radio/Initialize()
-	..()
+	. = ..()
 	radio = new(src)
 	radio.frequency = FREQ_COMMON
 	GLOB.ic_speakers += src

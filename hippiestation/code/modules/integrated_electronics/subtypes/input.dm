@@ -43,7 +43,7 @@
 	var/list/freq_blacklist = list(FREQ_CENTCOM,FREQ_SYNDICATE,FREQ_CTF_RED,FREQ_CTF_BLUE)
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/Initialize()
-	..()
+	. = ..()
 	receiver = new(src)
 	receiver.holder = src
 
