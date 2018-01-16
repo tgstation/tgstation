@@ -203,12 +203,10 @@ GLOBAL_PROTECT(security_mode)
 	var/s = ""
 	var/hostedby
 	var/forumurl
-	var/githuburl
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		hostedby = CONFIG_GET(string/hostedby)
 		forumurl = CONFIG_GET(string/forumurl)
-		githuburl = CONFIG_GET(string/githuburl)
 		if (server_name)
 			s += "<a href=\"[forumurl]\"><big><b>[server_name]</b> &#8212; [station_name()]</big></a>"
 	if(SSticker)
@@ -219,11 +217,6 @@ GLOBAL_PROTECT(security_mode)
 	if (hostedby)
 		s += "<br>Hosted by <b>[hostedby]</b>."
 	s += "<img src=\"https://i.imgur.com/xfWVypg.png\">" //Banner image
-	s += "<br>("
-	s += "<a href=\"[githuburl]\">"
-	s += "Github"
-	s += "</a>"
-	s += ") "
 
 	status = s
 
