@@ -53,7 +53,8 @@
 			else
 				escaped = "abandoned"
 		if(!m.mind && (!ishuman(m) || !issilicon(m)))
-			if(file_data["[escaped]"]["npcs"].Find(initial(m.name)))
+			var/list/npc_nest = file_data["[escaped]"]["npcs"]
+			if(npc_nest.Find(initial(m.name)))
 				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] += 1
 			else
 				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
@@ -302,11 +303,9 @@
 	else
 		parts += "<div class='panel stationborder'>"
 	parts += "<br>"
-	if(GLOB.survivor_report)
-		parts += GLOB.survivor_report
-	else
-		parts += survivor_report(popcount)
-
+	if(!GLOB.survivor_report)
+		GLOB.survivor_report = survivor_report(popcount)
+	parts += GLOB.survivor_report
 	parts += "</div>"
 
 	return parts.Join()
