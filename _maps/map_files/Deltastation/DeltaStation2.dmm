@@ -10131,7 +10131,6 @@
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/requests_console{
 	department = "Custodial Closet";
-	departmentType = 0;
 	name = "Custodial RC";
 	pixel_y = 32
 	},
