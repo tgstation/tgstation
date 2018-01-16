@@ -72,7 +72,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "ao" = (
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
 /turf/open/floor/engine,
 /area/tcommsat/chamber)
 "ap" = (
