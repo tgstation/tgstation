@@ -14,8 +14,7 @@ if [ "$BUILD_TOOLS" = false ]; then
     	exit 1
 	fi;
 	if grep 'pixel_[xy] = 0' _maps/**/*.dmm;	then
-    	echo "pixel_[xy] = 0 variables detected in maps, please remove them."
-    	exit 1
+    	echo "pixel_[xy] = 0 detected in maps, please review to ensure they are not dirty varedits."
 	fi;
 	if grep '\td[1-2] =' _maps/**/*.dmm;	then
     	echo "d[1-2] cable variables detected in maps, please remove them."
