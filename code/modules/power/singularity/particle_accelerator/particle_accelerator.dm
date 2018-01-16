@@ -46,8 +46,6 @@
 		if(PA_CONSTRUCTION_PANEL_OPEN)
 			to_chat(user, "The panel is open.")
 
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
-
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = PA_CONSTRUCTION_UNSECURED
 	if(master)
@@ -56,41 +54,10 @@
 		master = null
 	return ..()
 
-/obj/structure/particle_accelerator/verb/rotate()
-	set name = "Rotate Clockwise"
-	set category = "Object"
-	set src in oview(1)
+/obj/structure/particle_accelerator/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
-		return 0
-	setDir(turn(dir, -90))
-	return 1
-
-/obj/structure/particle_accelerator/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
-
-/obj/structure/particle_accelerator/verb/rotateccw()
-	set name = "Rotate Counter Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
-		return 0
-	setDir(turn(dir, -90))
-	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	var/did_something = FALSE

@@ -1,6 +1,6 @@
 /obj/structure/chair/e_chair
 	name = "electric chair"
-	desc = "Looks absolutely SHOCKING!\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
