@@ -3,20 +3,19 @@
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	attachable = 1
+	attachable = TRUE
 
-	var/scanning = 0
-	var/timing = 0
+	var/scanning = FALSE
+	var/timing = FALSE
 	var/time = 10
 	var/sensitivity = 1
 
 /obj/item/device/assembly/prox_sensor/Initialize()
 	. = ..()
-	proximity_monitor = new(src, 0)
+	proximity_monitor = new(src, 0, FALSE)
 
 /obj/item/device/assembly/prox_sensor/Destroy()
-	if (timing)
-		STOP_PROCESSING(SSprocessing, src)
+	set_timing(FALSE)  // stops processing if necessary
 
 /obj/item/device/assembly/prox_sensor/describe()
 	if(timing)
@@ -25,23 +24,19 @@
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())
-		return 0//Cooldown check
-	timing = !timing
+		return FALSE //Cooldown check
+	set_timing(!timing)
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
+		set_timing(FALSE)
 		if(scanning)
-			toggle_scan()
-			proximity_monitor.host = src
-		timing = 0
-	else
-		proximity_monitor.host = loc
+			toggle_scan(FALSE)
 	update_icon()
 	return secured
-
 
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
@@ -56,19 +51,17 @@
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
 	next_activate = world.time + 30
 
-
 /obj/item/device/assembly/prox_sensor/process()
 	if(timing)
-		time--
+		time -= SSobj.wait / 10
 		if(time <= 0)
-			timing = 0
-			STOP_PROCESSING(SSprocessing, src)
-			toggle_scan(1)
+			set_timing(FALSE)
+			toggle_scan(TRUE)
 			time = initial(time)
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan(scan)
 	if(!secured)
-		return 0
+		return
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()
@@ -78,6 +71,13 @@
 	sensitivity = sense
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
+
+/obj/item/device/assembly/prox_sensor/proc/set_timing(new_timing)
+	if (new_timing && !timing)
+		START_PROCESSING(SSprocessing, src)
+	else if (timing && !new_timing)
+		STOP_PROCESSING(SSprocessing, src)
+	timing = new_timing
 
 /obj/item/device/assembly/prox_sensor/update_icon()
 	cut_overlays()
@@ -120,11 +120,7 @@
 		toggle_scan(text2num(href_list["scanning"]))
 
 	if(href_list["time"])
-		timing = text2num(href_list["time"])
-		if (timing)
-			START_PROCESSING(SSprocessing, src)
-		else
-			STOP_PROCESSING(SSprocessing, src)
+		set_timing(text2num(href_list["time"]))
 		update_icon()
 
 	if(href_list["tp"])
