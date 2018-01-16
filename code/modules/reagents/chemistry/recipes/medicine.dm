@@ -221,6 +221,12 @@
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 
+/datum/chemical_reaction/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	results = list("regen_jelly" = 2)
+	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = "corazone"

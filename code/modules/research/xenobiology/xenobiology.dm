@@ -148,7 +148,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
-			user.reagents.add_reagent("tricordrazine",10)
+			user.reagents.add_reagent("regen_jelly",10)
 			return 600
 
 /obj/item/slime_extract/darkpurple

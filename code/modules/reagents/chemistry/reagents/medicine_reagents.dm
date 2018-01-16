@@ -134,7 +134,7 @@
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
 		M.adjustFireLoss(-power, 0)
-		M.adjustToxLoss(-power, 0)
+		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
 		M.status_flags &= ~DISFIGURED
 		. = 1
@@ -978,6 +978,22 @@
 	M.adjustFireLoss(2*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy."
+	reagent_state = LIQUID
+	color = "#91D865"
+	taste_description = "jelly"
+
+/datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
+		M.adjustBruteLoss(-1.5*REM, 0)
+		M.adjustFireLoss(-1.5*REM, 0)
+		M.adjustOxyLoss(-1.5*REM, 0)
+		M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+		. = 1
+	..()
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
