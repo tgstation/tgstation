@@ -11,7 +11,7 @@
 	for(var/id in env_gases)
 		var/gas = env_gases[id]
 		var/moles = gas[MOLES]
-		if (moles)
+		if (moles >= 0.00001)
 			lines += "[gas[GAS_META][META_GAS_NAME]]: [moles]"
 	to_chat(usr, lines.Join("\n"))
 
