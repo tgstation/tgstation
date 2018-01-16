@@ -2371,6 +2371,7 @@
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\entered.dm"
+#include "code\modules\vehicles\lavaboat.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"
 #include "code\modules\vehicles\ridden.dm"
 #include "code\modules\vehicles\scooter.dm"
