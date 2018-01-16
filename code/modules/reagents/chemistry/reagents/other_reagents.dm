@@ -397,17 +397,17 @@
 	..()
 	return
 
-/datum/reagent/stableslimetoxin
+/datum/reagent/mutationtoxin
 	name = "Stable Mutation Toxin"
 	id = "stablemutationtoxin"
-	description = "A humanizing toxin produced by slimes."
+	description = "A humanizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
 	taste_description = "slime"
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
 
-/datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
 		return
@@ -417,7 +417,7 @@
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
-/datum/reagent/stableslimetoxin/proc/mutate(mob/living/carbon/human/H)
+/datum/reagent/mutationtoxin/proc/mutate(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
 	var/current_species = H.dna.species.type
@@ -428,130 +428,150 @@
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
 
-/datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
+/datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
+	description = "A corruptive toxin."
 	color = "#13BC5E" // rgb: 19, 188, 94
 	race = /datum/species/jelly/slime
 	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
 
-/datum/reagent/stableslimetoxin/lizard
+/datum/reagent/mutationtoxin/lizard
 	name = "Lizard Mutation Toxin"
 	id = "lizardmutationtoxin"
-	description = "A lizarding toxin produced by slimes."
+	description = "A lizarding toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard
 	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
 
-/datum/reagent/stableslimetoxin/fly
+/datum/reagent/mutationtoxin/fly
 	name = "Fly Mutation Toxin"
 	id = "flymutationtoxin"
-	description = "An insectifying toxin produced by slimes."
+	description = "An insectifying toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
-/datum/reagent/stableslimetoxin/pod
+/datum/reagent/mutationtoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
-	description = "A vegetalizing toxin produced by slimes."
+	description = "A vegetalizing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/pod
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
-/datum/reagent/stableslimetoxin/jelly
+/datum/reagent/mutationtoxin/jelly
 	name = "Imperfect Mutation Toxin"
 	id = "jellymutationtoxin"
-	description = "An jellyfying toxin produced by slimes."
+	description = "An jellyfying toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/jelly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
 
-/datum/reagent/stableslimetoxin/golem
+/datum/reagent/mutationtoxin/golem
 	name = "Golem Mutation Toxin"
 	id = "golemmutationtoxin"
-	description = "A crystal toxin produced by slimes."
+	description = "A crystal toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/golem/random
 	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
 
-/datum/reagent/stableslimetoxin/abductor
+/datum/reagent/mutationtoxin/abductor
 	name = "Abductor Mutation Toxin"
 	id = "abductormutationtoxin"
-	description = "An alien toxin produced by slimes."
+	description = "An alien toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/abductor
 	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
 
-/datum/reagent/stableslimetoxin/android
+/datum/reagent/mutationtoxin/android
 	name = "Android Mutation Toxin"
 	id = "androidmutationtoxin"
-	description = "A robotic toxin produced by slimes."
+	description = "A robotic toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
 
 //BLACKLISTED RACES
-/datum/reagent/stableslimetoxin/skeleton
+/datum/reagent/mutationtoxin/skeleton
 	name = "Skeleton Mutation Toxin"
 	id = "skeletonmutationtoxin"
-	description = "A scary toxin produced by slimes."
+	description = "A scary toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/skeleton
 	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
 
-/datum/reagent/stableslimetoxin/zombie
+/datum/reagent/mutationtoxin/zombie
 	name = "Zombie Mutation Toxin"
 	id = "zombiemutationtoxin"
-	description = "An undead toxin produced by slimes."
+	description = "An undead toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
 	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
 
-/datum/reagent/stableslimetoxin/ash
+/datum/reagent/mutationtoxin/ash
 	name = "Ash Mutation Toxin"
 	id = "ashmutationtoxin"
-	description = "An ashen toxin produced by slimes."
+	description = "An ashen toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
 
 
 //DANGEROUS RACES
-/datum/reagent/stableslimetoxin/shadow
+/datum/reagent/mutationtoxin/shadow
 	name = "Shadow Mutation Toxin"
 	id = "shadowmutationtoxin"
-	description = "A dark toxin produced by slimes."
+	description = "A dark toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/shadow
 	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
 
-/datum/reagent/stableslimetoxin/plasma
+/datum/reagent/mutationtoxin/plasma
 	name = "Plasma Mutation Toxin"
 	id = "plasmamutationtoxin"
-	description = "A plasma-based toxin produced by slimes."
+	description = "A plasma-based toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
 
-/datum/reagent/stableslimetoxin/unstable //PSYCH
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+/datum/reagent/slime_toxin
+	name = "Slime Mutation Toxin"
+	id = "slime_toxin"
+	description = "A toxin that turns organic material into slime."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	mutationtext = "<span class='danger'>The pain subsides. You feel... different.</span>"
+	taste_description = "slime"
+	metabolization_rate = 0.2
 
-/datum/reagent/stableslimetoxin/unstable/on_mob_life(mob/living/carbon/human/H)
-	var/list/possible_morphs = list()
-	for(var/type in subtypesof(/datum/species))
-		var/datum/species/S = type
-		if(initial(S.blacklisted))
-			continue
-		possible_morphs += S
-	race = pick(possible_morphs)
+/datum/reagent/slime_toxin/on_mob_life(mob/living/carbon/human/H)
 	..()
+	if(!istype(H))
+		return
+	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+		return
+
+	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
+		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		H.set_species(species_type)
+		H.reagents.del_reagent(id)
+
+	switch(current_cycle)
+		if(1 to 6)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("You don't feel very well.", "Your skin feels a little slimy.")]</span>")
+		if(7 to 12)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("Your appendages are melting away.", "Your limbs begin to lose their shape.")]</span>")
+		if(13 to 19)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
+		if(20 to INFINITY)
+			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+			H.set_species(species_type)
+			H.reagents.del_reagent(id)
+			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
