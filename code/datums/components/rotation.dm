@@ -71,4 +71,4 @@
 	return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user)
-	to_chat(user,"<span class='notice>You rotate [parent]</span>")
+	to_chat(user,"<span class='notice'>You rotate [parent]</span>")
