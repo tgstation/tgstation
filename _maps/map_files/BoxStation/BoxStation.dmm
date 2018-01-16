@@ -38821,10 +38821,11 @@
 /obj/item/device/integrated_circuit_printer/upgraded,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
-	dir = 4;
+	dir = 2;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = -28
+	pixel_x = 0;
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -43398,12 +43399,18 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cbZ" = (
-/obj/structure/closet/crate,
-/obj/item/target,
-/obj/item/target,
-/obj/item/target,
-/turf/open/floor/plasteel,
-/area/science/misc_lab)
+/obj/structure/table/reinforced,
+/obj/item/device/integrated_circuit_printer/upgraded,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the RD's goons from the safety of his office.";
+	dir = 1;
+	name = "Research Monitor";
+	network = list("RD");
+	pixel_x = 0;
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "cca" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -106209,7 +106216,7 @@ bPL
 bQI
 bTo
 Qqk
-bQY
+cbZ
 bSl
 cmo
 cNW
