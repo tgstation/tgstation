@@ -42969,6 +42969,15 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "cbd" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Testing Lab APC";
+	areastring = "/area/science/misc_lab";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
@@ -43373,15 +43382,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Toxins Lab APC";
-	areastring = "/area/science/mixing";
-	pixel_x = 26
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cbY" = (
@@ -57387,32 +57387,36 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "Qqj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime,
+/area/science/misc_lab)
+"Qqk" = (
 /turf/closed/wall,
 /turf/open/floor/circuit,
 /area/science/circuit)
-"Qqk" = (
+"Qql" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qql" = (
+"Qqm" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qqm" = (
+"Qqn" = (
 /obj/machinery/rnd/protolathe/department/science,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qqn" = (
+"Qqo" = (
 /turf/closed/wall,
 /turf/open/floor/circuit,
 /area/science/circuit)
-"Qqo" = (
+"Qqp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light,
 /obj/item/stock_parts/cell/super,
@@ -57420,7 +57424,7 @@
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qqp" = (
+"Qqq" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
 /obj/item/target/alien,
@@ -57432,7 +57436,7 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"Qqq" = (
+"Qqr" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -57440,7 +57444,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Qqr" = (
+"Qqs" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -57451,7 +57455,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Qqs" = (
+"Qqt" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -57463,7 +57467,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Qqt" = (
+"Qqu" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -105699,8 +105703,8 @@ bOB
 bPs
 bYo
 bSc
+Qqj
 cbd
-cbX
 ccT
 bSc
 bSc
@@ -105956,8 +105960,8 @@ QpY
 bPb
 bQG
 Qqg
-Qqj
-Qqn
+Qqk
+Qqo
 bSl
 bQZ
 bQZ
@@ -106213,7 +106217,7 @@ bXs
 bPL
 bQI
 bTo
-Qqk
+Qql
 cbZ
 bSl
 cmo
@@ -106470,7 +106474,7 @@ QpZ
 bPF
 bQI
 bXs
-Qql
+Qqm
 cbY
 bSl
 cOe
@@ -106728,7 +106732,7 @@ bPM
 bZh
 Qqh
 cbe
-Qqo
+Qqp
 bSl
 cOe
 ceS
@@ -106991,7 +106995,7 @@ cOe
 ceR
 cbf
 cbv
-Qqs
+Qqt
 cQw
 cjD
 cjD
@@ -107241,14 +107245,14 @@ Qqb
 Qqd
 Qqe
 Qqi
-Qqm
-Qqp
+Qqn
+Qqq
 bSl
 cOx
-Qqq
+Qqr
 ckS
 cNW
-Qqt
+Qqu
 cds
 cjD
 ckt
@@ -107759,7 +107763,7 @@ cbg
 bTr
 bTr
 bTr
-Qqr
+Qqs
 cbg
 bTr
 cct
