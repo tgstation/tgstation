@@ -373,7 +373,8 @@
 	if(get_eye_protection() < intensity && (override_blindness_check || !(has_disability(DISABILITY_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
-		return 1
+		return TRUE
+	return FALSE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
