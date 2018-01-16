@@ -41,12 +41,22 @@
 			if(!silent)
 				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			traitor_mob.dna.remove_mutation(CLOWNMUT)
+	if(owner.assigned_role == "Mime")
+		var/mob/living/carbon/human/traitor_mob = owner.current
+		if(traitor_mob && istype(traitor_mob))
+			if(!silent)
+				to_chat(traitor_mob, "Your vow of silence is not more important than your goals, therefore it has been lifted.")
+			traitor_mob.mind.miming = 0 
 
 /datum/antagonist/traitor/remove_innate_effects()
 	if(owner.assigned_role == "Clown")
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob && istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
+	if(owner.assigned_role == "Mime")
+		var/mob/living/carbon/human/traitor_mob = owner.current
+		if(traitor_mob && istype(traitor_mob))
+			traitor_mob.mind.miming = 1 
 
 /datum/antagonist/traitor/on_removal()
 	if(should_specialise)
