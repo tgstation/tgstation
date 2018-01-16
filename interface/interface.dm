@@ -70,7 +70,7 @@
 		var/href = issue_template
 		if(GLOB.round_id || servername)
 			href = "Issue reported from [GLOB.round_id ? " Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]" : servername]\n\n[issue_template]"
-		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(href)]")
+		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(href)]"))
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
