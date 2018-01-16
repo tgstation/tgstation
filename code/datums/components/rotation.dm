@@ -35,8 +35,13 @@
 
 	if(src.rotation_flags & ROTATION_ALTCLICK)
 		RegisterSignal(COMSIG_CLICK_ALT, .proc/HandRot)
+		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(src.rotation_flags & ROTATION_WRENCH)
 		RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+
+/datum/component/simple_rotation/proc/ExamineMessage(mob/user)
+	if(rotation_flags & ROTATION_ALTCLICK)
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /datum/component/simple_rotation/proc/HandRot(mob/user)
 	if(!can_be_rotated.Invoke(user) || !can_user_rotate.Invoke(user))
