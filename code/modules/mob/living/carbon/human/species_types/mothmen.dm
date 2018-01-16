@@ -45,10 +45,10 @@
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()
-	if(H.dna.features["moth_wings"] != "Punished")
+	if(H.dna.features["moth_wings"] != "Burnt Off")
 		if(H.bodytemperature >= 800) //do not go into the extremely hot light. you will not survive
 			to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
-			H.dna.features["moth_wings"] = "Punished"
+			H.dna.features["moth_wings"] = "Burnt Off"
 			handle_mutant_bodyparts(H)
 
 /datum/species/moth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -64,7 +64,7 @@
 
 /datum/species/moth/space_move(mob/living/carbon/human/H)
 	. = ..()
-	if(H.loc && !isspaceturf(H.loc))
+	if(H.loc && !isspaceturf(H.loc) && H.dna.features["moth_wings"] != "Burnt Off")
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
