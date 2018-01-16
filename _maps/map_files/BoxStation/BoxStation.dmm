@@ -38824,7 +38824,6 @@
 	dir = 2;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/white,
@@ -43406,7 +43405,7 @@
 	dir = 1;
 	name = "Research Monitor";
 	network = list("RD");
-	pixel_x = 0;
+
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/white,

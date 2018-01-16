@@ -2307,7 +2307,6 @@
 "aeC" = (
 /obj/machinery/requests_console{
 	department = "Construction";
-	departmentType = 0;
 	name = "Construction RC";
 	pixel_y = 32
 	},
