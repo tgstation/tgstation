@@ -14,6 +14,10 @@
 /obj/item/implant/explosive/on_mob_death(mob/living/L, gibbed)
 	activate("death")
 
+/obj/item/implant/explosive/trigger(emote, mob/source)
+	if(emote == "deathgasp")
+		activate("deathgasp")
+
 /obj/item/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
