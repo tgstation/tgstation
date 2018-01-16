@@ -24,7 +24,7 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_disability(CLUMSY) && prob(50))
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
@@ -46,11 +46,10 @@
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	var/area/A = get_area(T)
 	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_COORDJMP(T)]"
 	GLOB.bombers += message
 	message_admins(message)
-	log_game("[key_name(user)] has primed \a [src] for detonation at [A.name] [COORD(T)].")
+	log_game("[key_name(user)] has primed \a [src] for detonation at [get_area_name(T, TRUE)] [COORD(T)].")
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)

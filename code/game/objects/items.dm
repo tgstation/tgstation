@@ -412,6 +412,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
+	SendSignal(COMSIG_ITEM_DROPPED,user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -442,6 +443,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -543,7 +545,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.has_disability(BLIND) || M.has_disability(NEARSIGHT)))
+		if(!(M.has_disability(DISABILITY_BLIND) || M.has_disability(DISABILITY_NEARSIGHT)))
 			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
@@ -556,20 +558,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if (prob(eyes.eye_damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
-
-/obj/item/clean_blood()
-	. = ..()
-	if(.)
-		if(initial(icon) && initial(icon_state))
-			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
-			if(blood_splatter_icon)
-				cut_overlay(blood_splatter_icon)
-
-/obj/item/clothing/gloves/clean_blood()
-	. = ..()
-	if(.)
-		transfer_blood = 0
 
 /obj/item/singularity_pull(S, current_size)
 	..()
@@ -611,6 +599,36 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
+/obj/item/proc/update_slot_icon()
+	if(!ismob(loc))
+		return
+	var/mob/owner = loc
+	var/flags = slot_flags
+	if(flags & SLOT_OCLOTHING)
+		owner.update_inv_wear_suit()
+	if(flags & SLOT_ICLOTHING)
+		owner.update_inv_w_uniform()
+	if(flags & SLOT_GLOVES)
+		owner.update_inv_gloves()
+	if(flags & SLOT_EYES)
+		owner.update_inv_glasses()
+	if(flags & SLOT_EARS)
+		owner.update_inv_ears()
+	if(flags & SLOT_MASK)
+		owner.update_inv_wear_mask()
+	if(flags & SLOT_HEAD)
+		owner.update_inv_head()
+	if(flags & SLOT_FEET)
+		owner.update_inv_shoes()
+	if(flags & SLOT_ID)
+		owner.update_inv_wear_id()
+	if(flags & SLOT_BELT)
+		owner.update_inv_belt()
+	if(flags & SLOT_BACK)
+		owner.update_inv_back()
+	if(flags & SLOT_NECK)
+		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
 	return heat

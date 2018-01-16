@@ -84,7 +84,7 @@
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
-	name = "BZ canister"
+	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = /datum/gas/bz
@@ -196,7 +196,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		ADD_GAS(gas_type, air_contents.gases)
+		air_contents.add_gas(gas_type)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -217,7 +217,7 @@
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		icon_state = "[initial(icon_state)]-1"
+		icon_state = "[icon_state]-1"
 		return
 
 	var/last_update = update
@@ -383,7 +383,7 @@
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
 					name = initial(replacement.name)
-					desc = initial(replacement.name)
+					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 		if("restricted")
 			restricted = !restricted

@@ -75,7 +75,7 @@
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -138,7 +138,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-GLOBAL_LIST(external_rsc_urls)
+GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
 
@@ -149,13 +149,6 @@ GLOBAL_LIST(external_rsc_urls)
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
-
-#if (PRELOAD_RSC == 0)
-	var/static/next_external_rsc = 0
-	if(external_rsc_urls && external_rsc_urls.len)
-		next_external_rsc = WRAP(next_external_rsc+1, 1, external_rsc_urls.len+1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
-#endif
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
@@ -638,6 +631,12 @@ GLOBAL_LIST(external_rsc_urls)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+#if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
+	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
+		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
+#endif
 	//get the common files
 	getFiles(
 		'html/search.js',

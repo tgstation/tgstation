@@ -322,10 +322,6 @@
 	to_chat(S, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/message_server/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
-	return FALSE
-
 /obj/machinery/deepfryer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>This kitchen appliance should be preserved, it will make delicious unhealthy snacks for our masters in the future. Aborting.</span>")
 	return FALSE
@@ -454,7 +450,7 @@
 	if(target == src)
 		return
 
-	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_LAVALAND)
+	if(!is_station_level(z) && !is_mining_level(z))
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 

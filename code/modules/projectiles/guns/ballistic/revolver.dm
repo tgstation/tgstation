@@ -40,9 +40,7 @@
 		CB = magazine.get_round(0)
 		if(CB)
 			CB.forceMove(drop_location())
-			CB.SpinAnimation(10, 1)
-			CB.update_icon()
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, CB, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
@@ -99,7 +97,7 @@
 						"The Peacemaker" = "detective_peacemaker"
 						)
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override = "")
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
@@ -229,7 +227,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(src, "gun_dry_fire", 60, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
@@ -351,7 +349,7 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.has_disability(CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((user.has_disability(DISABILITY_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
 	if(process_fire(user, user, 0, zone_override = "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")

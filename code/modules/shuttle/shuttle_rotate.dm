@@ -105,3 +105,9 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /obj/machinery/gravity_generator/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
+
+/obj/machinery/door/airlock/shuttleRotate(rotation, params)
+	. = ..()
+	if(cyclelinkeddir)
+		cyclelinkeddir = angle2dir(rotation+dir2angle(cyclelinkeddir))
+		cyclelinkairlock()

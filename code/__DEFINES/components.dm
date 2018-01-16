@@ -6,9 +6,10 @@
 
 // How multiple components of the exact same type are handled in the same datum
 
-#define COMPONENT_DUPE_HIGHLANDER 0 //old component is deleted (default)
-#define COMPONENT_DUPE_ALLOWED 1    //duplicates allowed
-#define COMPONENT_DUPE_UNIQUE 2     //new component is deleted
+#define COMPONENT_DUPE_HIGHLANDER 0		//old component is deleted (default)
+#define COMPONENT_DUPE_ALLOWED 1		//duplicates allowed
+#define COMPONENT_DUPE_UNIQUE 2			//new component is deleted
+#define COMPONENT_DUPE_UNIQUE_PASSARGS 4	//old component is given the initialization args of the new
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -26,6 +27,13 @@
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob)
+#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
+	//Positions for overrides list
+	#define EXAMINE_POSITION_ARTICLE 1
+	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_NAME 3
+	//End positions
+	#define COMPONENT_EXNAME_CHANGED 1
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (/atom/movable, /atom)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
@@ -74,6 +82,7 @@
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2

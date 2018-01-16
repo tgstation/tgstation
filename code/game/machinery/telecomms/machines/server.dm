@@ -1,11 +1,9 @@
-
 /*
 	The server logs all traffic and signal data. Once it records the signal, it sends
 	it to the subspace broadcaster.
 
 	Store a maximum of 100 logs and then deletes them.
 */
-
 
 /obj/machinery/telecomms/server
 	name = "telecommunication server"
@@ -15,112 +13,57 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
-	machinetype = 4
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
-	var/list/stored_names = list()
-	var/list/TrafficActions = list()
-	var/logs = 0 // number of logs
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
-
-	var/list/memory = list()	// stored memory
-
-	var/encryption = "null" // encryption key: ie "password"
-	var/salt = "null"		// encryption salt: ie "123comsat"
-							// would add up to md5("password123comsat")
-	var/language = "human"
-	var/obj/item/device/radio/headset/server_radio = null
-	var/last_signal = 0 	// Last time it sent a signal
 
 /obj/machinery/telecomms/server/Initialize()
 	. = ..()
-	server_radio = new
 
-/obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	if(signal.data["message"])
+/obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
+	// can't log non-vocal signals
+	if(!istype(signal) || !signal.data["message"] || !is_freq_listening(signal))
+		return
 
-		if(is_freq_listening(signal))
+	if(traffic > 0)
+		totaltraffic += traffic // add current traffic to total traffic
 
-			if(traffic > 0)
-				totaltraffic += traffic // add current traffic to total traffic
+	// Delete particularly old logs
+	if (log_entries.len >= 400)
+		log_entries.Cut(1, 2)
 
-			//Is this a test signal? Bypass logging
-			if(signal.data["type"] != 4)
-
-				// If signal has a message and appropriate frequency
-
-				update_logs()
-
-				var/datum/comm_log_entry/log = new
-
-				// Copy the signal.data entries we want
-				log.parameters["mobtype"] = signal.data["mobtype"]
-				log.parameters["job"] = signal.data["job"]
-				log.parameters["key"] = signal.data["key"]
-				log.parameters["message"] = signal.data["message"]
-				log.parameters["name"] = signal.data["name"]
-				log.parameters["realname"] = signal.data["realname"]
-
-				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
-				// TODO languages: ^ I don't know what this does
-
-				// If the signal is still compressed, make the log entry gibberish
-				if(signal.data["compression"] > 0)
-					log.parameters["message"] = Gibberish(signal.data["message"], signal.data["compression"] + 50)
-					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
-					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
-					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
-					log.input_type = "Corrupt File"
-
-				// Log and store everything that needs to be logged
-				log_entries.Add(log)
-				if(!(signal.data["name"] in stored_names))
-					stored_names.Add(signal.data["name"])
-				logs++
-				signal.data["server"] = src
-
-				// Give the log a name
-				var/identifier = num2text( rand(-1000,1000) + world.time )
-				log.name = "data packet ([md5(identifier)])"
-
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
-			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
-
-/obj/machinery/telecomms/server/proc/update_logs()
-	// start deleting the very first log entry
-	if(logs >= 400)
-		for(var/i = 1, i <= logs, i++) // locate the first garbage collectable log entry and remove it
-			var/datum/comm_log_entry/L = log_entries[i]
-			if(L.garbage_collector)
-				log_entries.Remove(L)
-				logs--
-				break
-
-/obj/machinery/telecomms/server/proc/add_entry(content, input)
 	var/datum/comm_log_entry/log = new
-	var/identifier = num2text( rand(-1000,1000) + world.time )
-	log.name = "[input] ([md5(identifier)])"
-	log.input_type = input
-	log.parameters["message"] = content
-	log_entries.Add(log)
-	update_logs()
+	log.parameters["mobtype"] = signal.virt.source.type
+	log.parameters["name"] = signal.data["name"]
+	log.parameters["job"] = signal.data["job"]
+	log.parameters["message"] = signal.data["message"]
 
+	// If the signal is still compressed, make the log entry gibberish
+	var/compression = signal.data["compression"]
+	if(compression > 0)
+		log.input_type = "Corrupt File"
+		log.parameters["name"] = Gibberish(signal.data["name"], compression + 50)
+		log.parameters["job"] = Gibberish(signal.data["job"], compression + 50)
+		log.parameters["message"] = Gibberish(signal.data["message"], compression + 50)
+
+	// Give the log a name and store it
+	var/identifier = num2text( rand(-1000,1000) + world.time )
+	log.name = "data packet ([md5(identifier)])"
+	log_entries.Add(log)
+
+	var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
+	if(!can_send)
+		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 
 // Simple log entry datum
-
 /datum/comm_log_entry
-	var/parameters = list() // carbon-copy to signal.data[]
-	var/name = "data packet (#)"
-	var/garbage_collector = 1 // if set to 0, will not be garbage collected
 	var/input_type = "Speech File"
+	var/name = "data packet (#)"
+	var/parameters = list()  // copied from signal.data above
 
 
-
-
-//Preset Servers
-
+// Preset Servers
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
 

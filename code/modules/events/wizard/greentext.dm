@@ -58,7 +58,7 @@
 	..()
 
 /obj/item/greentext/process()
-	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
+	if(new_holder && is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
 		if(!(new_holder in SSticker.mode.traitors))
 			SSticker.mode.traitors += new_holder.mind

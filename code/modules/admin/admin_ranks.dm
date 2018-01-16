@@ -143,8 +143,10 @@ GLOBAL_PROTECT(admin_ranks)
 			previous_rights = R.rights
 	else
 		if(!SSdbcore.Connect())
-			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			if(CONFIG_GET(flag/sql_enabled))
+				var/msg = "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+				log_world(msg)
+				WRITE_FILE(GLOB.world_game_log, msg)
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return

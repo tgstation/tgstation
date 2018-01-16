@@ -321,9 +321,9 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.ChangeTurf(/turf/open/floor/plasteel)
+				target_turf.PlaceOnTop(/turf/open/floor/plasteel)
 			else //Build a hull plating without a floor tile.
-				target_turf.ChangeTurf(/turf/open/floor/plating)
+				target_turf.PlaceOnTop(/turf/open/floor/plating)
 
 	else
 		var/turf/open/floor/F = target_turf
@@ -375,7 +375,7 @@
 		empty_tiles()
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)
 	T.amount = 1

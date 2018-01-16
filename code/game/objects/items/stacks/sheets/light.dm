@@ -11,7 +11,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	max_amount = 60
-	grind_results = list("silicon" = 1, "copper" = 1)
+	grind_results = list("silicon" = 20, "copper" = 5)
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 

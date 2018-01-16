@@ -673,7 +673,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Ammo Box (.357)"
+	name = "Speed Loader (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
@@ -806,6 +806,15 @@
 	materials = list(MAT_GLASS = 20)
 	build_path = /obj/item/stock_parts/cell/emergency_light
 	category = list("initial", "Electronics")
+
+/datum/design/packageWrap
+	name = "Package Wrapping"
+	id = "packagewrap"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200)
+	build_path = /obj/item/stack/packageWrap
+	category = list("initial", "Misc")
+	maxstack = 30
 
 /datum/design/holodisk
 	name = "Holodisk"

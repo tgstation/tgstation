@@ -76,6 +76,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/structure/cable/white
 	cable_color = "white"
+	color = "#ffffff"
 
 // the power cable object
 /obj/structure/cable/Initialize(mapload, param_color)
@@ -493,8 +494,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
 	. = ..()
-	if(new_amount) // MAXCOIL by default
-		amount = new_amount
 
 	var/list/cable_colors = GLOB.cable_colors
 	item_color = param_color || item_color || pick(cable_colors)
@@ -665,7 +664,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 			NC.d1 = 0
 			NC.d2 = fdirn
-			NC.add_fingerprint()
+			NC.add_fingerprint(user)
 			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
@@ -716,7 +715,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		//updates the stored cable coil
 		C.update_stored(2, item_color)
 
-		C.add_fingerprint()
+		C.add_fingerprint(user)
 		C.update_icon()
 
 

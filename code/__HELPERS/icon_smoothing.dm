@@ -267,6 +267,13 @@
 	if(!target_turf)
 		return NULLTURF_BORDER
 
+	var/area/target_area = get_area(target_turf)
+	var/area/source_area = get_area(source)
+	if(source_area.canSmoothWithAreas && !is_type_in_typecache(target_area, source_area.canSmoothWithAreas))
+		return null
+	if(target_area.canSmoothWithAreas && !is_type_in_typecache(source_area, target_area.canSmoothWithAreas))
+		return null
+
 	if(source.canSmoothWith)
 		var/atom/A
 		if(source.smooth & SMOOTH_MORE)

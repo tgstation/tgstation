@@ -406,7 +406,7 @@
 	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
-	bodytemperature = 310
+	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
@@ -452,24 +452,8 @@
 			return 0
 
 	var/old_direction = dir
-	var/atom/movable/pullee = pulling
-	if(pullee && get_dist(src, pullee) > 1)
-		stop_pulling()
-	if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
-		log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
-		stop_pulling()
 	var/turf/T = loc
 	. = ..()
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
-		if(pulling.anchored)
-			stop_pulling()
-			return
-
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-				stop_pulling()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
@@ -761,9 +745,9 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
+	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return 0
-	if(T.z >= ZLEVEL_SPACEMAX)
+	if(is_away_level(T.z))
 		return 0
 	if(user != null && src == user)
 		return 0
@@ -786,14 +770,15 @@
 	if(QDELETED(src))
 		return
 	if(butcher_results)
+		var/atom/Tsec = drop_location()
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+				new path(Tsec)
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib(0, 0, 1)
 
-/mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
 		return
 	if(no_dextery)
@@ -806,7 +791,7 @@
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
-	if(has_disability(PACIFISM))
+	if(has_disability(DISABILITY_PACIFISM))
 		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE
@@ -1034,7 +1019,7 @@
 	. = ..()
 	if(.)
 		if(client)
-			reset_perspective(destination)
+			reset_perspective()
 		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
@@ -1058,3 +1043,31 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
+
+/mob/living/MouseDrop(mob/over)
+	. = ..()
+	var/mob/living/user = usr
+	if(!istype(over) || !istype(user))
+		return
+	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
+		return
+	if(can_be_held)
+		mob_try_pickup(over)
+
+/mob/living/proc/mob_pickup(mob/living/L)
+	return
+
+/mob/living/proc/mob_try_pickup(mob/living/user)
+	if(!ishuman(user))
+		return
+	if(user.get_active_held_item())
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return FALSE
+	if(buckled)
+		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		return FALSE
+	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
+	if(!do_after(user, 20, target = src))
+		return FALSE
+	mob_pickup(user)
+	return TRUE

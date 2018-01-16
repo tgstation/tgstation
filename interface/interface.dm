@@ -78,6 +78,7 @@
 
 	var/adminhotkeys = {"<font color='purple'>
 Admin:
+\tF3 = asay
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel
 \tF7 = admin-pm

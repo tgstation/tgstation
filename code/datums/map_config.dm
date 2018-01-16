@@ -31,16 +31,17 @@
 	var/voteweight = 1
 	var/allow_custom_shuttles = TRUE
 
-/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
+/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	if(default_to_box)
 		return
-	LoadConfig(filename)
+	LoadConfig(filename, error_if_missing)
 	if(delete_after)
 		fdel(filename)
 
-/datum/map_config/proc/LoadConfig(filename)
+/datum/map_config/proc/LoadConfig(filename, error_if_missing)
 	if(!fexists(filename))
-		log_world("map_config not found: [filename]")
+		if(error_if_missing)
+			log_world("map_config not found: [filename]")
 		return
 
 	var/json = file(filename)

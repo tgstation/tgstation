@@ -32,19 +32,24 @@
 	return protection
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
-	dna.species.on_hit(P, src)
+	if(dna && dna.species)
+		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	var/spec_return = dna.species.bullet_act(P, src)
-	if(spec_return)
-		return spec_return
+	if(dna && dna.species)
+		var/spec_return = dna.species.bullet_act(P, src)
+		if(spec_return)
+			return spec_return
 
 	if(mind)
 		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					if(mind.martial_art.deflection_chance >= 100) //if they can NEVER be hit, lets clue sec in ;)
+						visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					else
+						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 					return 0
 
@@ -65,7 +70,10 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
-					P.Angle = null
+					var/new_angle_s = P.Angle + rand(120,240)
+					while(new_angle_s > 180)	// Translate to regular projectile degrees
+						new_angle_s -= 360
+					P.setAngle(new_angle_s)
 
 				return -1 // complete projectile permutation
 
@@ -109,9 +117,10 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
-	var/spec_return = dna.species.spec_hitby(AM, src)
-	if(spec_return)
-		return spec_return
+	if(dna && dna.species)
+		var/spec_return = dna.species.spec_hitby(AM, src)
+		if(spec_return)
+			return spec_return
 	var/obj/item/I
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
@@ -140,7 +149,7 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_disability(FAT)) && ismonkey(pulling))
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_disability(DISABILITY_FAT)) && ismonkey(pulling))
 		devour_mob(pulling)
 	else
 		..()
