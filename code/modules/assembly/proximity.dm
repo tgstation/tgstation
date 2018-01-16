@@ -9,27 +9,7 @@
 	var/timing = 0
 	var/time = 10
 	var/sensitivity = 1
-//	var/suicider = null
-/*
-/obj/item/device/assembly/prox_sensor/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] eats \the [src]! If something get's close [user.p_they()]'ll be killed!</span>")
-	suicider = user
-	proximity_monitor.ignore_if_not_on_turf = FALSE
-	user.transferItemToLoc(src, user, TRUE)
-	proximity_monitor.host = loc
-	//sensitivity = 3
-	//src.forceMove(user)
-	proximity_monitor.SetRange(3)
-	toggle_scan(1)
 
-	return MANUAL_SUICIDE
-
-/obj/item/device/assembly/prox_sensor/proc/manual_suicide(mob/living/user)
-	suicider = null
-	user.visible_message("<span class='suicide'>[user]'s sensor goes off, sending a lethal shock into [user.p_them()]!</span>")
-	user.adjustOxyLoss(200)
-	user.death(0)
-*/
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
 
 
@@ -68,12 +48,6 @@
 /obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
 		return
-	/*if (suicider != null && AM != suicider && AM != src)
-		message_admins("[AM!= suicider] so [suicider] got caught by [AM]")
-		manual_suicide(suicider)
-		
-		return
-	message_admins("[AM] = am, [suicider] = suicider")	*/
 	sense()
 
 
