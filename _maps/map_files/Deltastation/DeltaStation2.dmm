@@ -14420,7 +14420,6 @@
 	},
 /obj/machinery/requests_console{
 	department = "Bar Counter";
-
 	name = "Bar RC";
 	pixel_y = 32;
 	receive_ore_updates = 1

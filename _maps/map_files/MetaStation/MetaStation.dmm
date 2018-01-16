@@ -80866,8 +80866,9 @@
 /area/science/circuit)
 "QtA" = (
 /obj/machinery/power/apc{
+	areastring = "/area/science/circuit";
 	dir = 1;
-	name = "Circuitry lab area power controller";
+	name = "Circuitry lab APC";
 	pixel_y = 30
 	},
 /obj/structure/cable/yellow{

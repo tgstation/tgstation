@@ -43405,7 +43405,6 @@
 	dir = 1;
 	name = "Research Monitor";
 	network = list("RD");
-
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/white,
@@ -57294,7 +57293,7 @@
 /area/science/circuit)
 "QpX" = (
 /obj/machinery/power/apc{
-	areastring = "/turf/open/floor/circuit";
+	areastring = "/area/science/circuit";
 	name = "Circuitry Lab APC";
 	pixel_x = 30
 	},
