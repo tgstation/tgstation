@@ -60,9 +60,6 @@
 		stack_trace("Wrong team type passed to [type] initialization.")
 	monkey_team = new_team
 
-/datum/antagonist/monkey/get_team()
-	return monkey_team
-
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
 	owner.objectives |= objectives
