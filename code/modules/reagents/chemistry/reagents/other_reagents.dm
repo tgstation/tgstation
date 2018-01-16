@@ -836,6 +836,15 @@
 			C.blood_volume += 0.5
 	..()
 
+/datum/reagent/iron/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!..())
+		return FALSE
+	switch(CR.id)
+		if("salglu_solution")
+			M.blood_volume -= 1
+			if(M.blood_volume < 0)
+				M.blood_volume = 0
+
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!isliving(M))
 		return

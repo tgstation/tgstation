@@ -31,6 +31,7 @@
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/conflicting_reagents // Reagents that don't mesh well with this reagent.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -111,6 +112,10 @@
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
+
+/datum/reagent/proc/on_reagent_conflict(mob/living/M, datum/reagent/CR)
+	if(!M || !CR)
+		return FALSE
 
 /proc/pretty_string_from_reagent_list(var/list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
