@@ -10,15 +10,13 @@
 	var/time = 10
 	var/sensitivity = 1
 
-/obj/item/device/assembly/prox_sensor/proc/toggle_scan()
-
-
-/obj/item/device/assembly/prox_sensor/proc/sense()
-
-
 /obj/item/device/assembly/prox_sensor/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 0)
+
+/obj/item/device/assembly/prox_sensor/Destroy()
+	if (timing)
+		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/device/assembly/prox_sensor/describe()
 	if(timing)
@@ -51,7 +49,7 @@
 	sense()
 
 
-/obj/item/device/assembly/prox_sensor/sense()
+/obj/item/device/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)
 		return 0
 	pulse(0)
@@ -64,10 +62,11 @@
 		time--
 		if(time <= 0)
 			timing = 0
+			STOP_PROCESSING(SSprocessing, src)
 			toggle_scan(1)
 			time = initial(time)
 
-/obj/item/device/assembly/prox_sensor/toggle_scan(scan)
+/obj/item/device/assembly/prox_sensor/proc/toggle_scan(scan)
 	if(!secured)
 		return 0
 	scanning = scan
@@ -122,6 +121,10 @@
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
+		if (timing)
+			START_PROCESSING(SSprocessing, src)
+		else
+			STOP_PROCESSING(SSprocessing, src)
 		update_icon()
 
 	if(href_list["tp"])
