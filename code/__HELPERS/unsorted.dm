@@ -1500,7 +1500,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		var/datum/thing = input
 		if(thing.use_tag)
 			if(!thing.tag)
+			#ifdef TESTING
 				stack_trace("A ref was requested of an object with use_tag set but no tag: [thing]")
+			#endif
 				thing.use_tag = FALSE
 			else
 				return "\[[url_encode(thing.tag)]\]"
