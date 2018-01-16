@@ -223,7 +223,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if((target.has_disability(NOCLONE)) || (target.has_disability(NOCLONE)))
+	if((target.has_disability(DISABILITY_NOCLONE)) || (target.has_disability(DISABILITY_NOCLONE)))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return

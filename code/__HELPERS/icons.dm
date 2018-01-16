@@ -714,7 +714,7 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 	if(!A)
@@ -722,6 +722,16 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha <= 0)
 		return flat
 	var/noIcon = FALSE
+
+	if(start)
+		if(!defdir)
+			defdir = A.dir
+		if(!deficon)
+			deficon = A.icon
+		if(!defstate)
+			defstate = A.icon_state
+		if(!defblend)
+			defblend = A.blend_mode
 
 	var/curicon
 	if(A.icon)
@@ -745,10 +755,31 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(A.dir != 2)
-		curdir = A.dir
-	else
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
+	
+	//These should use the parent's direction (most likely)
+	if(!A.dir || A.dir == SOUTH)
 		curdir = defdir
+	else
+		curdir = A.dir
+
+	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
+	if(curdir != SOUTH)
+		var/icon/test_icon 
+		var/directionals_exist = FALSE
+		var/list/dirs_to_check = GLOB.cardinals - SOUTH
+		outer:
+			for(var/possible_dir in dirs_to_check)
+				test_icon = icon(curicon,curstate,possible_dir,frame=1)
+				for(var/x in 1 to world.icon_size)
+					for(var/y in 1 to world.icon_size)
+						if(!isnull(test_icon.GetPixel(x,y)))
+							directionals_exist = TRUE
+							break outer
+		if(!directionals_exist)
+			base_icon_dir = SOUTH
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -761,7 +792,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -813,10 +844,16 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/icon/add // Icon of overlay being added
 
-		// Current dimensions of flattened icon
-	var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
-		// Dimensions of overlay being added
-	var/{addX1;addX2;addY1;addY2}
+	// Current dimensions of flattened icon
+	var/flatX1=1
+	var/flatX2=flat.Width()
+	var/flatY1=1
+	var/flatY2=flat.Height()
+	// Dimensions of overlay being added
+	var/addX1
+	var/addX2
+	var/addY1
+	var/addY2
 
 	for(var/V in layers)
 		var/image/I = V
@@ -825,9 +862,9 @@ The _flatIcons list is a cache for generated icon files.
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I.icon, I.icon_state, I.dir)
+			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
@@ -849,7 +886,7 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
-	return icon(flat, "", curdir)
+	return icon(flat, "", SOUTH)
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.

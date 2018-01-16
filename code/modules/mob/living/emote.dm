@@ -1,18 +1,3 @@
-//The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/living/emote(act, m_type = null, message = null)
-	act = lowertext(act)
-	var/param = message
-	var/custom_param = findchar(act, " ")
-	if(custom_param)
-		param = copytext(act, custom_param + 1, length(act) + 1)
-		act = copytext(act, 1, custom_param)
-
-	var/datum/emote/E
-	E = E.emote_list[act]
-	if(!E)
-		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
-		return
-	E.run_emote(src, param, m_type)
 
 /* EMOTE DATUMS */
 /datum/emote/living
@@ -143,16 +128,6 @@
 	restraint_check = TRUE
 	wing_time = 10
 
-/datum/emote/living/flip
-	key = "flip"
-	key_third_person = "flips"
-	restraint_check = TRUE
-
-/datum/emote/living/flip/run_emote(mob/user, params)
-	. = ..()
-	if(.)
-		user.SpinAnimation(7,1)
-
 /datum/emote/living/frown
 	key = "frown"
 	key_third_person = "frowns"
@@ -218,6 +193,7 @@
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
+	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
@@ -230,7 +206,7 @@
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
@@ -254,6 +230,19 @@
 	message = "points."
 	message_param = "points at %t."
 	restraint_check = TRUE
+
+/datum/emote/living/point/run_emote(mob/user, params)
+	message_param = initial(message_param) // reset
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.get_num_arms() == 0)
+			if(H.get_num_legs() != 0)
+				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
+				H.Knockdown(20)
+			else
+				message_param = "<span class='userdanger'>bumps their head on the ground</span> trying to motion towards %t."
+				H.adjustBrainLoss(5)
+	..()
 
 /datum/emote/living/pout
 	key = "pout"
@@ -481,25 +470,6 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
-
-/datum/emote/living/spin
-	key = "spin"
-	key_third_person = "spins"
-	restraint_check = TRUE
-
-/datum/emote/living/spin/run_emote(mob/user)
-	. = ..()
-	if(.)
-		user.spin(20, 1)
-		if(iscyborg(user) && user.has_buckled_mobs())
-			var/mob/living/silicon/robot/R = user
-			GET_COMPONENT_FROM(riding_datum, /datum/component/riding, R)
-			if(riding_datum)
-				for(var/mob/M in R.buckled_mobs)
-					riding_datum.force_dismount(M)
-			else
-				R.unbuckle_all_mobs()
-
 
 /datum/emote/living/circle
 	key = "circle"

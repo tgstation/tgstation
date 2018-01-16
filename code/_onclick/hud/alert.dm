@@ -341,12 +341,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
-	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
 		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
 		return
-	desc = "You are currently tracking [blood_target] in [A.name]."
+	desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
 	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()

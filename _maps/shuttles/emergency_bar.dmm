@@ -387,7 +387,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bq" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
 	},
 /turf/open/floor/mineral/titanium,

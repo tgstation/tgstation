@@ -11,9 +11,9 @@
 
 //reports to servants when scripture is locked or unlocked
 /proc/scripture_unlock_alert(list/previous_states)
+	. = scripture_unlock_check()
 	if(!GLOB.servants_active)
 		return
-	. = scripture_unlock_check()
 	for(var/i in .)
 		if(.[i] != previous_states[i])
 			update_slab_info()

@@ -622,7 +622,7 @@ obj/item/storage/box/clown
 			return
 		qdel(I)
 		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
-		var/obj/item/honkbot_assembly/A = new
+		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
 	else

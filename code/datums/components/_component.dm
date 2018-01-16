@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		return
+		CRASH("Incompatible [type] assigned to a [P]!")
 
 	_JoinParent(P)
 
@@ -205,13 +205,13 @@
 						new_comp = new nt(arglist(args))
 					if(!QDELETED(new_comp))
 						old_comp.InheritComponent(new_comp, TRUE)
-						qdel(new_comp)
+						QDEL_NULL(new_comp)
 				if(COMPONENT_DUPE_HIGHLANDER)
 					if(!new_comp)
 						new_comp = new nt(arglist(args))
 					if(!QDELETED(new_comp))
 						new_comp.InheritComponent(old_comp, FALSE)
-						qdel(old_comp)
+						QDEL_NULL(old_comp)
 				if(COMPONENT_DUPE_UNIQUE_PASSARGS)
 					if(!new_comp)
 						var/list/arguments = args.Copy(2)

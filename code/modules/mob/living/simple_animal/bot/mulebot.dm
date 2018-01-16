@@ -415,11 +415,9 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	var/area/dest_area
 	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
-		dest_area = get_area(target)
-		destination = format_text(dest_area.name)
+		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
@@ -472,8 +470,7 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						if(blood_DNA && blood_DNA.len)
-							B.blood_DNA |= blood_DNA.Copy()
+						B.add_blood_DNA(return_blood_DNA())
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -609,7 +606,7 @@
 				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
-						speak("Now loading [load] at <b>[get_area(src)]</b>.", radio_channel)
+						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
 		// whatever happened, check to see if we return home
 
 		if(auto_return && home_destination && destination != home_destination)
@@ -655,8 +652,7 @@
 	T.add_mob_blood(H)
 
 	var/list/blood_dna = H.get_blood_dna_list()
-	if(blood_dna)
-		transfer_blood_dna(blood_dna)
+	add_blood_DNA(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move

@@ -1436,11 +1436,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
-
-
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -1505,7 +1500,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		var/datum/thing = input
 		if(thing.use_tag)
 			if(!thing.tag)
-				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
+				stack_trace("A ref was requested of an object with use_tag set but no tag: [thing]")
 				thing.use_tag = FALSE
 			else
 				return "\[[url_encode(thing.tag)]\]"
@@ -1518,7 +1513,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	usr = M
 	. = CB.Invoke()
 	usr = temp
-  
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
@@ -1542,3 +1537,29 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))

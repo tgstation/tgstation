@@ -132,7 +132,7 @@ GLOBAL_PROTECT(exp_to_update)
 	for(var/client/L in GLOB.clients)
 		if(L.is_afk())
 			continue
-		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
+		L.update_exp_list(mins,ann)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)

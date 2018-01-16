@@ -472,7 +472,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "") as message|null
 	if(!input)
 		return
 
@@ -523,7 +523,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		if(isturf(D))
 			var/turf/T = D
-			T.ChangeTurf(T.baseturf)
+			T.ScrapeAway()
 		else
 			qdel(D)
 

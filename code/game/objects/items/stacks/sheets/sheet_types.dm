@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
-	grind_results = list("iron" = 0.5, "blood" = 1.5)
+	grind_results = list("iron" = 5, "blood" = 15)
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -332,12 +332,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	return ..()
-
-/obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
-		return
-	..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
@@ -385,7 +379,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 0.5, "teslium" = 1.5)
+	grind_results = list("iron" = 5, "teslium" = 15)
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -436,7 +430,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
-	grind_results = list("carbon" = 1)
+	grind_results = list("carbon" = 10)
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \

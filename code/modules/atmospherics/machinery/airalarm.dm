@@ -169,9 +169,8 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
-	var/area/A = get_area(src)
 	if(name == initial(name))
-		name = "[A.name] Air Alarm"
+		name = "[get_area_name(src)] Air Alarm"
 
 	update_icon()
 
@@ -447,11 +446,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -465,11 +460,18 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 1,
-					"n2o_scrub" = 1,
-					"rare_scrub"= 1,
-					"water_vapor_scrub"= 1,
+					"set_filters" = list(
+						/datum/gas/carbon_dioxide,
+						/datum/gas/plasma,
+						/datum/gas/water_vapor,
+						/datum/gas/hypernoblium,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/nitryl,
+						/datum/gas/tritium,
+						/datum/gas/bz,
+						/datum/gas/stimulum,
+						/datum/gas/pluoxium
+					),
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -496,11 +498,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -625,10 +623,8 @@
 	if(!frequency)
 		return
 
-	var/area/A = get_area(src)
-
 	var/datum/signal/alert_signal = new(list(
-		"zone" = A.name,
+		"zone" = get_area_name(src),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)
@@ -691,7 +687,7 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
+					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
@@ -701,7 +697,7 @@
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
-						locked = TRUE
+						locked = FALSE
 						mode = 1
 						shorted = 0
 						post_alert(0)

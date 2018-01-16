@@ -162,15 +162,6 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/mode = ATMOS_MODE
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
-	var/list/paint_colors = list(
-		"Grey"		= rgb(255,255,255),
-		"Red"		= rgb(255,0,0),
-		"Blue"		= rgb(0,0,255),
-		"Cyan"		= rgb(0,256,249),
-		"Green"		= rgb(30,255,0),
-		"Yellow"	= rgb(255,198,0),
-		"Purple"	= rgb(130,43,255)
-	)
 	var/paint_color="Grey"
 	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -237,8 +228,8 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	data["paint_colors"] = list()
-	for(var/c in paint_colors)
-		data["paint_colors"] += list(list("color_name" = c, "color_hex" = paint_colors[c], "selected" = (c == paint_color)))
+	for(var/c in GLOB.pipe_paint_colors)
+		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
 
 	return data
 
@@ -281,25 +272,23 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
-	var/atmos_piping_mode = mode == ATMOS_MODE || mode == METER_MODE
-	var/temp_piping_layer
-	if(atmos_piping_mode)
-		if(istype(A, /obj/machinery/atmospherics))
-			var/obj/machinery/atmospherics/AM = A
-			temp_piping_layer = AM.piping_layer
-			A = get_turf(user)
-
-	var/static/list/make_pipe_whitelist
-	if(!make_pipe_whitelist)
-		make_pipe_whitelist = list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe)
-
-	//make sure what we're clicking is valid for the current mode
-	var/can_make_pipe = (atmos_piping_mode || mode == DISPOSALS_MODE) && (isturf(A) || is_type_in_list(A, make_pipe_whitelist))
-
 	//So that changing the menu settings doesn't affect the pipes already being built.
+	var/temp_piping_layer = piping_layer
 	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
+
+	// clicking on an existing component puts the new one on the same layer
+	if ((mode == ATMOS_MODE || mode == METER_MODE) && istype(A, /obj/machinery/atmospherics))
+		var/obj/machinery/atmospherics/AM = A
+		temp_piping_layer = AM.piping_layer
+		A = get_turf(user)
+
+	//make sure what we're clicking is valid for the current mode
+	var/static/list/make_pipe_whitelist
+	if(!make_pipe_whitelist)
+		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe))
+	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
 
 	. = FALSE
 	switch(mode) //if we've gotten this var, the target is valid
@@ -308,7 +297,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.paint(paint_colors[paint_color])
+			P.paint(GLOB.pipe_paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			return
 
@@ -332,19 +321,16 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				var/obj/machinery/atmospherics/path = queued_p_type
 				var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
 
-				var/obj/item/pipe/P = new pipe_item_type(A, queued_p_type, queued_p_dir)
+				var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
 
-				if(queued_p_flipped)
+				if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
 					var/obj/item/pipe/trinary/flippable/F = P
 					F.flipped = queued_p_flipped
 
 				P.update()
 				P.add_fingerprint(usr)
-				if(!isnull(temp_piping_layer))
-					P.setPipingLayer(temp_piping_layer)
-				else
-					P.setPipingLayer(piping_layer)
-				P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+				P.setPipingLayer(temp_piping_layer)
+				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 		if(METER_MODE) //Making pipe meters
 			if(!can_make_pipe)
@@ -354,14 +340,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			if(do_after(user, 2, target = A))
 				activate()
 				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
-				if(!isnull(temp_piping_layer))
-					PM.setAttachLayer(temp_piping_layer)
-				else
-					PM.setAttachLayer(piping_layer)
+				PM.setAttachLayer(temp_piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(!can_make_pipe)
 				return ..()
+			A = get_turf(A)
 			if(isclosedturf(A))
 				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 				return
