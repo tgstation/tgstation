@@ -96,8 +96,13 @@
 		var/datum/mind/M = V
 		if(ishuman(M.current))
 			human_servants++
-	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
-	construct_limit = CLAMP(construct_limit, 1, 3)
+	construct_limit = human_servants / 5 //1 per 5 human servants, and a maximum of 3 marauders
+	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3) 
+	if(recent_marauders)
+		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
+
+
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/check_special_requirements()
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)
