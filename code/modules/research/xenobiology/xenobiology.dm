@@ -261,7 +261,7 @@
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
 			user.ExtinguishMob()
 			user.adjust_fire_stacks(-20)
-			user.reagents.add_reagent("frostoil",5)
+			user.reagents.add_reagent("frostoil",4)
 			user.reagents.add_reagent("cryoxadone",5)
 			return 100
 
