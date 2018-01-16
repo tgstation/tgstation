@@ -290,17 +290,21 @@
 
 /datum/action/innate/servant_warp
 	name = "Warp"
-	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return."
+	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return. Clicking this button again cancels the warp."
 	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "warp_down"
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
+	var/cancel = FALSE //if TRUE, an active warp will be canceled
 	var/obj/effect/temp_visual/ratvar/warp_marker/warping
 
 /datum/action/innate/servant_warp/Activate()
-	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target) || warping)
+	if(QDELETED(target) || !(ishuman(owner) || iscyborg(owner)) || !owner.canUseTopic(target))
 		return
 	if(!GLOB.servants_active) //No leaving unless there's servants from the get-go
+		return
+	if(warping)
+		cancel = TRUE
 		return
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
@@ -327,10 +331,17 @@
 	do_sparks(5, TRUE, T)
 	warping = new(T)
 	user.visible_message("<span class='warning'>[user]'s [target.name] flares!</span>", "<span class='bold sevtug_small'>You begin warping to [AR]...</span>")
-	if(!do_after(user, 50, target = warping))
+	button_icon_state = "warp_cancel"
+	owner.update_action_buttons()
+	if(!do_after(user, 50, target = warping, extra_checks = CALLBACK(src, .proc/is_canceled)))
 		to_chat(user, "<span class='bold sevtug_small'>Warp interrupted.</span>")
 		QDEL_NULL(warping)
+		button_icon_state = "warp_down"
+		owner.update_action_buttons()
+		cancel = FALSE
 		return
+	button_icon_state = "warp_down"
+	owner.update_action_buttons()
 	T.visible_message("<span class='warning'>[user] warps in!</span>")
 	playsound(user, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
@@ -339,3 +350,6 @@
 	flash_color(user, flash_color = "#AF0AAF", flash_time = 5)
 	R.remove_eye_control(user)
 	QDEL_NULL(warping)
+
+/datum/action/innate/servant_warp/proc/is_canceled()
+	return !cancel
