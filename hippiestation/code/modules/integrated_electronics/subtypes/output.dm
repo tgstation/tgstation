@@ -7,7 +7,7 @@
 	name = "text-to-radio circuit"
 	desc = "Takes any string as an input and will make the device output it in the radio with the frequency chosen as input."
 	extended_desc = "Similar to the text-to-speech circuit, except the fact that the text is converted into a subspace signal and broadcasted to the desired frequency, or 1459 as default.\
-					The frequency is a number, and doesn't need the dot. Example: Common frequency is 145.9, so the result is 1459 as a number. Accepted frequencies are from 144.1 to 148.9."
+					The frequency is a number, and doesn't need the dot. Example: Common frequency is 145.9, so the result is 1459 as a number."
 	icon_state = "speaker"
 	complexity = 15
 	inputs = list("text" = IC_PINTYPE_STRING, "frequency" = IC_PINTYPE_NUMBER)
