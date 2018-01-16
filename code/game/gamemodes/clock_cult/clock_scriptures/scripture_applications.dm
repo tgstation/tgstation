@@ -94,9 +94,10 @@
 	var/human_servants = 0
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(ishuman(M.current))
+		var/datum/mob/C = M.current
+		if(ishuman(C) && C.stat != DEAD)
 			human_servants++
-	construct_limit = human_servants / 5 //1 per 5 human servants, and a maximum of 3 marauders
+	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
 	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3) 
 	if(recent_marauders)
 		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
