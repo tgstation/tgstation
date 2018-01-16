@@ -5,6 +5,9 @@
 	icon_state = "target_stake"
 	density = TRUE
 	flags_1 = CONDUCT_1
+	can_buckle = TRUE
+	max_buckled_mobs = 1
+	buckle_lying = FALSE
 	var/obj/item/target/pinned_target
 
 /obj/structure/target_stake/Destroy()
