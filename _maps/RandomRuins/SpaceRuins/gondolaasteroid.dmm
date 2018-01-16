@@ -25,9 +25,7 @@
 /area/ruin/space/has_grav)
 "g" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav{
-	dynamic_lighting = 1
-	})
+/area/ruin/space/has_grav)
 "h" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/plating/asteroid/airless,
