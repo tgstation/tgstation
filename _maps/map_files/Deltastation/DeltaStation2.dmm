@@ -75597,10 +75597,6 @@
 "cXA" = (
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
-"cXB" = (
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel/whitepurple/corner,
-/area/science/research)
 "cXC" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -76390,7 +76386,6 @@
 	id = "rndlab1";
 	name = "Research and Development Shutter"
 	},
-/obj/machinery/door/window/northleft,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -105097,6 +105092,23 @@
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
+"QNf" = (
+/obj/machinery/autolathe,
+/obj/machinery/door/window/southleft{
+	name = "Research Lab Desk";
+	req_access_txt = "7"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rndlab1";
+	name = "Research and Development Shutter"
+	},
+/turf/open/floor/plating,
+/area/science/lab)
+"QNg" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/whitepurple/corner,
+/area/science/research)
 
 (1,1,1) = {"
 aaa
@@ -143036,8 +143048,8 @@ cQQ
 cSw
 cUl
 cQP
-cXB
-cZo
+QNg
+QNf
 daV
 dcJ
 dei
