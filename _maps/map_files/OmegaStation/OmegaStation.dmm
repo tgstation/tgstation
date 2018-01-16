@@ -8,14 +8,10 @@
 /area/space)
 "aac" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aad" = (
 /turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aae" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -33,9 +29,7 @@
 "aah" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aai" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -466,15 +460,11 @@
 "aaV" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aaW" = (
 /obj/item/ore/iron,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aaX" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -626,14 +616,10 @@
 "abi" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abj" = (
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -752,9 +738,7 @@
 /area/hallway/primary/central)
 "abu" = (
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abv" = (
 /turf/closed/wall,
 /area/security/detectives_office)
@@ -942,20 +926,14 @@
 "abR" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abS" = (
 /obj/item/ore/glass,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abT" = (
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -1324,23 +1302,17 @@
 "acD" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acE" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acF" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acG" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/turf_decal/stripes/line{
@@ -1350,15 +1322,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acH" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acI" = (
 /obj/structure/dresser,
 /obj/structure/sign/vacuum{
@@ -1760,31 +1728,23 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adw" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adx" = (
 /obj/item/clothing/suit/space/orange,
 /obj/item/clothing/head/helmet/space/orange,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adz" = (
 /obj/structure/sign/vacuum,
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adA" = (
 /obj/structure/closet/secure_closet/detective,
 /turf/open/floor/plasteel/vault{
@@ -2141,17 +2101,13 @@
 	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aem" = (
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aeo" = (
 /obj/structure/table,
 /obj/item/extinguisher/mini,
@@ -2161,18 +2117,14 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aep" = (
 /turf/open/floor/plating,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg2"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aeq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/nanotrasen{
@@ -2524,9 +2476,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afd" = (
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
@@ -2947,22 +2897,16 @@
 "afL" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afM" = (
 /obj/item/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afN" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afP" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
@@ -3380,26 +3324,20 @@
 /obj/item/ore/silver,
 /obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agF" = (
 /turf/closed/wall/r_wall,
 /area/security/brig)
 "agG" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agI" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase{
@@ -3868,9 +3806,7 @@
 /area/shuttle/supply)
 "ahu" = (
 /turf/closed/wall/r_wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahv" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/structure/extinguisher_cabinet{
@@ -3930,9 +3866,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahA" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
@@ -3942,9 +3876,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahB" = (
 /obj/machinery/photocopier,
 /obj/machinery/firealarm{
@@ -4256,9 +4188,7 @@
 "aik" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aim" = (
 /obj/structure/rack,
 /obj/item/storage/box/rubbershot,
@@ -5158,9 +5088,7 @@
 "ajQ" = (
 /obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ajR" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -6255,9 +6183,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "alH" = (
 /obj/item/grenade/barrier{
 	pixel_x = -3;
@@ -6761,9 +6687,7 @@
 	},
 /obj/item/device/flashlight,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "amH" = (
 /obj/item/storage/box/chemimp{
 	pixel_x = 6
@@ -23989,43 +23913,33 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUR" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUS" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUU" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUV" = (
 /obj/machinery/light{
 	dir = 8
@@ -24385,18 +24299,14 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aVL" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aVM" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -24761,9 +24671,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aWA" = (
 /obj/machinery/libraryscanner,
 /obj/machinery/newscaster{
@@ -25039,9 +24947,7 @@
 "aXc" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aXe" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -32922,9 +32828,7 @@
 /area/engine/supermatter)
 "bvg" = (
 /turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvh" = (
 /obj/structure/closet/emcloset{
 	anchored = 1
@@ -32938,15 +32842,11 @@
 "bvo" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvI" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvO" = (
 /obj/machinery/light{
 	dir = 1
@@ -33148,9 +33048,7 @@
 	dir = 4
 	},
 /turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bxj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -33554,9 +33452,7 @@
 "swF" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "swG" = (
 /turf/closed/wall/rust,
 /area/security/detectives_office)
@@ -33594,17 +33490,13 @@
 /area/quartermaster/storage)
 "swN" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "swZ" = (
 /turf/closed/wall/r_wall/rust,
 /area/security/brig)
 "sxc" = (
 /turf/closed/wall/r_wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "sxC" = (
 /turf/closed/wall/r_wall/rust,
 /area/ai_monitored/turret_protected/ai)
@@ -35420,7 +35312,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Satellite turret control";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/door/airlock/hatch{
@@ -35676,9 +35567,7 @@
 "sNT" = (
 /obj/item/stack/sheet/metal,
 /obj/item/stack/sheet/glass{
-	amount = 20;
-	pixel_x = 0;
-	pixel_y = 0
+	amount = 20
 	},
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
@@ -35834,9 +35723,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "sOK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
