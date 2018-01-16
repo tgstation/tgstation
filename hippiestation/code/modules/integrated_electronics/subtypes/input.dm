@@ -21,6 +21,7 @@
 	Beware, this cannot stop signals from unreachable areas, such \
 	as space or zlevels other than station's one."
 	complexity = 30
+	cooldown_per_use = 0.1
 	w_class = WEIGHT_CLASS_SMALL
 	inputs = list(
 		"intercept" = IC_PINTYPE_BOOLEAN,
