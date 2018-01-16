@@ -45,11 +45,10 @@
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()
-	if(H.dna.features["moth_wings"] != "Burnt Off")
-		if(H.bodytemperature >= 800) //do not go into the extremely hot light. you will not survive
-			to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
-			H.dna.features["moth_wings"] = "Burnt Off"
-			handle_mutant_bodyparts(H)
+	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
+		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
+		H.dna.features["moth_wings"] = "Burnt Off"
+		handle_mutant_bodyparts(H)
 
 /datum/species/moth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
