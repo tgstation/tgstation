@@ -320,11 +320,11 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
-/obj/structure/windoor_assembly/proc/can_be_rotated(mob/user)
+/obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
-	var/target_dir = turn(dir, -90)
+	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir))
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")

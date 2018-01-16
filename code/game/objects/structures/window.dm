@@ -291,19 +291,19 @@
 	update_nearby_icons()
 
 
-/obj/structure/window/proc/can_be_rotated(mob/user)
+/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
-	var/target_dir = turn(dir, -90)
+	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir))
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 	return TRUE
 
-/obj/structure/window/proc/after_rotation(mob/user)
+/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(user)
