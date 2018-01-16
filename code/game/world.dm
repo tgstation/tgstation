@@ -45,13 +45,13 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
+	while(i<=GLOB.external_rsc_urls.len)
+		if(GLOB.external_rsc_urls[i])
 			i++
 		else
-			external_rsc_urls.Cut(i,i+1)
+			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
 
 /world/proc/CheckSchemaVersion()
