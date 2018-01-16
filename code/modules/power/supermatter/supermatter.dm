@@ -531,6 +531,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		cause = "contact"
 	nom.visible_message(vis_msg, mob_msg, "<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	investigate_log("has been attacked ([cause]) by [nom]", INVESTIGATE_SUPERMATTER)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[nom]</span> has been dusted by the supermatter at <span class='name'>[get_area(nom)]</span>.</span>", nom)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 	Consume(nom)
 
