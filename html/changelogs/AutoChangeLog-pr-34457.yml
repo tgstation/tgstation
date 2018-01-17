@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The debug verbs \"Display Air Status\" and \"Air Status in Location\" now format their reports the same and actually work more often."

@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The Camera Failure event no longer crashes the server if the station has no cameras."

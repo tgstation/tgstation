@@ -1,5 +1,0 @@
-author: "F-OS"
-delete-after: True
-changes: 
-  - tweak: "Air alarms start unlocked"
-  - bugfix: "Air alarms no longer think they are fire alarms"
