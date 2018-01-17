@@ -1042,45 +1042,52 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dd" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L1"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "de" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L3"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "df" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L5"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dg" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dh" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L9"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "di" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L11"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dj" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L13"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1119,39 +1126,46 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "dq" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L2"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dr" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L4"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "ds" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L6"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dt" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L8"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "du" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L10"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dv" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L12"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dw" = (
-/turf/open/floor/plasteel{
+/obj/effect/turf_decal/plaque{
 	icon_state = "L14"
 	},
+/turf/open/floor/plasteel,
 /area/storage/primary)
 "dx" = (
 /obj/machinery/light{

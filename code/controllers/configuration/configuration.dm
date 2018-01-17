@@ -17,6 +17,8 @@
 	var/list/mode_reports
 	var/list/mode_false_report_weight
 
+	var/motd
+
 /datum/controller/configuration/New()
 	config = src
 	InitEntries()
@@ -27,6 +29,7 @@
 		LoadEntries("dbconfig.txt")
 		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
+	LoadMOTD()
 
 /datum/controller/configuration/Destroy()
 	entries_by_type.Cut()
@@ -191,6 +194,12 @@
 					votable_modes += M.config_tag
 		qdel(M)
 	votable_modes += "secret"
+
+/datum/controller/configuration/proc/LoadMOTD()
+	motd = file2text("[directory]/motd.txt")
+	var/tm_info = GLOB.revdata.GetTestMergeInfo()
+	if(motd || tm_info)
+		motd = motd ? "[motd]<br>[tm_info]" : tm_info
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
