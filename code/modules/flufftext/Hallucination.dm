@@ -1070,8 +1070,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	target.set_screwyhud(SCREWYHUD_DEAD)
 	target.Knockdown(300)
 	target.silent += 10
-	var/area/area = get_area(target)
-	to_chat(target, "<span class='deadsay'><b>[target.mind.name]</b> has died at <b>[area.name]</b>.</span>")
+	to_chat(target, "<span class='deadsay'><b>[target.mind.name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
 	if(prob(50))
 		var/mob/fakemob
 		var/list/dead_people = list()

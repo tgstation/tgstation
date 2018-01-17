@@ -102,8 +102,8 @@
 			return
 		wiggle_wiggle = FALSE
 	else
-		user.visible_message("<span class='danger'>You start tenderly lifting [user] off of [src]...</span>", \
-		"<span class='danger'>You start tenderly lifting [user] off of [src]...</span>")
+		user.visible_message("<span class='danger'>[user] starts tenderly lifting [skewee] off of [src]...</span>", \
+		"<span class='danger'>You start tenderly lifting [skewee] off of [src]...</span>")
 		if(!do_after(user, 60, target = skewee))
 			skewee.visible_message("<span class='warning'>[skewee] painfully slides back down [src].</span>")
 			skewee.emote("moan")

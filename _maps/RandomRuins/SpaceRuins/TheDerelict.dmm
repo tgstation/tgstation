@@ -2333,7 +2333,7 @@
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hJ" = (
-/obj/item/firstaid_arm_assembly,
+/obj/item/bot_assembly/medbot,
 /turf/open/floor/plasteel/airless/white,
 /area/ruin/space/derelict/medical)
 "hK" = (

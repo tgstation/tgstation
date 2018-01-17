@@ -10,14 +10,10 @@
 /area/ruin/unpowered/no_grav)
 "ad" = (
 /turf/closed/mineral/random/low_chance,
-/area/asteroid/cave{
-	name = "Asteroid - Space"
-	})
+/area/asteroid/cave/space)
 "ae" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/asteroid/cave{
-	name = "Asteroid - Space"
-	})
+/area/asteroid/cave/space)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)

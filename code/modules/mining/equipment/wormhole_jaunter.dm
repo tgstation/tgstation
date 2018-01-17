@@ -54,7 +54,7 @@
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -83,21 +83,17 @@
 		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 //jaunter tunnel
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
+	innate_accuracy_penalty = 6
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
-		return
-
-	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
-		return
-
-	if(do_teleport(M, hard_target, 6))
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+	. = ..()
+	if(.)
 		// KERPLUNK
 		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 		if(iscarbon(M))
