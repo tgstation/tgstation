@@ -66,6 +66,10 @@
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	file_data["additional data"]["station integrity"] = station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", num_escapees, list("escapees", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len, list("players", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len - num_survivors, list("players", "dead"))
 	. = list()
 	.[POPCOUNT_SURVIVORS] = num_survivors
 	.[POPCOUNT_ESCAPEES] = num_escapees
