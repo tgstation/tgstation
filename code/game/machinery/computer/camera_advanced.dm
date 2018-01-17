@@ -4,7 +4,7 @@
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	var/list/z_lock = list() // Lock use to these z levels
-	var/station_lock_override = FALSE
+	var/lock_override = NONE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
 	var/list/networks = list("SS13")
@@ -16,8 +16,15 @@
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
-	if(station_lock_override)
-		z_lock = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	if(lock_override)
+		if(lock_override & CAMERA_LOCK_STATION)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
+		if(lock_override & CAMERA_LOCK_MINING)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_MINING)
+		if(lock_override & CAMERA_LOCK_CENTCOM)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
+		if(lock_override & CAMERA_LOCK_REEBE)
+			z_lock |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"

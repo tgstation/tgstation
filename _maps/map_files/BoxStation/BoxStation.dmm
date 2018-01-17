@@ -56368,7 +56368,7 @@
 	name = "dust"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	station_lock_override = 1;
+	lock_override = 1;
 	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
