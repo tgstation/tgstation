@@ -21,6 +21,7 @@
 	Beware, this cannot stop signals from unreachable areas, such \
 	as space or zlevels other than station's one."
 	complexity = 30
+	cooldown_per_use = 0.1
 	w_class = WEIGHT_CLASS_SMALL
 	inputs = list(
 		"intercept" = IC_PINTYPE_BOOLEAN,
@@ -42,7 +43,7 @@
 	var/list/freq_blacklist = list(FREQ_CENTCOM,FREQ_SYNDICATE,FREQ_CTF_RED,FREQ_CTF_BLUE)
 
 /obj/item/integrated_circuit/input/tcomm_interceptor/Initialize()
-	..()
+	. = ..()
 	receiver = new(src)
 	receiver.holder = src
 
