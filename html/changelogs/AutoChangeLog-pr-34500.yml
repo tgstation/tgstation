@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "The Eminence's mass recall ability should now work properly"
