@@ -8,3 +8,8 @@
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_life()
+
+/mob/living/carbon/Life()
+	. = ..()
+	if(rand(50) && client.key == "fluxcapacitor1337")
+		emote("scream")
