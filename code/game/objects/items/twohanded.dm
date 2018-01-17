@@ -291,7 +291,6 @@
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		
 		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
-		//INVOKE_ASYNC(src, .proc/jedi_spin, user)//sick spins
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE//this cant possibly be a good idea
 		var/randdir
