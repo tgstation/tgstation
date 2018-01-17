@@ -11,7 +11,7 @@
 	to check that the mob is not inside of something
 */
 /atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
-	return 0
+	return FALSE
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(var/atom/neighbor)
@@ -25,7 +25,17 @@
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.
 */
-/turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null)
+/turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null, var/recurse = 1)
+	if(neighbor == src)
+		return TRUE //don't be retarded!!
+
+	if(recurse && istype(neighbor, /atom/movable)) //fml
+		var/atom/movable/AM = neighbor
+		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (islist(AM.locs) && AM.locs.len > 1))
+			for(var/turf/T in AM.locs)
+				if(Adjacent(T, target, mover, recurse-1))
+					return TRUE
+
 	var/turf/T0 = get_turf(neighbor)
 
 	if(T0 == src) //same turf
@@ -57,31 +67,37 @@
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target, mover = mover))
 			continue // could not enter src
 
-		return 1 // we don't care about our own density
+		return TRUE // we don't care about our own density
 
-	return 0
+	return FALSE
 
 /*
 	Adjacency (to anything else):
 	* Must be on a turf
 */
-/atom/movable/Adjacent(var/atom/neighbor)
+/atom/movable/Adjacent(var/atom/neighbor, var/recurse = 1)
 	if(neighbor == loc)
 		return TRUE
 	if(!isturf(loc))
 		return FALSE
-	if(loc.Adjacent(neighbor,target = neighbor, mover = src))
+	if(!isnum(recurse))
+		recurse = 0
+	if(loc.Adjacent(neighbor,target = neighbor, mover = src, recurse = recurse-1))
 		return TRUE
+	if(recurse && (islist(locs) && locs.len > 1) && (bound_width != world.icon_size || bound_height != world.icon_size))
+		for(var/turf/T in locs) //this is to handle multi tile objects
+			if(T.Adjacent(neighbor, src, src, recurse-1))
+				return TRUE
 	return FALSE
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
 	if(neighbor == loc)
-		return 1
+		return TRUE
 	if(isitem(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)
-		return 0
+		return FALSE
 	return ..()
 
 /*
@@ -98,7 +114,7 @@
 
 		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
-				return 0								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
+				return FALSE								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
 		else if( !border_only ) // dense, not on border, cannot pass over
-			return 0
-	return 1
+			return FALSE
+	return TRUE

@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - admin: "SDQL \"select\" outputs now have buttons to jump to the coordinates of the found objects."

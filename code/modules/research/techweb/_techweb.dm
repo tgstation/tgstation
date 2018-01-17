@@ -293,3 +293,7 @@
 /datum/techweb/specialized/autounlocking/exofab
 	node_autounlock_ids = list("robotics", "mmi", "cyborg", "mecha_odysseus", "mech_gygax", "mech_durand", "mecha_phazon", "mecha", "mech_tools", "clown")
 	allowed_buildtypes = MECHFAB
+
+/datum/techweb/specialized/autounlocking/podfab
+	node_autounlock_ids = list("spacepod_basic")
+	allowed_buildtypes = PODFAB
