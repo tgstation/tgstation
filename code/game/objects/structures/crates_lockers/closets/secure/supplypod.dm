@@ -1,12 +1,12 @@
 //The "BDPtarget" temp visual is created by the expressconsole, which in turn makes two things: a falling droppod animation, and the droppod itself.
 
 
-//------------------------------------BLUESPACE DROP POD-------------------------------------//
-/obj/structure/closet/bsdroppod
+//------------------------------------SUPPLY POD-------------------------------------//
+/obj/structure/closet/supplypod
 	name = "Supply Drop Pod"
 	desc = "A Nanotrasen supply drop pod."
 	icon = 'icons/obj/2x2.dmi'
-	icon_state = "BDP"
+	icon_state = "supplypod"
 	pixel_x = -16//2x2 sprite
 	pixel_y = -5
 	layer = TABLE_LAYER//so that the crate inside doesn't appear underneath
@@ -18,67 +18,92 @@
 	anchored = TRUE
 	anchorable = FALSE
 	var/datum/supply_order/SupplyOrder
+	var/bluespacepod = FALSE
 
-/obj/structure/closet/bsdroppod/Initialize(mapload, datum/supply_order/so)
+
+/obj/structure/closet/supplypod/bluespacepod
+	name = "Bluespace Drop Pod"
+	desc = "A Nanotrasen Bluespace drop pod. Teleports back to Centcom after delivery."
+	icon_state = "bluespacepod"
+	bluespacepod = TRUE//dont use isType so that later down the road, we can mix and match supply pod upgrades
+
+/obj/structure/closet/supplypod/Initialize(mapload, datum/supply_order/so)
 	. = ..()
 	SupplyOrder = so//uses Supply Order passed from expressconsole into BDPtarget
 	addtimer(CALLBACK(src, .proc/open), 30)//open 3seconds after appearing
 
-/obj/structure/closet/bsdroppod/update_icon()
+/obj/structure/closet/supplypod/update_icon()
 	cut_overlays()
 	if (opened)
-		add_overlay("BDP_open")
+		add_overlay("[icon_state]_open")
 	else
-		add_overlay("BDP_door")
+		add_overlay("[icon_state]_door")
 
-/obj/structure/closet/bsdroppod/toggle(mob/living/user)
+/obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
+	return TRUE
+
+/obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/bsdroppod/open()
+/obj/structure/closet/supplypod/open()
 	var/turf/T = get_turf(src)
 	opened = TRUE
 	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
+	if(bluespacepod)
+		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete		
+ 		
+/obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer		
+ 	do_sparks(5, TRUE, src)		
+ 	qdel(src)//no need for QDEL_IN if we already have a timer 
 
-/obj/structure/closet/bsdroppod/Destroy()//make some sparks b4 deletion
+/obj/structure/closet/supplypod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)
 	return ..()
 
-//------------------------------------FALLING BLUESPACE DROP POD-------------------------------------//
-/obj/effect/temp_visual/BDPfall
+//------------------------------------FALLING SUPPLY POD-------------------------------------//
+/obj/effect/temp_visual/DPfall
 	icon = 'icons/obj/2x2.dmi'
-	icon_state = "BDP_falling"
 	pixel_x = -16
 	pixel_y = -5
 	pixel_z = 200
-	name = "Bluespace Drop Pod"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	randomdir = FALSE
 
+/obj/effect/temp_visual/DPfall/Initialize(dropLocation, isBluespace)
+	if (isBluespace)
+		icon_state = "bluespacepod_falling"
+		name = "Bluespace Drop Pod"
+	else
+		icon_state = "supplypod_falling"
+		name = "Supply Drop Pod"
+	. = ..()
+
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
-/obj/effect/BDPtarget
+/obj/effect/DPtarget
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/BDPtarget/Initialize(mapload, datum/supply_order/SO)
+/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO), 30)//wait 3 seconds
 
-/obj/effect/BDPtarget/proc/beginLaunch(datum/supply_order/SO)
-	fallingPod = new /obj/effect/temp_visual/BDPfall(drop_location())
+/obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/bluespace)
+	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), bluespace)
+
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
 	addtimer(CALLBACK(src, .proc/endLaunch, SO), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
 
-/obj/effect/BDPtarget/proc/endLaunch(datum/supply_order/SO)
-	new /obj/structure/closet/bsdroppod(drop_location(), SO)//pod is created
+/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO)
+	new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
 	explosion(src,0,0,2, flame_range = 2) //explosion and camshake (shoutout to @cyberboss)
 	qdel(src)
 
-/obj/effect/BDPtarget/Destroy()
+/obj/effect/DPtarget/Destroy()
 	QDEL_NULL(fallingPod)//delete falling pod after animation's over
 	return ..()

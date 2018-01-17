@@ -12,7 +12,8 @@
 	var/message
 	var/locked = TRUE
 	var/list/meme_pack_data
-
+	var/bluespaceUpgraded = FALSE
+	
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
@@ -30,6 +31,7 @@
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
+	bluespaceUpgraded = TRUE
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
@@ -114,7 +116,7 @@
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
 						SSshuttle.points -= SO.pack.cost * 2
-						new /obj/effect/BDPtarget(LZ, SO)
+						new /obj/effect/DPtarget(LZ, SO, bluespaceUpgraded)
 						. = TRUE
 						update_icon()
 			else
@@ -131,7 +133,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = empty_turfs[rand(empty_turfs.len-1)]
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/BDPtarget(LZ, SO)
+							new /obj/effect/DPtarget(LZ, SO, bluespaceUpgraded)
 							. = TRUE
 							update_icon()
 							CHECK_TICK
