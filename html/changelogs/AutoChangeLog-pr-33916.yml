@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "By using a multitool on a radiation collector, you can use it to generate research points! This requires a tank filled with a mix of tritium and oxygen."
+  - tweak: "The display of rad collectors' power production rates has been moved from a multitool interaction to examine text."
+  - tweak: "Radiation collectors now emit a ding when they run out of fuel."
