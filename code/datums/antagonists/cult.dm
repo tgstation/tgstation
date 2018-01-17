@@ -106,7 +106,6 @@
 		current = mob_override
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
-	current.verbs += /mob/living/proc/cult_help
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
@@ -121,7 +120,6 @@
 		current = mob_override
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
-	current.verbs -= /mob/living/proc/cult_help
 	vote.Remove(current)
 	communion.Remove(current)
 	magic.Remove(current)

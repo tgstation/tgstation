@@ -775,7 +775,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	construct_invoke = FALSE
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/affecting = null
-	var/ghost_limit = 5
+	var/ghost_limit = 4
 	var/ghosts = 0
 
 /obj/effect/rune/manifest/Initialize()
