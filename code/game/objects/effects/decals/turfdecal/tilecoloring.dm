@@ -1,8 +1,9 @@
 /obj/effect/turf_decal/tile
+	name = "tile decal"
 	icon_state = "corner_white_full"
 
 /obj/effect/turf_decal/tile/black
-	name = "black corner"
+	name = "black tile decal"
 	color = COLOR_ALMOST_BLACK
 
 /obj/effect/turf_decal/tile/black/diagonal
@@ -15,7 +16,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/blue
-	name = "blue corner"
+	name = "blue tile decal"
 	color = COLOR_BLUE_GRAY
 
 /obj/effect/turf_decal/tile/blue/diagonal
@@ -28,7 +29,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/paleblue
-	name = "pale blue corner"
+	name = "pale blue tile decal"
 	color = COLOR_PALE_BLUE_GRAY
 
 /obj/effect/turf_decal/tile/paleblue/diagonal
@@ -41,7 +42,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/green
-	name = "green corner"
+	name = "green tile decal"
 	color = COLOR_GREEN_GRAY
 
 /obj/effect/turf_decal/tile/green/diagonal
@@ -54,7 +55,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/lime
-	name = "lime corner"
+	name = "lime tile decal"
 	color = COLOR_PALE_GREEN_GRAY
 
 /obj/effect/turf_decal/tile/lime/diagonal
@@ -67,7 +68,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/yellow
-	name = "yellow corner"
+	name = "yellow tile decal"
 	color = COLOR_BROWN
 
 /obj/effect/turf_decal/tile/yellow/diagonal
@@ -80,7 +81,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/beige
-	name = "beige corner"
+	name = "beige tile decal"
 	color = COLOR_BEIGE
 
 /obj/effect/turf_decal/tile/beige/diagonal
@@ -93,7 +94,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/red
-	name = "red corner"
+	name = "red tile decal"
 	color = COLOR_RED_GRAY
 
 /obj/effect/turf_decal/tile/red/diagonal
@@ -106,7 +107,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/pink
-	name = "pink corner"
+	name = "pink tile decal"
 	color = COLOR_PALE_RED_GRAY
 
 /obj/effect/turf_decal/tile/pink/diagonal
@@ -119,7 +120,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/purple
-	name = "purple corner"
+	name = "purple tile decal"
 	color = COLOR_PURPLE_GRAY
 
 /obj/effect/turf_decal/tile/purple/diagonal
@@ -132,7 +133,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/mauve
-	name = "mauve corner"
+	name = "mauve tile decal"
 	color = COLOR_PALE_PURPLE_GRAY
 
 /obj/effect/turf_decal/tile/mauve/diagonal
@@ -145,7 +146,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/orange
-	name = "orange corner"
+	name = "orange tile decal"
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/turf_decal/tile/orange/diagonal
@@ -158,7 +159,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/brown
-	name = "brown corner"
+	name = "brown tile decal"
 	color = COLOR_DARK_BROWN
 
 /obj/effect/turf_decal/tile/brown/diagonal
@@ -171,7 +172,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/white
-	name = "white corner"
+	name = "white tile decal"
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/white/diagonal
@@ -184,7 +185,7 @@
 	icon_state = "corner_white"
 
 /obj/effect/turf_decal/tile/gray
-	name = "gray corner"
+	name = "gray tile decal"
 	color = COLOR_FLOORTILE_GRAY
 
 /obj/effect/turf_decal/tile/gray/diagonal
