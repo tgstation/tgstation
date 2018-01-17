@@ -43,7 +43,7 @@
 		obj_integrity = max_integrity
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")
-		var/static/list/string_to_objflag = list("EMAGGED" = EMAGGED, "IN_USE" = IN_USE, "CAN_BE_HIT" = CAN_BE_HIT, "BEING_SHOCKED" = BEING_SHOCKED, "DANGEROUS_POSSESSION" = DANGEROUS_POSSESSION, "ON_BLUEPRINTS" = ON_BLUEPRINTS, "UNIQUE_RENAME" = UNIQUE_RENAME)
+		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
 		for (var/flag in flagslist)
 			if (findtext(flag,"!",1,2))
 				flag = copytext(flag,1-(length(flag))) // Get all but the initial !

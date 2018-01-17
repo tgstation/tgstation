@@ -433,6 +433,12 @@
 		else
 			item = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 
+	else if (name in GLOB.bitfields)
+		var/list/flags = list()
+		for (var/i in GLOB.bitfields[name])
+			if (value & GLOB.bitfields[name][i])
+				flags += i
+			item = "[VV_HTML_ENCODE(name)] = [VV_HTML_ENCODE(jointext(flags, ", "))]"
 	else
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
@@ -1215,4 +1221,3 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
-
