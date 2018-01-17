@@ -14,4 +14,6 @@
 			return INITIALIZE_HINT_QDEL
 		else
 			var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_OPEN_TURF_LAYER, loc = src)
+			I.alpha = 64
+			I.appearance_flags = RESET_ALPHA
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blessedAware, "blessing", I)
