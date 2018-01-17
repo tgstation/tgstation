@@ -106,7 +106,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "ao" = (
 /obj/machinery/light/small,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -724,7 +724,7 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'DANGER: SELF DESTRUCT DEVICE'.";
 	name = "DANGER: SELF DESTRUCT DEVICE";
 	pixel_x = 32
@@ -741,7 +741,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "bn" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
 "bo" = (

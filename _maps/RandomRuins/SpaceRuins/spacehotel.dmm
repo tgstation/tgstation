@@ -774,7 +774,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cz" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 4;
 	icon_state = "roomnum";
@@ -785,7 +785,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cA" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 8;
 	icon_state = "roomnum";
@@ -802,7 +802,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cC" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 6;
 	icon_state = "roomnum";
@@ -822,7 +822,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cE" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 10;
 	icon_state = "roomnum";
@@ -946,7 +946,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cT" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 1;
 	icon_state = "roomnum";
@@ -963,7 +963,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "cV" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	icon_state = "roomnum";
 	name = "Room Number 1";
@@ -2172,7 +2172,7 @@
 "gL" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
-/obj/structure/sign/nosmoking_1{
+/obj/structure/sign/warning/nosmoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
@@ -2784,7 +2784,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	desc = "A poster designed to remind the reader to wear appropriate insulation and head protection when working with material.";
 	icon_state = "safety";
 	name = "Safety Poster";
@@ -3344,7 +3344,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/pool)
 "jZ" = (
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -3464,7 +3464,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -3499,7 +3499,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -3678,7 +3678,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/sign/atmosplaque{
+/obj/structure/sign/plaques/atmos{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -3705,7 +3705,7 @@
 "lb" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/red/side{

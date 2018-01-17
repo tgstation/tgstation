@@ -581,7 +581,7 @@
 	},
 /area/awaymission/centcomAway/cafe)
 "cg" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/cafe)
 "ch" = (
@@ -649,7 +649,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "cv" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/maint)
 "cw" = (
@@ -1437,7 +1437,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "ft" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fu" = (
@@ -1463,7 +1463,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "fy" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fz" = (
@@ -1578,7 +1578,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "fQ" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fR" = (
@@ -1969,7 +1969,7 @@
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hi" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "hj" = (
@@ -2067,7 +2067,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hy" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "hz" = (
@@ -2195,7 +2195,7 @@
 /turf/open/floor/wood,
 /area/awaymission/centcomAway/courtroom)
 "hU" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/hangar)
 "hV" = (
@@ -2809,7 +2809,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "jU" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "jV" = (

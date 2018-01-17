@@ -978,7 +978,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ce" = (
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
 /obj/structure/alien/weeds/node,
@@ -1006,7 +1006,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cg" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -1835,7 +1835,7 @@
 /turf/closed/mineral,
 /area/awaymission/moonoutpost19/main)
 "dB" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
 	pixel_y = -32
@@ -2094,7 +2094,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ec" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "ed" = (
@@ -2308,11 +2308,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "eA" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
-	},
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "eB" = (
@@ -2590,7 +2586,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fe" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/structure/cable{
@@ -3083,7 +3079,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fX" = (
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_x = 32
 	},
 /obj/structure/cable{
@@ -4415,7 +4411,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iu" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/machinery/shower{
@@ -4909,7 +4905,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jx" = (
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6274,7 +6270,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mv" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD"
 	},
@@ -6387,7 +6383,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mJ" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
 	icon = 'icons/obj/radio.dmi';
 	icon_state = "beacon";
@@ -6648,7 +6644,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nm" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
 	pixel_y = 32
@@ -6903,7 +6899,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nK" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
 	pixel_x = -32

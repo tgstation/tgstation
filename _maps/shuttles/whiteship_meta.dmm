@@ -151,7 +151,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -559,7 +559,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/structure/sign/restroom,
+/obj/structure/sign/departments/restroom,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
@@ -608,7 +608,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
-/obj/structure/sign/cargo,
+/obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -730,7 +730,7 @@
 /area/shuttle/abandoned)
 "bl" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1085,7 +1085,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bR" = (
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1148,7 +1148,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bX" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bY" = (
@@ -1182,7 +1182,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cb" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cc" = (
