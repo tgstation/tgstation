@@ -72,7 +72,7 @@
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	randomdir = FALSE
 
-/obj/effect/temp_visual/DPfall/Initialize(dropLocation, isBluespace)
+/obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/isBluespace)
 	if (isBluespace)
 		icon_state = "bluespacepod_falling"
 		name = "Bluespace Drop Pod"
@@ -97,10 +97,14 @@
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), bluespace)
 
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
-	addtimer(CALLBACK(src, .proc/endLaunch, SO), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
+	addtimer(CALLBACK(src, .proc/endLaunch, SO, bluespace), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
 
-/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO)
-	new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
+/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO, var/bluespace)
+	if (bluespace)
+		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
+	else
+		new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
+
 	explosion(src,0,0,2, flame_range = 2) //explosion and camshake (shoutout to @cyberboss)
 	qdel(src)
 
