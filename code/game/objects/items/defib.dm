@@ -94,6 +94,8 @@
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
 		return
+	else if(istype(loc, /obj/machinery/defibrillator_mount))
+		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)

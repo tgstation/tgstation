@@ -94,6 +94,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/defibrillator_mount
+	name = "Defibrillator Wall Mount"
+	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables."
+	id = "defibmount"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/wallframe/defib_mount
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/alienscalpel
 	name = "Alien Scalpel"
 	desc = "An advanced scalpel obtained through Abductor technology."
