@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(input)
 	wait = 1 //SS_TICKER means this runs every tick
 	init_order = INIT_ORDER_INPUT
 	flags = SS_TICKER
-	priority = FIRE_PRIORITY_INPUT
+	priority = 1000
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/macro_sets
