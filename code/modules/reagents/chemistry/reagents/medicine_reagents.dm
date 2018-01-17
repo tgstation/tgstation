@@ -988,11 +988,11 @@
 	taste_description = "jelly"
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
-		M.adjustBruteLoss(-1.5*REM, 0)
-		M.adjustFireLoss(-1.5*REM, 0)
-		M.adjustOxyLoss(-1.5*REM, 0)
-		M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-		. = 1
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
 	..()
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
