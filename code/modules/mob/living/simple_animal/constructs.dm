@@ -178,8 +178,8 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
+	maxHealth = 65
+	health = 65
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	retreat_distance = 2 //AI wraiths will move in and out of combat

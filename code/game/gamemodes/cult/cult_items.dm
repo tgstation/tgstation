@@ -888,6 +888,14 @@
 	if(iscultist(owner))
 		if(istype(hitby, /obj/item/projectile))
 			var/obj/item/projectile/P = hitby
+			if(P.damage >= 35)
+				var/turf/T = get_turf(owner)
+				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
+				new /obj/effect/temp_visual/cult/sparks(T)
+				playsound(T, 'sound/effects/glassbr3.ogg', 100)
+				owner.Knockdown(20)
+				qdel(src)
+				return FALSE
 			if(P.is_reflectable)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()

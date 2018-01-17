@@ -103,6 +103,23 @@
 	popup.open()
 	return 1
 
+/datum/action/innate/cult/tooltips
+	name = "Tooltips"
+	desc = "Click to close the introductory tooltips."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "neckchop"
+
+/datum/action/innate/cult/tooltips/Activate()
+	closeToolTip(owner)
+	qdel(src)
+
+/datum/action/innate/cult/tooltips/Grant(mob/living/owner)
+		..()
+	button.screen_loc = "6:-29,4:-32"
+	button.moved = "6:-29,4:-32"
+	button.locked = TRUE
+	openToolTip(owner, src, null, title = "Communion", content = "Use this to chat!", theme = "cult")
+
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
