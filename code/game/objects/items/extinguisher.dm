@@ -46,16 +46,15 @@
 	reagents.add_reagent("water", max_water)
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
-	if (!safety && (src.reagents.total_volume >= 1))
+	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message("<span class='suicide'>[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extenguish the spark of life!</span>")
-		//playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
-		src.afterattack(user,user)
+		afterattack(user,user)
 		return OXYLOSS
-	else if (safety && (src.reagents.total_volume >= 1))
+	else if (safety && (reagents.total_volume >= 1))
 		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!</span>")
 		return SHAME
 	else
-		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... \The [src] is empty!</span>")
+		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!</span>")
 		return SHAME
 
 /obj/item/extinguisher/attack_self(mob/user)
