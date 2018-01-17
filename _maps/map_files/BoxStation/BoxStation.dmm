@@ -829,7 +829,6 @@
 /obj/item/storage/secure/safe/HoS{
 	pixel_x = 35
 	},
-/obj/structure/closet/secure_closet/hos,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aco" = (
