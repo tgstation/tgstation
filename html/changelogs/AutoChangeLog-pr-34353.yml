@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "If enough people vote to start CTF (by clicking on a CTF controller
-as a ghost), then CTF will automatically begin."
