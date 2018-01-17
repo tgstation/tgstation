@@ -89,9 +89,9 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO)
+/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO, var/bluespace)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/beginLaunch, SO), 30)//wait 3 seconds
+	addtimer(CALLBACK(src, .proc/beginLaunch, SO, bluespace), 30)//wait 3 seconds
 
 /obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/bluespace)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), bluespace)
