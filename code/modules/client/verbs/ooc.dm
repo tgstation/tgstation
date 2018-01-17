@@ -229,8 +229,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
 
-	if(GLOB.join_motd)
-		to_chat(src, "<div class=\"motd\">[GLOB.join_motd]</div>")
+	var/motd = global.config.motd
+	if(motd)
+		to_chat(src, "<div class=\"motd\">[motd]</div>")
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 

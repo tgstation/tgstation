@@ -178,7 +178,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 					var/turf/T = t
 					//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-					T.AfterChange(TRUE)
+					T.AfterChange(CHANGETURF_IGNORE_AIR)
 		return bounds
 
 /**

@@ -231,20 +231,10 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	set name = "Air Status in Location"
 	if(!mob)
 		return
-	var/turf/T = mob.loc
-
+	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-
-	var/datum/gas_mixture/env = T.return_air()
-	var/list/env_gases = env.gases
-
-	var/t = ""
-	for(var/id in env_gases)
-		if(id in GLOB.hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
-
-	to_chat(usr, t)
+	show_air_status_to(T, usr)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -524,7 +514,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
-	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
+	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin, /area/asteroid))
 
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please hold!")
