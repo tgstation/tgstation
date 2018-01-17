@@ -41,7 +41,15 @@
 	icon_state = "buttshoes"
 	item_state = "buttshoes"
 	item_color = "buttshoes"
-	
+
 /obj/item/clothing/shoes/buttshoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('hippiestation/sound/effects/fart.ogg'=1), 50)
+
+/obj/item/clothing/shoes/jackboots/larp
+	name = "guard boots"
+	desc = "Combat jackboots with a fancier look. The fur isn't any good for keeping the cold away."
+	icon_state = "guardboots"
+	item_state = "guardboots"
+	icon = 'hippiestation/icons/obj/clothing/shoes.dmi'
+	alternate_worn_icon = 'hippiestation/icons/mob/feet.dmi'
