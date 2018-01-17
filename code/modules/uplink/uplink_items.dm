@@ -1296,7 +1296,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
     name = "Omnilathe Board"
     desc = "A circuit-board for an Omnilathe, able to print anything that is researched."
     item = /obj/item/circuitboard/machine/protolathe
-    cost = 15
+    cost = 20
     surplus = 20
     restricted_roles = list("Research Director")
 
