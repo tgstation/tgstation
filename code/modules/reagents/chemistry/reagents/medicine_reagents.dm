@@ -41,7 +41,7 @@
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0)
+	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.remove_all_disabilities()
