@@ -13,11 +13,11 @@
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
-#define PRELOAD_RSC	1			/*set to:
-								0 to allow using external resources or on-demand behaviour;
-								1 to use the default behaviour;
-								2 for preloading absolutely everything;
-								*/
+#ifndef PRELOAD_RSC				//set to:
+#define PRELOAD_RSC	0			//	0 to allow using external resources or on-demand behaviour;
+#endif							//	1 to use the default behaviour;
+								//	2 for preloading absolutely everything;
+
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 511

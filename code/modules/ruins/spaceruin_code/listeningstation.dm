@@ -1,9 +1,5 @@
 ///////////	listening station
 
-/area/ruin/space/has_grav/powered/listeningstation
-	name = "Listening Post"
-	icon_state = "away"
-
 /obj/item/paper/fluff/ruins/listeningstation/reports
 	info = "Nothing of interest to report."
 

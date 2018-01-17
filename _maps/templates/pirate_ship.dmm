@@ -26,7 +26,6 @@
 /obj/machinery/button/door{
 	id = "piratebridge";
 	name = "Bridge Shutters Control";
-	pixel_x = 0;
 	pixel_y = -5;
 	req_access_txt = "0"
 	},
@@ -258,7 +257,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -24;
 	req_access = null
 	},
@@ -532,7 +530,6 @@
 /area/shuttle/pirate/vault)
 "br" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/pod/dark,
@@ -550,8 +547,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -650,8 +646,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -719,7 +714,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24;
 	req_access = 152
 	},
@@ -797,7 +791,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -24;
 	req_access = null
 	},
@@ -853,7 +846,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -24;
-	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -914,7 +906,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 24;
-	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -1192,12 +1183,9 @@
 "cH" = (
 /obj/structure/chair/stool,
 /obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -1216,7 +1204,6 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1308,8 +1295,7 @@
 "cQ" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/barman_recipes{
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1354,8 +1340,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1429,8 +1414,7 @@
 /area/shuttle/pirate)
 "dc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 25;
-	pixel_y = 0
+	pixel_x = 25
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -1494,10 +1478,7 @@
 /area/shuttle/pirate)
 "dl" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1616,10 +1597,7 @@
 /area/shuttle/pirate)
 "dz" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/floorgrime,
@@ -1672,7 +1650,6 @@
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/stack/sheet/mineral/plastitanium{
@@ -1735,10 +1712,7 @@
 /area/shuttle/pirate)
 "dK" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/public/glass{
 	heat_proof = 1;
@@ -1769,10 +1743,7 @@
 /area/shuttle/pirate)
 "dO" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
@@ -1801,8 +1772,7 @@
 "dR" = (
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/compressor{
 	comp_id = "pirateturbine";

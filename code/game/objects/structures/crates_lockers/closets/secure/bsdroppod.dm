@@ -3,7 +3,7 @@
 
 //------------------------------------BLUESPACE DROP POD-------------------------------------//
 /obj/structure/closet/bsdroppod
-	name = "Bluespace Drop Pod"
+	name = "Supply Drop Pod"
 	desc = "A Nanotrasen supply drop pod."
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "BDP"
@@ -43,11 +43,6 @@
 	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
-	addtimer(CALLBACK(src, .proc/sparks), 30)//3 seconds after opening, make some sparks and delete
-
-/obj/structure/closet/bsdroppod/proc/sparks()//sparks cant be called from addtimer
-	do_sparks(5, TRUE, src)
-	qdel(src)//no need for QDEL_IN if we already have a timer 
 
 /obj/structure/closet/bsdroppod/Destroy()//make some sparks b4 deletion
 	QDEL_NULL(SupplyOrder)
