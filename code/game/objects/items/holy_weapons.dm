@@ -348,7 +348,7 @@
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
-	desc = "Particularly twisted dieties grant gifts of dubious value."
+	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
