@@ -320,6 +320,15 @@
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
-	. = ..()
-	for(var/obj/item/I in contents)
-		I.AddComponent(/datum/component/constant_emp)
+	new /obj/item/clothing/under/chameleon/broken(src)
+	new /obj/item/clothing/suit/chameleon/broken(src)
+	new /obj/item/clothing/gloves/chameleon/broken(src)
+	new /obj/item/clothing/shoes/chameleon/broken(src)
+	new /obj/item/clothing/glasses/chameleon/broken(src)
+	new /obj/item/clothing/head/chameleon/broken(src)
+	new /obj/item/clothing/mask/chameleon/broken(src)
+	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/device/radio/headset/chameleon/broken(src)
+	new /obj/item/stamp/chameleon/broken(src)
+	new /obj/item/device/pda/chameleon/broken(src)
+	// No chameleon laser, they can't randomise for //REASONS//
