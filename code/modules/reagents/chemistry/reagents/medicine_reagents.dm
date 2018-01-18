@@ -1171,11 +1171,12 @@
 		M.adjustOxyLoss(20*REM,0)
 		M.adjustBruteLoss(40*REM,0)
 	if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+		var/mob/living/carbon/human/H = M
+		if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
 				H.set_heartattack(TRUE)
-		else
+ 		else
 			M.losebreath +=10
+	return
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
@@ -1184,7 +1185,7 @@
 		M.drop_all_held_items()
 		M.Jitter(2)
 		M.Dizzy(2)
-
+	return
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
@@ -1196,6 +1197,7 @@
 		M.adjustStaminaLoss(6*REM,0)
 		M.Dizzy(3)
 		M.Jitter(3)
+	return
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
@@ -1207,4 +1209,5 @@
 		M.adjustStaminaLoss(7*REM,0)
 		M.Dizzy(7)
 		M.Jitter(7)
+	return
 	..()
