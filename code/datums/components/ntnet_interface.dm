@@ -13,14 +13,16 @@
 	var/network_name = ""			//text
 	var/list/networks_connected_by_id = list()		//id = datum/ntnet
 
-/datum/component/ntnet_interface/Initialize(force_ID, force_name = "NTNet Device", autoconnect_station_network = TRUE)			//Don't force ID unless you know what you're doing!
+/datum/component/ntnet_interface/Initialize(force_ID, force_name = "NTNet Device", autoconnect_station_network = TRUE, datum/ntnet/forced_connection)			//Don't force ID unless you know what you're doing!
 	if(!force_ID)
 		hardware_id = "[SSnetworks.assignment_hardware_id++]"
 	else
 		hardware_id = force_ID
 	network_name = force_name
 	SSnetworks.register_interface(src)
-	if(autoconnect_station_network)
+	if(forced_connection)
+		register_connection(forced_connection)
+	else if(autoconnect_station_network)
 		register_connection(SSnetworks.station_network)
 
 /datum/component/ntnet_interface/Destroy()

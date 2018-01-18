@@ -8,6 +8,11 @@
 	var/list/available_antag_software = list()
 	var/list/chat_channels = list()
 	var/list/fileservers = list()
+
+	var/list/datum/ntnet_service/network_services = list()
+	var/list/network_service_ids = list()	//id = service
+	var/list/autoinit_service_ids = list()		//list of service_ids that will be made and automatically added on creation of network.
+
 	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
 	// High values make displaying logs much laggier.
 	var/setting_maxlogcount = 100
@@ -26,11 +31,43 @@
 /datum/ntnet/New(_netid)
 	build_software_lists()
 	add_log("NTNet logging system activated.")
+	START_PROCESSING(SSnetworks, src)
 	if(_netid)
 		network_id = _netid
 	if(!SSnetworks.register_network(src))
 		stack_trace("Network [type] with ID [network_id] failed to register and has been deleted.")
 		qdel(src)
+	init_services()
+
+/datum/ntnet/Destroy()
+	SSnetworks.unregister_network(src)
+	STOP_PROCESSING(SSnetworks, src)
+	return ..()
+
+/datum/ntnet/process()
+	for(var/i in network_services)
+		var/datum/ntnet_service/NTS = i
+		NTS.service_process()
+
+/datum/ntnet/proc/init_services()
+	for(var/i in subtypesof(/datum/ntnet_service))
+		var/datum/ntnet_service/NTS = i
+		if(initial(NTS.service_id) in autoinit_service_ids)
+			add_network_service(new NTS)
+
+/datum/ntnet/proc/add_network_service(datum/ntnet_service/NTS)
+	if(NTS.unique && NTS.service_id)
+		if(network_service_ids[NTS.service_id])
+			return FALSE
+		network_service_ids[NTS.service_id] = NTS
+	network_services += NTS
+	return TRUE
+
+/datum/ntnet/proc/remove_network_service(datum/ntnet_service/NTS)
+	if(NTS.unique && NTS.service_id)
+		network_service_ids -= NTS.service_id
+	network_services -= NTS
+	return TRUE
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/I)
 	connected_interfaces_by_id[I.hardware_id] = I
@@ -47,6 +84,12 @@
 	data.network_id = src
 	log_data_transfer(data)
 	if(!check_relay_operation())
+		return FALSE
+	var/ret = NONE
+	for(var/i in network_services)
+		var/datum/ntnet_service/NTS = i
+		ret |= NTS.on_network_transmit(sender, data)
+	if(ret & NETSERVICE_BLOCK_TRANSMIT)
 		return FALSE
 	for(var/i in data.recipient_ids)
 		var/datum/component/ntnet_interface/reciever = find_interface_id(i)
@@ -80,7 +123,6 @@
 	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len-setting_maxlogcount,0)
-
 
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
 /datum/ntnet/proc/check_function(specific_action = 0)
@@ -173,6 +215,7 @@
 
 /datum/ntnet/station
 	network_id = "SS13-NTNET"
+	autoinit_service_ids = list(NETWORK_SERVICE_ID_MULEBOT)
 
 /datum/ntnet/station/proc/register_map_supremecy()					//called at map init to make this what station networks use.
 	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
