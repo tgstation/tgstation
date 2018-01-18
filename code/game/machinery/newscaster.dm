@@ -253,9 +253,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
+		var/timer_time_thingy = rand(0, 15))
+		addtimer(callback(src, .proc/update_icon), timer_time_thingy)
+		addtimer(VARSET_CALLBACK(src, stat, stat|NOPOWER), timer_time_thingy)
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -874,9 +874,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		say("Breaking news from [channel]!")
 		alert ++
 		update_icon()
-		spawn(alert_delay)
-			alert --
-			update_icon()
+		addtimer(VARSET_CALLBACK(src, alert, alert-1), alert_delay)
+		addtimer(CALLBACK(src, .proc/update_icon), alert_delay)
 		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")
