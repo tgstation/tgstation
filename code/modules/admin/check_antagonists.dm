@@ -31,6 +31,8 @@
 	parts += "<a href='?priv_msg=[ckey(owner.key)]'>PM</a>"
 	if(owner.current) //There's body to follow
 		parts += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(owner.current)]'>FLW</a>"
+	else
+		parts += ""
 	parts += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(owner)]'>Show Objective</a>"
 	return parts //Better as one cell or two/three
 
@@ -200,7 +202,7 @@
 		dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 		if(other_players)
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
-		dat += "<BR>"
+		dat += "<br><br>"
 
 		dat += buildit()
 
