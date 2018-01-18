@@ -227,7 +227,13 @@
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
 
-<<<<<<< HEAD
+/datum/chemical_reaction/morphine
+	name = "Morphine"
+	id = "morphine"
+	results = list("morphine" = 3)
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "nitrogen" = 1, "oxygen" = 1)
+	required_temp = 480
+
 /datum/chemical_reaction/ketrazine
 	name = "Ketrazine"
 	id = "ketrazine"
@@ -236,11 +242,3 @@
 	required_catalysts = list("gold" = 1)
 	required_temp = 520
 	mix_message = "The solution fizzes and then settles into an oily, smooth, purple liquid."
-=======
-/datum/chemical_reaction/morphine
-	name = "Morphine"
-	id = "morphine"
-	results = list("morphine" = 3)
-	required_reagents = list("carbon" = 2, "hydrogen" = 2, "nitrogen" = 1, "oxygen" = 1)
-	required_temp = 480
->>>>>>> refs/remotes/tgstation/master
