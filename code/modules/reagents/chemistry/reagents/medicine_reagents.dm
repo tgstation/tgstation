@@ -1164,7 +1164,7 @@
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
-		to_chat(M, <"span class='warning'> You feel an impending sense of doom. </span>")
+		to_chat(M, "<span class='warning'> You feel an impending sense of doom. </span>")
 		M.drop_all_held_items()
 		M.Dizzy(6)
 		M.Jitter(7)
