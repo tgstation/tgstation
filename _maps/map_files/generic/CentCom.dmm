@@ -2733,10 +2733,7 @@
 	},
 /area/centcom/prison)
 "ir" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 6
-	},
+/turf/closed/indestructible/fakeglass,
 /area/centcom/prison)
 "is" = (
 /obj/structure/table/reinforced,
@@ -3253,12 +3250,12 @@
 "jC" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 8;
+	dwidth = 5;
 	height = 7;
 	id = "supply_away";
+	json_key = "cargo";
 	name = "CentCom";
-	width = 20;
-	json_key = "cargo"
+	width = 12
 	},
 /turf/open/space,
 /area/space)
@@ -3544,7 +3541,7 @@
 	id = "emergency_syndicate";
 	name = "Syndicate Auxillary Shuttle Dock";
 	turf_type = /turf/open/floor/plating/asteroid/snow;
-	width = 50;
+	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
@@ -6808,7 +6805,9 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "sq" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -7230,7 +7229,9 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "to" = (
-/obj/machinery/computer/shuttle/ferry,
+/obj/machinery/computer/shuttle/ferry{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -8034,8 +8035,7 @@
 	height = 50;
 	id = "emergency_away";
 	name = "CentCom Emergency Shuttle Dock";
-	width = 50;
-	json_key = "emergency"
+	width = 50
 	},
 /turf/open/space,
 /area/space)
@@ -8766,8 +8766,7 @@
 	height = 13;
 	id = "ferry_away";
 	name = "CentCom Ferry Dock";
-	width = 5;
-	json_key = "ferry"
+	width = 5
 	},
 /turf/open/space,
 /area/space)
@@ -9009,8 +9008,7 @@
 	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
-	preferred_direction = 4;
-	timid = 0
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -13115,10 +13113,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Il" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
-	},
+/turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeobserve)
 "Im" = (
 /turf/closed/indestructible/fakeglass{
@@ -13637,10 +13632,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "JI" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
-	},
+/turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeadmin)
 "JJ" = (
 /turf/closed/indestructible/fakeglass{
@@ -13831,9 +13823,7 @@
 	name = "Backup Shuttle Dock";
 	width = 8
 	},
-/obj/docking_port/mobile/emergency/backup{
-	timid = 0
-	},
+/obj/docking_port/mobile/emergency/backup,
 /turf/open/floor/plating,
 /area/shuttle/escape/backup)
 "Kl" = (
@@ -14382,7 +14372,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "LP" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "LQ" = (
@@ -14655,9 +14647,9 @@
 	height = 17;
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
+	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
-	roundstart_template = /datum/map_template/shuttle/infiltrator/basic
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
@@ -14700,6 +14692,12 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"ME" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/wizard_station)
 
 (1,1,1) = {"
 aa
@@ -19248,8 +19246,8 @@ lI
 lI
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -19510,7 +19508,7 @@ zN
 zo
 Bf
 qE
-zn
+Ax
 Ax
 qE
 lI
@@ -19758,7 +19756,7 @@ lI
 lI
 qE
 qE
-uC
+ME
 vj
 ya
 qZ
@@ -20290,7 +20288,7 @@ DZ
 Eh
 qE
 qE
-tW
+Ax
 qE
 lI
 lI
@@ -20533,8 +20531,8 @@ vj
 xu
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -21292,11 +21290,11 @@ lI
 lI
 lI
 lI
-qF
+Ax
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21308,7 +21306,7 @@ qZ
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21549,7 +21547,7 @@ lI
 lI
 lI
 lI
-qG
+Ax
 ra
 qZ
 qZ
@@ -21573,7 +21571,7 @@ DD
 uE
 Ec
 uE
-tW
+Ax
 EX
 qZ
 qZ
@@ -21806,11 +21804,11 @@ lI
 lI
 lI
 lI
-qH
+Ax
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21822,7 +21820,7 @@ qZ
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -22346,7 +22344,7 @@ Ee
 Em
 qE
 qE
-tW
+Ax
 qE
 qE
 qE
@@ -22589,8 +22587,8 @@ uE
 xz
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -22844,13 +22842,13 @@ vn
 uE
 vl
 uE
-qF
+Ax
 yH
 yK
 zQ
 Az
 yK
-qF
+Ax
 qZ
 qZ
 qZ
@@ -23101,13 +23099,13 @@ qE
 uF
 wQ
 wd
-qG
+Ax
 yI
 zq
 yI
 AA
 yI
-qG
+Ax
 qZ
 uE
 qZ
@@ -23358,13 +23356,13 @@ qE
 qE
 vn
 uE
-qH
+Ax
 yJ
 zr
 yK
 zq
 yK
-qH
+Ax
 qZ
 qZ
 qE
@@ -23622,7 +23620,7 @@ yI
 AB
 Bi
 qE
-zn
+Ax
 Ax
 qE
 lI
@@ -30548,7 +30546,7 @@ kt
 hl
 hl
 hl
-Mx
+hl
 hl
 hl
 hl
@@ -31061,9 +31059,9 @@ hl
 kt
 kt
 kt
-uK
+nz
 uJ
-uK
+nz
 kt
 hl
 hl
@@ -31318,9 +31316,9 @@ hl
 hl
 hl
 kt
-tc
+nz
 ll
-tc
+nz
 kt
 kt
 kt
@@ -31575,9 +31573,9 @@ kt
 kt
 kt
 kt
-tc
+nz
 uJ
-tc
+nz
 kt
 rd
 kt
@@ -32598,7 +32596,7 @@ kt
 kt
 kt
 kt
-pE
+nz
 pY
 pZ
 rf
@@ -33362,8 +33360,8 @@ kR
 ll
 ku
 ku
-mB
-ng
+nz
+nz
 nz
 ku
 ku
@@ -33382,7 +33380,7 @@ pZ
 ku
 ku
 ku
-pE
+nz
 ku
 ku
 hh
@@ -34147,9 +34145,9 @@ rh
 ku
 ku
 ku
-uK
+nz
 uJ
-uK
+nz
 ku
 xH
 xG
@@ -34404,9 +34402,9 @@ ri
 ri
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xI
 xG
@@ -34661,9 +34659,9 @@ ri
 sj
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xJ
 xG
@@ -34912,15 +34910,15 @@ hl
 mA
 hl
 pG
-pE
+nz
 qP
 rj
 ku
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xK
 xG
@@ -35175,9 +35173,9 @@ ku
 ku
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 ku
 ku
@@ -35432,9 +35430,9 @@ ku
 sk
 sk
 sk
-tc
+nz
 ll
-tc
+nz
 sk
 sk
 sk
@@ -35689,9 +35687,9 @@ ku
 sk
 th
 ue
-tc
+nz
 uJ
-tc
+nz
 ue
 xL
 sk
@@ -56537,7 +56535,7 @@ Ep
 HM
 HW
 HN
-Im
+Il
 It
 It
 It
@@ -56546,7 +56544,7 @@ It
 It
 It
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -56794,7 +56792,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 Iu
 IF
 IF
@@ -56803,7 +56801,7 @@ IF
 IF
 IF
 Iu
-JJ
+JI
 JQ
 Ka
 Ki
@@ -57051,7 +57049,7 @@ Ep
 HO
 HW
 Id
-Im
+Il
 It
 IG
 IG
@@ -57060,7 +57058,7 @@ IG
 IG
 IG
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -57308,7 +57306,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57317,7 +57315,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -57565,7 +57563,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57574,7 +57572,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -57822,7 +57820,7 @@ Gy
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57831,7 +57829,7 @@ Ji
 IH
 IH
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -58079,7 +58077,7 @@ Gx
 HL
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58088,7 +58086,7 @@ Jq
 IH
 IH
 It
-JJ
+JI
 JS
 Kb
 Ki
@@ -58336,7 +58334,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58345,7 +58343,7 @@ Ji
 IH
 IH
 It
-JJ
+JI
 JT
 JY
 Ki
@@ -58593,7 +58591,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58602,7 +58600,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -58850,7 +58848,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58859,7 +58857,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59107,7 +59105,7 @@ Ep
 HO
 HW
 Id
-Im
+Il
 It
 II
 II
@@ -59116,7 +59114,7 @@ II
 II
 II
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -59364,7 +59362,7 @@ Ep
 HM
 HW
 HN
-Im
+Il
 Iu
 IF
 IF
@@ -59373,7 +59371,7 @@ IF
 IF
 IF
 Iu
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59621,7 +59619,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 It
 It
@@ -59630,7 +59628,7 @@ It
 It
 It
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59878,7 +59876,7 @@ Gx
 HL
 HW
 HW
-In
+Il
 Is
 IJ
 IY
@@ -59887,7 +59885,7 @@ Jk
 Jt
 IJ
 Is
-JK
+JI
 JP
 Kc
 JY

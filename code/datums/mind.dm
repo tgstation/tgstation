@@ -738,7 +738,7 @@
 	else
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(src)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(src)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(src)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>Toggle Completion</font></a><br>"
+			out += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(src)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(src)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(src)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
 			obj_count++
 	out += "<a href='?src=[REF(src)];obj_add=1'>Add objective</a><br><br>"
 
@@ -1167,7 +1167,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = FALSE
 					message_admins("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] unable to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] unable to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")
@@ -1179,7 +1179,7 @@
 				if(devilinfo)
 					devilinfo.ascendable = TRUE
 					message_admins("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
-					log_admin("[key_name_admin(usr)] has made [current] able to ascend as a devil.")
+					log_admin("[key_name(usr)] has made [current] able to ascend as a devil.")
 					return
 				if(!ishuman(current) && !iscyborg(current))
 					to_chat(usr, "<span class='warning'>This only works on humans and cyborgs!</span>")

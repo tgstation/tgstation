@@ -2615,7 +2615,7 @@
 /area/awaymission/centcomAway/general)
 "jr" = (
 /obj/structure/table,
-/obj/item/firstaid_arm_assembly,
+/obj/item/bot_assembly/medbot,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "js" = (

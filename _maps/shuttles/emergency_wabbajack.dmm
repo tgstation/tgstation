@@ -316,7 +316,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 1;
+	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
@@ -327,9 +328,6 @@
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "bi" = (
 /obj/machinery/light,

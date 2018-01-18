@@ -164,6 +164,10 @@
 	icon_living = "maid"
 	icon_dead = "maid_dead"
 
+/mob/living/simple_animal/hostile/alien/maid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cleaning)
+
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))

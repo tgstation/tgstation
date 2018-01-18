@@ -339,7 +339,7 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/clown
+	coin_type = /obj/item/coin/bananium
 
 /datum/material/titanium
 	name = "Titanium"
