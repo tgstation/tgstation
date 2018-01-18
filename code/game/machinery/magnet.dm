@@ -363,11 +363,11 @@
 		INVOKE_ASYNC(radio_connection, /datum/radio_frequency/radio_connection.proc/post_signal, src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
-			sleep(1)
+			addtimer(VARSET_CALLBACK(src, looping, FALSE), 1)
 		else
-			sleep(12-speed)
+			addtimer(VARSET_CALLBACK(src, looping, FALSE), 12-speed)
 
-	looping = 0
+	looping = FALSE
 
 
 /obj/machinery/magnetic_controller/proc/filter_path()
