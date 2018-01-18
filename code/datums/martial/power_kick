@@ -10,10 +10,16 @@
 /datum/martial_art/power_kick/proc/harm_pkick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
   if(D.lying)
-    var/atk_verb = pick("stomps", "crushes", "stamps")
-    D.apply_damage(rand(25,30), BRUTE)
-    D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
-				"<span class='userdanger'>[A] [atk_verb] you!</span>")
+  	if(D.stat && user.get_bodypart("head"))
+		var/obj/item/bodypart/head/Dhead = D.get_bodypart("head")
+		if(do_after(A, 50, D)) //if if if but i promise this is needed
+			Dhead.qdel() //this can't be right but wip wip wip wip
+			//gibs here
+	else
+    	var/atk_verb = pick("stomps", "crushes", "stamps")
+    	D.apply_damage(rand(25,30), BRUTE)
+    	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
+					"<span class='userdanger'>[A] [atk_verb] you!</span>")
   else
     var/atk_verb = pick("punts", "kicks", "cracks", "boots", "slams")
     D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
