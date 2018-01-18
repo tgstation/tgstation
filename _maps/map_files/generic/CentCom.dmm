@@ -8035,7 +8035,8 @@
 	height = 50;
 	id = "emergency_away";
 	name = "CentCom Emergency Shuttle Dock";
-	width = 50
+	width = 50;
+	json_key = "emergency"
 	},
 /turf/open/space,
 /area/space)
