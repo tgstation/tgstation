@@ -256,6 +256,7 @@
 	use_power = FALSE
 	networks = list("SS13", "MiniSat") //:eye:
 	var/datum/action/innate/servant_warp/warp_action = new
+	var/no_teleportation = FALSE //If this console can't be used for warping
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()
 	. = ..()
@@ -288,6 +289,17 @@
 		return
 	. = ..()
 
+/obj/machinery/computer/camera_advanced/ratvar/proc/disable_teleport(time = 300)
+	no_teleportation = TRUE
+	addtimer(CALLBACK(src, .proc/enable_teleport), time)
+
+/obj/machinery/computer/camera_advanced/ratvar/proc/enable_teleport()
+	no_teleportation = FALSE
+	var/static/sent_message
+	if(!sent_message)
+		sent_message = TRUE
+		hierophant_message("<span class='big bold brass'>You can now once more warp to the station!</span>")
+
 /datum/action/innate/servant_warp
 	name = "Warp"
 	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return."
@@ -305,6 +317,9 @@
 	var/mob/living/carbon/human/user = owner
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
+	if(R.no_teleportation)
+		to_chat(user, "<span class='sevtug_small'>Teleportation has been temporarily disabled and will recover soon.</span>")
+		return
 	var/turf/T = get_turf(remote_eye)
 	if(!is_reebe(user.z) || !is_station_level(T.z))
 		return
