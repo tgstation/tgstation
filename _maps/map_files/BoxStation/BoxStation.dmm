@@ -37604,9 +37604,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 2
-	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bOl" = (
@@ -37738,9 +37735,9 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "bOC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -37987,7 +37984,6 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bPb" = (
-/turf/open/floor/plasteel,
 /obj/machinery/door/airlock/research/glass{
 	name = "Circuitry Lab";
 	req_access_txt = "47"
@@ -38002,7 +37998,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bPc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -38134,16 +38130,16 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "bPt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -41847,7 +41843,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "bYp" = (
 /obj/structure/sign/securearea{
@@ -57476,6 +57475,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"Qqv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/science/circuit)
 
 (1,1,1) = {"
 aaa
@@ -105950,19 +105954,19 @@ bMv
 bNv
 bMv
 Qpo
-Qpw
-QpB
-QpG
-QpK
-QpO
+Qpp
+Qpp
+Qpp
+Qpp
+Qpp
 QpS
 QpY
 bPb
 bQG
-Qqg
-Qqk
-Qqo
-bSl
+QpS
+Qpp
+Qpp
+Qpo
 bQZ
 bQZ
 bQZ
@@ -106213,13 +106217,13 @@ bTo
 bUp
 QpP
 QpT
-bXs
+QpE
 bPL
 bQI
 bTo
 Qql
 cbZ
-bSl
+Qpo
 cmo
 cNW
 cOx
@@ -106463,20 +106467,20 @@ bFU
 bMy
 bNx
 bOG
-Qpq
+Qpp
 Qpx
 bSk
-QpH
-QpL
+QpE
+QpE
 QpQ
 QpU
-QpZ
+QpU
 bPF
 bQI
-bXs
+QpE
 Qqm
 cbY
-bSl
+Qpo
 cOe
 cNW
 cNW
@@ -106720,20 +106724,20 @@ bFU
 bMA
 bNz
 bOI
-Qpr
+Qpp
 bRa
 QpD
 bTp
 QpM
 bVs
-QpV
+Qqv
 bXt
 bPM
 bZh
 Qqh
-cbe
+QpD
 Qqp
-bSl
+Qpo
 cOe
 ceS
 cae
@@ -106977,20 +106981,20 @@ bEC
 bEC
 bEC
 bEC
-Qps
+Qpo
 Qpy
 QpE
-QpI
-QpN
+QpE
+QpE
 QpR
 QpW
 Qqa
 Qqc
-bXs
-bXs
-bXs
-bXs
-bSl
+QpE
+QpE
+QpE
+QpE
+Qpo
 cOe
 ceR
 cbf
@@ -107234,7 +107238,7 @@ cNW
 bMB
 bNA
 cOe
-Qpt
+Qpo
 bRb
 QpF
 QpJ
@@ -107247,7 +107251,7 @@ Qqe
 Qqi
 Qqn
 Qqq
-bSl
+Qpo
 cOx
 Qqr
 ckS
@@ -107491,20 +107495,20 @@ cNX
 cNZ
 cNZ
 Qpj
-Qpu
-Qpz
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
-bSl
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
 cNW
 cgr
 cNW
@@ -108785,7 +108789,7 @@ aaa
 aaf
 cNW
 bYs
-Qqf
+Qpm
 ciJ
 cbf
 cbf
