@@ -1148,7 +1148,7 @@
 			M.adjustToxLoss(10*REM,0)
 			M.adjustStaminaLoss(30*REM,0)
 		if(30 to INFINITY)
-			to_chat(M. "<span class='warning'>Your body	can't handle the stress!</span>")
+			to_chat(M, "<span class='warning'>Your body	can't handle the stress!</span>")
 			M.Sleeping(60, 0)
 			M.adjustKnockdown(70*REM,0)
 			M.drop_all_held_items()
@@ -1164,7 +1164,7 @@
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
-		to_chat(M. <"span class'warning'>You feel an impending sense of doom,</span>")
+		to_chat(M, <"span class'warning'>You feel an impending sense of doom,</span>")
 		M.drop_all_held_items()
 		M.Dizzy(6)
 		M.Jitter(7)
@@ -1180,7 +1180,7 @@
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		to_chat(M. <"span class'warning'>You feel like you need more power...</span>")
+		to_chat(M, <"span class'warning'>You feel like you need more power...</span>")
 		M.drop_all_held_items()
 		M.Jitter(2)
 		M.Dizzy(2)
@@ -1190,7 +1190,7 @@
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
 	if(prob(50))
-		to_chat(M. <"span class'warning'>You feel weak and sore, you need something to amp you up!</span>")
+		to_chat(M, <"span class'warning'>You feel weak and sore, you need something to amp you up!</span>")
 		M.drop_all_held_items()
 		M.adjustToxLoss(1*REM, 0)
 		M.adjustBruteLoss(2*REM,0)
@@ -1201,7 +1201,7 @@
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
 	if(prob(66))
-		to_chat(M. <"span class'warning'>You need ketrazine! You need it badly! You need it now!></span>")
+		to_chat(M, <"span class'warning'>You need ketrazine! You need it badly! You need it now!></span>")
 		M.drop_all_held_items()
 		M.adjustToxLoss(3*REM, 0)
 		M.adjustBruteLoss(2*REM,0)
