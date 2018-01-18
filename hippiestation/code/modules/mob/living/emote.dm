@@ -37,14 +37,6 @@
 				sound = 'hippiestation/sound/voice/caw.ogg'
 			if (is_species(user, /datum/species/tarajan))
 				sound = 'hippiestation/sound/voice/cat.ogg'
-			if(user.ckey == "fluxcapacitor1337")
-				sound = 'hippiestation/sound/misc/oof.ogg'
-				if(user.stat != CONSCIOUS)
-					var/list/flux_limbs = list(user.get_bodypart("l_leg"),user.get_bodypart("r_leg"),user.get_bodypart("l_arm"),user.get_bodypart("r_arm") )
-					user.adjustOxyLoss(-200)
-					for(var/obj/item/bodypart/B in flux_limbs)
-						B.dismember()
-						user.adjustBruteLoss(-100)
 		if(isalien(user))
 			sound = 'sound/voice/hiss6.ogg'
 		LAZYINITLIST(user.alternate_screams)
