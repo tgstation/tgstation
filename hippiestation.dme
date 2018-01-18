@@ -2630,6 +2630,7 @@
 #include "hippiestation\code\modules\jobs\job_types\engineering.dm"
 #include "hippiestation\code\modules\jobs\job_types\medical.dm"
 #include "hippiestation\code\modules\jobs\job_types\science.dm"
+#include "hippiestation\code\modules\keybindings\bindings_admin.dm"
 #include "hippiestation\code\modules\keybindings\bindings_hippie.dm"
 #include "hippiestation\code\modules\library\lib_machines.dm"
 #include "hippiestation\code\modules\lighting\lighting_turf.dm"
@@ -2778,8 +2779,8 @@
 #include "hippiestation\code\modules\tts\tts.dm"
 #include "hippiestation\code\modules\uplink\uplink_item.dm"
 #include "hippiestation\code\modules\vehicles\pimpin_ride.dm"
+#include "hippiestation\interface\interface.dm"
 #include "hippiestation\interface\skin.dmf"
-#include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 // END_INCLUDE
