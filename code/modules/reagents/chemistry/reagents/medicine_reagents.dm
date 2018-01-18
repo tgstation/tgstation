@@ -1159,7 +1159,7 @@
 			M.adjustStaminaLoss(40*REM,0)
 			M.losebreath +=1
 
-			=1
+
 	..()
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
