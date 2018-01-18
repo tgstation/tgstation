@@ -1173,7 +1173,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
-				H.set_heartattack(TRUE)
+			H.set_heartattack(TRUE)
  		else
 			M.losebreath +=10
 	return
