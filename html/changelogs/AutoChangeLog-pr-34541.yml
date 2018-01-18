@@ -1,0 +1,5 @@
+author: "OrdoM"
+delete-after: True
+changes: 
+  - rscadd: "Adds morphine recipe to chemistry."
+  - rscdel: "Removed ability for bartender to steal all morphine on the map"
