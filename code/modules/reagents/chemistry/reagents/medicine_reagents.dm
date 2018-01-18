@@ -1127,6 +1127,7 @@
 	M.adjustKnockdown(-70*REM, 0)
 	M.adjustStaminaLoss(-80*REM, 0)
 	M.adjustUnconscious(-50*REM, 0)
+	M.adjustBrainLoss(.5*REM,0)
 	switch(current_cycle)
 		if(13)
 			to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
@@ -1164,19 +1165,13 @@
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
-		to_chat(M, "<span class='warning'> You feel an impending sense of doom. </span>")
+		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
 		M.drop_all_held_items()
 		M.Dizzy(6)
 		M.Jitter(7)
-		M.adjustOxyLoss(20*REM,0)
+		M.adjustOxyLoss(40*REM,0)
 		M.adjustBruteLoss(40*REM,0)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
-			H.set_heartattack(TRUE)
- 		else
-			M.losebreath +=10
-	return
+		M.losebreath +=10
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
@@ -1185,7 +1180,6 @@
 		M.drop_all_held_items()
 		M.Jitter(2)
 		M.Dizzy(2)
-	return
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
@@ -1197,7 +1191,6 @@
 		M.adjustStaminaLoss(6*REM,0)
 		M.Dizzy(3)
 		M.Jitter(3)
-	return
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
@@ -1209,5 +1202,4 @@
 		M.adjustStaminaLoss(7*REM,0)
 		M.Dizzy(7)
 		M.Jitter(7)
-	return
 	..()
