@@ -16,7 +16,7 @@
 		useblacklist = FALSE
 
 	if(imp_in)
-		if(imp_in.z != ZLEVEL_CENTCOM) //teleporting doesn't work on centcom
+		if(!is_centcom_level(imp_in.z)) //teleporting doesn't work on centcom
 
 			if(blacklist.len && useblacklist)
 				var/i = 0
@@ -44,7 +44,7 @@
 					retrieve_exile()
 
 /obj/item/implant/teleporter/proc/retrieve_exile()
-	if(imp_in.z != ZLEVEL_CENTCOM)
+	if(!is_centcom_level(imp_in.z))
 		do_teleport(imp_in, pointofreturn)
 		say(retrievalmessage)
 

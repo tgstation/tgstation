@@ -166,9 +166,12 @@
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
-		zlevels = list(zlevel)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
