@@ -360,14 +360,14 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		INVOKE_ASYNC(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, filter = RADIO_MAGNETS)
+		INVOKE_ASYNC(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS)
 
 		if(speed == 10)
 			addtimer(VARSET_CALLBACK(src, looping, FALSE), 1)
 		else
 			addtimer(VARSET_CALLBACK(src, looping, FALSE), 12-speed)
 
-	looping = FALSE
+	looping = 0
 
 
 /obj/machinery/magnetic_controller/proc/filter_path()
