@@ -57126,7 +57126,6 @@
 /area/science/circuit)
 "Qpp" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qpq" = (
 /turf/closed/wall,
@@ -57264,9 +57263,8 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpS" = (
-/turf/closed/wall,
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/circuit,
+/turf/closed/wall,
 /area/science/circuit)
 "QpT" = (
 /obj/machinery/light{
@@ -57372,11 +57370,10 @@
 /turf/open/floor/circuit,
 /area/science/circuit)
 "Qqh" = (
-/turf/open/floor/plasteel/white,
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "Qqi" = (
 /obj/machinery/light{
