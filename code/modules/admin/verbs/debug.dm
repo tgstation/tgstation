@@ -694,7 +694,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M.get_equipped_items())
 		qdel(I)
-	if(!(dresscode == "Naked"))
+	if(dresscode != "Naked")
 		M.equipOutfit(dresscode)
 
 	M.regenerate_icons()
