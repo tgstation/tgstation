@@ -7,218 +7,154 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "d" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "e" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "f" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "g" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "h" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "i" = (
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "j" = (
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "k" = (
 /obj/machinery/power/smes/magical,
 /turf/open/floor/plasteel,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "l" = (
 /turf/open/floor/plasteel,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "m" = (
 /turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
 /turf/open/space,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "o" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "p" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "q" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
 /turf/open/space,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "s" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "t" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "u" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "v" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "w" = (
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "x" = (
 /obj/structure/chair/comfy{
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "y" = (
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "z" = (
 /obj/machinery/sleeper,
 /turf/open/floor/plasteel/darkblue,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "A" = (
 /turf/open/floor/plasteel/dark,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "B" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "C" = (
 /turf/open/floor/plasteel/darkblue,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "D" = (
 /obj/structure/table,
 /obj/item/storage/firstaid,
 /turf/open/floor/plasteel/darkblue,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "E" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "F" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 "G" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/ruin/powered{
-	name = "Shuttle"
-	})
+/area/ruin/powered/shuttle/medium_3)
 
 (1,1,1) = {"
 a

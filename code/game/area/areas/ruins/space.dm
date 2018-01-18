@@ -72,6 +72,24 @@
 	name = "Hotel Guest Room"
 	icon_state = "Sleep"
 
+/area/ruin/space/has_grav/hotel/guestroom/room_1
+	name = "Hotel Guest Room 1"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_2
+	name = "Hotel Guest Room 2"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_3
+	name = "Hotel Guest Room 3"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_4
+	name = "Hotel Guest Room 4"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_5
+	name = "Hotel Guest Room 5"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_6
+	name = "Hotel Guest Room 6"
+
 /area/ruin/space/has_grav/hotel/security
 	name = "Hotel Security Post"
 	icon_state = "security"
