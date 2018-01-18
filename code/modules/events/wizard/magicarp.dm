@@ -1,6 +1,6 @@
 /datum/round_event_control/wizard/magicarp //these fish is loaded
 	name = "Magicarp"
-	weight = 1
+	weight = 10
 	typepath = /datum/round_event/wizard/magicarp
 	max_occurrences = 1
 	earliest_start = 0
@@ -8,6 +8,7 @@
 /datum/round_event/wizard/magicarp
 	announceWhen	= 3
 	startWhen = 50
+	fakeable = TRUE
 
 /datum/round_event/wizard/magicarp/setup()
 	startWhen = rand(40, 60)

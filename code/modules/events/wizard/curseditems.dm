@@ -1,6 +1,6 @@
 /datum/round_event_control/wizard/cursed_items //fashion disasters
 	name = "Cursed Items"
-	weight = 3
+	weight = 7
 	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
 	earliest_start = 0

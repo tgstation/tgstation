@@ -499,17 +499,41 @@
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return 1
 
-/datum/spellbook_entry/summon/events
-	name = "Summon Events"
-	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
+/datum/spellbook_entry/summon/event_chorus
+	name = "Summon Event Chorus"
+	desc = "In the course of a shift, random things will happen to the station. But what if they happened MORE often? Casting this spell will decrease the time between events, which means more things will be happening at once."
+	cost = 2
 	var/times = 0
 
-/datum/spellbook_entry/summon/events/IsAvailible()
+/datum/spellbook_entry/summon/event_chorus/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	times++
+	SSevents.frequency_lower /= 2
+	SSevents.frequency_upper /= 2
+	SSevents.reschedule()
+	to_chat(user, "<span class='notice'>You have summoned a chorus of events.</span>")
+	user.say("CHORUS[pick(" ", "`")]FIERI")
+
+	return TRUE
+
+/datum/spellbook_entry/summon/event_chorus/GetInfo()
+	. = ..()
+	if(times>0)
+		. += "You cast it [times] times.<br>"
+	return .
+
+/datum/spellbook_entry/summon/magical_events
+	name = "Summon Magical Events"
+	desc = "Add special wizard events to the mystical event pool, which will confound and confuse everyone! Multiple castings double the weight of these events within the mystical pool. If you want events to happen more often, summon an Event Chorus."
+	var/times = 0
+
+/datum/spellbook_entry/summon/magical_events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
 	return !CONFIG_GET(flag/no_summon_events)
 
-/datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+/datum/spellbook_entry/summon/magical_events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
@@ -517,7 +541,7 @@
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 
-/datum/spellbook_entry/summon/events/GetInfo()
+/datum/spellbook_entry/summon/magical_events/GetInfo()
 	. = ..()
 	if(times>0)
 		. += "You cast it [times] times.<br>"
