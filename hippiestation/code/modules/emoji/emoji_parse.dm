@@ -2,7 +2,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon('hippiestation/icons/emoji.dmi'))
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0
@@ -16,7 +16,7 @@
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
-					parsed += icon2html('icons/emoji.dmi', world, emoji)
+					parsed += icon2html('hippiestation/icons/emoji.dmi', world, emoji)
 					pos = search + 1
 				else
 					parsed += copytext(text, pos, search)
@@ -28,3 +28,5 @@
 		break
 	return parsed
 
+/datum/asset/simple/icon_states/emojis
+	icon = 'hippiestation/icons/emoji.dmi'
