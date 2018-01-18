@@ -63716,6 +63716,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "cBF" = (
@@ -80868,7 +80869,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
 	dir = 1;
-	name = "Circuitry lab APC";
+	name = "Circuitry Lab APC";
 	pixel_y = 30
 	},
 /obj/structure/cable/yellow{
@@ -81061,6 +81062,10 @@
 /area/science/circuit)
 "Quf" = (
 /obj/structure/table/glass,
+/obj/machinery/camera/autoname{
+	dir = 4;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "Qug" = (
@@ -81266,6 +81271,14 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"QuW" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"QuX" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 
 (1,1,1) = {"
 aaa
@@ -116128,8 +116141,8 @@ cJa
 cJa
 QtP
 QtZ
-Qug
-Quu
+QtZ
+QtZ
 cBE
 cAJ
 cCE
@@ -116643,7 +116656,7 @@ cuZ
 cuZ
 cuZ
 Qui
-Quv
+Qtm
 czD
 cAL
 cBG
@@ -117154,10 +117167,10 @@ dxQ
 cuZ
 Qtt
 QtE
-cwZ
+QtE
 Quc
 Quk
-Qux
+Qtm
 cQv
 cAN
 cBI
@@ -117410,11 +117423,11 @@ ctk
 cuc
 cuZ
 dyp
-cwZ
-cwZ
-cyM
+QtE
+QtE
+Quc
 Qul
-Quy
+Qtm
 czF
 cAN
 cBJ
@@ -117437,7 +117450,7 @@ aaa
 aaf
 aaa
 aaa
-QuV
+Qtj
 aaa
 aaf
 aaa
@@ -117668,10 +117681,10 @@ Qtc
 cuZ
 Qtu
 QtF
-cxN
+QtF
 Qud
-cxO
-Quz
+QtG
+Qtm
 czG
 cAN
 cBK
@@ -117925,10 +117938,10 @@ cud
 cuZ
 Qtv
 QtG
-cxO
-cxO
+QtG
+QuW
 Qum
-QuA
+Qtm
 cQB
 cAO
 cBL
@@ -118183,9 +118196,9 @@ Qtl
 cwd
 QtH
 cxP
-cxO
+QtG
 Qun
-QuB
+Qtm
 czI
 cAP
 cAP
@@ -118440,9 +118453,9 @@ Qtm
 Qtw
 QtI
 QtR
-cxO
+QtG
 Quo
-QuC
+Qtm
 aaf
 aaf
 aaf
@@ -118693,13 +118706,13 @@ clY
 crZ
 dvY
 Qtf
-Qtn
+Qtm
 Qtx
 QtJ
 QtS
-cxO
-cxO
-QuD
+QuX
+QtG
+Qtm
 aaf
 aaa
 aaf
@@ -118950,13 +118963,13 @@ cra
 csa
 dvY
 Qtg
-Qto
+Qtm
 Qty
 QtK
 QtT
-cxO
+QtG
 Qup
-QuE
+Qtm
 aaa
 aaa
 aaa
@@ -119207,13 +119220,13 @@ cou
 csb
 dvY
 Qth
-Qtp
+Qtm
 Qtz
 QtL
 QtU
-cxO
+QtG
 Quq
-QuF
+Qtm
 aaa
 aaa
 aaa
@@ -119464,13 +119477,13 @@ cgs
 csc
 dvY
 Qti
-Qtq
+Qtm
 QtA
 QtM
 QtV
-cxO
+QtG
 Qur
-QuG
+Qtm
 aaa
 aaa
 aaa
@@ -119721,13 +119734,13 @@ dwN
 csc
 dvY
 Qtj
-Qtr
+Qtm
 QtB
 QtN
 QtW
-cxO
+QtG
 Qus
-QuH
+Qtm
 aaa
 aaa
 aaa
@@ -119977,14 +119990,14 @@ cpL
 crb
 csd
 dvY
-Qtk
-Qts
-QtC
+Qtj
+Qtm
+Qtm
 QtO
-QtX
-Que
-Qut
-QuI
+Qtm
+QtO
+Qtm
+Qtm
 aaa
 aaa
 aaa
@@ -120501,7 +120514,7 @@ aaf
 aaf
 aaf
 QuJ
-QuO
+QuJ
 aaf
 aaa
 aaf
@@ -122813,8 +122826,8 @@ aaa
 aaa
 aaf
 aaf
-QuK
-QuP
+QuJ
+QuJ
 aaf
 aaf
 aaa
@@ -125640,8 +125653,8 @@ aaa
 aaf
 aaf
 aaf
-QuL
-QuQ
+QuJ
+QuJ
 aaf
 aaf
 aaa
