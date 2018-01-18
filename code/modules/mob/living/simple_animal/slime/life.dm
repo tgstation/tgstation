@@ -337,6 +337,14 @@
 					if(L in Friends) // No eating friends!
 						continue
 
+					var/ally = FALSE
+					for(var/F in faction)
+						if(F in L.faction)
+							ally = TRUE
+							break
+					if(ally)
+						continue
+
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
