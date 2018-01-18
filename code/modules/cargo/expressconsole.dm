@@ -12,7 +12,7 @@
 	var/message
 	var/locked = TRUE
 	var/list/meme_pack_data
-	var/bluespaceUpgraded = FALSE
+	var/podID = 0//0 is your standard supply droppod (requires dissassembly after landing), 1 is the bluespace drop pod (teleports out after landing)
 	
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
@@ -24,6 +24,12 @@
 	if((istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda)) && allowed(user))
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
+
+	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
+		podID = 1//doesnt effect circuit board, so that reversal is possible
+		to_chat(user, "<span class='notice'>You insert the disk into the console, allowing for advanced supply delivery vehicles.</span>")
+		qdel(W)
+		return TRUE
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -116,7 +122,7 @@
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
 						SSshuttle.points -= SO.pack.cost * 2
-						new /obj/effect/DPtarget(LZ, SO, bluespaceUpgraded)
+						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
 			else
@@ -133,7 +139,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = empty_turfs[rand(empty_turfs.len-1)]
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/DPtarget(LZ, SO, bluespaceUpgraded)
+							new /obj/effect/DPtarget(LZ, SO, podID)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

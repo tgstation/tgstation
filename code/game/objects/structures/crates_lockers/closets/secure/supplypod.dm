@@ -18,14 +18,11 @@
 	anchored = TRUE
 	anchorable = FALSE
 	var/datum/supply_order/SupplyOrder
-	var/bluespacepod = FALSE
-
 
 /obj/structure/closet/supplypod/bluespacepod
 	name = "Bluespace Drop Pod"
 	desc = "A Nanotrasen Bluespace drop pod. Teleports back to Centcom after delivery."
 	icon_state = "bluespacepod"
-	bluespacepod = TRUE//dont use isType so that later down the road, we can mix and match supply pod upgrades
 
 /obj/structure/closet/supplypod/Initialize(mapload, datum/supply_order/so)
 	. = ..()
@@ -39,7 +36,7 @@
 	else
 		add_overlay("[icon_state]_door")
 
-/obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
+/obj/structure/closet/supplypod/bluespacepod/tool_interact(obj/item/W, mob/user)
 	return TRUE
 
 /obj/structure/closet/supplypod/toggle(mob/living/user)
@@ -51,7 +48,7 @@
 	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
-	if(bluespacepod)
+	if(istype(src,/obj/structure/closet/supplypod/bluespacepod))
 		addtimer(CALLBACK(src, .proc/sparks), 30)//if bluespace, then 3 seconds after opening, make some sparks and delete		
  		
 /obj/structure/closet/supplypod/proc/sparks()//sparks cant be called from addtimer		
@@ -72,8 +69,8 @@
 	layer = FLY_LAYER//that wasnt flying, that was falling with style!
 	randomdir = FALSE
 
-/obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/isBluespace)
-	if (isBluespace)
+/obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
+	if (podID == 1)
 		icon_state = "bluespacepod_falling"
 		name = "Bluespace Drop Pod"
 	else
@@ -89,25 +86,33 @@
 	light_range = 2
 	var/obj/effect/temp_visual/fallingPod
 
-/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO, var/bluespace)
+/obj/effect/DPtarget/Initialize(mapload, datum/supply_order/SO, var/podID)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/beginLaunch, SO, bluespace), 30)//wait 3 seconds
+	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), 30)//wait 3 seconds
 
-/obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/bluespace)
-	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), bluespace)
-
+/obj/effect/DPtarget/proc/beginLaunch(datum/supply_order/SO, var/podID)
+	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
 	animate(fallingPod, pixel_z = 0, time = 3, easing = LINEAR_EASING)//make and animate a falling pod
-	addtimer(CALLBACK(src, .proc/endLaunch, SO, bluespace), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
+	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
 
-/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO, var/bluespace)
-	if (bluespace)
+/obj/effect/DPtarget/proc/endLaunch(datum/supply_order/SO, var/podID)
+	if (podID == 1)//podID 1 = bluespace supplypod, podID 0 = standard supplypod
 		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
+		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
 	else
 		new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
-
-	explosion(src,0,0,2, flame_range = 2) //explosion and camshake (shoutout to @cyberboss)
+		explosion(src,0,0,2, flame_range = 3) //less advanced equipment than bluespace pod, so larger explosion when landing
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()
 	QDEL_NULL(fallingPod)//delete falling pod after animation's over
 	return ..()
+
+//------------------------------------UPGRADES-------------------------------------//
+/obj/item/disk/cargo/bluespace_pod
+	name = "Bluespace Drop Pod Upgrade"
+	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cargodisk"
+	item_state = "card-id"
+	w_class = WEIGHT_CLASS_SMALL
