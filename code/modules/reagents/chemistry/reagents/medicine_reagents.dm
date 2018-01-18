@@ -1127,7 +1127,7 @@
 	M.adjustKnockdown(-70*REM, 0)
 	M.adjustStaminaLoss(-80*REM, 0)
 	M.adjustUnconscious(-50*REM, 0)
-	M.adjustBrainLoss(.5*REM,0)
+	M.adjustBrainLoss(0.5*REM,0)
 	switch(current_cycle)
 		if(13)
 			to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
