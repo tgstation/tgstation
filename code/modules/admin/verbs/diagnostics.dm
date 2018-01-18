@@ -1,21 +1,27 @@
+/proc/show_air_status_to(turf/target, mob/user)
+	var/datum/gas_mixture/env = target.return_air()
+	var/list/env_gases = env.gases
+	var/burning = FALSE
+	if(isopenturf(target))
+		var/turf/open/T = target
+		if(T.active_hotspot)
+			burning = TRUE
+
+	var/list/lines = list("<span class='adminnotice'>[COORD(target)]: [env.temperature] K ([env.temperature - T0C] C), [env.return_pressure()] kPa[(burning)?(", <font color='red'>burning</font>"):(null)]</span>")
+	for(var/id in env_gases)
+		var/gas = env_gases[id]
+		var/moles = gas[MOLES]
+		if (moles >= 0.00001)
+			lines += "[gas[GAS_META][META_GAS_NAME]]: [moles]"
+	to_chat(usr, lines.Join("\n"))
+
 /client/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 
 	if(!isturf(target))
 		return
-
-	var/datum/gas_mixture/GM = target.return_air()
-	var/list/GM_gases
-	var/burning = 0
-	if(isopenturf(target))
-		var/turf/open/T = target
-		if(T.active_hotspot)
-			burning = 1
-
-	to_chat(usr, "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>")
-	for(var/id in GM_gases)
-		to_chat(usr, "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]")
+	show_air_status_to(target, usr)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Air Status") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
