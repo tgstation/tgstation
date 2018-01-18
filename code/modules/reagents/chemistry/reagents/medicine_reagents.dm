@@ -1170,17 +1170,17 @@
 		M.Jitter(7)
 		M.adjustOxyLoss(20*REM,0)
 		M.adjustBruteLoss(40*REM,0)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
-				H.set_heartattack(TRUE)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+					H.set_heartattack(TRUE)
 		else
 			M.losebreath +=10
 	..()
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
-		to_chat(M, "<span class'warning'>You feel like you need more power... </span>")
+		to_chat(M, "<span class='warning'>You feel like you need more power... </span>")
 		M.drop_all_held_items()
 		M.Jitter(2)
 		M.Dizzy(2)
@@ -1189,7 +1189,7 @@
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
 	if(prob(50))
-		to_chat(M, "<span class'warning'>You feel weak and sore, you need something to amp you up! </span>")
+		to_chat(M, "<span class='warning'>You feel weak and sore, you need something to amp you up! </span>")
 		M.drop_all_held_items()
 		M.adjustToxLoss(2*REM, 0)
 		M.adjustBruteLoss(4*REM,0)
@@ -1200,7 +1200,7 @@
 
 /datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
 	if(prob(66))
-		to_chat(M, "<span class'warning'> You need ketrazine! You need it badly! You need it now! </span>")
+		to_chat(M, "<span class='warning'> You need ketrazine! You need it badly! You need it now! </span>")
 		M.drop_all_held_items()
 		M.adjustToxLoss(4*REM, 0)
 		M.adjustBruteLoss(5*REM,0)
