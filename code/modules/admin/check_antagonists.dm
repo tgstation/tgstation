@@ -81,7 +81,7 @@
 /datum/team/proc/is_gamemode_hero()
 	return FALSE
 
-/proc/buildit()
+/datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()
 
@@ -204,7 +204,7 @@
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 		dat += "<br><br>"
 
-		dat += buildit()
+		dat += build_antag_listing()
 
 		dat += "</body></html>"
 		usr << browse(dat, "window=roundstatus;size=500x500")
