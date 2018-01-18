@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(obj)
 	name = "Objects"
-	priority = FIRE_PRIORITY_OBJ
+	priority = 40
 	flags = SS_NO_INIT
 
 	var/list/processing = list()

@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
-	priority = FIRE_PRIORITY_ORBIT
+	priority = 35
 	wait = 2
 	flags = SS_NO_INIT|SS_TICKER
 
