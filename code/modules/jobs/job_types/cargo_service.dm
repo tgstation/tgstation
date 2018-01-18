@@ -54,8 +54,7 @@ Cargo Technician
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
-
-
+	r_pocket = /obj/item/device/export_scanner
 /*
 Shaft Miner
 */
