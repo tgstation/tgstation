@@ -400,7 +400,7 @@ AI MODULES
 
 /obj/item/aiModule/core/full/custom/Initialize()
 	. = ..()
-	for(var/line in world.file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
