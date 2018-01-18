@@ -80400,6 +80400,9 @@
 "dhS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "dhT" = (
@@ -81903,6 +81906,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dli" = (
@@ -82426,6 +82432,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
@@ -86989,6 +87001,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dwb" = (
@@ -86996,6 +87011,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dwc" = (
@@ -87003,7 +87021,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/blobstart,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -88558,11 +88578,17 @@
 	dir = 4
 	},
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
 "dzj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
@@ -88573,6 +88599,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzl" = (
@@ -88580,6 +88609,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzm" = (
@@ -88597,6 +88629,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dzn" = (
@@ -88606,6 +88641,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -105405,6 +105443,110 @@
 "QOa" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
+"QOb" = (
+/obj/machinery/power/apc{
+	areastring = "/area/science/research/abandoned";
+	dir = 1;
+	name = "Abandoned Research Lab APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/white{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating,
+/area/science/research/abandoned)
+"QOc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/science/research/abandoned)
+"QOd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/science/research/abandoned)
+"QOe" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/science/research/abandoned)
+"QOf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/research/abandoned)
+"QOg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/maintenance/port)
+"QOh" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/circuit/green,
+/area/science/research/abandoned)
+"QOi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/science/research/abandoned)
+"QOj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/circuit/green,
+/area/science/research/abandoned)
+"QOk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/science/research/abandoned)
+"QOl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/science/research/abandoned)
+"QOm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 
 (1,1,1) = {"
 aaa
@@ -129988,13 +130130,13 @@ cJT
 caE
 caE
 QNi
-QNn
-QNs
-QNB
-QNH
-QNN
-QNR
-QNY
+QNi
+QNi
+QNi
+QNi
+QNi
+QNi
+QNi
 dhQ
 dhQ
 dhQ
@@ -130251,7 +130393,7 @@ dmr
 dog
 dle
 drz
-dhR
+QNj
 dul
 dvZ
 dxH
@@ -130501,14 +130643,14 @@ cRP
 ddP
 deW
 cKk
-QNk
+QNj
 QNo
 QNt
 QNC
 QNI
 dpX
 QNS
-dhR
+QNj
 djs
 dlf
 dxI
@@ -130758,14 +130900,14 @@ cMY
 cMY
 cCM
 dgm
-dhR
+QNj
 djp
 QNu
 dmt
 doh
 QNO
 drA
-dhR
+QNj
 dum
 dli
 dpZ
@@ -131022,11 +131164,11 @@ QND
 QNJ
 QNP
 drB
-dhR
-dpZ
-dli
-dxJ
-dxJ
+QNj
+QOb
+QOc
+QOh
+QOj
 dxJ
 dBV
 dlg
@@ -131272,16 +131414,16 @@ dcb
 cMY
 deX
 dgn
-dhR
+QNj
 djr
-QNw
+QNu
 dmv
 doj
 QNQ
 QNT
-dhR
+QNj
 dun
-dli
+QOd
 dxK
 dzg
 dAr
@@ -131529,18 +131671,18 @@ cNd
 cMY
 deX
 dgo
-dhR
+QNj
 QNp
 QNx
 dmw
-dok
+QNx
 dqa
 drC
-dhR
+QNj
 duo
 dmu
-dlg
-dzh
+QOi
+QOk
 dxM
 doi
 dun
@@ -131786,18 +131928,18 @@ cMY
 cMY
 deY
 cKl
-dhR
+QNj
 djt
 QNy
-dmx
+QNy
 dol
 dqb
 drD
-dhR
+QNj
 dup
-dlg
+QOe
 dxL
-dzh
+QOl
 dAs
 dpY
 dDi
@@ -132043,14 +132185,14 @@ dcc
 cMY
 cOD
 cKj
-dhR
+QNj
 dju
 dlj
 dlj
 QNK
 dqc
 QNU
-dhR
+QNj
 duq
 dlh
 dxM
@@ -132300,16 +132442,16 @@ cRS
 cMY
 deZ
 dgo
-dhR
+QNj
 djv
 dlj
 dlj
-QNL
+QNK
 dqb
 drE
-dhR
+QNj
 dur
-dmu
+QOf
 dxN
 dzj
 don
@@ -132557,14 +132699,14 @@ dcd
 cMY
 deX
 dgo
-dhR
+QNj
 QNq
 QNz
 QNE
 doo
 dqd
 drF
-dhR
+QNj
 dus
 dwa
 dom
@@ -132815,13 +132957,13 @@ cMY
 dfa
 dgp
 QNm
-QNr
+QNm
 dll
-dhR
+QNj
 QNM
 dqe
-dhR
-dhR
+QNj
+QNj
 dut
 dwb
 dxO
@@ -133337,9 +133479,9 @@ dqg
 QNV
 dtd
 duu
+QOg
 djw
-djw
-cOm
+QOm
 dAu
 caE
 aaa
@@ -133849,7 +133991,7 @@ djA
 dos
 dqi
 QNX
-QOa
+QNX
 djA
 djA
 djA
