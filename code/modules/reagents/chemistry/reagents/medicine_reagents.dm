@@ -1170,10 +1170,10 @@
 		M.Jitter(7)
 		M.adjustOxyLoss(20*REM,0)
 		M.adjustBruteLoss(40*REM,0)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
-					H.set_heartattack(TRUE)
+	if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.undergoing_cardiac_arrest() && H.can_heartattack())
+				H.set_heartattack(TRUE)
 		else
 			M.losebreath +=10
 	..()
