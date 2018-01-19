@@ -2474,7 +2474,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/space/nearstation)
 "iE" = (
-/turf/closed/mineral/clown,
+/turf/closed/mineral/bananium,
 /area/space/nearstation)
 "iF" = (
 /obj/machinery/door/airlock/external,

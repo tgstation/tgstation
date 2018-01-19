@@ -264,7 +264,6 @@
 			if(!results.len)
 				return
 			var/atom/movable/AM = pick_n_take(results)
-			var/area/loot_area = get_area(AM)
-			say("Located: [AM.name] at [loot_area.name]")
+			say("Located: [AM.name] at [get_area_name(AM)]")
 
 #undef LOOT_LOCATOR_COOLDOWN

@@ -29,6 +29,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "cat"
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -39,8 +40,11 @@
 	if(client && stat != DEAD)
 		if (resting)
 			icon_state = "[icon_living]_rest"
+			collar_type = "[initial(collar_type)]_rest"
 		else
 			icon_state = "[icon_living]"
+			collar_type = "[initial(collar_type)]"
+	regenerate_icons()
 
 
 /mob/living/simple_animal/pet/cat/space
@@ -60,6 +64,8 @@
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
+	collar_type = null
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -70,6 +76,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	collar_type = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -80,6 +87,7 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -153,23 +161,27 @@
 	name = "Proc"
 	gender = MALE
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
 		if(prob(1))
 			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
+			collar_type = "[initial(collar_type)]_rest"
 			resting = 1
 			update_canmove()
 		else if (prob(1))
 			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
+			collar_type = "[initial(collar_type)]_sit"
 			resting = 1
 			update_canmove()
 		else if (prob(1))
 			if (resting)
 				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
+				collar_type = "[initial(collar_type)]"
 				resting = 0
 				update_canmove()
 			else

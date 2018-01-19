@@ -18,16 +18,19 @@ GLOBAL_PROTECT(config_dir)
 	var/list/mode_reports
 	var/list/mode_false_report_weight
 
+	var/motd
+
 /datum/controller/configuration/New()
 	config = src
 	InitEntries()
 	LoadModes()
-	if(LoadEntries("config.txt") <= 1)
+	if(fexists("config/config.txt") && LoadEntries("config.txt") <= 1)
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
 		LoadEntries("game_options.txt")
 		LoadEntries("dbconfig.txt")
 		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
+	LoadMOTD()
 
 /datum/controller/configuration/Destroy()
 	entries_by_type.Cut()
@@ -191,6 +194,12 @@ GLOBAL_PROTECT(config_dir)
 					votable_modes += M.config_tag
 		qdel(M)
 	votable_modes += "secret"
+
+/datum/controller/configuration/proc/LoadMOTD()
+	motd = file2text("[GLOB.config_dir]/motd.txt")
+	var/tm_info = GLOB.revdata.GetTestMergeInfo()
+	if(motd || tm_info)
+		motd = motd ? "[motd]<br>[tm_info]" : tm_info
 
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")

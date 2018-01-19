@@ -1,13 +1,6 @@
-#define Z_NORTH 1
-#define Z_EAST 2
-#define Z_SOUTH 3
-#define Z_WEST 4
-
 GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-
-GLOBAL_LIST_INIT(station_z_levels, list(ZLEVEL_STATION_PRIMARY))
 
 GLOBAL_LIST(global_map)
 	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.

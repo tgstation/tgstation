@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = INIT_ORDER_ICON_SMOOTHING
 	wait = 1
-	priority = FIRE_PRIOTITY_SMOOTHING
+	priority = 35
 	flags = SS_TICKER
 
 	var/list/smooth_queue = list()
