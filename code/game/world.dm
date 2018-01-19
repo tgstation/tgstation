@@ -4,6 +4,8 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
+//This happens after the Master subsystem news (it's a global datum)
+//So subsystems globals exist, but are not initialised
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -17,10 +19,17 @@ GLOBAL_PROTECT(security_mode)
 
 	new /datum/controller/configuration
 
+<<<<<<< HEAD
 	hippie_initialize()
 	CheckSchemaVersion()
 	SetRoundID()
 
+=======
+	//SetupLogs depends on the RoundID, so lets check
+	//DB schema and set RoundID if we can
+	SSdbcore.CheckSchemaVersion()
+	SSdbcore.SetRoundID()
+>>>>>>> 0b2301322d... Merge pull request #34513 from optimumtact/hostwiththemost
 	SetupLogs()
 
 	SERVER_TOOLS_ON_NEW
@@ -53,6 +62,7 @@ GLOBAL_PROTECT(security_mode)
 			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
 
+<<<<<<< HEAD
 /world/proc/CheckSchemaVersion()
 	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
@@ -84,6 +94,8 @@ GLOBAL_PROTECT(security_mode)
 			if(query_round_last_id.NextRow())
 				GLOB.round_id = query_round_last_id.item[1]
 
+=======
+>>>>>>> 0b2301322d... Merge pull request #34513 from optimumtact/hostwiththemost
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
 	if(GLOB.round_id)
