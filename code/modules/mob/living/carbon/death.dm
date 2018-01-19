@@ -7,6 +7,12 @@
 
 	if(!gibbed)
 		emote("deathgasp")
+	if(istype(LAssailant, /mob/living))
+		var/mob/living/L = LAssailant
+		if(L.mind && LAssailant != src)
+			L.mind.kill_streak++
+			L.mind.kill_streak_act()
+
 
 	. = ..()
 	if(SSticker.mode)
