@@ -1,8 +1,9 @@
 /datum/antagonist/traitor
 	name = "Traitor"
 	roundend_category = "traitors"
+	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
-	var/should_specialise = FALSE //do we split into AI and human, set to true on inital assignment only
+	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
 	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
 	var/special_role = "traitor"
@@ -10,23 +11,28 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 
+	
+
 /datum/antagonist/traitor/human
+	show_in_antagpanel = FALSE
+	should_specialise = FALSE
 	var/should_equip = TRUE
 
-/datum/antagonist/traitor/AI
 
-/datum/antagonist/traitor/proc/specialise()
-	silent = TRUE
-	if(owner.current && isAI(owner.current))
-		owner.add_antag_datum(ai_datum)
-	else 
-		owner.add_antag_datum(human_datum)
-	on_removal()
+/datum/antagonist/traitor/AI
+	show_in_antagpanel = FALSE
+	should_specialise = FALSE
+
+/datum/antagonist/traitor/specialization(datum/mind/new_owner)
+	if(should_specialise)
+		if(new_owner.current && isAI(new_owner.current))
+			return new ai_datum()
+		else
+			return new human_datum()
+	else
+		return ..()
 
 /datum/antagonist/traitor/on_gain()
-	if(should_specialise)
-		specialise()
-		return
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
@@ -49,8 +55,6 @@
 			traitor_mob.dna.add_mutation(CLOWNMUT)
 
 /datum/antagonist/traitor/on_removal()
-	if(should_specialise)
-		return ..()//we never did any of this anyway
 	SSticker.mode.traitors -= owner
 	for(var/O in objectives)
 		owner.objectives -= O
@@ -79,6 +83,7 @@
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	return
+
 /datum/antagonist/traitor/human/forge_traitor_objectives()
 	var/is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
@@ -229,8 +234,8 @@
 	to_chat(traitor_mob, "<B>Code Phrase</B>: <span class='danger'>[GLOB.syndicate_code_phrase]</span>")
 	to_chat(traitor_mob, "<B>Code Response</B>: <span class='danger'>[GLOB.syndicate_code_response]</span>")
 
-	traitor_mob.mind.store_memory("<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]")
-	traitor_mob.mind.store_memory("<b>Code Response</b>: [GLOB.syndicate_code_response]")
+	antag_memory += "<b>Code Phrase</b>: [GLOB.syndicate_code_phrase]<br>"
+	antag_memory += "<b>Code Response</b>: [GLOB.syndicate_code_response]<br>"
 
 	to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 
@@ -249,7 +254,7 @@
 	return
 
 /datum/antagonist/traitor/human/equip(var/silent = FALSE)
-	owner.equip_traitor(employer, silent)
+	owner.equip_traitor(employer, silent, src)
 
 /datum/antagonist/traitor/human/proc/assign_exchange_role()
 	//set faction
@@ -340,3 +345,6 @@
 /datum/antagonist/traitor/roundend_report_footer()
 	return "<br><b>The code phrases were:</b> <span class='codephrase'>[GLOB.syndicate_code_phrase]</span><br>\
 		<b>The code responses were:</b> <span class='codephrase'>[GLOB.syndicate_code_response]</span><br>"
+
+/datum/antagonist/traitor/is_gamemode_hero()
+	return SSticker.mode.name == "traitor"

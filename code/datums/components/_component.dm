@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		return
+		CRASH("Incompatible [type] assigned to a [P]!")
 
 	_JoinParent(P)
 

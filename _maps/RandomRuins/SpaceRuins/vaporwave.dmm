@@ -162,7 +162,6 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "I" = (
-/turf/open/space,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel/airless/asteroid,
 /area/ruin/unpowered/no_grav)

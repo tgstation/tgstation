@@ -10,14 +10,10 @@
 /area/ruin/unpowered/no_grav)
 "ad" = (
 /turf/closed/mineral/random/low_chance,
-/area/asteroid/cave{
-	name = "Asteroid - Space"
-	})
+/area/asteroid/cave/space)
 "ae" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/asteroid/cave{
-	name = "Asteroid - Space"
-	})
+/area/asteroid/cave/space)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -2437,7 +2433,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2461,7 +2457,7 @@
 /obj/machinery/camera{
 	network = list("Bunker1")
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2489,7 +2485,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -2653,7 +2649,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -2870,7 +2866,7 @@
 	dir = 5
 	},
 /obj/machinery/autolathe,
-/obj/structure/sign/radiation{
+/obj/structure/sign/warning/radiation{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime,

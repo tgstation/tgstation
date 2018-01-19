@@ -18,7 +18,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "af" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -31,7 +31,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ah" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -364,7 +364,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bk" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -410,7 +410,7 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/glowshroom/single,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/old{
