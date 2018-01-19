@@ -29,6 +29,8 @@
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
+	var/check = 0 //Yes,0.not FALSE
+	var/datum/PathNode/PN//for a*
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -66,6 +68,8 @@
 		has_opaque_atom = TRUE
 
 	ComponentInitialize()
+
+	PN = new /datum/PathNode(src)
 
 	return INITIALIZE_HINT_NORMAL
 

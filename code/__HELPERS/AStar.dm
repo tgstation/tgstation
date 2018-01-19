@@ -37,8 +37,11 @@ Actual Adjacent procs :
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
 
-/datum/PathNode/New(s,p,pg,ph,pnt)
+/datum/PathNode/New(s)
 	source = s
+	source.PN = src
+
+/datum/PathNode/proc/setp(p,pg,ph,pnt)
 	prevNode = p
 	g = pg
 	h = ph
@@ -69,84 +72,74 @@ Actual Adjacent procs :
 
 //the actual algorithm
 /proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/pnodelist = list()
 	//sanitation
-	var/start = get_turf(caller)
+	var/turf/start = get_turf(caller)
+	start.check = 1
 	if(!start)
 		return 0
-
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
 		if(call(start, dist)(end) > maxnodes)
 			return 0
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
-
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
-	var/list/closed = new() //the closed list
+	var/list/checked = new() //the closed list
 	var/list/path = null //the returned path, if any
 	var/datum/PathNode/cur //current processed turf
-
+	var/datum/PathNode/CN  //current checking turf
+	checked.Add(start)
 	//initialization
-	open.Insert(new /datum/PathNode(start,null,0,call(start,dist)(end),0))
-
+	start.PN.setp(null,0,call(start,dist)(end),0)
+	open.Insert(start.PN)
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		//get the lower f node on the open list
 		cur = open.Pop() //get the lower f turf in the open list
-		closed.Add(cur.source) //and tell we've processed it
-
+		cur.source.check = 2 //and tell we've processed it
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
-
 		//if too many steps, abandon that path
 		if(maxnodedepth && (cur.nt > maxnodedepth))
 			continue
-
 		//found the target turf (or close enough), let's create the path to it
 		if(cur.source == end || closeenough)
 			path = new()
 			path.Add(cur.source)
-
 			while(cur.prevNode)
 				cur = cur.prevNode
 				path.Add(cur.source)
-
 			break
-
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
-		for(var/turf/T in L)
-			if(T == exclude || (T in closed))
+		for(var/k in 1 to L.len)
+			var/turf/T = L[k]
+			if(T == exclude || (T.check == 2))
 				continue
-
 			var/newg = cur.g + call(cur.source,dist)(T)
-
-			var/datum/PathNode/P = pnodelist[T]
-			if(!P)
-			 //is not already in open list, so add it
-				var/datum/PathNode/newnode = new /datum/PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
-				open.Insert(newnode)
-				pnodelist[T] = newnode
-			else //is already in open list, check if it's a better way from the current turf
-				if(newg < P.g)
-					P.prevNode = cur
-					P.g = (newg * L.len / 9)
-					P.calc_f()
-					P.nt = cur.nt + 1
-					open.ReSort(P)//reorder the changed element in the list
+			CN = T.PN
+			if(T.check == 1)
+			//is already in open list, check if it's a better way from the current turf
+				if(newg < T.PN.g)
+					CN.setp(cur,newg * L.len / 9,CN.h,cur.nt+1)
+					open.ReSort(CN)//reorder the changed element in the list
+			else
+			//is not already in open list, so add it
+				T.check = 1
+				checked.Add(T)
+				CN.setp(cur,newg,call(T,dist)(end),cur.nt+1)
+				open.Insert(T.PN)
 		CHECK_TICK
-
-
+	for(var/k in 1 to checked.len)
+		var/turf/T = checked[k]
+		T.check = 0
+	checked = null
 	//cleaning after us
-	pnodelist = null
-
 	//reverse the path to get it from start to finish
 	if(path)
-		for(var/i = 1; i <= path.len/2; i++)
+		for(var/i = 1 to round(0.5*path.len))
 			path.Swap(i,path.len-i+1)
-
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
@@ -156,8 +149,8 @@ Actual Adjacent procs :
 	var/turf/T
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 
-	for(var/dir in GLOB.cardinals)
-		T = get_step(src,dir)
+	for(var/k in 1 to GLOB.cardinals.len)
+		T = get_step(src,GLOB.cardinals[k])
 		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
