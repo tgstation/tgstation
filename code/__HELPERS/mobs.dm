@@ -93,27 +93,34 @@
 			return pick(GLOB.facial_hair_styles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		if(gender==FEMALE)
 			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
 		else
 			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(lizard_name(gender))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
+			break
+
+/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(moth_name())
+
+		if(!findname(.))
 			break
 
 /proc/random_skin_tone()

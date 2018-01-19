@@ -451,18 +451,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		var/mutable_appearance/eye_overlay
-		if(!has_eyes)
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-		else
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
-		if((EYECOLOR in species_traits) && has_eyes)
-			eye_overlay.color = "#" + H.eye_color
-		if(OFFSET_FACE in H.dna.species.offset_features)
-			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-		standing += eye_overlay
+		if(!(NOEYES in species_traits))
+			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/eye_overlay
+			if(!has_eyes)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+			else
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			if((EYECOLOR in species_traits) && has_eyes)
+				eye_overlay.color = "#" + H.eye_color
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -624,8 +625,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+<<<<<<< HEAD
 				else
 					S = hippie_mutant_bodyparts(bodypart, H)
+=======
+				if("moth_wings")
+					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
+>>>>>>> b30e2934e7... Moths, except I have stolen them and they no longer conflict (#34498)
 
 			if(!S || S.icon_state == "none")
 				continue
