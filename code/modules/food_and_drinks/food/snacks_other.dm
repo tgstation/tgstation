@@ -193,7 +193,7 @@
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
 	icon_state = "spiderling"
-	list_reagents = list("nutrient" = 1, "toxin" = 4)
+	list_reagents = list("nutriment" = 1, "toxin" = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
