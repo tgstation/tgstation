@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		if(!announcementConsole)
 			return
 		if(isliving(usr))
-			var/mob/living/L = user
+			var/mob/living/L = usr
 			if(L.stuttering)
 				message = stutter(message)
 			if(L.slurring)
