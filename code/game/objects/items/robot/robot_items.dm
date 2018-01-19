@@ -294,7 +294,7 @@
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		if(R.cell.charge < 1200)
+		if(!R.cell || R.cell.charge < 1200)
 			to_chat(user, "<font color='red'>You don't have enough charge to do this!</font>")
 			return
 		R.cell.charge -= 1000
@@ -652,7 +652,7 @@
 		else
 			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
 			return
-	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
+	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 
