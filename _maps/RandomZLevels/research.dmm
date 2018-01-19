@@ -20,8 +20,7 @@
 /area/awaymission/research/exterior)
 "ag" = (
 /turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
+	dir = 8
 	},
 /area/awaymission/research/interior/engineering)
 "ah" = (
@@ -42,8 +41,7 @@
 /area/awaymission/research/interior/engineering)
 "ak" = (
 /turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
+	dir = 1
 	},
 /area/awaymission/research/interior/engineering)
 "al" = (
@@ -231,9 +229,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aT" = (
 /mob/living/simple_animal/hostile/syndicate/melee,
@@ -244,8 +240,7 @@
 	icon_state = "damaged1"
 	},
 /turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
+	dir = 4
 	},
 /area/awaymission/research/interior/engineering)
 "aV" = (
@@ -303,9 +298,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "bd" = (
 /turf/open/floor/plasteel{
@@ -320,12 +313,8 @@
 	},
 /area/awaymission/research/interior/engineering)
 "bf" = (
-/turf/open/floor/plasteel{
-	icon_state = "damaged3"
-	},
 /turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
+	dir = 4
 	},
 /area/awaymission/research/interior/engineering)
 "bg" = (
@@ -4041,7 +4030,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mf" = (
-/turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
@@ -4152,7 +4140,6 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mz" = (
-/turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
@@ -4357,6 +4344,12 @@
 "ne" = (
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
+"nf" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/research/interior/engineering)
+"ng" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/awaymission/research/interior/engineering)
 
 (1,1,1) = {"
 aa
@@ -41728,7 +41721,7 @@ ap
 ap
 an
 aJ
-al
+nf
 bc
 bp
 bH
@@ -42499,7 +42492,7 @@ aq
 ay
 an
 aL
-al
+ng
 bf
 bs
 bK

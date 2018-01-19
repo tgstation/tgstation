@@ -19457,7 +19457,6 @@
 /turf/open/floor/plasteel/redyellow/side,
 /area/security/prison)
 "aPt" = (
-/turf/open/floor/plasteel/redyellow/side,
 /obj/machinery/vending/sustenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -59948,7 +59947,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "crA" = (
-/turf/open/floor/plating,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"

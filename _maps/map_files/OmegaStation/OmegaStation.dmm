@@ -2113,7 +2113,6 @@
 /turf/open/floor/plasteel,
 /area/asteroid/nearstation)
 "aep" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
