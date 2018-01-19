@@ -103,6 +103,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return TRUE
 	return FALSE
 
+/datum/species/proc/is_player_eligible(client/parent)
+	return TRUE
+
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
