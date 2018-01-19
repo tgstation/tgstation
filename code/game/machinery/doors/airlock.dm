@@ -979,7 +979,7 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
+	if(beingcrowbarred && panel_open && (emagged || (density && welded && !operating && !hasPower() && !locked)))
 		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
