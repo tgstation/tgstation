@@ -288,6 +288,7 @@
 #include "code\datums\antagonists\changeling.dm"
 #include "code\datums\antagonists\clockcult.dm"
 #include "code\datums\antagonists\cult.dm"
+#include "code\datums\antagonists\darkspawn.dm"
 #include "code\datums\antagonists\datum_traitor.dm"
 #include "code\datums\antagonists\devil.dm"
 #include "code\datums\antagonists\internal_affairs.dm"

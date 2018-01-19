@@ -23,6 +23,7 @@
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BROTHER			"blood brother"
+#define ROLE_DARKSPAWN			"darkspawn"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

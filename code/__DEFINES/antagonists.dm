@@ -18,3 +18,4 @@
 #define ANTAG_DATUM_ABDUCTOR_AGENT 		/datum/antagonist/abductor/agent
 #define ANTAG_DATUM_MONKEY				/datum/antagonist/monkey
 #define ANTAG_DATUM_MONKEY_LEADER		/datum/antagonist/monkey/leader
+#define ANTAG_DATUM_DARKSPAWN			/datum/antagonist/darkspawn
