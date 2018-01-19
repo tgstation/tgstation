@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
-
+#ifndef LOWMEMORYMODE
 	// Create space levels
 	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
 		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(mapping)
 	if (space_ruins.len)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	loading_ruins = FALSE
-
+#endif
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
