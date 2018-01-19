@@ -56,6 +56,23 @@
 	name = "Snowdin Outpost - Garage"
 	icon_state = "awaycontent13"
 
+/area/awaymission/snowdin/post/minipost
+	name = "Snowdin Outpost - Recon Post"
+	icon_state = "awaycontent19"
+
+/area/awaymission/snowdin/post/mining_main
+	name = "Snowdin Outpost - Mining Post"
+	icon_state = "awaycontent21"
+
+/area/awaymission/snowdin/post/mining_dock
+	name = "Snowdin Outpost - Underground Mine Post"
+	icon_state = "awaycontent22"
+
+/area/awaymission/snowdin/post/broken_shuttle
+	name = "Snowdin Outpost - Broken Transist Shuttle"
+	icon_state = "awaycontent20"
+	requires_power = FALSE
+
 /area/awaymission/snowdin/igloo
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
@@ -65,6 +82,15 @@
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/awaymission/snowdin/cave/cavern
+	name = "Snowdin Depths"
+	icon_state = "awaycontent23"
+
+/area/awaymission/snowdin/cave/mountain
+	name = "Snowdin Mountains"
+	icon_state = "awaycontent24"
+
 
 /area/awaymission/snowdin/base
 	name = "Snowdin Main Base"
@@ -82,6 +108,38 @@
 	icon_state = "awaycontent18"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	requires_power = TRUE
+
+/area/shuttle/snowdin/elevator1
+	name = "Excavation Elevator"
+
+/area/shuttle/snowdin/elevator2
+	name = "Mining Elevator"
+
+//shuttle console for elevators//
+
+/obj/machinery/computer/shuttle/snowdin/mining
+	name = "shuttle console"
+	desc = "A shuttle control computer."
+	icon_screen = "shuttle"
+	icon_keyboard = "tech_key"
+	light_color = LIGHT_COLOR_CYAN
+	shuttleId = "snowdin_mining"
+	possible_destinations = "snowdin_mining_top;snowdin_mining_down"
+
+
+//liquid plasma!!!!!!//
+
+/turf/open/lava/plasma
+	name = "liquid plasma"
+	desc = "A flowing stream of chilled plasma, this probably isn't safe to breath in."
+	icon_state = "lava"
+	color = rgb(114,228,250)
+	baseturfs = /turf/open/lava/plasma //lava all the way down
+	slowdown = 2
+
+	light_range = 3
+	light_power = 0.75
+	light_color = LIGHT_COLOR_PURPLE
 
 
 
@@ -195,7 +253,39 @@
 	info = {"Snow piles up bad here all-year round, even worse during the winter months. Keeping a constant rotation of shoveling that shit out of the way of the airlocks and keeping the paths decently clear
 	is a good step towards not getting stuck walking through knee-deep snow."}
 
+//holo disk recording//--
 
+/obj/item/disk/holodisk/snowdin/weregettingpaidright
+	name = "Conversation #AOP#23"
+	preset_image_type = /datum/preset_holoimage/researcher
+	preset_record_text = {"
+	NAME Jacob Ullman
+	DELAY 10
+	SAY Have you gotten anything interesting on the scanners yet? The deep-drilling from the plasma is making it difficult to get anything that isn't useless noise.
+	DELAY 45
+	NAME Elizabeth Queef
+	DELAY 10
+	SAY Nah. I've been feeding the AI the results for the past 2 weeks to sift through the garbage and haven't seen anything out of the usual, at least whatever Nanotrasen is looking for.
+	DELAY 45
+	NAME Jacob Ullman
+	DELAY 10
+	SAY Figured as much. Dunno what Nanotrasen expects to find out here past the plasma. At least we're getting paid to fuck around for a couple months while the AI does the hard work.
+	DELAY 45
+	NAME Elizabeth Queef
+	DELAY 10
+	SAY . . .
+	DELAY 10
+	SAY ..We're getting paid?
+	DELAY 20
+	NAME Jacob Ullman
+	DELAY 10
+	SAY ..We are getting paid, aren't we..?
+	DELAY 15
+	PRESET /datum/preset_holoimage/captain
+	NAME Caleb Reed
+	DELAY 10
+	SAY Paid in experience! That's the Nanotrasen Motto!
+	DELAY 30;"}
 
 
 //lootspawners//--

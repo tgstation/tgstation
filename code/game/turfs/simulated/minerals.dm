@@ -370,6 +370,30 @@
 	turf_type = /turf/open/floor/plating/ashplanet/rocky
 	defer_change = 1
 
+/turf/closed/mineral/snowmountain
+	name = "snowy mountainside"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
+	icon_state = "mountainrock"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/closed)
+	baseturfs = /turf/open/floor/plating/asteroid/snow
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	environment_type = "snow"
+	turf_type = /turf/open/floor/plating/asteroid/snow
+	defer_change = 1
+
+/turf/closed/mineral/snowmountain/cavern
+	name = "ice cavern rock"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	icon_state = "icerock"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/closed)
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	environment_type = "snow_cavern"
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 
 //GIBTONITE
 

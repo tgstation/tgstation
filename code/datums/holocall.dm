@@ -306,6 +306,12 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
 
