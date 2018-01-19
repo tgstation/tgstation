@@ -1,0 +1,4 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - refactor: "Added test run mode which checks for runtimes in startup/shutdown and runs tests (if they were enabled during compilation). Invoke it with the \"test-run\" world parameter"

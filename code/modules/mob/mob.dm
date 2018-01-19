@@ -20,7 +20,6 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -35,6 +34,9 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -980,7 +982,6 @@
 	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
 	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
 	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
 	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
 	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"

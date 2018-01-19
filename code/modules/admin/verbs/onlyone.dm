@@ -26,7 +26,6 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	addtimer(CALLBACK(src, .proc/only_one), 420)
 
 /mob/living/carbon/human/proc/make_scottish()
-	SSticker.mode.traitors += mind
 	mind.special_role = "highlander"
 	
 	dna.species.species_traits |= NOGUNS //nice try jackass

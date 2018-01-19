@@ -2,6 +2,7 @@
 /datum/antagonist/clockcult
 	name = "Clock Cultist"
 	roundend_category = "clock cultists"
+	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	var/datum/action/innate/hierophant/hierophant_network = new()
 	var/datum/team/clockcult/clock_team
@@ -9,6 +10,7 @@
 
 /datum/antagonist/clockcult/silent
 	silent = TRUE
+	show_in_antagpanel = FALSE //internal
 
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
@@ -21,6 +23,8 @@
 	if(!new_team && make_team)
 		//TODO blah blah same as the others, allow multiple
 		for(var/datum/antagonist/clockcult/H in GLOB.antagonists)
+			if(!H.owner)
+				continue
 			if(H.clock_team)
 				clock_team = H.clock_team
 				return
@@ -33,28 +37,7 @@
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
-		if(iscyborg(new_owner.current))
-			var/mob/living/silicon/robot/R = new_owner.current
-			if(R.deployed)
-				var/mob/living/silicon/ai/AI = R.mainframe
-				R.undeploy()
-				to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>") //The AI needs to be in its core to properly be converted
 		. = is_eligible_servant(new_owner.current)
-		if(!silent && new_owner.current)
-			if(.)
-				to_chat(new_owner.current, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(new_owner.current) ? "You cannot compute this truth!" : \
-				"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
-				Ratvar, the Clockwork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
-				flash_color(new_owner.current, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
-			else
-				new_owner.current.visible_message("<span class='boldwarning'>[new_owner.current] seems to resist an unseen force!</span>", null, null, 7, new_owner.current)
-				to_chat(new_owner.current, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(new_owner.current) ? "You cannot compute this truth!" : \
-				"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and the sound</span> <span class='boldwarning'>\
-				is a meaningless cacophony.</span><br>\
-				<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
-				" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
-				owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
-				flash_color(new_owner.current, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
 
 /datum/antagonist/clockcult/greet()
 	if(!owner.current || silent)
@@ -85,7 +68,7 @@
 		to_chat(current, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
 	to_chat(current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
-	owner.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>" //Memorize the objectives
+	antag_memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>" //Memorize the objectives
 
 /datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -178,12 +161,31 @@
 		owner.current.visible_message("<span class='deconversion_message'>[owner] seems to have remembered their true allegiance!</span>", ignored_mob = owner.current)
 		to_chat(owner, "<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
 	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
-	owner.wipe_memory()
 	owner.special_role = null
 	if(iscyborg(owner.current))
 		to_chat(owner.current, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 	. = ..()
 
+
+/datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
+	add_servant_of_ratvar(new_owner.current, TRUE)
+	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
+	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
+
+/datum/antagonist/clockcult/admin_remove(mob/user)
+	remove_servant_of_ratvar(owner.current, TRUE)
+	message_admins("[key_name_admin(user)] has removed clockwork servant status from [owner.current].")
+	log_admin("[key_name(user)] has removed clockwork servant status from [owner.current].")
+
+/datum/antagonist/clockcult/get_admin_commands()
+	. = ..()
+	.["Give slab"] = CALLBACK(src,.proc/admin_give_slab)
+
+/datum/antagonist/clockcult/proc/admin_give_slab(mob/admin)
+	if(!SSticker.mode.equip_servant(owner.current))
+		to_chat(admin, "<span class='warning'>Failed to outfit [owner.current]!</span>")
+	else
+		to_chat(admin, "<span class='notice'>Successfully gave [owner.current] servant equipment!</span>")
 
 /datum/team/clockcult
 	name = "Clockcult"

@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(research)
 	name = "Research"
 	flags = SS_KEEP_TIMING
-	priority = 15		//My powergame is priority.
+	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH
 	var/list/invalid_design_ids = list()		//associative id = number of times
