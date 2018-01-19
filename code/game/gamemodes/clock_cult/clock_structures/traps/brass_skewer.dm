@@ -19,7 +19,7 @@
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	if(buckled_mobs && buckled_mobs.len)
+	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		if(iscarbon(L))
 			L.Knockdown(100)
@@ -30,18 +30,18 @@
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/process()
 	if(density)
-		if(buckled_mobs.len)
+		if(buckled_mobs && LAZYLEN(buckled_mobs))
 			var/mob/living/spitroast = buckled_mobs[1]
 			spitroast.adjustBruteLoss(0.1)
 
 /obj/structure/destructible/clockwork/trap/attackby(obj/item/I, mob/living/user, params)
-	if(user in buckled_mobs)
+	if(buckled_mobs && (user in buckled_mobs))
 		to_chat(user, "<span class='warning'>You can't reach!</span>")
 		return
 	..()
 
 /obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
-	if(buckled_mobs.len)
+	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		return L.bullet_act(P)
 	return ..()
