@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(server_maint)
 	for(var/I in currentrun)
 		var/client/C = I
 		//handle kicking inactive players
-		if(round_started && kick_inactive && C.is_afk(afk_period))
+		if(round_started && kick_inactive && C && C.is_afk(afk_period))
 			var/cmob = C.mob
 			if(!(isobserver(cmob) || (isdead(cmob) && C.holder)))
 				log_access("AFK: [key_name(C)]")
