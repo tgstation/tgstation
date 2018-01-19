@@ -140,10 +140,16 @@
 		if(!istype(A))
 			return
 	else
-		A = new datum_type_or_instance(src, team)
+		A = new datum_type_or_instance()
+	//Choose snowflake variation if antagonist handles it
+	var/datum/antagonist/S = A.specialization(src)
+	if(S && S != A)
+		qdel(A)
+		A = S
 	if(!A.can_be_owned(src))
 		qdel(A)
 		return
+	A.owner = src
 	LAZYADD(antag_datums, A)
 	A.create_team(team)
 	var/datum/team/antag_team = A.get_team()
@@ -242,7 +248,7 @@
 	SSticker.mode.update_traitor_icons_removed(src)
 	SSticker.mode.update_cult_icons_removed(src)
 
-/datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
+/datum/mind/proc/equip_traitor(employer = "The Syndicate", silent = FALSE, datum/antagonist/uplink_owner)
 	if(!current)
 		return
 	var/mob/living/carbon/human/traitor_mob = current
@@ -289,27 +295,32 @@
 		. = 0
 	else
 		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
-
+		var/unlock_note
+		
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
-
+			unlock_note = "<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name])."
 		else if(uplink_loc == PDA)
 			PDA.lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
+			unlock_note = "<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name])."
 
 		else if(uplink_loc == P)
 			P.traitor_unlock_degrees = rand(1, 360)
 
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
+			unlock_note = "<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name])."
+		
+		if(uplink_owner)
+			uplink_owner.antag_memory += unlock_note + "<br>"
+		else
+			traitor_mob.mind.store_memory(unlock_note)
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
@@ -326,7 +337,7 @@
 
 	else if(is_nuclear_operative(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
-		var/datum/antagonist/nukeop/N = new(src)
+		var/datum/antagonist/nukeop/N = new()
 		N.send_to_spawnpoint = FALSE
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
@@ -347,6 +358,10 @@
 	var/output = "<B>[current.real_name]'s Memories:</B><br>"
 	output += memory
 
+
+	for(var/datum/antagonist/A in antag_datums)
+		output += A.antag_memory
+
 	if(objectives.len)
 		output += "<B>Objectives:</B>"
 		var/obj_count = 1
@@ -364,6 +379,7 @@
 	else if(objectives.len || memory)
 		to_chat(recipient, "<i>[output]</i>")
 
+<<<<<<< HEAD
 /datum/mind/proc/edit_memory()
 	if(!SSticker.HasRoundStarted())
 		alert("Not before round-start!", "Alert")
@@ -772,9 +788,22 @@
 	//usr << browse(out, "window=edit_memory[src];size=575x600")
 
 
+=======
+>>>>>>> e38e6b8fa4... Antag Panel / Check antagonists Refactor (#34236)
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
+
+	var/self_antagging = usr == current
+
+	if(href_list["add_antag"])
+		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
+	if(href_list["remove_antag"])
+		var/datum/antagonist/A = locate(href_list["remove_antag"]) in antag_datums
+		if(!istype(A))
+			to_chat(usr,"<span class='warning'>Invalid antagonist ref to be removed.</span>")
+			return
+		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
 		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
@@ -793,8 +822,6 @@
 		var/objective_pos
 		var/def_value
 
-
-
 		var/datum/antagonist/target_antag
 
 		if (href_list["obj_edit"])
@@ -808,7 +835,7 @@
 					objective_pos = A.objectives.Find(objective)
 					break
 
-			if(!target_antag) //Shouldn't happen
+			if(!target_antag) //Shouldn't happen anymore
 				stack_trace("objective without antagonist found")
 				objective_pos = objectives.Find(objective)
 
@@ -818,19 +845,25 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 		else
-			switch(antag_datums.len)
-				if(0)
-					target_antag = add_antag_datum(/datum/antagonist/custom)
-				if(1)
-					target_antag = antag_datums[1]
-				else
-					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
-					if (QDELETED(target))
-						return
-					else if(target == "(new custom antag)")
+			//We're adding this objective
+			if(href_list["target_antag"])
+				var/datum/antagonist/X = locate(href_list["target_antag"]) in antag_datums
+				if(X)
+					target_antag = X
+			if(!target_antag)
+				switch(antag_datums.len)
+					if(0)
 						target_antag = add_antag_datum(/datum/antagonist/custom)
+					if(1)
+						target_antag = antag_datums[1]
 					else
-						target_antag = target
+						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", def_value) as null|anything in antag_datums + "(new custom antag)"
+						if (QDELETED(target))
+							return
+						else if(target == "(new custom antag)")
+							target_antag = add_antag_datum(/datum/antagonist/custom)
+						else
+							target_antag = target
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
@@ -979,6 +1012,7 @@
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
 
+<<<<<<< HEAD
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
 			if("clear")
@@ -1355,6 +1389,8 @@
 				log_admin("[key_name(usr)] has de-brother'ed [current].")
 				SSticker.mode.update_brother_icons_removed(src)
 
+=======
+>>>>>>> e38e6b8fa4... Antag Panel / Check antagonists Refactor (#34236)
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")
@@ -1400,7 +1436,10 @@
 	else if (href_list["obj_announce"])
 		announce_objectives()
 
-	edit_memory()
+	//Something in here might have changed your mob
+	if(self_antagging && (!usr || !usr.client) && current.client)
+		usr = current
+	traitor_panel()
 
 /datum/mind/proc/announce_objectives()
 	var/obj_count = 1
@@ -1423,9 +1462,7 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
-		var/datum/antagonist/traitor/T = new(src)
-		T.should_specialise = TRUE
-		add_antag_datum(T)
+		add_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/make_Changling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
@@ -1449,7 +1486,7 @@
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 
 /datum/mind/proc/make_Rev()
-	var/datum/antagonist/rev/head/head = new(src)
+	var/datum/antagonist/rev/head/head = new()
 	head.give_flash = TRUE
 	head.give_hud = TRUE
 	add_antag_datum(head)

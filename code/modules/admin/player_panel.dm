@@ -307,6 +307,7 @@
 	</body></html>
 	"}
 
+<<<<<<< HEAD
 	usr << browse(dat, "window=players;size=600x480")
 
 /datum/admins/proc/check_antagonists()
@@ -687,3 +688,6 @@
 		usr << browse(dat, "window=roundstatus;size=420x500")
 	else
 		alert("The game hasn't started yet!")
+=======
+	usr << browse(dat, "window=players;size=600x480")
+>>>>>>> e38e6b8fa4... Antag Panel / Check antagonists Refactor (#34236)

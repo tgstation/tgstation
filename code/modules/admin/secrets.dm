@@ -351,7 +351,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new(H.mind)
+				var/datum/antagonist/traitor/human/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
