@@ -34,6 +34,10 @@
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
+	for(var/f in filter_types)
+		if(istext(f))
+			filter_types -= f
+			filter_types += gas_id2path(f)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE
