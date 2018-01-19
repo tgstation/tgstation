@@ -86,6 +86,11 @@
 		var/mob/B = AM
 		if((isdrone(B) || iscyborg(B)) && B.stat)
 			return
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(istype(H.wear_id, /obj/item/card/emag))
+				emag_act(H)
+				return
 		if(isliving(AM))
 			var/mob/living/M = AM
 			if(world.time - M.last_bumped <= 10)
