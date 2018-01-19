@@ -77,6 +77,7 @@
 
 				return -1 // complete projectile permutation
 
+		LAssailant = P.firer
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
@@ -128,6 +129,7 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
+		LAssailant = I.thrownby
 	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
 		hitpush = FALSE
 		skipcatch = TRUE
@@ -164,6 +166,7 @@
 	if(!I || !user)
 		return 0
 
+	LAssailant = user
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target

@@ -65,6 +65,24 @@
 	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
+	var/kill_streak = 0 //How many kills we have
+
+/datum/mind/proc/kill_streak_act()
+	switch(kill_streak)
+		if(3)
+			world << "<B>[name] is on a killing spree!</B>"
+		if(5)
+			world << "<B>[name] is dominating!</B>"
+		if(7)
+			world << "<B>[name] got a MEGA KILL!</B>"
+		if(9)
+			world << "<B>[name] is UNSTOPPABLE!</B>"
+		if(11)
+			world << "<B>[name] is WICKED SICK!!</B>"
+		if(13)
+			world << "<B>[name] is GODLIKE!</B>"
+		if(15)
+			world << "<B>[name] is a KILLIONAIRE!</B>"
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -111,7 +129,7 @@
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself		
+	new_character.mind = src							//and associate our new body with ourself
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
