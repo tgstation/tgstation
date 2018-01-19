@@ -31,9 +31,6 @@
 	else
 		add_overlay("BDP_door")
 
-/obj/structure/closet/bsdroppod/tool_interact(obj/item/W, mob/user)
-	return TRUE
-
 /obj/structure/closet/bsdroppod/toggle(mob/living/user)
 	return
 
