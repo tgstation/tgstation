@@ -27,7 +27,7 @@
 
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
 		podID = 1//doesnt effect circuit board, so that reversal is possible
-		to_chat(user, "<span class='notice'>You insert the disk into the console, allowing for advanced supply delivery vehicles.</span>")
+		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
 		return TRUE
 
