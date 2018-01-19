@@ -271,7 +271,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "aY" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Fore)
 "aZ" = (
