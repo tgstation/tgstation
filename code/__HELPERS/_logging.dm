@@ -24,6 +24,12 @@
 #define testing(msg)
 #endif
 
+#ifdef UNIT_TESTS
+/proc/log_test(text)
+	WRITE_FILE(GLOB.test_log, "\[[time_stamp()]]: [text]")
+	SEND_TEXT(world.log, text)
+#endif
+
 /proc/log_admin(text)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_admin))

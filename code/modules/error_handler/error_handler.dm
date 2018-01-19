@@ -121,6 +121,12 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)
 
+#ifdef UNIT_TESTS
+	if(GLOB.current_test)
+		//good day, sir
+		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
+#endif
+
 /* This logs the runtime in the old format */
 
 	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
