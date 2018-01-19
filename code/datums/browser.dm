@@ -239,7 +239,7 @@
     						</label>
     					</li>"}
 	output += {"</ul><div style="text-align:center">
-		<input type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
+		<button type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
 
 	if (Button2)
 		output += {"<button type="submit" name="button" value="2" style="font-size:large;[( Button3 ? "" : "float:right" )]">[Button2]</button>"}
@@ -262,6 +262,8 @@
 
 /datum/browser/listpicker/open()
 	set waitfor = 0
+	opentime = world.time
+
 
 	if (stealfocus)
 		. = ..(use_onclose = 1)
