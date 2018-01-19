@@ -16,7 +16,8 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/ratvar,
-		/datum/language/aphasia
+		/datum/language/aphasia,
+		/datum/language/moth
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
