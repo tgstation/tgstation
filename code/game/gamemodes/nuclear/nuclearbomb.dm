@@ -85,7 +85,7 @@
 /obj/machinery/nuclearbomb/syndicate/GenerateTag()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
 	if(existing)
-		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
+		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [COORD(existing.loc)]")
 		use_tag = FALSE
 		return
 	tag = "syndienuke"
