@@ -4,6 +4,8 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
+//This happens after the Master subsystem news (it's a global datum)
+//So subsystems globals exist, but are not initialised
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -17,14 +19,14 @@ GLOBAL_PROTECT(security_mode)
 
 	new /datum/controller/configuration
 
-	CheckSchemaVersion()
-	SetRoundID()
-
+	//SetupLogs depends on the RoundID, so lets check
+	//DB schema and set RoundID if we can
+	SSdbcore.CheckSchemaVersion()
+	SSdbcore.SetRoundID()
 	SetupLogs()
 
 	SERVER_TOOLS_ON_NEW
 
-	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
@@ -58,44 +60,14 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
+	while(i<=GLOB.external_rsc_urls.len)
+		if(GLOB.external_rsc_urls[i])
 			i++
 		else
-			external_rsc_urls.Cut(i,i+1)
+			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
-
-/world/proc/CheckSchemaVersion()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			log_world("Database connection established.")
-			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
-			if(query_db_version.NextRow())
-				var/db_major = text2num(query_db_version.item[1])
-				var/db_minor = text2num(query_db_version.item[2])
-				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-			else
-				message_admins("Could not get schema version from database")
-				log_sql("Could not get schema version from database")
-		else
-			log_sql("Your server failed to establish a connection with the database.")
-	else
-		log_sql("Database is not enabled in configuration.")
-
-/world/proc/SetRoundID()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_start.Execute()
-			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-			query_round_last_id.Execute()
-			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -241,9 +213,6 @@ GLOBAL_PROTECT(security_mode)
 	log_world("World rebooted at [time_stamp()]")
 	..()
 
-/world/proc/load_motd()
-	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
-
 /world/proc/update_status()
 
 	var/list/features = list()
@@ -300,4 +269,3 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
-

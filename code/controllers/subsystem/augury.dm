@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(augury)
 	active = FALSE
 	UpdateButtonIcon()
 
-/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE)
+/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE, force)
 	..()
 	if(active)
 		button.icon_state = "template_active"

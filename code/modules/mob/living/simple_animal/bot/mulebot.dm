@@ -415,11 +415,9 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	var/area/dest_area
 	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
-		dest_area = get_area(target)
-		destination = format_text(dest_area.name)
+		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
@@ -608,7 +606,7 @@
 				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
-						speak("Now loading [load] at <b>[get_area(src)]</b>.", radio_channel)
+						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
 		// whatever happened, check to see if we return home
 
 		if(auto_return && home_destination && destination != home_destination)

@@ -1,0 +1,4 @@
+author: "AverageJoe82"
+delete-after: True
+changes: 
+  - tweak: "Reduce clock work mob death sound file's volume to 80%"

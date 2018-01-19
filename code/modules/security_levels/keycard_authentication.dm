@@ -1,5 +1,9 @@
 GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
+#define KEYCARD_RED_ALERT "Red Alert"
+#define KEYCARD_EMERGENCY_MAINTENANCE_ACCESS "Emergency Maintenance Access"
+#define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
+
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
@@ -57,11 +61,11 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	switch(action)
 		if("red_alert")
 			if(!event_source)
-				sendEvent("Red Alert")
+				sendEvent(KEYCARD_RED_ALERT)
 				. = TRUE
 		if("emergency_maint")
 			if(!event_source)
-				sendEvent("Emergency Maintenance Access")
+				sendEvent(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 				. = TRUE
 		if("auth_swipe")
 			if(event_source)
@@ -70,7 +74,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 				. = TRUE
 		if("bsa_unlock")
 			if(!event_source)
-				sendEvent("Bluespace Artillery Unlock")
+				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
@@ -97,12 +101,18 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
 	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
 	message_admins("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")
+
+	var/area/A1 = get_area(triggerer)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[triggerer]</span> triggered [event] at <span class='name'>[A1.name]</span>.</span>", triggerer)
+
+	var/area/A2 = get_area(confirmer)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[confirmer]</span> confirmed [event] at <span class='name'>[A2.name]</span>.</span>", confirmer)
 	switch(event)
-		if("Red Alert")
+		if(KEYCARD_RED_ALERT)
 			set_security_level(SEC_LEVEL_RED)
-		if("Emergency Maintenance Access")
+		if(KEYCARD_EMERGENCY_MAINTENANCE_ACCESS)
 			make_maint_all_access()
-		if("Bluespace Artillery Unlock")
+		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
@@ -128,3 +138,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	GLOB.bsa_unlock = !GLOB.bsa_unlock
 	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
 	SSblackbox.record_feedback("nested tally", "keycard_auths", 1, list("bluespace artillery", GLOB.bsa_unlock? "unlocked" : "locked"))
+
+#undef KEYCARD_RED_ALERT
+#undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
+#undef KEYCARD_BSA_UNLOCK

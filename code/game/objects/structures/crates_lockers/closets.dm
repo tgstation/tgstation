@@ -212,6 +212,7 @@
 		return ..()
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weldingtool))
@@ -221,29 +222,29 @@
 					playsound(loc, cutting_sound, 40, 1)
 					if(do_after(user, 40*WT.toolspeed, 1, target = src))
 						if(!opened || !WT.isOn())
-							return TRUE
+							return
 						playsound(loc, cutting_sound, 50, 1)
 						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
 										"<span class='italics'>You hear welding.</span>")
 						deconstruct(TRUE)
-					return TRUE
+					return
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
-				return TRUE
+				return
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
-			return TRUE
+			return
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
 		var/obj/item/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
-			return TRUE
+			return
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
 		playsound(loc, 'sound/items/welder2.ogg', 40, 1)
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
-				return TRUE
+				return
 			playsound(loc, WT.usesound, 50, 1)
 			welded = !welded
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
@@ -252,7 +253,7 @@
 			update_icon()
 	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
-			return TRUE
+			return
 		anchored = !anchored
 		playsound(src.loc, W.usesound, 75, 1)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
@@ -261,7 +262,6 @@
 	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
-		return TRUE
 	else
 		return FALSE
 

@@ -322,12 +322,12 @@
 	defer_change = 1
 
 
-/turf/closed/mineral/clown
+/turf/closed/mineral/bananium
 	mineralType = /obj/item/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Clown"
+	scan_state = "rock_Bananium"
 
 
 /turf/closed/mineral/bscrystal
@@ -414,7 +414,7 @@
 				message_admins("An explosion has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
 
 		if(!triggered_by_explosion)
-			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] [ADMIN_JMP(bombturf)].")
+			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [A.name] [COORD(bombturf)].")
 		else
 			log_game("An explosion has triggered a gibtonite deposit reaction at [A.name] [COORD(bombturf)]")
 
