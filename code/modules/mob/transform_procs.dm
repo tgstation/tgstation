@@ -6,6 +6,10 @@
 	//first implants & organs
 	var/list/stored_implants = list()
 	var/list/int_organs = list()
+	
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.set_species(/datum/species/human)
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/X in implants)
