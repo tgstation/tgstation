@@ -44,8 +44,8 @@ if [ "$BUILD_TOOLS" = false ]; then
 	#config folder should not be mandatory
 	rm -rf config/*
 	
-	#enable all ruins
-	echo -e "LAVALAND_BUDGET 99999999999999999999999999999999999\nSPACE_BUDGET 99999999999999999999999999999999999" > config/config.txt
+	#disable all ruins
+	echo -e "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
 
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
