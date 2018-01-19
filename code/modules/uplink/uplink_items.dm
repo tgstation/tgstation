@@ -1292,6 +1292,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
+/datum/uplink_item/role_restricted/uranium
+	name = "Bottle of Uranium"
+	desc = "A bottle of uranium, for advanced virusmaking."
+	item = /obj/item/reagent_containers/glass/bottle/uranium
+	cost = 15
+	restricted_roles = list("Virologist")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
