@@ -11,6 +11,7 @@
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
 	roundend_category = "syndicate operatives" //just in case
+	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -85,7 +86,7 @@
 
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
-		owner.store_memory("<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]", 0, 0)
+		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
 		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 	else
 		to_chat(owner, "Unfortunately the syndicate was unable to provide you with nuclear authorization code.")
@@ -107,6 +108,8 @@
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
+				if(!N.owner)
+					continue
 				if(N.nuke_team)
 					nuke_team = N.nuke_team
 					return
@@ -118,6 +121,32 @@
 		stack_trace("Wrong team type passed to [type] initialization.")
 	nuke_team = new_team
 
+/datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
+	new_owner.assigned_role = "Syndicate"
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has nuke op'ed [new_owner.current].")
+	log_admin("[key_name(admin)] has nuke op'ed [new_owner.current].")
+
+/datum/antagonist/nukeop/get_admin_commands()
+	. = ..()
+	.["Send to base"] = CALLBACK(src,.proc/admin_send_to_base)
+	.["Tell code"] = CALLBACK(src,.proc/admin_tell_code)
+
+/datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
+	owner.current.forceMove(pick(GLOB.nukeop_start))
+
+/datum/antagonist/nukeop/proc/admin_tell_code(mob/admin)
+	var/code
+	for (var/obj/machinery/nuclearbomb/bombue in GLOB.machines)
+		if (length(bombue.r_code) <= 5 && bombue.r_code != initial(bombue.r_code))
+			code = bombue.r_code
+			break
+	if (code)
+		antag_memory += "<B>Syndicate Nuclear Bomb Code</B>: [code]<br>"
+		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
+	else
+		to_chat(admin, "<span class='danger'>No valid nuke found!</span>")
+		
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
@@ -200,6 +229,10 @@
 		else
 			stack_trace("Station self destruct ot found during lone op team creation.")
 			nuke_team.memorized_code = null
+
+/datum/antagonist/nukeop/reinforcement
+	send_to_spawnpoint = FALSE
+	nukeop_outfit = /datum/outfit/syndicate/no_crystals
 
 /datum/team/nuclear
 	var/syndicate_name
@@ -316,3 +349,31 @@
 	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/team/nuclear/antag_listing_name()
+	if(syndicate_name)
+		return "[syndicate_name] Syndicates"
+	else
+		return "Syndicates"
+
+/datum/team/nuclear/antag_listing_entry()
+	var/disk_report = "<b>Nuclear Disk(s)</b><br>"
+	disk_report += "<table cellspacing=5>"
+	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
+		disk_report += "<tr><td>[N.name], "
+		var/atom/disk_loc = N.loc
+		while(!isturf(disk_loc))
+			if(ismob(disk_loc))
+				var/mob/M = disk_loc
+				disk_report += "carried by <a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a> "
+			if(isobj(disk_loc))
+				var/obj/O = disk_loc
+				disk_report += "in \a [O.name] "
+			disk_loc = disk_loc.loc
+		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
+	disk_report += "</table>"
+	var/common_part = ..()
+	return common_part + disk_report
+
+/datum/team/nuclear/is_gamemode_hero()
+	return SSticker.mode.name == "nuclear emergency"

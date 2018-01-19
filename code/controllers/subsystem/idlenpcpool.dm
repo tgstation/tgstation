@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(idlenpcpool)
 	name = "Idling NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
-	priority = 10
+	priority = FIRE_PRIORITY_IDLE_NPC
 	wait = 60
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 

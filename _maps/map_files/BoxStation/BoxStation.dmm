@@ -17605,7 +17605,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aSj" = (
-/obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aSk" = (
@@ -43716,7 +43715,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdp" = (
-/obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -56143,7 +56141,7 @@
 	name = "dust"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	station_lock_override = 1;
+	lock_override = 1;
 	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
@@ -56882,15 +56880,12 @@
 /area/science/circuit)
 "Qpp" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qpq" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qpr" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qps" = (
 /turf/closed/wall/r_wall,
@@ -56911,7 +56906,6 @@
 /area/maintenance/starboard/aft)
 "Qpw" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qpx" = (
 /obj/structure/table/reinforced,
@@ -56942,7 +56936,6 @@
 /area/maintenance/starboard/aft)
 "QpB" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "QpC" = (
 /obj/structure/table/reinforced,
@@ -56968,7 +56961,6 @@
 /area/science/circuit)
 "QpG" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "QpH" = (
 /turf/open/floor/plasteel/white,
@@ -56985,7 +56977,6 @@
 /area/science/circuit)
 "QpK" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "QpL" = (
 /turf/open/floor/plasteel/white,
@@ -56999,7 +56990,6 @@
 /area/science/circuit)
 "QpO" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "QpP" = (
 /obj/machinery/light_switch{
@@ -57020,9 +57010,8 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "QpS" = (
-/turf/closed/wall,
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/circuit,
+/turf/closed/wall,
 /area/science/circuit)
 "QpT" = (
 /obj/machinery/light{
@@ -57123,16 +57112,14 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "Qqg" = (
-/turf/closed/wall,
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/circuit,
+/turf/closed/wall,
 /area/science/circuit)
 "Qqh" = (
-/turf/open/floor/plasteel/white,
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/circuit,
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "Qqi" = (
 /obj/machinery/light{
@@ -57147,7 +57134,6 @@
 /area/science/misc_lab)
 "Qqk" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qql" = (
 /obj/structure/table/reinforced,
@@ -57169,7 +57155,6 @@
 /area/science/circuit)
 "Qqo" = (
 /turf/closed/wall,
-/turf/open/floor/circuit,
 /area/science/circuit)
 "Qqp" = (
 /obj/structure/table/reinforced,
