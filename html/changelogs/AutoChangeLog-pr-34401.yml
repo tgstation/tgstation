@@ -1,5 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - balance: "you can't get 12 syndi bomb cores from stripping the syndi lava base for parts anymore"
-  - bugfix: "fixed the syndi lava base blowing up from stray colossus shots, goliaths breaking in or miners throwing gibtonite at it."

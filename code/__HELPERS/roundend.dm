@@ -26,6 +26,9 @@
 	var/list/team_ids = list()
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!A.owner)
+			continue
+		
 		var/list/antag_info = list()
 		antag_info["key"] = A.owner.key
 		antag_info["name"] = A.owner.name
@@ -41,8 +44,6 @@
 				team_ids[T] = team_gid++
 			antag_info["team"]["id"] = team_ids[T]
 
-		if(!A.owner)
-			continue
 		if(A.objectives.len)
 			for(var/datum/objective/O in A.objectives)
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
@@ -368,6 +369,8 @@
 	var/list/all_antagonists = list()
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!A.owner)
+			continue
 		all_teams |= A.get_team()
 		all_antagonists += A
 

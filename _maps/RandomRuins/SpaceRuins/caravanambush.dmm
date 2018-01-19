@@ -355,7 +355,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/unpowered)
 "bm" = (
-/turf/open/floor/plating,
 /obj/machinery/door/poddoor{
 	id = "caravantrade1";
 	name = "cargo blastdoor"
@@ -399,17 +398,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
-"bt" = (
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg3";
-	icon_state = "platingdmg3"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
-	},
-/area/ruin/unpowered)
 "bu" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/dirt,
@@ -493,7 +481,6 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "bJ" = (
-/turf/open/floor/plating,
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
@@ -649,7 +636,6 @@
 /turf/template_noop,
 /area/template_noop)
 "ch" = (
-/turf/template_noop,
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless{
@@ -754,7 +740,6 @@
 	},
 /area/ruin/unpowered)
 "cx" = (
-/turf/template_noop,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
@@ -1158,12 +1143,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ruin/powered)
-"dB" = (
-/obj/machinery/computer{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "dC" = (
 /obj/machinery/computer{
@@ -1862,7 +1841,7 @@ aa
 aa
 ab
 ce
-dB
+dC
 ce
 ab
 aa
@@ -3497,7 +3476,7 @@ aa
 aa
 aa
 bl
-bt
+ci
 bB
 bB
 bU

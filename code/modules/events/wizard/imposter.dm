@@ -27,7 +27,7 @@
 		var/datum/antagonist/wizard/master = M.has_antag_datum(/datum/antagonist/wizard)
 		if(!master.wiz_team)
 			master.create_wiz_team()
-		var/datum/antagonist/wizard/apprentice/imposter/imposter = new(I.mind)
+		var/datum/antagonist/wizard/apprentice/imposter/imposter = new()
 		imposter.master = M
 		imposter.wiz_team = master.wiz_team
 		master.wiz_team.add_member(imposter)
