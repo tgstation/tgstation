@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6
 	flags = SS_POST_FIRE_TIMING
-	priority = FIRE_PRIORITY_SERVER_MAINT
+	priority = 10
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun

@@ -392,7 +392,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aQ" = (

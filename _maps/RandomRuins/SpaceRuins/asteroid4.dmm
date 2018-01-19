@@ -18,7 +18,7 @@
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered)
 "g" = (
-/turf/closed/mineral/clown,
+/turf/closed/mineral/bananium,
 /area/ruin/unpowered)
 "h" = (
 /turf/open/floor/plating/asteroid/airless,

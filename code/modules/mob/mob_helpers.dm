@@ -323,8 +323,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
-		return	B.eye_blind
-	return 0
+		return B.eye_blind
+	return FALSE
 
 /mob/proc/hallucinating()
 	return FALSE

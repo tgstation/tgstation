@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Mappers can now color individual tiles of floors via turf decals."

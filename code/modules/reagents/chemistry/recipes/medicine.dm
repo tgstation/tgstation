@@ -226,3 +226,10 @@
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
+
+/datum/chemical_reaction/morphine
+	name = "Morphine"
+	id = "morphine"
+	results = list("morphine" = 3)
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "nitrogen" = 1, "oxygen" = 1)
+	required_temp = 480
