@@ -420,7 +420,6 @@
 "bf" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -434,7 +433,6 @@
 	icon_state = "coil_red2"
 	},
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -737,7 +735,6 @@
 /area/template_noop)
 "bW" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -814,7 +811,6 @@
 	},
 /obj/item/shard,
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1035,7 +1031,6 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cL" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1145,7 +1140,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
