@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Z-manager stuff
 	var/list/z_list
+	var/datum/space_level/transit
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -47,7 +48,7 @@ SUBSYSTEM_DEF(mapping)
 	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
 		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
 	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", CROSSLINKED, list())  // no ruins
-	add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
+	transit = add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
 	createRandomZlevel()
