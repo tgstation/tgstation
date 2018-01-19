@@ -42,11 +42,10 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
 
 	#config folder should not be mandatory
-	rm -rf config
+	rm -rf config/*
 	
 	#disable ruins because can't test em all
-	mkdir config
-	echo e- "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
+	echo -e "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
 
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
