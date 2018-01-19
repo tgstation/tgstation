@@ -1294,7 +1294,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/uranium
 	name = "Bottle of Uranium"
-	desc = "A bottle of uranium, for advanced virusmaking.."
+	desc = "A bottle of uranium, for advanced virusmaking."
 	item = /obj/item/reagent_containers/glass/bottle/uranium
 	cost = 15
 	restricted_roles = list("Virologist")
