@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Fixed frost oil (cryosting) sending insulated crewmembers below absolute zero temperatures."
-  - bugfix: "Fixed damaging cold temps being a death sentence to simple mobs (they wouldn't heat back up to safe temps at room temperature)."
-  - refactor: "Refactored human temperature code, insulating clothing now helps you stay warm but going unprotected will help you cool off. However, you will now benefit from colder temps when you're overheating even in full EVA/hardsuit gear and you will warm up faster at room temperature in insulated gear as well (i.e. putting on a winter coat will no longer suppress your temperature if your already cold)."

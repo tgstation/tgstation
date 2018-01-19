@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Floors that look damaged / burned are now ACTUALLY damaged / burned, and can be repaired!"

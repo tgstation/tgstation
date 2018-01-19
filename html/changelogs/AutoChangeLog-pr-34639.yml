@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Autolathe now consumes reasonable amounts of power when inserting materials"

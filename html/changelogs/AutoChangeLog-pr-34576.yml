@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "The Free Golem Ship no longer has a teleport beacon."
-  - rscdel: "Jaunters no longer have a special effect when teleporting golems."

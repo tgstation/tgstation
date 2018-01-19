@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Servants can now cancel warps by clicking the button again, instead of having to manually interrupt it by doing something like picking up an item from their pocket."

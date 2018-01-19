@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Cancelling the \"Change equipment\" command now works as expected again."

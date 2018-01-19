@@ -1,6 +1,0 @@
-author: "Shadowlight213"
-delete-after: True
-changes: 
-  - rscadd: "Players can now have a verb in the ooc tab to see their own tracked playtime"
-  - bugfix: "fixed admin bypass not using the right proc"
-  - bugfix: "Lavaland ghost roles should now show up in the playtime report"

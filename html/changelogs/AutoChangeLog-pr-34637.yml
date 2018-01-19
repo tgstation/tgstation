@@ -1,4 +1,0 @@
-author: "yorii"
-delete-after: True
-changes: 
-  - bugfix: "fixed the syringe getting a transfer amount of 0 if the contents of it are 0, intended feature was probably to check the target and not the syringe itself for clamp."
