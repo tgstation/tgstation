@@ -1344,7 +1344,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20
-	//pplayer_minimum = 25
+	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
@@ -1354,7 +1354,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
 			but you never know. Contents are sorted to always be worth 125 TC."
 	cost = 40
-	//player_minimum = 40
+	player_minimum = 40
 	starting_crate_value = 125
 
 /datum/uplink_item/badass/surplus/purchase(mob/user, datum/component/uplink/U)
