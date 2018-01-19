@@ -300,7 +300,7 @@
 
 		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
-		addtimer(CALLBACK(src, .proc/updateUsrDialog()), 1) // pretty sure this increases responsiveness
+		addtimer(CALLBACK(src, .proc/updateUsrDialog), 1) // pretty sure this increases responsiveness
 
 	if(href_list["operation"])
 		switch(href_list["operation"])
