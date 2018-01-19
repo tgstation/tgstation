@@ -52,8 +52,6 @@ SUBSYSTEM_DEF(mapping)
 
 	// Pick a random away mission.
 	createRandomZlevel()
-	if (z_list.len < world.maxz)
-		add_new_zlevel("Away Mission", UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
 
 	// Generate mining ruins
 	loading_ruins = TRUE
