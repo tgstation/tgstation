@@ -31,11 +31,9 @@
 	// Out of Range
 	if (!(target in range(1, get_turf(usr))))
 		return 0
-
 	// Self
 	if (target == usr)
 		return 0
-
 	// Target Type: Living
 	if (isliving(target))
 		return 1
@@ -62,6 +60,13 @@
 	// We attempted to cast and succeeded! Player is now armed and ready to click.
 
 	//message_admins("DEBUG1: attempt_cast() [name] ")
+
+	// Not Correct State
+	if (user.incapacitated())
+		to_chat(user, "<span class='warning'>Not while you're incapacitated!</span>")
+		cancel_spell(usr)
+		return 0
+
 
 	// Attempt to break out of bonds!
 	if (user.restrained() && iscarbon(user))
@@ -137,7 +142,7 @@
 	else if (istype(target, /obj/machinery/door))
 		var/obj/machinery/door/D = target
 		if (D.Adjacent(user))
-			to_chat(user, "<span class='notice'>You prepare to tear open the [D].</span>")
+			to_chat(user, "<span class='notice'>You prepare to tear open [D].</span>")
 			user.Stun(10)
 			user.do_attack_animation(D, ATTACK_EFFECT_SMASH)
 			playsound(get_turf(D), 'sound/effects/bang.ogg', 30, 1, -1)

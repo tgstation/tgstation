@@ -13,3 +13,10 @@
 	amTargetted = FALSE
 	action_icon_state = "power_speed"				// State for that image inside icon
 */
+
+
+// TIP: Use do_mob() to determine if you've moved. If you have, then we can reset your invis.
+
+
+// OTHER IDEAS:  HIDE POWER
+// You can hide so long as you're next to a solid object, and you are not in VISUAL RANGE of them anymore. Press button to try to hide.

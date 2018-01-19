@@ -38,5 +38,5 @@ Ishiro	=	Administrator
 
 #TRIAL ADMINS
 Wicker0	=	Trial Admin
-hiimchros	=	Trial Admin
-InkPacket	=	Trial Admin
+hiimchros	=	Admin Observer
+InkPacket	=	Administrator

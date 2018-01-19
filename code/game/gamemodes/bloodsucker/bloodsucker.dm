@@ -65,6 +65,13 @@
 	//modePlayer += bloodsuckers // REMOVED 11/6/17, apparently obsolete?
 	return ..()
 
+// Checking for ACTUALLY Dead Vamps
+/datum/game_mode/bloodsucker/are_special_antags_dead()
+	// Bloodsucker not Final Dead
+	for(var/datum/mind/bloodsucker in bloodsuckers)
+		if(!bloodsucker.AmFinalDeath())
+			return FALSE
+	return TRUE
 
 
 /datum/game_mode/proc/can_make_bloodsucker(datum/mind/bloodsucker,datum/mind/creator) // Creator is just here so we can display fail messages to whoever is turning us.

@@ -1,6 +1,9 @@
 
 /datum/antagonist/bloodsucker/proc/AmFinalDeath()
- 	return !owner.current || !isliving(owner.current) || isbrain(owner.current) || !get_turf(owner.current)
+ 	return owner && owner.AmFinalDeath()// !owner.current || !isliving(owner.current) || isbrain(owner.current) || !get_turf(owner.current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
+
+/datum/mind/proc/AmFinalDeath()
+ 	return !current || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
 

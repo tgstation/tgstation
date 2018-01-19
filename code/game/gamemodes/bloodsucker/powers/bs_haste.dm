@@ -82,6 +82,12 @@
 		to_chat(user, "<span class='warning'>Your feet stay planted as long as [user.pulledby] holds you fast!</span>")
 		cancel_spell(usr)
 		return 0
+	// Not Correct State
+	if (user.incapacitated())
+		to_chat(user, "<span class='warning'>Not while you're incapacitated!</span>")
+		cancel_spell(usr)
+		return 0
+
 
 	// Spend Blood
 	pay_blood_cost()
