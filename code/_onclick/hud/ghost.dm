@@ -73,8 +73,9 @@
 	static_inventory += using
 
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client.prefs.ghost_hud)
 		screenmob.client.screen -= static_inventory

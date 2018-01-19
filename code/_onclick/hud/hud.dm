@@ -205,13 +205,16 @@
 	return TRUE
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/mob/screenmob = viewmob || mymob
 	hidden_inventory_update(screenmob)
 
 /datum/hud/robot/show_hud(version = 0, mob/viewmob)
-	..()
+	. = ..()
+	if(!.)
+		return
 	update_robot_modules_display()
 
 /datum/hud/proc/hidden_inventory_update()
