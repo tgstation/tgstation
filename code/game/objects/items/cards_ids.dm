@@ -55,6 +55,7 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	slot_flags = SLOT_ID
 	flags_1 = NOBLUDGEON_1
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/prox_check = TRUE //If the emag requires you to be in range
