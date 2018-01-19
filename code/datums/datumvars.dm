@@ -2,7 +2,7 @@
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	if(var_name == NAMEOF(src, vars) || (var_name == NAMEOF(src, datum_flags) && (!isnum(var_value) || (!(var_value & DF_VAR_EDITED) && (datum_flags & DF_VAR_EDITED)))))
+	if(var_name == NAMEOF(src, vars))
 		return FALSE
 	vars[var_name] = var_value
 	datum_flags |= DF_VAR_EDITED
