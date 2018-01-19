@@ -1,4 +1,4 @@
-#define WHITELISTFILE "[global.config.directory]/whitelist.txt"
+#define WHITELISTFILE "config/whitelist.txt"
 
 GLOBAL_LIST(whitelist)
 GLOBAL_PROTECT(whitelist)
