@@ -44,7 +44,8 @@
 		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2)
+		/obj/item/toy/windupToolbox								= 2,
+		/obj/item/extendohand/ACME								= 1)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -279,7 +280,7 @@
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
 			usr.gib()
-		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal"))) 
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal")))
 
 	blocked = FALSE
 	return

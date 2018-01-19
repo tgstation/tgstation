@@ -617,7 +617,7 @@
 	return TRUE
 
 /obj/item/extendohand
-	name = "ACME Extendo-Hand"
+	name = "extendo-hand"
 	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "extendohand"
@@ -627,6 +627,10 @@
 	force = 0
 	throwforce = 5
 	reach = 2
+
+/obj/item/extendohand/ACME
+	name = "\improper ACME Extendo-Hand"
+	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
 /obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
 	var/dist = get_dist(M, user)
