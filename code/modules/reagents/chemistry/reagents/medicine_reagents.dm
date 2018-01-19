@@ -1154,10 +1154,15 @@
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
 				M.Knockdown(20, 1, 0) // you should be in crit at this point unless actions have been taken
-		if(81 to INFINITY)
+		if(81)
 			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
 			M.Sleeping(100, 0)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
+		if(82 to INFINITY)
+			M.Sleeping(100, 0)
+			M.adjustOxyLoss(1.5*REM, 0)
+			M.adjustStaminaLoss(1.5*REM, 0)
+
 	..()
 	. = 1
