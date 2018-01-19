@@ -20,36 +20,17 @@
 "d" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_2)
-"e" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/ruin/powered/shuttle/medium_2)
 "f" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered/shuttle/medium_2)
-"g" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_2)
 "h" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_2)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/powered/shuttle/medium_2)
-"j" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "k" = (
 /turf/open/floor/plasteel/dark,
@@ -70,11 +51,6 @@
 /area/ruin/powered/shuttle/medium_2)
 "p" = (
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_2)
-"q" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "r" = (
 /obj/structure/table,
@@ -113,19 +89,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_2)
-"z" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_2)
-"A" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "B" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -179,15 +142,15 @@ a
 (4,1,1) = {"
 b
 f
-j
 d
 d
-q
+d
+d
 a
-j
 d
 d
-q
+d
+d
 b
 f
 "}
@@ -196,11 +159,11 @@ c
 c
 d
 d
-g
+h
 h
 l
 h
-z
+h
 d
 d
 c
@@ -209,7 +172,7 @@ c
 (6,1,1) = {"
 d
 d
-g
+h
 h
 h
 r
@@ -217,7 +180,7 @@ m
 r
 h
 h
-z
+h
 d
 d
 "}
@@ -238,7 +201,7 @@ d
 "}
 (8,1,1) = {"
 d
-g
+h
 h
 n
 h
@@ -248,7 +211,7 @@ B
 h
 n
 h
-z
+h
 d
 "}
 (9,1,1) = {"
@@ -267,7 +230,7 @@ h
 d
 "}
 (10,1,1) = {"
-e
+d
 h
 k
 k
@@ -279,7 +242,7 @@ h
 k
 k
 h
-A
+d
 "}
 (11,1,1) = {"
 a
