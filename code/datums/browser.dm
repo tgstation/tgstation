@@ -216,6 +216,120 @@
 	if (A.selectedbutton)
 		return A.selectedbutton
 
+
+/datum/browser/listpicker
+	var/valueslist = list()
+	var/opentime = 0
+	var/timeout
+	var/selectedbutton = 0
+	var/stealfocus
+
+/datum/browser/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = 6000,list/values,Radio=FALSE)
+	if (!User)
+		return
+
+	var/output =  {"<form method="GET" action="?src="[REF(src)]"><ul class="sparse">"}
+
+	for (var/i in values)
+		output += {"<li>
+        				<label class="switch">
+        					<input type="[Radio ? "radio" : "checkbox"]" value="[i["value"]]"[i["checked"] ? " checked" : ""]>
+      							<div class="slider"></div>
+      								<span>[i["label"]]</span>
+    						</label>
+    					</li>"}
+	output += {"</ul><div style="text-align:center">
+		<input type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
+
+	if (Button2)
+		output += {"<button type="submit" name="button" value="2" style="font-size:large;[( Button3 ? "" : "float:right" )]">[Button2]</button>"}
+
+	if (Button3)
+		output += {"<button type="submit" name="button" value="3" style="font-size:large;float:right">[Button3]</button>"}
+
+	output += {"</form></div>"}
+
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src)
+	set_content(output)
+	stealfocus = StealFocus
+	if (!StealFocus)
+		window_options += "focus=false;"
+	timeout = Timeout
+
+/datum/browser/listpicker/close()
+	.=..()
+	opentime = 0
+
+/datum/browser/listpicker/open()
+	set waitfor = 0
+
+	if (stealfocus)
+		. = ..(use_onclose = 1)
+	else
+		var/focusedwindow = winget(user, null, "focus")
+		. = ..(use_onclose = 1)
+
+		//waits for the window to show up client side before attempting to un-focus it
+		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
+		for (var/i in 1 to 10)
+			if (user && winexists(user, window_id))
+				if (focusedwindow)
+					winset(user, focusedwindow, "focus=true")
+				else
+					winset(user, "mapwindow", "focus=true")
+				break
+
+/datum/browser/listpicker/Topic(href,href_list)
+	if (href_list["close"] || !user || !user.client)
+		opentime = 0
+		return
+	if (href_list["button"])
+		var/button = text2num(href_list["button"])
+		if (button <= 3 && button >= 1)
+			selectedbutton = button
+	for (var/item in href_list)
+		switch(item)
+			if ("close", "button", "src")
+				continue
+			else
+				valueslist[item] = href_list[item]
+	opentime = 0
+	close()
+
+/datum/browser/listpicker/proc/wait()
+	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
+		stoplag(1)
+
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,values,Radio=FALSE)
+	if (!istype(User))
+		if (istype(User, /client/))
+			var/client/C = User
+			User = C.mob
+		else
+			return
+	var/datum/browser/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, values,Radio)
+	A.open()
+	A.wait()
+	if (A.selectedbutton)
+		return list("button" = A.selectedbutton, "values" = A.valueslist)
+
+/proc/input_bitfield(var/mob/User, title, bitfield, current_value)
+	if (!User || !(bitfield in GLOB.bitfields))
+		return
+	var/list/pickerlist = list()
+	message_admins(list2params(GLOB.bitfields[bitfield]))
+	for (var/i in GLOB.bitfields[bitfield])
+		if (current_value & GLOB.bitfields[bitfield][i])
+			pickerlist += list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "label" = i)
+		else
+			pickerlist += list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "label" = i)
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", List = pickerlist)
+	message_admins("Button says [result["button"]]")
+	message_admins(list2params(result["values"]))
+	. = 0
+	for (var/flag in result["values"])
+		. |= GLOB.bitfields[bitfield][flag]
+
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
