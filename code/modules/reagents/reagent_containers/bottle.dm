@@ -312,3 +312,8 @@
 	name = "BVAK bottle"
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/reagent_containers/glass/bottle/uranium
+	name = "uranium bottle"
+	desc = "A small bottle containing some uranium"
+	list_reagents = list("uranium" = 30)
