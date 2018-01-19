@@ -341,6 +341,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
+	if(!P || !Q)
+		icon_state = "runed_sensed2"
+		desc = "You have difficulty sensing where [blood_target] is..."
+		return
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
 		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
