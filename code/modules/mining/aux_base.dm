@@ -44,7 +44,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S))
+			if(!M.check_dock(S, silent=TRUE))
 				continue
 			destination_found = 1
 			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"

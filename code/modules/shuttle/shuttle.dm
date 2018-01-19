@@ -335,17 +335,16 @@
 
 	return SHUTTLE_CAN_DOCK
 
-/obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S)
+/obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S, silent=FALSE)
 	var/status = canDock(S)
 	if(status == SHUTTLE_CAN_DOCK)
 		return TRUE
-	else if(status == SHUTTLE_ALREADY_DOCKED)
+	else
+		if(status != SHUTTLE_ALREADY_DOCKED && !silent) // SHUTTLE_ALREADY_DOCKED is no cause for error
+			var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
+			message_admins(msg)
 		// We're already docked there, don't need to do anything.
 		// Triggering shuttle movement code in place is weird
-		return FALSE
-	else
-		var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
-		message_admins(msg)
 		return FALSE
 
 /obj/docking_port/mobile/proc/transit_failure()
