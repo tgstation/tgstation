@@ -111,7 +111,7 @@
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself		
+	new_character.mind = src							//and associate our new body with ourself
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -597,6 +597,22 @@
 			text += " | Disabled in Prefs"
 
 		sections["abductor"] = text
+
+		/** DARKSPAWN **/
+		text = "darkspawn"
+		if(SSticker.mode.config_tag == "darkspawn")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in SSticker.mode.darkspawn)
+			text += "<b>DARKSPAWN</b> | <a href='?src=[REF(src)];darkspawn=clear'>employee</a>"
+		else
+			text += "<a href='?src=[REF(src)];darkspawn=create'>darkspawn</a> | <b>EMPLOYEE</b>"
+		if(current && current.client && (ROLE_DARKSPAWN in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+
+		sections["darkspawn"] = text
 
 
 		/** DEVIL ***/
@@ -1234,7 +1250,16 @@
 						H.equipOutfit(/datum/outfit/abductor/agent)
 					else
 						H.equipOutfit(/datum/outfit/abductor/scientist)
-
+	else if(href_list["darkspawn"])
+		switch(href_list["darkspawn"])
+			if("clear")
+				remove_antag_datum(ANTAG_DATUM_DARKSPAWN)
+				message_admins("[key_name_admin(usr)] has de-darkspawned [current].")
+				log_admin("[key_name(usr)] has syndie de-darkspawned [current].")
+			if("create")
+				add_antag_datum(ANTAG_DATUM_DARKSPAWN)
+				message_admins("[key_name_admin(usr)] has darkspawned [current].")
+				log_admin("[key_name(usr)] has syndie darkspawned [current].")
 	else if (href_list["monkey"])
 		var/mob/living/L = current
 		if (L.notransform)

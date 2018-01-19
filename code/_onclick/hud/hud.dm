@@ -23,6 +23,8 @@
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
+	var/obj/screen/darkspawn_psi/psi_counter
+
 	var/obj/screen/nightvisionicon
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
@@ -111,6 +113,7 @@
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
+	psi_counter = null
 	nightvisionicon = null
 
 	if(plane_masters.len)
