@@ -60,7 +60,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		SEND_SOUND(user,'sound/items/sheath.ogg')
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 15, target = src))
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
@@ -347,7 +347,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "2"
 	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
+	light_power = 4
+	var/obj/effect/temp_visual/cult/portal/inner_portal //The portal "hint" for off-station teleportations
+	var/obj/effect/temp_visual/cult/rune_spawn/rune2/outer_portal
 	var/listkey
+
 
 /obj/effect/rune/teleport/Initialize(mapload, set_keyword)
 	. = ..()
@@ -396,6 +400,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/movedsomething = FALSE
 	var/moveuserlater = FALSE
 	for(var/atom/movable/A in T)
+		if(ishuman(A))
+			new /obj/effect/temp_visual/dir_setting/cult/phase/out(T, A.dir)
+			new /obj/effect/temp_visual/dir_setting/cult/phase(target, A.dir)
 		if(A == user)
 			moveuserlater = TRUE
 			movedsomething = TRUE
@@ -409,10 +416,40 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
+			actual_selected_rune.handle_portal("lava")
+		else
+			var/area/A = get_area(T)
+			if(A.map_name == "Space")
+				actual_selected_rune.handle_portal("space")
 		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
+/obj/effect/rune/teleport/proc/handle_portal(portal_type)
+	var/turf/T = get_turf(src)
+	if(inner_portal)
+		qdel(inner_portal) //We need fresh effects/animations
+	if(outer_portal)
+		qdel(outer_portal)
+	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
+	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
+	if(portal_type == "space")
+		light_color = RUNE_COLOR_TELEPORT
+		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space!</b>"
+	else
+		inner_portal.icon_state = "lava"
+		light_color = LIGHT_COLOR_FIRE
+		desc += "<br><b>A tear in reality reveals a coursing river of lava... something recently teleported here from the Lavaland Mines!</b>"
+	outer_portal = new(T, 600, color)
+	light_range = 4
+	update_light()
+	addtimer(CALLBACK(src, .proc/close_portal,"cult_apoc",TRUE), 600, TIMER_UNIQUE)
+
+/obj/effect/rune/teleport/proc/close_portal()
+	desc = initial(desc)
+	light_range = 0
+	update_light()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
@@ -961,10 +998,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 				addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
 				images += C
 		else
-			to_chat(M, "<span class='cultlarge'>An Apocalypse Rune was invoked in /the [place.name], it is no longer available as a summoning site!</span>")
+			to_chat(M, "<span class='cultlarge'>An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!</span>")
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity>=285) // Based on the prior formula, this means the cult makes up <~15% of current players
+	if(intensity>=285) // Based on the prior formula, this means the cult makes up <15% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)

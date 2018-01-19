@@ -471,8 +471,17 @@
 		Remove(owner)
 
 /datum/action/item_action/cult_dagger/Trigger()
+	for(var/obj/item/H in owner.held_items) //In case we were already holding another dagger
+		if(istype(H, /obj/item/melee/cultblade/dagger))
+			H.attack_self(owner)
+			return
 	var/obj/item/I = target
-	I.attack_self(owner)
+	if(owner.can_equip(I, slot_hands))
+		owner.temporarilyRemoveItemFromInventory(I)
+		owner.put_in_hands(I)
+		I.attack_self(owner)
+	else
+		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
 
 
 //Preset for spells

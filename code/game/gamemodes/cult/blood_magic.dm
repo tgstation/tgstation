@@ -187,6 +187,8 @@
 			 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
 	SEND_SOUND(owner, sound('sound/effects/magic.ogg',0,1,25))
 	charges--
+	desc = base_desc
+	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	if(charges<=0)
 		qdel(src)
 
@@ -254,7 +256,7 @@
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
-		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 240)
+		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400)
 		to_chat(ranged_ability_user,"<span class='cult'><b>[H] has been cursed with living nightmares!</b></span>")
 		attached_action.charges--
 		attached_action.desc = attached_action.base_desc
@@ -311,8 +313,8 @@
 	UpdateButtonIcon()
 
 /datum/action/innate/cult/blood_spell/manipulation
-	name = "Blood Manipulation"
-	desc = "A complex spell that allows your to gather blood and focus it into powerful spells."
+	name = "Blood Rites"
+	desc = "A complex spell that allows you to gather blood and use it for healing or other powerful spells."
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
 	charges = 5
@@ -604,7 +606,7 @@
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Blood Rite"
-	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br>Clicking the hand will potentially let you focus the spell into something stronger."
+	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Clicking the hand will potentially let you focus the spell into something stronger.</b>"
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/user, proximity)
@@ -727,7 +729,7 @@
 					var/turf/T = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/spear/S = new(user)
-					var/obj/item/twohanded/spear/cult/rite = new(T)
+					var/obj/item/twohanded/cult_spear/rite = new(T)
 					S.Grant(user, rite)
 					rite.spear_act = S
 					if(user.put_in_hands(rite))

@@ -627,10 +627,12 @@
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
 
-/obj/item/twohanded/spear/cult
-	name = "Nar'sien spear"
+/obj/item/twohanded/cult_spear
+	name = "blood halberd"
 	desc = "A sickening spear composed entirely of crystallized blood."
 	icon_state = "bloodspear0"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
 	force_wielded = 24
@@ -640,17 +642,20 @@
 	block_chance = 30
 	embed_chance = 0
 	embedded_fall_chance = 0
+	attack_verb = list("attacked", "impaled", "stabbed", "torn", "gored")
+	sharpness = IS_SHARP
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
 
-/obj/item/twohanded/spear/cult/Destroy()
+/obj/item/twohanded/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
 	..()
 
-/obj/item/twohanded/spear/cult/update_icon()
+/obj/item/twohanded/cult_spear/update_icon()
 	icon_state = "bloodspear[wielded]"
 
-/obj/item/twohanded/spear/cult/throw_impact(atom/target)
+/obj/item/twohanded/cult_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
 	if(isliving(target))
 		var/mob/living/L = target
@@ -670,7 +675,7 @@
 	else
 		..()
 
-/obj/item/twohanded/spear/cult/proc/break_spear(turf/T)
+/obj/item/twohanded/cult_spear/proc/break_spear(turf/T)
 	if(src)
 		if(!T)
 			T = get_turf(src)
@@ -681,7 +686,7 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/spear/cult/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
@@ -700,7 +705,7 @@
 	desc = "Call the blood spear back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
-	var/obj/item/twohanded/spear/cult/spear
+	var/obj/item/twohanded/cult_spear/spear
 	var/cooldown = 0
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
@@ -721,6 +726,7 @@
 		if(isliving(spear.loc))
 			var/mob/living/L = spear.loc
 			L.dropItemToGround(spear)
+			L.visible_message("<span class='warning'>An unseen force pulls the blood spear from [L]'s hands!</span>")
 		spear.throw_at(owner, 10, 2, owner)
 
 
@@ -962,81 +968,3 @@
 					throw_at(D.thrower, 7, 1, D.thrower)
 	else
 		..()
-/*
-/obj/item/blood_beam/proc/pewpew(mob/user, params)
-	var/turf/targets_from = get_turf(src)
-	var/turf/target = get_turf_in_angle(angle, targets_from, 40)
-	var/spread = 40
-	var/second = FALSE
-	var/set_angle = angle
-	for(var/i in 1 to 10)
-		if(second)
-			set_angle = angle - spread
-			spread -= 10
-		else
-			sleep(20)
-			set_angle = angle + spread
-		if(!firing)
-			break
-		var/obj/item/projectile/beam/beam_rifle/hitscan/blood/P = new
-		P.gun = src
-		P.preparePixelProjectile(target, user, params, 0)
-		P.fire(set_angle)
-		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
-		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
-		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
-		for(var/turf/turf in getline(targets_from,temp_target))
-			turf.narsie_act(TRUE, TRUE)
-		second = !second //Handles beam firing in pairs
-
-/obj/item/projectile/beam/beam_rifle/hitscan/blood
-	name = "blood beam"
-	tracer_type = /obj/effect/projectile_beam/blood
-	range = 40
-	impact_direct_damage = 45
-
-
-/obj/item/projectile/beam/beam_rifle/hitscan/blood/check_pierce(atom/target)
-	if(pierced[target])
-		forceMove(get_turf(target))
-		return TRUE
-	if(isliving(target))
-		forceMove(target)
-		handle_impact(target)
-		pierced[target] = TRUE
-		return TRUE
-	if(isclosedturf(target))
-		forceMove(target)
-		return TRUE
-	if(ismovableatom(target))
-		var/atom/movable/AM = target
-		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
-			pierced[AM] = TRUE
-			forceMove(AM.drop_location())
-			return TRUE
-	return FALSE
-
-/obj/item/projectile/beam/beam_rifle/hitscan/blood/handle_impact(atom/target)
-	if(isliving(target))
-		if(iscultist(target))
-			new /obj/effect/temp_visual/cult/sparks(target)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if(H.stat != DEAD)
-					H.reagents.add_reagent("unholywater", 7)
-			if(isshade(target) || isconstruct(target))
-				var/mob/living/simple_animal/M = target
-				if(M.health+15 < M.maxHealth)
-					M.adjustHealth(-15)
-				else
-					M.health = M.maxHealth
-		else
-			var/mob/living/L = target
-			playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
-			L.emote("scream")
-			L.Knockdown(20)
-			L.adjustBruteLoss(impact_direct_damage)
-
-/obj/effect/projectile_beam/blood
-	icon_state = "blood_beam"
-*/

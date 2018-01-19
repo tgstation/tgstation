@@ -75,7 +75,7 @@ This file contains the cult dagger and rune list code
 			return
 		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 		if(!(A in summon_objective.summon_spots))
-			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site (where Nar-sie can be summoned), it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 			return
 		if(summon_objective.summon_spots.len <= 1)
 			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
@@ -85,7 +85,7 @@ This file contains the cult dagger and rune list code
 		if(CM && !CM.incapacitated() && iscultist(CM) && CM.stat != DEAD)
 			decider = CM
 			to_chat(user, "<span class='cult'><b>The cult master is deciding whether to permit this rune...</b></span>")
-		var/confirm_final = alert(decider, "The Apocalypse Rite will prevent Nar-sie from being summoned at this particular site", "Are you sure you wish to lose this summoning site?", "It must be done!", "No")
+		var/confirm_final = alert(decider, "The Apocalypse Rune will prevent Nar-sie from being summoned at this location", "Are you sure you wish to lose this summoning site?", "It must be done!", "No")
 		if(confirm_final == "No")
 			if(decider == user)
 				to_chat(user, "<span class='cult'>You decide against scribing the rune.</span>")
