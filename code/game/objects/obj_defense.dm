@@ -27,7 +27,7 @@
 			return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor[damage_flag]
+		armor_protection = armor.vars[damage_flag]
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
@@ -178,7 +178,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ACID_PROOF))
 		for(var/armour_value in armor)
 			if(armour_value != "acid" && armour_value != "fire")
-				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
+				armor.modifyAllRatings(0 - round(sqrt(acid_level)*0.1))
 		if(prob(33))
 			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)

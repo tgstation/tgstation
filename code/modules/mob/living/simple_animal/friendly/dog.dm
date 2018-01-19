@@ -87,16 +87,16 @@
 	if(def_zone)
 		if(def_zone == "head")
 			if(inventory_head)
-				armorval = inventory_head.armor[type]
+				armorval = inventory_head.armor.vars[type]
 		else
 			if(inventory_back)
-				armorval = inventory_back.armor[type]
+				armorval = inventory_back.armor.vars[type]
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.armor[type]
+			armorval += inventory_head.armor.vars[type]
 		if(inventory_back)
-			armorval += inventory_back.armor[type]
+			armorval += inventory_back.armor.vars[type]
 	return armorval*0.5
 
 /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)

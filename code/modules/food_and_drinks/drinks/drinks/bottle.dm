@@ -68,12 +68,7 @@
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
-
-			// If their head has an armor value, assign headarmor to it, else give it 0.
-			if(H.head.armor["melee"])
-				headarmor = H.head.armor["melee"]
-			else
-				headarmor = 0
+			headarmor = H.head.armor.melee
 		else
 			headarmor = 0
 
