@@ -323,7 +323,7 @@
 			pickerlist += list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "label" = i)
 		else
 			pickerlist += list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "label" = i)
-	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", List = pickerlist)
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", values = pickerlist)
 	message_admins("Button says [result["button"]]")
 	message_admins(list2params(result["values"]))
 	. = 0
