@@ -209,6 +209,8 @@
 	if(!ckey)
 		var/list/candidates = list()
 		for(var/mob/M in GLOB.player_list)
+			if(!M.client)
+				continue	//we have no client!
 			if(M.stat != DEAD)
 				continue	//we are not dead!
 			if(!(ROLE_ALIEN in M.client.prefs.be_special))
