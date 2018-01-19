@@ -37,7 +37,6 @@ Last space-z level = empty
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_LAVALAND 5
 #define ZLEVEL_EMPTY_SPACE 12
 //Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
 #define ZLEVEL_TRANSIT 13

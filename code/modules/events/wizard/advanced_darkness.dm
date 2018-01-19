@@ -13,4 +13,4 @@
 /datum/round_event/wizard/darkness/start()
 	if(!started)
 		started = TRUE
-		SSweather.run_weather("advanced darkness", ZLEVEL_STATION_PRIMARY)
+		SSweather.run_weather(/datum/weather/advanced_darkness)
