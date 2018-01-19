@@ -31,7 +31,7 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stack/sheet/glass = 1)
 
-/obj/item/circuitboard/machine/abductor
+//obj/item/circuitboard/machine/protolathe/abductor
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
 
@@ -620,17 +620,13 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/micro_laser = 2)
 
-/obj/item/circuitboard/machine/protolathe
-	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe
+/obj/item/circuitboard/machine/protolathe/department
+	name = "Departmental Protolathe (Machine Board)"
+	build_path = /obj/machinery/rnd/protolathe/department
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
-
-/obj/item/circuitboard/machine/protolathe/department
-	name = "Departmental Protolathe (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe/department
 
 /obj/item/circuitboard/machine/protolathe/department/cargo
 	name = "Departmental Protolathe (Machine Board) - Cargo"
