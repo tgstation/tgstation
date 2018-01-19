@@ -1105,3 +1105,59 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
+	reagent_state = LIQUID
+	color = "#BEF7D8" // palish blue white
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	overdose_threshold = 15 // low overdose treshold due to very low and random metabolism rate
+	taste_description = "salt" // it actually does taste salty
+	var/overdose_progress = 0 // to track overdose progress
+
+/datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
+	if(!overdosed) // We do not want any effects on OD
+		M.AdjustStun(-5, 0)
+		M.AdjustKnockdown(-5, 0)
+		M.AdjustUnconscious(-5, 0)
+		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.SetSleeping(0, FALSE)
+		M.Jitter(1)
+		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
+		. = 1
+	..()
+
+/datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
+
+/datum/reagent/medicine/modafinil/overdose_process(mob/living/M)
+	overdose_progress++
+	switch(overdose_progress)
+		if(1 to 40)
+			M.adjustOxyLoss(0.5*REM, 0)
+			M.adjustStaminaLoss(0.5*REM, 0)
+			M.jitteriness = min(M.jitteriness+2, 10)
+			M.stuttering = min(M.stuttering+2, 10)
+			M.Dizzy(5)
+			M.losebreath++
+		if(41 to 80)
+			M.adjustOxyLoss(1*REM, 0)
+			M.adjustStaminaLoss(1*REM, 0)
+			M.jitteriness = min(M.jitteriness+4, 20)
+			M.stuttering = min(M.stuttering+4, 20)
+			M.Dizzy(10)
+			M.losebreath++
+			if(prob(33))
+				to_chat(M, "You spazz the fuck out!")
+				M.emote("moan")
+				M.Knockdown(20, 1, 0) // you should be in crit at this point unless actions have been taken
+		if(81 to INFINITY)
+			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you got charcoal
+			M.Sleeping(100, 0)
+			M.adjustOxyLoss(5*REM, 0)
+			M.adjustStaminaLoss(5*REM, 0)
+	..()
+	. = 1
