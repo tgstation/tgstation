@@ -81,6 +81,8 @@
 			world << "<B>[name] is WICKED SICK!!</B>"
 		if(13)
 			world << "<B>[name] is GODLIKE!</B>"
+		if(15)
+			world << "<B>[name] is a KILLIONAIRE!</B>"
 
 /datum/mind/New(var/key)
 	src.key = key
