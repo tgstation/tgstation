@@ -21,6 +21,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
 
 /*
  * Photo
@@ -116,7 +117,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = TRUE
