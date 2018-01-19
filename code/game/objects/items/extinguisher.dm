@@ -188,6 +188,6 @@
 		var/turf/T = get_turf(loc)
 		if(isopenturf(T))
 			var/turf/open/theturf = T
-			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
