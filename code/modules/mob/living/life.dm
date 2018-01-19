@@ -67,8 +67,6 @@
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
-	CheckFocus()
-
 	if(stat != DEAD)
 		return 1
 

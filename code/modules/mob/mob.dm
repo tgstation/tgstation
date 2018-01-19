@@ -172,7 +172,6 @@
 
 /mob/proc/Life()
 	set waitfor = FALSE
-	CheckFocus()
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
