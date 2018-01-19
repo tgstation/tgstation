@@ -5,6 +5,7 @@
 /datum/antagonist/changeling
 	name = "Changeling"
 	roundend_category  = "changelings"
+	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 
 	var/you_are_greet = TRUE
@@ -40,11 +41,6 @@
 	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
 
 
-/datum/antagonist/changeling/New()
-	. = ..()
-	generate_name()
-	create_actions()
-
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
 	QDEL_NULL(emporium_action)
@@ -68,6 +64,8 @@
 	emporium_action = new(cellular_emporium)
 
 /datum/antagonist/changeling/on_gain()
+	generate_name()
+	create_actions()
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
@@ -340,6 +338,9 @@
 
 	owner.announce_objectives()
 
+/datum/antagonist/changeling/farewell()
+	to_chat(owner.current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
+
 /datum/antagonist/changeling/proc/forge_team_objectives()
 	if(GLOB.changeling_team_objective_type)
 		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
@@ -436,6 +437,25 @@
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
 
+/datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
+	. = ..()
+	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [changelingID], a changeling!</span>")
+
+/datum/antagonist/changeling/get_admin_commands()
+	. = ..()
+	if(stored_profiles.len && (owner.current.real_name != first_prof.name))
+		.["Transform to initial appearance."] = CALLBACK(src,.proc/admin_restore_appearance)
+
+/datum/antagonist/changeling/proc/admin_restore_appearance(mob/admin)
+	if(!stored_profiles.len || !iscarbon(owner.current))
+		to_chat(admin, "<span class='danger'>Resetting DNA failed!</span>")
+	else
+		var/mob/living/carbon/C = owner.current
+		first_prof.dna.transfer_identity(C, transfer_SE=1)
+		C.real_name = first_prof.name
+		C.updateappearance(mutcolor_update=1)
+		C.domutcheck()
+
 // Profile
 
 /datum/changelingprofile
@@ -510,3 +530,9 @@
 		parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")
+
+/datum/antagonist/changeling/antag_listing_name()
+	return ..() + "([changelingID])"
+
+/datum/antagonist/changeling/xenobio/antag_listing_name()
+	return ..() + "(Xenobio)"

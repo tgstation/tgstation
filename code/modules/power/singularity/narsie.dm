@@ -49,6 +49,8 @@
 	GLOB.cult_narsie = src
 	var/list/all_cults = list()
 	for(var/datum/antagonist/cult/C in GLOB.antagonists)
+		if(!C.owner)
+			continue
 		all_cults |= C.cult_team
 	for(var/datum/team/cult/T in all_cults)
 		deltimer(T.blood_target_reset_timer)

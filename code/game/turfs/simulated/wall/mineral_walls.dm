@@ -34,13 +34,13 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/closed/wall/mineral/clown
+/turf/closed/wall/mineral/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	canSmoothWith = list(/turf/closed/wall/mineral/clown, /obj/structure/falsewall/clown)
+	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
@@ -250,10 +250,15 @@
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
-
-/turf/closed/wall/mineral/plastitanium/explosive/dismantle_wall(devastated, explode)
-	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
-	if(devastated || explode)
+	
+/turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
+	var/datum/explosion/acted_explosion = null
+	for(var/datum/explosion/E in GLOB.explosions)
+		if(E.explosion_id == explosion_id)
+			acted_explosion = E
+			break
+	if(acted_explosion && istype(acted_explosion.explosion_source, /obj/item/bombcore))
+		var/obj/item/bombcore/large/bombcore = new(get_turf(src))
 		bombcore.detonate()
 	..()
 

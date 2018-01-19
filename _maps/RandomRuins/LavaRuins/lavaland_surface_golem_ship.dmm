@@ -106,7 +106,6 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "s" = (
-/obj/machinery/bluespace_beacon,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (

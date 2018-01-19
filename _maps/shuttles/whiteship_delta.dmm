@@ -47,7 +47,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ai" = (
@@ -701,8 +701,7 @@
 /area/shuttle/abandoned)
 "bp" = (
 /obj/structure/urinal{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -892,7 +891,7 @@
 	},
 /area/shuttle/abandoned)
 "bI" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -1085,7 +1084,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/abandoned)
 "cc" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cd" = (
@@ -1098,7 +1097,7 @@
 	},
 /area/shuttle/abandoned)
 "ce" = (
-/obj/structure/sign/engineering,
+/obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cf" = (
@@ -1431,7 +1430,7 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/shuttle/abandoned)
 "cL" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cM" = (

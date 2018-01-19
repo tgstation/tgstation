@@ -73,8 +73,8 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-
-	var/datum/antagonist/wizard/apprentice/app = new(app_mind)
+	
+	var/datum/antagonist/wizard/apprentice/app = new()
 	app.master = user
 	app.school = kind
 
@@ -136,7 +136,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 
-	var/datum/antagonist/nukeop/new_op = new(M.mind)
+	var/datum/antagonist/nukeop/new_op = new()
 	new_op.send_to_spawnpoint = FALSE
 	new_op.nukeop_outfit = /datum/outfit/syndicate/no_crystals
 
@@ -187,8 +187,8 @@
 	R.real_name = R.name
 
 	R.key = C.key
-
-	var/datum/antagonist/nukeop/new_borg = new(R.mind)
+	
+	var/datum/antagonist/nukeop/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE
 	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
 	R.mind.special_role = "Syndicate Cyborg"
@@ -235,7 +235,6 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
 	if(user)
 		new_objective = new /datum/objective/assassinate

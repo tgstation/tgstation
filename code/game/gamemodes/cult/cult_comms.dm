@@ -338,6 +338,7 @@
 	return ..()
 
 /datum/action/innate/cult/master/pulse/Destroy()
+	PM.attached_action = null //What the fuck is even going on here.
 	QDEL_NULL(PM)
 	return ..()
 

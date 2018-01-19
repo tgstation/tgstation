@@ -231,20 +231,20 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
  */
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
-	icon_state = "sheet-clown"
+	icon_state = "sheet-bananium"
 	singular_name = "bananium sheet"
-	sheettype = "clown"
+	sheettype = "bananium"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
 	grind_results = list("banana" = 20)
 
-GLOBAL_LIST_INIT(clown_recipes, list ( \
+GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
 	new/datum/stack_recipe("Clown Statue", /obj/structure/statue/bananium/clown, 5, one_per_turf = 1, on_floor = 1), \
 	))
 
 /obj/item/stack/sheet/mineral/bananium/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.clown_recipes
+	recipes = GLOB.bananium_recipes
 	. = ..()
 
 /*
