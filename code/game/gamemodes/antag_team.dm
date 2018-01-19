@@ -32,3 +32,15 @@
 	report += printplayerlist(members)
 
 	return report.Join("<br>")
+
+//Get all teams [of type team_type]
+//TODO move these to some antag helpers file with get_antagonists
+/proc/get_all_teams(team_type)
+	. = list()
+	for(var/V in GLOB.antagonists)
+		var/datum/antagonist/A = V
+		if(!A.owner)
+			continue
+		var/datum/team/T = A.get_team()
+		if(!team_type || istype(T,team_type))
+			. |= T
