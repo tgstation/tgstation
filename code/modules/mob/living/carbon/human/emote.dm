@@ -1,6 +1,11 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
+/datum/emote/living/carbon/human/can_run_emote(mob/user, status_check = TRUE)
+	. = ..()
+	if(!ishuman(user))
+		return FALSE
+
 /datum/emote/living/carbon/human/cry
 	key = "cry"
 	key_third_person = "cries"
