@@ -9,7 +9,6 @@
 	invocation_type = "whisper"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
-	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
 	var/unconscious_amount_caster = 400 //how much the caster is stunned for after the spell
 	var/unconscious_amount_victim = 400 //how much the victim is stunned for after the spell
 
@@ -54,7 +53,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 		to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
 		return
 
-	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
+	var/datum/mind/TM = target.mind
+	if((TM.has_antag_datum(/datum/antagonist/wizard) || TM.has_antag_datum(/datum/antagonist/cult) || TM.has_antag_datum(/datum/antagonist/clockcult) || TM.has_antag_datum(/datum/antagonist/changeling) || TM.has_antag_datum(/datum/antagonist/rev)) || cmptext(copytext(target.key,1,2),"@"))
 		to_chat(user, "<span class='warning'>[target.p_their(TRUE)] mind is resisting your spell!</span>")
 		return
 

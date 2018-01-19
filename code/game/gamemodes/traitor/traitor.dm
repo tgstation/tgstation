@@ -26,7 +26,7 @@
 	var/list/datum/mind/pre_traitors = list()
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
-	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
+	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
 
 

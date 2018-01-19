@@ -6,8 +6,8 @@
 
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
-	human_datum = ANTAG_DATUM_IAA_HUMAN
-	ai_datum = ANTAG_DATUM_IAA_AI
+	human_datum = /datum/antagonist/traitor/human/internal_affairs
+	ai_datum = /datum/antagonist/traitor/AI/internal_affairs
 	antagpanel_category = "IAA"
 
 /datum/antagonist/traitor/AI/internal_affairs

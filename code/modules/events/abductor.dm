@@ -27,8 +27,8 @@
 	log_game("[scientist.mind.key] (ckey) has been selected as [T.name] abductor scientist.")
 	log_game("[agent.mind.key] (ckey) has been selected as [T.name] abductor agent.")
 
-	scientist.mind.add_antag_datum(ANTAG_DATUM_ABDUCTOR_SCIENTIST, T)
-	agent.mind.add_antag_datum(ANTAG_DATUM_ABDUCTOR_AGENT, T)
+	scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, T)
+	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)
 
 	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN

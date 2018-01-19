@@ -4,8 +4,8 @@
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
-	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
-	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
+	var/ai_datum = /datum/antagonist/traitor/AI
+	var/human_datum = /datum/antagonist/traitor/human
 	var/special_role = "traitor"
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
