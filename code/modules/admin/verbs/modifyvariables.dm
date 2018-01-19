@@ -77,8 +77,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				VV_NEW_TYPE,
 				VV_NEW_LIST,
 				VV_NULL,
-				VV_RESTORE_DEFAULT,
-				VV_BITFIELD
+				VV_RESTORE_DEFAULT
 				)
 
 		if(holder && holder.marked_datum && !(VV_MARKED_DATUM in restricted_classes))

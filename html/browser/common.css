@@ -14,7 +14,7 @@ hr
 	height: 1px;
 }
 
-a, a:link, a:visited, a:active, .linkOn, .linkOff
+a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 {
 	color: #ffffff;
 	text-decoration: none;
@@ -356,6 +356,10 @@ input:checked + .slider:before {
   margin-left: 60px;
 }
 
+ul.sparse {
+	padding-bottom:20px;
+}
+
 .sparse li {
   margin-top: 2px;
 }
@@ -366,4 +370,4 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-} 
+}
