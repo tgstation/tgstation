@@ -1,0 +1,4 @@
+author: "Buggy123"
+delete-after: True
+changes: 
+  - rscadd: "Observers can now view the atmospheric contents of the tile they're floating above."
