@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
 		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
 		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"font-awesome.min.css"	   = 'tgui/assets/font-awesome.min.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
