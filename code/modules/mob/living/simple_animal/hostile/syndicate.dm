@@ -8,6 +8,11 @@
 
 
 ///////////////Base mob////////////
+/obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
+	set_luminosity = 2
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_RED
+
 
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
@@ -40,6 +45,7 @@
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = 1
+	var/obj/effect/light_emitter/red_energy_sword/sord
 
 ///////////////Sword and shield////////////
 
@@ -52,10 +58,15 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
+	light_color = LIGHT_COLOR_RED
 	status_flags = 0
 	maxHealth = 170
 	health = 170
 	spacewalk = TRUE
+
+/mob/living/simple_animal/hostile/syndicate/melee/Initialize()
+	. = ..()
+	set_light(2)
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -76,6 +87,11 @@
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
 
+/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
+	. = ..()
+	sord = new(src)
+	set_light(4)
+
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicatemeleestormtrooper"
 	icon_living = "syndicatemeleestormtrooper"
@@ -83,6 +99,11 @@
 	maxHealth = 340
 	health = 340
 	loot = list(/obj/effect/gibspawner/human)
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper/Initialize()
+	. = ..()
+	sord = new(src)
+	set_light(4)
 
 ///////////////Guns////////////
 
@@ -107,6 +128,10 @@
 	spacewalk = TRUE
 	loot = list(/obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
+	. = ..()
+	set_light(4)
+
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicaterangedstormtrooper"
 	icon_living = "syndicaterangedstormtrooper"
@@ -116,6 +141,10 @@
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/gibspawner/human)
+
+/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper/Initialize()
+	. = ..()
+	set_light(4)
 
 ///////////////Misc////////////
 
