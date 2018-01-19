@@ -323,11 +323,21 @@
 		if(B)
 			B.vital = FALSE
 			B.decoy_override = TRUE
+	if(owner.assigned_role == "Mime")
+		var/mob/living/carbon/human/traitor_mob = owner.current
+		if(traitor_mob && istype(traitor_mob))
+			if(!silent)
+				to_chat(traitor_mob, "We may need to speak to infiltrate the crew, therefore we have chosen to ignore our vow.")
+			owner.miming = 0 
 	update_changeling_icons_added()
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
+	if(owner.assigned_role == "Mime")
+		var/mob/living/carbon/human/traitor_mob = owner.current
+		if(traitor_mob && istype(traitor_mob))
+			owner.miming = 1 
 	return
 
 
