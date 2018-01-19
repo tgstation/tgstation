@@ -1113,7 +1113,7 @@
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	overdose_threshold = 15 // low overdose treshold due to very low and random metabolism rate
+	overdose_threshold = 10 // low overdose treshold due to very low and random metabolism rate
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
 
@@ -1137,27 +1137,27 @@
 	overdose_progress++
 	switch(overdose_progress)
 		if(1 to 40)
-			M.adjustOxyLoss(0.5*REM, 0)
-			M.adjustStaminaLoss(0.5*REM, 0)
-			M.jitteriness = min(M.jitteriness+2, 10)
-			M.stuttering = min(M.stuttering+2, 10)
+			M.jitteriness = min(M.jitteriness+1, 10)
+			M.stuttering = min(M.stuttering+1, 10)
 			M.Dizzy(5)
-			M.losebreath++
+			if(prob(50))
+				M.losebreath++
 		if(41 to 80)
-			M.adjustOxyLoss(1*REM, 0)
-			M.adjustStaminaLoss(1*REM, 0)
-			M.jitteriness = min(M.jitteriness+4, 20)
-			M.stuttering = min(M.stuttering+4, 20)
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+			M.jitteriness = min(M.jitteriness+1, 20)
+			M.stuttering = min(M.stuttering+1, 20)
 			M.Dizzy(10)
-			M.losebreath++
-			if(prob(33))
-				to_chat(M, "You spazz the fuck out!")
+			if(prob(50))
+				M.losebreath++
+			if(prob(20))
+				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
 				M.Knockdown(20, 1, 0) // you should be in crit at this point unless actions have been taken
 		if(81 to INFINITY)
-			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you got charcoal
+			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
 			M.Sleeping(100, 0)
-			M.adjustOxyLoss(5*REM, 0)
-			M.adjustStaminaLoss(5*REM, 0)
+			M.adjustOxyLoss(1.5*REM, 0)
+			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	. = 1
