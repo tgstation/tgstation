@@ -248,7 +248,7 @@
 		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(status_flags & FAKEDEATH))
+	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
 
 		if(lying)
 			if(buckled)
@@ -300,12 +300,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_disability(DISABILITY_NEARSIGHT))
+					if(!has_trait(TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_disability(DISABILITY_BLIND))
+					if(!has_trait(TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 

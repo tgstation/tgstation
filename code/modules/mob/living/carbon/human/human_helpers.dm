@@ -56,7 +56,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart("head")
-	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -92,7 +92,7 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	if(has_disability(DISABILITY_MONKEYLIKE))
+	if(has_trait(TRAIT_MONKEYLIKE))
 		return FALSE
 	return TRUE//Humans can use guns and such
 

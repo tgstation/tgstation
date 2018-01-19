@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.status_flags & FAKEDEATH)
+	if(M.has_trait(TRAIT_FAKEDEATH))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -249,7 +249,7 @@
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
@@ -258,7 +258,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 

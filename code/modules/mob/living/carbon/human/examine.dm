@@ -98,7 +98,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		appears_dead = 1
 		if(suiciding)
 			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
@@ -246,7 +246,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(has_disability(DISABILITY_DUMB))
+			if(has_trait(TRAIT_DUMB))
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"

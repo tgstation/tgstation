@@ -20,7 +20,7 @@
 		if(!armed)
 			if(ishuman(usr))
 				var/mob/living/carbon/human/user = usr
-				if((user.has_disability(DISABILITY_DUMB) || user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+				if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
 					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(0)
 		update_icon()
@@ -76,7 +76,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if((user.has_disability(DISABILITY_DUMB) || user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = "l_hand"
 			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"
@@ -92,7 +92,7 @@
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
 	if(armed)
-		if((user.has_disability(DISABILITY_DUMB) || user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = "l_hand"
 			if(!(user.active_hand_index % 2))
 				which_hand = "r_hand"

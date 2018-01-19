@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(has_disability(DISABILITY_MUTE))
+	if(has_trait(TRAIT_MUTE))
 		return 0
 
 	if(is_muzzled())

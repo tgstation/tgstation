@@ -167,7 +167,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.status_flags |= GOTTAGOREALLYFAST
+	victim.add_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
 	sleep(duration)
-	victim.status_flags &= ~GOTTAGOREALLYFAST
+	victim.remove_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

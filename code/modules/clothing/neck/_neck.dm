@@ -62,7 +62,7 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
+			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
 					heart_strength = "<span class='danger'>an unstable</span>"
 					if(heart.beating)

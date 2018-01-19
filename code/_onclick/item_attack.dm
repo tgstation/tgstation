@@ -59,10 +59,10 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
-	if(force && user.has_disability(DISABILITY_PACIFISM))
+	if(force && user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-    
+
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)

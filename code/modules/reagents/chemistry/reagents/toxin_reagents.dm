@@ -141,7 +141,7 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.has_disability(DISABILITY_FAT))
+	if(M.has_trait(TRAIT_FAT))
 		M.gib()
 	return ..()
 
@@ -162,18 +162,22 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5*REM, 0)
-	M.Knockdown(100, 0)
-	M.silent = max(M.silent, 5)
-	M.tod = worldtime2text()
+/datum/reagent/toxin/zombiepowder/on_mob_add(mob/M)
 	..()
-	. = 1
+	if(isliving(M))
+		var/mob/living/L = M
+		L.fakedeath(id)
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	M.status_flags &= ~FAKEDEATH
+	if(isliving(M))
+		var/mob/living/L = M
+		L.cure_fakedeath(id)
 	..()
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
+	M.adjustOxyLoss(0.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"

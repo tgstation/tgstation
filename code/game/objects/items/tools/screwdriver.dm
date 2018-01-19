@@ -75,7 +75,7 @@
 		return ..()
 	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 

@@ -44,7 +44,7 @@
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.remove_all_disabilities()
+	M.remove_all_traits()
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
@@ -136,7 +136,7 @@
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0)
 		M.adjustCloneLoss(-power, 0)
-		M.status_flags &= ~DISFIGURED
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
@@ -152,7 +152,7 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
-		M.status_flags &= ~DISFIGURED
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
@@ -169,7 +169,7 @@
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_bodypart_damage(1,1, 0)
-	M.status_flags &= ~DISFIGURED
+	M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
 	. = 1
 
@@ -518,8 +518,19 @@
 	overdose_threshold = 45
 	addiction_threshold = 30
 
+/datum/reagent/medicine/ephedrine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/ephedrine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -587,8 +598,19 @@
 	overdose_threshold = 30
 	addiction_threshold = 25
 
+/datum/reagent/medicine/morphine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/morphine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	..()
+
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
 			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
@@ -652,14 +674,14 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
+	if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
+	else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
@@ -750,7 +772,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.has_disability(DISABILITY_NOCLONE)) && !M.hellbound)
+		if(!M.suiciding && !(M.has_trait(TRAIT_NOCLONE)) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
@@ -829,8 +851,19 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
+/datum/reagent/medicine/stimulants/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/stimulants/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
@@ -1092,8 +1125,19 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
+/datum/reagent/medicine/changelingAdrenaline2/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+
+/datum/reagent/medicine/changelingAdrenaline2/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	..()
+
 /datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()

@@ -197,7 +197,7 @@
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
-	if((user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
 		user.Knockdown(60)
 		if(ishuman(user))

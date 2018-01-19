@@ -24,7 +24,7 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		preprime(user, 5, FALSE)
 		return FALSE

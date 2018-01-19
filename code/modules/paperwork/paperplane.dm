@@ -65,7 +65,7 @@
 		update_icon()
 
 	else if(P.is_hot())
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(10))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

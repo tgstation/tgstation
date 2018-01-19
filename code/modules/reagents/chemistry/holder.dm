@@ -442,31 +442,7 @@
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
-				check_ignoreslow(my_atom)
-				check_gofast(my_atom)
-				check_goreallyfast(my_atom)
 	return 1
-
-/datum/reagents/proc/check_ignoreslow(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("morphine"))
-			return 1
-		else
-			M.status_flags &= ~IGNORESLOWDOWN
-
-/datum/reagents/proc/check_gofast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOFAST
-
-/datum/reagents/proc/check_goreallyfast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("methamphetamine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list

@@ -46,7 +46,7 @@
 	return 0
 
 //Fairly important to remember to return 1 on success >.<
-/obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/proc/can_sting(mob/living/user, mob/target)
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
@@ -62,7 +62,7 @@
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
+	if((user.has_trait(TRAIT_FAKEDEATH)) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
 	return 1
