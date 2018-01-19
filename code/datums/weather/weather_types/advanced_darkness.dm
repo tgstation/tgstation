@@ -14,7 +14,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION_PRIMARY
+	target_trait = ZTRAIT_STATION
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
