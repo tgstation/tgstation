@@ -572,28 +572,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 #define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
 
-/proc/caesar_cipher(text = "", key)
-	key = CLAMP(key, 1, 25)
-	var/list/textlist = string2charlist(text)
-	var/list/result = list()
-	var/ascii_char
-	for(var/char in textlist)
-		ascii_char = text2ascii(char)
-		if(ascii_char >= text2ascii("a") && ascii_char <= text2ascii("Z"))
-			for(var/i in 1 to key)
-				if(ascii2text(ascii_char) == "z") //in case of hitting a wall, loop back around
-					ascii_char = text2ascii("a") - 1
-				if(ascii2text(ascii_char) == "Z")
-					ascii_char = text2ascii("A") - 1
-				ascii_char++ //loop through each possibility at a time so as to make any key possible
-		result += ascii2text(ascii_char)
-	return jointext(result, "")
-
-#warn To-do: Test that the methods in caesar_cipher don't change things that aren't normal letters
-
 /proc/rot13(text = "")
-	return caesar_cipher(text, 13)
-	/*var/list/textlist = string2charlist(text)
+	var/list/textlist = string2charlist(text)
 	var/list/result = list()
 	for(var/c in textlist)
 		var/ca = text2ascii(c)
@@ -606,7 +586,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else if(ca >= text2ascii("N") && ca <= text2ascii("Z"))
 			ca -= 13
 		result += ascii2text(ca)
-	return jointext(result, "")*/
+	return jointext(result, "")
 
 //Takes a list of values, sanitizes it down for readability and character count,
 //then exports it as a json file at data/npc_saves/[filename].json.

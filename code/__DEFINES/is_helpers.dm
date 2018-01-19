@@ -151,6 +151,8 @@
 
 #define iseminence(A) (istype(A, /mob/camera/eminence))
 
+#define isdarkspawn(A) (A.mind && A.mind.has_antag_datum(ANTAG_DATUM_DARKSPAWN))
+
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 

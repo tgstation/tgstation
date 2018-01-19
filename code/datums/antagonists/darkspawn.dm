@@ -6,6 +6,7 @@
 /datum/antagonist/darkspawn
 	name = "Darkspawn"
 	roundend_category = "darkspawn"
+	antagpanel_category = "Darkspawn"
 	job_rank = ROLE_DARKSPAWN
 	var/darkspawn_state = MUNDANE //0 for normal crew, 1 for divulged, and 2 for progenitor
 
@@ -17,10 +18,12 @@
 	var/psi_regen_ticks = 0 //When this hits 0, regenerate Psi and return to psi_regen_delay
 	var/psi_used_since_regen = 0 //How much Psi has been used since we last regenerated
 
-/mob/living/proc/darkspawn()
-	mind.add_antag_datum(ANTAG_DATUM_DARKSPAWN)
+	//Lucidity variables
+	var/lucidity = 3 //Lucidity is used to buy abilities and is gained by using Devour Will
+	var/lucidity_drained = 0 //How much lucidity has been drained from other players
 
-
+	//Ability variables
+	var/list/abilities = list() //An associative list ("id" = ability datum) containing the abilities the darkspawn has
 
 // Antagonist datum things like assignment //
 
@@ -54,8 +57,42 @@
 	adjust_darkspawn_hud(FALSE)
 	owner.current.remove_language(/datum/language/darkspawn)
 
+/datum/antagonist/darkspawn/antag_panel_data()
+	. = "<b>Abilities:</b><br>"
+	for(var/V in abilities)
+		var/datum/action/innate/darkspawn/D = abilities[V]
+		. += "[D.name] ([D.id])<br>"
+
+/datum/antagonist/darkspawn/get_admin_commands()
+	. = ..()
+	.["Give Ability"] = CALLBACK(src,.proc/admin_give_ability)
+	.["Take Ability"] = CALLBACK(src,.proc/admin_take_ability)
+
+/datum/antagonist/darkspawn/proc/admin_give_ability(mob/admin)
+	var/id = stripped_input(admin, "Enter an ability ID.", "Give Ability")
+	if(!id)
+		return
+	if(has_ability(id))
+		to_chat(admin, "<span class='warning'>[owner.current] already has this ability!</span>")
+		return
+	add_ability(id)
+
+/datum/antagonist/darkspawn/proc/admin_take_ability(mob/admin)
+	var/id = stripped_input(admin, "Enter an ability ID.", "Tale Ability")
+	if(!id)
+		return
+	if(!has_ability(id))
+		to_chat(admin, "<span class='warning'>[owner.current] does not have this ability!</span>")
+		return
+	remove_ability(id)
+
 /datum/antagonist/darkspawn/greet()
 	to_chat(owner.current, "<span class='velvet bold big'>You are a darkspawn!</span>")
+	to_chat(owner.current, "<i>Append :a or .a before your message to silently speak with any other darkspawn.</i>")
+	to_chat(owner.current, "<i>When you're ready, retreat to a hidden location and Divulge to shed your human skin.</i>")
+	to_chat(owner.current, "<i>If you do not do this within ten minutes, this will happen involuntarily. Prepare quickly.</i>")
+	to_chat(owner.current, "<i>Remember that this will make you die in the light and heal in the dark - keep to the shadows.</i>")
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/darkspawn.ogg', 50, FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/darkspawn/proc/forge_objectives()
@@ -71,8 +108,7 @@
 		SSticker.mode.update_darkspawn_icons_removed(owner)
 
 
-
-// Gamemode variables as needed //
+// Gamemode variables as needed (but note that there is no darkspawn gamemode)//
 
 /datum/game_mode
 	var/list/darkspawn = list()
@@ -88,7 +124,6 @@
 	set_antag_hud(darkspawn_mind.current, null)
 
 
-
 // Darkspawn-related things like Psi //
 
 /datum/antagonist/darkspawn/process() //This is here since it controls most of the Psi stuff
@@ -98,8 +133,6 @@
 		if(!psi_regen_ticks)
 			regenerate_psi()
 	update_psi_hud()
-
-#warn To-do: Make the speech bubble changes less hamfisted
 
 /datum/antagonist/darkspawn/proc/has_psi(amt)
 	return psi >= amt
@@ -130,6 +163,76 @@
 		return
 	var/obj/screen/counter = owner.current.hud_used.psi_counter
 	counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#7264FF'>[psi]</font></div>"
+
+/datum/antagonist/darkspawn/proc/has_ability(id)
+	return abilities[id]
+
+/datum/antagonist/darkspawn/proc/add_ability(id, silent, cost)
+	for(var/V in subtypesof(/datum/action/innate/darkspawn))
+		var/datum/action/innate/darkspawn/D = V
+		if(initial(D.id) == id)
+			var/datum/action/innate/darkspawn/action = new D
+			action.Grant(owner.current)
+			action.darkspawn = src
+			abilities[id] = action
+			if(!silent)
+				to_chat(owner.current, "<span class='velvet'>You have learned the <b>[action.name]</b> ability.</span>")
+			if(cost)
+				lucidity = max(0, lucidity - action.lucidity_price)
+			return TRUE
+	return FALSE
+
+/datum/antagonist/darkspawn/proc/remove_ability(id, silent)
+	if(abilities[id])
+		var/datum/action/innate/darkspawn/D = abilities[id]
+		if(!silent)
+			to_chat(owner.current, "<span class='velvet'>You have lost the <b>[D.name]</b> ability.</span>")
+		qdel(D)
+		abilities[id] = null
+		return TRUE
+	return FALSE
+
+
+// Psi Web code //
+
+/datum/antagonist/darkspawn/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "psi_web", "Psi Web", 900, 480, master_ui, state)
+		ui.open()
+
+/datum/antagonist/darkspawn/ui_data(mob/user)
+	var/list/data = list()
+
+	data["lucidity"] = lucidity
+
+	var/list/abilities = list()
+
+	for(var/path in subtypesof(/datum/action/innate/darkspawn))
+		var/datum/action/innate/darkspawn/ability = path
+
+		if(initial(ability.blacklisted))
+			continue
+
+		var/list/AL = list() //This is mostly copy-pasted from the cellular emporium, but it should be fine regardless
+		AL["name"] = initial(ability.name)
+		AL["id"] = initial(ability.id)
+		AL["desc"] = initial(ability.desc)
+		AL["psi_cost"] = initial(ability.psi_cost)
+		AL["lucidity_cost"] = initial(ability.lucidity_price)
+		AL["owned"] = has_ability(initial(ability.id))
+		AL["can_purchase"] = (!has_ability(initial(ability.id)) && lucidity >= initial(ability.lucidity_price))
+
+		abilities += list(AL)
+
+	return data
+
+/datum/antagonist/darkspawn/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("unlock")
+			add_ability(params["id"])
 
 #undef MUNDANE
 #undef DIVULGED
