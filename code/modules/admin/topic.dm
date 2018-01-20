@@ -1888,10 +1888,24 @@
 
 		var/mob/M = locate(href_list["traitor"])
 		if(!ismob(M))
-			to_chat(usr, "This can only be used on instances of type /mob.")
+			var/datum/mind/D = M
+			if(!istype(D))
+				to_chat(usr, "This can only be used on instances of type /mob and /mind")
+				return
+			else
+				D.traitor_panel()
+		else
+			show_traitor_panel(M)
+	
+	else if(href_list["initmind"])
+		if(!check_rights(R_ADMIN))
 			return
-		show_traitor_panel(M)
-
+		var/mob/M = locate(href_list["initmind"])
+		if(!ismob(M) || M.mind)
+			to_chat(usr, "This can only be used on instances on mindless mobs")
+			return
+		M.mind_initialize()
+		
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
