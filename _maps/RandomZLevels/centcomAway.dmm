@@ -350,9 +350,6 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "bn" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bo" = (
@@ -1884,7 +1881,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "gS" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},

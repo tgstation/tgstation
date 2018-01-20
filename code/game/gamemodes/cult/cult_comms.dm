@@ -401,10 +401,10 @@
 	return ..()
 
 /datum/action/innate/cult/master/pulse/Destroy()
-	var/obj/effect/proc_holder/pulse/destroy = PM
-	. = ..()
-	if(destroy && !QDELETED(destroy))
-		QDEL_NULL(destroy)
+	PM.attached_action = null //What the fuck is even going on here.
+	QDEL_NULL(PM)
+	return ..()
+
 
 /datum/action/innate/cult/master/pulse/Activate()
 	PM.toggle(owner) //the important bit

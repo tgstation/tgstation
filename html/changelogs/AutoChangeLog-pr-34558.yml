@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "PDA messages sent by the message monitor console are now included in the talk logs."
