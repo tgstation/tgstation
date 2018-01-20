@@ -202,9 +202,7 @@
 	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "aA" = (
 /obj/machinery/door/airlock{
@@ -213,9 +211,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "aB" = (
 /obj/machinery/light/small,
@@ -237,9 +233,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "aC" = (
 /obj/machinery/light/small,
@@ -261,9 +255,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "aD" = (
 /obj/item/stack/rods,
@@ -370,9 +362,7 @@
 /area/shuttle/caravan/freighter3)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter3)
 "aO" = (
 /obj/machinery/airalarm/all_access{
@@ -390,9 +380,7 @@
 /mob/living/simple_animal/hostile/pirate/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter2)
 "aQ" = (
 /obj/structure/rack,
@@ -441,8 +429,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/stack/sheet/glass{
@@ -491,9 +478,7 @@
 	density = 0;
 	name = "broken airlock"
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "aY" = (
 /obj/effect/turf_decal/bot_white/right,
@@ -564,9 +549,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "bf" = (
 /obj/effect/turf_decal/bot_white,
@@ -574,9 +557,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "bg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -604,7 +585,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter2)
@@ -1343,8 +1323,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,
@@ -1617,9 +1596,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "fT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1691,9 +1668,7 @@
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "fY" = (
 /obj/machinery/light/small{
@@ -1765,9 +1740,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/mob_spawn/human/corpse/cargo_tech,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "gk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1797,9 +1770,7 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "gn" = (
 /obj/machinery/door/airlock/external{
@@ -1896,8 +1867,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/twenty,
@@ -1972,9 +1942,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter3)
 "gU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1989,7 +1957,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter3)
@@ -2046,9 +2013,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "he" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2064,9 +2029,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "hg" = (
 /obj/machinery/light/small{
@@ -2183,8 +2146,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2262,9 +2224,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "hH" = (
 /obj/structure/rack,
@@ -2273,9 +2233,7 @@
 	pixel_y = 29
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "hI" = (
 /obj/machinery/light{
@@ -2488,9 +2446,7 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter3)
 "if" = (
 /obj/machinery/firealarm{
@@ -2524,16 +2480,13 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "ij" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter1)
@@ -2552,9 +2505,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter1)
 "im" = (
 /obj/item/stack/sheet/mineral/titanium,
@@ -2568,9 +2519,7 @@
 "in" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "io" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -2632,7 +2581,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter2)
@@ -2669,7 +2617,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter3)
@@ -2681,9 +2628,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter3)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2744,7 +2689,6 @@
 "iN" = (
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched2"
 	},
 /area/shuttle/caravan/freighter1)
@@ -2780,8 +2724,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2894,9 +2837,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "jj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2910,9 +2851,7 @@
 /obj/item/stack/sheet/mineral/titanium{
 	amount = 20
 	},
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "jl" = (
 /obj/structure/closet/crate{
@@ -2942,9 +2881,7 @@
 /area/shuttle/caravan/freighter2)
 "jq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter2)
 "jr" = (
 /obj/effect/turf_decal/box/white/corners{
@@ -3009,9 +2946,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "jB" = (
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "jC" = (
 /obj/effect/turf_decal/box/white/corners{
@@ -3063,14 +2998,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter2)
 "jK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter2)
@@ -3081,13 +3013,10 @@
 /mob/living/simple_animal/hostile/pirate/space/ranged{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/floorgrime{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/shuttle/caravan/freighter2)
 "jN" = (
 /turf/open/floor/plasteel/airless{
-	burnt = 1;
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter2)
@@ -3389,9 +3318,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate{
-	desc = "It's a personal storage unit for operative gear."
-	},
+/obj/structure/closet/syndicate,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
@@ -3533,9 +3460,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/syndicate{
-	desc = "It's a personal storage unit for operative gear."
-	},
+/obj/structure/closet/syndicate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
@@ -3552,9 +3477,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/syndicate{
-	desc = "It's a personal storage unit for operative gear."
-	},
+/obj/structure/closet/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "kQ" = (
@@ -3768,9 +3691,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/syndicate{
-	desc = "It's a personal storage unit for operative gear."
-	},
+/obj/structure/closet/syndicate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
@@ -3854,9 +3775,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate{
-	desc = "It's a personal storage unit for operative gear."
-	},
+/obj/structure/closet/syndicate,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
