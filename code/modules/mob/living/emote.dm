@@ -257,6 +257,36 @@
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/scream/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
+		return ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.scream_sound)
+			playsound(H.loc, H.dna.species.scream_sound, 50, 1, 4, 1.2)
+
+			if(H.scream_time > world.time || H.scream_time <= 0)
+				H.scream_overload += 1
+			else
+				var/scream_last_num = (world.time - H.scream_time) / H.scream_cooldown
+				H.scream_overload -= max((FLOOR(scream_last_num, 1) - 1), 0)
+
+			H.scream_time = world.time+H.scream_cooldown
+
+			if(H.scream_overload >= 7)
+				to_chat(H, "<span class='danger'>You scream so hard, your lungs violently explode!</span>")
+				H.gib() //I don't know how you're still screaming at this point but stop it.
+				return
+
+			if(H.scream_overload >= 5)
+				to_chat(H, "<span class='danger'>You can feel your vocal cords tear apart! You should really stop screaming...</span>")
+				H.silent = max(H.silent, 300) //Seriously, stop screaming.
+
+			if(H.scream_overload >= 3)
+				to_chat(H, "<span class='danger'>You scream so hard you pass out!</span>")
+				H.SetSleeping(max(H.AmountSleeping(), 300), 1) //Stop screaming.
+
 /datum/emote/living/scowl
 	key = "scowl"
 	key_third_person = "scowls"
