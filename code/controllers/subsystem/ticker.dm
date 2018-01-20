@@ -307,9 +307,9 @@ SUBSYSTEM_DEF(ticker)
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
-	if(CONFIG_GET(number/maprotation) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) > -1)
+	if(CONFIG_GET(number/maprotation_vote_method) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) > -1)
 		var/time_til_vote = CONFIG_GET(number/maprotation_vote_delay)
-		if(CONFIG_GET(number/maprotation_result_method) == MAPVOTE_WEIGHTED)
+		if(CONFIG_GET(flag/maprotation_use_weighted))
 			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED), (time_til_vote ? time_til_vote*10 : 3000)) //3000 = 5 minutes
 		else
 			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server"), (time_til_vote ? time_til_vote*10 : 3000))

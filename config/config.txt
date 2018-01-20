@@ -320,15 +320,21 @@ ANNOUNCE_ADMIN_LOGOUT
 
 ## Map rotation
 ## You should edit maps.txt to match your configuration when you enable this.
+## THIS IS DEPRECATED! Make this a number in a few months.
+MAPROTATION
+
+## Map rotation method
 ## Set to 0 for no map rotation, 1 for pref-based maprotation, 2 for vote-based maprotation, 3 for random.
-MAPROTATION 2
+MAPROTATION_VOTE_METHOD 2
 
 ## Map Rotation result method
-## Set to 1 for greatest, 2 for weighted random.
-MAPROTATION_RESULT_METHOD 2
+## For automatic map votes, this flag will make the vote use weighted random for decisions
+## If this is commented out, a normal "greatest vote amount".
+MAPROTATION_USE_WEIGHTED
 
 ## When should the map rotation vote happened, in seconds (for vote-based map rotation)
 ## Set this to -1 if you want it to happen at the end of the round.
+## Will default to 300 seconds (5 minutes).
 MAPROTATION_VOTE_DELAY 300
 
 ## Map rotate chance delta
