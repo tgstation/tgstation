@@ -28,7 +28,7 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		
+
 		var/list/antag_info = list()
 		antag_info["key"] = A.owner.key
 		antag_info["name"] = A.owner.name
@@ -103,6 +103,12 @@
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+
+	if(CONFIG_GET(number/maprotation) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) == -1)
+		if(CONFIG_GET(number/maprotation_result_method) == MAPVOTE_WEIGHTED)
+			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED|AUTOMAPVOTE)
+		else
+			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", AUTOMAPVOTE)
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
