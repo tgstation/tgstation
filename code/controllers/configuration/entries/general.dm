@@ -242,11 +242,6 @@
 /datum/config_entry/number/maprotation_vote_delay
 	min_val = 0
 
-/datum/config_entry/number/maprotation_result_method
-	value = MAPVOTE_WEIGHTED
-	min_val = MAPVOTE_GREATEST
-	max_val = MAPVOTE_WEIGHTED
-
 /datum/config_entry/number/maprotatechancedelta
 	value = 0.75
 	min_val = 0
