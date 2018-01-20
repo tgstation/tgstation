@@ -1119,6 +1119,7 @@
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
 	if(!overdosed) // We do not want any effects on OD
+		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
 		M.AdjustStun(-5, 0)
 		M.AdjustKnockdown(-5, 0)
 		M.AdjustUnconscious(-5, 0)
@@ -1153,7 +1154,7 @@
 			if(prob(20))
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
-				M.Knockdown(20, 1, 0) // you should be in crit at this point unless actions have been taken
+				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
 			M.Sleeping(100, 0)
