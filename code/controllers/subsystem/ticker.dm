@@ -310,9 +310,9 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(number/maprotation) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) > -1)
 		var/time_til_vote = CONFIG_GET(number/maprotation_vote_delay)
 		if(CONFIG_GET(number/maprotation_result_method) == MAPVOTE_WEIGHTED)
-			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED|AUTOMAPVOTE), (time_til_vote ? time_til_vote*10 : 3000)) //3000 = 5 minutes
+			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED), (time_til_vote ? time_til_vote*10 : 3000)) //3000 = 5 minutes
 		else
-			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", AUTOMAPVOTE), (time_til_vote ? time_til_vote*10 : 3000))
+			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server"), (time_til_vote ? time_til_vote*10 : 3000))
 	setup_done = TRUE
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

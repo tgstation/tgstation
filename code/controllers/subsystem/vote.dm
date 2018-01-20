@@ -73,17 +73,6 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
-			else if(mode == "map" && (vote_flags & AUTOMAPVOTE))
-				for(var/X in non_voters)
-					var/client/C = X
-					if(C.prefs && C.prefs.preferred_map && choices[C.prefs.preferred_map])
-						choices[C.prefs.preferred_map]++
-						non_voters -= C
-						if(choices[C.prefs.preferred_map] > greatest_votes)
-							greatest_votes = choices[C.prefs.preferred_map]
-
-
-
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(vote_flags & WEIGHTED)

@@ -106,9 +106,9 @@
 
 	if(CONFIG_GET(number/maprotation) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) == -1)
 		if(CONFIG_GET(number/maprotation_result_method) == MAPVOTE_WEIGHTED)
-			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED|AUTOMAPVOTE)
+			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED)
 		else
-			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", AUTOMAPVOTE)
+			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server")
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
