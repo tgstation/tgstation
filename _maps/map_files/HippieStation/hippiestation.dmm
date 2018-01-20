@@ -21062,7 +21062,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aVS" = (
-/obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aVT" = (
@@ -53927,7 +53926,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqY" = (
-/obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -70546,7 +70544,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/lightsout,
 /turf/open/floor/carpet,
 /area/security/vacantoffice)
 "diy" = (
