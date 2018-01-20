@@ -17,7 +17,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
 	result_path = /obj/structure/light_construct
-	inverse = 1
+	inverse = TRUE
 
 /obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"
@@ -204,22 +204,28 @@
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	var/on = FALSE					// 1 if on, 0 if off
-	var/on_gs = 0
+	var/on_gs = FALSE
 	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
+	var/bulb_power = 1			// basically the alpha of the emitted light source
+	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
-	var/flickering = 0
+	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
 
-	var/rigged = 0				// true if rigged to explode
+	var/rigged = FALSE			// true if rigged to explode
 
 	var/obj/item/stock_parts/cell/cell
 	var/start_with_cell = TRUE	// if true, this fixture generates a very weak cell at roundstart
 	var/emergency_mode = FALSE	// if true, the light is in emergency mode
 	var/no_emergency = FALSE	// if true, this light cannot ever have an emergency mode
+	var/bulb_emergency_brightness_mul	// multiplier for this light's base brightness in emergency power mode
+	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
+	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
+	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
 // the smaller bulb light fixture
 
@@ -315,7 +321,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, 1, "#FFFFFF")
+				set_light(brightness, bulb_power, bulb_colour)
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
@@ -517,7 +523,7 @@
 		burn_out()
 		return FALSE
 	cell.use(pwr)
-	set_light(brightness * 0.25, max(0.5, 0.75 * (cell.charge / cell.maxcharge)), "#FF3232") //RGB: 255, 50, 50
+	set_light(brightness * bulb_emergency_brightness_mul, max(bulb_emergency_pow_min, bulb_emergency_pow_mul * (cell.charge / cell.maxcharge)), bulb_emergency_colour)
 	return TRUE
 
 
