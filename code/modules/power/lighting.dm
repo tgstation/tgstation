@@ -413,6 +413,11 @@
 			else
 				to_chat(user, "<span class='warning'>This type of light requires a [fitting]!</span>")
 
+	// hit the light socket with umbral tendrils, instantly breaking the light as opposed to RNG
+	else if(istype(W, /obj/item/umbral_tendrils))
+		break_light_tube()
+		..()
+
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
@@ -426,6 +431,7 @@
 				do_sparks(3, TRUE, src)
 				if (prob(75))
 					electrocute_mob(user, get_area(src), src, rand(0.7,1.0), TRUE)
+
 	else
 		return ..()
 

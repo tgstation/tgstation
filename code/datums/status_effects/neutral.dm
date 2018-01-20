@@ -47,3 +47,52 @@
 /datum/status_effect/syphon_mark/on_remove()
 	get_kill()
 	. = ..()
+
+/datum/status_effect/tagalong //applied to darkspawns while they accompany someone
+	id = "tagalong"
+	duration = -1
+	tick_interval = 1 //as fast as possible
+	alert_type = /obj/screen/alert/status_effect/tagalong
+	var/mob/living/shadowing
+	var/turf/cached_location //we store this so if the mob is somehow gibbed we aren't put into nullspace
+
+/datum/status_effect/tagalong/on_creation(mob/living/owner, mob/living/tag)
+	. = ..()
+	if(!.)
+		return
+	shadowing = tag
+
+/datum/status_effect/tagalong/on_remove()
+	if(owner.loc == shadowing)
+		owner.forceMove(cached_location ? cached_location : get_turf(owner))
+		shadowing.visible_message("<span class='warning'>[owner] breaks away from [shadowing]'s shadow!</span>", \
+		"<span class='userdanger'>You feel a sense of freezing cold pass through you!</span>", ignore_mob = owner)
+		to_chat(owner, "<span class='velvet'>You break away from [shadowing].</span>")
+	playsound(owner, 'sound/magic/devour_will_form.ogg', 50, TRUE)
+	owner.setDir(SOUTH)
+	for(var/obj/item/bloodcrawl/B in owner)
+		qdel(B)
+
+/datum/status_effect/tagalong/process()
+	if(!shadowing)
+		owner.forceMove(cached_location)
+		qdel(src)
+		return
+	cached_location = get_turf(shadowing)
+	if(cached_location.get_lumcount() < DARKSPAWN_DIM_LIGHT)
+		owner.forceMove(cached_location)
+		shadowing.visible_message("<span class='warning'>[owner] suddenly appears from the dark!</span>", ignore_mob = owner)
+		to_chat(owner, "<span class='warning'>You are forced out of [shadowing]'s shadow!</span>")
+		owner.Knockdown(30)
+		qdel(src)
+
+/obj/screen/alert/status_effect/tagalong
+	name = "Tagalong"
+	desc = "You are accompanying TARGET_NAME. Use the Tagalong ability to break away at any time."
+	icon_state = "shadow_mend"
+
+/obj/screen/alert/status_effect/tagalong/MouseEntered()
+	var/datum/status_effect/tagalong/tagalong = attached_effect
+	desc = replacetext(desc, "TARGET_NAME", tagalong.shadowing.real_name)
+	..()
+	desc = initial(desc)

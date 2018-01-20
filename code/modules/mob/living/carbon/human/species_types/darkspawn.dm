@@ -2,12 +2,14 @@
 	name = "Darkspawn"
 	id = "darkspawn"
 	limbs_id = "darkspawn"
-	burnmod = 1.5
 	sexes = FALSE
 	nojumpsuit = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	siemens_coeff = 0
+	brutemod = 0.9
+	heatmod = 1.5
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store, slot_head)
 	species_traits = list(NOBREATH, RESISTCOLD, RESISTPRESSURE, NOGUNS, NOBLOOD, RADIMMUNE, VIRUSIMMUNE, PIERCEIMMUNE, NODISMEMBER, NO_UNDERWEAR, NOHUNGER, NO_DNA_COPY, NOTRANSSTING, NOEYES)
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien
 
@@ -46,4 +48,4 @@
 			H.adjustFireLoss(DARKSPAWN_LIGHT_BURN)
 
 /datum/species/darkspawn/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(H, 'sound/creatures/darkspawn_death.ogg', 50, TRUE)
+	playsound(H, 'sound/creatures/darkspawn_death.ogg', 50, FALSE)

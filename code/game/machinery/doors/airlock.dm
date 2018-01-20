@@ -922,6 +922,48 @@
 		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
 		note = C
 		update_icon()
+	else if(istype(C, /obj/item/umbral_tendrils))
+		if(user.a_intent == INTENT_HELP && !hasPower())
+			if(!density)
+				return
+			if(locked || welded)
+				to_chat(user, "<span class='warning'>Your [C.name] can't force open locked doors without smashing them down [src].</span>")
+				return
+			open(2)
+		var/obj/item/umbral_tendrils/T = C
+		if(!T.darkspawn)
+			return ..()
+		else if(user.a_intent == INTENT_DISARM)
+			if(!locked && !welded)
+				if(!T.darkspawn.has_psi(15))
+					to_chat(user, "<span class='warning'>You need at least 15 Psi to force open an airlock!</span>")
+					return
+				user.visible_message("<span class='warning'>[user] starts forcing open [src]!</span>", "<span class='velvet'><b>ueahz</b><br>You begin forcing open [src]...</span>")
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+				if(!do_after(user, 75, target = src))
+					return
+				open(2)
+				if(density && !open(2))
+					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open!</span>")
+				T.darkspawn.use_psi(15)
+			else
+				if(!T.darkspawn.has_psi(30))
+					to_chat(user, "<span class='warning'>You need at least 30 Psi to smash down an airlock!</span>")
+					return
+				user.visible_message("<span class='boldwarning'>[user] starts slamming [T] into [src]!</span>", \
+				"<span class='velvet italics'>You loudly begin smashing down [src].</span>")
+				while(obj_integrity > max_integrity * 0.25)
+					if(!do_after(user, rand(8, 10), target = src))
+						T.darkspawn.use_psi(30)
+						qdel(T)
+						return
+					playsound(src, 'sound/magic/pass_smash_door.ogg', 50, TRUE)
+					take_damage(max_integrity / rand(8, 15))
+					to_chat(user, "<span class='velvet bold'>klaj.</span>")
+				ex_act(EXPLODE_DEVASTATE)
+				user.visible_message("<span class='boldwarning'>[user] slams down [src]!</span>", "<span class='velvet bold'>KLAJ.</span>")
+				T.darkspawn.use_psi(30)
+				qdel(T)
 	else
 		return ..()
 

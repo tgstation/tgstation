@@ -33,6 +33,7 @@
 	forge_objectives()
 	owner.current.hud_used.psi_counter.invisibility = 0
 	update_psi_hud()
+	add_ability("divulge")
 	START_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -67,6 +68,11 @@
 	. = ..()
 	.["Give Ability"] = CALLBACK(src,.proc/admin_give_ability)
 	.["Take Ability"] = CALLBACK(src,.proc/admin_take_ability)
+	if(darkspawn_state == MUNDANE)
+		.["Divulge"] = CALLBACK(src, .proc/divulge)
+	else if(darkspawn_state == DIVULGED)
+		.["[psi]/[psi_cap] Psi"] = CALLBACK(src, .proc/admin_edit_psi)
+		.["[lucidity] Lucidity"] = CALLBACK(src, .proc/admin_edit_lucidity)
 
 /datum/antagonist/darkspawn/proc/admin_give_ability(mob/admin)
 	var/id = stripped_input(admin, "Enter an ability ID.", "Give Ability")
@@ -78,13 +84,27 @@
 	add_ability(id)
 
 /datum/antagonist/darkspawn/proc/admin_take_ability(mob/admin)
-	var/id = stripped_input(admin, "Enter an ability ID.", "Tale Ability")
+	var/id = stripped_input(admin, "Enter an ability ID.", "Take Ability")
 	if(!id)
 		return
 	if(!has_ability(id))
 		to_chat(admin, "<span class='warning'>[owner.current] does not have this ability!</span>")
 		return
 	remove_ability(id)
+
+/datum/antagonist/darkspawn/proc/admin_edit_psi(mob/admin)
+	var/new_psi = input(admin, "Enter a new psi amount. (Current: [psi]/[psi_cap])", "Change Psi", psi) as null|num
+	if(!new_psi)
+		return
+	new_psi = CLAMP(new_psi, 0, psi_cap)
+	psi = new_psi
+
+/datum/antagonist/darkspawn/proc/admin_edit_lucidity(mob/admin)
+	var/newcidity = input(admin, "Enter a new lucidity amount. (Current: [lucidity])", "Change Lucidity", lucidity) as null|num
+	if(!newcidity)
+		return
+	newcidity = max(0, newcidity)
+	lucidity = newcidity
 
 /datum/antagonist/darkspawn/greet()
 	to_chat(owner.current, "<span class='velvet bold big'>You are a darkspawn!</span>")
@@ -167,7 +187,9 @@
 /datum/antagonist/darkspawn/proc/has_ability(id)
 	return abilities[id]
 
-/datum/antagonist/darkspawn/proc/add_ability(id, silent, cost)
+/datum/antagonist/darkspawn/proc/add_ability(id, silent, no_cost)
+	if(has_ability(id))
+		return
 	for(var/V in subtypesof(/datum/action/innate/darkspawn))
 		var/datum/action/innate/darkspawn/D = V
 		if(initial(D.id) == id)
@@ -177,20 +199,31 @@
 			abilities[id] = action
 			if(!silent)
 				to_chat(owner.current, "<span class='velvet'>You have learned the <b>[action.name]</b> ability.</span>")
-			if(cost)
+			if(!no_cost)
 				lucidity = max(0, lucidity - action.lucidity_price)
 			return TRUE
-	return FALSE
 
 /datum/antagonist/darkspawn/proc/remove_ability(id, silent)
-	if(abilities[id])
-		var/datum/action/innate/darkspawn/D = abilities[id]
-		if(!silent)
-			to_chat(owner.current, "<span class='velvet'>You have lost the <b>[D.name]</b> ability.</span>")
-		qdel(D)
-		abilities[id] = null
-		return TRUE
-	return FALSE
+	if(!has_ability(id))
+		return
+	var/datum/action/innate/darkspawn/D = abilities[id]
+	if(!silent)
+		to_chat(owner.current, "<span class='velvet'>You have lost the <b>[D.name]</b> ability.</span>")
+	qdel(D)
+	abilities[id] = null
+	return TRUE
+
+/datum/antagonist/darkspawn/proc/divulge()
+	var/mob/living/carbon/human/user = owner.current
+	to_chat(user, "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>")
+	user.fully_heal()
+	user.set_species(/datum/species/darkspawn)
+	add_ability("psi_web", TRUE)
+	add_ability("sacrament", TRUE)
+	add_ability("devour_will", TRUE)
+	add_ability("pass", TRUE)
+	remove_ability("divulge", TRUE)
+	darkspawn_state = DIVULGED
 
 
 // Psi Web code //
@@ -204,7 +237,7 @@
 /datum/antagonist/darkspawn/ui_data(mob/user)
 	var/list/data = list()
 
-	data["lucidity"] = lucidity
+	data["lucidity"] = "[lucidity] ([lucidity_drained] drained)"
 
 	var/list/abilities = list()
 
@@ -218,12 +251,14 @@
 		AL["name"] = initial(ability.name)
 		AL["id"] = initial(ability.id)
 		AL["desc"] = initial(ability.desc)
-		AL["psi_cost"] = initial(ability.psi_cost)
+		AL["psi_cost"] = "[initial(ability.psi_cost)][initial(ability.psi_addendum)]"
 		AL["lucidity_cost"] = initial(ability.lucidity_price)
 		AL["owned"] = has_ability(initial(ability.id))
 		AL["can_purchase"] = (!has_ability(initial(ability.id)) && lucidity >= initial(ability.lucidity_price))
 
 		abilities += list(AL)
+
+	data["abilities"] = abilities
 
 	return data
 

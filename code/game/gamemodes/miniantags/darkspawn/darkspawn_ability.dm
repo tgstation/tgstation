@@ -7,10 +7,22 @@
 	buttontooltipstyle = "alien"
 
 	var/psi_cost = 0 //How much psi the ability costs to use
+	var/psi_addendum = "" //If applicable, descriptive text shown after the cost
 	var/lucidity_price = 0 //How much lucidity the ability costs to buy; if this is 0, it isn't listed on the catalog
 	var/blacklisted = FALSE //If the ability can't be gained from the psi web
 	var/in_use = FALSE //For channeled/cast-time abilities
 	var/datum/antagonist/darkspawn/darkspawn //Linked antag datum for drawing lucidity and psi
+
+/datum/action/innate/darkspawn/New()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/innate/darkspawn/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/action/innate/darkspawn/process()
+	UpdateButtonIcon() //so as to be consistent with psi costs and situational requirements, keep the button updated
 
 /datum/action/innate/darkspawn/Trigger()
 	var/activated = FALSE
@@ -32,14 +44,5 @@
 		return
 	. = ..()
 
-
-/datum/action/innate/darkspawn/test_ability
-	name = "Test Ability"
-	id = "test_ability"
-	desc = "This is a test ability. Costs 20 Psi."
-	lucidity_price = 1
-	psi_cost = 20
-
-/datum/action/innate/darkspawn/test_ability/Activate()
-	to_chat(owner, "<span class='velvet'>Nice, you used an ability!</span>")
-	return TRUE
+/datum/action/innate/darkspawn/proc/reset()
+	in_use = FALSE
