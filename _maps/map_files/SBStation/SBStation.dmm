@@ -37,7 +37,7 @@
 /turf/closed/wall/r_wall,
 /area/security/main)
 "aah" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hos)
 "aai" = (
@@ -809,7 +809,7 @@
 	},
 /area/security/main)
 "abF" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/side{
@@ -855,7 +855,7 @@
 "abJ" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1121,7 +1121,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "acp" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "acq" = (
@@ -1565,7 +1565,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/side{
@@ -2198,7 +2198,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "afe" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "aff" = (
@@ -2229,7 +2229,7 @@
 /area/shuttle/transport)
 "afk" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
@@ -2237,7 +2237,7 @@
 /area/hallway/secondary/entry)
 "afl" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "afm" = (
@@ -2366,7 +2366,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/security/brig)
 "afx" = (
@@ -2553,7 +2553,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "afS" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/side{
@@ -4289,7 +4289,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "akf" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/maintenance/port)
 "akg" = (
@@ -4510,7 +4510,7 @@
 /area/medical/sleeper)
 "akL" = (
 /obj/structure/closet/secure_closet/medical2,
-/obj/structure/sign/nosmoking_1{
+/obj/structure/sign/warning/nosmoking/circle{
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/vault{
@@ -5565,7 +5565,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "anu" = (
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -26
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -5629,7 +5629,7 @@
 /area/medical/sleeper)
 "anD" = (
 /obj/structure/closet/secure_closet/medical3,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -5946,7 +5946,7 @@
 	dir = 8;
 	light_color = "#e8eaff"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -26
 	},
 /obj/machinery/camera{
@@ -5983,7 +5983,7 @@
 /area/medical/chemistry)
 "aor" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/sleeper)
@@ -5999,7 +5999,7 @@
 /area/medical/sleeper)
 "aot" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "aou" = (
@@ -6292,7 +6292,7 @@
 /area/medical/sleeper)
 "apg" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/open/floor/plating,
 /area/medical/genetics)
 "aph" = (
@@ -6385,7 +6385,7 @@
 /turf/closed/wall,
 /area/hydroponics)
 "apt" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall,
 /area/hydroponics)
 "apu" = (
@@ -6790,7 +6790,7 @@
 "aqs" = (
 /obj/machinery/chem_heater,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -6826,7 +6826,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "aqx" = (
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/machinery/light{
@@ -7178,7 +7178,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "ars" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
@@ -7220,7 +7220,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "arx" = (
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
 /obj/machinery/light_switch{
@@ -8156,7 +8156,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "atH" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/bridge)
 "atI" = (
@@ -8577,7 +8577,7 @@
 /area/maintenance/port)
 "auF" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/open/floor/plating,
 /area/hydroponics)
 "auG" = (
@@ -8823,7 +8823,7 @@
 "avo" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -8904,7 +8904,7 @@
 "avz" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -8924,7 +8924,7 @@
 	},
 /area/hallway/primary/central)
 "avB" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/purple/side{
@@ -8961,7 +8961,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white,
@@ -9079,7 +9079,7 @@
 	},
 /area/science/research)
 "avS" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
 /area/science/xenobiology)
 "avT" = (
@@ -9760,7 +9760,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -10093,7 +10093,7 @@
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
 "aya" = (
@@ -10307,7 +10307,7 @@
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "ays" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "ayt" = (
@@ -10376,7 +10376,7 @@
 	},
 /area/science/research)
 "ayD" = (
-/obj/structure/sign/xenobio,
+/obj/structure/sign/departments/xenobio,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -10418,7 +10418,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "ayI" = (
-/obj/structure/sign/xenobio,
+/obj/structure/sign/departments/xenobio,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -10750,7 +10750,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "azu" = (
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	name = "The Most Robust Captain Award for Robustness";
 	pixel_y = 32
 	},
@@ -11094,7 +11094,7 @@
 /area/science/server)
 "azZ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = 32
@@ -11216,7 +11216,7 @@
 /area/shuttle/escape)
 "aAn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
@@ -11224,7 +11224,7 @@
 /area/hallway/secondary/exit)
 "aAo" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "aAp" = (
@@ -11467,7 +11467,7 @@
 /obj/machinery/light{
 	light_color = "#e8eaff"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/machinery/camera/motion{
@@ -11947,7 +11947,7 @@
 /area/storage/primary)
 "aBV" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aBW" = (
@@ -12158,7 +12158,7 @@
 /area/science/server)
 "aCy" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = -32
@@ -13574,7 +13574,7 @@
 	},
 /area/hallway/primary/central)
 "aFp" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -13663,7 +13663,7 @@
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "aFB" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "aFC" = (
@@ -13823,7 +13823,7 @@
 	id = "unloading";
 	name = "supply dock unloading door"
 	},
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -14473,7 +14473,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "aHt" = (
-/obj/structure/sign/radiation,
+/obj/structure/sign/warning/radiation,
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "aHu" = (
@@ -14724,7 +14724,7 @@
 /area/science/xenobiology)
 "aHU" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "aHV" = (
@@ -14806,7 +14806,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "aIb" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
@@ -15917,7 +15917,7 @@
 	id = "cargoload";
 	name = "supply dock loading door"
 	},
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -16041,7 +16041,7 @@
 /obj/item/tank/jetpack/carbondioxide,
 /obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -16220,7 +16220,7 @@
 /turf/open/floor/circuit/green,
 /area/science/robotics/mechbay)
 "aKQ" = (
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/structure/reagent_dispensers/fueltank,
@@ -16454,7 +16454,7 @@
 /turf/closed/wall,
 /area/security/detectives_office)
 "aLv" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva{
 	name = "E.V.A. Storage"
@@ -16491,7 +16491,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "aLz" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -16526,7 +16526,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -16551,7 +16551,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "aLF" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "aLG" = (
@@ -17365,7 +17365,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "aND" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
@@ -17375,7 +17375,7 @@
 /turf/closed/wall,
 /area/quartermaster/miningdock)
 "aNF" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/quartermaster/miningdock)
 "aNG" = (
@@ -17670,7 +17670,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aOu" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
 "aOv" = (
@@ -19303,7 +19303,7 @@
 "aSf" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/pump,
-/obj/structure/sign/atmosplaque{
+/obj/structure/sign/plaques/atmos{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -19551,7 +19551,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aSI" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall,
 /area/maintenance/port/aft)
 "aSJ" = (
@@ -19795,7 +19795,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aTk" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/machinery/power/apc/highcap/five_k{
@@ -20328,7 +20328,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
@@ -20647,7 +20647,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "aVc" = (
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -20839,7 +20839,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aVx" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall,
 /area/engine/engineering)
 "aVy" = (
@@ -21348,7 +21348,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aWB" = (
@@ -21364,7 +21364,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aWC" = (
-/obj/structure/sign/radiation,
+/obj/structure/sign/warning/radiation,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "aWD" = (
@@ -22105,7 +22105,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aYi" = (
-/obj/structure/sign/radiation,
+/obj/structure/sign/warning/radiation,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aYj" = (
@@ -22347,7 +22347,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "aYN" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/chief)
@@ -23073,7 +23073,7 @@
 /area/engine/engineering)
 "baB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "baC" = (
@@ -23371,7 +23371,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bbr" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
 "bbs" = (
@@ -23701,7 +23701,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -23714,7 +23714,7 @@
 "bcg" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH-POWER TURRETS AHEAD'.";
 	name = "\improper HIGH-POWER TURRETS AHEAD";
 	pixel_y = -32
@@ -24174,7 +24174,7 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bdC" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
 "bdE" = (
@@ -24582,7 +24582,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "\improper SERVER ROOM"
 	},

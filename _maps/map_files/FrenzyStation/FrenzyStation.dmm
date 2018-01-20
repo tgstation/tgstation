@@ -6972,7 +6972,7 @@
 	icon_state = "intact"
 	},
 /obj/machinery/space_heater,
-/obj/structure/sign/atmosplaque{
+/obj/structure/sign/plaques/atmos{
 	pixel_x = -32;
 	pixel_y = 0
 	},
@@ -7091,7 +7091,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "qL" = (
-/obj/structure/sign/radiation,
+/obj/structure/sign/warning/radiation,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "qM" = (
@@ -48431,7 +48431,7 @@ ud
 ud
 ud
 ud
-ud
+aa
 ud
 ud
 ud
