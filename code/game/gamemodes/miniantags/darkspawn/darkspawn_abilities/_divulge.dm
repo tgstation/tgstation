@@ -15,6 +15,7 @@
 	in_use = TRUE
 	user.visible_message("<b>[user]</b> flaps their wings.", "<span class='velvet'>You begin creating a psychic barrier around yourself...</span>")
 	if(!do_after(user, 30, target = user))
+		in_use = FALSE
 		return
 	var/image/alert_overlay = image('icons/mob/actions/actions_darkspawn.dmi', "divulge")
 	notify_ghosts("Darkspawn [user.real_name] has begun divulging at [get_area(user)]! ", source = user, ghost_sound = 'sound/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)

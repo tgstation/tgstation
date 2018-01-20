@@ -412,3 +412,32 @@
 
 /datum/status_effect/sword_spin/on_remove()
 	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
+
+
+/datum/status_effect/creep //allows darkspawn to move through lights without lightburn damage
+	id = "creep"
+	duration = -1
+	alert_type = /obj/screen/alert/status_effect/creep
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is surrounded by velvety, gently-waving black shadows!</span>"
+	var/datum/antagonist/darkspawn/darkspawn
+
+/datum/status_effect/creep/on_creation(mob/living/owner, datum/antagonist/darkspawn)
+	. = ..()
+	if(!.)
+		return
+	src.darkspawn = darkspawn
+
+/datum/status_effect/creep/process()
+	if(!darkspawn)
+		qdel(src)
+		return
+	if(!darkspawn.has_psi(0.2))
+		to_chat(owner, "<span class='warning'>Without the Psi to maintain it, your protective aura vanishes!</span>")
+		qdel(src)
+		return
+	darkspawn.use_psi(0.2)
+
+/obj/screen/alert/status_effect/creep
+	name = "Creep"
+	desc = "You are immune to lightburn. Drains 1 Psi per second."
+	icon_state = "creep"

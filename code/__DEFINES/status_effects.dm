@@ -28,6 +28,8 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
+#define STATUS_EFFECT_CREEP /datum/status_effect/creep //Provides immunity to lightburn for darkspawn, does nothing to anyone else
+
 /////////////
 // DEBUFFS //
 /////////////

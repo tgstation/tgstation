@@ -1,5 +1,5 @@
 //Formed by the Devour Will ability.
-/obj/item/weapon/dark_bead
+/obj/item/dark_bead
 	name = "dark bead"
 	desc = "A glowing black orb. It's fading fast."
 	icon_state = "dark_bead"
@@ -13,12 +13,12 @@
 	var/eating = FALSE //If we're devouring someone's will
 	var/datum/action/innate/darkspawn/devour_will/linked_ability //The ability that keeps data for us
 
-/obj/item/weapon/dark_bead/Initialize()
+/obj/item/dark_bead/Initialize()
 	. = ..()
 	animate(src, alpha = 30, time = 30)
 	QDEL_IN(src, 30)
 
-/obj/item/weapon/dark_bead/Destroy(force)
+/obj/item/dark_bead/Destroy(force)
 	if(isliving(loc) && !eating && !force)
 		to_chat(loc, "<span class='warning'>You were too slow! [src] faded away...</span>")
 	if(!eating || force)
@@ -26,7 +26,7 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-/obj/item/weapon/dark_bead/attack(mob/living/carbon/L, mob/living/user)
+/obj/item/dark_bead/attack(mob/living/carbon/L, mob/living/user)
 	var/datum/antagonist/darkspawn/darkspawn = isdarkspawn(user)
 	if(!darkspawn || eating || L == user) //no eating urself ;)))))))
 		return
@@ -44,17 +44,30 @@
 		to_chat(user, "<span class='warning'>You cannot drain allies or the mindless.</span>")
 		return
 	eating = TRUE
-	user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
-	<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
-	to_chat(L, "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>")
-	L.Stun(30)
-	playsound(L, 'sound/magic/devour_will.ogg', 100, FALSE) //T A S T Y   S O U L S
-	if(!do_mob(user, L, 30))
-		user.Knockdown(30)
-		to_chat(L, "<span class='boldwarning'>All right. You're all right.</span>")
-		L.Knockdown(30)
-		qdel(src, force = TRUE)
-		return
+	if(user.loc != L)
+		user.visible_message("<span class='warning'>[user] grabs [L] and leans in close...</span>", "<span class='velvet bold'>cera qo...</span><br>\
+		<span class='danger'>You begin siphoning [L]'s mental energy...</span>")
+		to_chat(L, "<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>")
+		L.Stun(30)
+		playsound(L, 'sound/magic/devour_will.ogg', 65, FALSE) //T A S T Y   S O U L S
+		if(!do_mob(user, L, 30))
+			user.Knockdown(30)
+			to_chat(L, "<span class='boldwarning'>All right. You're all right.</span>")
+			L.Knockdown(30)
+			qdel(src, force = TRUE)
+			return
+	else
+		L.visible_message("<span class='userdanger italics'>[L] suddenly howls and clutches as their face as violet light screams from their eyes!</span>", \
+		"<span class='userdanger italics'>AAAAAAAAAAAAAAA-</span>", ignore_mob = user)
+		to_chat(user, "<span class='velvet'><b>cera qo...</b><br>You begin siphoning [L]'s will...</span>")
+		L.Stun(50)
+		playsound(L, 'sound/magic/devour_will_long.ogg', 65, FALSE)
+		if(!do_mob(user, L, 50))
+			user.Knockdown(50)
+			to_chat(L, "<span class='boldwarning'>All right. You're all right.</span>")
+			L.Knockdown(50)
+			qdel(src, force = TRUE)
+			return
 	user.visible_message("<span class='warning'>[user] gently lowers [L] to the ground...</span>", "<span class='velvet'><b>...aranupdejc</b><br>\
 	You devour [L]'s will. Your Psi has been fully restored.\n\
 	Additionally, you have gained one lucidity. Use it to purchase and upgrade abilities.<br>\
@@ -63,6 +76,7 @@
 	darkspawn.psi = darkspawn.psi_cap
 	darkspawn.lucidity++
 	darkspawn.lucidity_drained++
+	darkspawn.update_psi_hud()
 	linked_ability.victims[L] = TRUE
 	to_chat(L, "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>")
 	L.playsound_local(L, 'sound/magic/devour_will_end.ogg', 75, FALSE)

@@ -30,7 +30,7 @@
 	owner.visible_message("<span class='warning'>A glowing black orb appears in [owner]'s hand!</span>", "<span class='velvet'><b>...iejz</b><br>\
 	You form a dark bead in your hand.</span>")
 	playsound(owner, 'sound/magic/devour_will_form.ogg', 50, 1)
-	var/obj/item/weapon/dark_bead/B = new
+	var/obj/item/dark_bead/B = new
 	owner.put_in_hands(B)
 	B.linked_ability = src
 	return TRUE

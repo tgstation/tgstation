@@ -70,8 +70,6 @@
 		to_chat(owner, "<span class='velvet'>You break away from [shadowing].</span>")
 	playsound(owner, 'sound/magic/devour_will_form.ogg', 50, TRUE)
 	owner.setDir(SOUTH)
-	for(var/obj/item/bloodcrawl/B in owner)
-		qdel(B)
 
 /datum/status_effect/tagalong/process()
 	if(!shadowing)
@@ -84,6 +82,10 @@
 		shadowing.visible_message("<span class='warning'>[owner] suddenly appears from the dark!</span>", ignore_mob = owner)
 		to_chat(owner, "<span class='warning'>You are forced out of [shadowing]'s shadow!</span>")
 		owner.Knockdown(30)
+		qdel(src)
+	var/obj/item/I = owner.get_active_held_item()
+	if(I && !istype(I, /obj/item/dark_bead))
+		to_chat(owner, "<span class='userdanger'>Equipping an item forces you out!</span>")
 		qdel(src)
 
 /obj/screen/alert/status_effect/tagalong

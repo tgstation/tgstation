@@ -2,7 +2,7 @@
 /datum/action/innate/darkspawn/tagalong
 	name = "Tagalong"
 	id = "tagalong"
-	desc = "Melds with a target's shadow, causing you to invisibly follow them. Only works in lit areas and with empty hands. Costs 30 Psi."
+	desc = "Melds with a target's shadow, causing you to invisibly follow them. Only works in lit areas, and holding any item other than a dark bead will cancel the effect. Costs 30 Psi."
 	button_icon_state = "tagalong"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 30
@@ -41,14 +41,4 @@
 	to_chat(owner, "<span class='velvet'><b>iahz</b><br>\
 	You slip into [target]'s shadow. This will last until canceled or you are forced out.</span>")
 	owner.forceMove(target)
-	var/obj/item/bloodcrawl/antikill = new(owner)
-	antikill.name = "tagalong"
-	antikill.desc = "You cannot hold items while tagging along."
-	antikill.icon_state = "bloodhand_left"
-	owner.put_in_hands(antikill)
-	antikill = new(owner)
-	antikill.name = "tagalong"
-	antikill.desc = "You cannot hold items while tagging along."
-	antikill.icon_state = "bloodhand_right"
-	owner.put_in_hands(antikill)
 	return TRUE

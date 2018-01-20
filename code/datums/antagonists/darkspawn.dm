@@ -69,10 +69,12 @@
 	.["Give Ability"] = CALLBACK(src,.proc/admin_give_ability)
 	.["Take Ability"] = CALLBACK(src,.proc/admin_take_ability)
 	if(darkspawn_state == MUNDANE)
-		.["Divulge"] = CALLBACK(src, .proc/divulge)
+		.["Admin Divulge (IRREVERSIBLE)"] = CALLBACK(src, .proc/divulge)
 	else if(darkspawn_state == DIVULGED)
 		.["[psi]/[psi_cap] Psi"] = CALLBACK(src, .proc/admin_edit_psi)
 		.["[lucidity] Lucidity"] = CALLBACK(src, .proc/admin_edit_lucidity)
+		.["[lucidity_drained] Lucidity Drained"] = CALLBACK(src, .proc/admin_edit_lucidity_drained)
+		.["Admin Sacrament (ENDS THE ROUND)"] = CALLBACK(src, .proc/sacrament)
 
 /datum/antagonist/darkspawn/proc/admin_give_ability(mob/admin)
 	var/id = stripped_input(admin, "Enter an ability ID.", "Give Ability")
@@ -105,6 +107,13 @@
 		return
 	newcidity = max(0, newcidity)
 	lucidity = newcidity
+
+/datum/antagonist/darkspawn/proc/admin_edit_lucidity(mob/admin)
+	var/newcidity = input(admin, "Enter a new lucidity amount. (Current: [lucidity_drained])", "Change Lucidity Drained", lucidity_drained) as null|num
+	if(!newcidity)
+		return
+	newcidity = max(0, newcidity)
+	lucidity_drained = newcidity
 
 /datum/antagonist/darkspawn/greet()
 	to_chat(owner.current, "<span class='velvet bold big'>You are a darkspawn!</span>")
@@ -163,6 +172,7 @@
 	psi_regen_ticks = psi_regen_delay
 	psi_used_since_regen += amt
 	psi -= amt
+	psi = round(psi, 0.2)
 	update_psi_hud()
 	return TRUE
 
@@ -224,6 +234,28 @@
 	add_ability("pass", TRUE)
 	remove_ability("divulge", TRUE)
 	darkspawn_state = DIVULGED
+
+/datum/antagonist/darkspawn/proc/sacrament()
+	var/mob/living/carbon/human/user = owner.current
+	var/mob/living/simple_animal/hostile/darkspawn_progenitor/progenitor = new(get_turf(user))
+	user.status_flags |= GODMODE
+	user.mind.transfer_to(progenitor)
+	addtimer(CALLBACK(src, .proc/sacrament_shuttle_call), 50)
+	for(var/V in abilities)
+		remove_ability(abilities[V], TRUE)
+	for(var/mob/M in GLOB.player_list)
+		M.playsound_local(M, 'sound/magic/sacrament_complete.ogg', 100, FALSE, pressure_affected = FALSE)
+		for(var/obj/machinery/light/light in SSmachines.processing)
+			light.break_light_tube()
+	psi = 99999
+	psi_cap = 9999
+	psi_regen = 9999
+	psi_regen_delay = 1
+	darkspawn_state = PROGENITOR
+	QDEL_IN(user, 5)
+
+/datum/antagonist/darkspawn/proc/sacrament_shuttle_call()
+	SSshuttle.emergency.request(null, 0, null, FALSE, 0.1)
 
 
 // Psi Web code //
