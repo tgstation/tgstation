@@ -74,7 +74,7 @@
 	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct that can deflect projectiles with its shield."
 	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal.")
 	channel_time = 80
-	power_cost = 7000
+	power_cost = 8000
 	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
 	usage_tip = "Reciting this scripture multiple times in a short period will cause it to take longer!"
 	tier = SCRIPTURE_APPLICATION
