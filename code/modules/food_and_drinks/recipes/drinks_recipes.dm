@@ -552,7 +552,7 @@
 /datum/chemical_reaction/narsour
 	name = "Nar'sour"
 	id = "narsour"
-	results = list("hearty_punch" = 1)  //Very little, for balance reasons
+	results = list("narsour" = 1) 
 	required_reagents = list("blood" = 1, "lemonjuice" = 1, "demonsblood" = 1)
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
