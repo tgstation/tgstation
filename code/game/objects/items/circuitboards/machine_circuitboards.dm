@@ -707,3 +707,12 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)
+
+/obj/item/circuitboard/machine/podfab
+	name = "Spacepod Fabricator (Machine Board)"
+	build_path = /obj/machinery/mecha_part_fabricator/spacepod
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stack/sheet/glass = 1)

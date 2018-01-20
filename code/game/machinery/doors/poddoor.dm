@@ -12,7 +12,7 @@
 	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
-	
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
@@ -66,3 +66,36 @@
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)
+
+/obj/machinery/door/poddoor/multi_tile // Whoever wrote the old code for multi-tile spesspod doors needs to burn in hell.
+	name = "Large Pod Door"
+
+/obj/machinery/door/poddoor/multi_tile/four_tile_ver/
+	icon = 'icons/obj/doors/1x4blast_vert.dmi'
+	bound_height = 128
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/three_tile_ver/
+	icon = 'icons/obj/doors/1x3blast_vert.dmi'
+	bound_height = 96
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/two_tile_ver/
+	icon = 'icons/obj/doors/1x2blast_vert.dmi'
+	bound_height = 64
+	dir = NORTH
+
+/obj/machinery/door/poddoor/multi_tile/four_tile_hor/
+	icon = 'icons/obj/doors/1x4blast_hor.dmi'
+	bound_width = 128
+	dir = EAST
+
+/obj/machinery/door/poddoor/multi_tile/three_tile_hor/
+	icon = 'icons/obj/doors/1x3blast_hor.dmi'
+	bound_width = 96
+	dir = EAST
+
+/obj/machinery/door/poddoor/multi_tile/two_tile_hor/
+	icon = 'icons/obj/doors/1x2blast_hor.dmi'
+	bound_width = 64
+	dir = EAST

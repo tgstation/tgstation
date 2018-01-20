@@ -110,3 +110,88 @@
 
 /datum/construction/reversible/custom_action(index, diff, used_atom, user)
 	return 1
+
+
+#define STATE_NEXT "next"
+#define STATE_PREV "prev"
+
+//i couldn't think of a way to verbosify these names more so i just added _THING to them
+#define DELETE_THING "delete"
+#define SPAWN_THING "spawn"
+#define AMOUNT_THING "amount"
+
+
+/datum/construction/reversible2
+	var/index = 1
+	var/base_icon = "durand"
+
+/datum/construction/reversible2/proc/update_index(diff as num, mob/user as mob)
+	index-=diff
+	if(index==steps.len+1)
+		spawn_result(user)
+	else
+		set_desc(index)
+	return
+
+/datum/construction/reversible2/proc/update_icon()
+	if(holder)
+		holder.icon_state="[base_icon]_[index]"
+
+/datum/construction/reversible2/is_right_key(mob/user as mob,atom/used_atom) // returns index step
+	var/list/state = steps[index]
+	if(STATE_NEXT in state)
+		var/list/le_step = state[STATE_NEXT]
+		if(istype(used_atom, le_step["key"]))
+			//if(L["consume"] && !try_consume(used_atom,L["consume"]))
+			//	return FALSE
+			return FORWARD //to the first step -> forward
+	else if(STATE_PREV in state)
+		var/list/le_step = state[STATE_PREV]
+		if(istype(used_atom, le_step["key"]))
+			//if(L["consume"] && !try_consume(used_atom,L["consume"]))
+			//	return FALSE
+			return BACKWARD //to the first step -> forward
+	return FALSE
+
+/datum/construction/reversible2/check_step(atom/used_atom,mob/user as mob)
+	var/diff = is_right_key(user,used_atom)
+	if(diff)
+		if(custom_action(index, diff, used_atom, user))
+			update_index(diff,user)
+			update_icon()
+			return TRUE
+	return FALSE
+
+/datum/construction/reversible2/proc/fixText(text,user)
+	text = replacetext(text,"{USER}","[user]")
+	text = replacetext(text,"{HOLDER}","[holder]")
+	return text
+
+/datum/construction/reversible2/custom_action(index, diff, used_atom, var/mob/user)
+	if(!..())
+		return FALSE
+
+	var/list/le_fucking_step = steps[index]
+	var/list/state = le_fucking_step[diff==FORWARD ? STATE_NEXT : STATE_PREV]
+	user.visible_message(fixText(state["vis_msg"],user),fixText(state["self_msg"],user)) //show messages
+
+	if(DELETE_THING in state) //delete it if it needs to be deleted
+		qdel(used_atom)
+	else if(state[SPAWN_THING]) //if we need to create a thing, then do it
+		var/spawntype=state[SPAWN_THING]
+		var/atom/A = new spawntype(holder.loc)
+		if(state[AMOUNT_THING]) //create X amount of thing if applicable
+			if(istype(A,/obj/item/stack/cable_coil)) //why don't we have universal stackcode
+				var/obj/item/stack/cable_coil/C=A
+				C.amount=state[AMOUNT_THING]
+			if(istype(A,/obj/item/stack))
+				var/obj/item/stack/S=A
+				S.amount=state[AMOUNT_THING]
+	return TRUE
+
+/datum/construction/reversible2/action(used_atom,user)
+	return check_step(used_atom,user)
+
+#undef DELETE_THING
+#undef SPAWN_THING
+#undef AMOUNT_THING

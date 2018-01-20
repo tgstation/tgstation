@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater")			//Default research tech, prevents bricking
+	"space_heater", "podfab")			//Default research tech, prevents bricking
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -851,6 +851,108 @@
 		for(var/i in l)
 			var/datum/uplink_item/UI = i
 			boost_item_paths[UI.item] = 0	//allows deconning to unlock.
+
+
+////////////SPACEPOD////////////
+/datum/techweb_node/spacepod_basic
+	id = "spacepod_basic"
+	display_name = "Spacepod Construction"
+	description = "Basic stuff to construct Spacepods."
+	research_cost = 2500
+	export_price = 2500
+	prereq_ids = list("base")
+	design_ids = list("podframefp", "podframeap", "podframefs", "podframeas", "podcore", "podarmor_civ", "podarmor_dark", "spacepod_main", "mk1_pod_thruster")
+
+/datum/techweb_node/spacepod_lock
+	id = "spacepod_lock"
+	display_name = "Spacepod Security"
+	description = "Unlocks spacepod locks and keys."
+	research_cost = 2750
+	export_price = 2750
+	prereq_ids = list("spacepod_basic", "engineering")
+	design_ids = list("podlock_keyed", "podkey", "podmisc_tracker")
+
+/datum/techweb_node/spacepod_disabler
+	id = "spacepod_disabler"
+	display_name = "Spacepod Wepaonry"
+	description = "Unlocks spacepod disablers."
+	research_cost = 3500
+	export_price = 3500
+	prereq_ids = list("spacepod_basic", "weaponry")
+	design_ids = list("podgun_disabler")
+
+/datum/techweb_node/spacepod_lasers
+	id = "spacepod_lasers"
+	display_name = "Spacepod Lethal Weaponry"
+	description = "Unlocks spacepod lasers."
+	research_cost = 5250
+	export_price = 5250
+	prereq_ids = list("spacepod_disabler", "electronic_weapons")
+	design_ids = list("podgun_laser")
+
+/datum/techweb_node/spacepod_ka
+	id = "spacepod_ka"
+	display_name = "Spacepod Mining Tech"
+	description = "Unlocks spacepod mining tech"
+	research_cost = 3500
+	export_price = 500
+	prereq_ids = list("basic_mining", "spacepod_disabler")
+	design_ids = list("pod_ka_basic")
+
+/datum/techweb_node/spacepod_advmining
+	id = "spacepod_aka"
+	display_name = "Advanced Spacepod Mining Tech"
+	description = "Unlocks advanced spacepod mining tech"
+	research_cost = 3500
+	export_price = 3500
+	prereq_ids = list("spacepod_ka", "adv_mining")
+	design_ids = list("pod_ka", "pod_plasma_cutter")
+
+/datum/techweb_node/spacepod_advplasmacutter
+	id = "spacepod_apc"
+	display_name = "Advanced Spacepod Plasma Cutter"
+	description = "Unlocks spacepod mining tech"
+	research_cost = 4500
+	export_price = 4500
+	prereq_ids = list("spacepod_aka", "adv_plasma")
+	design_ids = list("pod_adv_plasma_cutter")
+
+
+/datum/techweb_node/spacepod_pseat
+	id = "spacepod_pseat"
+	display_name = "Spacepod Passenger Seat"
+	description = "Unlocks an extra seat for spacepods!"
+	research_cost = 3750
+	export_price = 3750
+	prereq_ids = list("spacepod_basic", "adv_engi")
+	design_ids = list("podcargo_sec_seat")
+
+/datum/techweb_node/spacepod_storage
+	id = "spacepod_storage"
+	display_name = "Spacepod Storage"
+	description = "Unlocks spacepod storage stuff!"
+	research_cost = 4500
+	export_price = 4500
+	prereq_ids = list("spacepod_pseat", "high_efficiency")
+	design_ids = list("podcargo_sec_lootbox", "podcargo_crate", "podcargo_ore")
+
+/datum/techweb_node/spacepod_lockbuster
+	id = "spacepod_lockbuster"
+	display_name = "Spacepod Lock Buster"
+	description = "Unlocks spacepod lock buster!"
+	research_cost = 8500
+	export_price = 8500
+	prereq_ids = list("spacepod_lasers", "high_efficiency", "adv_mining")
+	design_ids = list("pod_lockbuster")
+
+/datum/techweb_node/spacepod_iarmor
+	id = "spacepod_iarmor"
+	display_name = "Industrial Spacepod Armor"
+	description = "Unlocks industrial spacepod armor."
+	research_cost = 2750
+	export_price = 2750
+	prereq_ids = list("spacepod_storage", "high_efficiency", "exp_flight")
+	design_ids = list("podarmor_industiral")
 
 //HELPERS
 /proc/total_techweb_exports()

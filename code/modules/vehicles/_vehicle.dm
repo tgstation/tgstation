@@ -1,6 +1,3 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
@@ -137,4 +134,3 @@
 		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
 			for(var/m in occupants)
 				M.CollidedWith(m)
-

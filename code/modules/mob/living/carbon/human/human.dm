@@ -25,9 +25,9 @@
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 
 	handcrafting = new()
-	
+
 	. = ..()
-	
+
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -62,6 +62,13 @@
 			if(changeling)
 				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
 				stat("Absorbed DNA", changeling.absorbedcount)
+
+		if(isspacepod(loc))
+			var/obj/vehicle/sealed/spacepod/SP = loc
+			var/mob/D = SP.get_driver()
+			stat("Spacepod Driver", "[D ? D : "None"]")
+			stat("Spacepod Charge", "[SP.cell ? "[round(SP.cell.charge/100)]%" : "No Power Cell!"]")
+			stat("Spacepod Integrity", "[SP.obj_integrity ? "[round(SP.obj_integrity/SP.max_integrity*100)]%" : "Detonation Imminent!"]")
 
 
 	//NINJACODE

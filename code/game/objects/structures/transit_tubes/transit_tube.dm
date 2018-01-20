@@ -14,8 +14,8 @@
 	var/enter_delay = 0
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+	if(isspacepod(mover) || (istype(mover) && (mover.pass_flags & PASSGLASS))) //Spacepods can just fly over tubes.
+		return TRUE
 	return !density
 
 /obj/structure/transit_tube/New(loc, newdirection)
