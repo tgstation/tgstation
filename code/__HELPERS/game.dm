@@ -15,9 +15,7 @@
 	return T ? T.loc : null
 
 /proc/get_area_name(atom/X, format_text = FALSE)
-	if(isarea(X))
-		return format_text ? format_text(X.name) : X.name
-	var/area/A = get_area(X)
+	var/area/A = isarea(X) ? X : get_area(X)
 	if(!A)
 		return null
 	return format_text ? format_text(A.name) : A.name
