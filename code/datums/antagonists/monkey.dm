@@ -49,7 +49,6 @@
 
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
-		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
 			if(!H.owner)
 				continue
