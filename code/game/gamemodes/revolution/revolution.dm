@@ -16,7 +16,7 @@
 	required_players = 30
 	required_enemies = 2
 	recommended_enemies = 3
-	enemy_minimum_age = 18
+	enemy_minimum_age = 14
 
 	announce_span = "danger"
 	announce_text = "Some crewmembers are attempting a coup!\n\
