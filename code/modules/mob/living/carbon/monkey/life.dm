@@ -71,7 +71,7 @@
 		if(loc_temp < bodytemperature)
 			bodytemperature += max(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
 		else
-			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+			bodytemperature += min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		switch(bodytemperature)
