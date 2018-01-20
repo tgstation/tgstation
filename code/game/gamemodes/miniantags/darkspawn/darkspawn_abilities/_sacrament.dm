@@ -21,7 +21,7 @@
 		in_use = FALSE
 		return
 	var/image/alert_overlay = image('icons/mob/actions/actions_darkspawn.dmi', "sacrament")
-	notify_ghosts("darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ", source = user, ghost_sound = 'sound/creatures/progenitor_distant.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
+	notify_ghosts("Darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ", source = user, ghost_sound = 'sound/creatures/progenitor_distant.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
 	user.visible_message("<span class='warning'>A vortex of violet energies surrounds [user]!</span>", "<span class='velvet'>Your barrier will protect you.</span>")
 	user.visible_message("<span class='danger'>[user] suddenly jolts into the air, pulsing with screaming violet light.</span>", \
 						"<span class='velvet big'><b>You begin the Sacrament.</b></span>")
@@ -51,11 +51,11 @@
 		M.playsound_local(M, 'sound/magic/sacrament_ending.ogg', 75, FALSE, pressure_affected = FALSE)
 	user.visible_message("<span class='userdanger'>[user] rises into the air, crackling with power!</span>", "<span class='velvet bold'>AND THE WEAK WILL KNOW <i>FEAR--</i></span>")
 	for(var/turf/T in range(7, owner))
-		addtimer(CALLBACK(src, .proc/unleashed_psi, T), rand(1, 40))
+		if(prob(25))
+			addtimer(CALLBACK(src, .proc/unleashed_psi, T), rand(1, 40))
 	animate(user, pixel_y = user.pixel_y + 20, time = 40)
 	addtimer(CALLBACK(darkspawn, /datum/antagonist/darkspawn/.proc/sacrament), 40)
 
 /datum/action/innate/darkspawn/sacrament/proc/unleashed_psi(turf/T)
-	explosion(T, 0, 0, 1)
 	playsound(T, 'sound/magic/divulge_end.ogg', 25, FALSE)
 	new/obj/effect/temp_visual/revenant/cracks(T)

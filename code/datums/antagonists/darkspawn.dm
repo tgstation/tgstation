@@ -25,6 +25,7 @@
 	//Ability variables
 	var/list/abilities = list() //An associative list ("id" = ability datum) containing the abilities the darkspawn has
 
+
 // Antagonist datum things like assignment //
 
 /datum/antagonist/darkspawn/on_gain()
@@ -108,7 +109,7 @@
 	newcidity = max(0, newcidity)
 	lucidity = newcidity
 
-/datum/antagonist/darkspawn/proc/admin_edit_lucidity(mob/admin)
+/datum/antagonist/darkspawn/proc/admin_edit_lucidity_drained(mob/admin)
 	var/newcidity = input(admin, "Enter a new lucidity amount. (Current: [lucidity_drained])", "Change Lucidity Drained", lucidity_drained) as null|num
 	if(!newcidity)
 		return
@@ -245,8 +246,8 @@
 		remove_ability(abilities[V], TRUE)
 	for(var/mob/M in GLOB.player_list)
 		M.playsound_local(M, 'sound/magic/sacrament_complete.ogg', 100, FALSE, pressure_affected = FALSE)
-		for(var/obj/machinery/light/light in SSmachines.processing)
-			light.break_light_tube()
+	for(var/obj/machinery/light/light in SSmachines.processing)
+		light.break_light_tube()
 	psi = 99999
 	psi_cap = 9999
 	psi_regen = 9999
