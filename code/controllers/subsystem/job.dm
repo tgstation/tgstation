@@ -374,7 +374,7 @@ SUBSYSTEM_DEF(job)
 	if(!joined_late)
 		var/obj/S = null
 		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(sloc.name != rank)
+			if(sloc.name != initial(job.title))
 				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
 				continue
 			if(locate(/mob/living) in sloc.loc)
