@@ -3,5 +3,8 @@
 		if("B")
 			resist()
 			return
+		if("S")
+			if(client.keys_held["Ctrl"])
+				emote("scream")
 
 	return ..()
