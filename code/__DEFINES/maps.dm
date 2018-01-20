@@ -80,3 +80,11 @@ Last space-z level = empty
 #define CAMERA_LOCK_MINING 2
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
+
+#define MAPVOTE_NONE		0
+#define MAPVOTE_PREF		1
+#define MAPVOTE_VOTE		2
+#define MAPVOTE_RANDOM		3
+
+#define MAPVOTE_GREATEST	1
+#define MAPVOTE_WEIGHTED	2

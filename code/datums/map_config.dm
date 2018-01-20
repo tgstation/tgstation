@@ -30,6 +30,7 @@
 	var/config_min_users = 0
 	var/voteweight = 1
 	var/allow_custom_shuttles = TRUE
+	var/allowvote = FALSE
 
 /datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	if(default_to_box)

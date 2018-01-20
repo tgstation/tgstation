@@ -307,6 +307,12 @@ SUBSYSTEM_DEF(ticker)
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	if(CONFIG_GET(number/maprotation) == MAPVOTE_VOTE)
+		var/time_til_vote = CONFIG_GET(number/maprotation_vote_delay)
+		if(CONFIG_GET(number/maprotation_result_method) == MAPVOTE_WEIGHTED)
+			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED|AUTOMAPVOTE), (time_til_vote ? time_til_vote*10 : 3000)) //3000 = 5 minutes
+		else
+			addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", AUTOMAPVOTE), (time_til_vote ? time_til_vote*10 : 3000))
 	setup_done = TRUE
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -412,7 +418,9 @@ SUBSYSTEM_DEF(ticker)
 			queue_delay = 0
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
-	if (!CONFIG_GET(flag/maprotation))
+	if (!CONFIG_GET(number/maprotation))
+		return
+	if (CONFIG_GET(number/maprotation) == 2)
 		return
 	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return

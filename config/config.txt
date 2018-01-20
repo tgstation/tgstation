@@ -320,12 +320,15 @@ ANNOUNCE_ADMIN_LOGOUT
 
 ## Map rotation
 ## You should edit maps.txt to match your configuration when you enable this.
-MAPROTATION
+## Set to 0 for no map rotation, 1 for pref-based maprotation, 2 for vote-based maprotation, 3 for random.
+MAPROTATION 2
 
-## Map voting
-## Allows players to vote for their preffered map
-## When it's set to zero, the map will be randomly picked each round
-ALLOW_MAP_VOTING 1
+## Map Rotation result method
+## Set to 1 for greatest, 2 for weighted random.
+MAPROTATION_RESULT_METHOD 2
+
+## When should the map rotation vote happened, in seconds (for vote-based map rotation)
+MAPROTATION_VOTE_DELAY 300
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
