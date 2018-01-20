@@ -69,7 +69,7 @@
 
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < bodytemperature)
-			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+			bodytemperature += max(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
 		else
 			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
