@@ -15,10 +15,12 @@
 	return T ? T.loc : null
 
 /proc/get_area_name(atom/X, format_text = FALSE)
-	var/area/Y = get_area(X)
-	if(format_text)
-		return format_text(Y.name)
-	return Y.name
+	if(isarea(X))
+		return format_text ? format_text(X.name) : X.name
+	var/area/A = get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.name) : A.name
 
 /proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
