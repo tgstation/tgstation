@@ -13,7 +13,6 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -1027,7 +1026,6 @@
 #include "code\game\objects\structures\reflector.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\showcase.dm"
-#include "code\game\objects\structures\signs.dm"
 #include "code\game\objects\structures\spirit_board.dm"
 #include "code\game\objects\structures\statues.dm"
 #include "code\game\objects\structures\table_frames.dm"
