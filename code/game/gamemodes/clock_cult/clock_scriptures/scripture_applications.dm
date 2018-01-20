@@ -94,8 +94,8 @@
 	var/human_servants = 0
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		var/datum/mob/C = M.current
-		if(ishuman(C) && C.stat != DEAD)
+		var/mob/living/L = M.current
+		if(ishuman(L) && L.stat != DEAD)
 			human_servants++
 	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
 	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3) 
