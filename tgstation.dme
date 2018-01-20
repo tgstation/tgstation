@@ -219,6 +219,7 @@
 #include "code\controllers\subsystem\overlays.dm"
 #include "code\controllers\subsystem\pai.dm"
 #include "code\controllers\subsystem\parallax.dm"
+#include "code\controllers\subsystem\pathfinder.dm"
 #include "code\controllers\subsystem\persistence.dm"
 #include "code\controllers\subsystem\radiation.dm"
 #include "code\controllers\subsystem\radio.dm"

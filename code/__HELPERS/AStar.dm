@@ -36,10 +36,10 @@ Actual Adjacent procs :
 	var/g		//A* movement cost variable
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
+	var/check = 0
 
 /datum/PathNode/New(s)
 	source = s
-	source.PN = src
 
 /datum/PathNode/proc/setp(p,pg,ph,pnt)
 	prevNode = p
@@ -64,38 +64,47 @@ Actual Adjacent procs :
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
 	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
 
 //the actual algorithm
-/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+/proc/AStar(caller, var/turf/end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
 	//sanitation
 	var/turf/start = get_turf(caller)
-	start.check = 1
 	if(!start)
+		return 0
+	if(start.z != end.z) //no PF between z levels
 		return 0
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
 		if(call(start, dist)(end) > maxnodes)
 			return 0
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+	var/l
+	while(!l)
+		stoplag(1)
+		l = SSpathfinder.getfree()
+	var/datum/PathNode/cur = start.Pathl[l]//current processed turf
+	if(cur.check)
+		SSpathfinder.found(l)
+		return 0
+	cur.check = 1
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
-	var/list/checked = new() //the closed list
+	var/list/checked = new() //list of turfs with changed vars
 	var/list/path = null //the returned path, if any
-	var/datum/PathNode/cur //current processed turf
-	var/datum/PathNode/CN  //current checking turf
-	checked.Add(start)
+
+	checked.Add(cur)
 	//initialization
-	start.PN.setp(null,0,call(start,dist)(end),0)
-	open.Insert(start.PN)
+	cur.setp(null,0,call(start,dist)(end),0)
+	open.Insert(cur)
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		//get the lower f node on the open list
 		cur = open.Pop() //get the lower f turf in the open list
-		cur.source.check = 2 //and tell we've processed it
+		cur.check = 2 //and tell we've processed it
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
@@ -112,29 +121,34 @@ Actual Adjacent procs :
 				path.Add(cur.source)
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
-		for(var/k in 1 to L.len)
-			var/turf/T = L[k]
-			if(T == exclude || (T.check == 2))
+		//var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		for(var/k in 1 to GLOB.cardinals.len)
+			var/turf/T = get_step(cur.source,GLOB.cardinals[k])
+			var/datum/PathNode/CN = T.Pathl[l]  //current checking turf
+			if(T == exclude || (CN.check == 2))
 				continue
 			var/newg = cur.g + call(cur.source,dist)(T)
-			CN = T.PN
-			if(T.check == 1)
+
+			if(CN.check == 1)
 			//is already in open list, check if it's a better way from the current turf
-				if(newg < T.PN.g)
-					CN.setp(cur,newg * L.len / 9,CN.h,cur.nt+1)
+				if(newg < CN.g)
+					CN.setp(cur,newg,CN.h,cur.nt+1)
 					open.ReSort(CN)//reorder the changed element in the list
 			else
 			//is not already in open list, so add it
-				T.check = 1
-				checked.Add(T)
-				CN.setp(cur,newg,call(T,dist)(end),cur.nt+1)
-				open.Insert(T.PN)
+				if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+					CN.check = 1
+					CN.setp(cur,newg,call(T,dist)(end),cur.nt+1)
+					open.Insert(CN)
+				else
+					CN.check = 2
+				checked.Add(CN)
 		CHECK_TICK
 	for(var/k in 1 to checked.len)
-		var/turf/T = checked[k]
-		T.check = 0
+		var/datum/PathNode/CN = checked[k]
+		CN.check = 0
 	checked = null
+	SSpathfinder.found(l)
 	//cleaning after us
 	//reverse the path to get it from start to finish
 	if(path)
@@ -144,6 +158,7 @@ Actual Adjacent procs :
 
 //Returns adjacent turfs in cardinal directions that are reachable
 //simulated_only controls whether only simulated turfs are considered or not
+/*
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/T
@@ -156,6 +171,21 @@ Actual Adjacent procs :
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)
 	return L
+*/
+
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+	var/list/L = new()
+	var/turf/T
+
+	for(var/k in 1 to GLOB.cardinals.len)
+		T = get_step(src,GLOB.cardinals[k])
+		if(reachableTurftest(caller, T, ID, simulated_only))
+			L.Add(T)
+	return L
+
+/turf/proc/reachableTurftest(caller, var/turf/T, ID, simulated_only)
+	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
+		return TRUE
 
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
 /turf/proc/reachableAdjacentAtmosTurfs()
