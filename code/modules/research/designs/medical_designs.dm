@@ -377,6 +377,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/implant_health
+	name = "Health Monitor Implant Case"
+	desc = "A glass case containing an implant."
+	id = "implant_health_monitor"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/implantcase/health_monitor
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
+
 //Cybernetic organs
 
 /datum/design/cybernetic_liver

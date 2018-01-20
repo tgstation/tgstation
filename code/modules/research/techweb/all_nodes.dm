@@ -377,7 +377,7 @@
 	display_name = "Subdermal Implants"
 	description = "Electronic implants buried beneath the skin."
 	prereq_ids = list("biotech")
-	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking")
+	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking", "implant_health_monitor")
 	research_cost = 2500
 	export_price = 5000
 

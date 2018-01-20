@@ -27,7 +27,9 @@
 	handle_changeling()
 
 	if(stat != DEAD)
-		return 1
+		if(hud_used && hud_used.healths && LAZYLEN(hud_used.adv_health))
+			handle_adv_hud()
+		return TRUE
 
 ///////////////
 // BREATHING //
@@ -455,3 +457,36 @@
 		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
 			B.damaged_brain = TRUE
+
+///////////////////
+//ADVANCED HEALTH//
+///////////////////
+
+/mob/living/carbon/proc/handle_adv_hud()
+	if(adv_health_hud)
+		hud_used.healths.invisibility = INVISIBILITY_ABSTRACT
+	else
+		hud_used.healths.invisibility = 0
+	for(var/obj/screen/adv_health/S in hud_used.adv_health)
+		if(adv_health_hud)
+			S.invisibility = 0
+			var/dmg_amt = get_damage_amount(S.dmg_type)
+			var/stage = 0
+			switch(dmg_amt)
+				if (-INFINITY to 0) // this goes the other way around from the normal health indicator since it's determined by how much of whatever damage you have
+					stage = 0 // bright green
+				if (1 to 15)
+					stage = 1 // green
+				if (16 to 30)
+					stage = 2 // yellow
+				if (31 to 45)
+					stage = 3 // orange
+				if (46 to 60)
+					stage = 4 // dark orange
+				if (61 to 75)
+					stage = 5 // red
+				if (76 to INFINITY)
+					stage = 6 // crit
+			S.icon_state = "m[S.dmg_type][stage]"
+		else
+			S.invisibility = INVISIBILITY_ABSTRACT

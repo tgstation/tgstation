@@ -46,6 +46,8 @@
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 
+	var/list/obj/screen/adv_health = list()
+
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 
 /datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')
@@ -101,6 +103,11 @@
 		for(var/thing in infodisplay)
 			qdel(thing)
 		infodisplay.Cut()
+
+	if(adv_health.len)
+		for(var/thing in adv_health)
+			qdel(thing)
+		adv_health.Cut()
 
 	healths = null
 	healthdoll = null

@@ -78,3 +78,8 @@
 	name = "implant case - 'Adrenaline'"
 	desc = "A glass case containing an adrenaline implant."
 	imp_type = /obj/item/implant/adrenalin
+
+/obj/item/implantcase/health_monitor
+	name = "implant case - 'Health Monitor'"
+	desc = "A glass case containing an health monitor implant."
+	imp_type = /obj/item/implant/health_monitor

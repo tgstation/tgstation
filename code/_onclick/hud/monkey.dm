@@ -84,6 +84,12 @@
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 
+	for(var/X in subtypesof(/obj/screen/adv_health))
+		var/Y = new X()
+		Y.invisibility = INVISIBILITY_ABSTRACT
+		adv_health += Y
+		infodisplay += Y
+
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)

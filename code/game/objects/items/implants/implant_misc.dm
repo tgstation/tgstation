@@ -114,3 +114,21 @@
 /obj/item/implanter/radio
 	name = "implanter (internal radio)"
 	imp_type = /obj/item/implant/radio
+
+/obj/item/implant/health_monitor
+	name = "health monitor implant"
+	activated = TRUE
+
+/obj/item/implant/health_monitor/removed(source, silent = 0, special = 0)
+	if(..())
+		if(iscarbon(source))
+			var/mob/living/carbon/C = source
+			C.adv_health_hud = FALSE
+			to_chat(C, "<span class='notice'>You feel less in-tune with your body.</span>")
+
+/obj/item/implant/health_monitor/implant(mob/living/target, mob/user, silent = 0)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.adv_health_hud = TRUE
+		to_chat(C, "<span class='notice'>You feel more in-tune with your body.</span>")
+	return ..()
