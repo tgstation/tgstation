@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			GLOB.uplink_items[I.category] = list()
 		GLOB.uplink_items[I.category][I.name] = I
 
-/proc/get_uplink_items(var/datum/game_mode/gamemode = null)
+/proc/get_uplink_items(var/datum/game_mode/gamemode = null, allow_sales = TRUE)
 	if(!GLOB.uplink_items.len)
 		initialize_global_uplink_items()
 
@@ -37,29 +37,29 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 			if(!filtered_uplink_items[category])
 				filtered_uplink_items[category] = list()
-			filtered_uplink_items[category][item] = I
+			filtered_uplink_items[category][item] = new I.type()
 			if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
 				sale_items += I
+	if(allow_sales)
+		for(var/i in 1 to 3)
+			var/datum/uplink_item/I = pick_n_take(sale_items)
+			var/datum/uplink_item/A = new I.type
+			var/discount = A.get_discount()
+			var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+			A.limited_stock = 1
+			I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
+			A.refundable = FALSE
+			if(A.cost >= 20) //Tough love for nuke ops
+				discount *= 0.5
+			A.cost = max(round(A.cost * discount),1)
+			A.category = "Discounted Gear"
+			A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
+			A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+			A.item = I.item
 
-	for(var/i in 1 to 3)
-		var/datum/uplink_item/I = pick_n_take(sale_items)
-		var/datum/uplink_item/A = new I.type
-		var/discount = A.get_discount()
-		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
-		A.limited_stock = 1
-		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
-		A.refundable = FALSE
-		if(A.cost >= 20) //Tough love for nuke ops
-			discount *= 0.5
-		A.cost = max(round(A.cost * discount),1)
-		A.category = "Discounted Gear"
-		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
-		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
-		A.item = I.item
-
-		if(!filtered_uplink_items[A.category])
-			filtered_uplink_items[A.category] = list()
-		filtered_uplink_items[A.category][A.name] = A
+			if(!filtered_uplink_items[A.category])
+				filtered_uplink_items[A.category] = list()
+			filtered_uplink_items[A.category][A.name] = A
 	return filtered_uplink_items
 
 
@@ -89,9 +89,26 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
-/datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
-	if(item)
-		return new item(loc)
+/datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
+	var/atom/A = spawn_item(item, user)
+	if(purchase_log_vis && U.purchase_log)
+		U.purchase_log.LogPurchase(A, src, cost)
+
+/datum/uplink_item/proc/spawn_item(spawn_item, mob/user)
+	if(!spawn_item)
+		return
+	var/atom/A
+	if(ispath(spawn_item))
+		A = new spawn_item(get_turf(user))
+	else
+		A = spawn_item
+	if(ishuman(user) && istype(A, /obj/item))
+		var/mob/living/carbon/human/H = user
+		if(H.put_in_hands(A))
+			to_chat(H, "[A] materializes into your hands!")
+			return A
+	to_chat(user, "[A] materializes onto the floor.")
+	return A
 
 /datum/uplink_item/Destroy()
 	if(src in GLOB.uplink_items)
@@ -943,15 +960,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/briefcase_launchpad
 	cost = 6
 
-/datum/uplink_item/device_tools/briefcase_launchpad/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
-	var/obj/item/device/launchpad_remote/L = new(loc) //free remote
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(L))
-			to_chat(H, "[L] materializes into your hands!")
-		else
-			to_chat(H, "\The [L] materializes onto the floor.")
-	return ..()
+/datum/uplink_item/device_tools/briefcase_launchpad/purchase(mob/user, datum/component/uplink/U)
+	spawn_item(/obj/item/device/launchpad_remote, user) //free remote
+	..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1163,15 +1174,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
-	if(item)
-		if(istype(item, /obj/item/organ))
-			SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
-			return new /obj/item/storage/box/cyber_implants(loc, item)
-		else
-			return ..()
-
-
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
@@ -1345,12 +1347,23 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
+	var/starting_crate_value = 50
+	
+/datum/uplink_item/badass/surplus/super
+	name = "Super Surplus Crate"
+	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
+			but you never know. Contents are sorted to always be worth 125 TC."
+	cost = 40
+	player_minimum = 40
+	starting_crate_value = 125
 
-/datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
+/datum/uplink_item/badass/surplus/purchase(mob/user, datum/component/uplink/U)
+	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
 
-	var/crate_value = 50
-	var/obj/structure/closet/crate/C = new(loc)
+	var/crate_value = starting_crate_value
+	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
+	if(U.purchase_log)
+		U.purchase_log.LogPurchase(C, src, cost)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
@@ -1362,9 +1375,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		var/obj/goods = new I.item(C)
-		U.purchase_log.LogPurchase(goods, I.cost)
-
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
+		if(U.purchase_log)
+			U.purchase_log.LogPurchase(goods, I, 0)
 	return C
 
 /datum/uplink_item/badass/random
@@ -1374,8 +1386,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
+/datum/uplink_item/badass/random/purchase(mob/user, datum/component/uplink/U)
+	var/list/uplink_items = U.uplink_items
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
@@ -1384,12 +1396,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 				continue
 			if(U.telecrystals < I.cost)
 				continue
+			if(I.limited_stock == 0)
+				continue
 			possible_items += I
 
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
-		U.telecrystals -= I.cost
-		U.purchase_log.total_spent += I.cost
-		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(I.name)]", "[cost]"))
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
-		return new I.item(loc)
+		U.MakePurchase(user, I)

@@ -8,6 +8,12 @@
 "ac" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"ad" = (
+/turf/closed/mineral/random/low_chance,
+/area/asteroid/cave/space)
+"ae" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/cave/space)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -22,6 +28,12 @@
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage/kitchen)
+"aj" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "ak" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -100,6 +112,17 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"av" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "bunkerrecycle";
+	movedir = 2
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 "aw" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
@@ -146,6 +169,17 @@
 	dir = 2;
 	name = "Recycling APC";
 	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"aF" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "bunkerrecycle";
+	movedir = 2
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -1278,6 +1312,14 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
+"do" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/space/has_grav/deepstorage)
 "dp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/mineral/iron,
@@ -2391,7 +2433,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2415,7 +2457,7 @@
 /obj/machinery/camera{
 	network = list("Bunker1")
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2443,7 +2485,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -2584,6 +2626,18 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage)
+"go" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/space/has_grav/deepstorage)
+"gp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/power)
 "gq" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -2595,10 +2649,19 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
+"gs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -2787,12 +2850,23 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+"gS" = (
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
 "gT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
 	},
 /obj/machinery/autolathe,
-/obj/structure/sign/radiation{
+/obj/structure/sign/warning/radiation{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -2974,41 +3048,116 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"jb" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/mineral/iron,
-/area/ruin/space/has_grav/deepstorage)
-"jn" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/mineral/iron,
-/area/ruin/space/has_grav/deepstorage/hydroponics)
-"uP" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/mineral/iron,
-/area/ruin/space/has_grav/deepstorage/power)
-"wb" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/mineral/iron,
-/area/ruin/space/has_grav/deepstorage/dorm)
-"yv" = (
-/obj/effect/baseturf_helper/asteroid/airless,
-/turf/closed/wall/mineral/iron,
-/area/ruin/space/has_grav/deepstorage/kitchen)
-"Cy" = (
+"hr" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered/no_grav)
-"GT" = (
+"hs" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
-"Wz" = (
+"ht" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hu" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hv" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hw" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hx" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hy" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hz" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hA" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/kitchen)
+"hB" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/hydroponics)
+"hC" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hD" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hE" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hF" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hG" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hH" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hI" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hJ" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hK" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hL" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hM" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hN" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hO" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hP" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hQ" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hR" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hS" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hT" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage)
+"hU" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/storage)
+"hV" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/dorm)
+"hW" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/armory)
-"XX" = (
+"hX" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"hY" = (
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/power)
 
 (1,1,1) = {"
 aa
@@ -3489,7 +3638,7 @@ ab
 ab
 ab
 ab
-Cy
+hr
 ab
 ab
 ab
@@ -3548,14 +3697,14 @@ ab
 ab
 ab
 ab
-GT
-GT
-GT
-GT
-GT
-GT
-GT
-wb
+hE
+hJ
+hN
+hP
+hQ
+hS
+hU
+hV
 dB
 dB
 dB
@@ -3600,7 +3749,7 @@ ab
 ab
 ab
 ab
-GT
+hF
 bT
 bU
 cB
@@ -3649,10 +3798,10 @@ ab
 ab
 ab
 aw
-GT
-GT
-GT
-GT
+hz
+hC
+hD
+hG
 bU
 bU
 cB
@@ -3700,11 +3849,11 @@ ab
 ab
 ab
 ab
-GT
+hs
 aG
 aR
 bm
-GT
+hH
 bV
 ch
 cC
@@ -3752,15 +3901,15 @@ ab
 ab
 ab
 ab
-GT
+ht
 aH
 aS
 bn
-GT
-GT
-GT
+hI
+hK
+hO
 cD
-GT
+hR
 dg
 dz
 dQ
@@ -3804,7 +3953,7 @@ ab
 ab
 ab
 ab
-GT
+hu
 aI
 aT
 bo
@@ -3856,7 +4005,7 @@ ab
 ab
 ab
 ab
-GT
+hv
 aJ
 aU
 bp
@@ -3908,12 +4057,12 @@ ab
 ab
 ab
 ab
-GT
+hw
 aK
 aV
 bq
 bG
-GT
+hL
 cj
 cG
 bz
@@ -3960,12 +4109,12 @@ ab
 ab
 ab
 ab
-GT
+hx
 aL
 aW
 br
 bH
-GT
+hM
 ck
 cH
 cT
@@ -4012,8 +4161,8 @@ ab
 ab
 ab
 ab
-GT
-yv
+hy
+hA
 af
 af
 af
@@ -4229,7 +4378,7 @@ af
 cp
 cp
 cp
-jb
+hT
 dI
 dX
 eq
@@ -4289,7 +4438,7 @@ eJ
 eV
 fi
 fu
-XX
+hX
 ho
 fp
 fp
@@ -4805,7 +4954,7 @@ de
 de
 de
 de
-Wz
+hW
 fb
 fp
 fD
@@ -4815,7 +4964,7 @@ fp
 fD
 gE
 fD
-uP
+hY
 ab
 ab
 ab
@@ -4949,7 +5098,7 @@ ab
 ab
 ab
 ab
-jn
+hB
 aQ
 aQ
 aQ

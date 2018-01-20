@@ -9,6 +9,9 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ad" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -35,6 +38,9 @@
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
+/area/shuttle/escape)
+"aj" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
@@ -112,6 +118,18 @@
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
+"av" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"aw" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ax" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ay" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "az" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
@@ -121,6 +139,9 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/status_display,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"aB" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aC" = (
@@ -222,6 +243,9 @@
 /obj/structure/table/wood/bar,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
+"aQ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "aR" = (
 /obj/structure/table/wood/bar{
 	boot_dir = 8
@@ -307,18 +331,39 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
+"bf" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "bg" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
+"bh" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "bi" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bj" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bl" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
 /obj/machinery/door/airlock{
@@ -329,7 +374,7 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/effect/spawner/structure/window/shuttle,
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
@@ -358,6 +403,9 @@
 	name = "Unit 1"
 	},
 /turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"bt" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock{
@@ -404,12 +452,26 @@
 /obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"bA" = (
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/escape)
+"bB" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "bC" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bD" = (
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -562,35 +624,35 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+bt
+bt
+bt
 aK
-ab
+bt
 aT
-ab
+bt
 ac
 ac
 ac
-ab
+bt
 bg
-ab
+bt
 bo
-ab
-ab
-ab
+bt
+bt
+bt
 aa
 "}
 (2,1,1) = {"
 aa
-ab
-ab
-ab
-ab
+bt
+bt
+bt
+bt
 aC
 aH
 aL
-ab
+bt
 bY
 bH
 aZ
@@ -598,23 +660,23 @@ bc
 aZ
 bH
 bZ
-ab
+bt
 bp
 bs
 bx
-ab
-ab
+bt
+bt
 "}
 (3,1,1) = {"
-ab
+bt
 ae
 al
 aq
-ab
+bt
 aC
 aI
 aM
-ab
+bt
 aE
 aW
 ba
@@ -622,10 +684,10 @@ bL
 bO
 bQ
 bR
-ab
+bt
 bp
-ab
-ab
+bt
+bt
 bC
 bE
 "}
@@ -634,11 +696,11 @@ ac
 af
 am
 ar
-ab
+bt
 aC
 aI
 aM
-ab
+bt
 aE
 aW
 bJ
@@ -646,7 +708,7 @@ bM
 bP
 bQ
 aE
-ab
+bt
 ak
 bu
 bx
@@ -658,7 +720,7 @@ ac
 ag
 an
 as
-ab
+bt
 ac
 aJ
 ac
@@ -672,8 +734,8 @@ bH
 aE
 aA
 bp
-ab
-ab
+bt
+bt
 bC
 bE
 "}
@@ -682,7 +744,7 @@ ac
 ah
 an
 at
-ab
+bt
 aD
 aE
 aE
@@ -719,9 +781,9 @@ aN
 aE
 ca
 ae
-ab
-ab
-ab
+bt
+bt
+bt
 bC
 bE
 "}
@@ -750,11 +812,11 @@ bC
 bE
 "}
 (9,1,1) = {"
-ab
+bt
 ae
 ap
 au
-ab
+bt
 aF
 bH
 aP
@@ -775,10 +837,10 @@ bE
 "}
 (10,1,1) = {"
 aa
-ab
-ab
-ab
-ab
+bt
+bt
+bt
+bt
 aG
 bW
 bI
@@ -794,30 +856,30 @@ bF
 br
 cb
 bU
-ab
-ab
+bt
+bt
 "}
 (11,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+bt
 ac
-ab
+bt
 ac
-ab
-ab
-ab
+bt
+bt
+bt
 ac
 ac
 ac
-ab
-ab
-ab
+bt
+bt
+bt
 ac
-ab
+bt
 ac
-ab
+bt
 aa
 "}

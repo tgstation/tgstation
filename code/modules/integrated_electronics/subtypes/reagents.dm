@@ -193,7 +193,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = CLAMP(transfer_amount, 0, reagents.total_volume)
+		var/tramount = CLAMP(transfer_amount, 0, AM.reagents.total_volume)
 
 		if(isliving(AM))
 			var/mob/living/L = AM

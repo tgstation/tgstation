@@ -405,9 +405,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			var/obj/machinery/computer/C = item
 			var/screen = initial(C.icon_screen)
 			var/keyboard = initial(C.icon_keyboard)
-			if (screen && screen in all_states)
+			if (screen && (screen in all_states))
 				I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
-			if (keyboard && keyboard in all_states)
+			if (keyboard && (keyboard in all_states))
 				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		assets["design_[initial(D.id)].png"] = I

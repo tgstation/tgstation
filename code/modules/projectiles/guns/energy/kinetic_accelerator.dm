@@ -87,7 +87,7 @@
 
 /obj/item/gun/energy/kinetic_accelerator/dropped()
 	. = ..()
-	if(!holds_charge)
+	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
 		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
@@ -97,10 +97,13 @@
 		empty()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/empty()
-	cell.use(cell.charge)
+	if(cell)
+		cell.use(cell.charge)
 	update_icon()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/attempt_reload(recharge_time)
+	if(!cell)
+		return
 	if(overheat)
 		return
 	if(!recharge_time)

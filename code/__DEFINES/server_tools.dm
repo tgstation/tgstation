@@ -1,5 +1,5 @@
 // /tg/station 13 server tools API
-#define SERVICE_API_VERSION_STRING "3.2.0.1"
+#define SERVICE_API_VERSION_STRING "3.2.0.2"
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
@@ -104,6 +104,7 @@
 The MIT License
 
 Copyright (c) 2017 Jordan Brown
+
 Permission is hereby granted, free of charge, 
 to any person obtaining a copy of this software and 
 associated documentation files (the "Software"), to 

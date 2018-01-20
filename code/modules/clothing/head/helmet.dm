@@ -29,7 +29,7 @@
 
 		if(S.secured)
 			qdel(S)
-			var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+			var/obj/item/bot_assembly/secbot/A = new
 			user.put_in_hands(A)
 			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
 			qdel(src)

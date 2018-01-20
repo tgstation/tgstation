@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return data
 
 	var/turf/curr = get_turf(src)
-	data["current"] = "[get_area_name(curr)] ([curr.x], [curr.y], [curr.z])"
+	data["current"] = "[get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
 
 	var/list/signals = list()
 	data["signals"] = list()
@@ -94,10 +94,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		var/turf/pos = get_turf(G)
 		if(!global_mode && pos.z != curr.z)
 			continue
-		var/area/gps_area = get_area_name(G)
 		var/list/signal = list()
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
-		signal["area"] = format_text(gps_area)
+		signal["area"] = get_area_name(G, TRUE)
 		signal["coord"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs

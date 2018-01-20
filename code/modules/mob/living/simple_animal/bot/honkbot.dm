@@ -35,6 +35,7 @@
 	var/check_records = TRUE
 	var/arrest_type = FALSE
 	var/weaponscheck = TRUE
+	var/bikehorn = /obj/item/bikehorn
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
@@ -331,8 +332,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
-	new /obj/item/bikehorn(Tsec)
+		drop_part(robot_arm, Tsec)
+	new bikehorn(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	var/datum/effect_system/spark_spread/s = new

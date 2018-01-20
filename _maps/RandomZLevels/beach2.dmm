@@ -383,7 +383,7 @@
 "bt" = (
 /turf/open/floor/plating/beach/water,
 /area/awaymission/beach)
-"Zo" = (
+"bu" = (
 /obj/effect/baseturf_helper/beach/sand,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
@@ -43403,7 +43403,7 @@ ab
 ab
 ab
 ab
-Zo
+bu
 ac
 ac
 ac

@@ -94,6 +94,13 @@
 "ar" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/hivebot)
+"as" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/banner,
+/turf/open/floor/plasteel/blue/side{
+	dir = 9
+	},
+/area/ruin/space/has_grav/ancientstation/comm)
 "at" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner{
@@ -130,6 +137,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
+	},
+/area/ruin/space/has_grav/ancientstation/comm)
+"ay" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/banner,
+/turf/open/floor/plasteel/blue/side{
+	dir = 5
 	},
 /area/ruin/space/has_grav/ancientstation/comm)
 "az" = (
@@ -536,7 +550,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "bO" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation)
 "bP" = (
@@ -579,6 +593,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
+"bV" = (
+/turf/open/floor/plasteel/airless/floorgrime,
+/area/ruin/space/has_grav/ancientstation)
 "bW" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-25"
@@ -587,7 +604,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "bX" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation)
 "bY" = (
@@ -1204,13 +1221,30 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/betanorth)
+"dE" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
 "dF" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"dG" = (
+/turf/open/floor/plasteel/airless,
+/area/template_noop)
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
+/area/template_noop)
+"dI" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "floorscorched1"
+	},
+/area/template_noop)
+"dJ" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged5"
+	},
 /area/template_noop)
 "dK" = (
 /obj/structure/lattice/catwalk,
@@ -1383,6 +1417,11 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
+"eh" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "damaged2"
+	},
+/area/template_noop)
 "ei" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -1459,6 +1498,14 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/poppy,
 /obj/item/seeds/grape,
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/space/has_grav/ancientstation/hydroponics)
+"es" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Hydroponics"
+	},
+/obj/machinery/door/firedoor/closed,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "et" = (
@@ -1802,6 +1849,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
+/area/ruin/space/has_grav/ancientstation)
+"fo" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "fp" = (
 /obj/structure/sign/poster/official/here_for_your_safety,
@@ -3024,12 +3075,23 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
+"ia" = (
+/turf/open/floor/plasteel/airless{
+	icon_state = "floorscorched2"
+	},
+/area/template_noop)
 "ib" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/template_noop,
+/area/template_noop)
+"ic" = (
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/airless,
 /area/template_noop)
 "id" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3085,6 +3147,14 @@
 	name = "Dining Area"
 	},
 /turf/open/floor/plasteel/cafeteria,
+/area/ruin/space/has_grav/ancientstation/kitchen)
+"ij" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/public/glass{
+	name = "Dining Area"
+	},
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ik" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3475,7 +3545,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iX" = (
-/obj/structure/sign/radiation,
+/obj/structure/sign/warning/radiation,
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iY" = (
@@ -3680,6 +3750,9 @@
 /obj/item/storage/box/firingpins,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
+"jA" = (
+/turf/open/floor/plasteel/floorgrime,
+/area/template_noop)
 "jB" = (
 /obj/structure/closet/crate/radiation,
 /obj/item/stack/sheet/mineral/uranium{
@@ -4360,6 +4433,16 @@
 /obj/item/pickaxe,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
+"lr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ore/bluespace_crystal,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
+"ls" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/ore/bluespace_crystal/refined,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/ancientstation/rnd)
 "lt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{
@@ -4368,6 +4451,10 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
+"lu" = (
+/obj/item/stock_parts/manipulator,
+/turf/open/floor/plasteel/airless/floorgrime,
+/area/template_noop)
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/glass,
@@ -4375,6 +4462,10 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/betanorth)
+"lw" = (
+/obj/item/stock_parts/matter_bin,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/science{
@@ -4382,7 +4473,78 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hivebot)
+"ly" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/science,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/hivebot)
 "lz" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lA" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lB" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lC" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lD" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lE" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lF" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lG" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lH" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lI" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lJ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lK" = (
 /turf/open/floor/plating/airless{
 	tag = "icon-floor";
 	icon_state = "floor"
@@ -4401,6 +4563,42 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
+"lN" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lO" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lP" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lQ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lR" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lS" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4410,6 +4608,68 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
+"lU" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/orange/side{
+	tag = "icon-orange (WEST)";
+	icon_state = "orange";
+	dir = 8
+	},
+/area/ruin/space/has_grav/ancientstation/rnd)
+"lV" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lW" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lX" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lY" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"lZ" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"ma" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"mb" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"mc" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
+"md" = (
+/turf/open/floor/plating/airless{
+	tag = "icon-floor";
+	icon_state = "floor"
+	},
+/area/template_noop)
 "me" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
@@ -4417,7 +4677,112 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
+"mg" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mh" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mi" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mj" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mk" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"ml" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mm" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mn" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mo" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mp" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mq" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mr" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"ms" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mt" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mu" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mv" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mw" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mx" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"my" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mz" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mA" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mB" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mC" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mD" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mE" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mF" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
+"mG" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/ancientstation/betanorth)
 "mH" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mI" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mJ" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mK" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mL" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mM" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mN" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/ancientstation/atmo)
+"mO" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "mP" = (

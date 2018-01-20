@@ -420,7 +420,6 @@
 "bf" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -434,7 +433,6 @@
 	icon_state = "coil_red2"
 	},
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -737,7 +735,6 @@
 /area/template_noop)
 "bW" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -814,7 +811,6 @@
 	},
 /obj/item/shard,
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -966,6 +962,13 @@
 "cB" = (
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
+"cC" = (
+/obj/structure/lattice,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/space,
+/area/ruin/space/has_grav/onehalf/hallway)
 "cD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/broken{
@@ -1028,7 +1031,6 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cL" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1043,6 +1045,13 @@
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
 /area/template_noop)
+"cO" = (
+/obj/structure/lattice,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/space,
+/area/ruin/space/has_grav/onehalf/hallway)
 "cP" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
@@ -1131,7 +1140,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
