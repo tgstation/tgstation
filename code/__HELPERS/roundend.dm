@@ -105,7 +105,7 @@
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
 	if(CONFIG_GET(number/maprotation_vote_method) == MAPVOTE_VOTE && CONFIG_GET(number/maprotation_vote_delay) == -1)
-		if(CONFIG_GET(number/maprotation_use_weighted))
+		if(CONFIG_GET(flag/maprotation_use_weighted))
 			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server", WEIGHTED)
 		else
 			INVOKE_ASYNC(SSvote, /datum/controller/subsystem/vote.proc/initiate_vote, "map", "The Server")

@@ -430,7 +430,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
-			if (CONFIG_GET(number/maprotation) == MAPVOTE_PREF)
+			if (CONFIG_GET(number/maprotation_vote_method) == MAPVOTE_PREF)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"

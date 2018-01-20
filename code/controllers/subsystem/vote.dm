@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				for(var/map in SSmapping.map_names)
 					var/datum/map_config/VM = SSmapping.map_names[map]
-					if(VM.allowvote)
+					if(VM.allow_vote)
 						choices.Add(map)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")

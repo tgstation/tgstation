@@ -418,9 +418,9 @@ SUBSYSTEM_DEF(ticker)
 			queue_delay = 0
 
 /datum/controller/subsystem/ticker/proc/check_maprotate()
-	if (!CONFIG_GET(number/maprotation))
+	if (!CONFIG_GET(flag/maprotation))
 		return
-	if (CONFIG_GET(number/maprotation) == 2)
+	if (CONFIG_GET(number/maprotation_vote_method) == MAPVOTE_VOTE)
 		return
 	if (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return

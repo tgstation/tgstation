@@ -242,12 +242,10 @@ GLOBAL_PROTECT(config_dir)
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
-			if ("weight","voteweight")
-				currentmap.voteweight = text2num(data)
+			if ("novote", "disable_vote")
+				currentmap.allow_vote = FALSE
 			if ("default","defaultmap")
 				defaultmap = currentmap
-			if ("vote", "allowvote")
-				currentmap.allowvote = TRUE
 			if ("endmap")
 				LAZYINITLIST(maplist)
 				maplist[currentmap.map_name] = currentmap

@@ -169,8 +169,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/maprotate()
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
-	var/thingy = CONFIG_GET(number/maprotation)
-	if(thingy == 2 || thingy == 0)
+	var/thingy = CONFIG_GET(number/maprotation_vote_method)
+	if(thingy == MAPVOTE_VOTE || thingy == MAPVOTE_NONE)
 		return
 	//count votes
 	for (var/client/c in GLOB.clients)
