@@ -169,9 +169,8 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
-	var/area/A = get_area(src)
 	if(name == initial(name))
-		name = "[A.name] Air Alarm"
+		name = "[get_area_name(src)] Air Alarm"
 
 	update_icon()
 
@@ -624,10 +623,8 @@
 	if(!frequency)
 		return
 
-	var/area/A = get_area(src)
-
 	var/datum/signal/alert_signal = new(list(
-		"zone" = A.name,
+		"zone" = get_area_name(src),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)
@@ -690,7 +687,7 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
+					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
@@ -700,7 +697,7 @@
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
-						locked = TRUE
+						locked = FALSE
 						mode = 1
 						shorted = 0
 						post_alert(0)

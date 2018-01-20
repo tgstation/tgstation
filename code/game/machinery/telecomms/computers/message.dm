@@ -315,7 +315,7 @@
 				message = noserver
 			else
 				if(auth)
-					var/dkey = trim(stripped_input(usr, "Please enter the decryption key."))
+					var/dkey = stripped_input(usr, "Please enter the decryption key.")
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
@@ -417,6 +417,7 @@
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
+						log_talk(usr, "[key_name(usr)] (PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOGPDA)
 
 
 		//Request Console Logs - KEY REQUIRED

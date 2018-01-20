@@ -67,6 +67,8 @@
 	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
+/turf/open/floor/plating/lavaland_baseturf
+	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"

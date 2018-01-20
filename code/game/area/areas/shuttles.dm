@@ -101,6 +101,14 @@
 	name = "Luxurious Emergency Shuttle"
 	noteleport = TRUE
 
+/area/shuttle/escape/arena
+	name = "The Arena"
+	noteleport = TRUE
+
+/area/shuttle/escape/meteor
+	name = "\proper a meteor with engines strapped to it"
+	luminosity = NONE
+
 /area/shuttle/transport
 	name = "Transport Shuttle"
 	blob_allowed = FALSE

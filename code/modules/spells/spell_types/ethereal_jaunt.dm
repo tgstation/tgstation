@@ -44,7 +44,8 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, target.dir)
+	new jaunt_in_type(mobloc, holder.dir)
+	target.setDir(holder.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
 	if(!QDELETED(target))

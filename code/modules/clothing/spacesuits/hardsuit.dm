@@ -105,10 +105,10 @@
 	var/obj/item/tank/jetpack/suit/jetpack = null
 
 
-/obj/item/clothing/suit/space/hardsuit/New()
+/obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -268,8 +268,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/New()
-	..()
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
+	. = ..()
 	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
 		linkedsuit = loc
 
@@ -450,8 +450,8 @@
 	scan_reagents = 1
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rd/New()
-	..()
+/obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
+	. = ..()
 	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
@@ -743,9 +743,9 @@
 	slowdown = 0
 
 
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/New()
+/obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
-	..()
+	. = ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	name = "blood-red hardsuit helmet"

@@ -17,31 +17,30 @@
 	var/harvest_message_high = "You harvest and collect shavings from several mushroom caps."
 	var/harvested = FALSE
 	var/base_icon
-	var/regrowth_time_low = 4800
-	var/regrowth_time_high = 8400
+	var/regrowth_time_low = 8 MINUTES
+	var/regrowth_time_high = 16 MINUTES
 
 /obj/structure/flora/ash/Initialize()
 	. = ..()
 	base_icon = "[icon_state][rand(1, 4)]"
 	icon_state = base_icon
-	if(prob(15))
-		harvest(null, TRUE)
 
-/obj/structure/flora/ash/proc/harvest(user, no_drop)
+/obj/structure/flora/ash/proc/harvest(user)
 	if(harvested)
 		return 0
-	if(!no_drop)
-		var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
-		if(rand_harvested)
-			if(user)
-				var/msg = harvest_message_med
-				if(rand_harvested == harvest_amount_low)
-					msg = harvest_message_low
-				else if(rand_harvested == harvest_amount_high)
-					msg = harvest_message_high
-				to_chat(user, "<span class='notice'>[msg]</span>")
-			for(var/i in 1 to rand_harvested)
-				new harvest(get_turf(src))
+
+	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
+	if(rand_harvested)
+		if(user)
+			var/msg = harvest_message_med
+			if(rand_harvested == harvest_amount_low)
+				msg = harvest_message_low
+			else if(rand_harvested == harvest_amount_high)
+				msg = harvest_message_high
+			to_chat(user, "<span class='notice'>[msg]</span>")
+		for(var/i in 1 to rand_harvested)
+			new harvest(get_turf(src))
+
 	icon_state = "[base_icon]p"
 	name = harvested_name
 	desc = harvested_desc

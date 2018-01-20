@@ -64,7 +64,7 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")

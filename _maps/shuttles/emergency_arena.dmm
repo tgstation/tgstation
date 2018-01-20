@@ -21,55 +21,39 @@
 /area/template_noop)
 "g" = (
 /turf/closed/indestructible/necropolis,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "h" = (
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "i" = (
 /obj/structure/closet/crate/necropolis/dragon,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "j" = (
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "k" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "l" = (
 /obj/structure/closet/crate/necropolis/tendril,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "m" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "n" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "o" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /obj/docking_port/mobile/emergency{
@@ -77,15 +61,11 @@
 	timid = 1
 	},
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 "p" = (
 /obj/structure/healingfountain,
 /turf/open/indestructible/necropolis/air,
-/area/shuttle/escape{
-	noteleport = 1
-	})
+/area/shuttle/escape/arena)
 
 (1,1,1) = {"
 a

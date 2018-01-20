@@ -2,7 +2,8 @@
 	name = "wirecutters"
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "cutters"
+	icon_state = "cutters_map"
+	item_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -20,14 +21,32 @@
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/random_color = TRUE
+	var/static/list/wirecutter_colors = list(
+		"blue" = "#1861d5",
+		"red" = "#951710",
+		"pink" = "#d5188d",
+		"brown" = "#a05212",
+		"green" = "#0e7f1b",
+		"cyan" = "#18a2d5",
+		"yellow" = "#d58c18"
+	)
 
 
-/obj/item/wirecutters/New(loc, var/param_color = null)
-	..()
-	if(random_color)
-		if(!param_color)
-			param_color = pick("yellow","red")
-		icon_state = "cutters_[param_color]"
+/obj/item/wirecutters/Initialize()
+	. = ..()
+	if(random_color) //random colors!
+		icon_state = "cutters"
+		var/our_color = pick(wirecutter_colors)
+		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
+		update_icon()
+
+/obj/item/wirecutters/update_icon()
+	if(!random_color) //icon override
+		return
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "cutters_cutty_thingy")
+	base_overlay.appearance_flags = RESET_COLOR
+	add_overlay(base_overlay)
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))
@@ -92,7 +111,7 @@
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
-	
+
 /obj/item/wirecutters/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed)
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
