@@ -84,6 +84,7 @@ Actual Adjacent procs :
 			return 0
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 	var/l
+	l = SSpathfinder.getfree()
 	while(!l)
 		stoplag(1)
 		l = SSpathfinder.getfree()
