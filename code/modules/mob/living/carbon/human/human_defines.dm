@@ -48,3 +48,7 @@
 
 	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
+
+	var/scream_overload = 0 //how many times you've screamed without waiting for at least the cooldown period
+	var/scream_cooldown = 300 //how long you need to wait between screams to avoid consequences
+	var/scream_time = 0 //last time this mob screamed

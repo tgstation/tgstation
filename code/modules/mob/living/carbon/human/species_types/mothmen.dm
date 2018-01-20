@@ -9,6 +9,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
+	scream_sound = 'sound/effects/scream_moth.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
 	liked_food = VEGETABLES | DAIRY
 	disliked_food = FRUIT | GROSS
