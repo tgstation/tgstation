@@ -235,6 +235,7 @@
 /datum/config_entry/flag/maprotation_use_weighted
 
 /datum/config_entry/number/maprotation_vote_method
+	value = MAPVOTE_VOTE
 	min_val = MAPVOTE_NONE
 	max_val = MAPVOTE_RANDOM
 
