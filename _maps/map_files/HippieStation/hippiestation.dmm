@@ -21482,7 +21482,7 @@
 /area/hippie/clown)
 "aXl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/clown{
+/obj/machinery/door/airlock/bananium{
 	name = "Clown's Office";
 	req_access_txt = "46"
 	},

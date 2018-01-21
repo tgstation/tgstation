@@ -5,7 +5,7 @@
 	doorDeni = 'hippiestation/sound/machine/denied.ogg'
 	var/request_cooldown = 0 //To prevent spamming requests for the AI to open
 
-/obj/machinery/door/airlock/clown
+/obj/machinery/door/airlock/bananium
 	doorClose = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/door/airlock/AltClick(mob/living/user)
