@@ -108,12 +108,14 @@
 /turf/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return TRUE
+	var/list/contents_cached = contents
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
+		for(var/obj/structure/cable/LC in contents_cached)
 			if(!LC.d1 || !LC.d2)
 				LC.attackby(C,user)
 				return
+			CHECK_TICK
 		coil.place_turf(src, user)
 		return TRUE
 
@@ -133,10 +135,13 @@
 	return FALSE
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	var/list/contents_cached = contents
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
+		var/turf/other_T = mover.loc
+		var/list/other_turf_contents = other_T.contents
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
-		for(var/obj/obstacle in mover.loc)
+		for(var/obj/obstacle in other_turf_contents)
 			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
 				mover.Collide(obstacle)
 				return FALSE
@@ -151,7 +156,7 @@
 	var/top_layer = FALSE
 
 	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/obstacle in src)
+	for(var/atom/movable/obstacle in contents_cached)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
 			if(obstacle.flags_1 & ON_BORDER_1)
 				mover.Collide(obstacle)
@@ -238,15 +243,19 @@
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	for(var/obj/O in src)
+	var/list/contents_cached = contents
+	for(var/obj/O in contents_cached)
 		if(O.level == 1 && O.initialized)
 			O.hide(src.intact)
+		CHECK_TICK
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
-	for(var/obj/O in src)
+	var/list/contents_cached = contents
+	for(var/obj/O in contents_cached)
 		if(O.level == 1 && O.initialized)
 			O.hide(0)
+		CHECK_TICK
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -255,12 +264,13 @@
 		qdel(L)
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
-	for(var/mob/living/M in src)
+	var/list/contents_cached = contents // FUCKING NINJA CODE
+	for(var/mob/living/M in contents_cached)
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
 		M.adjustBruteLoss(damage)
 		M.Unconscious(damage * 4)
-	for(var/obj/mecha/M in src)
+	for(var/obj/mecha/M in contents_cached) // REMOVE NINJA CODE
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
@@ -299,8 +309,9 @@
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()
+	var/list/contents_cached = contents // someone profile if this helps
 	if(intact)
-		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+		for(var/obj/O in contents_cached) //this is for deleting things like wires contained in the turf
 			if(O.level != 1)
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
@@ -322,6 +333,7 @@
 /turf/proc/is_shielded()
 
 /turf/contents_explosion(severity, target)
+	var/list/contents_cached = contents // someone profile if this helps
 	var/affecting_level
 	if(severity == 1)
 		affecting_level = 1
@@ -332,7 +344,7 @@
 	else
 		affecting_level = 1
 
-	for(var/V in contents)
+	for(var/V in contents_cached)
 		var/atom/A = V
 		if(A.level >= affecting_level)
 			if(ismovableatom(A))
@@ -343,17 +355,19 @@
 			CHECK_TICK
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
+	var/list/contents_cached = contents
 	. = (prob(probability) || force)
-	for(var/I in src)
+	for(var/I in contents_cached)
 		var/atom/A = I
 		if(ignore_mobs && ismob(A))
 			continue
 		if(ismob(A) || .)
 			A.narsie_act()
 
-/turf/ratvar_act(force, ignore_mobs, probability = 40)
+/turf/ratvar_act(force, ignore_mobs, probability = 40) // todo: merge with above somehow, copypasta
+	var/list/contents_cached = contents
 	. = (prob(probability) || force)
-	for(var/I in src)
+	for(var/I in contents_cached)
 		var/atom/A = I
 		if(ignore_mobs && ismob(A))
 			continue
@@ -386,11 +400,12 @@
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
+	var/list/contents_cached = contents
 	var/acid_type = /obj/effect/acid
 	if(acidpwr >= 200) //alien acid power
 		acid_type = /obj/effect/acid/alien
 	var/has_acid_effect = FALSE
-	for(var/obj/O in src)
+	for(var/obj/O in contents_cached)
 		if(intact && O.level == 1) //hidden under the floor
 			continue
 		if(istype(O, acid_type))
@@ -425,10 +440,11 @@
 	cut_overlay(decals[group])
 	decals[group] = null
 
-/turf/proc/photograph(limit=20)
+/turf/proc/photograph(limit=20) // look at this
+	var/list/contents_cached = contents
 	var/image/I = new()
 	I.add_overlay(src)
-	for(var/V in contents)
+	for(var/V in contents_cached)
 		var/atom/A = V
 		if(A.invisibility)
 			continue
@@ -437,6 +453,7 @@
 			limit--
 		else
 			return I
+		CHECK_TICK
 	return I
 
 /turf/AllowDrop()
