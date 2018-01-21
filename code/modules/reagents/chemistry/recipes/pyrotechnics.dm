@@ -377,6 +377,13 @@
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
+/datum/chemical_reaction/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	results = list("energized_jelly" = 2)
+	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
+
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"

@@ -184,6 +184,12 @@
 	results = list("cryoxadone" = 3)
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 
+/datum/chemical_reaction/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	results = list("pyroxadone" = 2)
+	required_reagents = list("cryoxadone" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
