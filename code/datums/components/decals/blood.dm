@@ -14,11 +14,15 @@
 		_icon = 'icons/effects/blood.dmi'
 	if(!_icon_state)
 		_icon_state = "itemblood"
-	if(!initial(I.icon) || !initial(I.icon_state))
-		return FALSE
+	var/icon = initial(I.icon)
+	var/icon_state = initial(I.icon_state)
+	if(!icon || !icon_state)
+		// It's something which takes on the look of other items, probably
+		icon = I.icon
+		icon_state = I.icon_state
 	var/static/list/blood_splatter_appearances = list()
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
-	var/index = "[REF(initial(I.icon))]-[initial(I.icon_state)]"
+	var/index = "[REF(icon)]-[icon_state]"
 	pic = blood_splatter_appearances[index]
 	if(!pic)
 		var/icon/blood_splatter_icon = icon(initial(I.icon), initial(I.icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
