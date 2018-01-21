@@ -369,7 +369,7 @@
 	var/obj/acting_object = get_object()
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/mode = get_pin_data(IC_INPUT, 2)
-	mode = CLAMP(mode, GRAB_PASSIVE, max_grab
+	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
 	if(AM)
 		if(check_target(AM, exclude_contents = TRUE))
 			acting_object.start_pulling(AM,mode)
