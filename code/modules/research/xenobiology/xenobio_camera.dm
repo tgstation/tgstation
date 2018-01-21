@@ -105,6 +105,7 @@
 			replaced = TRUE
 		current_potion = O
 		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
+		return
 	..()
 
 /datum/action/innate/slime_place
