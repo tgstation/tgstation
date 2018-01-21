@@ -625,13 +625,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
-<<<<<<< HEAD
-				else
-					S = hippie_mutant_bodyparts(bodypart, H)
-=======
+
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
->>>>>>> b30e2934e7... Moths, except I have stolen them and they no longer conflict (#34498)
+
+				else
+					S = hippie_mutant_bodyparts(bodypart, H)
 
 			if(!S || S.icon_state == "none")
 				continue
