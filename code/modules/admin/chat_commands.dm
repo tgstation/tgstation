@@ -114,7 +114,7 @@ GLOBAL_LIST(round_end_notifiees)
 /datum/server_tools_command/playerlist
 	name = "playerlist"
 	help_text = "Gives you a list of online players."
-	admin_only = FALSE
+	admin_only = TRUE
 
 /datum/server_tools_command/playerlist/Run(sender, params)
 	var/list/assembled = list()
