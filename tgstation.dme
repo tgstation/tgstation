@@ -2323,6 +2323,7 @@
 #include "code\modules\superbox\howl.dm"
 #include "code\modules\superbox\hullrot.dm"
 #include "code\modules\superbox\medals.dm"
+#include "code\modules\superbox\plaques.dm"
 #include "code\modules\superbox\sciencestation.dm"
 #include "code\modules\superbox\wizard_versus.dm"
 #include "code\modules\surgery\amputation.dm"

@@ -25066,6 +25066,13 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"qvH" = (
+/obj/structure/sign/plaques/sciencestation{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "qyI" = (
 /obj/machinery/porta_turret/ai{
 	installation = /obj/item/gun/energy/e_gun
@@ -59613,7 +59620,7 @@ aiT
 aga
 aga
 aga
-aga
+qvH
 amJ
 aga
 aga
