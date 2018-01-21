@@ -144,7 +144,6 @@
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
 		if(!H.mind || !H.mind.active)
-			bodies -= H
 			return
 
 		var/list/available_bodies = (bodies - H)
@@ -342,12 +341,11 @@
 		SS.bodies -= dupe
 		return FALSE
 
-	if(dupe.stat == DEAD) 				//Is it alive?
+	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
 		SS.bodies -= dupe
 		return FALSE
 
-	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
-		SS.bodies -= dupe
+	if(dupe.stat == DEAD) 				//Is it alive?
 		return FALSE
 
 	if(dupe.stat != CONSCIOUS) 			//Is it awake?
