@@ -15982,8 +15982,7 @@
 /turf/open/floor/plating,
 /area/library)
 "aJd" = (
-/obj/structure/table/wood,
-/obj/item/storage/pill_bottle/dice,
+/obj/machinery/vending/games,
 /turf/open/floor/wood,
 /area/library)
 "aJe" = (
