@@ -1295,5 +1295,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A new hit cocktail inspired by THE ARM Breweries will have you shouting Fuu ma'jin in no time!"
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/M)
-	M.cultslurring += 3
+	M.cultslurring = min(M.cultslurring + 3, 3)
+	M.stuttering = min(M.stuttering + 3, 3)
 	..()
