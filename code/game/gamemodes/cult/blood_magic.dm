@@ -143,13 +143,13 @@
 	name = "Electromagnetic Pulse"
 	desc = "A large spell that immediately disables all electronics in the area."
 	button_icon_state = "emp"
-	health_cost = 5
+	health_cost = 10
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 4, 8)
+	empulse(owner, 3, 6)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
@@ -413,7 +413,7 @@
 				S.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/C = L
-				C.silent += 7
+				C.silent += 6
 				C.stuttering += 15
 				C.cultslurring += 15
 				C.Jitter(15)
