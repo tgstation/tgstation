@@ -847,11 +847,9 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "bu" = (
-/obj/machinery/sleeper/syndie{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/listeningstation)
 "bv" = (
