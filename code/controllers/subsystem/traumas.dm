@@ -20,13 +20,13 @@ SUBSYSTEM_DEF(traumas)
 						"greytide"  = strings(PHOBIA_FILE, "greytide"),
 						"lizards"   = strings(PHOBIA_FILE, "lizards"),
 						"skeletons" = strings(PHOBIA_FILE, "skeletons"),
-						"snakes"	= strings(PHOBIA_FILE, "snakes"),
+						"snakes"	= strings(PHOBIA_FILE, "snakes")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
-					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard))
-					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/poison/snake)),
+					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
+					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/poison/snake))
 					   )
 
 	phobia_objs = list("spiders"   = typecacheof(list(/obj/structure/spider)),
