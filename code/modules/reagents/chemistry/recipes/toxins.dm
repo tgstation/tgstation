@@ -111,11 +111,11 @@
 /datum/chemical_reaction/dna_mutagen
 	name = "Stable mutagen"
 	id = "dna_mutagen"
-	results = results("dna_mutagen" = 3)
+	results = list("dna_mutagen" = 3)
 	required_reagents = list("mutagen" = 1, "lithium" = 1, "acetone" = 1, "bromine" = 1)
 	mix_phrase = "The substance turns a drab green and begins to bubble."
 
 /datum/chemical_reaction/dna_mutagen/dna_mutagen2
 	id = "dna_mutagen2"
 	required_reagents = list("mutadone" = 3, "lithium" = 1)
-	results = results("dna_mutagen" = 4)
+	results = list("dna_mutagen" = 4)
