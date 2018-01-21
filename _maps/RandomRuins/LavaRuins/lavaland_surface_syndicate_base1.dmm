@@ -2597,9 +2597,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ig" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -6668,10 +6666,10 @@ ab
 dG
 dG
 ig
-iu
-iu
-iu
-lv
+ig
+ig
+ig
+ig
 lT
 mq
 mS
@@ -6714,11 +6712,11 @@ ab
 dG
 dG
 ig
-je
-iv
-jk
+ig
+ig
+ig
 le
-lw
+ig
 lT
 mr
 mS
@@ -6760,8 +6758,8 @@ ab
 dG
 dG
 ig
-je
-jk
+ig
+ig
 jx
 jx
 jP
@@ -6806,8 +6804,8 @@ ab
 dG
 dG
 ig
-je
-jk
+ig
+ig
 jx
 jx
 kG
@@ -6852,8 +6850,8 @@ dG
 dG
 dG
 ig
-je
-iv
+ig
+ig
 jx
 jx
 kn
@@ -6896,10 +6894,10 @@ hw
 hI
 hX
 ig
-iu
-iu
-je
-jk
+ig
+ig
+ig
+ig
 jx
 jx
 jN
@@ -6942,11 +6940,11 @@ gZ
 hw
 hJ
 hY
-ih
-iv
+ig
+ig
 iM
-iv
-iv
+ig
+ig
 jx
 jL
 jY
