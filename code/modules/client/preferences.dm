@@ -332,10 +332,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 				dat += "</td>"
-<<<<<<< HEAD
-			
-			dat = add_hippie_choices(dat)
-=======
+
 			if("moth_wings" in pref_species.mutant_bodyparts)
 
 				dat += "<td valign='top' width='7%'>"
@@ -346,7 +343,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
->>>>>>> b30e2934e7... Moths, except I have stolen them and they no longer conflict (#34498)
+			dat = add_hippie_choices(dat)
+			
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
 				if("tail_human" in pref_species.mutant_bodyparts)
