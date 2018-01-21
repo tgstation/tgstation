@@ -1,0 +1,5 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "We've lost contact with one of our trade caravans in your sector, be on the lookout for possible enemy activity."
+  - rscadd: "Redesigned the syndicate ambush space ruin. It now boasts multiple flyable shuttles and looks a lot prettier."
