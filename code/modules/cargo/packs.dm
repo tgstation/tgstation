@@ -1035,6 +1035,17 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/organic/critter/snake
+    name = "Exotic Snakes"
+    cost = 6000
+    contains = list(/mob/living/simple_animal/hostile/poison/snake)
+    crate_name = "snake crate"
+
+/datum/supply_pack/organic/critter/snake/generate()
+    . = ..()
+    for(var/i in 1 to 3)
+        new /mob/living/simple_animal/hostile/poison/snake(.)
+
 /datum/supply_pack/organic/critter/chick
 	name = "Chicken Crate"
 	cost = 2000
