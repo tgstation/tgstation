@@ -931,7 +931,7 @@
 				to_chat(M, "<span class='notice'>You feel like another person.</span>")
 		if(30 to INFINITY)
 			if(dna_to)
-				M.dna = dna_to.Copy()
+				M.dna = dna_to.copy_dna(M.dna)
 				M.updateappearance()
 				M.domutcheck()
 	..()
