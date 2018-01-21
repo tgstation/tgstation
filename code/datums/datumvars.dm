@@ -925,11 +925,11 @@
 					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
 					var/y = input(usr, "Choose x mod","Transform Mod") as null|num
 					if(!isnull(x) && !isnull(y))
-						A.transform = M.Transform(x,y)
+						A.transform = M.Translate(x,y)
 				if("Rotate")
 					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 					if(!isnull(angle))
-						A.transform = M.Rotate(angle)
+						A.transform = M.Turn(angle)
 			
 			href_list["datumrefresh"] = href_list["modtransform"]
 
