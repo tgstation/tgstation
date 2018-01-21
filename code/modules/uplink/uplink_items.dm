@@ -1294,6 +1294,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/clownbomb
 	cost = 12
+	restricted_roles = list("Clown")
 
 // Pointless
 /datum/uplink_item/badass
