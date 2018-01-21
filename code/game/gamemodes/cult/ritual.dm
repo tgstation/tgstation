@@ -269,5 +269,11 @@ This file contains the arcane tome files.
 	if(!is_station_level(T.z) && !is_mining_level(T.z))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
+		
+	var/area/A = get_area(T)
+	if(A && !A.blob_allowed)
+		to_chat(user, "<span class='warning'>There's a passage in [src] specifically forbidding oyster consumption, triple-frying, and building outside of designated cult zones.</span>")
+		return FALSE
+		
 
 	return TRUE
