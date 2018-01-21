@@ -148,5 +148,22 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
 	if(iscultist(M))
+    return TRUE
+	return FALSE
+  
+/datum/atom_hud/alternate_appearance/basic/blessedAware
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/New()
+	..()
+	for(var/mob in GLOB.mob_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/mobShouldSee(mob/M)
+	if(M.mind && (M.mind.assigned_role == "Chaplain"))
+		return TRUE
+	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
+		return TRUE
+	if(isrevenant(M) || iseminence(M) || iswizard(M))
 		return TRUE
 	return FALSE
