@@ -157,6 +157,34 @@
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
 
+/datum/reagent/medicine/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
+	color = "#f7832a"
+	taste_description = "spicy jelly"
+
+/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
+	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		var/power = 0
+		switch(M.bodytemperature)
+			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+				power = 2
+			if(400 to 460)
+				power = 3
+			else(power = 5)
+		if(M.on_fire)
+			power *= 2
+
+		M.adjustOxyLoss(-2 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-1.5 * power, 0)
+		M.adjustToxLoss(-power, 0, TRUE)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	..()
+
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
 	id = "rezadone"
