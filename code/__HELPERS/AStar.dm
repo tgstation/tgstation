@@ -45,7 +45,7 @@ Actual Adjacent procs :
 	prevNode = p
 	g = pg
 	h = ph
-	f = g + h
+	f = g + h*(1+SSpathfinder.tiew)
 	nt = pnt
 
 /datum/PathNode/proc/calc_f()
@@ -86,7 +86,7 @@ Actual Adjacent procs :
 	var/l
 	l = SSpathfinder.getfree()
 	while(!l)
-		stoplag(1)
+		stoplag(10)
 		l = SSpathfinder.getfree()
 	var/datum/PathNode/cur = start.Pathl[l]//current processed turf
 	if(cur.check)

@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/free
 	var/list/flow
 	var/static/space_type_cache
+	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
 /datum/controller/subsystem/pathfinder/Initialize()
 	space_type_cache = typecacheof(/turf/open/space)
@@ -18,10 +19,11 @@ SUBSYSTEM_DEF(pathfinder)
 
 /datum/controller/subsystem/pathfinder/proc/getfree()
 	if(run < lcount)
+		run += 1
 		while(flow[free])
 			free = (free % lcount) + 1
 		flow[free] = TRUE
-		run += 1
+
 		return free
 	else
 		return 0
