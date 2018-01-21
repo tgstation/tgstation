@@ -273,6 +273,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	and something evil takes root.</b></span>")
 	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>")
+	if(ishuman(convertee))
+		var/mob/living/carbon/human/H = convertee
+		H.uncuff()
+		H.stuttering = 0
+		H.cultslurring = 0
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)

@@ -493,7 +493,7 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
-				C.silent += 7
+				C.silent += 5
 				to_chat(user, "<span class='notice'>You shackle [C].</span>")
 				add_logs(user, C, "shackled")
 				uses--
