@@ -172,7 +172,8 @@
 				power = 2
 			if(400 to 460)
 				power = 3
-			else(power = 5)
+			else
+				power = 5
 		if(M.on_fire)
 			power *= 2
 

@@ -245,6 +245,6 @@
 		if(isluminescent(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(0, extract_cooldown - 20)
+			L.extract_cooldown = max(0, L.extract_cooldown - 20)
 	..()
 
