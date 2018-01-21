@@ -65506,7 +65506,7 @@
 /turf/open/floor/plating,
 /area/hippie/clown)
 "cUT" = (
-/obj/machinery/door/airlock/clown{
+/obj/machinery/door/airlock/bananium{
 	name = "Clown's Office";
 	req_access_txt = "46"
 	},
