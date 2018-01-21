@@ -19,14 +19,15 @@
 
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
-	owner.objectives += team.objectives
+	objectives += team.objectives
+	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= team.objectives
+	owner.objectives -= objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
