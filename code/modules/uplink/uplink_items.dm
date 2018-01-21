@@ -1293,7 +1293,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/clownbomb
-	cost = 12
+	cost = 15
 	restricted_roles = list("Clown")
 
 // Pointless
