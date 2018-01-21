@@ -902,3 +902,28 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/toxin/mutagen_stable
+	name = "Stable mutagen"
+	id = "dna_mutagen"
+	description = "Predictable mutagen. Keep away from foreign DNA."
+	color = "#00FF00"
+	toxpwr = 0
+	taste_description = "slime"
+	taste_mult = 0.9
+	var/datum/dna/dna_to
+
+/datum/reagent/toxin/mutagen_stable/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
+	if(!..())
+		return
+	if(!M.has_dna())
+		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
+	if(!dna_to)
+		for(var/datum/reagent/blood/B in M.reagents.reagent_list)
+			if(B.data && B.data["dna_copy"] && B.data["dna_copy"] != M.dna)
+				dna_to = B.data["dna_copy"]
+	if(current_cycle >= 30)
+		M.dna = dna_to.Copy()
+		M.updateappearance()
+		M.domutcheck()
+	..()
