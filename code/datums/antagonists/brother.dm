@@ -57,6 +57,31 @@
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
 
+<<<<<<< HEAD
+=======
+/datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
+	//show list of possible brothers
+	var/list/candidates = list()
+	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(!L.mind || L.mind == new_owner || !can_be_owned(L.mind))
+			continue
+		candidates[L.mind.name] = L.mind
+
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
+	if(!choice)
+		return
+	var/datum/mind/bro = candidates[choice]
+	var/datum/team/brother_team/T = new
+	T.add_member(new_owner)
+	T.add_member(bro)
+	T.pick_meeting_area()
+	T.forge_brother_objectives()
+	new_owner.add_antag_datum(/datum/antagonist/brother,T)
+	bro.add_antag_datum(/datum/antagonist/brother, T)
+	T.update_name()
+	message_admins("[key_name_admin(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
+	log_admin("[key_name(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
+>>>>>>> ae2a8dc467... Fixes rev mindswap (#34567)
 
 /datum/team/brother_team
 	name = "brotherhood"

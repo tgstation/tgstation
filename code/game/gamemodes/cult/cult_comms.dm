@@ -31,7 +31,7 @@
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
 	var/span = "cult italic"
-	if(user.mind && user.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
 		span = "cultlarge"
 		if(ishuman(user))
 			title = "Master"
@@ -141,7 +141,7 @@
 		return FALSE
 	team.cult_mastered = TRUE
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
-	Nominee.mind.add_antag_datum(ANTAG_DATUM_CULT_MASTER)
+	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
 	for(var/datum/mind/B in team.members)
 		if(B.current)
 			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
@@ -151,7 +151,7 @@
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER) || GLOB.cult_narsie)
+	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
 		return 0
 	return ..()
 
@@ -234,7 +234,7 @@
 	..()
 
 /datum/action/innate/cult/master/cultmark/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master))
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
@@ -329,7 +329,7 @@
 	..()
 
 /datum/action/innate/cult/master/pulse/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master))
 		return FALSE
 	if(cooldown > world.time)
 		if(!PM.active)

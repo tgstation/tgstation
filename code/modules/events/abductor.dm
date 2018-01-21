@@ -30,7 +30,12 @@
 	if(!team)
 		return MAP_ERROR
 
+<<<<<<< HEAD
 	GM.post_setup_team(team)
+=======
+	scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, T)
+	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)
+>>>>>>> ae2a8dc467... Fixes rev mindswap (#34567)
 
 	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN

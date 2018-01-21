@@ -190,12 +190,12 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(/datum/antagonist/traitor)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
-		remove_antag_datum(ANTAG_DATUM_BROTHER)
+		remove_antag_datum(/datum/antagonist/brother)
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -1422,10 +1422,15 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
+<<<<<<< HEAD
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/T = new(src)
 		T.should_specialise = TRUE
 		add_antag_datum(T)
+=======
+	if(!(has_antag_datum(/datum/antagonist/traitor)))
+		add_antag_datum(/datum/antagonist/traitor)
+>>>>>>> ae2a8dc467... Fixes rev mindswap (#34567)
 
 /datum/mind/proc/make_Changling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
