@@ -88,10 +88,14 @@
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
+		if(!M)
+			continue
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	for(var/V in GLOB.brass_recipes)
 		var/datum/stack_recipe/R = V
+		if(!R)
+			continue
 		if(R.title == "wall gear")
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
@@ -123,7 +127,9 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(M.current.stat != DEAD)
+		if(!M)
+			continue
+		if(isliving(M.current) && M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 		M.current.clear_fullscreen("flash", 5)
@@ -262,7 +268,7 @@
 		return
 	if(!first_sound_played || prob(7))
 		for(var/mob/M in GLOB.player_list)
-			if(M && !isnewplayer(M))
+			if(!isnewplayer(M))
 				var/turf/T = get_turf(M)
 				if(T && T.z == z)
 					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")

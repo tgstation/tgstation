@@ -168,7 +168,7 @@
 
 /obj/item/ore/bananium
 	name = "bananium ore"
-	icon_state = "Clown ore"
+	icon_state = "Bananium ore"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium

@@ -695,7 +695,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -1109,7 +1109,7 @@
 	},
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -1131,7 +1131,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/enginesafety{
+/obj/structure/sign/warning/enginesafety{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,

@@ -740,28 +740,6 @@
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
-		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))
-				return
-
-			var/mob/living/carbon/human/M = locate(href_list["ninja"]) in GLOB.carbon_list
-			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
-				return
-
-			if(tgalert(usr, "Are you sure you want to make [M] into a ninja?", "Confirmation", "Yes", "No") == "No")
-				return
-
-			if(!M.mind)
-				M.mind_initialize()
-
-			var/datum/antagonist/ninja/hiyah = M.mind.has_antag_datum(/datum/antagonist/ninja)
-			if(!hiyah)
-				hiyah = add_ninja(M)
-			if(hiyah)
-				hiyah.equip_space_ninja()
-			href_list["datumrefresh"] = href_list["ninja"]
-
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))
 				return

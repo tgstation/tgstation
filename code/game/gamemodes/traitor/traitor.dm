@@ -61,8 +61,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		var/datum/antagonist/traitor/new_antag = new antag_datum(traitor)
-		new_antag.should_specialise = TRUE
+		var/datum/antagonist/traitor/new_antag = new antag_datum()
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
@@ -82,8 +81,7 @@
 						add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
-	var/datum/antagonist/traitor/new_antag = new antag_datum(character)
-	new_antag.should_specialise = TRUE
+	var/datum/antagonist/traitor/new_antag = new antag_datum()
 	character.add_antag_datum(new_antag)
 
 /datum/game_mode/traitor/generate_report()
