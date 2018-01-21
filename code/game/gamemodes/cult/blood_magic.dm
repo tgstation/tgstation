@@ -445,9 +445,10 @@
 			log_game("Teleport talisman failed - no other teleport runes")
 			return
 
-		if(user.z > ZLEVEL_SPACEMAX)
+		var/turf/T = get_turf(src)
+		if(is_away_level(T.z))
 			to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
-			log_game("Teleport talisman failed - user in away mission")
+			log_game("Teleport spell failed - user in away mission")
 			return
 
 		var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked

@@ -148,9 +148,9 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
 	if(iscultist(M))
-    	return TRUE
+		return TRUE
 	return FALSE
-  
+
 /datum/atom_hud/alternate_appearance/basic/blessedAware
 
 /datum/atom_hud/alternate_appearance/basic/blessedAware/New()

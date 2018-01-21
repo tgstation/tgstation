@@ -17,14 +17,15 @@
 
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
-	owner.objectives += team.objectives
+	objectives += team.objectives
+	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= team.objectives
+	owner.objectives -= objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
@@ -71,8 +72,8 @@
 	T.add_member(bro)
 	T.pick_meeting_area()
 	T.forge_brother_objectives()
-	new_owner.add_antag_datum(ANTAG_DATUM_BROTHER,T)
-	bro.add_antag_datum(ANTAG_DATUM_BROTHER, T)
+	new_owner.add_antag_datum(/datum/antagonist/brother,T)
+	bro.add_antag_datum(/datum/antagonist/brother, T)
 	T.update_name()
 	message_admins("[key_name_admin(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
 	log_admin("[key_name(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
