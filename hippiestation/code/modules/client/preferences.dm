@@ -3,7 +3,7 @@
 #define BACKPACK_SLOT_AMT	3
 
 /datum/preferences
-	features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+	features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "ipc_screen" = "Sunburst")
 	var/gear_points = 5
 	var/list/gear_categories
 	var/list/chosen_gear
@@ -15,23 +15,23 @@
 	LAZYINITLIST(chosen_gear)
 
 /datum/preferences/proc/add_hippie_choices(dat)
-	if("moth_wings" in pref_species.mutant_bodyparts)
+	if("ipc_screen" in pref_species.mutant_bodyparts)
 		dat += "<td valign='top' width='7%'>"
 
-		dat += "<h3>Moth wings</h3>"
+		dat += "<h3>Screen</h3>"
 
-		dat += "<a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+		dat += "<a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
 
 		dat += "</td>"
 	return dat
 
 /datum/preferences/proc/process_hippie_link(mob/user, list/href_list)
 	if(href_list["task"] == "input")
-		if(href_list["preference"] == "moth_wings")
-			var/new_moth_wings
-			new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
-			if(new_moth_wings)
-				features["moth_wings"] = new_moth_wings
+		if(href_list["preference"] == "ipc_screen")
+			var/new_ipc_screen
+			new_ipc_screen = input(user, "Choose your character's screen:", "Character Preference") as null|anything in GLOB.ipc_screens_list
+			if(new_ipc_screen)
+				features["ipc_screen"] = new_ipc_screen
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
 			LAZYCLEARLIST(chosen_gear)

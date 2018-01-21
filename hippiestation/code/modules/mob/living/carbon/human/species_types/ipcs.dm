@@ -5,8 +5,8 @@
 	default_color = "00FF00"
 	blacklisted = 0
 	sexes = 0
-	mutant_bodyparts = list("screen")
-	default_features = list("screen" = "Screen")
+	mutant_bodyparts = list("ipc_screen")
+	default_features = list("ipc_screen" = "Sunburst")
 	species_traits = list(MUTCOLORS)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 
