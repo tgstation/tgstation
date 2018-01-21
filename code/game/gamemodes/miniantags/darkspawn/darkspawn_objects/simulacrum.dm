@@ -4,6 +4,7 @@
 	desc = "What are you hiding?!"
 	icon_state = "static"
 	density = TRUE
+	obj_integrity = 25
 	var/mob/living/mimicking
 
 /obj/effect/simulacrum/Initialize()

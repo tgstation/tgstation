@@ -21,7 +21,7 @@
 	..()
 	if(isobserver(user) || isdarkspawn(user))
 		to_chat(user, "<span class='velvet bold'>Functions:<span>")
-		to_chat(user, "<span class='velvet'><b>Help intent:</b> Click on an open tile within seven meters to jump to it for 10 Psi.</span>")
+		to_chat(user, "<span class='velvet'><b>Help intent:</b> Click on an open tile within seven tiles to jump to it for 10 Psi.</span>")
 		to_chat(user, "<span class='velvet'><b>Disarm intent:</b> Click on an airlock to force it open for 15 Psi (or 30 if it's bolted.)</span>")
 		to_chat(user, "<span class='velvet'><b>Harm intent:</b> Click on a mob within four tiles to knock them down after half a second.</span>")
 		to_chat(user, "<span class='velvet'>The tendrils will shatter light fixtures instantly, as opposed to in several attacks.</span>")
@@ -42,7 +42,7 @@
 	if(!darkspawn.has_psi(10))
 		to_chat(user, "<span class='warning'>You need at least 10 Psi to jump!</span>")
 		return
-	if(!(target in view(5, user)))
+	if(!(target in view(7, user)))
 		to_chat(user, "<span class='warning'>You can't access that area, or it's too far away!</span>")
 		return
 	to_chat(user, "<span class='velvet'>You pull yourself towards [target].</span>")
@@ -51,8 +51,11 @@
 	darkspawn.use_psi(10)
 
 /obj/item/umbral_tendrils/proc/tendril_swing(mob/living/user, mob/living/target) //swing the tendrils to knock someone down
-	if(!(target in view(4, user)))
+	if(!(target in view(5, user)))
 		to_chat(user, "<span class='warning'>[target] is not accessible or needs to be closer!</span>")
+		return
+	if(target.lying)
+		to_chat(user, "<span class='warning'>[target] is already knocked down!</span>")
 		return
 	user.visible_message("<span class='warning'>[user] draws back [src] and swings them towards [target]!</span>", \
 	"<span class='velvet'><b>opehhjaoo</b><br>You swing your tendrils towards [target]!</span>")
@@ -62,17 +65,19 @@
 /obj/item/umbral_tendrils/proc/tendril_knockdown(mob/living/user, mob/living/target)
 	if(QDELETED(src))
 		return
-	if(!(target in view(4, user)))
+	if(!(target in view(5, user)))
 		user.visible_message("<span class='warning'>[user]'s tendrils crack as they whip harmlessly through the air!</span>", \
 		"<span class='velvet italics'>[target] escaped your range!</span>")
 		return
-	if(!issilicon(target))
-		target.visible_message("<span class='warning'>[user]'s [name] slam into [target], knocking \them off \their feet!</span>", \
+	if(!iscyborg(target))
+		target.visible_message("<span class='warning'>[user]'s [name] slam into [target], knocking them off their feet!</span>", \
 		"<span class='userdanger'>You feel something slam into your stomach, knocking you off your feet!</span>")
-		playsound(user, 'sound/magic/pass_attack.ogg', 50, TRUE)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 2)
+		playsound(target, 'sound/magic/pass_attack.ogg', 50, TRUE)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 1)
 		target.Knockdown(50)
 	else
+		var/mob/living/silicon/robot/R = target
+		R.update_headlamp(TRUE) //disable headlamps
 		target.visible_message("<span class='warning'>[user]'s [name] smashes into [target]'s chassis!</span>", \
 		"<span class='userdanger'>Heavy percussive impact detected. Recalibrating motor input.</span>")
 		target.playsound_local(target, 'sound/misc/interference.ogg', 25, FALSE)

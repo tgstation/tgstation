@@ -10,6 +10,10 @@
 /datum/action/innate/darkspawn/divulge/Activate()
 	set waitfor = FALSE
 	var/mob/living/carbon/human/user = usr
+	var/turf/spot = get_turf(user)
+	if(spot.get_lumcount() > DARKSPAWN_DIM_LIGHT)
+		to_chat(user, "<span class='warning'>You are only able to divulge in darkness!</span>")
+		return
 	if(alert(user, "You are ready to divulge. Are you sure?", name, "Yes", "No") == "No")
 		return
 	in_use = TRUE

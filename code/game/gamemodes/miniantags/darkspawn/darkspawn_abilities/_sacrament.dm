@@ -2,12 +2,15 @@
 /datum/action/innate/darkspawn/sacrament
 	name = "Sacrament"
 	id = "sacrament"
-	desc = "Ascends into a progenitor. You must have drained 15 lucidity for this to work."
+	desc = "Ascends into a progenitor. Unless someone else has performed the Sacrament, you must have drained 15 lucidity for this to work."
 	button_icon_state = "sacrament"
 	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	blacklisted = TRUE //baseline
 
 /datum/action/innate/darkspawn/sacrament/Activate()
+	if(darkspawn.sacrament_complete)
+		darkspawn.sacrament()
+		return
 	if(!darkspawn || darkspawn.lucidity_drained < 15)
 		to_chat(usr, "<span class='warning'>You do not have enough total drained lucidity! ([darkspawn.lucidity_drained] / 15)</span>")
 		return
@@ -53,9 +56,14 @@
 	for(var/turf/T in range(7, owner))
 		if(prob(25))
 			addtimer(CALLBACK(src, .proc/unleashed_psi, T), rand(1, 40))
+	addtimer(CALLBACK(src, .proc/shatter_lights), 35)
 	animate(user, pixel_y = user.pixel_y + 20, time = 40)
 	addtimer(CALLBACK(darkspawn, /datum/antagonist/darkspawn/.proc/sacrament), 40)
 
 /datum/action/innate/darkspawn/sacrament/proc/unleashed_psi(turf/T)
 	playsound(T, 'sound/magic/divulge_end.ogg', 25, FALSE)
 	new/obj/effect/temp_visual/revenant/cracks(T)
+
+/datum/action/innate/darkspawn/sacrament/proc/shatter_lights()
+	for(var/obj/machinery/light/light in SSmachines.processing)
+		light.break_light_tube()

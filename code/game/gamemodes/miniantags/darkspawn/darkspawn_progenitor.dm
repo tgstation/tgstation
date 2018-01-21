@@ -18,11 +18,11 @@
 	pixel_x = -48
 	pixel_y = -32
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	obj_damage = 100
 	light_range = 15
 	light_color = "#21007F"
-	weather_immunities = list("lava","ash")
+	weather_immunities = list("lava", "ash")
 	movement_type = FLYING
 	var/time_since_last_roar = 0
 
@@ -33,7 +33,7 @@
 /mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget()
 	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
 		playsound(target, 'sound/magic/pass_smash_door.ogg', 100, FALSE)
-		obj_damage = 30
+		obj_damage = 60
 	. = ..()
 	obj_damage = 100
 
@@ -52,13 +52,25 @@
 		roar()
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/say()
-	if(time_since_last_roar > world.time + 50) //come on, give it at least SOME time before you roarspam
+	if(time_since_last_roar > world.time + 350) //at least give it SOME time
 		return
 	roar()
+
+/mob/living/simple_animal/hostile/darkspawn_progenitor/Process_Spacemove()
+	return TRUE
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/proc/roar()
 	playsound(src, 'sound/creatures/progenitor_roar.ogg', 100, TRUE)
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
 			M.playsound_local(src, 'sound/creatures/progenitor_distant.ogg', 75, FALSE, falloff = 5)
-	time_since_last_roar = world.time + rand(300, 400)
+	time_since_last_roar = world.time + 400
+
+/mob/living/simple_animal/hostile/darkspawn_progenitor/narsie_act()
+	return
+
+/mob/living/simple_animal/hostile/darkspawn_progenitor/ratvar_act()
+	return
+
+/mob/living/simple_animal/hostile/darkspawn_progenitor/singularity_act()
+	return

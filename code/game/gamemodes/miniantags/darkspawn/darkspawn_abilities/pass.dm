@@ -4,7 +4,7 @@
 	id = "pass"
 	desc = "Twists an active arm into tendrils with many uses."
 	button_icon_state = "pass"
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_CONSCIOUS
 	blacklisted = TRUE //baseline
 
 /datum/action/innate/darkspawn/pass/IsAvailable()
@@ -17,6 +17,9 @@
 	active = locate(/obj/item/umbral_tendrils) in owner
 
 /datum/action/innate/darkspawn/pass/Activate()
+	if(owner.lying)
+		to_chat(owner, "<span class='warning'>Stand up first!</span>")
+		return
 	owner.visible_message("<span class='warning'>[owner]'s arm contorts into tentacles!</span>", "<span class='velvet bold'>ikna</span><br>\
 	<span class='notice'>You transform your arm into umbral tendrils. Examine them to see possible uses.</span>")
 	playsound(owner, 'sound/magic/pass_create.ogg', 50, 1)

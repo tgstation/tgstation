@@ -9,6 +9,7 @@
 	antagpanel_category = "Darkspawn"
 	job_rank = ROLE_DARKSPAWN
 	var/darkspawn_state = MUNDANE //0 for normal crew, 1 for divulged, and 2 for progenitor
+	var/static/sacrament_complete = FALSE //This causes any darkspawn beyond the first to perform the Sacrament instantaneously
 
 	//Psi variables
 	var/psi = 100 //Psi is the resource used for darkspawn powers
@@ -17,13 +18,15 @@
 	var/psi_regen_delay = 5 //How many ticks need to pass before Psi regenerates
 	var/psi_regen_ticks = 0 //When this hits 0, regenerate Psi and return to psi_regen_delay
 	var/psi_used_since_regen = 0 //How much Psi has been used since we last regenerated
+	var/psi_regenerating = FALSE //Used to prevent duplicate regen proc calls
 
 	//Lucidity variables
 	var/lucidity = 3 //Lucidity is used to buy abilities and is gained by using Devour Will
 	var/lucidity_drained = 0 //How much lucidity has been drained from other players
 
-	//Ability variables
+	//Ability and upgrade variables
 	var/list/abilities = list() //An associative list ("id" = ability datum) containing the abilities the darkspawn has
+	var/list/upgrades = list() //An associative list ("id" = null or TRUE) containing the passive upgrades the darkspawn has
 
 
 // Antagonist datum things like assignment //
@@ -62,8 +65,11 @@
 /datum/antagonist/darkspawn/antag_panel_data()
 	. = "<b>Abilities:</b><br>"
 	for(var/V in abilities)
-		var/datum/action/innate/darkspawn/D = abilities[V]
+		var/datum/action/innate/darkspawn/D = has_ability(V)
 		. += "[D.name] ([D.id])<br>"
+	. += "<br><b>Upgrades:</b><br>"
+	for(var/V in upgrades)
+		. += "[upgrades(V)]<br>"
 
 /datum/antagonist/darkspawn/get_admin_commands()
 	. = ..()
@@ -159,7 +165,7 @@
 /datum/antagonist/darkspawn/process() //This is here since it controls most of the Psi stuff
 	psi = min(psi, psi_cap)
 	if(psi != psi_cap)
-		psi_regen_ticks = max(0, psi_regen_ticks - 1)
+		psi_regen_ticks--
 		if(!psi_regen_ticks)
 			regenerate_psi()
 	update_psi_hud()
@@ -179,18 +185,24 @@
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
 	set waitfor = FALSE
-	var/total_regen = min(psi_used_since_regen, psi_regen)
-	while(total_regen && psi < psi_cap) //tick it up very quickly instead of just increasing it by the regen
+	if(psi_regenerating)
+		return
+	psi_regenerating = TRUE
+	var/total_regen = min(psi_regen, psi_used_since_regen)
+	for(var/i in 1 to psi_cap) //tick it up very quickly instead of just increasing it by the regen; also include a failsafe to avoid infinite loops
+		if(!total_regen || psi >= psi_cap)
+			break
 		psi++
 		total_regen--
 		update_psi_hud()
 		sleep(0.5)
 	psi_used_since_regen = 0
 	psi_regen_ticks = psi_regen_delay
+	psi_regenerating = FALSE
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/update_psi_hud()
-	if(!owner.current)
+	if(!owner.current || !owner.current.hud_used)
 		return
 	var/obj/screen/counter = owner.current.hud_used.psi_counter
 	counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#7264FF'>[psi]</font></div>"
@@ -220,9 +232,26 @@
 	var/datum/action/innate/darkspawn/D = abilities[id]
 	if(!silent)
 		to_chat(owner.current, "<span class='velvet'>You have lost the <b>[D.name]</b> ability.</span>")
-	qdel(D)
-	abilities[id] = null
+	QDEL_NULL(abilities[id])
+	abilities -= abilities[id]
 	return TRUE
+
+/datum/antagonist/darkspawn/proc/has_upgrade(id)
+	return upgrades[id]
+
+/datum/antagonist/darkspawn/proc/add_upgrade(id, silent, no_cost)
+	if(has_upgrade(id))
+		return
+	for(var/V in subtypesof(/datum/darkspawn_upgrade))
+		var/datum/darkspawn_upgrade/_U = V
+		if(initial(_U.id) == id)
+			var/datum/darkspawn_upgrade/U = new _U(src)
+			upgrades[id] = TRUE
+			if(!silent)
+				to_chat(owner.current, "<span class='velvet bold'>You have adapted the \"[U.name]\" upgrade.</span>")
+			if(!no_cost)
+				lucidity = max(0, lucidity - initial(U.lucidity_price))
+			U.unlock()
 
 /datum/antagonist/darkspawn/proc/divulge()
 	var/mob/living/carbon/human/user = owner.current
@@ -245,13 +274,12 @@
 	for(var/V in abilities)
 		remove_ability(abilities[V], TRUE)
 	for(var/mob/M in GLOB.player_list)
-		M.playsound_local(M, 'sound/magic/sacrament_complete.ogg', 100, FALSE, pressure_affected = FALSE)
-	for(var/obj/machinery/light/light in SSmachines.processing)
-		light.break_light_tube()
-	psi = 99999
+		M.playsound_local(M, 'sound/magic/sacrament_complete.ogg', 70, FALSE, pressure_affected = FALSE)
+	psi = 9999
 	psi_cap = 9999
 	psi_regen = 9999
 	psi_regen_delay = 1
+	sacrament_complete = TRUE
 	darkspawn_state = PROGENITOR
 	QDEL_IN(user, 5)
 
@@ -273,6 +301,7 @@
 	data["lucidity"] = "[lucidity] ([lucidity_drained] drained)"
 
 	var/list/abilities = list()
+	var/list/upgrades = list()
 
 	for(var/path in subtypesof(/datum/action/innate/darkspawn))
 		var/datum/action/innate/darkspawn/ability = path
@@ -287,11 +316,26 @@
 		AL["psi_cost"] = "[initial(ability.psi_cost)][initial(ability.psi_addendum)]"
 		AL["lucidity_cost"] = initial(ability.lucidity_price)
 		AL["owned"] = has_ability(initial(ability.id))
-		AL["can_purchase"] = (!has_ability(initial(ability.id)) && lucidity >= initial(ability.lucidity_price))
+		AL["can_purchase"] = !AL["owned"] && lucidity >= initial(ability.lucidity_price)
 
 		abilities += list(AL)
 
 	data["abilities"] = abilities
+
+	for(var/path in subtypesof(/datum/darkspawn_upgrade))
+		var/datum/darkspawn_upgrade/upgrade = path
+
+		var/list/UP = list()
+		UP["name"] = initial(upgrade.name)
+		UP["id"] = initial(upgrade.id)
+		UP["desc"] = initial(upgrade.desc)
+		UP["lucidity_cost"] = initial(upgrade.lucidity_price)
+		UP["owned"] = has_upgrade(initial(upgrade.id))
+		UP["can_purchase"] = !UP["owned"] && lucidity >= initial(upgrade.lucidity_price)
+
+		upgrades += list(UP)
+
+	data["upgrades"] = upgrades
 
 	return data
 
@@ -301,6 +345,8 @@
 	switch(action)
 		if("unlock")
 			add_ability(params["id"])
+		if("upgrade")
+			add_upgrade(params["id"])
 
 #undef MUNDANE
 #undef DIVULGED

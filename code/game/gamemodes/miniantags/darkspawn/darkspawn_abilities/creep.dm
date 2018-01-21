@@ -2,7 +2,7 @@
 /datum/action/innate/darkspawn/creep
 	name = "Creep"
 	id = "creep"
-	desc = "Allows you to move freely through solid objects as long as they are in darkness. Drains 1 Psi per second."
+	desc = "Grants immunity to lightburn while active. Can be toggled on and off. Drains 1 Psi per second."
 	button_icon_state = "creep"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 1

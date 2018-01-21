@@ -654,7 +654,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Become lucid and perform the Sacrament."
 
 /datum/objective/darkspawn/check_completion()
-	return TRUE //placeholder
+	return istype(owner.current, /mob/living/simple_animal/hostile/darkspawn_progenitor)
 
 ////////////////////////////////
 // Changeling team objectives //
