@@ -440,4 +440,27 @@
 /obj/screen/alert/status_effect/creep
 	name = "Creep"
 	desc = "You are immune to lightburn. Drains 1 Psi per second."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
 	icon_state = "creep"
+
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 600
+	alert_type = /obj/screen/alert/status_effect/time_dilation
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is moving jerkily and unpredictably!</span>"
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.next_move_modifier -= 0.5
+	owner.action_speed_modifier -= 0.5
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.next_move_modifier += 0.5
+	owner.action_speed_modifier += 0.5
+
+/obj/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"

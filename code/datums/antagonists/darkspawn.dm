@@ -66,10 +66,11 @@
 	. = "<b>Abilities:</b><br>"
 	for(var/V in abilities)
 		var/datum/action/innate/darkspawn/D = has_ability(V)
-		. += "[D.name] ([D.id])<br>"
+		if(D && istype(D))
+			. += "[D.name] ([D.id])<br>"
 	. += "<br><b>Upgrades:</b><br>"
 	for(var/V in upgrades)
-		. += "[upgrades(V)]<br>"
+		. += "[V]<br>"
 
 /datum/antagonist/darkspawn/get_admin_commands()
 	. = ..()
@@ -208,6 +209,8 @@
 	counter.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#7264FF'>[psi]</font></div>"
 
 /datum/antagonist/darkspawn/proc/has_ability(id)
+	if(isnull(abilities[id]))
+		return
 	return abilities[id]
 
 /datum/antagonist/darkspawn/proc/add_ability(id, silent, no_cost)

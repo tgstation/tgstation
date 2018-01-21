@@ -65,5 +65,7 @@
 	new/obj/effect/temp_visual/revenant/cracks(T)
 
 /datum/action/innate/darkspawn/sacrament/proc/shatter_lights()
+	if(darkspawn.sacrament_complete)
+		return
 	for(var/obj/machinery/light/light in SSmachines.processing)
 		light.break_light_tube()

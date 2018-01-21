@@ -933,15 +933,19 @@
 		var/obj/item/umbral_tendrils/T = C
 		if(!T.darkspawn)
 			return ..()
-		else if(user.a_intent == INTENT_DISARM)
+		else if(user.a_intent == INTENT_DISARM && density)
 			if(!locked && !welded)
 				if(!T.darkspawn.has_psi(15))
 					to_chat(user, "<span class='warning'>You need at least 15 Psi to force open an airlock!</span>")
 					return
 				user.visible_message("<span class='warning'>[user] starts forcing open [src]!</span>", "<span class='velvet'><b>ueahz</b><br>You begin forcing open [src]...</span>")
 				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-				if(!do_after(user, 75, target = src))
-					return
+				if(!T.twin)
+					if(!do_after(user, 75, target = src))
+						return
+				else
+					if(!do_after(user, 50, target = src))
+						return
 				open(2)
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open!</span>")
@@ -953,10 +957,16 @@
 				user.visible_message("<span class='boldwarning'>[user] starts slamming [T] into [src]!</span>", \
 				"<span class='velvet italics'>You loudly begin smashing down [src].</span>")
 				while(obj_integrity > max_integrity * 0.25)
-					if(!do_after(user, rand(8, 10), target = src))
-						T.darkspawn.use_psi(30)
-						qdel(T)
-						return
+					if(T.twin)
+						if(!do_after(user, rand(4, 6), target = src))
+							T.darkspawn.use_psi(30)
+							qdel(T)
+							return
+					else
+						if(!do_after(user, rand(8, 10), target = src))
+							T.darkspawn.use_psi(30)
+							qdel(T)
+							return
 					playsound(src, 'sound/magic/pass_smash_door.ogg', 50, TRUE)
 					take_damage(max_integrity / rand(8, 15))
 					to_chat(user, "<span class='velvet bold'>klaj.</span>")

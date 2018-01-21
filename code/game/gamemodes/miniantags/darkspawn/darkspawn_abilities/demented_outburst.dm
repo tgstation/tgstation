@@ -2,7 +2,7 @@
 /datum/action/innate/darkspawn/demented_outburst
 	name = "Demented Outburst"
 	id = "demented_outburst"
-	desc = "Deafens and confuses listeners, and knocks away everyone nearby. Very loud. Costs 50 Psi."
+	desc = "Deafens and confuses listeners after a five-second charge period, knocking away everyone nearby. Costs 50 Psi."
 	button_icon_state = "demented_outburst"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 50 //big boom = big cost
@@ -10,7 +10,7 @@
 
 /datum/action/innate/darkspawn/demented_outburst/Activate()
 	in_use = TRUE
-	owner.visible_message("<span class='warning'>[owner] begins to growl!</span>", "<span class='velvet bold'>cap...</span><br>\
+	owner.visible_message("<span class='boldwarning'>[owner] begins to growl as their chitin hardens...</span>", "<span class='velvet bold'>cap...</span><br>\
 	<span class='danger'>You begin harnessing your power...</span>")
 	playsound(owner, 'sound/magic/demented_outburst_charge.ogg', 50, 0)
 	addtimer(CALLBACK(src, .proc/outburst, owner), 50)
@@ -21,7 +21,7 @@
 	in_use = FALSE
 	if(!owner || owner.stat)
 		return
-	owner.visible_message("<span class='boldwarning'>[owner] lets out a deafening scream!</span>", "<span class='velvet bold italics'>WSWU!</span><br>\
+	owner.visible_message("<span class='userdanger'>[owner] lets out a deafening scream!</span>", "<span class='velvet bold italics'>WSWU!</span><br>\
 	<span class='danger'>You let out a deafening outburst!</span>")
 	playsound(owner, 'sound/magic/demented_outburst_scream.ogg', 75, 0)
 	var/list/thrown_atoms = list()

@@ -12,10 +12,22 @@
 	hitsound = 'sound/magic/pass_attack.ogg'
 	attack_verb = list("impaled", "tentacled", "torn")
 	var/datum/antagonist/darkspawn/darkspawn
+	var/obj/item/umbral_tendrils/twin
 
 /obj/item/umbral_tendrils/Initialize(mapload, new_darkspawn)
 	. = ..()
 	darkspawn = new_darkspawn
+	for(var/obj/item/umbral_tendrils/U in loc)
+		if(U != src)
+			twin = U
+			U.twin = src
+			force = 12
+			U.force = 12
+
+/obj/item/umbral_tendrils/Destroy()
+	if(twin)
+		qdel(twin)
+	. = ..()
 
 /obj/item/umbral_tendrils/examine(mob/user)
 	..()
@@ -23,9 +35,16 @@
 		to_chat(user, "<span class='velvet bold'>Functions:<span>")
 		to_chat(user, "<span class='velvet'><b>Help intent:</b> Click on an open tile within seven tiles to jump to it for 10 Psi.</span>")
 		to_chat(user, "<span class='velvet'><b>Disarm intent:</b> Click on an airlock to force it open for 15 Psi (or 30 if it's bolted.)</span>")
-		to_chat(user, "<span class='velvet'><b>Harm intent:</b> Click on a mob within four tiles to knock them down after half a second.</span>")
+		to_chat(user, "<span class='velvet'><b>Harm intent:</b> Click on a mob within five tiles to knock them down after half a second.</span>")
 		to_chat(user, "<span class='velvet'>The tendrils will shatter light fixtures instantly, as opposed to in several attacks.</span>")
 		to_chat(user, "<span class='velvet'>Also functions to pry open depowered airlocks on any intent other than harm.</span>")
+
+/obj/item/umbral_tendrils/attack(mob/living/target, mob/living/user, twinned_attack = TRUE)
+	set waitfor = FALSE
+	..()
+	sleep(1)
+	if(twin && twinned_attack && user.Adjacent(target))
+		twin.attack(target, user, FALSE)
 
 /obj/item/umbral_tendrils/afterattack(atom/target, mob/living/user, proximity)
 	if(!darkspawn)
@@ -70,11 +89,17 @@
 		"<span class='velvet italics'>[target] escaped your range!</span>")
 		return
 	if(!iscyborg(target))
-		target.visible_message("<span class='warning'>[user]'s [name] slam into [target], knocking them off their feet!</span>", \
-		"<span class='userdanger'>You feel something slam into your stomach, knocking you off your feet!</span>")
 		playsound(target, 'sound/magic/pass_attack.ogg', 50, TRUE)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 1)
-		target.Knockdown(50)
+		if(!twin)
+			target.visible_message("<span class='warning'>[user]'s [name] slam into [target], knocking them off their feet!</span>", \
+			"<span class='userdanger'>You feel something slam into your stomach, knocking you off your feet!</span>")
+			target.Knockdown(50)
+		else
+			target.visible_message("<span class='warning'>[user]'s [name] slam into [target] and drag them across the ground!</span>", \
+			"<span class='userdanger'>You feel something slam into your stomach as you're suddenly dragged across the floor!</span>")
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 1)
+			target.Knockdown(80) //hit 'em twice
+			target.throw_at(get_step_towards(user, target), 7, 2)
 	else
 		var/mob/living/silicon/robot/R = target
 		R.update_headlamp(TRUE) //disable headlamps

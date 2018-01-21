@@ -30,6 +30,8 @@
 
 #define STATUS_EFFECT_CREEP /datum/status_effect/creep //Provides immunity to lightburn for darkspawn, does nothing to anyone else
 
+#define STATUS_EFFECT_TIME_DILATION /datum/status_effect/time_dilation //Provides immunity to slowdown and halves click-delay/action times
+
 /////////////
 // DEBUFFS //
 /////////////
