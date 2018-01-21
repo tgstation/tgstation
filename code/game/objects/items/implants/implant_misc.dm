@@ -118,6 +118,17 @@
 /obj/item/implant/health_monitor
 	name = "health monitor implant"
 	activated = TRUE
+	var/obj/item/device/radio/internal_radio
+	var/triggered_in_crit = FALSE
+
+/obj/item/implant/health_monitor/Initialize()
+	. = ..()
+	internal_radio = new/obj/item/device/radio(src)
+	internal_radio.keyslot = new /obj/item/device/encryptionkey/headset_med
+	internal_radio.subspace_transmission = TRUE
+	internal_radio.listening = FALSE
+	internal_radio.broadcasting = FALSE
+	internal_radio.recalculateChannels()
 
 /obj/item/implant/health_monitor/removed(source, silent = 0, special = 0)
 	if(..())
@@ -132,3 +143,11 @@
 		C.adv_health_hud = TRUE
 		to_chat(C, "<span class='notice'>You feel more in-tune with your body.</span>")
 	return ..()
+
+/obj/item/implant/health_monitor/on_life(mob/living/carbon/source)
+	if(!triggered_in_crit && source.InCritical())
+		triggered_in_crit = TRUE
+		var/area/location = get_area(src)
+		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", SPAN_ROBOT)
+	else
+		triggered_in_crit = FALSE

@@ -281,7 +281,7 @@
 	infodisplay += healths
 
 	for(var/X in subtypesof(/obj/screen/adv_health))
-		var/Y = new X()
+		var/obj/screen/adv_health/Y = new X()
 		Y.invisibility = INVISIBILITY_ABSTRACT
 		adv_health += Y
 		infodisplay += Y
