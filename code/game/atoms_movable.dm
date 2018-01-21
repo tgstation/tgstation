@@ -659,7 +659,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
+	var/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
