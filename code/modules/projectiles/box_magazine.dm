@@ -47,7 +47,7 @@
 /*hippie edit */
 	if ((caliber == "all") && (stored_ammo.len < max_ammo))
 		stored_ammo += R
-		R.loc = src
+		R.forceMove(src)
 		return 1
 /*hippie edit end*/
 
