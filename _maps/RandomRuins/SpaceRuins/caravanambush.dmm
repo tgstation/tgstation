@@ -1326,8 +1326,7 @@
 /obj/machinery/button/door{
 	id = "caravanpirate_bridge";
 	name = "Bridge Blast Door Control";
-	pixel_x = -16;
-	req_access_txt = "150"
+	pixel_x = -16
 	},
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/pirate)
