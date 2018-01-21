@@ -999,6 +999,25 @@
 	dir = 5
 	},
 /area/ruin/space/has_grav/listeningstation)
+"bJ" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 6;
+	height = 7;
+	id = "caravansyndicate3_listeningpost";
+	name = "Syndicate Listening Post";
+	width = 15
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 5;
+	id = "caravansyndicate1_listeningpost";
+	name = "Syndicate Listening Post";
+	width = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 aa
@@ -2250,7 +2269,7 @@ aa
 aa
 aa
 aa
-aa
+bJ
 aa
 aa
 aa
