@@ -573,6 +573,15 @@
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser
+	lethal_projectile_sound = 'sound/weapons/laser.ogg'
+	desc = "An energy blaster auto-turret."
+
+/obj/machinery/porta_turret/syndicate/energy/heavy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
@@ -756,7 +765,6 @@
 			return
 
 	user.set_machine(src)
-	var/area/area = get_area(src)
 	var/t = ""
 
 	if(locked && !(issilicon(user) || IsAdminGhost(user)))
@@ -767,7 +775,7 @@
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
 
-	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
+	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([get_area_name(src, TRUE)])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

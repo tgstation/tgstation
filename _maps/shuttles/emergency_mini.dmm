@@ -195,7 +195,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
-/turf/closed/wall/mineral/titanium,
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/regular{
@@ -204,7 +203,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
 /turf/closed/wall/mineral/titanium,
@@ -246,11 +245,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
-/turf/closed/wall/mineral/titanium,
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "O" = (
 /obj/machinery/computer/crew{

@@ -8,45 +8,35 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
-
-	crit_fail = 0     //Is the flash burnt out?
+	crit_fail = FALSE     //Is the flash burnt out?
 	var/times_used = 0 //Number of times it's been used.
+	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
+	var/cooldown = 0
+	var/last_trigger = 0 //Last time it was successfully triggered.
 
-
-/obj/item/device/assembly/flash/update_icon(var/flash = 0)
+/obj/item/device/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
 	if(crit_fail)
 		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
-
 	if(flash)
 		add_overlay("flash-f")
 		attached_overlays += "flash-f"
-		spawn(5)
-			update_icon()
+		addtimer(CALLBACK(src, .proc/update_icon), 5)
 	if(holder)
 		holder.update_icon()
 
 /obj/item/device/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
 		flash_carbon(user, user, 15, 0)
-		return 0
-	return 1
-
-/obj/item/device/assembly/flash/activate()
-	if(!try_use_flash())
-		return 0
-	var/turf/T = get_turf(src)
-	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
-	for(var/mob/living/carbon/M in viewers(3, T))
-		flash_carbon(M, null, 5, 0)
-
+		return FALSE
+	return TRUE
 
 /obj/item/device/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!crit_fail)
-		crit_fail = 1
+		crit_fail = TRUE
 		update_icon()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -55,57 +45,81 @@
 		var/turf/T = get_turf(src)
 		T.visible_message("<span class='danger'>[src] burns out!</span>")
 
-
-/obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
-	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
-		burn_out()
-		return 0
-
+/obj/item/device/assembly/flash/proc/flash_recharge(interval = 10)
 	var/deciseconds_passed = world.time - last_used
-	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
+	for(var/seconds = deciseconds_passed / 10, seconds >= interval, seconds -= interval) //get 1 charge every interval
 		times_used--
-
 	last_used = world.time
 	times_used = max(0, times_used) //sanity
-	return 1
+	if(max(0, prob(times_used * 3) - burnout_resistance)) //The more often it's used in a short span of time the more likely it will burn out
+		burn_out()
+		return FALSE
+	return TRUE
+
+//BYPASS CHECKS ALSO PREVENTS BURNOUT!
+/obj/item/device/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, power = 5, targeted = FALSE, mob/user)
+	if(!bypass_checks && !try_use_flash())
+		return FALSE
+	var/list/mob/targets = get_flash_targets(loc, range, FALSE)
+	if(user)
+		targets -= user
+	for(var/mob/M in targets)
+		flash_carbon(M, user, power, targeted, TRUE)
+	return TRUE
+
+/obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
+	if(!target_loc)
+		target_loc = loc
+	if(override_vision_checks)
+		return get_hearers_in_view(range, get_turf(target_loc))
+	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
+		return viewers(range, get_turf(target_loc))
+	else
+		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob)))
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
-	if(crit_fail)
-		return 0
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	if(crit_fail || (world.time < last_trigger + cooldown))
+		return FALSE
+	last_trigger = world.time
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	times_used++
-	flash_recharge(10)
-	update_icon(1)
+	flash_recharge()
+	update_icon(TRUE)
 	if(user && !clown_check(user))
-		return 0
+		return FALSE
+	return TRUE
 
-	return 1
-
-
-/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
-	add_logs(user, M, "flashed", src)
-	if(user && targeted)
+/obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
+	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	if(generic_message && M != user)
+		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
+	if(targeted)
 		if(M.flash_act(1, 1))
 			M.confused += power
-			terrible_conversion_proc(M, user)
+			if(user)
+				terrible_conversion_proc(M, user)
+				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+				to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
+				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
+			else
+				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
 			M.Knockdown(rand(80,120))
-			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
-		else
+		else if(user)
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
 			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+		else
+			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
 			M.confused += power
 
 /obj/item/device/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
-		return 0
+		return FALSE
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
-		return 1
+		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
@@ -114,29 +128,24 @@
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
-		return 1
+		return TRUE
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)
-		return 0
-	if(!try_use_flash(user))
-		return 0
-	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
-	for(var/mob/living/carbon/M in oviewers(3, null))
-		flash_carbon(M, user, 1, 0)
-
+		return FALSE
+	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
+		return FALSE
+	to_chat(user, "<span class='danger'>Your [src] emits a blinding light!</span>")
 
 /obj/item/device/assembly/flash/emp_act(severity)
 	if(!try_use_flash())
-		return 0
-	if(iscarbon(loc))
-		flash_carbon(loc, null, 10, 0)
+		return FALSE
+	AOE_flash()
 	burn_out()
-	..()
-
+	. = ..()
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
@@ -189,7 +198,7 @@
 	if(I && I.owner)
 		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
-	overheat = FALSE
+	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
 
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
@@ -199,7 +208,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	return TRUE
 
@@ -229,8 +238,8 @@
 /obj/item/device/assembly/flash/shield/flash_recharge(interval=10)
 	if(times_used >= 4)
 		burn_out()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/device/assembly/flash/shield/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))

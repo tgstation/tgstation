@@ -21,6 +21,7 @@ FLOOR SAFES
 	var/dial = 0		//where is the dial pointing?
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	var/explosion_count = 0	//Tough, but breakable
 
 
 /obj/structure/safe/New()
@@ -47,6 +48,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
+	if(explosion_count > 2)
+		return 1
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
 			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
@@ -182,7 +185,15 @@ FLOOR SAFES
 	return
 
 /obj/structure/safe/ex_act(severity, target)
-	return
+	if(((severity == 2 && target == src) || severity == 1) && explosion_count < 3)
+		explosion_count++
+		switch(explosion_count)
+			if(1)
+				desc = initial(desc) + "\nIt looks a little banged up."
+			if(2)
+				desc = initial(desc) + "\nIt's pretty heavily damaged."
+			if(3)
+				desc = initial(desc) + "\nThe lock seems to be broken."
 
 
 //FLOOR SAFES

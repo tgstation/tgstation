@@ -68,6 +68,7 @@
 	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
+	var/atom/movable/buckling
 
 	//Hands
 	var/active_hand_index = 1

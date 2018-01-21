@@ -333,12 +333,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	return ..()
 
-/obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
-		return
-	..()
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()

@@ -19,7 +19,7 @@
 /datum/component/jousting/Initialize()
 	if(!isitem(parent))
 		. = COMPONENT_INCOMPATIBLE
-		stack_trace("Warning: Jousting component incorrectly applied to invalid parent type [parent.type]")
+		CRASH("Warning: Jousting component incorrectly applied to invalid parent type [parent.type]")
 	RegisterSignal(COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(COMSIG_ITEM_ATTACK, .proc/on_attack)
@@ -29,9 +29,13 @@
 	return ..()
 
 /datum/component/jousting/proc/on_equip(mob/user, slot)
-	QDEL_NULL(listener)
 	current_holder = user
-	listener = new(user, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/mob_move))
+	if(!listener)
+		listener = user.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/mob_move))
+	else
+		user.TakeComponent(listener)
+		if(QDELING(listener))
+			listener = null
 
 /datum/component/jousting/proc/on_drop(mob/user)
 	QDEL_NULL(listener)

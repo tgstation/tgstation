@@ -18,12 +18,12 @@
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE)	//Immune atoms assoc list atom = TRUE
 	. = ..()
-	if(immune_atoms)
-		immune = immune_atoms.Copy()
 	if(!isnull(time))
 		duration = time
 	if(!isnull(radius))
 		freezerange = radius
+	for(var/A in immune_atoms)
+		immune[A] = TRUE
 	for(var/mob/living/L in GLOB.player_list)
 		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune[L] = TRUE

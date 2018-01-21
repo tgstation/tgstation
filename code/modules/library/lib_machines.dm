@@ -403,7 +403,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical")
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
