@@ -102,9 +102,6 @@
 	if(recent_marauders)
 		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
 
-
-/datum/clockwork_scripture/create_object/construct/clockwork_marauder/check_special_requirements()
-
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)
 	calculate_scaling()
