@@ -113,7 +113,7 @@
 	id = "dna_mutagen"
 	results = list("dna_mutagen" = 3)
 	required_reagents = list("mutagen" = 1, "lithium" = 1, "acetone" = 1, "bromine" = 1)
-	mix_phrase = "The substance turns a drab green and begins to bubble."
+	mix_message = "The substance turns a drab green and begins to bubble."
 
 /datum/chemical_reaction/dna_mutagen/dna_mutagen2
 	id = "dna_mutagen2"
