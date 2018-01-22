@@ -1038,8 +1038,8 @@
 /datum/supply_pack/organic/critter/snake
     name = "Exotic Snakes"
     cost = 3000
-    contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake
-    				/mob/living/simple_animal/hostile/retaliate/poison/snake
+    contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake,
     				/mob/living/simple_animal/hostile/retaliate/poison/snake)
     crate_name = "snake crate"
 
