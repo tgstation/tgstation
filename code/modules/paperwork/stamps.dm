@@ -116,7 +116,7 @@
 
 /obj/item/stamp/chameleon/broken/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/stamp/chameleon/broken/process()
 	change_to(pick(stamp_types))
