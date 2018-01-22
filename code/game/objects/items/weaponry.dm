@@ -637,5 +637,4 @@
 	if(dist < reach)
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
-	else
-		M.attack_hand(user)
+	M.attack_hand(user)
