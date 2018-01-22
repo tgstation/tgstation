@@ -44,13 +44,13 @@
 	icon_state = "arch_devil"
 
 /mob/living/carbon/true_devil/proc/set_name()
-	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	name = devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
 	..()
-	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	devilinfo.greet()
 	mind.announce_objectives()
 
@@ -58,7 +58,7 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.has_antag_datum(ANTAG_DATUM_DEVIL), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)

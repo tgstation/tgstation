@@ -42,12 +42,16 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
 
 	#config folder should not be mandatory
-	rm -rf config
+	rm -rf config/*
+	
+	#disable all ruins
+	echo -e "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
 
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme && DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
+		cat data/logs/travis/clean_run.lk
 	fi;
 fi;

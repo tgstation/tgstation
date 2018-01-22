@@ -9,7 +9,7 @@
 	name = "White Ship Navigation Computer"
 	desc = "Used to designate a precise transit location for the White Ship."
 	shuttleId = "whiteship"
-	station_lock_override = TRUE
+	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "whiteship_custom"
 	shuttlePortName = "Custom Location"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1)

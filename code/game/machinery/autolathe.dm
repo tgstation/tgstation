@@ -125,14 +125,14 @@
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
-		use_power(max(500, amount_inserted / 10))
+		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)
 			if (MAT_METAL)
 				flick("autolathe_o",src)//plays metal insertion animation
 			if (MAT_GLASS)
 				flick("autolathe_r",src)//plays glass insertion animation
-		use_power(amount_inserted * 100)
+		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * amount_inserted / 100)))
 	updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)

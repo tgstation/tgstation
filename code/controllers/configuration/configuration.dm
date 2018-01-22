@@ -19,8 +19,9 @@
 
 	var/motd
 
-/datum/controller/configuration/New()
-	config = src
+/datum/controller/configuration/proc/Load()
+	if(entries)
+		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
 	InitEntries()
 	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)

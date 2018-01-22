@@ -80,7 +80,7 @@
 	return ..()
 
 /obj/machinery/door/CollidedWith(atom/movable/AM)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -127,7 +127,7 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density && !emagged)
+	if(density && !(obj_flags & EMAGGED))
 		if(allowed(user))
 			open()
 		else
@@ -149,7 +149,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
