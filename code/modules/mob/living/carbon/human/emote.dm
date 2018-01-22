@@ -74,6 +74,8 @@
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
 	. = ..()
+	if(!.)
+		return
 	var/mob/living/carbon/human/H = user
 	if(!H.is_wagging_tail())
 		H.startTailWag()
