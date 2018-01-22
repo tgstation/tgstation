@@ -11,6 +11,8 @@
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
+	var/aux_zone // used for hands
+	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/brutestate = 0
@@ -317,6 +319,8 @@
 		should_draw_gender = FALSE
 
 	if(status == BODYPART_ORGANIC)
+		if(aux_zone)
+			. += mutable_appearance(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -407,6 +411,8 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+	aux_zone = "l_hand"
+	aux_layer = HANDS_LAYER
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -441,6 +447,8 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+	aux_zone = "r_hand"
+	aux_layer = HANDS_LAYER
 	held_index = 2
 	px_x = 6
 	px_y = 0
