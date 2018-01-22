@@ -55,9 +55,7 @@
 	pixel_y = 32
 	},
 /obj/item/device/radio/intercom{
-	dir = 8;
 	freerange = 1;
-	listening = 1;
 	name = "Syndicate Radio Intercom";
 	pixel_x = -30
 	},
