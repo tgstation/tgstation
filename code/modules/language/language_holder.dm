@@ -127,7 +127,7 @@
 
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
-	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)
+	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic, /datum/language/moth)
 
 /datum/language_holder/universal/New()
 	..()
