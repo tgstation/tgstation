@@ -110,3 +110,17 @@ GLOBAL_LIST(round_end_notifiees)
 	load_admins()
 	log_admin("[sender] reloaded admins via chat command.")
 	return "Admins reloaded."
+
+/datum/server_tools_command/playerlist
+	name = "playerlist"
+	help_text = "Gives you a list of online players."
+	admin_only = TRUE
+
+/datum/server_tools_command/playerlist/Run(sender, params)
+	var/list/assembled = list()
+	for(var/client/C in GLOB.clients)
+		if(C.holder && C.holder.fakekey)
+			assembled += C.holder.fakekey
+		else
+			assembled += C.key
+	return english_list(assembled, nothing_text = "There are no players online!")
