@@ -42,9 +42,9 @@
 	radiation_pulse(src, rad_damage)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isfloorturf(T))
-			var/turf/open/floor/F = T
+			var/turf/open2/floor/F = T
 			F.wet = TURF_WET_PERMAFROST
-			addtimer(CALLBACK(F, /turf/open/floor.proc/MakeDry, TURF_WET_PERMAFROST), rand(3000, 3100))
+			addtimer(CALLBACK(F, /turf/open2/floor.proc/MakeDry, TURF_WET_PERMAFROST), rand(3000, 3100))
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
 				L.bodytemperature -= 230

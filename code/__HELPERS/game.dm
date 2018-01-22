@@ -48,7 +48,7 @@
 	listclearnulls(.)
 
 /proc/get_open_turf_in_dir(atom/center, dir)
-	var/turf/open/T = get_ranged_target_turf(center, dir, 1)
+	var/turf/open2/T = get_ranged_target_turf(center, dir, 1)
 	if(istype(T))
 		return T
 

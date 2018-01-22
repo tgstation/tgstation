@@ -246,7 +246,7 @@
 			var/turf/T = t
 			dancefloor_turfs[i] = T
 			dancefloor_turfs_types[i] = T.type
-			T.ChangeTurf((i % 2 == 0) ? /turf/open/floor/light/colour_cycle/dancefloor_a : /turf/open/floor/light/colour_cycle/dancefloor_b)
+			T.ChangeTurf((i % 2 == 0) ? /turf/open2/floor/light/colour_cycle/dancefloor_a : /turf/open2/floor/light/colour_cycle/dancefloor_b)
 			i++
 
 /datum/effect_system/smoke_spread/transparent/dancefloor_devil

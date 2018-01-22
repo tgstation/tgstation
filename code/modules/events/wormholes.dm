@@ -20,7 +20,7 @@
 	endWhen = rand(40, 80)
 
 /datum/round_event/wormholes/start()
-	for(var/turf/open/floor/T in world)
+	for(var/turf/open2/floor/T in world)
 		if(is_station_level(T.z))
 			pick_turfs += T
 

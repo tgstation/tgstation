@@ -9,7 +9,7 @@
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 
 (1,1,1) = {"

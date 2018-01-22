@@ -19,9 +19,9 @@
 	var/lifetime = 40
 	var/reagent_divisor = 7
 	var/static/list/blacklisted_turfs = typecacheof(list(
-	/turf/open/space/transit,
-	/turf/open/chasm,
-	/turf/open/lava))
+	/turf/open2/space/transit,
+	/turf/open2/chasm,
+	/turf/open2/lava))
 
 
 /obj/effect/particle_effect/foam/metal
@@ -76,7 +76,7 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.PlaceOnTop(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open2/floor/plating/foam)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
@@ -270,7 +270,7 @@
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
 	if(isopenturf(loc))
-		var/turf/open/O = loc
+		var/turf/open2/O = loc
 		O.ClearWet()
 		if(O.air)
 			var/datum/gas_mixture/G = O.air

@@ -206,7 +206,7 @@
  	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
-	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
+	if(istype(target, /turf/open2/space/transit))//>implying these are ever made -Sieve
 		return
 
 	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
@@ -225,7 +225,7 @@
 					W.ScrapeAway()
 					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
-				var/turf/open/floor/F = target
+				var/turf/open2/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -239,14 +239,14 @@
 					playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
 		if(1)
 			if(isspaceturf(target))
-				var/turf/open/space/S = target
+				var/turf/open2/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.PlaceOnTop(/turf/open/floor/plating)
+					S.PlaceOnTop(/turf/open2/floor/plating)
 					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
-				var/turf/open/floor/F = target
+				var/turf/open2/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
 					F.PlaceOnTop(/turf/closed/wall)
@@ -388,7 +388,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
 	if(isfloorturf(new_turf))
-		var/turf/open/floor/T = new_turf
+		var/turf/open2/floor/T = new_turf
 		if(!isplatingturf(T))
 			if(!T.broken && !T.burnt)
 				new T.floor_tile(T)

@@ -10,8 +10,8 @@
 
 /turf/closed/CanAtmosPass = ATMOS_PASS_NO
 
-/turf/open/CanAtmosPass = ATMOS_PASS_PROC
-/turf/open/CanAtmosPass(turf/T)
+/turf/open2/CanAtmosPass = ATMOS_PASS_PROC
+/turf/open2/CanAtmosPass(turf/T)
 	var/R
 	if(blocks_air || T.blocks_air)
 		R = 1
@@ -107,12 +107,12 @@
     air_update_turf(1)
 
 /atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make an easy proc to spawn your plasma fires
-	var/turf/open/T = get_turf(src)
+	var/turf/open2/T = get_turf(src)
 	if(!istype(T))
 		return
 	T.atmos_spawn_air(text)
 
-/turf/open/atmos_spawn_air(text)
+/turf/open2/atmos_spawn_air(text)
 	if(!text || !air)
 		return
 

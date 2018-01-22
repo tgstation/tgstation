@@ -15,7 +15,7 @@
 				continue
 
 			if(isfloorturf(T))
-				var/turf/open/floor/TF = T
+				var/turf/open2/floor/TF = T
 				if(!(TF.burnt))
 					floor += 12
 				else

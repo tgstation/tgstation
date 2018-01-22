@@ -9,7 +9,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -22,13 +22,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (
 /turf/closed/wall,
 /area/shuttle/escape)
 "f" = (
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "g" = (
 /obj/docking_port/mobile/emergency{
@@ -40,14 +40,14 @@
 	timid = 1;
 	width = 30
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "h" = (
 /obj/effect/shuttle_build,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "i" = (
-/turf/open/space/basic,
+/turf/open2/space/basic,
 /area/space)
 
 (1,1,1) = {"

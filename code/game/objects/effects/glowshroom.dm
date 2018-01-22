@@ -16,8 +16,8 @@
 	var/spreadIntoAdjacentChance = 60
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
-	/turf/open/lava,
-	/turf/open/floor/plating/beach/water))
+	/turf/open2/lava,
+	/turf/open2/floor/plating/beach/water))
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
@@ -93,7 +93,7 @@
 			if(prob(spreadIntoAdjacentChance))
 				spreadsIntoAdjacent = TRUE
 
-			for(var/turf/open/floor/earth in view(3,src))
+			for(var/turf/open2/floor/earth in view(3,src))
 				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 					continue
 				if(!ownturf.CanAtmosPass(earth))

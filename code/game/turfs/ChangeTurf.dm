@@ -1,4 +1,4 @@
-/turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
+/turf/proc/empty(turf_type=/turf/open2/space, baseturf_type, list/ignore_typecache, flags)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
 	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
@@ -44,10 +44,10 @@
 /turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
 	if(!path)
 		return
-	if(path == /turf/open/space/basic)
+	if(path == /turf/open2/space/basic)
 		// basic doesn't initialize and this will cause issues
 		// no warning though because this can happen naturaly as a result of it being built on top of
-		path = /turf/open/space
+		path = /turf/open2/space
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP)) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
@@ -95,7 +95,7 @@
 			else
 				lighting_clear_overlay()
 
-		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		for(var/turf/open2/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
 	return W
@@ -210,14 +210,14 @@
 
 	HandleTurfChange(src)
 
-/turf/open/AfterChange(flags)
+/turf/open2/AfterChange(flags)
 	..()
 	RemoveLattice()
 	if(!(flags & CHANGETURF_IGNORE_AIR))
 		Assimilate_Air()
 
 //////Assimilate Air//////
-/turf/open/proc/Assimilate_Air()
+/turf/open2/proc/Assimilate_Air()
 	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
@@ -226,7 +226,7 @@
 	var/list/total_gases = total.gases
 
 	for(var/T in atmos_adjacent_turfs)
-		var/turf/open/S = T
+		var/turf/open2/S = T
 		if(!S.air)
 			continue
 		var/list/S_gases = S.air.gases

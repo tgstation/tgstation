@@ -1,11 +1,11 @@
 /datum/mapGeneratorModule/bottomLayer/cultFloor
-	spawnableTurfs = list(/turf/open/floor/engine/cult = 100)
+	spawnableTurfs = list(/turf/open2/floor/engine/cult = 100)
 
 /datum/mapGeneratorModule/border/cultWalls
 	spawnableTurfs = list(/turf/closed/wall/mineral/cult = 100)
 
 /datum/mapGeneratorModule/bottomLayer/clockFloor
-	spawnableTurfs = list(/turf/open/floor/clockwork = 100)
+	spawnableTurfs = list(/turf/open2/floor/clockwork = 100)
 
 /datum/mapGeneratorModule/border/clockWalls
 	spawnableTurfs = list(/turf/closed/wall/clockwork = 100)

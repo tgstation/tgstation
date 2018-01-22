@@ -98,7 +98,7 @@
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
 	var/turf/target
 	var/eject_range = 5
-	var/turf/open/floor/floorturf
+	var/turf/open2/floor/floorturf
 
 	if(isfloorturf(T)) //intact floor, pop the tile
 		floorturf = T

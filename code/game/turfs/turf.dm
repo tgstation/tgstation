@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/open/space
+	var/list/baseturfs = /turf/open2/space
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -177,7 +177,7 @@
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
 		reconsider_lights()
 
-/turf/open/Entered(atom/movable/AM)
+/turf/open2/Entered(atom/movable/AM)
 	..()
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
@@ -243,7 +243,7 @@
 			O.hide(src.intact)
 
 // override for space turfs, since they should never hide anything
-/turf/open/space/levelupdate()
+/turf/open2/space/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1 && O.initialized)
 			O.hide(0)

@@ -5,7 +5,7 @@
 	icon_state = "tile_e"
 	flags_1 = CONDUCT_1
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
-	turf_type = /turf/open/floor/light
+	turf_type = /turf/open2/floor/light
 	var/state = 0
 
 /obj/item/stack/tile/light/Initialize(mapload, new_amount, merge = TRUE)

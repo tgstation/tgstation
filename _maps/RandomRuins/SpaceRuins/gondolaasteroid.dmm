@@ -6,83 +6,83 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "d" = (
 /obj/structure/marker_beacon{
 	light_color = "#FFE8AA";
 	light_range = 20
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "e" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "f" = (
 /obj/structure/flora/ausbushes/ywflowers,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "g" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "h" = (
 /mob/living/simple_animal/pet/gondola,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "i" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "j" = (
 /obj/effect/overlay/coconut,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "k" = (
 /obj/effect/overlay/palmtree_l,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "l" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "m" = (
 /obj/structure/flora/ausbushes/grassybush,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "n" = (
 /obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "o" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "p" = (
 /obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "q" = (
 /obj/structure/flora/ausbushes/fernybush,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "r" = (
 /obj/effect/overlay/palmtree_r,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "s" = (
 /obj/structure/flora/junglebush/large,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "t" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "u" = (
 /obj/machinery/door/airlock/survival_pod/glass{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open2/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 
 (1,1,1) = {"

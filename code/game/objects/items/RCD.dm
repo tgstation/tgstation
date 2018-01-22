@@ -558,7 +558,7 @@ ARCD
 						if(!istype(W))
 							return FALSE
 						var/list/candidates = list()
-						var/turf/open/winner = null
+						var/turf/open2/winner = null
 						var/winning_dist = null
 						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
@@ -569,7 +569,7 @@ ARCD
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
 							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, 1)
 							return FALSE
-						for(var/turf/open/O in candidates)
+						for(var/turf/open2/O in candidates)
 							if(istype(O))
 								var/x0 = O.x
 								var/y0 = O.y
@@ -594,7 +594,7 @@ ARCD
 				return FALSE
 
 			if(isfloorturf(A))
-				var/turf/open/floor/F = A
+				var/turf/open2/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
 					user.Beam(A,icon_state="nzcrentrs_power",time=15)

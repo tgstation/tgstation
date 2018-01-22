@@ -178,7 +178,7 @@
 
 /obj/structure/bonfire/proc/CheckOxygen()
 	if(isopenturf(loc))
-		var/turf/open/O = loc
+		var/turf/open2/O = loc
 		if(O.air)
 			var/loc_gases = O.air.gases
 			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)

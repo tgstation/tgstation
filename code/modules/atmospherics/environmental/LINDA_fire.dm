@@ -9,7 +9,7 @@
 	return
 
 
-/turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
+/turf/open2/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents)
 		return 0
@@ -67,7 +67,7 @@
 	air_update_turf()
 
 /obj/effect/hotspot/proc/perform_exposure()
-	var/turf/open/location = loc
+	var/turf/open2/location = loc
 	if(!istype(location) || !(location.air))
 		return
 
@@ -102,7 +102,7 @@
 		just_spawned = FALSE
 		return
 
-	var/turf/open/location = loc
+	var/turf/open2/location = loc
 	if(!istype(location))
 		qdel(src)
 		return
@@ -132,7 +132,7 @@
 		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
-				var/turf/open/T = t
+				var/turf/open2/T = t
 				if(T.active_hotspot)
 					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
@@ -152,7 +152,7 @@
 /obj/effect/hotspot/Destroy()
 	set_light(0)
 	SSair.hotspots -= src
-	var/turf/open/T = loc
+	var/turf/open2/T = loc
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
 	DestroyTurf()

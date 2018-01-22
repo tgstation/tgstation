@@ -208,7 +208,7 @@
 /obj/item/clockwork/alloy_shards/small/IntegrateAmount()
 	return 1
 
-/turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
+/turf/open2/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_catwalk/swarmer_act()
@@ -231,7 +231,7 @@
 /obj/structure/flora/swarmer_act()
 	return FALSE
 
-/turf/open/lava/swarmer_act()
+/turf/open2/lava/swarmer_act()
 	if(!is_safe())
 		new /obj/structure/lattice/catwalk/swarmer_catwalk(src)
 	return FALSE
@@ -459,7 +459,7 @@
 	if(!do_mob(src, target, 30))
 		return
 
-	var/turf/open/floor/F
+	var/turf/open2/floor/F
 	F = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 
 	if(!F)

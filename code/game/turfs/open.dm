@@ -1,4 +1,4 @@
-/turf/open
+/turf/open2
 	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/wet = 0
@@ -8,84 +8,84 @@
 	var/postdig_icon
 	var/list/archdrops
 
-/turf/open/indestructible
+/turf/open2/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
-/turf/open/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/open2/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
 	return
 
-/turf/open/indestructible/sound
+/turf/open2/indestructible/sound
 	name = "squeeky floor"
 	var/sound
 
-/turf/open/indestructible/sound/Entered(var/mob/AM)
+/turf/open2/indestructible/sound/Entered(var/mob/AM)
 	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
-/turf/open/indestructible/necropolis
+/turf/open2/indestructible/necropolis
 	name = "necropolis floor"
 	desc = "It's regarding you suspiciously."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
-	baseturfs = /turf/open/indestructible/necropolis
+	baseturfs = /turf/open2/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open2/indestructible/necropolis/Initialize()
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
-/turf/open/indestructible/necropolis/air
+/turf/open2/indestructible/necropolis/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
-/turf/open/indestructible/boss //you put stone tiles on this and use it as a base
+/turf/open2/indestructible/boss //you put stone tiles on this and use it as a base
 	name = "necropolis floor"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "boss"
-	baseturfs = /turf/open/indestructible/boss
+	baseturfs = /turf/open2/indestructible/boss
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/indestructible/boss/air
+/turf/open2/indestructible/boss/air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
-/turf/open/indestructible/hierophant
+/turf/open2/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	baseturfs = /turf/open/indestructible/hierophant
+	baseturfs = /turf/open2/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
-/turf/open/indestructible/hierophant/two
+/turf/open2/indestructible/hierophant/two
 
-/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open2/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
-/turf/open/indestructible/paper
+/turf/open2/indestructible/paper
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
 
-/turf/open/indestructible/clock_spawn_room
+/turf/open2/indestructible/clock_spawn_room
 	name = "cogmetal"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
-	baseturfs = /turf/open/indestructible/clock_spawn_room
+	baseturfs = /turf/open2/indestructible/clock_spawn_room
 
-/turf/open/indestructible/clock_spawn_room/Entered()
+/turf/open2/indestructible/clock_spawn_room/Entered()
 	..()
 	START_PROCESSING(SSfastprocess, src)
 
-/turf/open/indestructible/clock_spawn_room/Destroy()
+/turf/open2/indestructible/clock_spawn_room/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/turf/open/indestructible/clock_spawn_room/process()
+/turf/open2/indestructible/clock_spawn_room/process()
 	if(!port_servants())
 		STOP_PROCESSING(SSfastprocess, src)
 
-/turf/open/indestructible/clock_spawn_room/proc/port_servants()
+/turf/open2/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
 		if(is_servant_of_ratvar(L) && L.stat != DEAD)
@@ -98,7 +98,7 @@
 			playsound(L, 'sound/magic/exit_blood.ogg', 50, TRUE)
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open2/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
 
@@ -108,7 +108,7 @@
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
 	for(var/direction in GLOB.cardinals)
-		var/turf/open/enemy_tile = get_step(src, direction)
+		var/turf/open2/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= enemy_tile
@@ -145,17 +145,17 @@
 	if (atmos_adjacent_turfs)
 		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
-/turf/open/proc/GetHeatCapacity()
+/turf/open2/proc/GetHeatCapacity()
 	. = air.heat_capacity()
 
-/turf/open/proc/GetTemperature()
+/turf/open2/proc/GetTemperature()
 	. = air.temperature
 
-/turf/open/proc/TakeTemperature(temp)
+/turf/open2/proc/TakeTemperature(temp)
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/proc/freon_gas_act()
+/turf/open2/proc/freon_gas_act()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			return
@@ -167,7 +167,7 @@
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return 1
 
-/turf/open/proc/water_vapor_gas_act()
+/turf/open2/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
@@ -179,7 +179,7 @@
 			qdel(O)
 	return 1
 
-/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+/turf/open2/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -219,13 +219,13 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
-/turf/open/copyTurf(turf/T)
+/turf/open2/copyTurf(turf/T)
 	. = ..()
 	if(. && isopenturf(T) && wet_time)
-		var/turf/open/O = T
+		var/turf/open2/O = T
 		O.MakeSlippery(wet_setting = wet, wet_time_to_add = wet_time) //we're copied, copy how wet we are also
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
+/turf/open2/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
 	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return
@@ -236,7 +236,7 @@
 			cut_overlay(wet_overlay)
 		else
 			wet_overlay = mutable_appearance()
-		var/turf/open/floor/F = src
+		var/turf/open2/floor/F = src
 		if(istype(F))
 			if(wet_setting == TURF_WET_PERMAFROST)
 				wet_overlay.icon = 'icons/effects/water.dmi'
@@ -253,7 +253,7 @@
 		add_overlay(wet_overlay)
 	HandleWet()
 
-/turf/open/proc/UpdateSlip()
+/turf/open2/proc/UpdateSlip()
 	var/intensity
 	var/lube_flags
 	switch(wet)
@@ -279,11 +279,11 @@
 	S.intensity = intensity
 	S.lube_flags = lube_flags
 
-/turf/open/proc/AfterSlip(mob/living/L)
+/turf/open2/proc/AfterSlip(mob/living/L)
 	if(wet == TURF_WET_LUBE)
 		L.confused = max(L.confused, 8)
 
-/turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open2/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
 		return
 	spawn(rand(0,20))
@@ -297,7 +297,7 @@
 				cut_overlay(wet_overlay)
 		UpdateSlip()
 
-/turf/open/proc/HandleWet()
+/turf/open2/proc/HandleWet()
 	if(!wet)
 		//It's possible for this handler to get called after all the wetness is
 		//cleared, so bail out if that is the case
@@ -341,17 +341,17 @@
 	if(wet)
 		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
 
-/turf/open/get_dumping_location()
+/turf/open2/get_dumping_location()
 	return src
 
-/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+/turf/open2/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	wet = TURF_DRY
 	UpdateSlip()
 	if(wet_overlay)
 		cut_overlay(wet_overlay)
 
 
-/turf/open/rad_act(pulse_strength)
+/turf/open2/rad_act(pulse_strength)
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)

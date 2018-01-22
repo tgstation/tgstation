@@ -47,7 +47,7 @@
 	if(dug)
 		return
 	else
-		var/turf/open/OT = get_turf(parent)
+		var/turf/open2/OT = get_turf(parent)
 		for(var/thing in archdrops)
 			var/maxtodrop = archdrops[thing]
 			for(var/i in 1 to maxtodrop)
@@ -56,13 +56,13 @@
 
 		if(isopenturf(OT))
 			if(OT.postdig_icon_change)
-				if(istype(OT, /turf/open/floor/plating/asteroid/) && !OT.postdig_icon)
-					var/turf/open/floor/plating/asteroid/AOT = parent
+				if(istype(OT, /turf/open2/floor/plating/asteroid/) && !OT.postdig_icon)
+					var/turf/open2/floor/plating/asteroid/AOT = parent
 					AOT.icon_plating = "[AOT.environment_type]_dug"
 					AOT.icon_state = "[AOT.environment_type]_dug"
 				else
 					if(isplatingturf(OT))
-						var/turf/open/floor/plating/POT = parent
+						var/turf/open2/floor/plating/POT = parent
 						POT.icon_plating = "[POT.postdig_icon]"
 						POT.icon_state = "[OT.postdig_icon]"
 

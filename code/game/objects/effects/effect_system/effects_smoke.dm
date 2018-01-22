@@ -159,7 +159,7 @@
 
 /datum/effect_system/smoke_spread/freezing/proc/Chilled(atom/A)
 	if(isopenturf(A))
-		var/turf/open/T = A
+		var/turf/open2/T = A
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(get_dist(T, location) < 2) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air

@@ -3,7 +3,7 @@
 /obj/item/storage/backpack/satchel/flat/secret{
 	reward_all_of_these = list(/obj/item/gun/energy/pulse/prize)
 	},
-/turf/open/floor/fakespace{
+/turf/open2/floor/fakespace{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/fakespace)

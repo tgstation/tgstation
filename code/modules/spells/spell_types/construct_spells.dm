@@ -41,7 +41,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/open/floor/engine/cult)
+	summon_type = list(/turf/open2/floor/engine/cult)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"

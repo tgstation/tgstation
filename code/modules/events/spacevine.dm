@@ -167,7 +167,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/T = holder.loc
+	var/turf/open2/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/oxygen])
@@ -182,7 +182,7 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/T = holder.loc
+	var/turf/open2/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/nitrogen])
@@ -197,7 +197,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/T = holder.loc
+	var/turf/open2/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/carbon_dioxide])
@@ -212,7 +212,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/T = holder.loc
+	var/turf/open2/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
 		if(!GM.gases[/datum/gas/plasma])

@@ -54,7 +54,7 @@
 	var/instant = FALSE
 	var/self_contained = TRUE // If it deletes itself when it is empty
 
-	var/list/validSurfaces = list(/turf/open/floor)
+	var/list/validSurfaces = list(/turf/open2/floor)
 
 	var/edible = TRUE // That doesn't mean eating it is a good idea
 
@@ -516,7 +516,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
+	validSurfaces = list(/turf/open2/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
 	pre_noise = TRUE
@@ -676,7 +676,7 @@
 
 	reagent_contents = list("lube" = 1, "banana" = 1)
 	volume_multiplier = 5
-	validSurfaces = list(/turf/open/floor)
+	validSurfaces = list(/turf/open2/floor)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"

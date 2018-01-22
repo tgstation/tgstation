@@ -131,9 +131,9 @@
 
 	if(!blacklisted_turfs)
 		blacklisted_turfs = typecacheof(list(
-			/turf/open/space,
-			/turf/open/chasm,
-			/turf/open/lava))
+			/turf/open2/space,
+			/turf/open2/chasm,
+			/turf/open2/lava))
 
 
 	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)

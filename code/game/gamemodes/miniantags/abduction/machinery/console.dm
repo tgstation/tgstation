@@ -132,7 +132,7 @@
 	if(chosen && vest && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
 
-/obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
+/obj/machinery/abductor/console/proc/SetDroppoint(turf/open2/location,user)
 	if(!istype(location))
 		to_chat(user, "<span class='warning'>That place is not safe for the specimen.</span>")
 		return

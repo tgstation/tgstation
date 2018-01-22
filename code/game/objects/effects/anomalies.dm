@@ -260,7 +260,7 @@
 		return
 	else
 		ticks = 0
-	var/turf/open/T = get_turf(src)
+	var/turf/open2/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
 
@@ -268,7 +268,7 @@
 	INVOKE_ASYNC(src, .proc/makepyroslime)
 
 /obj/effect/anomaly/pyro/proc/makepyroslime()
-	var/turf/open/T = get_turf(src)
+	var/turf/open2/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
 	var/new_colour = pick("red", "orange")

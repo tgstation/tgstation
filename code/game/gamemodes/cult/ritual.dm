@@ -236,7 +236,7 @@ This file contains the arcane tome files.
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
-	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+	if(istype(get_turf(user), /turf/open2/floor/engine/cult))
 		scribe_mod *= 0.5
 	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)

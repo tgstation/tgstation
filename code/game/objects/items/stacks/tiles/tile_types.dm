@@ -73,7 +73,7 @@
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they use on space golf courses."
 	icon_state = "tile_grass"
-	turf_type = /turf/open/floor/grass
+	turf_type = /turf/open2/floor/grass
 	resistance_flags = FLAMMABLE
 
 
@@ -83,7 +83,7 @@
 	singular_name = "wood floor tile"
 	desc = "An easy to fit wood floor tile."
 	icon_state = "tile-wood"
-	turf_type = /turf/open/floor/wood
+	turf_type = /turf/open2/floor/wood
 	resistance_flags = FLAMMABLE
 
 //Basalt
@@ -92,7 +92,7 @@
 	singular_name = "basalt floor tile"
 	desc = "Artificially made ashy soil themed on a hostile environment."
 	icon_state = "tile_basalt"
-	turf_type = /turf/open/floor/grass/fakebasalt
+	turf_type = /turf/open2/floor/grass/fakebasalt
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -100,13 +100,13 @@
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
-	turf_type = /turf/open/floor/carpet
+	turf_type = /turf/open2/floor/carpet
 	resistance_flags = FLAMMABLE
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
 	icon_state = "tile-carpet-black"
-	turf_type = /turf/open/floor/carpet/black
+	turf_type = /turf/open2/floor/carpet/black
 
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
@@ -116,7 +116,7 @@
 	singular_name = "astral carpet"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
-	turf_type = /turf/open/floor/fakespace
+	turf_type = /turf/open2/floor/fakespace
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fakespace
 
@@ -128,7 +128,7 @@
 	singular_name = "fake pit"
 	desc = "A piece of carpet with a forced perspective illusion of a pit. No way this could fool anyone!"
 	icon_state = "tile_pit"
-	turf_type = /turf/open/floor/fakepit
+	turf_type = /turf/open2/floor/fakepit
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/fakepit
 
@@ -141,7 +141,7 @@
 	singular_name = "high-traction floor tile"
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
-	turf_type = /turf/open/floor/noslip
+	turf_type = /turf/open2/floor/noslip
 	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
@@ -153,27 +153,27 @@
 	singular_name = "blue circuit tile"
 	desc = "A blue circuit tile."
 	icon_state = "tile_bcircuit"
-	turf_type = /turf/open/floor/circuit
+	turf_type = /turf/open2/floor/circuit
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
 	singular_name = "green circuit tile"
 	desc = "A green circuit tile."
 	icon_state = "tile_gcircuit"
-	turf_type = /turf/open/floor/circuit/green
+	turf_type = /turf/open2/floor/circuit/green
 
 /obj/item/stack/tile/circuit/green/anim
-	turf_type = /turf/open/floor/circuit/green/anim
+	turf_type = /turf/open2/floor/circuit/green/anim
 
 /obj/item/stack/tile/circuit/red
 	name = "red circuit tile"
 	singular_name = "red circuit tile"
 	desc = "A red circuit tile."
 	icon_state = "tile_rcircuit"
-	turf_type = /turf/open/floor/circuit/red
+	turf_type = /turf/open2/floor/circuit/red
 
 /obj/item/stack/tile/circuit/red/anim
-	turf_type = /turf/open/floor/circuit/red/anim
+	turf_type = /turf/open2/floor/circuit/red/anim
 
 //Pod floor
 /obj/item/stack/tile/pod
@@ -181,21 +181,21 @@
 	singular_name = "pod floor tile"
 	desc = "A grooved floor tile."
 	icon_state = "tile_pod"
-	turf_type = /turf/open/floor/pod
+	turf_type = /turf/open2/floor/pod
 
 /obj/item/stack/tile/pod/light
 	name = "light pod floor tile"
 	singular_name = "light pod floor tile"
 	desc = "A lightly colored grooved floor tile."
 	icon_state = "tile_podlight"
-	turf_type = /turf/open/floor/pod/light
+	turf_type = /turf/open2/floor/pod/light
 
 /obj/item/stack/tile/pod/dark
 	name = "dark pod floor tile"
 	singular_name = "dark pod floor tile"
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
-	turf_type = /turf/open/floor/pod/dark
+	turf_type = /turf/open2/floor/pod/dark
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -207,7 +207,7 @@
 	materials = list(MAT_METAL=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
-	turf_type = /turf/open/floor/plasteel
+	turf_type = /turf/open2/floor/plasteel
 	mineralType = "metal"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF

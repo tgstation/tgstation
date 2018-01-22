@@ -80,7 +80,7 @@
 /datum/gas_reaction/water_vapor/init_reqs()
 	min_requirements = list(/datum/gas/water_vapor = MOLES_GAS_VISIBLE)
 
-/datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
+/datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open2/location)
 	. = NO_REACTION
 	if (air.temperature <= WATER_VAPOR_FREEZE)
 		if(location && location.freon_gas_act())
@@ -98,7 +98,7 @@
 /datum/gas_reaction/fire/init_reqs()
 	min_requirements = list("TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //doesn't include plasma reqs b/c of other, rarer, burning gases.
 
-/datum/gas_reaction/fire/react(datum/gas_mixture/air, turf/open/location)
+/datum/gas_reaction/fire/react(datum/gas_mixture/air, turf/open2/location)
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
@@ -196,7 +196,7 @@
 		/datum/gas/tritium = MINIMUM_HEAT_CAPACITY
 	)
 
-/datum/gas_reaction/fusion/react(datum/gas_mixture/air, turf/open/location)
+/datum/gas_reaction/fusion/react(datum/gas_mixture/air, turf/open2/location)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 

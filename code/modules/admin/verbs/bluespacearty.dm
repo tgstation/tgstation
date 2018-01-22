@@ -10,7 +10,7 @@
 
 	explosion(target.loc, 0, 0, 0, 0)
 
-	var/turf/open/floor/T = get_turf(target)
+	var/turf/open2/floor/T = get_turf(target)
 	if(istype(T))
 		if(prob(80))
 			T.break_tile_to_plating()

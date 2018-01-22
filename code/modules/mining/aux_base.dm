@@ -106,7 +106,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
 			all_mining_turfs += Z_TURFS(z_level)
 		var/turf/LZ = safepick(all_mining_turfs) //Pick a random mining Z-level turf
-		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
+		if(!ismineralturf(LZ) && !istype(LZ, /turf/open2/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
 			updateUsrDialog()
@@ -144,9 +144,9 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
-			/turf/open/lava,
+			/turf/open2/lava,
 			/turf/closed/indestructible,
-			/turf/open/indestructible,
+			/turf/open2/indestructible,
 			))
 
 		if(!is_mining_level(T.z))

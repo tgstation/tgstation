@@ -202,7 +202,7 @@
 					L.loc = T
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
-			var/turf/open/floor/stepTurf = get_step(L, direct)
+			var/turf/open2/floor/stepTurf = get_step(L, direct)
 			if(stepTurf)
 				for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 					to_chat(L, "<span class='warning'>[S] bars your passage!</span>")

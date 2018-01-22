@@ -1,4 +1,4 @@
-// Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
+// Used by /turf/open2/chasm and subtypes to implement the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
 	var/fall_message = "GAH! Ah... where are you?"

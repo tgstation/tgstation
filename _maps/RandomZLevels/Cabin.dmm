@@ -6,30 +6,30 @@
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowforest)
 "ac" = (
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open2/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "ad" = (
 /turf/closed/wall/mineral/wood,
 /area/awaymission/snowforest/lumbermill)
 "ae" = (
 /obj/item/grown/log/tree,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open2/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "af" = (
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "ag" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "lumbermill"
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "ah" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "lumbermill"
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "ai" = (
 /obj/machinery/recycler/lumbermill,
@@ -37,45 +37,45 @@
 	dir = 4;
 	id = "lumbermill"
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "aj" = (
 /obj/item/grown/log/tree,
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "ak" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "al" = (
 /obj/structure/table/wood,
 /obj/item/grown/log/tree,
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "am" = (
 /obj/structure/table/wood,
 /obj/item/twohanded/required/chainsaw,
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest/lumbermill)
 "an" = (
 /turf/closed/wall/mineral/wood,
 /area/awaymission/cabin)
 "ao" = (
 /obj/structure/window/fulltile,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "ap" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aq" = (
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "ar" = (
 /obj/machinery/door/airlock/wood{
 	name = "bathroom"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "as" = (
 /obj/structure/sink{
@@ -85,7 +85,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "at" = (
 /obj/structure/sink{
@@ -96,11 +96,11 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "au" = (
 /obj/structure/dresser,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "av" = (
 /obj/machinery/power/apc{
@@ -110,14 +110,14 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aw" = (
 /obj/machinery/power/smes/magical,
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "ax" = (
 /obj/structure{
@@ -131,21 +131,21 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "ay" = (
 /obj/machinery/light/small,
 /obj/structure/table/wood,
 /obj/item/toy/syndicateballoon,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "az" = (
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "aA" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aB" = (
 /obj/structure/toilet{
@@ -154,7 +154,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aC" = (
 /obj/structure/toilet{
@@ -163,13 +163,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aD" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aE" = (
 /obj/machinery/power/terminal{
@@ -178,30 +178,30 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aG" = (
 /obj/item/reagent_containers/pill/patch/styptic,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "aH" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/table/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aJ" = (
 /obj/machinery/shower{
@@ -209,7 +209,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/northright,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aK" = (
 /obj/machinery/shower{
@@ -217,243 +217,243 @@
 	dir = 4
 	},
 /obj/machinery/door/window/northleft,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "aL" = (
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aM" = (
 /obj/machinery/telecomms/relay/preset/mining,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aN" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aO" = (
 /obj/structure/table/wood,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "aP" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "aQ" = (
 /obj/machinery/door/airlock/wood{
 	name = "maintenance"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/westright{
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aS" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 24
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aT" = (
 /obj/machinery/door/window/eastleft{
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aU" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/westright{
 	name = "fireplace"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aV" = (
 /obj/machinery/space_heater,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/eastleft{
 	name = "fireplace"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "aX" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "aY" = (
 /obj/structure/table/wood,
 /obj/item/phone,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "aZ" = (
 /obj/structure/guncase/shotgun,
 /obj/item/gun/ballistic/shotgun/riot,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "ba" = (
 /obj/machinery/door/airlock/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bb" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "bc" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/britcup,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "be" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "bf" = (
 /obj/machinery/door/airlock/wood{
 	name = "manager's office"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bg" = (
 /obj/machinery/door/window/westright{
 	name = "manager's desk"
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "bh" = (
 /obj/machinery/light,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bi" = (
 /obj/machinery/door/airlock/wood{
 	name = "manager's bedroom"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bj" = (
 /obj/structure/toilet,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bk" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bl" = (
 /obj/machinery/vending/autodrobe{
 	req_access_txt = "0"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bm" = (
 /obj/machinery/door/airlock/wood{
 	name = "stage left"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bn" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bo" = (
 /obj/structure/window{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bp" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bq" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "br" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bs" = (
 /obj/machinery/computer/arcade/battle,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bt" = (
 /obj/machinery/computer/slot_machine,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bu" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bv" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bw" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bx" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "by" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bA" = (
 /obj/machinery/chem_master/condimaster,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bB" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bC" = (
 /obj/machinery/gibber,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bD" = (
 /obj/structure/table/optable,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bE" = (
 /obj/machinery/computer/operating,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bF" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bG" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -461,10 +461,10 @@
 	dir = 2;
 	on = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bH" = (
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bI" = (
 /obj/machinery/shower{
@@ -476,61 +476,61 @@
 	icon_state = "window";
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bJ" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bK" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/reagent_containers/pill/patch/styptic,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "bL" = (
 /obj/structure/bed,
 /obj/item/bedsheet/patriot,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bM" = (
 /obj/machinery/vending/clothing,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bN" = (
 /obj/machinery/vending/boozeomat{
 	req_access_txt = "0"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bO" = (
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bP" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bR" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "bS" = (
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest)
 "bT" = (
 /obj/structure/table/wood,
 /obj/item/device/instrument/violin,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bU" = (
 /obj/machinery/light{
@@ -538,12 +538,12 @@
 	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "bV" = (
 /obj/structure/table,
 /obj/item/kitchen/knife/butcher,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bW" = (
 /obj/machinery/light{
@@ -551,18 +551,18 @@
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "bX" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bY" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/processor,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bZ" = (
 /obj/machinery/light{
@@ -575,47 +575,47 @@
 /obj/item/surgical_drapes,
 /obj/item/scalpel,
 /obj/item/hemostat,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "ca" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "cb" = (
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cc" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cd" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "ce" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest)
 "cf" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest)
 "cg" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest)
 "ch" = (
 /obj/machinery/light/small{
@@ -623,70 +623,70 @@
 	},
 /obj/structure/table/wood,
 /obj/item/device/instrument/guitar,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "ci" = (
 /obj/structure/chair/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cj" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "ck" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open2/floor/plasteel/cafeteria,
 /area/awaymission/cabin)
 "cl" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cm" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "cn" = (
 /obj/structure/bed/roller,
 /obj/item/bedsheet,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "co" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cp" = (
 /obj/machinery/gateway/centeraway,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cq" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cr" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/wood/cold,
+/turf/open2/floor/wood/cold,
 /area/awaymission/snowforest)
 "cs" = (
 /obj/structure/table/wood,
 /obj/item/wrench,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cu" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light{
@@ -696,267 +696,267 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/fire,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/awaymission/cabin)
 "cw" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cx" = (
 /obj/machinery/gateway,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cy" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cz" = (
 /obj/structure/piano,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cA" = (
 /obj/machinery/door/airlock/wood{
 	name = "stage right"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cB" = (
 /obj/machinery/door/window/eastleft,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cC" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cD" = (
 /obj/machinery/door/window/westright{
 	name = "bar"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cE" = (
 /obj/machinery/door/airlock/wood{
 	name = "kitchen"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cF" = (
 /obj/machinery/door/airlock/wood{
 	name = "kitchen cold room"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cG" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cI" = (
 /obj/machinery/door/airlock/wood{
 	name = "backstage"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cJ" = (
 /obj/machinery/door/airlock/glass_large{
 	name = "medbay"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cK" = (
 /obj/machinery/door/airlock/wood{
 	name = "cabin"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cL" = (
 /obj/structure/sign/barsign{
 	pixel_y = 32;
 	req_access = null
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cM" = (
 /obj/machinery/door/airlock/wood{
 	name = "gateway"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cN" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cO" = (
 /obj/machinery/light,
 /obj/machinery/vending/cola,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cP" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/awaymission/cabin)
 "cQ" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/awaymission/cabin)
 "cR" = (
 /obj/machinery/door/poddoor/shutters{
 	id = 42;
 	name = "garage door"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cS" = (
 /obj/machinery/button/door{
 	id = 42;
 	pixel_y = 24
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cT" = (
 /obj/vehicle/ridden/atv,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cU" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cV" = (
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cW" = (
 /obj/structure/closet,
 /obj/item/key,
 /obj/item/key,
 /obj/item/key,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cX" = (
 /obj/machinery/light,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cY" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open2/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "cZ" = (
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "da" = (
 /obj/structure/chair,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "db" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dc" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dd" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "de" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "df" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dg" = (
 /obj/structure/table,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dh" = (
 /obj/structure/kitchenspike,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "di" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dj" = (
-/turf/open/floor/plating/ice/temperate,
+/turf/open2/floor/plating/ice/temperate,
 /area/awaymission/snowforest)
 "dk" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dl" = (
 /obj/item/shard,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dm" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dn" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "do" = (
 /obj/item/chair,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dp" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dq" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dr" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "ds" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open2/floor/plating/snowed/temperatre,
 /area/awaymission/snowforest)
 "dt" = (
 /obj/effect/landmark/mapGenerator/snowy,
-/turf/open/floor/plating/asteroid/snow/temperatre,
+/turf/open2/floor/plating/asteroid/snow/temperatre,
 /area/awaymission/snowforest)
 "du" = (
 /obj/structure/closet/toolcloset,
 /obj/item/device/lightreplacer,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "dv" = (
 /obj/structure{
@@ -967,7 +967,7 @@
 	icon_state = "compressor";
 	name = "geothermal generator"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/awaymission/cabin)
 "dw" = (
 /obj/effect/mapping_helpers/planet_z,

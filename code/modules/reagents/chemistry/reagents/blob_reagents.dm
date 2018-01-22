@@ -168,7 +168,7 @@
 
 /datum/reagent/blob/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BURN && damage_flag != "energy")
-		for(var/turf/open/T in range(1, B))
+		for(var/turf/open2/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blob_reagent_datum.id == B.overmind.blob_reagent_datum.id) && prob(80))
 				new /obj/effect/hotspot(T)
@@ -457,7 +457,7 @@
 
 /datum/reagent/blob/pressurized_slime/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/turf/open/T = get_turf(M)
+	var/turf/open2/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
@@ -479,7 +479,7 @@
 		extinguisharea(B, 50)
 
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
-	for(var/turf/open/T in range(1, B))
+	for(var/turf/open2/T in range(1, B))
 		if(prob(probchance))
 			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 			for(var/obj/O in T)

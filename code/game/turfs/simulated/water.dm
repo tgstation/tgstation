@@ -1,15 +1,15 @@
-/turf/open/water
+/turf/open2/water
 	name = "water"
 	desc = "Shallow water."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "riverwater"
-	baseturfs = /turf/open/chasm/lavaland
+	baseturfs = /turf/open2/chasm/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 1
 	wet = TURF_WET_WATER
 
-/turf/open/water/HandleWet()
+/turf/open2/water/HandleWet()
     if(wet == TURF_WET_WATER)
         return
     ..()

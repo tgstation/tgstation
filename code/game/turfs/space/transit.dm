@@ -1,36 +1,36 @@
-/turf/open/space/transit
+/turf/open2/space/transit
 	icon_state = "black"
 	dir = SOUTH
-	baseturfs = /turf/open/space/transit
+	baseturfs = /turf/open2/space/transit
 	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
 
-/turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open2/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
 	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
 	underlay_appearance.transform = turn(matrix(), get_transit_angle(asking_turf))
 
-/turf/open/space/transit/south
+/turf/open2/space/transit/south
 	dir = SOUTH
 
-/turf/open/space/transit/north
+/turf/open2/space/transit/north
 	dir = NORTH
 
-/turf/open/space/transit/horizontal
+/turf/open2/space/transit/horizontal
 	dir = WEST
 
-/turf/open/space/transit/west
+/turf/open2/space/transit/west
 	dir = WEST
 
-/turf/open/space/transit/east
+/turf/open2/space/transit/east
 	dir = EAST
 
-/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+/turf/open2/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	..()
 	if(!locate(/obj/structure/lattice) in src)
 		throw_atom(AM)
 
-/turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+/turf/open2/space/transit/proc/throw_atom(atom/movable/AM)
 	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))
 		return
@@ -69,17 +69,17 @@
 	AM.forceMove(T)
 
 
-/turf/open/space/transit/CanBuildHere()
+/turf/open2/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
 
 
-/turf/open/space/transit/Initialize()
+/turf/open2/space/transit/Initialize()
 	. = ..()
 	update_icon()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
 
-/turf/open/space/transit/proc/update_icon()
+/turf/open2/space/transit/proc/update_icon()
 	icon_state = "speedspace_ns_[get_transit_state(src)]"
 	transform = turn(matrix(), get_transit_angle(src))
 

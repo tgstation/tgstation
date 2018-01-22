@@ -3,7 +3,7 @@
 	var/list/env_gases = env.gases
 	var/burning = FALSE
 	if(isopenturf(target))
-		var/turf/open/T = target
+		var/turf/open2/T = target
 		if(T.active_hotspot)
 			burning = TRUE
 

@@ -370,7 +370,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 			/obj/effect = "EFFECT",
 			/obj = "O",
 			/datum = "D",
-			/turf/open = "OPEN",
+			/turf/open2 = "OPEN",
 			/turf/closed = "CLOSED",
 			/turf = "T",
 			/mob/living/carbon = "CARBON",

@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/T in shuttle_area)
+		for(var/turf/open2/floor/T in shuttle_area)
 			if(is_blocked_turf(T))
 				continue
 			empty_turfs += T

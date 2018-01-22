@@ -7,7 +7,7 @@
 /area/shuttle/abandoned)
 "ac" = (
 /obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/abandoned)
 "ad" = (
 /obj/machinery/door/airlock/titanium{
@@ -17,7 +17,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ae" = (
 /obj/machinery/door/airlock/titanium{
@@ -43,7 +43,7 @@
 	timid = 1;
 	width = 28
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "af" = (
 /turf/template_noop,
@@ -52,7 +52,7 @@
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/abandoned)
 "ah" = (
 /obj/structure/toilet{
@@ -68,7 +68,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ai" = (
 /obj/structure/mirror{
@@ -86,7 +86,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aj" = (
 /obj/structure/closet/wardrobe/mixed,
@@ -102,7 +102,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ak" = (
 /obj/structure/table,
@@ -113,7 +113,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
@@ -128,7 +128,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "am" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -136,7 +136,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/tank_dispenser/oxygen{
@@ -148,7 +148,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/sign/warning/vacuum{
@@ -161,7 +161,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ap" = (
 /obj/effect/decal/cleanable/dirt{
@@ -172,7 +172,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aq" = (
 /obj/structure/closet/crate/medical{
@@ -194,7 +194,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "ar" = (
 /obj/structure/closet/crate{
@@ -212,7 +212,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "as" = (
 /obj/item/storage/box/lights/mixed,
@@ -235,7 +235,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "at" = (
 /obj/structure/closet/crate{
@@ -262,13 +262,13 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "au" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/abandoned)
 "av" = (
 /obj/structure/shuttle/engine/heater{
@@ -277,7 +277,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/abandoned)
 "aw" = (
 /obj/machinery/door/airlock/titanium{
@@ -287,7 +287,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ax" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -300,7 +300,7 @@
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/item/gun/energy/laser/retro,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ay" = (
 /obj/structure/bed,
@@ -314,7 +314,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/table,
@@ -331,7 +331,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aA" = (
 /obj/effect/decal/cleanable/dirt{
@@ -339,14 +339,14 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aB" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aC" = (
 /obj/machinery/door/airlock/titanium{
@@ -356,7 +356,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aD" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -368,7 +368,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aE" = (
 /obj/machinery/door/airlock/titanium{
@@ -377,7 +377,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -390,7 +390,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -402,7 +402,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -416,7 +416,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -436,7 +436,7 @@
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aJ" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -450,7 +450,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aK" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -463,7 +463,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aL" = (
 /obj/structure/bed,
@@ -472,7 +472,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aM" = (
 /obj/structure/table,
@@ -486,7 +486,7 @@
 	name = "dust"
 	},
 /obj/item/wrench,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/structure/rack,
@@ -507,7 +507,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aO" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -518,7 +518,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aP" = (
 /obj/effect/decal/cleanable/dirt{
@@ -528,7 +528,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/oil,
@@ -537,7 +537,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "aR" = (
 /obj/structure/closet/emcloset,
@@ -547,7 +547,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/structure/closet/firecloset/full,
@@ -556,7 +556,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "aT" = (
 /obj/structure/sign/departments/restroom,
@@ -571,7 +571,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/machinery/door/airlock/titanium{
@@ -582,7 +582,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aW" = (
 /obj/machinery/vending/boozeomat{
@@ -605,7 +605,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
 /obj/structure/sign/departments/cargo,
@@ -622,7 +622,7 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	dir = 1
 	},
 /area/shuttle/abandoned)
@@ -636,7 +636,7 @@
 /obj/machinery/vending/cigarette{
 	use_power = 0
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bc" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -645,7 +645,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bd" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -656,7 +656,7 @@
 /obj/machinery/light/built{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "be" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -664,7 +664,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bf" = (
 /obj/effect/decal/cleanable/dirt{
@@ -672,7 +672,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bg" = (
 /obj/effect/decal/cleanable/dirt{
@@ -682,7 +682,7 @@
 /obj/machinery/light/built{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bh" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -692,7 +692,7 @@
 	},
 /obj/structure/table,
 /obj/item/device/camera,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bi" = (
 /obj/structure/table,
@@ -705,7 +705,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bj" = (
 /obj/structure/table,
@@ -714,7 +714,7 @@
 	name = "dust"
 	},
 /obj/item/storage/photo_album,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bk" = (
 /obj/structure/table,
@@ -726,7 +726,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bl" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -740,18 +740,18 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bm" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bn" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bo" = (
 /obj/structure/chair,
@@ -759,7 +759,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bp" = (
 /obj/effect/decal/cleanable/dirt{
@@ -770,7 +770,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bq" = (
 /obj/effect/decal/cleanable/dirt{
@@ -784,7 +784,7 @@
 	pixel_x = -28;
 	req_access = null
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "br" = (
 /obj/effect/decal/cleanable/dirt{
@@ -798,7 +798,7 @@
 /obj/structure/chair/office/light{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bs" = (
 /obj/structure/table,
@@ -812,7 +812,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bt" = (
 /obj/machinery/door/airlock/titanium{
@@ -822,7 +822,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bu" = (
 /obj/structure/chair{
@@ -832,7 +832,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bv" = (
 /obj/structure/table,
@@ -841,7 +841,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bw" = (
 /obj/structure/table,
@@ -857,7 +857,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bx" = (
 /obj/structure/table,
@@ -866,7 +866,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "by" = (
 /obj/structure/chair{
@@ -876,7 +876,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bz" = (
 /obj/machinery/door/airlock/titanium{
@@ -886,7 +886,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bA" = (
 /obj/effect/decal/cleanable/dirt{
@@ -903,7 +903,7 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bB" = (
 /obj/item/clothing/suit/bio_suit,
@@ -919,7 +919,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/structure/table,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bC" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -931,7 +931,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bD" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -940,7 +940,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bE" = (
 /obj/effect/decal/cleanable/dirt{
@@ -954,7 +954,7 @@
 /obj/structure/table,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bF" = (
 /obj/item/storage/toolbox/emergency{
@@ -971,7 +971,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bG" = (
 /obj/machinery/door/airlock/titanium{
@@ -981,7 +981,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bH" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -992,7 +992,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bI" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1002,7 +1002,7 @@
 /obj/machinery/computer/shuttle/white_ship{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -1013,11 +1013,11 @@
 /obj/structure/light_construct/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bK" = (
 /obj/machinery/vending/cola/random,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bL" = (
 /obj/structure/chair{
@@ -1027,7 +1027,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bM" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -1036,7 +1036,7 @@
 	name = "dust"
 	},
 /obj/structure/chair/office/light,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bN" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -1052,7 +1052,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at."
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bO" = (
 /obj/item/phone{
@@ -1068,11 +1068,11 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bP" = (
 /obj/machinery/vending/snack/random,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1082,7 +1082,7 @@
 /obj/machinery/light/built{
 	dir = 2
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bR" = (
 /obj/structure/sign/departments/science{
@@ -1092,7 +1092,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bS" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1100,7 +1100,7 @@
 	name = "dust"
 	},
 /obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bT" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1109,7 +1109,7 @@
 	},
 /obj/structure/table,
 /obj/item/device/megaphone,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bU" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1126,7 +1126,7 @@
 /obj/machinery/light/built{
 	dir = 2
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bV" = (
 /obj/structure/table,
@@ -1134,7 +1134,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bW" = (
 /obj/structure/table,
@@ -1145,7 +1145,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bX" = (
 /obj/structure/sign/departments/botany,
@@ -1159,7 +1159,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bZ" = (
 /obj/machinery/door/airlock/titanium{
@@ -1169,7 +1169,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ca" = (
 /obj/machinery/door/airlock/titanium{
@@ -1179,7 +1179,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cb" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -1194,7 +1194,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cd" = (
 /obj/item/storage/bag/plants/portaseeder,
@@ -1215,14 +1215,14 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ce" = (
 /obj/machinery/biogenerator{
 	idle_power_usage = 0;
 	use_power = 0
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cf" = (
 /obj/machinery/vending/hydroseeds{
@@ -1235,7 +1235,7 @@
 /obj/machinery/light/small/built{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cg" = (
 /obj/machinery/processor,
@@ -1246,7 +1246,7 @@
 /obj/machinery/light/small/built{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ch" = (
 /obj/structure/kitchenspike,
@@ -1255,7 +1255,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ci" = (
 /obj/structure/table,
@@ -1269,7 +1269,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cj" = (
 /obj/effect/decal/cleanable/oil,
@@ -1277,7 +1277,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ck" = (
 /obj/machinery/sleeper{
@@ -1288,7 +1288,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cl" = (
 /obj/structure/closet/crate/freezer,
@@ -1303,7 +1303,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cm" = (
 /obj/structure/table/optable,
@@ -1316,7 +1316,7 @@
 /obj/machinery/light/small/built{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cn" = (
 /obj/structure/table,
@@ -1335,7 +1335,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "co" = (
 /obj/structure/sink{
@@ -1346,7 +1346,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cp" = (
 /obj/machinery/smartfridge{
@@ -1364,7 +1364,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cr" = (
 /obj/effect/decal/cleanable/egg_smudge,
@@ -1373,7 +1373,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cs" = (
 /obj/structure/table,
@@ -1386,7 +1386,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ct" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1396,7 +1396,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cu" = (
 /obj/structure/chair/office/light,
@@ -1408,7 +1408,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cv" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1418,7 +1418,7 @@
 /obj/machinery/light/small/built{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cw" = (
 /obj/machinery/vending/wallmed{
@@ -1435,7 +1435,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cx" = (
 /obj/effect/decal/cleanable/dirt{
@@ -1444,7 +1444,7 @@
 	},
 /obj/effect/decal/cleanable/ash,
 /obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cy" = (
 /obj/effect/decal/cleanable/xenoblood,
@@ -1455,7 +1455,7 @@
 /obj/effect/decal/remains/xeno{
 	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones."
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cz" = (
 /obj/structure/sink{
@@ -1468,13 +1468,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open2/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cA" = (
 /obj/structure/shuttle/engine/propulsion/right{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/abandoned)
 "cB" = (
 /obj/machinery/hydroponics/constructable,
@@ -1482,7 +1482,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cC" = (
 /obj/machinery/hydroponics/constructable,
@@ -1491,7 +1491,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cD" = (
 /obj/structure/table,
@@ -1502,7 +1502,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cE" = (
 /obj/structure/table,
@@ -1516,7 +1516,7 @@
 /obj/item/storage/fancy/egg_box{
 	pixel_y = 5
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cF" = (
 /obj/structure/table,
@@ -1531,7 +1531,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cG" = (
 /obj/structure/table,
@@ -1551,7 +1551,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cH" = (
 /obj/structure/table,
@@ -1566,7 +1566,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cI" = (
 /obj/structure/table,
@@ -1578,7 +1578,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cJ" = (
 /obj/structure/table,
@@ -1587,7 +1587,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cK" = (
 /obj/structure/table,
@@ -1596,7 +1596,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cL" = (
 /obj/structure/table,
@@ -1611,7 +1611,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cM" = (
 /obj/structure/table,
@@ -1622,14 +1622,14 @@
 	name = "dust"
 	},
 /obj/item/clothing/suit/apron/surgical,
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cN" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery{
 	pixel_y = 4
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open2/floor/mineral/titanium,
 /area/shuttle/abandoned)
 
 (1,1,1) = {"

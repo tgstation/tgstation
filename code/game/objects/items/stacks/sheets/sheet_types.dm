@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	max_amount = 50
 	throw_speed = 1
 	throw_range = 3
-	turf_type = /turf/open/floor/clockwork
+	turf_type = /turf/open2/floor/clockwork
 	novariants = FALSE
 	grind_results = list("iron" = 5, "teslium" = 15)
 

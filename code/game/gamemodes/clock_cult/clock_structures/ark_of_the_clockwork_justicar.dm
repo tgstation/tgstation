@@ -107,7 +107,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	var/turf/T = get_turf(src)
 	var/list/open_turfs = list()
-	for(var/turf/open/OT in orange(1, T))
+	for(var/turf/open2/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
 			open_turfs |= OT
 	if(open_turfs.len)

@@ -245,7 +245,7 @@
 			victim.acid_act(5, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))
-				var/turf/open/T = loc
+				var/turf/open2/T = loc
 				if(istype(T))
 					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20, wet_time_to_add = 15)
 			else

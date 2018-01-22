@@ -22,13 +22,13 @@
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
-#define isopenturf(A) (istype(A, /turf/open))
+#define isopenturf(A) (istype(A, /turf/open2))
 
-#define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+#define isindestructiblefloor(A) (istype(A, /turf/open2/indestructible))
 
-#define isspaceturf(A) (istype(A, /turf/open/space))
+#define isspaceturf(A) (istype(A, /turf/open2/space))
 
-#define isfloorturf(A) (istype(A, /turf/open/floor))
+#define isfloorturf(A) (istype(A, /turf/open2/floor))
 
 #define isclosedturf(A) (istype(A, /turf/closed))
 
@@ -38,11 +38,11 @@
 
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
-#define islava(A) (istype(A, /turf/open/lava))
+#define islava(A) (istype(A, /turf/open2/lava))
 
-#define ischasm(A) (istype(A, /turf/open/chasm))
+#define ischasm(A) (istype(A, /turf/open2/chasm))
 
-#define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+#define isplatingturf(A) (istype(A, /turf/open2/floor/plating))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))

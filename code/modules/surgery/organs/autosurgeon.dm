@@ -57,7 +57,7 @@
 		if(!storedorgan)
 			to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
 		else
-			var/turf/open/floorloc = get_turf(user)
+			var/turf/open2/floorloc = get_turf(user)
 			floorloc.contents += contents
 			to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
 			playsound(get_turf(user), I.usesound, 50, 1)

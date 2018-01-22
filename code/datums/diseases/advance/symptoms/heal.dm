@@ -67,11 +67,11 @@
 
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(istype(get_turf(M), /turf/open/space))
+	if(istype(get_turf(M), /turf/open2/space))
 		return power
 	else
 		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/open/space))
+			if(istype(T, /turf/open2/space))
 				return power * nearspace_penalty
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)

@@ -214,7 +214,7 @@
 
 	if(space_turfs_only)
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
-		if(!ispath(turf_type, /turf/open/space))
+		if(!ispath(turf_type, /turf/open2/space))
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries
