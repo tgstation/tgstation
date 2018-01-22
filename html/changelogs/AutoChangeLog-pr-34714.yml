@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "Light fixtures no longer use hardcoded values for their power and colour."

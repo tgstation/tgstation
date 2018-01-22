@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Fans of clown photography have successfully lobbied Nanotrasen to include camera and camera accessories designs in the autolathe."
-  - tweak: "Brings material values for the camera in line with other devices."
-  - tweak: "The tapes printed by autolathes now come in random colors."

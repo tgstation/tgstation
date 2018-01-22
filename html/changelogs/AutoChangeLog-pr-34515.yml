@@ -1,4 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - tweak: "Gas reagents (o2, plasma, ...) now dump out gas based on container temperature instead of room temperature"
