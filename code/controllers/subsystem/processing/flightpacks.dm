@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(flightpacks)
 	name = "Flightpack Movement"
-	priority = 30
+	priority = FIRE_PRIORITY_FLIGHTPACKS
 	wait = 2
 	stat_tag = "FM"
 	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
