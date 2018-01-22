@@ -55,7 +55,6 @@
 	pixel_y = 32
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	freerange = 1;
 	listening = 1;
