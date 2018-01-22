@@ -13,6 +13,7 @@
 	liked_food = VEGETABLES | DAIRY
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
+	mutanteyes = /obj/item/organ/eyes/moth
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
