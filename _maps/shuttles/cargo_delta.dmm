@@ -203,7 +203,7 @@
 /area/shuttle/supply)
 "B" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "C" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /obj/effect/turf_decal/stripes/line,

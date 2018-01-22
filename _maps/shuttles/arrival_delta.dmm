@@ -381,7 +381,7 @@
 /area/shuttle/arrival)
 "T" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "U" = (
 /obj/structure/frame/computer{
 	dir = 1

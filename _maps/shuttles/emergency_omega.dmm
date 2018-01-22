@@ -715,7 +715,7 @@
 /area/shuttle/escape)
 "bu" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "bv" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
