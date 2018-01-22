@@ -21,11 +21,11 @@
 	anchored = TRUE
 
 /obj/structure/stacklifter/attack_hand(mob/living/user)
-	if(in_use)
+	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
-		in_use = 1
+		obj_flags |= IN_USE
 		icon_state = "fitnesslifter2"
 		user.setDir(SOUTH)
 		user.Stun(80)
@@ -44,7 +44,7 @@
 			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
 
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
-		in_use = 0
+		obj_flags &= ~IN_USE
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
@@ -59,11 +59,11 @@
 	anchored = TRUE
 
 /obj/structure/weightlifter/attack_hand(mob/living/user)
-	if(in_use)
+	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
-		in_use = 1
+		obj_flags |= IN_USE
 		icon_state = "fitnessweight-c"
 		user.setDir(SOUTH)
 		user.Stun(80)
@@ -88,7 +88,7 @@
 		animate(user, pixel_y = 2, time = 3)
 		sleep(3)
 		playsound(user, 'sound/machines/click.ogg', 60, 1)
-		in_use = 0
+		obj_flags &= ~IN_USE
 		animate(user, pixel_y = 0, time = 3)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"

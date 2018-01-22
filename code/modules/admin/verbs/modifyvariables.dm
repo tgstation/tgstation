@@ -8,12 +8,15 @@ GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "boun
 GLOBAL_PROTECT(VVpixelmovement)
 
 
-/client/proc/vv_get_class(var/var_value)
+/client/proc/vv_get_class(var/var_name, var/var_value)
 	if(isnull(var_value))
 		. = VV_NULL
 
 	else if (isnum(var_value))
-		. = VV_NUM
+		if (var_name in GLOB.bitfields)
+			. = VV_BITFIELD
+		else
+			. = VV_NUM
 
 	else if (istext(var_value))
 		if (findtext(var_value, "\n"))
@@ -52,7 +55,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else
 		. = VV_NULL
 
-/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
+/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes, var_name)
 	. = list("class" = class, "value" = null)
 	if (!class)
 		if (!classes)
@@ -109,6 +112,11 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 
+		if (VV_BITFIELD)
+			.["value"] = input_bitfield(usr, "Editing bitfield: [var_name]", var_name, current_value)
+			if (.["value"] == null)
+				.["class"] = null
+				return
 
 		if (VV_ATOM_TYPE)
 			.["value"] = pick_closest_path(FALSE)
@@ -436,7 +444,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else
 		variable = L[index]
 
-	default = vv_get_class(variable)
+	default = vv_get_class(objectvar, variable)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.")
 
@@ -556,7 +564,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			return
 
 
-	var/default = vv_get_class(var_value)
+	var/default = vv_get_class(variable, var_value)
 
 	if(isnull(default))
 		to_chat(src, "Unable to determine variable type.")
@@ -585,7 +593,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			default = VV_MESSAGE
 		class = default
 
-	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST))
+	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST), var_name = variable)
 	class = value["class"]
 
 	if (!class)

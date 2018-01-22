@@ -57,6 +57,7 @@
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\monkeys.dm"
 #include "code\__DEFINES\networks.dm"
+#include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"
