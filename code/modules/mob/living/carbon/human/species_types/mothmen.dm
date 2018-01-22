@@ -27,19 +27,14 @@
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_moth_name(gender)
+		return random_unique_moth_name()
 
-	var/randname = moth_name(gender)
+	var/randname = moth_name()
 
 	if(lastname)
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/moth/qualifies_for_rank(rank, list/features)
-	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
-		return FALSE
-	return TRUE
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()

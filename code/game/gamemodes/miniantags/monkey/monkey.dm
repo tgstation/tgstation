@@ -108,25 +108,25 @@
 /proc/add_monkey_leader(datum/mind/monkey_mind)
 	if(is_monkey_leader(monkey_mind))
 		return FALSE
-	var/datum/antagonist/monkey/leader/M = monkey_mind.add_antag_datum(ANTAG_DATUM_MONKEY_LEADER)
+	var/datum/antagonist/monkey/leader/M = monkey_mind.add_antag_datum(/datum/antagonist/monkey/leader)
 	return M
 
 /proc/add_monkey(datum/mind/monkey_mind)
 	if(is_monkey(monkey_mind))
 		return FALSE
-	var/datum/antagonist/monkey/M = monkey_mind.add_antag_datum(ANTAG_DATUM_MONKEY)
+	var/datum/antagonist/monkey/M = monkey_mind.add_antag_datum(/datum/antagonist/monkey)
 	return M
 
 /proc/remove_monkey(datum/mind/monkey_mind)
 	if(!is_monkey(monkey_mind))
 		return FALSE
-	var/datum/antagonist/monkey/M = monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY)
+	var/datum/antagonist/monkey/M = monkey_mind.has_antag_datum(/datum/antagonist/monkey)
 	M.on_removal()
 	return TRUE
 
 /proc/is_monkey_leader(datum/mind/monkey_mind)
-	return monkey_mind && monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY_LEADER)
+	return monkey_mind && monkey_mind.has_antag_datum(/datum/antagonist/monkey/leader)
 
 /proc/is_monkey(datum/mind/monkey_mind)
-	return monkey_mind && (monkey_mind.has_antag_datum(ANTAG_DATUM_MONKEY) || is_monkey_leader(monkey_mind))
+	return monkey_mind && (monkey_mind.has_antag_datum(/datum/antagonist/monkey) || is_monkey_leader(monkey_mind))
 
