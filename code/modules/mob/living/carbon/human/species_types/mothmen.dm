@@ -22,9 +22,6 @@
 			H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
 			handle_mutant_bodyparts(H)
 
-/datum/species/moth/on_species_loss(mob/living/carbon/C)
-	. = ..()
-
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_moth_name()
