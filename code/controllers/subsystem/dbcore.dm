@@ -223,9 +223,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	item = list()
 	_db_query = _dm_db_new_query()
 
-/datum/DBQuery/proc/Connect(datum/controller/subsystem/dbcore/connection_handler)
-	db_connection = connection_handler
-
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
