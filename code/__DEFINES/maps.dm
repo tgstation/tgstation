@@ -37,18 +37,13 @@ Last space-z level = empty
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_LAVALAND 5
 #define ZLEVEL_EMPTY_SPACE 12
-//Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
-#define ZLEVEL_TRANSIT 13
-
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 #define ZLEVEL_SPACE_RUIN_COUNT 5
 
 // traits
+// boolean - marks a level as having that property if present
 #define ZTRAIT_CENTCOM "CentCom"
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
@@ -57,6 +52,7 @@ Last space-z level = empty
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+// number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
 // trait definitions
