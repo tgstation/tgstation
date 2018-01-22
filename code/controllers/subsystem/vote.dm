@@ -9,8 +9,10 @@ SUBSYSTEM_DEF(vote)
 	var/initiator = null
 	var/started_time = null
 	var/time_remaining = 0
+	var/vote_flags = NONE
 	var/mode = null
 	var/question = null
+	var/total_votes = 0
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -47,7 +49,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
-	var/total_votes = 0
+	total_votes = 0
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -73,7 +75,14 @@ SUBSYSTEM_DEF(vote)
 						greatest_votes = choices[GLOB.master_mode]
 	//get all options with that many votes and return them in a list
 	. = list()
-	if(greatest_votes)
+	if(vote_flags & WEIGHTED)
+		var/list/filteredchoices = choices.Copy()
+		for(var/a in filteredchoices)
+			if(!filteredchoices[a])
+				filteredchoices -= a //Remove choices with 0 votes, as pickweight gives them 1 vote
+		if(filteredchoices.len)
+			. += pickweight(filteredchoices.Copy())
+	else if(greatest_votes)
 		for(var/option in choices)
 			if(choices[option] == greatest_votes)
 				. += option
@@ -82,25 +91,26 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
+	var/is_weighted = vote_flags & WEIGHTED
+	var/feedbackanswer
 	if(winners.len > 0)
-		if(question)
-			text += "<b>[question]</b>"
-		else
-			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i=1,i<=choices.len,i++)
-			var/votes = choices[choices[i]]
-			if(!votes)
-				votes = 0
-			text += "\n<b>[choices[i]]:</b> [votes]"
-		if(mode != "custom")
-			if(winners.len > 1)
-				text = "\n<b>Vote Tied Between:</b>"
-				for(var/option in winners)
-					text += "\n\t[option]"
-			. = pick(winners)
-			text += "\n<b>Vote Result: [.]</b>"
-		else
-			text += "\n<b>Did not vote:</b> [GLOB.clients.len-voted.len]"
+		if(winners.len > 1)
+			text = "<b>Vote Tied Between:</b><br>"
+			for(var/option in winners)
+				text += "\t[option]<br>"
+			feedbackanswer = jointext(winners, " ")
+		. = pick(winners)
+		if(mode == "map")
+			if(!feedbackanswer)
+				SSblackbox.record_feedback("tally", "map_vote_winner", .)
+			else
+				SSblackbox.record_feedback("tally", "map_vote_tie", feedbackanswer)
+
+		text += "<b>[is_weighted ? "Random Weighted " : ""]Vote Result: [.] won with [choices[.]] vote\s[is_weighted? " and a [round(100*choices[.]/total_votes)]% chance of winning" : null].</b>"
+		for(var/choice in choices)
+			if(. == choice)
+				continue
+			text += "<br>\t [choice] had [choices[choice] != null ? choices[choice] : "0"] vote\s[(is_weighted&&choices[choice])? " and a [round(100*choices[choice]/total_votes)]% chance of winning" : null]."
 	else
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
@@ -115,14 +125,17 @@ SUBSYSTEM_DEF(vote)
 		switch(mode)
 			if("restart")
 				if(. == "Restart Round")
-					restart = 1
+					restart = TRUE
 			if("gamemode")
 				if(GLOB.master_mode != .)
 					SSticker.save_mode(.)
 					if(SSticker.HasRoundStarted())
-						restart = 1
+						restart = TRUE
 					else
 						GLOB.master_mode = .
+			if("map")
+				var/datum/map_config/VM = SSmapping.map_names[.]
+				SSmapping.changemap(VM)
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -148,7 +161,7 @@ SUBSYSTEM_DEF(vote)
 				return vote
 	return 0
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, flags = NONE)
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -171,6 +184,11 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("map")
+				for(var/map in SSmapping.map_names)
+					var/datum/map_config/VM = SSmapping.map_names[map]
+					if(VM.allow_vote)
+						choices.Add(map)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -181,10 +199,11 @@ SUBSYSTEM_DEF(vote)
 						break
 					choices.Add(option)
 			else
-				return 0
+				return FALSE
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
+		vote_flags = flags
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
 			text += "\n[question]"
@@ -200,8 +219,8 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
@@ -247,8 +266,14 @@ SUBSYSTEM_DEF(vote)
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
-
-		. += "</li>"
+		var/avmm = CONFIG_GET(flag/allow_vote_map)
+		if(trialmin || avmm)
+			. += "<a href='?src=[REF(src)];vote=map'>Map</a>"
+		else
+			. += "<font color='grey'>Map (Disallowed)</font>"
+		if(trialmin)
+			. += "\t(<a href='?src=[REF(src)];vote=toggle_map'>[avmm ? "Allowed" : "Disallowed"]</a>)"
+		. += "</li><li>"
 		//custom
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
@@ -274,12 +299,18 @@ SUBSYSTEM_DEF(vote)
 		if("toggle_gamemode")
 			if(usr.client.holder)
 				CONFIG_SET(flag/allow_vote_mode, !CONFIG_GET(flag/allow_vote_mode))
+		if("toggle_map")
+			if(usr.client.holder)
+				CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
 		if("gamemode")
 			if(CONFIG_GET(flag/allow_vote_mode) || usr.client.holder)
 				initiate_vote("gamemode",usr.key)
+		if("map")
+			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
+				initiate_vote("map",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)

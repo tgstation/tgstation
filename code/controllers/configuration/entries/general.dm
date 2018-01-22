@@ -61,6 +61,8 @@
 
 /datum/config_entry/flag/allow_vote_mode	// allow votes to change mode
 
+/datum/config_entry/flag/allow_vote_map	// allow votes to change map
+
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	value = 6000
 	min_val = 0
@@ -230,6 +232,16 @@
 
 /datum/config_entry/flag/maprotation
 
+/datum/config_entry/flag/maprotation_use_weighted
+
+/datum/config_entry/number/maprotation_vote_method
+	value = MAPVOTE_VOTE
+	min_val = MAPVOTE_NONE
+	max_val = MAPVOTE_RANDOM
+
+/datum/config_entry/number/maprotation_vote_delay
+	min_val = 0
+
 /datum/config_entry/number/maprotatechancedelta
 	value = 0.75
 	min_val = 0
@@ -303,8 +315,6 @@
 /datum/config_entry/flag/announce_admin_logout
 
 /datum/config_entry/flag/announce_admin_login
-
-/datum/config_entry/flag/allow_map_voting
 
 /datum/config_entry/flag/generate_minimaps
 

@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(mapping)
 
 	var/loading_ruins = FALSE
 
+	var/list/map_names = list()
+
 	// Z-manager stuff
 	var/list/z_list
 	var/datum/space_level/transit
@@ -71,6 +73,7 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
+	generate_map_name_list()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -93,6 +96,11 @@ SUBSYSTEM_DEF(mapping)
 	for(var/N in nuke_tiles)
 		var/turf/open/floor/circuit/C = N
 		C.update_icon()
+
+/datum/controller/subsystem/mapping/proc/generate_map_name_list()
+	for(var/map in global.config.maplist)
+		var/datum/map_config/VM = global.config.maplist[map]
+		map_names[VM.map_name] = global.config.maplist[map]
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
@@ -160,19 +168,17 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/maprotate()
 	var/players = GLOB.clients.len
 	var/list/mapvotes = list()
+	var/thingy = CONFIG_GET(number/maprotation_vote_method)
+	if(thingy == MAPVOTE_VOTE || thingy == MAPVOTE_NONE)
+		return
 	//count votes
-	var/amv = CONFIG_GET(flag/allow_map_voting)
-	if(amv)
-		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.preferred_map
-			if (!vote)
-				if (global.config.defaultmap)
-					mapvotes[global.config.defaultmap.map_name] += 1
-				continue
-			mapvotes[vote] += 1
-	else
-		for(var/M in global.config.maplist)
-			mapvotes[M] = 1
+	for (var/client/c in GLOB.clients)
+		var/vote = c.prefs.preferred_map
+		if (!vote)
+			if (global.config.defaultmap)
+				mapvotes[global.config.defaultmap.map_name] += 1
+			continue
+		mapvotes[vote] += 1
 
 	//filter votes
 	for (var/map in mapvotes)
@@ -195,8 +201,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			mapvotes.Remove(map)
 			continue
 
-		if(amv)
-			mapvotes[map] = mapvotes[map]*VM.voteweight
+		mapvotes[map] = mapvotes[map]*VM.voteweight
 
 	var/pickedmap = pickweight(mapvotes)
 	if (!pickedmap)

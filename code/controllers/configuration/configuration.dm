@@ -79,7 +79,7 @@
 	for(var/L in lines)
 		if(!L)
 			continue
-		
+
 		var/firstchar = copytext(L, 1, 2)
 		if(firstchar == "#")
 			continue
@@ -100,7 +100,7 @@
 
 		if(!entry)
 			continue
-		
+
 		if(entry == "$include")
 			if(!value)
 				log_config("Warning: Invalid $include directive: [value]")
@@ -108,7 +108,7 @@
 				LoadEntries(value, stack)
 				++.
 			continue
-		
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -124,10 +124,10 @@
 			log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 
 		E.resident_file = filename
-		
+
 		if(validated)
 			E.modified = TRUE
-	
+
 	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
@@ -243,8 +243,8 @@
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
-			if ("weight","voteweight")
-				currentmap.voteweight = text2num(data)
+			if ("novote", "disable_vote")
+				currentmap.allow_vote = FALSE
 			if ("default","defaultmap")
 				defaultmap = currentmap
 			if ("endmap")
