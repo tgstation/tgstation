@@ -33,7 +33,6 @@
 	var/list/hostiles_spawn = list()
 	var/list/hostile_types = list()
 	var/number_of_hostiles
-
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
