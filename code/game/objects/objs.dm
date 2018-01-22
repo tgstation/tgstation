@@ -213,6 +213,7 @@
 	. = ..()
 	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
 	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
+	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
 
 /obj/examine(mob/user)
 	..()

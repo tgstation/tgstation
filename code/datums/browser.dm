@@ -223,19 +223,25 @@
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
-/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,Radio=FALSE)
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,Type="checkbox")
 	if (!User)
 		return
 
 	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
-	for (var/i in values)
-		output += {"<li>
-        				<label class="switch">
-        					<input type="[Radio ? "radio" : "checkbox"]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
-      							<div class="slider"></div>
-      								<span>[i["name"]]</span>
-    						</label>
-    					</li>"}
+
+	if (Type == "checkbox" || Type == "radio")
+		for (var/i in values)
+			output += {"<li>
+	        				<label class="switch">
+	        					<input type="[Type]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
+	      							<div class="slider"></div>
+	      								<span>[i["name"]]</span>
+	    						</label>
+	    					</li>"}
+	else
+		for (var/i in values)
+			output += {"<li><input id="name="[i["name"]]"" style="width: 50px" type="[type]" name="[i["name"]]" value="[i["value"]]">
+      <label for="[i["name"]]">[i["name"]]</label></li>"}
 	output += {"</ul><div style="text-align:center">
 		<button type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
 
@@ -266,14 +272,14 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values,Radio=FALSE)
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, Type = "checkbox")
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values,Radio)
+	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, Type)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
