@@ -264,8 +264,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += GLOB.admin_verbs_possess
 		if(rights & R_PERMISSIONS)
 			verbs += GLOB.admin_verbs_permissions
-		if(rights & R_MENTOR)
-			verbs += GLOB.admin_verbs_mentor
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
 		if(rights & R_ADMIN)
@@ -293,7 +291,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		GLOB.admin_verbs_fun,
 		GLOB.admin_verbs_server,
 		GLOB.admin_verbs_debug,
-		GLOB.admin_verbs_mentor,
 		GLOB.admin_verbs_possess,
 		GLOB.admin_verbs_permissions,
 		/client/proc/stealth,

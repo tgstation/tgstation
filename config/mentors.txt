@@ -1,0 +1,2 @@
+# Like admins.txt, but for mentors and without ranks.
+# Just put ckeys in the format of one ckey per line, and all the ckeys listed here will be made mentors.

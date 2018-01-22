@@ -29,10 +29,8 @@
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
 # +AUTOLOGIN = admin gains powers upon connect. This defaults to on, you can use -AUTOLOGIN to make a role require using the readmin verb to gain powers. (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit.)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
-# +MENTOR = mentor verbs and abilities
 # END_KEYWORDS
 
-Mentor			= +MENTOR
 Admin Observer	= -AUTOLOGIN
 Moderator		= +ADMIN
 Admin Candidate	= +@

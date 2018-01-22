@@ -1,18 +1,12 @@
-GLOBAL_PROTECT(admin_verbs_mentor)
-GLOBAL_LIST_INIT(admin_verbs_mentor, list(
+GLOBAL_PROTECT(mentor_verbs)
+GLOBAL_LIST_INIT(mentor_verbs, list(
 	/client/proc/cmd_mentor_say,
 	/client/proc/show_mentor_memo
 	))
 
-/proc/IsMentor()
-	if(!usr || !usr.client)
-		return FALSE
-	return CkeyIsMentor(usr.ckey)
+/client/proc/add_mentor_verbs()
+	if(mentor_datum)
+		verbs += GLOB.mentor_verbs
 
-/proc/CkeyIsMentor(ckey)
-	if(!GLOB.admin_datums[ckey])
-		return FALSE
-	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
-	if(admin_datum.rank.name == "Mentor")
-		return TRUE
-	return FALSE
+/client/proc/remove_mentor_verbs()
+	verbs -= GLOB.mentor_verbs

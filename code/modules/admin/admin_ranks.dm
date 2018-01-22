@@ -51,8 +51,6 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
-		if("mentor")
-			flag = R_MENTOR
 		if("poll")
 			flag = R_POLL
 		if("varedit")
