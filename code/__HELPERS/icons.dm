@@ -813,6 +813,9 @@ The _flatIcons list is a cache for generated icon files.
 				curIndex++ //Try the next layer
 				continue
 			var/image/I = current
+			if(I.plane != FLOAT_PLANE && I.plane != A.plane)
+				curIndex++
+				continue
 			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000)
