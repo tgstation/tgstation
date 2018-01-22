@@ -226,3 +226,42 @@
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()
+
+/datum/reagent/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	description = "A historical fire suppressant. Originally believed to simply displace oxygen to starve fires, it actually interferes with the combustion reaction itself. Vastly superior to the cheap water-based extinguishers found on NT vessels."
+	reagent_state = LIQUID
+	color = "#A6FAFF55"
+	taste_description = "the inside of a fire extinguisher"
+
+/datum/reagent/firefighting_foam/reaction_turf(turf/open/T, reac_volume)
+	if (!istype(T))
+		return
+
+	if(reac_volume >= 1)
+		var/obj/effect/particle_effect/foam/firefighting/F = (locate(/obj/effect/particle_effect/foam) in T)
+		if(!F)
+			F = new(T)
+		else if(istype(F))
+			F.lifetime = initial(F.lifetime) //reduce object churn a little bit when using smoke by keeping existing foam alive a bit longer
+
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && !isspaceturf(T))
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			if(G.temperature > T20C)
+				G.temperature = max(G.temperature/2,T20C)
+			G.react()
+			qdel(hotspot)
+
+/datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)
+	O.extinguish()
+
+/datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	if(method in list(VAPOR, TOUCH))
+		M.adjust_fire_stacks(-reac_volume)
+		M.ExtinguishMob()
+	..()
