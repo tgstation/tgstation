@@ -6314,7 +6314,8 @@
 	launch_status = 0;
 	name = "monastery shuttle";
 	port_direction = 2;
-	width = 5
+	width = 5;
+	timid = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)

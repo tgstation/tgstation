@@ -202,8 +202,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "B" = (
-/turf/open/space/basic,
-/turf/open/space,
+/turf/template_noop,
 /area/space)
 "C" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,

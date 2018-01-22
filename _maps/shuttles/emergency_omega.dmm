@@ -714,7 +714,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bu" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/space)
 "bv" = (
 /obj/structure/shuttle/engine/propulsion,

@@ -1,10 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/open/space/basic,
-/turf/open/space,
+/turf/template_noop,
 /area/template_noop)
 "ac" = (
 /obj/machinery/porta_turret/syndicate{
