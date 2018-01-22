@@ -26,15 +26,11 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
-	var/fingerprintslast
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -542,7 +538,4 @@
 	return
 
 /atom/proc/wirecutter_act(mob/user, obj/item/tool)
-	return
-
-/atom/proc/GenerateTag()
 	return

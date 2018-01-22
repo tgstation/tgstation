@@ -188,7 +188,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
-	lock_override = CAMERA_LOCK_STATION
+	station_lock_override = TRUE
 	shuttlePortId = "pirateship_custom"
 	shuttlePortName = "custom location"
 	x_offset = 9

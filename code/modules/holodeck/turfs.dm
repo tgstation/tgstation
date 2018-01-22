@@ -1,16 +1,12 @@
 /turf/open/floor/holofloor
 	icon_state = "floor"
 	thermal_conductivity = 0
+	broken_states = list("engine")
+	burnt_states = list("engine")
 	flags_1 = NONE
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
-
-/turf/open/floor/holofloor/burn_tile()
-	return //you can't burn a hologram!
-
-/turf/open/floor/holofloor/break_tile()
-	return //you can't break a hologram!
 
 /turf/open/floor/holofloor/plating
 	name = "holodeck projector floor"
@@ -88,6 +84,7 @@
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
+	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 

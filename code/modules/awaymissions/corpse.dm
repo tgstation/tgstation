@@ -275,10 +275,6 @@
 /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
 	disease = /datum/disease/fluspanish
 
-/obj/effect/mob_spawn/human/corpse/cargo_tech
-	name = "Cargo Tech"
-	outfit = /datum/outfit/job/cargo_tech
-
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook

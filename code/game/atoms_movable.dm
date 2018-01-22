@@ -157,47 +157,36 @@
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
-			var/first_step_dir
-			if (direct & NORTH)
-				if (direct & EAST)
+			if (direct & 1)
+				if (direct & 4)
 					if (step(src, NORTH))
-						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
-						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
-				else if (direct & WEST)
+				else if (direct & 8)
 					if (step(src, NORTH))
-						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
-						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
-			else if (direct & SOUTH)
-				if (direct & EAST)
+			else if (direct & 2)
+				if (direct & 4)
 					if (step(src, SOUTH))
-						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
-						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
-				else if (direct & WEST)
+				else if (direct & 8)
 					if (step(src, SOUTH))
-						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
-						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
-			if(!. && moving_diagonally == SECOND_DIAG_STEP)
-				setDir(first_step_dir)
 			moving_diagonally = 0
 			return
 
@@ -657,7 +646,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf()
+	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))

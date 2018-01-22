@@ -1405,7 +1405,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "eJ" = (
-/obj/structure/sign/warning/vacuum,
+/obj/structure/sign/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/wildwest/refine)
 "eK" = (

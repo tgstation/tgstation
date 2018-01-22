@@ -30,8 +30,7 @@ GLOBAL_LIST_INIT(hallucinations_medium, list(
 	/datum/hallucination/husks,
 	/datum/hallucination/battle,
 	/datum/hallucination/fire,
-	/datum/hallucination/self_delusion,
-	/datum/hallucination/stray_bullet))
+	/datum/hallucination/self_delusion))
 
 GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/fakeattacker,
@@ -64,7 +63,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/feedback_details //extra info for investigate
 
 /datum/hallucination/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
+	set waitfor = 0
 	target = T
 	if(!forced)
 		target.hallucination = max(0, target.hallucination - cost)
@@ -158,15 +157,11 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 25
 
 /datum/hallucination/fake_flood/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			center = get_turf(U)
 			break
-	if(!center)
-		qdel(src)
-		return
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
 	flood_images += image(image_icon,center,image_state,MOB_LAYER)
 	flood_turfs += center
@@ -183,7 +178,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			new /datum/hallucination/fake_alert(target, TRUE, "too_much_tox")
+			new /datum/hallucination/fake_alert(target, TRUE, "tox_in_air")
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
@@ -228,14 +223,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 25
 
 /datum/hallucination/xeno_attack/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break
+	feedback_details += "Vent Coords: [pump.x],[pump.y],[pump.z]"
 	if(pump)
-		feedback_details += "Vent Coords: [pump.x],[pump.y],[pump.z]"
 		xeno = new(pump.loc,target)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
@@ -276,7 +270,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 75
 
 /datum/hallucination/oh_yeah/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	. = ..()
 	var/turf/closed/wall/wall
 	for(var/turf/closed/wall/W in range(7,target))
@@ -332,7 +325,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 75
 
 /datum/hallucination/singularity_scare/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/turf/start = get_turf(T)
 	var/screen_border = pick(SOUTH,EAST,WEST,NORTH)
@@ -367,7 +359,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/battle/New(mob/living/carbon/T, forced = TRUE, battle_type)
-	set waitfor = FALSE
 	..()
 	var/hits = rand(3,6)
 	if(!battle_type)
@@ -414,7 +405,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 10
 
 /datum/hallucination/items_other/New(mob/living/carbon/T, forced = TRUE, item_type)
-	set waitfor = FALSE
 	..()
 	var/item
 	if(!item_type)
@@ -466,7 +456,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 50
 
 /datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null, custom_name = null)
-	set waitfor = FALSE
 	. = ..()
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
@@ -516,7 +505,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 40
 
 /datum/hallucination/self_delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null, wabbajack = TRUE) //set wabbajack to false if you want to use another fake source
-	set waitfor = FALSE
 	..()
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie","robot")
@@ -554,7 +542,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	return ..()
 
 /datum/hallucination/fakeattacker/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
@@ -720,7 +707,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 25
 
 /datum/hallucination/bolts/New(mob/living/carbon/T, forced, door_number=-1) //-1 for severe, 1-2 for subtle
-	set waitfor = FALSE
 	..()
 	var/image/I = null
 	var/count = 0
@@ -749,7 +735,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/target_name = target.first_name()
 	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
@@ -811,7 +796,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/message/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/chosen = pick("<span class='userdanger'>The light burns you!</span>", \
 		"<span class='danger'>You don't feel like yourself.</span>", \
@@ -832,11 +816,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/sounds/New(mob/living/carbon/T, forced = TRUE, sound_type)
-	set waitfor = FALSE
 	..()
 	if(!sound_type)
 		sound_type = pick("airlock","explosion","far_explosion","glass","phone","summon_guns","alarm","beepsky","hallelujah","creepy","ratvar","shuttle_dock",
-		"wall_decon","door_hack","esword","blob_alert","tesla","malf_ai","meteors")
+		"wall_decon","door_hack","esword","blob_alert","tesla","malf_ai")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
@@ -852,13 +835,11 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		if("glass")
 			target.playsound_local(null, pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg'), 50, 1)
 		if("phone")
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
-			sleep(25)
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 25)
-			sleep(25)
 			target.playsound_local(null, 'sound/weapons/ring.ogg', 35)
-			sleep(25)
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 45)
+			sleep(15)
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 35)
+			sleep(15)
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 35)
 		if("summon_guns")
 			target.playsound_local(null, 'sound/magic/summon_guns.ogg', 50, 1)
 		if("alarm")
@@ -907,25 +888,20 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.playsound_local(null, 'sound/ai/outbreak5.ogg', 100, 0)
 		if("tesla") //Tesla loose!
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 35, 1)
-			sleep(30)
+			sleep(20)
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 65, 1)
-			sleep(30)
+			sleep(20)
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 100, 1)
 		if("malf_ai") //AI is doomsdaying!
 			to_chat(target, "<h1 class='alert'>Anomaly Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
 			target.playsound_local(null, 'sound/ai/aimalf.ogg', 100, 0)
-		if("meteors") //Meteors inbound!
-			to_chat(target, "<h1 class='alert'>Meteor Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station.</span><br><br>")
-			target.playsound_local(null, 'sound/ai/meteors.ogg', 100, 0)
 	qdel(src)
 
 /datum/hallucination/hudscrew
 	cost = 10
 
 /datum/hallucination/hudscrew/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	//Screwy HUD
 	target.set_screwyhud(pick(SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY))
@@ -938,7 +914,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/fake_alert/New(mob/living/carbon/T, forced = TRUE, specific, duration = 150)
-	set waitfor = FALSE
 	..()
 	var/alert_type = pick("not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","weightless","fire","locked","hacked","temphot","tempcold","pressure")
 	if(specific)
@@ -994,7 +969,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/items/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	//Strange items
 	if(!target.halitem)
@@ -1057,7 +1031,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/dangerflash/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	//Flashes of danger
 	if(!target.halimage)
@@ -1092,12 +1065,12 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 40
 
 /datum/hallucination/death/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
+	set waitfor = 0
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
 	target.Knockdown(300)
 	target.silent += 10
-	to_chat(target, "<span class='deadsay'><b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
+	to_chat(target, "<span class='deadsay'><b>[target.mind.name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
 	if(prob(50))
 		var/mob/fakemob
 		var/list/dead_people = list()
@@ -1121,7 +1094,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 25
 
 /datum/hallucination/fire/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/image/fire_overlay = image('icons/mob/OnFire.dmi', target, "Standing", ABOVE_MOB_LAYER)
 	if(target.client)
@@ -1150,7 +1122,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 20
 
 /datum/hallucination/husks/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	if(!target.halbody)
 		var/list/possible_points = list()
@@ -1183,7 +1154,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	cost = 15
 
 /datum/hallucination/stray_bullet/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
 	..()
 	var/list/turf/startlocs = list()
 	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))

@@ -1347,20 +1347,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
-	var/starting_crate_value = 50
-	
-/datum/uplink_item/badass/surplus/super
-	name = "Super Surplus Crate"
-	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
-			but you never know. Contents are sorted to always be worth 125 TC."
-	cost = 40
-	player_minimum = 40
-	starting_crate_value = 125
 
 /datum/uplink_item/badass/surplus/purchase(mob/user, datum/component/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
 
-	var/crate_value = starting_crate_value
+	var/crate_value = 50
 	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
 	if(U.purchase_log)
 		U.purchase_log.LogPurchase(C, src, cost)

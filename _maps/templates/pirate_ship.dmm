@@ -213,7 +213,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aD" = (
-/obj/structure/sign/departments/medbay/alt,
+/obj/structure/sign/bluecross_2,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aE" = (
@@ -542,7 +542,11 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bt" = (
-/obj/structure/sign/warning/vacuum/external{
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
 	pixel_x = -32
 	},
 /obj/machinery/light/small{
@@ -637,7 +641,11 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bE" = (
-/obj/structure/sign/warning/vacuum/external{
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
 	pixel_x = 32
 	},
 /obj/machinery/light/small{
@@ -1302,7 +1310,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "cS" = (
-/obj/structure/sign/departments/engineering{
+/obj/structure/sign/engineering{
 	pixel_x = 32
 	},
 /obj/machinery/light/small{
@@ -1371,7 +1379,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "cY" = (
-/obj/structure/sign/departments/engineering{
+/obj/structure/sign/engineering{
 	pixel_x = -32
 	},
 /obj/machinery/light/small{
@@ -1454,7 +1462,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/nosmoking_2{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -1699,7 +1707,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "dJ" = (
-/obj/structure/sign/warning/fire,
+/obj/structure/sign/fire,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "dK" = (
@@ -1745,7 +1753,11 @@
 	frequency = 1441;
 	id = "inc_in"
 	},
-/obj/structure/sign/warning/vacuum/external{
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
 	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
@@ -1777,7 +1789,7 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dT" = (
-/obj/structure/sign/warning/fire,
+/obj/structure/sign/fire,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "dU" = (

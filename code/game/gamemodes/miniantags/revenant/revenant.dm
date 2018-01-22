@@ -86,6 +86,7 @@
 		to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
+		SSticker.mode.traitors |= mind //Necessary for announcing
 		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
@@ -224,6 +225,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
+	return
 
 
 //reveal, stun, icon updates, cast checks, and essence changing

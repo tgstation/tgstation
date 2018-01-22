@@ -454,7 +454,7 @@
 	else
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)

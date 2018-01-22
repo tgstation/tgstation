@@ -23,7 +23,7 @@
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S, silent=TRUE))
+			if(!M.check_dock(S))
 				continue
 			destination_found = 1
 			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"

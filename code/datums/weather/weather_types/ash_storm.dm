@@ -17,7 +17,7 @@
 	end_overlay = "light_ash"
 
 	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	target_z = ZLEVEL_LAVALAND
 
 	immunity_type = "ash"
 
@@ -32,9 +32,7 @@
 	. = ..()
 	var/list/inside_areas = list()
 	var/list/outside_areas = list()
-	var/list/eligible_areas = list()
-	for (var/z in impacted_z_levels)
-		eligible_areas += SSmapping.areas_in_z["[z]"]
+	var/list/eligible_areas = SSmapping.areas_in_z["[target_z]"]
 	for(var/i in 1 to eligible_areas.len)
 		var/area/place = eligible_areas[i]
 		if(place.outdoors)

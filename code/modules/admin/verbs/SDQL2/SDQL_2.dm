@@ -95,7 +95,7 @@
 				for(var/datum/d in objs)
 					world.SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
-
+					
 			if("delete")
 				for(var/datum/d in objs)
 					SDQL_qdel_datum(d)
@@ -133,9 +133,9 @@
 		var/turf/T = a.loc
 		var/turf/actual = get_turf(a)
 		if(istype(T))
-			text += ": [t] <font color='gray'>at turf</font> [T] [ADMIN_COORDJMP(T)]<br>"
+			text += ": [t] at turf [T] [COORD(T)]<br>"
 		else if(a.loc && istype(actual))
-			text += ": [t] <font color='gray'>in</font> [a.loc] <font color='gray'>at turf</font> [actual] [ADMIN_COORDJMP(actual)]<br>"
+			text += ": [t] in [a.loc] at turf [actual] [COORD(actual)]<br>"
 		else
 			text += ": [t]<br>"
 	else

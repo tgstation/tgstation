@@ -1,9 +1,11 @@
 /datum/antagonist/brother
 	name = "Brother"
-	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = "blood brother"
 	var/datum/team/brother_team/team
+
+/datum/antagonist/brother/New(datum/mind/new_owner)
+	return ..()
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -17,15 +19,14 @@
 
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
-	objectives += team.objectives
-	owner.objectives += objectives
+	owner.objectives += team.objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= objectives
+	owner.objectives -= team.objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
@@ -35,7 +36,7 @@
 	if(!owner.current || !team || !team.meeting_area)
 		return
 	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
-	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
+	owner.store_memory("<b>Meeting Area</b>: [team.meeting_area]")
 
 /datum/antagonist/brother/greet()
 	var/brother_text = ""
@@ -55,41 +56,14 @@
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
 
-/datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
-	//show list of possible brothers
-	var/list/candidates = list()
-	for(var/mob/living/L in GLOB.alive_mob_list)
-		if(!L.mind || L.mind == new_owner || !can_be_owned(L.mind))
-			continue
-		candidates[L.mind.name] = L.mind
-
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
-	if(!choice)
-		return
-	var/datum/mind/bro = candidates[choice]
-	var/datum/team/brother_team/T = new
-	T.add_member(new_owner)
-	T.add_member(bro)
-	T.pick_meeting_area()
-	T.forge_brother_objectives()
-	new_owner.add_antag_datum(/datum/antagonist/brother,T)
-	bro.add_antag_datum(/datum/antagonist/brother, T)
-	T.update_name()
-	message_admins("[key_name_admin(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
-	log_admin("[key_name(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
 
 /datum/team/brother_team
 	name = "brotherhood"
 	member_name = "blood brother"
 	var/meeting_area
-	var/static/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 
 /datum/team/brother_team/is_solo()
 	return FALSE
-
-/datum/team/brother_team/proc/pick_meeting_area()
-	meeting_area = pick(meeting_areas)
-	meeting_areas -= meeting_area
 
 /datum/team/brother_team/proc/update_name()
 	var/list/last_names = list()
@@ -149,6 +123,3 @@
 			add_objective(new/datum/objective/assassinate, TRUE)
 	else
 		add_objective(new/datum/objective/steal, TRUE)
-
-/datum/team/brother_team/antag_listing_name()
-	return "[name] blood brothers"

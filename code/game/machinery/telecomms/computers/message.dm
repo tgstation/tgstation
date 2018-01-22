@@ -417,7 +417,6 @@
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						log_talk(usr, "[key_name(usr)] (PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOGPDA)
 
 
 		//Request Console Logs - KEY REQUIRED

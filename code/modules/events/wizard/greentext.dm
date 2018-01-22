@@ -60,6 +60,8 @@
 /obj/item/greentext/process()
 	if(new_holder && is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
+		if(!(new_holder in SSticker.mode.traitors))
+			SSticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!

@@ -35,7 +35,6 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
-	var/ui_screen = "home"
 
  /**
   * public
@@ -217,7 +216,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
-			"screen"	= ui_screen,
+			"screen"	= src_object.ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -278,7 +277,7 @@
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
-				ui_screen = params["screen"]
+				src_object.ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])

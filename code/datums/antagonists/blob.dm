@@ -1,7 +1,6 @@
 /datum/antagonist/blob
 	name = "Blob"
 	roundend_category = "blobs"
-	antagpanel_category = "Blob"
 	job_rank = ROLE_BLOB
 
 	var/datum/action/innate/blobpop/pop_action
@@ -58,10 +57,3 @@
 	owner.mind.transfer_to(B)
 	old_body.gib()
 	B.place_blob_core(blobtag.point_rate_human_blob, pop_override = TRUE)
-
-/datum/antagonist/blob/antag_listing_status()
-	. = ..()
-	if(owner && owner.current)
-		var/mob/camera/blob/B = owner.current
-		if(istype(B))
-			. += "(Progress: [B.blobs_legit.len]/[B.blobwincount])"

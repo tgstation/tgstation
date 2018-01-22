@@ -59,8 +59,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	verbs += list(
 		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/view_gas)
+		/mob/dead/observer/proc/open_spawners_menu)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -107,7 +106,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = SSmapping.get_station_center()
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
 
 	forceMove(T)
 
@@ -373,14 +372,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	usr.forceMove(pick(L))
 	update_parallax_contents()
-
-/mob/dead/observer/proc/view_gas()
-	set category = "Ghost"
-	set name = "View Gases"
-	set desc= "View the atmospheric conditions in a location"
-
-	var/turf/loc = get_turf(src)
-	show_air_status_to(loc, usr)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"

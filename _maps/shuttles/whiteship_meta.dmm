@@ -151,7 +151,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/structure/sign/warning/vacuum{
+/obj/structure/sign/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -559,7 +559,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/structure/sign/departments/restroom,
+/obj/structure/sign/restroom,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
@@ -608,7 +608,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
-/obj/structure/sign/departments/cargo,
+/obj/structure/sign/cargo,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -730,7 +730,7 @@
 /area/shuttle/abandoned)
 "bl" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/warning/vacuum{
+/obj/structure/sign/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1085,7 +1085,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bR" = (
-/obj/structure/sign/departments/science{
+/obj/structure/sign/science{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1118,7 +1118,7 @@
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 1;
-	lock_override = 1;
+	station_lock_override = 1;
 	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
@@ -1148,7 +1148,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bX" = (
-/obj/structure/sign/departments/botany,
+/obj/structure/sign/botany,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bY" = (
@@ -1182,7 +1182,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cb" = (
-/obj/structure/sign/departments/medbay/alt,
+/obj/structure/sign/bluecross_2,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cc" = (

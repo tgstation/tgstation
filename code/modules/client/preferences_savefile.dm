@@ -162,7 +162,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
-	S["pda_color"]			>> pda_color
+	S["pda_color"]			>> pda_color 
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -290,7 +290,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	S["feature_moth_wings"]				>> features["moth_wings"]
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -360,7 +359,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] 	= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
-	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -414,7 +412,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
-	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
 	WRITE_FILE(S["human_name"]			, custom_names["human"])
 	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
 	WRITE_FILE(S["mime_name"]			, custom_names["mime"])

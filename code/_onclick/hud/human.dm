@@ -15,10 +15,10 @@
 			targetmob = M
 
 	if(usr.hud_used.inventory_shown && targetmob.hud_used)
-		usr.hud_used.inventory_shown = FALSE
+		usr.hud_used.inventory_shown = 0
 		usr.client.screen -= targetmob.hud_used.toggleable_inventory
 	else
-		usr.hud_used.inventory_shown = TRUE
+		usr.hud_used.inventory_shown = 1
 		usr.client.screen += targetmob.hud_used.toggleable_inventory
 
 	targetmob.hud_used.hidden_inventory_update(usr)
@@ -432,7 +432,7 @@
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = FALSE
+		hud_used.hotkey_ui_hidden = 0
 	else
 		client.screen -= hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = TRUE
+		hud_used.hotkey_ui_hidden = 1

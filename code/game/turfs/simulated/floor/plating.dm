@@ -19,7 +19,7 @@
 		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
 		return
 	if(attachment_holes)
-		to_chat(user, "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+		to_chat(user, "<span class='notice'>There are few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
 	else
 		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
 
@@ -29,10 +29,7 @@
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
 	. = ..()
-	if(!attachment_holes || (!broken && !burnt))
-		icon_plating = icon_state
-	else
-		icon_plating = initial(icon_state)
+	icon_plating = icon_state
 
 /turf/open/floor/plating/update_icon()
 	if(!..())
@@ -92,12 +89,8 @@
 	name = "metal foam plating"
 	desc = "Thin, fragile flooring created with metal foam."
 	icon_state = "foam_plating"
-
-/turf/open/floor/plating/foam/burn_tile()
-	return //jetfuel can't melt steel foam
-
-/turf/open/floor/plating/foam/break_tile()
-	return //jetfuel can't break steel foam...
+	broken_states = list("foam_plating")
+	burnt_states = list("foam_plating")
 
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/tile/plasteel))

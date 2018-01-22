@@ -63,8 +63,8 @@
 	var/list/mob/targets = get_flash_targets(loc, range, FALSE)
 	if(user)
 		targets -= user
-	for(var/mob/living/carbon/C in targets)
-		flash_carbon(C, user, power, targeted, TRUE)
+	for(var/mob/M in targets)
+		flash_carbon(M, user, power, targeted, TRUE)
 	return TRUE
 
 /obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -75,7 +75,7 @@
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
 		return viewers(range, get_turf(target_loc))
 	else
-		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob/living)))
+		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob)))
 
 /obj/item/device/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))
@@ -90,8 +90,6 @@
 	return TRUE
 
 /obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
-	if(!istype(M))
-		return
 	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")

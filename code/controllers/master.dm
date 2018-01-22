@@ -49,7 +49,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/map_loading = FALSE	//Are we loading in a new map?
 
 	var/current_runlevel	//for scheduling different subsystems for different stages of the round
-	var/sleep_offline_after_initializations = TRUE
 
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
@@ -62,9 +61,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
-	config = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-
+	
 	if(!random_seed)
 		random_seed = rand(1, 1e9)
 		rand_seed(random_seed)
@@ -198,12 +196,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
-	if(sleep_offline_after_initializations)
-		world.sleep_offline = TRUE
+	world.sleep_offline = TRUE
 	world.fps = CONFIG_GET(number/fps)
 	var/initialized_tod = REALTIMEOFDAY
 	sleep(1)
-	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
+	if(CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
 	// Loop.

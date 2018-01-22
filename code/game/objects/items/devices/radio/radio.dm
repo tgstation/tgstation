@@ -228,8 +228,7 @@
 	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
 	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
-		var/turf/jammer_turf = get_turf(jammer)
-		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
+		if(get_dist(position,get_turf(jammer)) < jammer.range)
 			message = Gibberish(message,100)
 			break
 

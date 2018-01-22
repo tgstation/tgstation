@@ -43,7 +43,7 @@
 			return FALSE
 		. = ValidateAndSet("[var_value]")
 		if(.)
-			datum_flags |= DF_VAR_EDITED
+			var_edited = TRUE
 		return
 	if(var_name in banned_edits)
 		return FALSE
@@ -114,7 +114,7 @@
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
 		value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
-		if(value != temp && !(datum_flags & DF_VAR_EDITED))
+		if(value != temp && !var_edited)
 			log_config("Changing [name] from [temp] to [value]!")
 		return TRUE
 	return FALSE

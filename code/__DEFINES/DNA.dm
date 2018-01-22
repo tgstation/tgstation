@@ -123,7 +123,6 @@
 #define SPECIES_INORGANIC 32
 #define SPECIES_UNDEAD  33
 #define SPECIES_ROBOTIC 34
-#define NOEYES			35
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

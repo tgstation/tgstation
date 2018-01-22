@@ -323,6 +323,7 @@
 			D.Devolve()
 
 /datum/chemical_reaction/mix_virus/neuter_virus
+
 	name = "Neuter Virus"
 	id = "neutervirus"
 	required_reagents = list("formaldehyde" = 1)

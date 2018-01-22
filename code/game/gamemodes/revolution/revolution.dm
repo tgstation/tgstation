@@ -13,8 +13,8 @@
 	antag_flag = ROLE_REV
 	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 30
-	required_enemies = 2
+	required_players = 20
+	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
@@ -96,7 +96,7 @@
 
 	for(var/datum/mind/rev_mind in headrev_candidates)
 		log_game("[rev_mind.key] (ckey) has been selected as a head rev")
-		var/datum/antagonist/rev/head/new_head = new()
+		var/datum/antagonist/rev/head/new_head = new(rev_mind)
 		new_head.give_flash = TRUE
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE

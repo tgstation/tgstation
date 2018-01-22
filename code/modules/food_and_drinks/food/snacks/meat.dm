@@ -108,13 +108,6 @@
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtype = MEAT | RAW | GROSS
 
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
-	icon_state = "mothmeat"
-	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
-	filling_color = "#BF896B"
-	tastes = list("dust" = 1, "powder" = 1, "meat" = 2)
-	foodtype = MEAT | RAW
-
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "bone"
 	icon_state = "skeletonmeat"
@@ -126,11 +119,12 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	name = " meat (rotten)"
-	icon_state = "rottenmeat"
+	icon_state = "lizardmeat" //Close enough.
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
 	tastes = list("brains" = 1, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
+
 
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////

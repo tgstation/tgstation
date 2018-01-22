@@ -18,7 +18,7 @@
 	end_sound = 'sound/ambience/acidrain_end.ogg'
 
 	area_type = /area/lavaland/surface/outdoors
-	target_trait = ZTRAIT_MINING
+	target_z = ZLEVEL_LAVALAND
 
 	immunity_type = "acid" // temp
 

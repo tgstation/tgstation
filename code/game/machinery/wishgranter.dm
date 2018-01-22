@@ -39,6 +39,7 @@
 		user.dna.add_mutation(COLDRES)
 		user.dna.add_mutation(TK)
 
+		SSticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
 		var/datum/objective/hijack/hijack = new

@@ -2860,7 +2860,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iI" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iJ" = (
@@ -2992,7 +2992,12 @@
 /area/centcom/control)
 "jb" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum/external,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK"
+	},
 /turf/open/floor/plating,
 /area/centcom/supply)
 "jc" = (
@@ -4738,7 +4743,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/syndicate_mothership/control)
 "nA" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/nosmoking_2,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "nB" = (
@@ -5916,7 +5921,7 @@
 /area/centcom/ferry)
 "ql" = (
 /obj/structure/dresser,
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/sign/goldenplaque/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -6398,7 +6403,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "rz" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "rA" = (
@@ -7409,7 +7414,7 @@
 	},
 /area/centcom/control)
 "tP" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tQ" = (
@@ -8000,7 +8005,12 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
-/obj/structure/sign/warning/vacuum/external,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK"
+	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vt" = (
@@ -9004,7 +9014,7 @@
 /area/syndicate_mothership/control)
 "yn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/vacuum,
+/obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "yo" = (
@@ -9025,7 +9035,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -28
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/securearea{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9985,7 +9995,7 @@
 	},
 /area/centcom/ferry)
 "AT" = (
-/obj/structure/sign/departments/medbay/alt,
+/obj/structure/sign/bluecross_2,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "AU" = (
@@ -10737,7 +10747,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/emps,
 /obj/item/gun/energy/ionrifle,
-/obj/structure/sign/departments/medbay/alt{
+/obj/structure/sign/bluecross_2{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12160,7 +12170,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gw" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/nosmoking_2,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "Gx" = (
@@ -12335,7 +12345,7 @@
 /area/tdome/tdomeobserve)
 "GL" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/lawyers_badge{
@@ -12356,7 +12366,7 @@
 /area/tdome/tdomeobserve)
 "GO" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/medal/silver{
@@ -12561,7 +12571,7 @@
 /area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/sign/atmosplaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -12579,7 +12589,7 @@
 /area/tdome/tdomeobserve)
 "Ht" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/sign/atmosplaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{
@@ -14378,7 +14388,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'FOURTH WALL'.";
 	name = "\improper FOURTH WALL";
 	pixel_x = -32

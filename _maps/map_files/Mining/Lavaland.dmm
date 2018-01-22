@@ -579,7 +579,10 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "bN" = (
-/obj/structure/sign/warning/docking,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA"
+	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
@@ -927,7 +930,11 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cN" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE"
+	},
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (

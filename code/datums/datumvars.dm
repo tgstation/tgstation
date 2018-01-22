@@ -1,11 +1,18 @@
+/datum
+	var/var_edited = FALSE //Warrenty void if seal is broken
+	var/fingerprintslast = null
+
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	if(var_name == NAMEOF(src, vars))
-		return FALSE
+	switch(var_name)
+		if ("vars")
+			return FALSE
+		if ("var_edited")
+			return FALSE
+	var_edited = TRUE
 	vars[var_name] = var_value
-	datum_flags |= DF_VAR_EDITED
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
@@ -102,7 +109,7 @@
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
-	if(!islist && (D.datum_flags & DF_VAR_EDITED))
+	if(!islist && D.var_edited)
 		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
 	var/list/dropdownoptions = list()
@@ -732,6 +739,28 @@
 
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
+
+		else if(href_list["ninja"])
+			if(!check_rights(R_FUN))
+				return
+
+			var/mob/living/carbon/human/M = locate(href_list["ninja"]) in GLOB.carbon_list
+			if(!istype(M))
+				to_chat(usr, "This can only be used on instances of type /mob")
+				return
+
+			if(tgalert(usr, "Are you sure you want to make [M] into a ninja?", "Confirmation", "Yes", "No") == "No")
+				return
+
+			if(!M.mind)
+				M.mind_initialize()
+
+			var/datum/antagonist/ninja/hiyah = M.mind.has_antag_datum(/datum/antagonist/ninja)
+			if(!hiyah)
+				hiyah = add_ninja(M)
+			if(hiyah)
+				hiyah.equip_space_ninja()
+			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))

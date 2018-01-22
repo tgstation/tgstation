@@ -1199,6 +1199,19 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
+/proc/get_areas_in_z(zlevel)
+	. = list()
+	var/validarea = FALSE
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		validarea = TRUE
+		for(var/turf/T in A)
+			if(T.z != zlevel)
+				validarea = FALSE
+				break
+		if(validarea)
+			. += A
+
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
@@ -1244,14 +1257,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
-
-GLOBAL_REAL_VAR(list/stack_trace_storage)
-/proc/gib_stack_trace()
-	stack_trace_storage = list()
-	stack_trace()
-	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
-	. = stack_trace_storage
-	stack_trace_storage = null
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
@@ -1489,14 +1494,14 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
 // If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
+// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
 /proc/REF(input)
 	if(istype(input, /datum))
 		var/datum/thing = input
-		if(thing.datum_flags & DF_USE_TAG)
+		if(thing.use_tag)
 			if(!thing.tag)
-				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
-				thing.datum_flags &= ~DF_USE_TAG
+				stack_trace("A ref was requested of an object with use_tag set but no tag: [thing]")
+				thing.use_tag = FALSE
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"

@@ -130,7 +130,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
+		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -452,14 +452,6 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
-/datum/reagent/mutationtoxin/moth
-	name = "Moth Mutation Toxin"
-	id = "mothmutationtoxin"
-	description = "A glowing toxin."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/moth
-	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
-
 /datum/reagent/mutationtoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
@@ -642,13 +634,11 @@
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
+	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
+		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/copper
@@ -670,13 +660,11 @@
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
+	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 
 /datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
+		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
 	return
 
 /datum/reagent/hydrogen
@@ -1151,13 +1139,11 @@
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
+	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
+		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
 	return
 
 /datum/reagent/nitrous_oxide
@@ -1172,13 +1158,11 @@
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)

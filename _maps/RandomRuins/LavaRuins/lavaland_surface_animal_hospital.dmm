@@ -507,7 +507,7 @@
 	},
 /area/ruin/powered/animal_hospital)
 "bI" = (
-/obj/structure/sign/departments/medbay/alt{
+/obj/structure/sign/bluecross_2{
 	name = "animal hospital"
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,

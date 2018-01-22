@@ -88,7 +88,6 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/camera/autoname,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ar" = (
@@ -131,7 +130,10 @@
 /area/engine/gravity_generator)
 "au" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/warning/radiation/rad_area{
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
+	icon_state = "radiation";
+	name = "RADIOACTIVE AREA";
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -603,7 +605,6 @@
 /area/bridge)
 "bM" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
 	},
@@ -628,7 +629,6 @@
 /area/hallway/primary/central)
 "bR" = (
 /obj/machinery/vending/cola,
-/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "bS" = (
@@ -668,7 +668,6 @@
 /area/hallway/secondary/entry)
 "bW" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -868,7 +867,6 @@
 /area/hallway/primary/central)
 "cC" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
@@ -1080,7 +1078,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/camera/autoname,
 /obj/effect/turf_decal/plaque{
 	icon_state = "L11"
 	},
@@ -1282,69 +1279,6 @@
 /obj/structure/table,
 /obj/item/device/flashlight{
 	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"dS" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
-/obj/machinery/camera/autoname,
-/turf/open/floor/plating,
-/area/engine/atmos)
-"dT" = (
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/dark,
-/area/engine/gravity_generator)
-"dU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/hallway/primary/central)
-"dV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/hallway/primary/central)
-"dW" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel,
-/area/construction)
-"dX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/construction)
-"dY" = (
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/storage/primary)
-"dZ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/construction)
-"ea" = (
-/obj/structure/table,
-/obj/machinery/camera/autoname{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -2084,7 +2018,7 @@ dm
 dy
 dy
 dy
-dX
+dy
 dy
 dy
 dy
@@ -2173,7 +2107,7 @@ ac
 ad
 af
 ah
-dS
+am
 ay
 aN
 bb
@@ -2295,7 +2229,7 @@ cA
 bE
 bE
 cN
-dW
+cY
 dn
 dn
 dn
@@ -2387,13 +2321,13 @@ aa
 ab
 ac
 ae
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 bu
 bG
 ce
@@ -2414,7 +2348,7 @@ dn
 dn
 dn
 dn
-dZ
+dL
 cN
 af
 ad
@@ -2441,19 +2375,19 @@ aa
 ab
 ac
 ae
-ab
+ag
 ai
 an
 ai
 aQ
 ai
-ab
+ag
 bv
 bH
 cf
 cq
 bv
-dU
+cD
 bE
 bE
 cR
@@ -2495,19 +2429,19 @@ aa
 ab
 ac
 ae
-ab
+ag
 ai
 ao
 aA
 aR
 ai
-ab
+ag
 bv
 bI
 cf
 cq
 bu
-dV
+cD
 bE
 bE
 cN
@@ -2549,13 +2483,13 @@ aa
 ab
 ac
 ae
-ab
-ab
-ab
+ag
+ag
+ag
 aB
-ab
-ab
-ab
+ag
+ag
+ag
 bv
 bJ
 cf
@@ -2605,9 +2539,9 @@ ac
 ae
 ac
 ac
-ab
+ag
 aB
-ab
+ag
 ac
 ac
 bv
@@ -3116,7 +3050,7 @@ dB
 dl
 dE
 dJ
-ea
+dN
 cS
 af
 ad
@@ -3307,7 +3241,7 @@ ac
 ad
 af
 ak
-dT
+av
 aK
 av
 bi
@@ -3434,7 +3368,7 @@ dx
 dl
 dl
 dl
-dY
+dl
 dl
 dl
 dl

@@ -344,7 +344,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new()
+				var/datum/antagonist/traitor/human/T = new(H.mind)
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -421,7 +421,7 @@
 				L.fix()
 
 		if("floorlava")
-			SSweather.run_weather(/datum/weather/floor_is_lava)
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))

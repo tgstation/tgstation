@@ -248,6 +248,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 
+// lightsout.
+/obj/effect/landmark/lightsout
+	name = "lightsout"
+
 // observer-start.
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"

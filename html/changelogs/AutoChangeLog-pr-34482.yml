@@ -1,0 +1,4 @@
+author: "F-OS"
+delete-after: True
+changes: 
+  - bugfix: "Drone dispensers no longer hide drones"

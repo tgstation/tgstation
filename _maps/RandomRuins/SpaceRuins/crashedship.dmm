@@ -10,8 +10,17 @@
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Aft)
+"ad" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/awaymission/BMPship/Aft)
 "ae" = (
 /turf/closed/wall/mineral/titanium/overspace,
+/area/awaymission/BMPship/Aft)
+"af" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "ag" = (
 /obj/machinery/porta_turret{
@@ -172,9 +181,22 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
+"aH" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/awaymission/BMPship/Fore)
 "aI" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/BMPship/Fore)
+"aJ" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/awaymission/BMPship/Midship)
+"aK" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/awaymission/BMPship/Midship)
 "aL" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -202,6 +224,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
+"aQ" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/BMPship/Fore)
 "aR" = (
 /obj/structure/table/wood,
 /obj/item/stack/spacecash/c500,
@@ -243,9 +271,19 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "aY" = (
-/obj/structure/sign/warning/vacuum,
+/obj/structure/sign/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Fore)
+"aZ" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/awaymission/BMPship/Midship)
+"ba" = (
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/awaymission/BMPship/Midship)
 "bb" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/gibspawner/human,
@@ -256,6 +294,12 @@
 	icon_state = "1-4"
 	},
 /obj/item/clothing/glasses/regular/hipster,
+/turf/open/floor/plating/airless,
+/area/awaymission/BMPship/Midship)
+"bd" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
 "be" = (
@@ -326,6 +370,12 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
+"br" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/awaymission/BMPship/Aft)
 "bs" = (
 /obj/structure/closet/crate,
 /obj/item/stack/spacecash/c1000,
@@ -405,6 +455,12 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
+"bF" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/BMPship/Aft)
 "bG" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -418,6 +474,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
+"bI" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/open/floor/carpet,
+/area/awaymission/BMPship/Fore)
 "bJ" = (
 /obj/machinery/door/airlock/silver,
 /turf/open/floor/carpet,
@@ -637,6 +697,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
+"co" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/BMPship/Fore)
 "cp" = (
 /obj/item/reagent_containers/food/snacks/hugemushroomslice,
 /turf/open/floor/plasteel/bar,
@@ -692,9 +758,18 @@
 "cC" = (
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/BMPship/Aft)
+"cD" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/BMPship/Aft)
 "cE" = (
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
+"cF" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/template_noop)
 "cG" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/BMPship/Fore)
@@ -847,6 +922,12 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
+"dh" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/bar,
+/area/awaymission/BMPship/Midship)
 "di" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -995,6 +1076,15 @@
 "dE" = (
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/BMPship/Aft)
+"dF" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
@@ -1419,6 +1509,12 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
+"eN" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/awaymission/BMPship/Aft)
 "eO" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -1901,6 +1997,7 @@
 /area/awaymission/BMPship/Midship)
 "gt" = (
 /turf/open/floor/plating/airless{
+	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/BMPship/Midship)
@@ -1942,6 +2039,12 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/BMPship/Aft)
+"gB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
@@ -1997,6 +2100,7 @@
 /area/awaymission/BMPship/Fore)
 "gL" = (
 /turf/open/floor/plating/airless{
+	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2079,6 +2183,7 @@
 /area/template_noop)
 "ha" = (
 /turf/open/floor/plating/airless{
+	broken = 1;
 	icon_state = "panelscorched"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2118,6 +2223,7 @@
 /area/awaymission/BMPship/Aft)
 "hg" = (
 /turf/open/floor/plating/airless{
+	broken = 1;
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/BMPship/Midship)
@@ -2147,6 +2253,12 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
+/area/awaymission/BMPship/Aft)
+"hm" = (
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/BMPship/Aft)
 "hn" = (
 /obj/item/clothing/gloves/color/fyellow,
@@ -2196,6 +2308,24 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
+/area/awaymission/BMPship/Fore)
+"hy" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hz" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hA" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hB" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hC" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/awaymission/BMPship/Fore)
+"hD" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/BMPship/Fore)
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -2576,7 +2706,7 @@ aa
 aa
 aa
 aI
-hE
+hD
 bV
 hx
 ee
@@ -2626,7 +2756,7 @@ aa
 aa
 aa
 aI
-hE
+hC
 bV
 bV
 dH
@@ -2676,7 +2806,7 @@ aa
 aa
 aa
 aI
-hE
+hB
 bV
 bV
 bV
@@ -2721,12 +2851,12 @@ aa
 aa
 aa
 aa
-cG
-gk
+aH
+aQ
 bl
 bt
-hE
-hE
+hy
+hA
 bV
 bV
 cY
@@ -2736,15 +2866,15 @@ eg
 bV
 bV
 bV
-fc
+bI
 fv
 fJ
-cG
+aH
 hE
-gk
+aQ
 gF
 gR
-cG
+aH
 fS
 fS
 gb
@@ -2772,7 +2902,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aR
 bm
 bu
@@ -2785,17 +2915,17 @@ du
 bV
 bV
 ev
-db
-db
+co
+co
 fd
 fw
 fu
 fT
-cG
+aH
 gl
 gG
 gl
-cG
+aH
 gb
 gb
 gb
@@ -2823,11 +2953,11 @@ aa
 aa
 aa
 aa
-cG
+aH
 aS
 bn
 bm
-fc
+bI
 bV
 bV
 bV
@@ -2842,11 +2972,11 @@ aT
 fx
 fK
 fU
-cG
+aH
 gm
 gG
 gG
-cG
+aH
 gb
 gb
 gb
@@ -2874,13 +3004,13 @@ aa
 aa
 aa
 aa
-cG
+aH
 aT
 aT
 aT
-hE
+hz
 bW
-db
+co
 cH
 bV
 bV
@@ -2893,11 +3023,11 @@ aT
 fy
 fL
 fv
-cG
-cG
+aH
+aH
 gH
-cG
-cG
+aH
+aH
 gb
 gb
 gb
@@ -2925,7 +3055,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aU
 bo
 bp
@@ -2933,10 +3063,10 @@ bJ
 bV
 bV
 cI
-db
+co
 dv
 dI
-db
+co
 ex
 bV
 eU
@@ -2948,7 +3078,7 @@ gd
 gn
 gI
 fv
-cG
+aH
 gb
 gb
 gb
@@ -2976,7 +3106,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aV
 bp
 bv
@@ -2999,7 +3129,7 @@ aT
 go
 fI
 fv
-cG
+aH
 gb
 gb
 gb
@@ -3027,7 +3157,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aW
 bp
 bv
@@ -3037,7 +3167,7 @@ ce
 ce
 ce
 dw
-dy
+dh
 ce
 ce
 ce
@@ -3078,7 +3208,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aV
 bp
 bw
@@ -3129,7 +3259,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aW
 bp
 bv
@@ -3138,7 +3268,7 @@ bZ
 bZ
 bZ
 dc
-dy
+dh
 dB
 dB
 dB
@@ -3180,7 +3310,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aV
 bp
 bv
@@ -3189,7 +3319,7 @@ ca
 cq
 cq
 dd
-dy
+dh
 dB
 eh
 eh
@@ -3231,7 +3361,7 @@ aa
 aa
 aa
 aa
-cG
+aH
 aX
 bp
 bx
@@ -3240,7 +3370,7 @@ cb
 cq
 cJ
 dd
-dy
+dh
 dB
 eh
 ey
@@ -3291,7 +3421,7 @@ cc
 cq
 cq
 de
-dy
+dh
 dB
 eh
 ej
@@ -3342,7 +3472,7 @@ ca
 cr
 cq
 dd
-dy
+dh
 dB
 ei
 ei
@@ -3393,7 +3523,7 @@ cd
 cd
 cd
 df
-dy
+dh
 dL
 ej
 ej
@@ -3498,7 +3628,7 @@ ce
 ce
 ce
 ek
-dy
+dh
 ce
 ce
 fg
@@ -3591,7 +3721,7 @@ am
 aa
 am
 aq
-gt
+aZ
 aq
 cf
 cs
@@ -3600,7 +3730,7 @@ ce
 ce
 ce
 ce
-dy
+dh
 ce
 ce
 ce
@@ -3640,9 +3770,9 @@ am
 aa
 aa
 am
-gt
+aZ
 at
-ha
+ba
 aq
 cg
 cs
@@ -3690,15 +3820,15 @@ aa
 aa
 am
 am
-gL
-hg
-ha
+aJ
+aK
+ba
 at
 aq
 ch
 cs
 cN
-dy
+dh
 ce
 dO
 ce
@@ -3707,7 +3837,7 @@ ce
 ce
 dO
 ce
-dy
+dh
 ce
 fm
 at
@@ -3741,15 +3871,15 @@ aa
 aa
 ap
 aq
-hg
+aK
 at
-hg
+aK
 by
 aq
 ci
 ct
 cO
-dy
+dh
 dA
 dP
 el
@@ -3758,7 +3888,7 @@ ce
 dA
 fi
 fB
-dy
+dh
 ce
 fm
 gt
@@ -3793,14 +3923,14 @@ aa
 aq
 as
 at
-ha
+ba
 at
 bz
 aq
 ce
 ce
 ce
-dy
+dh
 dB
 dQ
 dB
@@ -3809,7 +3939,7 @@ eL
 dB
 fj
 dB
-dy
+dh
 ce
 fm
 gs
@@ -3845,13 +3975,13 @@ aq
 at
 at
 bb
-ha
+ba
 at
 bK
 ce
 ce
 ce
-dy
+dh
 dB
 dP
 dB
@@ -3860,7 +3990,7 @@ ce
 dB
 fk
 dB
-dy
+dh
 fV
 fm
 gu
@@ -3902,7 +4032,7 @@ bK
 ce
 ce
 ce
-dy
+dh
 dB
 dP
 dB
@@ -3911,7 +4041,7 @@ ce
 dB
 fk
 dB
-dy
+dh
 ce
 fm
 at
@@ -3953,7 +4083,7 @@ bK
 ce
 ce
 ce
-dy
+dh
 dB
 dP
 dB
@@ -3962,7 +4092,7 @@ ce
 dB
 fk
 dB
-dy
+dh
 ce
 fm
 gs
@@ -4004,7 +4134,7 @@ aq
 cj
 cu
 ce
-dy
+dh
 dB
 dP
 dB
@@ -4013,7 +4143,7 @@ ce
 dB
 fk
 dB
-dy
+dh
 ce
 fm
 gt
@@ -4055,7 +4185,7 @@ aq
 ck
 cu
 ce
-dy
+dh
 dB
 dR
 dB
@@ -4064,7 +4194,7 @@ ce
 dB
 dR
 dB
-dy
+dh
 ce
 fm
 gv
@@ -4106,7 +4236,7 @@ aq
 cl
 ce
 cP
-dy
+dh
 dB
 dS
 dB
@@ -4115,7 +4245,7 @@ ce
 dB
 dS
 dB
-dy
+dh
 fV
 fm
 gw
@@ -4150,7 +4280,7 @@ aa
 aq
 az
 at
-gV
+bd
 at
 bA
 aq
@@ -4201,7 +4331,7 @@ aa
 aq
 aA
 at
-gV
+bd
 at
 bB
 aq
@@ -4213,7 +4343,7 @@ ce
 dU
 em
 ce
-dy
+dh
 eW
 fl
 ce
@@ -4222,7 +4352,7 @@ ce
 fm
 gy
 at
-gV
+bd
 at
 hi
 fm
@@ -4264,7 +4394,7 @@ aq
 aq
 en
 ce
-dy
+dh
 eX
 fm
 fm
@@ -4297,7 +4427,7 @@ aa
 aa
 aa
 ac
-ho
+af
 aj
 an
 ac
@@ -4315,7 +4445,7 @@ cw
 cw
 eo
 cw
-fD
+eN
 eo
 cw
 cw
@@ -4324,11 +4454,11 @@ ac
 cE
 gz
 gg
-gX
+gB
 cE
 hj
-ht
-ho
+ad
+af
 aj
 hu
 dk
@@ -4347,7 +4477,7 @@ aa
 aa
 aa
 aa
-ht
+ad
 ag
 ah
 ag
@@ -4355,7 +4485,7 @@ ac
 aC
 al
 bg
-fR
+br
 bD
 bM
 ac
@@ -4375,10 +4505,10 @@ ac
 cE
 cE
 cE
-gX
+gB
 cE
 hk
-ht
+ad
 ag
 ah
 ag
@@ -4398,7 +4528,7 @@ aa
 aa
 aa
 aa
-ht
+ad
 ah
 ah
 ao
@@ -4420,16 +4550,16 @@ eD
 eD
 eq
 fn
-fD
+eN
 cw
 fY
 cE
 al
 cE
-gX
+gB
 hb
 cE
-ht
+ad
 hp
 ah
 ah
@@ -4449,7 +4579,7 @@ aa
 aa
 aa
 aa
-ht
+ad
 ac
 ak
 ac
@@ -4458,7 +4588,7 @@ aE
 aN
 bh
 al
-dm
+bF
 bO
 ac
 cx
@@ -4471,16 +4601,16 @@ al
 er
 eY
 fo
-fD
+eN
 cw
 ac
 cE
 cE
 gN
-gX
+gB
 hc
 al
-ht
+ad
 ac
 ak
 ac
@@ -4500,7 +4630,7 @@ aa
 aa
 aa
 aa
-ht
+ad
 ai
 al
 al
@@ -4509,7 +4639,7 @@ aF
 al
 al
 al
-dm
+bF
 bM
 ac
 cy
@@ -4522,16 +4652,16 @@ eE
 al
 al
 fo
-fD
+eN
 cw
 ac
 gf
 cE
 cE
-gX
+gB
 cE
 cE
-ht
+ad
 hq
 al
 ai
@@ -4552,7 +4682,7 @@ aa
 aa
 aa
 ae
-ht
+ad
 al
 al
 ar
@@ -4576,7 +4706,7 @@ fp
 fE
 dj
 fZ
-dE
+cD
 gA
 gO
 gY
@@ -4585,7 +4715,7 @@ cE
 fY
 al
 hs
-ht
+ad
 ae
 aa
 aa
@@ -4604,14 +4734,14 @@ aa
 aa
 aa
 ae
-ht
+ad
 al
 ac
 aG
 al
 bi
 al
-dm
+bF
 bP
 ac
 cA
@@ -4628,14 +4758,14 @@ cw
 fP
 ac
 gg
-gX
+gB
 cE
 cE
 cE
 cE
-ht
+ad
 hr
-ht
+ad
 ae
 aa
 aa
@@ -4656,13 +4786,13 @@ aa
 aa
 aa
 ae
-ht
-ht
+ad
+ad
 aG
 al
 bj
 al
-dm
+bF
 bQ
 ac
 cB
@@ -4679,12 +4809,12 @@ fF
 fQ
 ac
 gh
-gX
+gB
 gN
 cE
 gN
 cE
-ht
+ad
 ac
 ae
 aa
@@ -4708,34 +4838,34 @@ aa
 aa
 aa
 ae
-ht
+ad
 aG
 al
 bk
 al
-dm
+bF
 bR
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
-ht
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 gi
-gX
+gB
 cE
 cE
 cE
 cE
-ht
+ad
 ae
 aa
 aa
@@ -4759,12 +4889,12 @@ aa
 aa
 aa
 aa
-ht
+ad
 aG
 al
 al
 al
-dm
+bF
 bS
 ac
 cC
@@ -4781,12 +4911,12 @@ cV
 cV
 ac
 gf
-gX
+gB
 cE
-ht
+ad
 hd
-ht
-ht
+ad
+ad
 aa
 aa
 aa
@@ -4810,7 +4940,7 @@ aa
 aa
 aa
 aa
-ht
+ad
 aG
 aO
 al
@@ -4818,26 +4948,26 @@ al
 bg
 bT
 cn
-dE
-dE
+cD
+cD
 dl
-dE
+cD
 dZ
 dZ
-dE
-dE
+cD
+cD
 fa
 dZ
-dE
-fR
+cD
+br
 ga
-dE
+cD
 gC
 cE
-ht
+ad
 he
 hl
-ht
+ad
 aa
 aa
 aa
@@ -4862,16 +4992,16 @@ aa
 aa
 aa
 ae
-ht
+ad
 aP
 aP
 bs
 bH
 bU
-ht
+ad
 cE
 cC
-dm
+bF
 al
 al
 al
@@ -4885,9 +5015,9 @@ ac
 gj
 gD
 gP
-ht
+ad
 hf
-ht
+hm
 ae
 aa
 aa
@@ -4914,30 +5044,30 @@ aa
 aa
 aa
 ae
-ht
-ht
-ht
-ht
-ht
-ht
-ht
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 cC
 dn
-fR
+br
 ea
-fR
-fR
+br
+br
 eQ
 al
 fq
 cC
-ht
-ht
-ht
-ht
-ht
-ht
-ht
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 ae
 aa
 aa
@@ -4982,7 +5112,7 @@ eb
 al
 al
 fG
-ht
+ad
 ae
 aa
 aa
@@ -5025,15 +5155,15 @@ aa
 ac
 cX
 dp
-eu
+dF
 ec
-eu
-eu
+dF
+dF
 eR
 cX
 fr
 fH
-ht
+ad
 aa
 aa
 aa
@@ -5074,17 +5204,17 @@ aa
 aa
 aa
 ac
-ht
-ht
+ad
+ad
 ak
-ht
-ht
+ad
+ad
 ac
-ht
+ad
 fb
-ht
-ht
-ht
+ad
+ad
+ad
 aa
 aa
 aa
@@ -5125,16 +5255,16 @@ aa
 aa
 aa
 ae
-ht
+ad
 dq
 ah
 ah
-ht
-ht
+ad
+ad
 eS
 ah
 fs
-ht
+ad
 ae
 aa
 aa
@@ -5176,16 +5306,16 @@ aa
 aa
 aa
 aa
-ht
+ad
 dr
 dr
 dr
-ht
-ht
+ad
+ad
 dr
 dr
 dr
-ht
+ad
 aa
 aa
 aa

@@ -7,10 +7,11 @@
 /datum/hud
 	var/mob/mymob
 
-	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
-	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
-	var/inventory_shown = FALSE		//Equipped item inventory
-	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hud_shown = 1			//Used for the HUD toggle (F12)
+	var/hud_version = 1			//Current displayed version of the HUD
+	var/inventory_shown = 0		//Equipped item inventory
+	var/show_intent_icons = 0
+	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
@@ -22,6 +23,7 @@
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
+	var/obj/screen/nightvisionicon
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
 	var/obj/screen/pull_icon
@@ -38,7 +40,7 @@
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
-	var/action_buttons_hidden = FALSE
+	var/action_buttons_hidden = 0
 
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
@@ -109,6 +111,7 @@
 	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
+	nightvisionicon = null
 
 	if(plane_masters.len)
 		for(var/thing in plane_masters)
@@ -131,10 +134,10 @@
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
-		return FALSE
+		return 0
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
-		return FALSE
+		return 0
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
@@ -147,7 +150,7 @@
 
 	switch(display_hud_version)
 		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = TRUE	//Governs behavior of other procs
+			hud_shown = 1	//Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
@@ -163,7 +166,7 @@
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
@@ -183,7 +186,7 @@
 				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
 		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = FALSE	//Governs behavior of other procs
+			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
@@ -198,23 +201,17 @@
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
-	screenmob.update_action_buttons(1)
+	mymob.update_action_buttons(1)
 	reorganize_alerts()
-	screenmob.reload_fullscreen()
+	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
-	return TRUE
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
-	. = ..()
-	if(!.)
-		return
-	var/mob/screenmob = viewmob || mymob
-	hidden_inventory_update(screenmob)
+	..()
+	hidden_inventory_update(viewmob)
 
 /datum/hud/robot/show_hud(version = 0, mob/viewmob)
-	. = ..()
-	if(!.)
-		return
+	..()
 	update_robot_modules_display()
 
 /datum/hud/proc/hidden_inventory_update()
@@ -227,7 +224,7 @@
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
 	set name = "F12"
-	set hidden = TRUE
+	set hidden = 1
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset

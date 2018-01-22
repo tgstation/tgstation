@@ -78,12 +78,12 @@
 				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
-			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B><br>"
+			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")
 			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
 			for(var/spoken_memory in recent_speech)
-				changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
+				user.mind.store_memory("\"[recent_speech[spoken_memory]]\"")
 				to_chat(user, "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>")
-			changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
+			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
 			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>")
 
 

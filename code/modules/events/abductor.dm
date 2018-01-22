@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
-	gamemode_blacklist = list("nuclear","wizard","revolution")
+	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
@@ -17,18 +17,20 @@
 	if(candidates.len < 2)
 		return NOT_ENOUGH_PLAYERS
 
+	var/datum/game_mode/abduction/GM
+	if(SSticker.mode.config_tag == "abduction")
+		GM = SSticker.mode
+	else
+		GM = new
+
 	var/mob/living/carbon/human/agent = makeBody(pick_n_take(candidates))
 	var/mob/living/carbon/human/scientist = makeBody(pick_n_take(candidates))
 
-	var/datum/team/abductor_team/T = new
-	if(T.team_number > ABDUCTOR_MAX_TEAMS)
+	var/team = GM.make_abductor_team(agent.mind, scientist.mind)
+	if(!team)
 		return MAP_ERROR
-	
-	log_game("[scientist.mind.key] (ckey) has been selected as [T.name] abductor scientist.")
-	log_game("[agent.mind.key] (ckey) has been selected as [T.name] abductor agent.")
 
-	scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, T)
-	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)
+	GM.post_setup_team(team)
 
 	spawned_mobs += list(agent, scientist)
 	return SUCCESSFUL_SPAWN

@@ -4,7 +4,7 @@
 	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/cult)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
@@ -99,7 +99,7 @@
 	if (!istype(cult_mind))
 		return 0
 
-	var/datum/antagonist/cult/new_cultist = new()
+	var/datum/antagonist/cult/new_cultist = new(cult_mind)
 	new_cultist.give_equipment = equip
 
 	if(cult_mind.add_antag_datum(new_cultist))
@@ -109,7 +109,7 @@
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)
-		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
 		cult_datum.silent = silent
