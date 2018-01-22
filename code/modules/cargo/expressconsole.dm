@@ -13,7 +13,7 @@
 	var/locked = TRUE
 	var/list/meme_pack_data
 	var/podID = 0//0 is your standard supply droppod (requires dissassembly after landing), 1 is the bluespace drop pod (teleports out after landing)
-	
+
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
@@ -37,7 +37,6 @@
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
-	bluespaceUpgraded = TRUE
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
