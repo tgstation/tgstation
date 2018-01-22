@@ -295,7 +295,7 @@
 	supplied[number + 1] = law
 
 /datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
+	var/replaceable_groups = list()
 	if(zeroth && (LAW_ZEROTH in groups))
 		replaceable_groups[LAW_ZEROTH] = 1
 	if(ion.len && (LAW_ION in groups))
