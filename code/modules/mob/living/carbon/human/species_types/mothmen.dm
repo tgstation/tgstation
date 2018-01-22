@@ -39,9 +39,8 @@
 	return randname
 
 /datum/species/moth/qualifies_for_rank(rank, list/features)
-	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
+	if(rank in GLOB.command_positions)
 		return FALSE
-	return TRUE
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()
