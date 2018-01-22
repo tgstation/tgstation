@@ -5,7 +5,7 @@
 	ask_verb = "clicks"
 	exclaim_verb = "buzzes"
 	key = "m"
-	space_chance = 90
+	space_chance = 45
 	syllables = list("bz", "ba", "mah", "fa", "ki", "nr")
 	default_priority = 90
 
