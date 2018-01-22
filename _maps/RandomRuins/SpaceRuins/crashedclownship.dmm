@@ -9,10 +9,10 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/closed/wall/mineral/clown,
+/turf/closed/wall/mineral/bananium,
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "f" = (

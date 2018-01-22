@@ -188,11 +188,13 @@
 		if("dispense_recipe")
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
-			for(var/r_id in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
+			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
+				var/list/keysplit = splittext(key," ")
+				var/r_id = keysplit[1]
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(chemicals_to_dispense[r_id], (cell.charge * powerefficiency)*10, free)
+					var/actual = min(chemicals_to_dispense[key], (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						R.add_reagent(r_id, actual)
 						cell.use((actual / 10) / powerefficiency)
@@ -223,7 +225,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -350,11 +352,12 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/proc/process_recipe_list(var/fucking_hell)
+	var/list/key_list = list()
 	var/list/final_list = list()
 	var/list/first_process = splittext(fucking_hell, ";")
 	for(var/reagents in first_process)
 		var/list/fuck = splittext(reagents, "=")
-		final_list += list(fuck[1] = text2num(fuck[2]))
+		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
 
 /obj/machinery/chem_dispenser/drinks

@@ -264,7 +264,7 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags_1 |= NOJAUNT_1
+	new /obj/effect/blessing(src)
 
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)

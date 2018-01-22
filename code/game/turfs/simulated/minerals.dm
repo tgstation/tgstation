@@ -322,12 +322,12 @@
 	defer_change = 1
 
 
-/turf/closed/mineral/clown
+/turf/closed/mineral/bananium
 	mineralType = /obj/item/ore/bananium
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Clown"
+	scan_state = "rock_Bananium"
 
 
 /turf/closed/mineral/bscrystal

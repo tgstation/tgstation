@@ -10,7 +10,6 @@
 	light_power = 3
 	light_color = "#6A4D2F"
 
-
 /obj/effect/clockwork/city_of_cogs_rift/singularity_act()
 	return
 
@@ -42,6 +41,13 @@
 
 /obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
 	if(!QDELETED(AM))
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client && !L.incapacitated())
+				L.visible_message("<span class='notice'>[L] starts climbing through [src]...</span>", \
+				"<span class='notice'>You begin climbing through [src]...</span>")
+				if(!do_after(L, 30, target = L))
+					return
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
