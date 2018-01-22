@@ -29,6 +29,11 @@
 			/obj/item/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
+	var/obj/effect/light_emitter/red_energy_sword/sord
+
+/mob/living/simple_animal/hostile/pirate/Initialize()
+	. = ..()
+	sord = new(src)
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -52,6 +57,11 @@
 	minbodytemp = 0
 	speed = 1
 
+/mob/living/simple_animal/hostile/pirate/space/Initialize()
+	. = ..()
+	sord = new(src)
+	set_light(3)
+
 /mob/living/simple_animal/hostile/pirate/space/ranged
 	name = "Space Pirate Gunner"
 	icon_state = "piratespaceranged"
@@ -64,4 +74,8 @@
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
 			/obj/item/gun/energy/laser)
+
+/mob/living/simple_animal/hostile/pirate/space/ranged/Initialize()
+	. = ..()
+	set_light(3)
 
