@@ -918,12 +918,12 @@
 			switch(result)
 				if("Scale")
 					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-					var/y = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
 					if(!isnull(x) && !isnull(y))
 						A.transform = M.Scale(x,y)
 				if("Translate")
 					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-					var/y = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
 					if(!isnull(x) && !isnull(y))
 						A.transform = M.Translate(x,y)
 				if("Rotate")
