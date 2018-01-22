@@ -212,9 +212,13 @@
 						R.stun(20)
 					return
 				if(stepTurf.flags_1 & NOJAUNT_1)
-					to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
-				else
-					L.loc = get_step(L, direct)
+					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
+					return
+				if (locate(/obj/effect/blessing, stepTurf))
+					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
+					return
+
+				L.loc = get_step(L, direct)
 			L.setDir(direct)
 	return TRUE
 

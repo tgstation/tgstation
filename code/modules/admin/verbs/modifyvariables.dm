@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(VVlocked, list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
 GLOBAL_PROTECT(VVlocked)
 GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
 GLOBAL_PROTECT(VVicon_edit_lock)
@@ -214,7 +214,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				return
 			.["type"] = type
 			var/atom/newguy = new type()
-			newguy.var_edited = TRUE
+			newguy.datum_flags |= DF_VAR_EDITED
 			.["value"] = newguy
 
 		if (VV_NEW_DATUM)
@@ -224,7 +224,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				return
 			.["type"] = type
 			var/datum/newguy = new type()
-			newguy.var_edited = TRUE
+			newguy.datum_flags |= DF_VAR_EDITED
 			.["value"] = newguy
 
 		if (VV_NEW_TYPE)
@@ -243,7 +243,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			.["type"] = type
 			var/datum/newguy = new type()
 			if(istype(newguy))
-				newguy.var_edited = TRUE
+				newguy.datum_flags |= DF_VAR_EDITED
 			.["value"] = newguy
 
 
