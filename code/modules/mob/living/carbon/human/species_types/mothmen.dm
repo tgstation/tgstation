@@ -29,9 +29,9 @@
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_moth_name(gender)
+		return random_unique_moth_name()
 
-	var/randname = moth_name(gender)
+	var/randname = moth_name()
 
 	if(lastname)
 		randname += " [lastname]"
