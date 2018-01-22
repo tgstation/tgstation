@@ -6,6 +6,7 @@
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -22,37 +23,23 @@
 	*/
 	var/zone_selected = null
 
-	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/lastattacker = null
-	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-
 
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
-	var/stuttering = 0		//Carbon
-	var/slurring = 0		//Carbon
-	var/cultslurring = 0	//Carbon
-	var/derpspeech = 0      //Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
-	var/druggy = 0			//Carbon
-	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
-	var/lastpuke = 0
 
 	var/name_archive //For admin things like possession
-
-	var/timeofdeath = 0//Living
-	var/cpr_time = 1//Carbon
 
 	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	var/drowsyness = 0//Carbon
@@ -62,7 +49,6 @@
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
 	var/list/possible_a_intents = null//Living
 	var/m_intent = MOVE_INTENT_RUN//Living
@@ -77,8 +63,6 @@
 
 	var/obj/item/storage/s_active = null//Carbon
 
-	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
-
 	var/datum/hud/hud_used = null
 
 	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
@@ -90,8 +74,6 @@
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
-
-	var/radiation = 0//Carbon
 
 	var/voice_name = "unidentifiable voice"
 
@@ -110,9 +92,6 @@
 	var/list/viruses = list() // list of all diseases in a mob
 	var/list/resistances = list()
 
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
@@ -127,12 +106,8 @@
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
-	var/resize = 1 //Badminnery resize
-
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
 
 	var/list/mousemove_intercept_objects
-
-	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
