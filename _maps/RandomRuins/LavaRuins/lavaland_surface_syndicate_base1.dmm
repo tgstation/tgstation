@@ -2597,6 +2597,9 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ig" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
@@ -2607,6 +2610,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2712,6 +2716,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2719,6 +2724,7 @@
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3099,6 +3105,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3163,6 +3170,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4333,6 +4341,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4340,6 +4349,7 @@
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -6666,10 +6676,10 @@ ab
 dG
 dG
 ig
-ig
-ig
-ig
-ig
+iu
+iu
+iu
+lv
 lT
 mq
 mS
@@ -6712,11 +6722,11 @@ ab
 dG
 dG
 ig
-ig
-ig
-ig
+je
+iv
+jk
 le
-ig
+lw
 lT
 mr
 mS
@@ -6758,8 +6768,8 @@ ab
 dG
 dG
 ig
-ig
-ig
+je
+jk
 jx
 jx
 jP
@@ -6804,8 +6814,8 @@ ab
 dG
 dG
 ig
-ig
-ig
+je
+jk
 jx
 jx
 kG
@@ -6850,8 +6860,8 @@ dG
 dG
 dG
 ig
-ig
-ig
+je
+iv
 jx
 jx
 kn
@@ -6894,10 +6904,10 @@ hw
 hI
 hX
 ig
-ig
-ig
-ig
-ig
+iu
+iu
+je
+jk
 jx
 jx
 jN
@@ -6940,11 +6950,11 @@ gZ
 hw
 hJ
 hY
-ig
-ig
+ih
+iv
 iM
-ig
-ig
+iv
+iv
 jx
 jL
 jY
