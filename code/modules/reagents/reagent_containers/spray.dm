@@ -232,7 +232,7 @@
 	return ..()
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/process()
-	if(world.time > last_generate + generate_delay)
+	if(world.time < last_generate + generate_delay)
 		return
 	last_generate = world.time
 	generate_reagents()

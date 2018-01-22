@@ -15,7 +15,7 @@
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is fighting with Nar-Sie
 	var/convert_range = 10
-	dangerous_possession = TRUE
+	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
 	. = ..()
@@ -28,8 +28,7 @@
 	send_to_playing_players("<span class='ratvar'>[text2ratvar("ONCE AGAIN MY LIGHT SHINES AMONG THESE PATHETIC STARS")]</span>")
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
-	var/area/A = get_area(src)
-	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
+	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 10, null, FALSE, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
@@ -146,6 +145,6 @@
 		if("Nar-Sie")
 			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
 			sound_to_playing_players('sound/magic/demon_attack1.ogg')
-			sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 50)
+			sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 62)
 			narsie.clashing = FALSE
 			qdel(src)

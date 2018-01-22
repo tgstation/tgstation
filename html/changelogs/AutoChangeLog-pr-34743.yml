@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Changeling clothing can get bloodied again."

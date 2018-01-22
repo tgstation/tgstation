@@ -28,16 +28,6 @@
 /obj/item/device/wormhole_jaunter/proc/get_destinations(mob/user)
 	var/list/destinations = list()
 
-	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
-			var/turf/T = get_turf(B)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
-				destinations += B
-
-	// In the event golem beacon is destroyed, send to station instead
-	if(destinations.len)
-		return destinations
-
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(is_station_level(T.z))
@@ -54,7 +44,7 @@
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -83,7 +73,7 @@
 		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 //jaunter tunnel
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
@@ -91,7 +81,7 @@
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	. = ..()
 	if(.)
 		// KERPLUNK

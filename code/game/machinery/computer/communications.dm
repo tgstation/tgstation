@@ -57,6 +57,9 @@
 		return
 	usr.set_machine(src)
 
+	var/area/A = get_area(usr)
+	var/area_name = A.name
+
 	if(!href_list["operation"])
 		return
 	var/obj/item/circuitboard/computer/communications/CM = circuit
@@ -79,7 +82,7 @@
 					if((20 in I.access))
 						authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					authenticated = 2
 					auth_id = "Unknown"
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>")
@@ -115,7 +118,7 @@
 						var/security_level = get_security_level()
 						log_game("[key_name(usr)] has changed the security level to [security_level].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
-						deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [security_level].</span>", usr)
+						deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has changed the security level to [security_level] at <span class='name'>[area_name]</span>.</span>", usr)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -249,13 +252,13 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay bold'>[usr.name] enabled emergency maintenance access.</span>", usr)
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> enabled emergency maintenance access at <span class='name'>[area_name]</span>.</span>", usr)
 			state = STATE_DEFAULT
 		if("disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			deadchat_broadcast("<span class='deadsay bold'>[usr.name] disabled emergency maintenance access.</span>", usr)
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> disabled emergency maintenance access at <span class='name'>[area_name]</span>.</span>", usr)
 			state = STATE_DEFAULT
 
 		// Status display stuff
@@ -289,12 +292,12 @@
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				log_talk(usr,"[key_name(usr)] has made a CentCom announcement: [input]",LOGSAY)
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged CentCom:</b> [input]</span>", usr)
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has messaged CentCom, \"[input]\" at <span class='name'>[area_name]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((authenticated==2) && (emagged))
+			if((authenticated==2) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -306,13 +309,13 @@
 				Syndicate_announce(input, usr)
 				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
 				log_talk(usr,"[key_name(usr)] has made a Syndicate announcement: [input]",LOGSAY)
-				deadchat_broadcast("<span class='deadsay'><b>[usr.name] has messaged the Syndicate:</b> [input]</span>", usr)
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has messaged the Syndicate, \"[input]\" at <span class='name'>[area_name]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
 			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-			emagged = FALSE
+			obj_flags &= ~EMAGGED
 			updateDialog()
 
 		if("nukerequest") //When there's no other way
@@ -389,7 +392,7 @@
 				var/security_level = get_security_level()
 				log_game("[key_name(usr)] has changed the security level to [security_level].")
 				message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
-				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has changed the security level to [security_level].</span>", usr)
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has changed the security level to [security_level].</span>", usr)
 			tmp_alertlevel = 0
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
@@ -418,9 +421,9 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(authenticated == 1)
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
@@ -482,7 +485,7 @@
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
-					if(!emagged)
+					if(!(obj_flags & EMAGGED))
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
@@ -701,7 +704,8 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
-	deadchat_broadcast("<span class='deadsay bold'>[user.name] made an priority announcement.</span>", user)
+	var/area/A = get_area(user)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> made an priority announcement at <span class='name'>[A.name]</span>.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 

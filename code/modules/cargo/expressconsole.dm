@@ -1,3 +1,5 @@
+#define MAX_EMAG_ROCKETS 8
+
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package for double the price,\
@@ -9,7 +11,12 @@
 	req_access = list(ACCESS_QM)
 	var/message
 	var/locked = TRUE
-	
+	var/list/meme_pack_data
+
+/obj/machinery/computer/cargo/express/Initialize()
+	. = ..()
+	packin_up()
+
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -18,14 +25,34 @@
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
-	board.emagged = TRUE
+	board.obj_flags |= EMAGGED
+	packin_up()
+
+/obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
+	meme_pack_data = list() // sorry for what?
+	for(var/pack in SSshuttle.supply_packs) // our quartermaster taught us not to be ashamed of our supply packs
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]  // specially since they're such a good price and all
+		if(!meme_pack_data[P.group]) // yeah, I see that, your quartermaster gave you good advice
+			meme_pack_data[P.group] = list( // it gets cheaper when I return it
+				"name" = P.group, // mmhm
+				"packs" = list()  // sometimes, I return it so much, I rip the manifest
+			) // see, my quartermaster taught me a few things too
+		if((P.hidden) || (P.special)) // like, how not to rip the manifest
+			continue// by using someone else's crate
+		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
+			continue // i'd be right happy to
+		meme_pack_data[P.group]["packs"] += list(list(
+			"name" = P.name,
+			"cost" = P.cost * 2, //displays twice the normal cost
+			"id" = pack
+		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -44,40 +71,15 @@
 		Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
-	
-	data["message"] = message
 
-	if (emagged)  
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-			if (P.name == "Toy Crate")//Can only order toys if emagged. You gotta spend 10K points to crash a droppod somewhere on the station
-				data["supplies"][P.group] = list(
-							"name" = P.group,
-							"packs" = list()
-						)
-				data["supplies"][P.group]["packs"] += list(list(
-						"name" = P.name,
-						"cost" = P.cost * 2, //displays twice the normal cost
-						"id" = pack
-					))		
-	else
-		for(var/pack in SSshuttle.supply_packs)
-			var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-			if(!data["supplies"][P.group])
-				data["supplies"][P.group] = list(
-					"name" = P.group,
-					"packs" = list()
-				)
-			if((P.hidden) || (P.contraband) || (P.special))//no fun allowed
-				continue
-			data["supplies"][P.group]["packs"] += list(list(
-				"name" = P.name,
-				"cost" = P.cost * 2, //displays twice the normal cost
-				"id" = pack
-			))
-				
+	data["message"] = message
+	if(!meme_pack_data)
+		packin_up()
+		stack_trace("You didn't give the cargo tech good advice, and he ripped the manifest. As a result, there was no pack data for [src]")
+	data["supplies"] = meme_pack_data
+
 	return data
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
@@ -98,28 +100,38 @@
 				name = usr.real_name
 				rank = "Silicon"
 			var/reason = ""
-
-			
+			var/list/empty_turfs
+			var/area/landingzone
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
-			if(SO.pack.cost* 2 <= SSshuttle.points) //If you can afford it, then begin the delivery
-				SO.generateRequisition(get_turf(src))
-				SSshuttle.points -= SO.pack.cost * 2//twice the normal cost
-
-				var/list/empty_turfs = list()
-				var/area/landingzone
-
-				if (!emagged) 
+			if(!(obj_flags & EMAGGED))
+				if(SO.pack.cost * 2 <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
-				else 
+					for(var/turf/open/floor/T in landingzone.contents)
+						if(is_blocked_turf(T))
+							continue
+						LAZYADD(empty_turfs, T)
+						CHECK_TICK
+					if(empty_turfs && empty_turfs.len)
+						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
+						SSshuttle.points -= SO.pack.cost * 2
+						new /obj/effect/BDPtarget(LZ, SO)
+						. = TRUE
+						update_icon()
+			else
+				if(SO.pack.cost * (1.2*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas
-
-				for(var/turf/open/floor/T in landingzone.contents) //get all the turfs in cargo bay
-					if(is_blocked_turf(T))//wont land on a blocked turf
-						continue
-					empty_turfs.Add(T)
-
-				if (empty_turfs.len != 0 )
-					var/LZ = empty_turfs[rand(empty_turfs.len-1)]//pick a random turf
-					new /obj/effect/BDPtarget(LZ, SO)//where the magic happens. this temp visual makes the actual droppod after a pause
-				. = TRUE
-				update_icon()
+					for(var/turf/open/floor/T in landingzone.contents)
+						if(is_blocked_turf(T))
+							continue
+						LAZYADD(empty_turfs, T)
+						CHECK_TICK
+					if(empty_turfs && empty_turfs.len)
+						SSshuttle.points -= SO.pack.cost * (1.2*MAX_EMAG_ROCKETS)
+						SO.generateRequisition(get_turf(src))
+						for(var/i in 1 to MAX_EMAG_ROCKETS)
+							var/LZ = empty_turfs[rand(empty_turfs.len-1)]
+							LAZYREMOVE(empty_turfs, LZ)
+							new /obj/effect/BDPtarget(LZ, SO)
+							. = TRUE
+							update_icon()
+							CHECK_TICK

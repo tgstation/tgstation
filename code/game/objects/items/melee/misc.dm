@@ -52,7 +52,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY

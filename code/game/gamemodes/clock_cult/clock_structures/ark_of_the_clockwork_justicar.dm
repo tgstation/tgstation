@@ -52,7 +52,8 @@
 			audible_message("<span class='boldwarning'>An unearthly screaming sound resonates throughout Reebe!</span>")
 			for(var/V in GLOB.player_list)
 				var/mob/M = V
-				if(M.z == z || is_servant_of_ratvar(M) || isobserver(M))
+				var/turf/T = get_turf(M)
+				if((T && T.z == z) || is_servant_of_ratvar(M) || isobserver(M))
 					M.playsound_local(M, 'sound/machines/clockcult/ark_scream.ogg', 100, FALSE, pressure_affected = FALSE)
 			hierophant_message("<span class='big boldwarning'>The Ark is taking damage!</span>")
 	last_scream = world.time + ARK_SCREAM_COOLDOWN
@@ -71,7 +72,8 @@
 	visible_message("<span class='boldwarning'>[src] shudders and roars to life, its parts beginning to whirr and screech!</span>")
 	hierophant_message("<span class='bold large_brass'>The Ark is activating! You will be transported there soon!</span>")
 	for(var/mob/M in GLOB.player_list)
-		if(is_servant_of_ratvar(M) || isobserver(M) || M.z == z)
+		var/turf/T = get_turf(M)
+		if(is_servant_of_ratvar(M) || isobserver(M) || (T && T.z == z))
 			M.playsound_local(M, 'sound/magic/clockwork/ark_activation_sequence.ogg', 30, FALSE, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs), 300)
 
@@ -86,10 +88,14 @@
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
+		if(!M)
+			continue
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	for(var/V in GLOB.brass_recipes)
 		var/datum/stack_recipe/R = V
+		if(!R)
+			continue
 		if(R.title == "wall gear")
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
@@ -121,7 +127,9 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(M.current.stat != DEAD)
+		if(!M)
+			continue
+		if(isliving(M.current) && M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 		M.current.clear_fullscreen("flash", 5)
@@ -145,7 +153,8 @@
 		qdel(countdown)
 		countdown = null
 	for(var/mob/L in GLOB.player_list)
-		if(L.z == z)
+		var/turf/T = get_turf(L)
+		if(T && T.z == z)
 			var/atom/movable/target = L
 			if(isobj(L.loc))
 				target = L.loc
@@ -169,7 +178,8 @@
 			visible_message("<span class='userdanger'>[src] begins to pulse uncontrollably... you might want to run!</span>")
 			sound_to_playing_players(volume = 50, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
 			for(var/mob/M in GLOB.player_list)
-				if(M.z == z || is_servant_of_ratvar(M))
+				var/turf/T = get_turf(M)
+				if((T && T.z == z) || is_servant_of_ratvar(M))
 					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
@@ -258,8 +268,9 @@
 		return
 	if(!first_sound_played || prob(7))
 		for(var/mob/M in GLOB.player_list)
-			if(M && !isnewplayer(M))
-				if(M.z == z)
+			if(!isnewplayer(M))
+				var/turf/T = get_turf(M)
+				if(T && T.z == z)
 					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 				else
 					to_chat(M, "<span class='boldwarning'>You hear otherworldly sounds from all around you...</span>")
@@ -274,7 +285,8 @@
 			O.update_icon()
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
-		if(is_servant_of_ratvar(M) && M.z != z)
+		var/turf/T = get_turf(M)
+		if(is_servant_of_ratvar(M) && (!T || T.z != z))
 			M.forceMove(get_step(src, SOUTH))
 			M.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			M.clear_fullscreen("flash", 5)
@@ -288,19 +300,19 @@
 				for(var/V in GLOB.generic_event_spawns)
 					addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
 				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
-				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
+				sound_to_playing_players(volume = 20, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
+				sound_to_playing_players(volume = 25, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
+				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -318,7 +330,7 @@
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
-				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION_PRIMARY) //approximate center of the station
+				var/turf/T = SSmapping.get_station_center()
 				new /obj/structure/destructible/clockwork/massive/ratvar(T)
 				SSticker.force_ending = TRUE
 				var/x0 = T.x

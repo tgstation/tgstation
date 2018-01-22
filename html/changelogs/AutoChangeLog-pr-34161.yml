@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Constructed security/honk/ect bots will now drop the correct parts when destroyed."

@@ -14,12 +14,6 @@
 /datum/proc/keyLoop(client/user) // Called once every frame
 	return
 
-// Keys used for movement
-GLOBAL_LIST_INIT(movement_keys, list(
-	"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,														// WASD
-	"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,											// Arrow keys & Numpad
-	))
-
 // removes all the existing macros
 /client/proc/erase_all_macros()
 	var/list/macro_sets = params2list(winget(src, null, "macros"))

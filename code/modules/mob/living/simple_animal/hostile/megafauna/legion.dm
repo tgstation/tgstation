@@ -170,17 +170,18 @@ Difficulty: Medium
 		return
 
 	var/area/user_area = get_area(user)
-	if(user_area.type in excluded_areas)
+	var/turf/user_turf = get_turf(user)
+	if(!user_area || !user_turf || (user_area.type in excluded_areas))
 		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
 		return
 	var/datum/weather/A
-	for(var/V in SSweather.existing_weather)
+	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
-		if(W.target_z == user.z && W.area_type == user_area.type)
+		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
 			A = W
 			break
-	if(A)
 
+	if(A)
 		if(A.stage != END_STAGE)
 			if(A.stage == WIND_DOWN_STAGE)
 				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
@@ -191,10 +192,9 @@ Difficulty: Medium
 			A.wind_down()
 			return
 	else
-		A = new storm_type
+		A = new storm_type(list(user_turf.z))
 		A.name = "staff storm"
 		A.area_type = user_area.type
-		A.target_z = user.z
 		A.telegraph_duration = 100
 		A.end_duration = 100
 

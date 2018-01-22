@@ -82,8 +82,9 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -92,8 +93,9 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -246,8 +248,10 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
+	var/area/A = get_area(user)
+
 	log_game("[key_name(user)] has called the shuttle.")
-	deadchat_broadcast("<span class='deadsay bold'>[user.name] has called the shuttle.</span>", user)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -285,7 +289,8 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
-		deadchat_broadcast("<span class='deadsay bold'>[user.name] has recalled the shuttle.</span>", user)
+		var/area/A = get_area(user)
+		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()

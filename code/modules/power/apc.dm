@@ -315,7 +315,7 @@
 			update_state |= UPSTATE_OPENED1
 		if(opened==2)
 			update_state |= UPSTATE_OPENED2
-	else if(emagged || malfai)
+	else if((obj_flags & EMAGGED) || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
 		update_state |= UPSTATE_WIREEXP
@@ -395,8 +395,8 @@
 								"<span class='italics'>You hear a crack.</span>")
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
-						else if (emagged) // We emag board, not APC's frame
-							emagged = FALSE
+						else if (obj_flags & EMAGGED) // We emag board, not APC's frame
+							obj_flags &= ~EMAGGED
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -479,7 +479,7 @@
 					to_chat(user, "<span class='warning'>There is nothing to secure!</span>")
 					return
 				update_icon()
-		else if(emagged)
+		else if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
 		else if((stat & MAINT) && !opened)
 			..() //its an empty closed frame... theres no wires to expose!
@@ -544,7 +544,7 @@
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				locked = TRUE //We placed new, locked board in
+				locked = FALSE
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
@@ -559,7 +559,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
 			has_electronics = TRUE
-			locked = TRUE
+			locked = FALSE
 		else if(!cell)
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
@@ -669,7 +669,7 @@
 		togglelock(user)
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
 	else if(opened)
 		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
@@ -705,7 +705,7 @@
 			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
-	if(!emagged && !malfhack)
+	if(!(obj_flags & EMAGGED) && !malfhack)
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else if(panel_open)
@@ -715,7 +715,7 @@
 		else
 			flick("apc-spark", src)
 			playsound(src, "sparks", 75, 1)
-			emagged = TRUE
+			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
@@ -852,7 +852,7 @@
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
-				if(emagged || (stat & (BROKEN|MAINT)))
+				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
 					to_chat(usr, "The APC does not respond to the command.")
 				else
 					locked = !locked

@@ -1,0 +1,5 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "engine goggles set to t-ray mode will no longer show pipes with the wrong rotation."
+  - bugfix: "cables now show up on t-ray scans."

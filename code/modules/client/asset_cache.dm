@@ -397,6 +397,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (machine)
 				item = machine
 		var/icon_file = initial(item.icon)
+		var/all_states = icon_states(icon_file)
 		var/icon/I = icon(icon_file, initial(item.icon_state), SOUTH)
 
 		// computers (and snowflakes) get their screen and keyboard sprites
@@ -404,9 +405,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			var/obj/machinery/computer/C = item
 			var/screen = initial(C.icon_screen)
 			var/keyboard = initial(C.icon_keyboard)
-			if (screen)
+			if (screen && (screen in all_states))
 				I.Blend(icon(icon_file, screen, SOUTH), ICON_OVERLAY)
-			if (keyboard)
+			if (keyboard && (keyboard in all_states))
 				I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		assets["design_[initial(D.id)].png"] = I
