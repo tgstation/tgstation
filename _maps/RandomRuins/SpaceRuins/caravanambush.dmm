@@ -735,13 +735,13 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dR" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering"
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dS" = (
@@ -870,13 +870,13 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ei" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ej" = (
@@ -1288,13 +1288,13 @@
 	},
 /area/shuttle/caravan/pirate)
 "ff" = (
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -1376,11 +1376,11 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "fp" = (
-/obj/machinery/door/airlock/security,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "fq" = (
@@ -1571,12 +1571,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "fO" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
@@ -2071,12 +2071,12 @@
 	},
 /area/shuttle/caravan/freighter1)
 "hi" = (
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
 	},
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter1)
