@@ -7,14 +7,14 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "ad" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
@@ -26,16 +26,16 @@
 /area/template_noop)
 "af" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
 "ag" = (
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "ah" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
@@ -52,20 +52,20 @@
 /area/template_noop)
 "ak" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
 "al" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
 "am" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/unpowered)
 "an" = (
 /obj/machinery/light{
@@ -73,65 +73,65 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "ao" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "ap" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "aq" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "ar" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/unpowered)
 "as" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
 "at" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "au" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "av" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aw" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "ax" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "ay" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
@@ -154,7 +154,7 @@
 /area/template_noop)
 "aB" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
@@ -164,10 +164,10 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
@@ -176,30 +176,30 @@
 /obj/structure/door_assembly/door_assembly_mhatch{
 	name = "broken airlock"
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/unpowered)
 "aF" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
 	},
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aH" = (
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/unpowered)
 "aI" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aJ" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aK" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -208,22 +208,22 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aL" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aM" = (
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aN" = (
 /obj/item/trash/plate,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aO" = (
 /obj/item/chair,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aP" = (
 /obj/machinery/light{
@@ -231,30 +231,30 @@
 	icon_state = "tube-broken";
 	status = 2
 	},
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "aQ" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/unpowered)
 "aR" = (
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aS" = (
 /obj/structure/table_frame,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aT" = (
 /obj/item/kitchen/fork,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aU" = (
 /obj/structure/table/wood,
 /obj/item/shard,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
@@ -262,25 +262,25 @@
 "aV" = (
 /obj/structure/table/wood,
 /obj/item/trash/plate,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "aW" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aX" = (
 /obj/item/chair/stool/bar,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aY" = (
-/turf/open/floor/plasteel/bar{
+/turf/open2/floor/plasteel/bar{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
@@ -294,23 +294,23 @@
 /area/template_noop)
 "ba" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bb" = (
 /obj/item/reagent_containers/food/snacks/donkpocket,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bc" = (
 /obj/structure/table,
 /obj/item/shard,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bd" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/airless/bar,
+/turf/open2/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "be" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
 	},
@@ -322,7 +322,7 @@
 /area/template_noop)
 "bg" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
@@ -334,12 +334,12 @@
 	status = 2
 	},
 /obj/structure/table_frame,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bi" = (
 /obj/item/stack/sheet/metal,
 /obj/item/clothing/head/chefhat,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
@@ -347,25 +347,25 @@
 "bj" = (
 /obj/item/trash/plate,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/airless/cafeteria,
+/turf/open2/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bk" = (
 /obj/structure/table_frame/wood,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
 "bl" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
 "bm" = (
 /obj/item/chair,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
@@ -382,14 +382,14 @@
 "bp" = (
 /obj/item/stack/sheet/metal,
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
 "bq" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg3";
 	icon_state = "platingdmg3"
 	},
@@ -397,7 +397,7 @@
 "br" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_plating = "platingdmg1";
 	icon_state = "platingdmg1"
 	},
@@ -451,7 +451,7 @@
 	icon_state = "pile";
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "bz" = (
 /obj/structure/lattice,
@@ -489,7 +489,7 @@
 	icon_state = "singular";
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/unpowered)
 "bE" = (
 /obj/structure/lattice,

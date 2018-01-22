@@ -182,7 +182,7 @@ Difficulty: Medium
 	var/turf/own_turf = get_turf(src)
 	if(!QDELETED(dash_target))
 		self_dist_to_target += get_dist(dash_target, own_turf)
-	for(var/turf/open/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
+	for(var/turf/open2/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)

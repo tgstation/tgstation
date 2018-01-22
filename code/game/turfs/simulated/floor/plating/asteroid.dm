@@ -3,20 +3,20 @@
 
 /**********************Asteroid**************************/
 
-/turf/open/floor/plating/asteroid //floor piece
+/turf/open2/floor/plating/asteroid //floor piece
 	name = "asteroid sand"
-	baseturfs = /turf/open/floor/plating/asteroid
+	baseturfs = /turf/open2/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
 	var/environment_type = "asteroid"
-	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
+	var/turf_type = /turf/open2/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
 	archdrops = list(/obj/item/ore/glass = 5)
 	attachment_holes = FALSE
 
-/turf/open/floor/plating/asteroid/Initialize()
+/turf/open2/floor/plating/asteroid/Initialize()
 	var/proper_name = name
 	. = ..()
 	name = proper_name
@@ -26,16 +26,16 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, 100, archdrops)
 
-/turf/open/floor/plating/asteroid/burn_tile()
+/turf/open2/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open2/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
 	return
 
-/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open2/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
-/turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
+/turf/open2/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	if(..())
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
@@ -49,30 +49,30 @@
 		var/obj/item/stack/tile/Z = W
 		if(!Z.use(1))
 			return
-		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
+		var/turf/open2/floor/T = ChangeTurf(Z.turf_type)
 		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
-			var/turf/open/floor/light/F = T
+			var/turf/open2/floor/light/F = T
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
 
 
-/turf/open/floor/plating/asteroid/singularity_act()
+/turf/open2/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
 		return ..()
 	ScrapeAway()
 
-/turf/open/floor/plating/asteroid/ex_act(severity, target)
+/turf/open2/floor/plating/asteroid/ex_act(severity, target)
 	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/floor/plating/lavaland_baseturf
-	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+/turf/open2/floor/plating/lavaland_baseturf
+	baseturfs = /turf/open2/floor/plating/asteroid/basalt/lava_land_surface
 
-/turf/open/floor/plating/asteroid/basalt
+/turf/open2/floor/plating/asteroid/basalt
 	name = "volcanic floor"
-	baseturfs = /turf/open/floor/plating/asteroid/basalt
+	baseturfs = /turf/open2/floor/plating/asteroid/basalt
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	icon_plating = "basalt"
@@ -80,20 +80,20 @@
 	archdrops = list(/obj/item/ore/glass/basalt = 5)
 	floor_variance = 15
 
-/turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturfs = /turf/open/lava/smooth
+/turf/open2/floor/plating/asteroid/basalt/lava //lava underneath
+	baseturfs = /turf/open2/lava/smooth
 
-/turf/open/floor/plating/asteroid/basalt/airless
+/turf/open2/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/asteroid/basalt/Initialize()
+/turf/open2/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
 	set_basalt_light(src)
 	GET_COMPONENT(arch, /datum/component/archaeology)
 	ASSERT(isnull(arch.callback))
 	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
 
-/proc/set_basalt_light(turf/open/floor/B)
+/proc/set_basalt_light(turf/open2/floor/B)
 	switch(B.icon_state)
 		if("basalt1", "basalt2", "basalt3")
 			B.set_light(2, 0.6, LIGHT_COLOR_LAVA) //more light
@@ -102,23 +102,23 @@
 
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface
+/turf/open2/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	baseturfs = /turf/open2/lava/smooth/lava_land_surface
 
 
 
 
-/turf/open/floor/plating/asteroid/airless
+/turf/open2/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
-	turf_type = /turf/open/floor/plating/asteroid/airless
+	turf_type = /turf/open2/floor/plating/asteroid/airless
 
 
 #define SPAWN_MEGAFAUNA "bluh bluh huge boss"
 #define SPAWN_BUBBLEGUM 6
 
-/turf/open/floor/plating/asteroid/airless/cave
+/turf/open2/floor/plating/asteroid/airless/cave
 	var/length = 100
 	var/list/mob_spawn_list
 	var/list/megafauna_spawn_list
@@ -128,26 +128,26 @@
 	var/backward_cave_dir = 2
 	var/going_backwards = TRUE
 	var/has_data = FALSE
-	var/data_having_type = /turf/open/floor/plating/asteroid/airless/cave/has_data
-	turf_type = /turf/open/floor/plating/asteroid/airless
+	var/data_having_type = /turf/open2/floor/plating/asteroid/airless/cave/has_data
+	turf_type = /turf/open2/floor/plating/asteroid/airless
 
-/turf/open/floor/plating/asteroid/airless/cave/has_data //subtype for producing a tunnel with given data
+/turf/open2/floor/plating/asteroid/airless/cave/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
 
-/turf/open/floor/plating/asteroid/airless/cave/volcanic
+/turf/open2/floor/plating/asteroid/airless/cave/volcanic
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
 		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
-	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	data_having_type = /turf/open2/floor/plating/asteroid/airless/cave/volcanic/has_data
+	turf_type = /turf/open2/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
+/turf/open2/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
 
-/turf/open/floor/plating/asteroid/airless/cave/Initialize()
+/turf/open2/floor/plating/asteroid/airless/cave/Initialize()
 	if (!mob_spawn_list)
 		mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
 	if (!megafauna_spawn_list)
@@ -160,7 +160,7 @@
 	else
 		..()	//do not continue after changeturfing or we will do a double initialize
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!set_length)
 		length = rand(25, 50)
@@ -172,7 +172,7 @@
 	// Get the opposite direction of our facing direction
 	backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/produce_tunnel_from_data(tunnel_length, excluded_dir = -1)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/produce_tunnel_from_data(tunnel_length, excluded_dir = -1)
 	get_cave_data(tunnel_length, excluded_dir)
 	// Make our tunnels
 	make_tunnel(forward_cave_dir)
@@ -181,7 +181,7 @@
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
 
@@ -208,7 +208,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
+				var/turf/open2/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -223,7 +223,7 @@
 			setDir(angle2dir(dir2angle(dir) )+ next_angle)
 
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
 		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
@@ -236,7 +236,7 @@
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored) || !istype(loc, /area/lavaland/surface/outdoors/unexplored))
 			return
@@ -265,7 +265,7 @@
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
 
-/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
+/turf/open2/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
 	if(prob(12))
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
@@ -277,11 +277,11 @@
 
 
 
-/turf/open/floor/plating/asteroid/snow
+/turf/open2/floor/plating/asteroid/snow
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
-	baseturfs = /turf/open/floor/plating/asteroid/snow
+	baseturfs = /turf/open2/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = "TEMP=180"
@@ -290,11 +290,11 @@
 	flags_1 = NONE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
 
-/turf/open/floor/plating/asteroid/snow/airless
+/turf/open2/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/asteroid/snow/temperatre
+/turf/open2/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "TEMP=255.37"
 
-/turf/open/floor/plating/asteroid/snow/atmosphere
+/turf/open2/floor/plating/asteroid/snow/atmosphere
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"

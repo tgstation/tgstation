@@ -1062,10 +1062,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	//Flashes of danger
 	if(!target.halimage)
 		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(target,world.view))
+		for(var/turf/open2/floor/F in view(target,world.view))
 			possible_points += F
 		if(possible_points.len)
-			var/turf/open/floor/danger_point = pick(possible_points)
+			var/turf/open2/floor/danger_point = pick(possible_points)
 
 			switch(rand(1,5))
 				if(1)
@@ -1154,10 +1154,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	..()
 	if(!target.halbody)
 		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(target,world.view))
+		for(var/turf/open2/floor/F in view(target,world.view))
 			possible_points += F
 		if(possible_points.len)
-			var/turf/open/floor/husk_point = pick(possible_points)
+			var/turf/open2/floor/husk_point = pick(possible_points)
 			switch(rand(1,4))
 				if(1)
 					var/image/body = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
@@ -1186,7 +1186,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	set waitfor = FALSE
 	..()
 	var/list/turf/startlocs = list()
-	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
+	for(var/turf/open2/T in view(world.view+1,target)-view(world.view,target))
 		startlocs += T
 	var/turf/start = pick(startlocs)
 	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))

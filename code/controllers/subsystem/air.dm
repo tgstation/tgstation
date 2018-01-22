@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(air)
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
-	var/list/turf/open/high_pressure_delta = list()
+	var/list/turf/open2/high_pressure_delta = list()
 
 
 	var/list/currentrun = list()
@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
 	while (high_pressure_delta.len)
-		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
+		var/turf/open2/T = high_pressure_delta[high_pressure_delta.len]
 		high_pressure_delta.len--
 		T.high_pressure_movements()
 		T.pressure_difference = 0
@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/open/T = currentrun[currentrun.len]
+		var/turf/open2/T = currentrun[currentrun.len]
 		currentrun.len--
 		if (T)
 			T.process_cell(fire_count)
@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
+/datum/controller/subsystem/air/proc/remove_from_active(turf/open2/T)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
@@ -252,7 +252,7 @@ SUBSYSTEM_DEF(air)
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
-/datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
+/datum/controller/subsystem/air/proc/add_to_active(turf/open2/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour("#00ff00", TEMPORARY_COLOUR_PRIORITY)
@@ -308,7 +308,7 @@ SUBSYSTEM_DEF(air)
 		var/list/turfs_to_check = active_turfs.Copy()
 		do
 			var/list/new_turfs_to_check = list()
-			for(var/turf/open/T in turfs_to_check)
+			for(var/turf/open2/T in turfs_to_check)
 				new_turfs_to_check += T.resolve_active_graph()
 			CHECK_TICK
 
@@ -327,7 +327,7 @@ SUBSYSTEM_DEF(air)
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
-/turf/open/proc/resolve_active_graph()
+/turf/open2/proc/resolve_active_graph()
 	. = list()
 	var/datum/excited_group/EG = excited_group
 	if (blocks_air || !air)
@@ -336,7 +336,7 @@ SUBSYSTEM_DEF(air)
 		EG = new
 		EG.add_turf(src)
 
-	for (var/turf/open/ET in atmos_adjacent_turfs)
+	for (var/turf/open2/ET in atmos_adjacent_turfs)
 		if ( ET.blocks_air || !ET.air)
 			continue
 
@@ -350,7 +350,7 @@ SUBSYSTEM_DEF(air)
 		if (!ET.excited)
 			ET.excited = 1
 			. += ET
-/turf/open/space/resolve_active_graph()
+/turf/open2/space/resolve_active_graph()
 	return list()
 
 /datum/controller/subsystem/air/proc/setup_atmos_machinery()

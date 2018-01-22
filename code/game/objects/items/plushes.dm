@@ -386,7 +386,7 @@
 	if(clash_target)
 		return
 	var/obj/item/toy/plush/narplush/P = locate() in range(1, src)
-	if(P && istype(P.loc, /turf/open) && !P.clashing)
+	if(P && istype(P.loc, /turf/open2) && !P.clashing)
 		clash_of_the_plushies(P)
 
 /obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
@@ -470,7 +470,7 @@
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
-	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
+	if(P && istype(P.loc, /turf/open2) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
 /obj/item/toy/plush/lizardplushie

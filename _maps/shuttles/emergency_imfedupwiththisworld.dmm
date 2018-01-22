@@ -17,71 +17,71 @@
 	timid = 1
 	},
 /obj/machinery/door/airlock/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "e" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "f" = (
 /obj/structure/chair/comfy/teal,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "h" = (
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/knife,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "j" = (
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/computer/security/wooden_tv,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/table/glass,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "n" = (
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "o" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/store/cake/birthday,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "q" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "r" = (
 /obj/structure/table/reinforced,
@@ -89,27 +89,27 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "s" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar,
+/turf/open2/floor/plasteel/bar,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "v" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "w" = (
 /obj/effect/decal/cleanable/blood,
@@ -121,44 +121,44 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "x" = (
 /obj/structure/bed,
 /obj/item/bedsheet/red,
 /obj/item/paper/fluff/shuttles/daniel,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "y" = (
 /obj/item/twohanded/required/kirbyplants,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "z" = (
 /obj/structure/table/wood,
 /obj/item/papercutter,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "B" = (
 /obj/machinery/light,
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "C" = (
 /obj/structure/mineral_door/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "D" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "E" = (
 /obj/machinery/status_display,

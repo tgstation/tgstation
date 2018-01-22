@@ -1,4 +1,4 @@
-/turf/open/floor
+/turf/open2/floor
 	//NOTE: Floor code has been refactored, many procs were removed and refactored
 	//- you should use istype() if you want to find out whether a floor has a certain type
 	//- floor_tile is now a path, and not a tile obj
@@ -16,7 +16,7 @@
 	var/list/broken_states
 	var/list/burnt_states
 
-/turf/open/floor/Initialize(mapload)
+/turf/open2/floor/Initialize(mapload)
 	if (!broken_states)
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if (!burnt_states)
@@ -47,7 +47,7 @@
 	if(mapload)
 		MakeDirty()
 
-/turf/open/floor/ex_act(severity, target)
+/turf/open2/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
 	..()
 	if(severity != 1 && shielded && target != src)
@@ -81,35 +81,35 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
-/turf/open/floor/is_shielded()
+/turf/open2/floor/is_shielded()
 	for(var/obj/structure/A in contents)
 		if(A.level == 3)
 			return 1
 
-/turf/open/floor/blob_act(obj/structure/blob/B)
+/turf/open2/floor/blob_act(obj/structure/blob/B)
 	return
 
-/turf/open/floor/proc/update_icon()
+/turf/open2/floor/proc/update_icon()
 	update_visuals()
 	return 1
 
-/turf/open/floor/attack_paw(mob/user)
+/turf/open2/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/floor/proc/gets_drilled()
+/turf/open2/floor/proc/gets_drilled()
 	return
 
-/turf/open/floor/proc/break_tile_to_plating()
-	var/turf/open/floor/plating/T = make_plating()
+/turf/open2/floor/proc/break_tile_to_plating()
+	var/turf/open2/floor/plating/T = make_plating()
 	T.break_tile()
 
-/turf/open/floor/proc/break_tile()
+/turf/open2/floor/proc/break_tile()
 	if(broken)
 		return
 	icon_state = pick(broken_states)
 	broken = 1
 
-/turf/open/floor/burn_tile()
+/turf/open2/floor/burn_tile()
 	if(broken || burnt)
 		return
 	if(burnt_states.len)
@@ -118,23 +118,23 @@
 		icon_state = pick(broken_states)
 	burnt = 1
 
-/turf/open/floor/proc/make_plating()
-	return ChangeTurf(/turf/open/floor/plating)
+/turf/open2/floor/proc/make_plating()
+	return ChangeTurf(/turf/open2/floor/plating)
 
-/turf/open/floor/ChangeTurf(path, new_baseturf, flags)
+/turf/open2/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
-	if(!ispath(path, /turf/open/floor))
+	if(!ispath(path, /turf/open2/floor))
 		return ..()
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
-	var/turf/open/floor/W = ..()
+	var/turf/open2/floor/W = ..()
 	W.icon_regular_floor = old_icon
 	W.setDir(old_dir)
 	W.update_icon()
 	return W
 
-/turf/open/floor/attackby(obj/item/C, mob/user, params)
+/turf/open2/floor/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
 		return 1
 	if(..())
@@ -145,22 +145,22 @@
 		try_replace_tile(C, user, params)
 	return 0
 
-/turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open2/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
 	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
 	if(!CB)
 		return
-	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)
+	var/turf/open2/floor/plating/P = pry_tile(CB, user, TRUE)
 	if(!istype(P))
 		return
 	P.attackby(T, user, params)
 
-/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
+/turf/open2/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	playsound(src, C.usesound, 80, 1)
 	return remove_tile(user, silent)
 
-/turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
+/turf/open2/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
 	if(broken || burnt)
 		broken = 0
 		burnt = 0
@@ -173,7 +173,7 @@
 			new floor_tile(src)
 	return make_plating()
 
-/turf/open/floor/singularity_pull(S, current_size)
+/turf/open2/floor/singularity_pull(S, current_size)
 	..()
 	if(current_size == STAGE_THREE)
 		if(prob(30))
@@ -193,20 +193,20 @@
 		else if(prob(50))
 			ReplaceWithLattice()
 
-/turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
+/turf/open2/floor/narsie_act(force, ignore_mobs, probability = 20)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/open/floor/engine/cult)
+		ChangeTurf(/turf/open2/floor/engine/cult)
 
-/turf/open/floor/ratvar_act(force, ignore_mobs)
+/turf/open2/floor/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/open/floor/clockwork)
+		ChangeTurf(/turf/open2/floor/clockwork)
 
-/turf/open/floor/acid_melt()
+/turf/open2/floor/acid_melt()
 	ScrapeAway()
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/turf/open2/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
@@ -221,7 +221,7 @@
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
 	return FALSE
 
-/turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+/turf/open2/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")

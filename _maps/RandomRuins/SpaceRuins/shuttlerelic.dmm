@@ -12,7 +12,7 @@
 /area/ruin/powered)
 "d" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
 /turf/closed/indestructible/oldshuttle/corner,
@@ -23,7 +23,7 @@
 	},
 /area/ruin/powered)
 "g" = (
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
 /turf/closed/indestructible/oldshuttle/corner{
@@ -35,7 +35,7 @@
 	icon_state = "oldcloset";
 	name = "strange closet"
 	},
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -45,7 +45,7 @@
 /area/ruin/powered)
 "k" = (
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "l" = (
 /turf/closed/indestructible/oldshuttle{
@@ -57,7 +57,7 @@
 	icon_state = "chairold";
 	dir = 1
 	},
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "n" = (
 /obj/structure/chair/old{
@@ -69,7 +69,7 @@
 	force = 20;
 	name = "heavy crowbar"
 	},
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (
 /obj/structure/chair/old{
@@ -77,7 +77,7 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "p" = (
 /turf/closed/indestructible/oldshuttle/corner{
@@ -99,11 +99,11 @@
 /area/ruin/powered)
 "t" = (
 /obj/machinery/power/generator,
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "u" = (
 /obj/machinery/power/smes,
-/turf/open/floor/oldshuttle,
+/turf/open2/floor/oldshuttle,
 /area/ruin/powered)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,

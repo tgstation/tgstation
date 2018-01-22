@@ -49,11 +49,11 @@
 
 /datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T))
-		var/turf/open/floor/plating/F = T
+		var/turf/open2/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ScrapeAway()
 	if(isfloorturf(T))
-		var/turf/open/floor/F = T
+		var/turf/open2/floor/F = T
 		if(prob(reac_volume))
 			F.make_plating()
 		else if(prob(reac_volume))

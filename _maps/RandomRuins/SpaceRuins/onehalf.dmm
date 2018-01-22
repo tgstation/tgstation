@@ -44,7 +44,7 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ah" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ai" = (
 /obj/structure/cable{
@@ -54,7 +54,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aj" = (
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "ak" = (
 /turf/closed/wall,
@@ -63,10 +63,10 @@
 /obj/machinery/sleeper/syndie{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "am" = (
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "an" = (
 /obj/structure/table,
@@ -75,22 +75,22 @@
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/fire,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ao" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ap" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aq" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "ar" = (
 /turf/closed/wall,
@@ -103,7 +103,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "at" = (
 /obj/machinery/door/poddoor{
@@ -113,7 +113,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "au" = (
 /obj/machinery/door/poddoor/preopen{
@@ -123,7 +123,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "av" = (
 /obj/machinery/door/poddoor{
@@ -133,7 +133,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aw" = (
 /obj/structure/lattice,
@@ -145,17 +145,17 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "ay" = (
 /obj/structure/table_frame,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "az" = (
 /obj/machinery/washing_machine,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aA" = (
 /obj/item/roller,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aB" = (
 /obj/machinery/light{
@@ -167,13 +167,13 @@
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
 /obj/structure/cable{
@@ -182,46 +182,46 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aE" = (
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aF" = (
 /obj/structure/disposalpipe/trunk,
 /obj/item/ore/diamond,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aH" = (
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
 "aI" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aJ" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aK" = (
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aL" = (
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aM" = (
 /obj/structure/cable{
@@ -237,7 +237,7 @@
 	name = "Crew Quarters APC";
 	pixel_x = 26
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aN" = (
 /obj/structure/disposalpipe/segment,
@@ -245,7 +245,7 @@
 	id = "onehalf_drone1int";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aO" = (
 /obj/structure/disposalpipe/segment,
@@ -253,7 +253,7 @@
 	id = "onehalf_drone2int";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aP" = (
 /obj/structure/disposalpipe/segment,
@@ -261,7 +261,7 @@
 	id = "onehalf_drone3int";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aQ" = (
 /obj/structure/disposalpipe/segment,
@@ -269,14 +269,14 @@
 	id = "onehalf_drone4int";
 	name = "mining drone bay blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aR" = (
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aS" = (
 /obj/structure/lattice,
@@ -287,12 +287,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "aU" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -301,11 +301,11 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open2/floor/plasteel/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aW" = (
 /obj/machinery/door/airlock,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aX" = (
 /obj/structure/cable{
@@ -317,7 +317,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aY" = (
 /obj/structure/cable{
@@ -331,14 +331,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "ba" = (
 /obj/machinery/button/door{
@@ -368,13 +368,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bc" = (
 /obj/machinery/button/door{
@@ -404,22 +404,22 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bd" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "be" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bf" = (
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -432,7 +432,7 @@
 	dir = 2;
 	icon_state = "coil_red2"
 	},
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -446,7 +446,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -457,7 +457,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -468,7 +468,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bk" = (
 /obj/structure/disposalpipe/junction{
@@ -480,7 +480,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -494,7 +494,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bm" = (
 /obj/structure/disposalpipe/junction{
@@ -503,7 +503,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bn" = (
 /obj/structure/disposalpipe/segment{
@@ -513,7 +513,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bo" = (
 /obj/structure/disposalpipe/segment{
@@ -522,27 +522,27 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "br" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance_hatch,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bs" = (
 /obj/structure/disposalpipe/segment{
@@ -551,7 +551,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -559,7 +559,7 @@
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -568,13 +568,13 @@
 	dir = 8
 	},
 /obj/machinery/disposal/bin,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bv" = (
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -582,7 +582,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -590,14 +590,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "by" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -611,13 +611,13 @@
 	name = "Hallway APC";
 	pixel_y = -24
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -626,45 +626,45 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bC" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bD" = (
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bG" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bH" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bI" = (
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -672,29 +672,29 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open2/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bK" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bL" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bM" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bN" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -703,28 +703,28 @@
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bP" = (
 /obj/structure/girder/reinforced,
 /obj/item/stack/sheet/plasteel,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bQ" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bR" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bS" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bT" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bU" = (
 /turf/closed/wall/r_wall,
@@ -734,20 +734,20 @@
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bX" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "bY" = (
 /obj/structure/grille,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
 "bZ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -755,33 +755,33 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ca" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cb" = (
 /obj/structure/table/reinforced,
 /obj/item/paper,
 /obj/item/pen,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cc" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cd" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/structure/frame/computer,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ce" = (
 /obj/structure/frame/computer,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cf" = (
 /obj/structure/cable{
@@ -792,7 +792,7 @@
 	name = "Bridge APC";
 	pixel_y = 24
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/cable{
@@ -803,14 +803,14 @@
 	pixel_y = 8
 	},
 /obj/item/stack/spacecash/c1000,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
 /obj/item/shard,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -844,7 +844,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cl" = (
 /obj/structure/disposalpipe/segment{
@@ -854,22 +854,22 @@
 /obj/item/paper_bin{
 	total_paper = 12
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cm" = (
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cn" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "co" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/cable{
@@ -880,7 +880,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/lighter,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -897,7 +897,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cr" = (
 /obj/item/stack/rods,
@@ -919,29 +919,29 @@
 /area/ruin/space/has_grav/onehalf/hallway)
 "cu" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cv" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cw" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cx" = (
 /obj/item/stack/tile/plasteel,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
 /obj/machinery/power/solar_control,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cz" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -953,7 +953,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cA" = (
 /obj/item/stack/tile/wood,
@@ -967,7 +967,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cD" = (
 /obj/structure/lattice,
@@ -983,11 +983,11 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cF" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cG" = (
 /obj/machinery/door/poddoor/preopen{
@@ -997,12 +997,12 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cH" = (
 /obj/item/crowbar/red,
 /obj/item/device/multitool,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cI" = (
 /obj/structure/safe/floor,
@@ -1012,13 +1012,13 @@
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/folder/syndicate/mining,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cJ" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cK" = (
 /obj/structure/lattice,
@@ -1030,7 +1030,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cL" = (
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1039,7 +1039,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cN" = (
 /obj/item/stack/sheet/plasteel,
@@ -1050,25 +1050,25 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cP" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cQ" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/hallway)
 "cR" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cS" = (
 /obj/structure/chair/office,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cT" = (
 /obj/machinery/button/door{
@@ -1077,11 +1077,11 @@
 	pixel_x = 32;
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cU" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cV" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1093,7 +1093,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cW" = (
 /obj/structure/cable{
@@ -1109,44 +1109,44 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cY" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cZ" = (
 /obj/structure/table/reinforced,
 /obj/item/ore/bluespace_crystal,
 /obj/item/coin/plasma,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "da" = (
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "db" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
 /obj/structure/grille/broken,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "dd" = (
 /obj/structure/grille,
 /obj/item/shard,
-/turf/open/floor/plating/airless{
+/turf/open2/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1162,7 +1162,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "df" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1176,7 +1176,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dg" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -1190,7 +1190,7 @@
 	id = "bridge_onehalf";
 	name = "bridge blast door"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dh" = (
 /obj/item/stack/sheet/plasteel,

@@ -1,22 +1,22 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
+/turf/open2/space,
 /area/space)
 "b" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/space/nearstation)
 "c" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "d" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/space/nearstation)
 "e" = (
 /obj/structure/window/reinforced{
@@ -25,47 +25,47 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "f" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "g" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "h" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "i" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "k" = (
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open2/space,
 /area/space/nearstation)
 "l" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "m" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "n" = (
 /obj/structure/table,
@@ -78,30 +78,30 @@
 /obj/item/trash/plate{
 	pixel_x = -10
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "o" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "p" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/space/nearstation)
 "q" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "r" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 
 (1,1,1) = {"

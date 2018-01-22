@@ -97,5 +97,5 @@
 	visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 	for(var/turf/T in range(2,src))
 		if(!T.density)
-			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland)
+			T.TerraformTurf(/turf/open2/chasm/lavaland, /turf/open2/chasm/lavaland)
 	qdel(src)

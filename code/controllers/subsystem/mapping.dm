@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(mapping)
 			nuke_threats -= d
 
 	for(var/N in nuke_tiles)
-		var/turf/open/floor/circuit/C = N
+		var/turf/open2/floor/circuit/C = N
 		C.update_icon()
 
 /datum/controller/subsystem/mapping/Recover()

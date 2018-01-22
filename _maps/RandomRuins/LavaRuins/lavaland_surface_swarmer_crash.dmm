@@ -9,7 +9,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/mineral/plastitanium,
+/turf/open2/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -19,7 +19,7 @@
 /area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
-/turf/open/floor/mineral/plastitanium,
+/turf/open2/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/baseturf_helper/lava_land/surface,

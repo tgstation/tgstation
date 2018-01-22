@@ -33,7 +33,7 @@
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
 /proc/create_area(mob/creator)
-	var/static/blacklisted_turfs = typecacheof(/turf/open/space)
+	var/static/blacklisted_turfs = typecacheof(/turf/open2/space)
 	var/static/blacklisted_areas = typecacheof(/area/space)
 	var/list/turfs = detect_room(get_turf(creator), blacklisted_turfs)
 	if(!turfs)

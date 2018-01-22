@@ -4,16 +4,16 @@
 	var/overlay
 
 	var/static/list/blacklist = typecacheof(
-		/turf/open/lava,
-		/turf/open/space,
-		/turf/open/water,
-		/turf/open/chasm,
+		/turf/open2/lava,
+		/turf/open2/space,
+		/turf/open2/water,
+		/turf/open2/chasm,
 		)
 
 	var/static/list/immunelist = typecacheof(
 		/turf/closed/wall/mineral/diamond,
 		/turf/closed/indestructible,
-		/turf/open/indestructible,
+		/turf/open2/indestructible,
 		)
 	
 	var/static/list/resistlist = typecacheof(

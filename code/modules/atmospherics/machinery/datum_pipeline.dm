@@ -150,7 +150,7 @@
 
 	if(isopenturf(target))
 
-		var/turf/open/modeled_location = target
+		var/turf/open2/modeled_location = target
 		target_temperature = modeled_location.GetTemperature()
 		target_heat_capacity = modeled_location.GetHeatCapacity()
 

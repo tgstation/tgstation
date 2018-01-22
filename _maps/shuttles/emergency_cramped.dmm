@@ -4,29 +4,29 @@
 /area/shuttle/escape)
 "b" = (
 /obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "c" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "e" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "f" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced,
@@ -36,11 +36,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
@@ -48,7 +48,7 @@
 /obj/item/device/gps{
 	gpstag = "STV5"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/status_display,
@@ -65,20 +65,20 @@
 	width = 14;
 	timid = 1
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "l" = (
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "n" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "o" = (
 /obj/structure/closet/crate,
@@ -87,18 +87,18 @@
 	name = "8maintenance loot spawner"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/escape)
 "q" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "r" = (
 /obj/structure/closet/crate/secure/weapon,
@@ -107,7 +107,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair{
@@ -116,31 +116,31 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "u" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "v" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/escape)
 "w" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/spawner/lootdrop/armory_contraband,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"

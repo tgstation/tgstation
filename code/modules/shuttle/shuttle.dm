@@ -190,7 +190,7 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	turf_type = /turf/open/space/transit
+	turf_type = /turf/open2/space/transit
 	var/list/turf/assigned_turfs = list()
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner

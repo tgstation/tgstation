@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space/basic,
+/turf/open2/space/basic,
 /area/space)
 "b" = (
 /obj/docking_port/stationary{
@@ -12,7 +12,7 @@
 	name = "Deep Space";
 	width = 35
 	},
-/turf/open/space,
+/turf/open2/space,
 /area/space)
 
 (1,1,1) = {"

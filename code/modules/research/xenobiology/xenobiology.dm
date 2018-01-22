@@ -166,7 +166,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/turf/open/T = get_turf(user)
+			var/turf/open2/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("plasma=20")
 			to_chat(user, "<span class='warning'>You activate [src], and a cloud of plasma bursts out of your skin!</span>")
@@ -266,7 +266,7 @@
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/turf/open/T = get_turf(user)
+			var/turf/open2/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("nitrogen=40;TEMP=2.7")
 			to_chat(user, "<span class='warning'>You activate [src], and icy air bursts out of your skin!</span>")
@@ -479,7 +479,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/turf/open/T = get_turf(user)
+			var/turf/open2/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("o2=11;n2=41;TEMP=293.15")
 				to_chat(user, "<span class='warning'>You activate [src], and fresh air bursts out of your skin!</span>")
@@ -903,7 +903,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	max_amount = 60
-	turf_type = /turf/open/floor/bluespace
+	turf_type = /turf/open2/floor/bluespace
 
 
 /obj/item/stack/tile/sepia
@@ -919,7 +919,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	max_amount = 60
-	turf_type = /turf/open/floor/sepia
+	turf_type = /turf/open2/floor/sepia
 
 
 /obj/item/areaeditor/blueprints/slime

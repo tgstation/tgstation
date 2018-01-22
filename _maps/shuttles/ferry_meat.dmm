@@ -21,13 +21,13 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "g" = (
 /obj/machinery/computer/shuttle/ferry/request{
 	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
 /obj/structure/closet/secure_closet/freezer/meat{
@@ -64,24 +64,24 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie{
 	name = "rotten meat"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "i" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "j" = (
 /obj/machinery/gibber,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "k" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "l" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "m" = (
 /obj/structure/sink/kitchen{
@@ -89,21 +89,21 @@
 	name = "old sink";
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "o" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/shuttle/transport)
 "p" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "q" = (
 /obj/machinery/door/airlock/titanium,
@@ -118,7 +118,7 @@
 	width = 5;
 	timid = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -131,24 +131,24 @@
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "u" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
 	req_access = "28"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "w" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open2/floor/plasteel/freezer,
 /area/shuttle/transport)
 "x" = (
 /turf/closed/wall/mineral/titanium,

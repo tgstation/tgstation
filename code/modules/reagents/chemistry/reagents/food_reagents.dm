@@ -120,7 +120,7 @@
 		..()
 	return TRUE
 
-/datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
+/datum/reagent/consumable/cooking_oil/reaction_turf(turf/open2/T, reac_volume)
 	if(!istype(T))
 		return
 	if(reac_volume >= 5)
@@ -246,7 +246,7 @@
 			M.adjustToxLoss(rand(15,30))
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(isopenturf(T))
-			var/turf/open/OT = T
+			var/turf/open2/OT = T
 			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
@@ -429,7 +429,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 
-/datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/open2/T, reac_volume)
 	if (!istype(T))
 		return
 	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)

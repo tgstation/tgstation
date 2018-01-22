@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Returns: a string indicating what check failed, or "" if check passes
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
+/datum/gas_mixture/proc/react(turf/open2/dump_location)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
+/datum/gas_mixture/react(turf/open2/dump_location)
 	. = NO_REACTION
 
 	reaction_results = new

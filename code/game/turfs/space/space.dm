@@ -1,4 +1,4 @@
-/turf/open/space
+/turf/open2/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
@@ -19,11 +19,11 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
-/turf/open/space/basic/New()	//Do not convert to Initialize
+/turf/open2/space/basic/New()	//Do not convert to Initialize
 	//This is used to optimize the map loader
 	return
 
-/turf/open/space/Initialize()
+/turf/open2/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 
@@ -48,27 +48,27 @@
 
 	return INITIALIZE_HINT_NORMAL
 
-/turf/open/space/attack_ghost(mob/dead/observer/user)
+/turf/open2/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
 
-/turf/open/space/Initalize_Atmos(times_fired)
+/turf/open2/space/Initalize_Atmos(times_fired)
 	return
 
-/turf/open/space/TakeTemperature(temp)
+/turf/open2/space/TakeTemperature(temp)
 
-/turf/open/space/RemoveLattice()
+/turf/open2/space/RemoveLattice()
 	return
 
-/turf/open/space/AfterChange()
+/turf/open2/space/AfterChange()
 	..()
 	atmos_overlay_types = null
 
-/turf/open/space/Assimilate_Air()
+/turf/open2/space/Assimilate_Air()
 	return
 
-/turf/open/space/proc/update_starlight()
+/turf/open2/space/proc/update_starlight()
 	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
@@ -78,13 +78,13 @@
 			return
 		set_light(0)
 
-/turf/open/space/attack_paw(mob/user)
+/turf/open2/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/open/space/proc/CanBuildHere()
+/turf/open2/space/proc/CanBuildHere()
 	return TRUE
 
-/turf/open/space/attackby(obj/item/C, mob/user, params)
+/turf/open2/space/attackby(obj/item/C, mob/user, params)
 	..()
 	if(!CanBuildHere())
 		return
@@ -118,13 +118,13 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				PlaceOnTop(/turf/open/floor/plating)
+				PlaceOnTop(/turf/open2/floor/plating)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
-/turf/open/space/Entered(atom/movable/A)
+/turf/open2/space/Entered(atom/movable/A)
 	..()
 	if ((!(A) || src != A.loc))
 		return
@@ -149,33 +149,33 @@
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
-/turf/open/space/handle_slip()
+/turf/open2/space/handle_slip()
 	return
 
-/turf/open/space/singularity_act()
+/turf/open2/space/singularity_act()
 	return
 
-/turf/open/space/can_have_cabling()
+/turf/open2/space/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return 1
 	return 0
 
-/turf/open/space/is_transition_turf()
+/turf/open2/space/is_transition_turf()
 	if(destination_x || destination_y || destination_z)
 		return 1
 
 
-/turf/open/space/acid_act(acidpwr, acid_volume)
+/turf/open2/space/acid_act(acidpwr, acid_volume)
 	return 0
 
-/turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open2/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
 	underlay_appearance.icon_state = SPACE_ICON_STATE
 	underlay_appearance.plane = PLANE_SPACE
 	return TRUE
 
 
-/turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/turf/open2/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
 		return FALSE
 
@@ -188,15 +188,15 @@
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+/turf/open2/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			PlaceOnTop(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open2/floor/plating)
 			return TRUE
 	return FALSE
 
-/turf/open/space/ReplaceWithLattice()
+/turf/open2/space/ReplaceWithLattice()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
 	var/dest_z = destination_z

@@ -235,7 +235,7 @@
 	else
 		soundloop.stop()
 		if(isopenturf(loc))
-			var/turf/open/tile = loc
+			var/turf/open2/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5, wet_time_to_add = 1)
 
 

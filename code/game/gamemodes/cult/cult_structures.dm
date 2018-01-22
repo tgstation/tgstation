@@ -167,15 +167,15 @@
 		var/list/validturfs = list()
 		var/list/cultturfs = list()
 		for(var/T in circleviewturfs(src, 5))
-			if(istype(T, /turf/open/floor/engine/cult))
+			if(istype(T, /turf/open2/floor/engine/cult))
 				cultturfs |= T
 				continue
 			var/static/list/blacklisted_pylon_turfs = typecacheof(list(
 				/turf/closed,
-				/turf/open/floor/engine/cult,
-				/turf/open/space,
-				/turf/open/lava,
-				/turf/open/chasm))
+				/turf/open2/floor/engine/cult,
+				/turf/open2/space,
+				/turf/open2/lava,
+				/turf/open2/chasm))
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
 				continue
 			else
@@ -185,9 +185,9 @@
 
 		var/turf/T = safepick(validturfs)
 		if(T)
-			T.ChangeTurf(/turf/open/floor/engine/cult)
+			T.ChangeTurf(/turf/open2/floor/engine/cult)
 		else
-			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
+			var/turf/open2/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
 				new /obj/effect/temp_visual/cult/turf/floor(F)
 			else

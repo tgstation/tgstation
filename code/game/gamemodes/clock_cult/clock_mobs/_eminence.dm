@@ -24,7 +24,7 @@
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	var/OldLoc = loc
-	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
+	if(NewLoc && !istype(NewLoc, /turf/open2/indestructible/reebe_void))
 		var/turf/T = get_turf(NewLoc)
 		for(var/obj/effect/blessing/B in T)
 			if(last_failed_turf != T)

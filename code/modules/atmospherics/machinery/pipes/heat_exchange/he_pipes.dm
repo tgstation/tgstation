@@ -36,7 +36,7 @@
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
-			var/turf/open/OT = T
+			var/turf/open2/OT = T
 			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature

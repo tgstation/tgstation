@@ -7,30 +7,30 @@
 /area/ruin/unpowered)
 "c" = (
 /obj/structure/healingfountain,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "d" = (
 /obj/structure/fluff/divine/conduit,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/sacrificealtar,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "f" = (
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "g" = (
 /mob/living/simple_animal/butterfly,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "h" = (
 /obj/structure/fans/tiny/invisible,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 "i" = (
 /obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/engine/cult,
+/turf/open2/floor/engine/cult,
 /area/ruin/unpowered)
 
 (1,1,1) = {"

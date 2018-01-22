@@ -810,15 +810,15 @@
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hitsound = 'sound/weapons/sear.ogg'
-	var/turf_type = /turf/open/lava/smooth
+	var/turf_type = /turf/open2/lava/smooth
 	var/transform_string = "lava"
-	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
+	var/reset_turf_type = /turf/open2/floor/plating/asteroid/basalt
 	var/reset_string = "basalt"
 	var/create_cooldown = 100
 	var/create_delay = 30
 	var/reset_cooldown = 50
 	var/timer = 0
-	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = typecacheof(list(/turf/open2/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -830,7 +830,7 @@
 
 	if(target in view(user.client.view, get_turf(user)))
 
-		var/turf/open/T = get_turf(target)
+		var/turf/open2/T = get_turf(target)
 		if(!istype(T))
 			return
 		if(!istype(T, turf_type))

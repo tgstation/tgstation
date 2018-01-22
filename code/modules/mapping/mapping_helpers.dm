@@ -22,39 +22,39 @@
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
-	baseturf = /turf/open/space
+	baseturf = /turf/open2/space
 
 /obj/effect/baseturf_helper/asteroid
 	name = "asteroid baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturf = /turf/open2/floor/plating/asteroid
 
 /obj/effect/baseturf_helper/asteroid/airless
 	name = "asteroid airless baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/airless
+	baseturf = /turf/open2/floor/plating/asteroid/airless
 
 /obj/effect/baseturf_helper/asteroid/basalt
 	name = "asteroid basalt baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open2/floor/plating/asteroid/basalt
 
 /obj/effect/baseturf_helper/asteroid/snow
 	name = "asteroid snow baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturf = /turf/open2/floor/plating/asteroid/snow
 
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/open2/floor/plating/beach/sand
 
 /obj/effect/baseturf_helper/beach/water
 	name = "water baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open2/floor/plating/beach/water
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
-	baseturf = /turf/open/lava/smooth
+	baseturf = /turf/open2/lava/smooth
 
 /obj/effect/baseturf_helper/lava_land/surface
 	name = "lavaland baseturf editor"
-	baseturf = /turf/open/lava/smooth/lava_land_surface
+	baseturf = /turf/open2/lava/smooth/lava_land_surface
 
 // Does the same thing as baseturf_helper but only the specified kinds of turf (the kind it's placed on or varedited)
 /obj/effect/baseturf_helper/picky
@@ -80,11 +80,11 @@
 
 /obj/effect/baseturf_helper/picky/lava_land/plating
 	name = "picky lavaland plating baseturf helper"
-	baseturf = /turf/open/floor/plating/lavaland_baseturf
+	baseturf = /turf/open2/floor/plating/lavaland_baseturf
 
 /obj/effect/baseturf_helper/picky/lava_land/basalt
 	name = "picky lavaland basalt baseturf helper"
-	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
+	baseturf = /turf/open2/floor/plating/asteroid/basalt/lava_land_surface
 
 //Contains the list of planetary z-levels defined by the planet_z helper.
 GLOBAL_LIST_EMPTY(z_is_planet)

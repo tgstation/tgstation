@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(squeak)
 	var/list/all_turfs
 	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
-	for(var/turf/open/floor/plating/T in all_turfs)
+	for(var/turf/open2/floor/plating/T in all_turfs)
 		if(is_blocked_turf(T))
 			continue
 		if(locate(/obj/structure/cable) in T)

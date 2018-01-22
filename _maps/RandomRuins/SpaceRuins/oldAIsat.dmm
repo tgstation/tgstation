@@ -7,7 +7,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ad" = (
 /obj/structure/lattice,
@@ -21,14 +21,14 @@
 /area/template_noop)
 "af" = (
 /obj/structure/grille,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/template_noop)
 "ag" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/chamber)
 "ah" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ai" = (
 /obj/structure/window/reinforced{
@@ -40,7 +40,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ak" = (
 /obj/machinery/power/apc{
@@ -52,7 +52,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "al" = (
 /obj/machinery/light/small{
@@ -61,37 +61,37 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "am" = (
 /obj/item/stock_parts/cell,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "an" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ao" = (
 /obj/item/coin/bananium,
-/turf/open/floor/engine,
+/turf/open2/floor/engine,
 /area/tcommsat/chamber)
 "ap" = (
 /obj/structure/bed,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aq" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ar" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
 /area/tcommsat/chamber)
 "as" = (
-/turf/open/floor/plasteel/airless{
+/turf/open2/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
 /area/tcommsat/chamber)
@@ -106,18 +106,18 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "av" = (
 /obj/item/wrench,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aw" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ax" = (
 /obj/structure/lattice,
@@ -128,15 +128,15 @@
 /area/template_noop)
 "ay" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "az" = (
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aA" = (
 /obj/structure/table,
 /obj/item/paper,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aB" = (
 /obj/structure/table,
@@ -145,46 +145,46 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aC" = (
 /obj/structure/frame/computer,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aD" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aE" = (
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
-/turf/open/floor/engine,
+/turf/open2/floor/engine,
 /area/tcommsat/chamber)
 "aF" = (
 /obj/structure/grille,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aG" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aH" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aI" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aJ" = (
 /obj/item/stack/cable_coil/cut{
 	amount = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aK" = (
 /obj/structure/window/reinforced,
@@ -192,7 +192,7 @@
 	dir = 4
 	},
 /obj/structure/closet,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aL" = (
 /obj/structure/window/reinforced{
@@ -202,12 +202,12 @@
 /area/template_noop)
 "aM" = (
 /obj/item/folder/yellow,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aN" = (
 /obj/structure/bed,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aO" = (
 /obj/structure/window/reinforced,
@@ -235,7 +235,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "aR" = (
 /obj/structure/window/reinforced,
@@ -263,35 +263,35 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aW" = (
 /obj/item/paper/crumpled,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aX" = (
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
 	name = "Cuban Pete-Meat"
 	},
 /obj/item/stack/spacecash,
-/turf/open/floor/engine,
+/turf/open2/floor/engine,
 /area/tcommsat/chamber)
 "aY" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aZ" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ba" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bb" = (
 /obj/structure/window/reinforced{
@@ -300,18 +300,18 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bc" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bd" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "be" = (
 /obj/structure/window/reinforced,
@@ -319,36 +319,36 @@
 	dir = 1
 	},
 /obj/item/electronics/airlock,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bf" = (
 /obj/structure/door_assembly/door_assembly_hatch,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bg" = (
 /obj/item/cigbutt,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bh" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bi" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bj" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bk" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bl" = (
 /obj/structure/disposalpipe/segment{
@@ -361,13 +361,13 @@
 	dir = 4
 	},
 /obj/structure/grille/broken,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bo" = (
 /obj/structure/disposaloutlet{
@@ -376,7 +376,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bp" = (
 /obj/structure/window/reinforced{
@@ -385,7 +385,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bq" = (
 /obj/structure/window/reinforced{
@@ -412,22 +412,22 @@
 "bt" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bu" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bv" = (
 /obj/machinery/door/airlock/maintenance_hatch,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bw" = (
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bx" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "by" = (
 /obj/structure/window/reinforced{
@@ -443,29 +443,29 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bC" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bD" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bE" = (
 /obj/structure/window/reinforced{
@@ -474,7 +474,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bF" = (
 /obj/structure/window/reinforced{
@@ -491,49 +491,49 @@
 	dir = 8
 	},
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bH" = (
 /obj/item/stack/rods,
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bI" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "bL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "bM" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "bN" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/scalpel{
 	pixel_y = 12
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bO" = (
 /obj/structure/window/reinforced{
@@ -542,33 +542,33 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "bQ" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/teleporter,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bR" = (
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "bT" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bU" = (
 /obj/effect/decal/cleanable/blood,
@@ -576,38 +576,38 @@
 /obj/item/clothing/under/rank/centcom_officer,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bV" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "bW" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bX" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "bY" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "bZ" = (
 /obj/item/cigbutt,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "ca" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/device/assembly/signaler,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cb" = (
 /obj/structure/table,
@@ -615,38 +615,38 @@
 /obj/item/reagent_containers/syringe/lethal{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "cd" = (
 /obj/item/storage/toolbox/syndicate,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ce" = (
 /obj/structure/table,
 /obj/item/device/electropack,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "cf" = (
 /obj/structure/table,
 /obj/item/hemostat,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cg" = (
 /obj/structure/table,
 /obj/item/circular_saw,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "ch" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "ci" = (
 /obj/structure/window/reinforced{
@@ -656,7 +656,7 @@
 	dir = 4
 	},
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cj" = (
 /obj/structure/window/reinforced{
@@ -674,25 +674,25 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cm" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "co" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cp" = (
 /obj/structure/window/reinforced{
@@ -706,37 +706,37 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cr" = (
 /obj/item/paper/crumpled,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cs" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ct" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cu" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/dark,
+/turf/open2/floor/plasteel/airless/dark,
 /area/tcommsat/chamber)
 "cv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cw" = (
 /obj/machinery/light/small,
@@ -744,13 +744,13 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open2/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "cy" = (
 /obj/item/shard{
@@ -768,11 +768,11 @@
 /area/template_noop)
 "cA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "cC" = (
 /obj/structure/grille/broken,
@@ -780,46 +780,46 @@
 /area/template_noop)
 "cD" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cH" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cI" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cJ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cK" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cL" = (
 /obj/structure/sign/warning/vacuum,
@@ -830,33 +830,33 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cN" = (
 /obj/item/paper/crumpled,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cO" = (
 /obj/structure/closet/malf/suits,
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cP" = (
 /obj/structure/door_assembly/door_assembly_ext,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "cQ" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "cR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cS" = (
 /obj/item/crowbar,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/tcommsat/chamber)
 "cT" = (
 /obj/structure/closet/crate,
@@ -864,13 +864,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cV" = (
 /obj/item/storage/toolbox/electrical{
@@ -880,13 +880,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cX" = (
 /obj/machinery/light/small{
@@ -895,19 +895,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/tcommsat/chamber)
 "cY" = (
 /obj/structure/frame/computer,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "cZ" = (
 /obj/machinery/teleport/station,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 "da" = (
 /obj/machinery/teleport/hub,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/tcommsat/chamber)
 
 (1,1,1) = {"

@@ -106,7 +106,7 @@
 			if(!emagged)
 				if(SO.pack.cost * 2 <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
-					for(var/turf/open/floor/T in landingzone.contents)
+					for(var/turf/open2/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)
@@ -120,7 +120,7 @@
 			else
 				if(SO.pack.cost * (1.2*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas
-					for(var/turf/open/floor/T in landingzone.contents)
+					for(var/turf/open2/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)

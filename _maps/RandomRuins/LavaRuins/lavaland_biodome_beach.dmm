@@ -4,13 +4,13 @@
 /area/template_noop)
 "ad" = (
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ae" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "af" = (
 /obj/structure/table,
@@ -18,19 +18,19 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "ag" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "ah" = (
 /obj/machinery/power/smes,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "ai" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "aj" = (
 /turf/closed/wall/mineral/sandstone,
@@ -38,27 +38,27 @@
 "ak" = (
 /obj/structure/toilet,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "al" = (
 /obj/structure/urinal{
 	pixel_y = 32
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "am" = (
 /obj/structure/urinal{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "an" = (
 /obj/item/device/flashlight/lantern,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "ao" = (
 /obj/structure/sink{
@@ -69,37 +69,37 @@
 /obj/structure/mirror{
 	pixel_x = 28
 	},
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "ap" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aq" = (
 /obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ar" = (
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "as" = (
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
 /obj/item/tank/internals/oxygen,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "au" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "av" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "aw" = (
 /obj/machinery/door/airlock/sandstone,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "ax" = (
 /obj/structure/extinguisher_cabinet,
@@ -108,25 +108,25 @@
 "ay" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "az" = (
 /obj/item/clothing/neck/necklace/dope,
 /obj/item/reagent_containers/spray/spraytan,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aA" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aB" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aC" = (
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aD" = (
 /obj/structure/table,
@@ -137,25 +137,25 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aE" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
 	emagged = 1;
 	req_access_txt = "0"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aG" = (
 /obj/structure/table,
 /obj/item/book/manual/barman_recipes,
 /obj/item/reagent_containers/glass/rag,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aH" = (
 /obj/structure/table,
@@ -163,12 +163,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aI" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aJ" = (
 /obj/structure/closet/crate/bin,
@@ -178,54 +178,54 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aK" = (
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aL" = (
 /obj/effect/mob_spawn/human/bartender/alive{
 	name = "beach bum sleeper"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aM" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aN" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aO" = (
 /obj/structure/stacklifter,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aP" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aQ" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aR" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aS" = (
 /obj/machinery/processor,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aT" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aU" = (
 /obj/effect/overlay/palmtree_l,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aV" = (
 /obj/effect/mob_spawn/human/beach/alive{
@@ -233,47 +233,47 @@
 	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "aW" = (
 /obj/structure/chair/stool,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aX" = (
 /obj/structure/closet/secure_closet/freezer/meat,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "aZ" = (
 /obj/effect/overlay/coconut,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bb" = (
 /obj/structure/weightlifter,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bc" = (
 /obj/machinery/door/airlock/sandstone,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "bd" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = null
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "be" = (
 /obj/vehicle/ridden/scooter/skateboard{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bg" = (
 /obj/structure/sign/barsign,
@@ -283,26 +283,26 @@
 /obj/structure/chair/wood/normal{
 	dir = 4
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "bk" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pastatomato,
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "bl" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "bx" = (
 /obj/structure/flora/rock,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bz" = (
 /mob/living/simple_animal/crab,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bA" = (
 /obj/structure/window/reinforced{
@@ -315,7 +315,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/firstaid,
 /obj/item/storage/firstaid/brute,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "bB" = (
 /obj/structure/window/reinforced{
@@ -326,15 +326,15 @@
 	layer = 2.9
 	},
 /obj/structure/chair/stool,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "bE" = (
 /obj/item/reagent_containers/spray/spraytan,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bF" = (
 /obj/item/toy/beach_ball,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bG" = (
 /obj/structure/window/reinforced{
@@ -342,7 +342,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/item/device/megaphone,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "bH" = (
 /obj/structure/window/reinforced{
@@ -355,60 +355,60 @@
 	id_job = "Lifeguard";
 	mob_gender = "female"
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
 /obj/structure/chair,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bK" = (
 /obj/item/storage/backpack/duffelbag,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bL" = (
 /obj/effect/turf_decal/sand{
 	density = 1
 	},
 /obj/effect/decal/fakelattice,
-/turf/open/floor/pod/light{
+/turf/open2/floor/pod/light{
 	density = 1
 	},
 /area/ruin/powered/beach)
 "bM" = (
-/turf/open/floor/plasteel/stairs/old,
+/turf/open2/floor/plasteel/stairs/old,
 /area/ruin/powered/beach)
 "bN" = (
 /obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bO" = (
 /obj/item/device/camera,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bP" = (
 /obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bQ" = (
 /obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/beach/coastline_t,
+/turf/open2/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "bR" = (
-/turf/open/floor/plating/beach/coastline_t,
+/turf/open2/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "bS" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/beach/coastline_t,
+/turf/open2/floor/plating/beach/coastline_t,
 /area/ruin/powered/beach)
 "bT" = (
-/turf/open/floor/plating/beach/coastline_b,
+/turf/open2/floor/plating/beach/coastline_b,
 /area/ruin/powered/beach)
 "bU" = (
-/turf/open/floor/plating/beach/water,
+/turf/open2/floor/plating/beach/water,
 /area/ruin/powered/beach)
 "bV" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/turf/open/floor/plating/beach/water,
+/turf/open2/floor/plating/beach/water,
 /area/ruin/powered/beach)
 "bW" = (
 /turf/closed/wall/r_wall,
@@ -424,19 +424,19 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cg" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ch" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cj" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -445,118 +445,118 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/asteroid,
+/turf/open2/floor/plasteel/asteroid,
 /area/ruin/powered/beach)
 "cs" = (
 /obj/effect/overlay/palmtree_l,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ct" = (
 /obj/machinery/light,
-/turf/open/floor/plating/beach/water,
+/turf/open2/floor/plating/beach/water,
 /area/ruin/powered/beach)
 "cz" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plating/beach/sand,
+/turf/open2/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/table/wood,
 /obj/item/tank/internals/oxygen,
 /obj/item/pickaxe,
 /obj/item/clothing/mask/gas,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "dw" = (
 /obj/machinery/door/airlock/sandstone,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "iw" = (
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "jF" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "lF" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/pod/dark{
+/turf/open2/floor/pod/dark{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/beach)
 "lM" = (
 /obj/structure/dresser,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "mh" = (
 /obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
+/turf/open2/floor/plating,
 /area/ruin/powered/beach)
 "pI" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "pU" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "qa" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "vl" = (
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "wY" = (
-/turf/open/floor/pod/light,
+/turf/open2/floor/pod/light,
 /area/ruin/powered/beach)
 "zw" = (
 /obj/structure/closet/athletic_mixed,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "Ec" = (
 /obj/machinery/door/airlock/sandstone,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "Gc" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/pod/light,
+/turf/open2/floor/pod/light,
 /area/ruin/powered/beach)
 "HC" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "TP" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/pod/dark{
+/turf/open2/floor/pod/dark{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/beach)
 "VO" = (
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 "Xp" = (
 /obj/effect/turf_decal/sand,
@@ -564,7 +564,7 @@
 	brightness = 3;
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open2/floor/pod/dark,
 /area/ruin/powered/beach)
 
 (1,1,1) = {"

@@ -23,8 +23,8 @@
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
-	var/turf/open/atmos_source		//Atmos link source
-	var/turf/open/atmos_destination	//Atmos link destination
+	var/turf/open2/atmos_source		//Atmos link source
+	var/turf/open2/atmos_destination	//Atmos link destination
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 

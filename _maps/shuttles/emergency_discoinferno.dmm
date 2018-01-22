@@ -7,22 +7,22 @@
 /area/shuttle/escape)
 "c" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plasteel/elevatorshaft,
+/turf/open2/floor/plasteel/elevatorshaft,
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "e" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "f" = (
 /obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table/wood,
@@ -31,75 +31,75 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "j" = (
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "k" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "m" = (
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /obj/machinery/light,
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "o" = (
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "p" = (
 /obj/machinery/door/airlock/gold{
 	req_access_txt = "19"
 	},
-/turf/open/floor/mineral/gold,
+/turf/open2/floor/mineral/gold,
 /area/shuttle/escape)
 "q" = (
 /obj/structure/statue/plasma/scientist{
 	anchored = 1;
 	oreAmount = 50
 	},
-/turf/open/floor/light/colour_cycle,
+/turf/open2/floor/light/colour_cycle,
 /area/shuttle/escape)
 "r" = (
-/turf/open/floor/mineral/plasma,
+/turf/open2/floor/mineral/plasma,
 /area/shuttle/escape)
 "s" = (
-/turf/open/floor/mineral/silver,
+/turf/open2/floor/mineral/silver,
 /area/shuttle/escape)
 "t" = (
-/turf/open/floor/light/colour_cycle,
+/turf/open2/floor/light/colour_cycle,
 /area/shuttle/escape)
 "u" = (
 /obj/docking_port/mobile/emergency{
@@ -111,67 +111,67 @@
 	heat_proof = 1;
 	resistance_flags = 2
 	},
-/turf/open/floor/mineral/plasma,
+/turf/open2/floor/mineral/plasma,
 /area/shuttle/escape)
 "v" = (
 /obj/machinery/disco/indestructible,
-/turf/open/floor/light/colour_cycle,
+/turf/open2/floor/light/colour_cycle,
 /area/shuttle/escape)
 "w" = (
 /obj/machinery/door/airlock/gold,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "x" = (
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "y" = (
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "z" = (
 /obj/structure/chair/comfy/brown{
 	dir = 2
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "A" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/cognac,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "B" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "C" = (
 /obj/machinery/computer/slot_machine,
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "D" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "E" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "F" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "G" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "H" = (
 /obj/structure/table/wood/fancy,
@@ -183,40 +183,40 @@
 	},
 /obj/item/coin/plasma,
 /obj/item/coin/plasma,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "I" = (
 /obj/machinery/computer/slot_machine{
 	dir = 3
 	},
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "J" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/carpet,
+/turf/open2/floor/carpet,
 /area/shuttle/escape)
 "K" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/absinthe,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine,
-/turf/open/floor/wood,
+/turf/open2/floor/wood,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/plasma/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "N" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
+/turf/open2/floor/plating/airless,
 /area/shuttle/escape)
 "O" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,

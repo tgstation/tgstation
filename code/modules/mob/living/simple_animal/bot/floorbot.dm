@@ -194,23 +194,23 @@
 
 		if(!target)
 			process_type = HULL_BREACH //Ensures the floorbot does not try to "fix" space areas or shuttle docking zones.
-			target = scan(/turf/open/space)
+			target = scan(/turf/open2/space)
 
 		if(!target && placetiles) //Finds a floor without a tile and gives it one.
 			process_type = PLACE_TILE //The target must be the floor and not a tile. The floor must not already have a floortile.
-			target = scan(/turf/open/floor)
+			target = scan(/turf/open2/floor)
 
 		if(!target && fixfloors) //Repairs damaged floors and tiles.
 			process_type = FIX_TILE
-			target = scan(/turf/open/floor)
+			target = scan(/turf/open2/floor)
 
 		if(!target && replacetiles && specialtiles > 0) //Replace a floor tile with custom tile
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
-			target = scan(/turf/open/floor)
+			target = scan(/turf/open2/floor)
 
 	if(!target && emagged == 2) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
-		target = scan(/turf/open/floor)
+		target = scan(/turf/open2/floor)
 
 
 	if(!target)
@@ -250,7 +250,7 @@
 			if(isturf(target) && emagged < 2)
 				repair(target)
 			else if(emagged == 2 && isfloorturf(target))
-				var/turf/open/floor/F = target
+				var/turf/open2/floor/F = target
 				anchored = TRUE
 				mode = BOT_REPAIRING
 				F.ReplaceWithLattice()
@@ -274,7 +274,7 @@
 //Floorbots, having several functions, need sort out special conditions here.
 /mob/living/simple_animal/bot/floorbot/process_scan(scan_target)
 	var/result
-	var/turf/open/floor/F
+	var/turf/open2/floor/F
 	switch(process_type)
 		if(HULL_BREACH) //The most common job, patching breaches in the station's hull.
 			if(is_hull_breach(scan_target)) //Ensure that the targeted space turf is actually part of the station, and not random space.
@@ -321,12 +321,12 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plasteel)
+				target_turf.PlaceOnTop(/turf/open2/floor/plasteel)
 			else //Build a hull plating without a floor tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plating)
+				target_turf.PlaceOnTop(/turf/open2/floor/plating)
 
 	else
-		var/turf/open/floor/F = target_turf
+		var/turf/open2/floor/F = target_turf
 
 		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
 			anchored = TRUE
@@ -337,7 +337,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(/turf/open/floor/plasteel)
+				F.ChangeTurf(/turf/open2/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE

@@ -10,7 +10,7 @@
 	layer = LATTICE_LAYER //under pipes
 	var/number_of_rods = 1
 	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
+	/turf/open2/floor,
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
@@ -60,7 +60,7 @@
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
 /obj/structure/lattice/clockwork/Initialize(mapload)
-	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
+	canSmoothWith += /turf/open2/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
 	if(is_reebe(z))
@@ -108,8 +108,8 @@
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
 	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/open/indestructible/clock_spawn_room,
+	/turf/open2/floor,
+	/turf/open2/indestructible/clock_spawn_room,
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE

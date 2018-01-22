@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
-		T.ChangeTurf(/turf/open/space)
+		T.ChangeTurf(/turf/open2/space)
 		transit_turfs += T
 		T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
-		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
+		if(istype(T, /turf/open2/space/transit) || !isspaceturf(T))
 			continue
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
@@ -514,16 +514,16 @@ SUBSYSTEM_DEF(shuttle)
 	var/transit_x = topleft.x + SHUTTLE_TRANSIT_BORDER + abs(x2)
 	var/transit_y = topleft.y + SHUTTLE_TRANSIT_BORDER + abs(y2)
 
-	var/transit_path = /turf/open/space/transit
+	var/transit_path = /turf/open2/space/transit
 	switch(travel_dir)
 		if(NORTH)
-			transit_path = /turf/open/space/transit/north
+			transit_path = /turf/open2/space/transit/north
 		if(SOUTH)
-			transit_path = /turf/open/space/transit/south
+			transit_path = /turf/open2/space/transit/south
 		if(EAST)
-			transit_path = /turf/open/space/transit/east
+			transit_path = /turf/open2/space/transit/east
 		if(WEST)
-			transit_path = /turf/open/space/transit/west
+			transit_path = /turf/open2/space/transit/west
 
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)

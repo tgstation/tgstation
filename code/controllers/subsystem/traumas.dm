@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human))
 					   )
-	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)))
+	phobia_turfs = list("space" = typecacheof(list(/turf/open2/space, /turf/open2/floor/holofloor/space, /turf/open2/floor/fakespace)))
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman))

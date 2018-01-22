@@ -15,13 +15,13 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "f" = (
-/turf/open/floor/plasteel,
+/turf/open2/floor/plasteel,
 /area/shuttle/abandoned)
 "g" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -39,11 +39,11 @@
 	},
 /obj/structure/table/glass,
 /obj/item/gun/medbeam,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
 /obj/structure/chair,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
 /obj/structure/window/reinforced{
@@ -56,7 +56,7 @@
 /obj/structure/table/glass,
 /obj/machinery/recharger,
 /obj/item/gun/energy/laser/retro,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "k" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -68,17 +68,17 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "m" = (
 /obj/machinery/computer/shuttle/white_ship,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
 /obj/machinery/door/airlock/public/glass{
@@ -98,7 +98,7 @@
 	timid = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open2/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{
@@ -109,13 +109,13 @@
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/hardsuit/engine/elite,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "r" = (
 /obj/structure/window/reinforced{
@@ -124,7 +124,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/table/glass,
 /obj/item/clothing/shoes/magboots,
-/turf/open/floor/plating/abductor,
+/turf/open2/floor/plating/abductor,
 /area/shuttle/abandoned)
 "s" = (
 /obj/structure/shuttle/engine/propulsion/burst,

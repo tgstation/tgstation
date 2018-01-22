@@ -678,7 +678,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	if (amount > 0)
 		var/area/area
 		var/list/candidates
-		var/turf/open/floor/tile
+		var/turf/open2/floor/tile
 		var/j,k
 
 		for (var/i = 1 to amount)

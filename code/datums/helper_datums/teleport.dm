@@ -182,7 +182,7 @@
 
 		if(!isfloorturf(random_location))
 			continue
-		var/turf/open/floor/F = random_location
+		var/turf/open2/floor/F = random_location
 		if(!F.air)
 			continue
 
@@ -214,7 +214,7 @@
 
 		if(extended_safety_checks)
 			if(islava(F)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/lava/L = F
+				var/turf/open2/lava/L = F
 				if(!L.is_safe())
 					continue
 

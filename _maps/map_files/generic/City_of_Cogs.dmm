@@ -1,32 +1,32 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "ab" = (
-/turf/open/indestructible/reebe_void/spawning/lattices,
+/turf/open2/indestructible/reebe_void/spawning/lattices,
 /area/reebe)
 "ac" = (
 /obj/structure/lattice/clockwork,
 /obj/structure/grille/ratvar,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "ad" = (
 /obj/structure/lattice/clockwork,
 /obj/item/clockwork/component/belligerent_eye/blind_eye,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "ae" = (
 /obj/structure/lattice/clockwork,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "af" = (
 /obj/structure/lattice/clockwork,
 /obj/item/clockwork/component/geis_capacitor/antennae,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "ag" = (
 /obj/structure/lattice/catwalk/clockwork,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "ah" = (
 /turf/closed/wall/clockwork,
@@ -34,23 +34,23 @@
 "ai" = (
 /obj/structure/window/reinforced/clockwork/fulltile,
 /obj/structure/grille/ratvar,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aj" = (
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "ak" = (
 /obj/structure/destructible/clockwork/massive/celestial_gateway,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "al" = (
 /obj/machinery/sleeper/clockwork,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "am" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/storage/firstaid,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "an" = (
 /obj/structure/noticeboard,
@@ -61,28 +61,28 @@
 /area/reebe/city_of_cogs)
 "ao" = (
 /obj/machinery/telecomms/relay/preset/reebe,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "ap" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Ark Chamber"
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aq" = (
 /obj/machinery/computer/camera_advanced/ratvar,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "ar" = (
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "as" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
 	pixel_y = 26
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "at" = (
 /obj/structure/table/reinforced/brass,
@@ -91,72 +91,72 @@
 /obj/item/clockwork/slab,
 /obj/item/clockwork/slab,
 /obj/item/clockwork/slab,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "au" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/device/radio/intercom/ratvar,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "av" = (
 /obj/structure/chair/brass{
 	dir = 8
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aw" = (
 /obj/structure/chair/brass{
 	dir = 4
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "ax" = (
 /obj/structure/chair/brass{
 	dir = 1
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "ay" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Dressing Room"
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "az" = (
 /obj/structure/destructible/clockwork/heralds_beacon,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aA" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Infirmary"
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aB" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/construct_chassis/cogscarab,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aC" = (
 /obj/machinery/sleeper/clockwork{
 	dir = 1
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aD" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Listening Station"
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aE" = (
 /obj/machinery/door/airlock/clockwork/brass{
 	name = "Observation Room"
 	},
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aF" = (
-/turf/open/indestructible/reebe_void/spawning,
+/turf/open2/indestructible/reebe_void/spawning,
 /area/reebe)
 "aG" = (
 /turf/closed/wall/clockwork{
@@ -165,144 +165,144 @@
 /area/reebe/city_of_cogs)
 "aH" = (
 /obj/effect/landmark/servant_of_ratvar,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aI" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/slab,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aJ" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/screwdriver/brass,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aK" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/crowbar/brass,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aL" = (
 /obj/structure/table/reinforced/brass,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aM" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/replicant_alloy,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aN" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/weldingtool/experimental/brass,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aO" = (
 /obj/structure/lattice/catwalk/clockwork,
 /obj/item/clockwork/component/belligerent_eye/lens_gem,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "aP" = (
 /obj/structure/lattice/catwalk/clockwork,
 /obj/item/clockwork/component/hierophant_ansible/obelisk,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "aQ" = (
 /obj/structure/lattice/clockwork,
 /obj/item/clockwork/alloy_shards/clockgolem_remains,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "aR" = (
 /obj/effect/clockwork/servant_blocker{
 	dir = 1
 	},
 /obj/structure/lattice/clockwork,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe/city_of_cogs)
 "aS" = (
 /obj/effect/clockwork/servant_blocker{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk/clockwork,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe/city_of_cogs)
 "aT" = (
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "aU" = (
 /obj/structure/grille/ratvar,
 /obj/structure/window/reinforced/clockwork/fulltile,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "aV" = (
 /obj/machinery/door/airlock/clockwork/brass,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "aW" = (
 /obj/item/clockwork/component/replicant_alloy/replication_plate,
-/turf/open/indestructible/reebe_void/spawning/lattices,
+/turf/open2/indestructible/reebe_void/spawning/lattices,
 /area/reebe)
 "aX" = (
 /obj/effect/landmark/city_of_cogs,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "aY" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/belligerent_eye/blind_eye,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "aZ" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/belligerent_eye,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "ba" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/belligerent_eye/lens_gem,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bb" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/replicant_alloy,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bc" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bd" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/replicant_alloy/replication_plate,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "be" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/geis_capacitor/antennae,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bf" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/geis_capacitor/fallen_armor,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bg" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/clockwork/component/geis_capacitor,
-/turf/open/indestructible/clock_spawn_room,
+/turf/open2/indestructible/clock_spawn_room,
 /area/reebe/city_of_cogs)
 "bh" = (
 /obj/structure/lattice/catwalk/clockwork,
 /obj/item/clockwork/integration_cog,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "bi" = (
 /obj/structure/lattice/catwalk/clockwork,
 /obj/item/clockwork/component/vanguard_cogwheel/onyx_prism,
-/turf/open/indestructible/reebe_void,
+/turf/open2/indestructible/reebe_void,
 /area/reebe)
 "bj" = (
 /obj/structure/destructible/clockwork/eminence_spire,
-/turf/open/floor/clockwork/reebe,
+/turf/open2/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 
 (1,1,1) = {"
