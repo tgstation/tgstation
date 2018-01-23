@@ -8402,7 +8402,7 @@
 /turf/open/floor/carpet,
 /area/wizard_station)
 "we" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'FOURTH WALL'.";
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
