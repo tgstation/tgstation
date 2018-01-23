@@ -270,7 +270,7 @@
 				var/obj/item/pen/inowhaveapen = new var/obj/item/pen(traitor_mob.back)
 				P = inowhaveapen
 			else
-				var/obj/item/pen/inowhaveapen = new var/obj/item/pen(traitor_mob.back)
+				var/obj/item/pen/inowhaveapen = new var/obj/item/pen(traitor_mob.loc)
 				P = inowhaveapen
 				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
 				
