@@ -1,0 +1,9 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added Regenerative Jelly, made with tricordrazine and slime jelly. It regenerates a bit faster, and won't harm jellypeople."
+  - rscadd: "Added Energized Jelly, made with teslium and jelly. It works as an anti-stun chemical for slimepeople and speeds up luminescents' power cooldown, but non-jellypeople will just get shocked."
+  - rscadd: "Added Pyroxadone, made with cryoxadone and slime jelly. It's basically inverse cryoxadone: it heals faster the hotter your body temperature is."
+  - tweak: "Cryoxadone no longer deals toxin damage to jellypeople."
+  - tweak: "Purple Slime Extracts no longer have their sugar->slime jelly reaction (obsolete with extract grinding), and instead have a blood->regen jelly reaction."
+  - tweak: "Purple Extract's major activation by Luminescents now give regenerative jelly instead of tricordrazine."
