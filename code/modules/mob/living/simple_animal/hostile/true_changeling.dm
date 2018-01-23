@@ -18,12 +18,12 @@
 	speed = -0.5
 	gender = NEUTER
 	a_intent = "harm"
-	stop_automated_movement = 1
-	status_flags = CANPUSH
+	stop_automated_movement = TRUE
+	status_flags = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	health = 100
-	maxHealth = 100 //pretty durable
+	health = 240
+	maxHealth = 240 //pretty durable
 	damage_coeff = list(BRUTE = 0.75, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //feel the burn!!
 	force_threshold = 10
 	healable = 0
@@ -143,7 +143,7 @@
 	M.stored_changeling.Unconscious(200)
 	M.stored_changeling.status_flags &= ~GODMODE
 	qdel(M)
-	return 1
+	return TRUE
 
 /datum/action/innate/changeling/devour
 	name = "Devour"

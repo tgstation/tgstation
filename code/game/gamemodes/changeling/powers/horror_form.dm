@@ -4,7 +4,7 @@
 	helptext = "We will become an unstoppable force of destruction. We will turn back into a human after some time."
 	chemical_cost = 75
 	dna_cost = 3
-	req_human = 1
+	req_human = TRUE
 
 /obj/effect/proc_holder/changeling/horror_form/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
@@ -19,4 +19,4 @@
 	user.loc = new_mob
 	user.status_flags |= GODMODE
 	user.mind.transfer_to(new_mob)
-	return 1
+	return TRUE
