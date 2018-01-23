@@ -28,7 +28,7 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	U.armor.attachArmor(armor)
+	U.armor = U.armor.attachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_equip(U, user)
@@ -41,7 +41,7 @@
 		pockets.forceMove(src)
 		U.pockets = null
 
-	U.armor.detachArmor(armor)
+	U.armor = U.armor.detachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_dropped(U, user)
