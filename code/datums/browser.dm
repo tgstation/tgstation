@@ -223,17 +223,17 @@
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
-/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,Type="checkbox")
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox")
 	if (!User)
 		return
 
 	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
 
-	if (Type == "checkbox" || Type == "radio")
+	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
 			output += {"<li>
 	        				<label class="switch">
-	        					<input type="[Type]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
+	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
 	      							<div class="slider"></div>
 	      								<span>[i["name"]]</span>
 	    						</label>
@@ -272,14 +272,14 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, Type = "checkbox")
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox")
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, Type)
+	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
