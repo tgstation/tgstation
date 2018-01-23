@@ -39,8 +39,10 @@
 	. = ..()
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
-	else if (!istype(armor, /datum/armor))
+	else if (!armor)
 		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
 
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
