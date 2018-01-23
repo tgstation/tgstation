@@ -295,7 +295,7 @@
 	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	size = 3
 
 	complexity = 10
@@ -304,7 +304,7 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
+	var/max_w_class = WEIGHT_CLASS_BULKY
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
