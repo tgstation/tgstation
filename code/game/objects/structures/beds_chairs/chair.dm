@@ -266,6 +266,11 @@
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
+/obj/item/chair/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src,hitsound,50,1)
+	return BRUTELOSS
+
 /obj/item/chair/narsie_act()
 	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
 	W.setDir(dir)
