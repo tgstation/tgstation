@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Fixed occasional runtimes when ion storms or overflow would replace an existing law."

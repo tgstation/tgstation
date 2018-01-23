@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Fake nuclear disks can only be identified by the captain,
-observers, nuclear operatives, seeing where the pinpointer points, or
-attempting to put it into a nuclear device."
-  - rscadd: "Fake nuclear disks \"respawn\" on the station just like the real one."
