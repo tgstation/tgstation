@@ -56,7 +56,7 @@ GLOBAL_PROTECT(admin_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = ALL
+			flag = ALRCE
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")

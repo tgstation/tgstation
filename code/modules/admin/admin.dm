@@ -800,7 +800,7 @@
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
 		return 0
 
-	if (!frommob.ckey)
+	if (!frommob.ckey)RCE
 		return 0
 
 	var/question = ""

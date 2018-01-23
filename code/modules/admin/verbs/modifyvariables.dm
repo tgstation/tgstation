@@ -361,7 +361,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar, index, autodetect_class = FALSE)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_RCE))
 		return
 	if(!istype(L, /list))
 		to_chat(src, "Not a List.")
@@ -518,7 +518,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_RCE))
 		return
 
 	var/class
