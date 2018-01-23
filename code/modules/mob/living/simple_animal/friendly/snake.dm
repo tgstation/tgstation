@@ -25,7 +25,7 @@
         response_help  = "pets"
         response_disarm = "shoos"
         response_harm   = "steps on"
-        faction = list("neutral","hostile")
+        faction = list("hostile")
         ventcrawler = VENTCRAWLER_ALWAYS
         density = FALSE
         pass_flags = PASSTABLE | PASSMOB
@@ -34,30 +34,24 @@
         obj_damage = 0
         environment_smash = ENVIRONMENT_SMASH_NONE
 
-/mob/living/simple_animal/hostile/retaliate/poison/snake/Found(atom/the_target)
-        if(istype(the_target, /mob/living/simple_animal/mouse))
-                return the_target
-
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
-	. = oview(vision_range, targets_from) //get list of things nearby
-	var/has_mice = FALSE
-	var/final = list()
+	. = oview(vision_range, targets_from) //get list of things in vision range
+	var/list/living_mobs = list()
+	var/list/mice = list()
 	for (var/HM in .)
+		//Yum a tasty mouse
 		if(istype(HM, /mob/living/simple_animal/mouse))
-			final += HM
-			has_mice = TRUE
-		//skip chasing living mobs if there are tasty mice nearby
-		if(!has_mice && isliving(HM))
-			final += HM
+			mice += HM
+		if(isliving(HM))
+			living_mobs += HM
 
-	//now add living mobs who attacked us and are still in range
-	//although we only do this if there are no tasty mice to chase
+	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
 	var/enemies_in_range = list()
-	if(!has_mice)
-		enemies_in_range = final & enemies
-		return enemies_in_range
-	return final
+	if(length(mice) == 0)
+		//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
+		return  living_mobs & enemies
+	return mice
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/AttackingTarget()
         if(istype(target, /mob/living/simple_animal/mouse))
