@@ -254,7 +254,7 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
-	. = 1
+	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
@@ -265,6 +265,15 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
+		if(!P) // I do not have a pen.
+			if(traitor_mob.back) //ok buddy you better have a backpack!
+				new var/obj/item/pen/inowhaveapen(traitor_mob.back)
+				P = inowhaveapen
+			else
+				new var/obj/item/pen/inowhaveapen(traitor_mob.loc)
+				P = inowhaveapen
+				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+				
 
 	var/obj/item/uplink_loc
 
