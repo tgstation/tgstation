@@ -1,5 +1,8 @@
 GLOBAL_LIST_EMPTY(mentor_datums)
-//GLOBAL_PROTECT(mentor_datums)
+GLOBAL_PROTECT(mentor_datums)
+
+GLOBAL_VAR_INIT(mentor_href_token, GenerateToken())
+GLOBAL_PROTECT(mentor_href_token)
 
 /datum/mentors
 	var/name = "someone's mentor datum"
@@ -26,7 +29,7 @@ GLOBAL_LIST_EMPTY(mentor_datums)
 
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
 	var/auth = href_list["mentor_token"]
-	. = auth && (auth == href_token || auth == GLOB.href_token)
+	. = auth && (auth == href_token || auth == GLOB.mentor_href_token)
 	if(.)
 		return
 	var/msg = !auth ? "no" : "a bad"
@@ -38,9 +41,11 @@ GLOBAL_LIST_EMPTY(mentor_datums)
 	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
 
 /proc/RawMentorHrefToken(forceGlobal = FALSE)
-	var/tok = GLOB.href_token
+	var/tok = GLOB.mentor_href_token
 	if(!forceGlobal && usr)
 		var/client/C = usr.client
+		to_chat(world, C)
+		to_chat(world, usr)
 		if(!C)
 			CRASH("No client for HrefToken()!")
 		var/datum/mentors/holder = C.mentor_datum
@@ -48,13 +53,12 @@ GLOBAL_LIST_EMPTY(mentor_datums)
 			tok = holder.href_token
 	return tok
 
-
 /proc/MentorHrefToken(forceGlobal = FALSE)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
 
 /datum/mentors/Topic(href, href_list)
 	..()
-	if(!usr || !usr.client || usr.client != owner || usr.client.is_mentor())
+	if(!usr || !usr.client || usr.client != owner || !usr.client.is_mentor())
 		return
 	if(!CheckMentorHREF(href, href_list))
 		return

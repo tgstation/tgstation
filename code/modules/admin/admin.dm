@@ -175,7 +175,7 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
 
-	body += HippiePPoptions(M) // hippie
+	body += usr.client.HippiePPoptions(M) // hippie
 	body += "<br>"
 	body += "</body></html>"
 

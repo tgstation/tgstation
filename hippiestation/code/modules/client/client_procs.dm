@@ -1,8 +1,5 @@
-GLOBAL_VAR(fuck)
-
 /client/proc/hippie_mentor_datum_set()
 	mentor_datum = GLOB.mentor_datums[ckey]
-	GLOB.fuck = GLOB.mentor_datums[ckey]
 	if(mentor_datum)
 		GLOB.mentors |= src
 		mentor_datum.owner = src

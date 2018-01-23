@@ -5,7 +5,6 @@
 		return
 	if(!ismob(usr))
 		return
-
 	mentor_datum.following = M
 	usr.reset_perspective(M)
 	verbs += /client/proc/mentor_unfollow

@@ -22,6 +22,8 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
+	hippieTopic(href, href_list) // hippie
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -43,6 +45,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+
 		if(!M)
 			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
 			return
@@ -63,7 +66,6 @@
 		if (!SSticker.mode)
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
 			return
-		hippieTopic(href, href_list) // hippie
 		switch(href_list["makeAntag"])
 			if("traitors")
 				if(src.makeTraitors())
