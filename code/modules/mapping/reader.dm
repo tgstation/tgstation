@@ -338,11 +338,13 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	GLOB._preloader.setup(attributes, path)
 
 	if(crds)
-		if(!no_changeturf && ispath(path, /turf))
+		if(ispath(path, /turf))
 			if(placeOnTop)
-				. = crds.PlaceOnTop(null, path, CHANGETURF_DEFER_CHANGE)
-			else
+				. = crds.PlaceOnTop(null, path, CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
+			else if(!no_changeturf)
 				. = crds.ChangeTurf(path, null, CHANGETURF_DEFER_CHANGE)
+			else
+				. = create_atom(path, crds)//first preloader pass
 		else
 			. = create_atom(path, crds)//first preloader pass
 
