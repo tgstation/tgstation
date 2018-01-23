@@ -609,7 +609,7 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/item/hand_labeler_refill,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking_2{
 	pixel_x = -32
 	},
 /obj/item/device/radio/intercom{
