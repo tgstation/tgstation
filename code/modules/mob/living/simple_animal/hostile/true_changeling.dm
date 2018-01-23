@@ -49,7 +49,7 @@
 
 /mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
-	icon_state = "horror[rand(1, 5)]"
+	icon_state = "horror[rand(1, 4)]"
 	reform = new
 	reform.Grant(src)
 	devour = new
@@ -190,10 +190,7 @@
 	playsound(lunch, 'sound/creatures/hit6.ogg', 100, 1)
 	if(!lunch.stat)
 		lunch.emote("scream")
-	if(lunch.disabilities & FAT)
-		M.adjustBruteLoss(-100) //Tasty leetle peegy
-	else
-		M.adjustBruteLoss(-50)
+	M.adjustBruteLoss(-50)
 
 /datum/action/innate/changeling/spine_crawl
 	name = "Spine Crawl"
