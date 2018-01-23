@@ -845,9 +845,12 @@
 		playsound(src, 'sound/magic/exit_blood.ogg', 75, 1)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
-		var/datum/beam/current_beam = new(user,temp_target,time=6,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
-		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 		for(var/turf/T in getline(targets_from,temp_target))
+			if (locate(/obj/effect/blessing, T))
+				temp_target = T
+				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, 1)
+				new /obj/effect/temp_visual/at_shield(T, T)
+				break
 			T.narsie_act(TRUE, TRUE)
 			for(var/mob/living/target in T.contents)
 				if(iscultist(target))
@@ -869,6 +872,8 @@
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
 						L.emote("scream")
+		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
+		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 
 
 /obj/effect/ebeam/blood
