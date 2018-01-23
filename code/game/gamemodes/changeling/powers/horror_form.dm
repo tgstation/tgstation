@@ -19,4 +19,4 @@
 	user.loc = new_mob
 	user.status_flags |= GODMODE
 	user.mind.transfer_to(new_mob)
-	return 1
+	return TRUE
