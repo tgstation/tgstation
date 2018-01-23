@@ -18,14 +18,32 @@
 	..()
 	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
 	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it. Alt-click to rotate.</span>")
-	else
-		to_chat(user, "<span class='notice'>Alt-click to rotate.</span>")
+		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
 
 /obj/structure/chair/Initialize()
 	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
+/obj/structure/chair/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
+
+/obj/structure/chair/proc/can_be_rotated(mob/user)
+	return TRUE
+
+/obj/structure/chair/proc/can_user_rotate(mob/user)
+	var/mob/living/L = user
+
+	if(istype(L))
+		if(!user.Adjacent(src) || user.incapacitated())
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return FALSE
+		else
+			return TRUE
+	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
+		return TRUE
+	return FALSE
 
 /obj/structure/chair/Destroy()
 	RemoveFromLatejoin()
@@ -72,10 +90,10 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(!anchored || has_buckled_mobs())
+	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		..()
 	else
-		rotate()
+		setDir(turn(dir,-90))
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -98,36 +116,9 @@
 	. = ..()
 	handle_layer()
 
-/obj/structure/chair/proc/spin()
-	setDir(turn(dir, -90))
-
 /obj/structure/chair/setDir(newdir)
 	..()
 	handle_rotation(newdir)
-
-/obj/structure/chair/verb/rotate()
-	set name = "Rotate Chair"
-	set category = "Object"
-	set src in oview(1)
-
-	if(CONFIG_GET(flag/ghost_interaction))
-		spin()
-	else
-		if(!usr || !isturf(usr.loc))
-			return
-		if(usr.stat || usr.restrained())
-			return
-		spin()
-
-/obj/structure/chair/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
 
 // Chair types
 /obj/structure/chair/wood
@@ -380,7 +371,7 @@
 	. = ..()
 
 /obj/structure/chair/brass/process()
-	spin()
+	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
 
 /obj/structure/chair/brass/ratvar_act()
