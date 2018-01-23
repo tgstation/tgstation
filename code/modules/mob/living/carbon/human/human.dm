@@ -1,7 +1,6 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
-	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
