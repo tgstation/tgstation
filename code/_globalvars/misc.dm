@@ -18,3 +18,5 @@ GLOBAL_LIST_EMPTY(powernets)
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
+
+GLOBAL_LIST_INIT(bitfields, list("obj_flags" = list("EMAGGED" = EMAGGED, "IN_USE" = IN_USE, "CAN_BE_HIT" = CAN_BE_HIT, "BEING_SHOCKED" = BEING_SHOCKED, "DANGEROUS_POSSESSION" = DANGEROUS_POSSESSION, "ON_BLUEPRINTS" = ON_BLUEPRINTS, "UNIQUE_RENAME" = UNIQUE_RENAME)))

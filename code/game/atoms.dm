@@ -511,6 +511,7 @@
 	var/turf/curturf = get_turf(src)
 	if (curturf)
 		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Modify Transform"] = "?_src_=vars;[HrefToken()];modtransform=[REF(src)]"
 	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
 	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
 	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
@@ -523,6 +524,9 @@
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/Exited(atom/movable/AM)
+	SendSignal(COMSIG_ATOM_EXITED, AM)
 
 /atom/proc/return_temperature()
 	return

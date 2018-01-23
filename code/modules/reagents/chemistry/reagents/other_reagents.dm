@@ -559,9 +559,9 @@
 	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
 		return
 
-	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+	if(isjellyperson(H))
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
-		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
 		H.reagents.del_reagent(id)
 
@@ -576,7 +576,7 @@
 			if(prob(10))
 				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
 		if(20 to INFINITY)
-			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+			var/species_type = pick(subtypesof(/datum/species/jelly))
 			H.set_species(species_type)
 			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")

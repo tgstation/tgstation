@@ -89,7 +89,7 @@
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "detective",
 						"Leopard Spots" = "detective_leopard",
 						"Black Panther" = "detective_panther",
@@ -261,7 +261,7 @@
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun-d",
 						"Ash" = "dshotgun-f",
@@ -307,7 +307,6 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_rename = FALSE
 	unique_reskin = null
 	var/slung = FALSE
 

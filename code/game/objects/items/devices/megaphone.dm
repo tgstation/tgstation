@@ -10,6 +10,12 @@
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
+/obj/item/device/megaphone/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	spamcheck = 0//so they dont have to worry about recharging
+	user.say("AAAAAAAAAAAARGHHHHH")//he must have died while coding this
+	return OXYLOSS
+
 /obj/item/device/megaphone/get_held_item_speechspans(mob/living/carbon/user)
 	if(spamcheck > world.time)
 		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
@@ -19,10 +25,10 @@
 		return voicespan
 
 /obj/item/device/megaphone/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
 
 /obj/item/device/megaphone/sec
