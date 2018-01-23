@@ -20,6 +20,13 @@
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 
+/obj/machinery/defibrillator_mount/Destroy()
+	if(defib)
+		if(defib.paddles)
+			QDEL_NULL(defib.paddles)
+		QDEL_NULL(defib)
+	. = ..()
+
 /obj/machinery/defibrillator_mount/examine(mob/user)
 	..()
 	if(defib)
@@ -51,6 +58,10 @@
 			add_overlay("charge[ratio]")
 		if(clamps_locked)
 			add_overlay("clamps")
+
+/obj/machinery/defibrillator_mount/get_cell()
+	if(defib)
+		return defib.get_cell()
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user)
