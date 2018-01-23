@@ -5,7 +5,7 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
 
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_RCE))
 		return
 
 	if(A && A.type)
@@ -15,7 +15,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
-	if(!check_rights(R_VAREDIT))
+	if(!check_rights(R_RCE))
 		return
 	if(!istype(O))
 		return

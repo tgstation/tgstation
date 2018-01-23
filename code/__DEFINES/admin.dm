@@ -30,7 +30,7 @@
 #define R_PERMISSIONS	0x80
 #define R_STEALTH		0x100
 #define R_POLL			0x200
-#define R_VAREDIT		0x400
+#define R_RCE		0x400
 #define R_SOUNDS		0x800
 #define R_SPAWN			0x1000
 #define R_AUTOLOGIN		0x2000

@@ -549,9 +549,9 @@
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 
-		if(href_list["rename"])
+		if(hrefRCErename"])
 			if(!check_rights(0))
-				return
+				returnRCE
 
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
