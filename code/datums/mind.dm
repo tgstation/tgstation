@@ -267,10 +267,10 @@
 		P = locate() in all_contents
 		if(!P) // I do not have a pen.
 			if(traitor_mob.back) //ok buddy you better have a backpack!
-				new var/obj/item/pen/inowhaveapen(traitor_mob.back)
+				var/obj/item/pen/inowhaveapen = new var/obj/item/pen(traitor_mob.back)
 				P = inowhaveapen
 			else
-				new var/obj/item/pen/inowhaveapen(traitor_mob.loc)
+				var/obj/item/pen/inowhaveapen = new var/obj/item/pen(traitor_mob.back)
 				P = inowhaveapen
 				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
 				
