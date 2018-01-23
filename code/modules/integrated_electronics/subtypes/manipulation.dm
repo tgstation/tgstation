@@ -316,7 +316,8 @@
 
 		if(mode == 1)
 			if(check_target(AM))
-				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
+				var/is_drone_or_large = istype(AM,/obj/item/device/electronic_assembly/large) || istype(AM,/obj/item/device/electronic_assembly/drone)
+				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class) && (!is_drone_or_large))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
