@@ -459,7 +459,7 @@
 		src.debug_variables(DAT)
 
 	else if(href_list["mob_player_panel"])
-		if(!check_rights(0))
+		if(!check_rights(NONE))
 			return
 
 		var/mob/M = locate(href_list["mob_player_panel"]) in GLOB.mob_list
