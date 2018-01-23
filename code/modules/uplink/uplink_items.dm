@@ -814,8 +814,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
-	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/disk/fakenucleardisk
+	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. Don't try to give this to us to complete your objective, we know better!"
+	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
 
