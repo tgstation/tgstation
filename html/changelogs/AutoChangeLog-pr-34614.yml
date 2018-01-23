@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Functions that aren't intending on actually moving the shuttle yet don't send error messages to admins anymore when seeing if a shuttle *can* move."

@@ -1,6 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - refactor: "Weather and certain events have been updated to use Z traits."
-  - bugfix: "The Staff of Storms now correctly starts and ends storms if used from inside lockers."
-  - bugfix: "Weather telegraph messages are now shown to those inside lockers and mechs."

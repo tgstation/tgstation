@@ -21,11 +21,6 @@
 		if(!H.dna.features["moth_wings"])
 			H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
 			handle_mutant_bodyparts(H)
-	C.grant_language(/datum/language/moth)
-
-/datum/species/moth/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.remove_language(/datum/language/moth)
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
@@ -37,11 +32,6 @@
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/moth/qualifies_for_rank(rank, list/features)
-	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
-		return FALSE
-	return TRUE
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()

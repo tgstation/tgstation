@@ -5,7 +5,6 @@
 
 /mob/living/carbon/alien
 	name = "alien"
-	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null

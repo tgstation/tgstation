@@ -1,9 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - balance: "foam and smoke now get 4x the reagents as they should according to the comments"
-  - bugfix: "fixes pyrosium and cryostylane not heating or cooling humans at all"
-  - bugfix: "fixes cryostylane cooling beakers to negative kelvin, it's now limited to what the description says"
-  - bugfix: "fixes cryostylane cooling people to negative body temperature"
-  - code_imp: "removed redundant check in trans_to"
-  - code_imp: "fixes a runtime when total_volume is 0 in copy_to"
