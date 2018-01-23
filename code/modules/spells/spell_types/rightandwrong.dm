@@ -176,18 +176,14 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 /proc/summonevents()
 	if(!SSevents.wizardmode)
-		SSevents.frequency_lower = 600									//1 minute lower bound
-		SSevents.frequency_upper = 3000									//5 minutes upper bound
 		SSevents.toggleWizardmode()
 		SSevents.reschedule()
-
 	else 																//Speed it up
-		SSevents.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
-		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
-			SSevents.frequency_upper = SSevents.frequency_lower
-
+		for(var/datum/round_event_control/E in SSevents.control)
+			if(E.wizardevent)
+				E.weight *= 2
 		SSevents.reschedule()
-		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
-		log_game("Summon Events was increased!")
+		message_admins("Summon Magical Events intensifies, magical events have twice the weight.")
+		log_game("Summon Magical Events was increased!")
 
 #undef SPECIALIST_MAGIC_PROB

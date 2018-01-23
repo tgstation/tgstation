@@ -35,6 +35,9 @@
 /datum/round_event_control/wizard
 	wizardevent = 1
 
+/datum/round_event/wizard
+	fakeable = FALSE
+
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
@@ -42,7 +45,7 @@
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
 		return FALSE
-	if(wizardevent != SSevents.wizardmode)
+	if(wizardevent && !SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -59,7 +62,7 @@
 		return EVENT_CANT_RUN
 
 	triggering = TRUE
-	if (alertadmins)
+	if(SSevents.admin_veto && (alertadmins || SSevents.always_inform))
 		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
@@ -93,7 +96,7 @@
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
-		if(alertadmins)
+		if(alertadmins || SSevents.always_inform)
 			deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
 		log_game("Random Event triggering: [name] ([typepath])")
 
