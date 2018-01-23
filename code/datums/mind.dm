@@ -266,11 +266,12 @@
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
 		if(!P) // I do not have a pen.
+			var/obj/item/pen/inowhaveapen
 			if(traitor_mob.back) //ok buddy you better have a backpack!
-				inowhaveapen = new var/obj/item/pen(traitor_mob.back)
+				inowhaveapen = new /obj/item/pen(traitor_mob.back)
 				P = inowhaveapen
 			else
-				inowhaveapen = new var/obj/item/pen(traitor_mob.loc)
+				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
 				P = inowhaveapen
 				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
 				
