@@ -1,3 +1,22 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @Pyko1
+ Sign out
+ Unwatch 12
+  Star 14  Fork 1,677 HippieStation/HippieStation
+forked from tgstation/tgstation
+ Code  Issues 71  Pull requests 22  Projects 1  Insights
+Tree: 4d64324bc7 Find file Copy pathHippieStation/code/modules/mob/living/carbon/human/species_types/mothmen.dm
+4d64324  18 hours ago
+@praisenarsie praisenarsie removes moth language
+1 contributor
+RawBlameHistory      
+60 lines (50 sloc)  2.19 KB
 /datum/species/moth
 	name = "Mothmen"
 	id = "moth"
@@ -21,11 +40,6 @@
 		if(!H.dna.features["moth_wings"])
 			H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
 			handle_mutant_bodyparts(H)
-	C.grant_language(/datum/language/moth)
-
-/datum/species/moth/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.remove_language(/datum/language/moth)
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
@@ -62,3 +76,15 @@
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
