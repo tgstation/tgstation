@@ -243,5 +243,5 @@
 	name = "Morphine"
 	id = "morphine"
 	results = list("morphine" = 3)
-	required_reagents = list("burningcarbon" = 2, "hydrogen" = 2, "nitrous_oxide" = 1, "oxygen" = 1, "impedrezine" = 1)
+	required_reagents = list("charcoal" = 2, "hydrogen" = 2, "nitrous_oxide" = 1, "oxygen" = 1, "impedrezine" = 1)
 	required_temp = 480
