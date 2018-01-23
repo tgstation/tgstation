@@ -14,7 +14,7 @@
 /client/proc/show_mentor_memo()
 	set name = "Show Memos"
 	set category = "Mentor"
-	if(!isMentor())
+	if(!is_mentor())
 		return
 	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")

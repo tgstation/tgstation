@@ -63,7 +63,7 @@
 		if (!SSticker.mode)
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
 			return
-		hippieTopic(href, href_list)
+		hippieTopic(href, href_list) // hippie
 		switch(href_list["makeAntag"])
 			if("traitors")
 				if(src.makeTraitors())

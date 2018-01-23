@@ -2644,7 +2644,7 @@
 #include "hippiestation\code\modules\mentor\follow.dm"
 #include "hippiestation\code\modules\mentor\mentor.dm"
 #include "hippiestation\code\modules\mentor\mentor_memo.dm"
-#include "hippiestation\code\modules\mentor\mentor_ranks.dm"
+#include "hippiestation\code\modules\mentor\mentor_verbs.dm"
 #include "hippiestation\code\modules\mentor\mentorhelp.dm"
 #include "hippiestation\code\modules\mentor\mentorpm.dm"
 #include "hippiestation\code\modules\mentor\mentorsay.dm"

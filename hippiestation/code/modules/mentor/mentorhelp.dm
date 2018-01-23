@@ -68,9 +68,9 @@
 	if(key)
 		if(include_link)
 			if(CONFIG_GET(flag/mentors_mobname_only))
-				. += "<a href='?mentor_msg=[REF(M)];[HrefToken(TRUE)]'>"
+				. += "<a href='?mentor_msg=[REF(M)];[MentorHrefToken(TRUE)]'>"
 			else
-				. += "<a href='?mentor_msg=[ckey];[HrefToken(TRUE)]'>"
+				. += "<a href='?mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
 
 		if(C && C.holder && C.holder.fakekey)
 			. += "Administrator"
@@ -92,6 +92,6 @@
 		. += "*no key*"
 
 	if(include_follow)
-		. += " (<a href='?mentor_follow=[REF(M)];[HrefToken(TRUE)]'>F</a>)"
+		. += " (<a href='?mentor_follow=[REF(M)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .

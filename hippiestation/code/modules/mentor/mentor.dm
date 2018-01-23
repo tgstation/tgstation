@@ -1,5 +1,5 @@
 GLOBAL_LIST_EMPTY(mentor_datums)
-GLOBAL_PROTECT(mentor_datums)
+//GLOBAL_PROTECT(mentor_datums)
 
 /datum/mentors
 	var/name = "someone's mentor datum"
@@ -13,18 +13,19 @@ GLOBAL_PROTECT(mentor_datums)
 		QDEL_IN(src, 0)
 		throw EXCEPTION("Mentor datum created without a ckey")
 		return
-	target = ckey
+	target = ckey(ckey)
 	name = "[ckey]'s mentor datum"
 	href_token = GenerateToken()
+	GLOB.mentor_datums[target] = src
 	//set the owner var and load commands
 	owner = GLOB.directory[ckey]
-	owner.mentor_datum = src
-	owner.add_mentor_verbs()
-	GLOB.mentors += owner
-	GLOB.mentor_datums += src
+	if(owner)
+		owner.mentor_datum = src
+		owner.add_mentor_verbs()
+		GLOB.mentors += owner
 
-/datum/mentors/proc/CheckMentorHref(href, href_list)
-	var/auth = href_list["admin_token"]
+/datum/mentors/proc/CheckMentorHREF(href, href_list)
+	var/auth = href_list["mentor_token"]
 	. = auth && (auth == href_token || auth == GLOB.href_token)
 	if(.)
 		return
@@ -35,6 +36,44 @@ GLOBAL_PROTECT(mentor_datums)
 		log_world("UAH: [href]")
 		return TRUE
 	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
+
+/proc/RawMentorHrefToken(forceGlobal = FALSE)
+	var/tok = GLOB.href_token
+	if(!forceGlobal && usr)
+		var/client/C = usr.client
+		if(!C)
+			CRASH("No client for HrefToken()!")
+		var/datum/mentors/holder = C.mentor_datum
+		if(holder)
+			tok = holder.href_token
+	return tok
+
+
+/proc/MentorHrefToken(forceGlobal = FALSE)
+	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
+
+/datum/mentors/Topic(href, href_list)
+	..()
+	if(!usr || !usr.client || usr.client != owner || usr.client.is_mentor())
+		return
+	if(!CheckMentorHREF(href, href_list))
+		return
+	if(href_list["mentor_msg"])
+		if(CONFIG_GET(flag/mentors_mobname_only))
+			var/mob/M = locate(href_list["mentor_msg"])
+			usr.client.cmd_mentor_pm(M,null)
+		else
+			usr.client.cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
+
+	//Mentor Follow
+	if(href_list["mentor_follow"])
+		var/mob/living/M = locate(href_list["mentor_follow"])
+
+		if(istype(M))
+			usr.client.mentor_follow(M)
+
+		return
 
 /proc/load_mentors()
 	GLOB.mentor_datums.Cut()
@@ -48,8 +87,6 @@ GLOBAL_PROTECT(mentor_datums)
 			if(!length(line))
 				continue
 			if(findtextEx(line, "#", 1, 2))
-				continue
-			if(!line)
 				continue
 			new /datum/mentors(line)
 	else//Database

@@ -49,8 +49,8 @@
 	msg = emoji_parse(msg)
 	C << 'sound/items/bikehorn.ogg'
 	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
-	if(C.isMentor())
-		if(isMentor())//both are mentors
+	if(C.is_mentor())
+		if(is_mentor())//both are mentors
 			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
 			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
 
@@ -59,13 +59,13 @@
 			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
 
 	else
-		if(isMentor())	//sender is an mentor but recipient is not.
+		if(is_mentor())	//sender is an mentor but recipient is not.
 			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
 			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</font>")
 
 	//we don't use message_Mentors here because the sender/receiver might get it too
-	var/show_char_sender = !isMentor() && CONFIG_GET(flag/mentors_mobname_only)
-	var/show_char_recip = !C.isMentor() && CONFIG_GET(flag/mentors_mobname_only)
+	var/show_char_sender = !is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
+	var/show_char_recip = !C.is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
 	for(var/client/X in GLOB.mentors + GLOB.admins)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
 			to_chat(X, "<B><font color='green'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> <font color ='blue'> [msg]</font>") //inform X

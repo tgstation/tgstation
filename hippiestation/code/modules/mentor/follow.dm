@@ -1,5 +1,5 @@
 /client/proc/mentor_follow(mob/living/M)
-	if(!isMentor())
+	if(!is_mentor())
 		return
 	if(isnull(M))
 		return
@@ -18,7 +18,7 @@
 	set name = "Stop Following"
 	set desc = "Stop following the followed."
 
-	if(!isMentor())
+	if(!is_mentor())
 		return
 	usr.reset_perspective()
 	verbs -= /client/proc/mentor_unfollow

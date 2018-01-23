@@ -2,7 +2,7 @@
 	set category = "Mentor"
 	set name = "Msay" //Gave this shit a shorter name so you only have to time out "msay" rather than "mentor say" to use it --NeoFite
 	set hidden = 1
-	if(!isMentor() && !check_rights_for(src, R_ADMIN,0))
+	if(!is_mentor() && !check_rights_for(src, R_ADMIN,0))
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
