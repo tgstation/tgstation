@@ -53,10 +53,10 @@
   return list("melee" = melee, "bullet" = bullet, "laser" = laser, "energy" = energy, "bomb" = bomb, "bio" = bio, "rad" = rad, "fire" = fire, "acid" = acid)
 
 /datum/armor/proc/attachArmor(datum/armor/AA)
-  return getArmor(src.melee+AA.melee, src.bullet+AA.bullet, src.laser+AA.laser, src.energy+AA.energy, src.bomb+AA.bomb, src.bio+AA.bio, src.rad+AA.rad, src.fire+AA.fire, src.acid+AA.acid)
+  return getArmor(melee+AA.melee, bullet+AA.bullet, laser+AA.laser, energy+AA.energy, bomb+AA.bomb, bio+AA.bio, rad+AA.rad, fire+AA.fire, acid+AA.acid)
 
 /datum/armor/proc/detachArmor(datum/armor/AA)
-  return getArmor(src.melee-AA.melee, src.bullet-AA.bullet, src.laser-AA.laser, src.energy-AA.energy, src.bomb-AA.bomb, src.bio-AA.bio, src.rad-AA.rad, src.fire-AA.fire, src.acid-AA.acid)
+  return getArmor(melee-AA.melee, bullet-AA.bullet, laser-AA.laser, energy-AA.energy, bomb-AA.bomb, bio-AA.bio, rad-AA.rad, fire-AA.fire, acid-AA.acid)
 
 /datum/armor/vv_edit_var(var_name, var_value)
   . = ..()
