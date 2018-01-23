@@ -33,7 +33,7 @@
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
-		stored = new /obj/structure/disposalconstruct(null, make_from = src)
+		stored = new /obj/structure/disposalconstruct(null, null , SOUTH , FALSE , src)
 
 	trunk_check()
 
