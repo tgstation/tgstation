@@ -12,12 +12,8 @@
 	var/message
 	var/locked = TRUE
 	var/list/meme_pack_data
-<<<<<<< HEAD
-	
-=======
 	var/podID = 0//0 is your standard supply droppod (requires dissassembly after landing), 1 is the bluespace drop pod (teleports out after landing)
 
->>>>>>> 9ec4f2fe3f... Adds the Bluespace Drop Pod upgrade to the cargo express console (#34560)
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
