@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/next_map_config
 
 	var/list/map_templates = list()
+	var/list/snowdin_templates = list()
 
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
@@ -99,6 +100,7 @@ SUBSYSTEM_DEF(mapping)
 	flags |= SS_NO_INIT
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
+	snowdin_templates = SSmapping.snowdin_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
@@ -226,6 +228,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadSnowdinDungeonTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -274,3 +277,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadSnowdinDungeonTemplates()
+	for(var/item in subtypesof(/datum/map_template/ruin/snowdin))
+		var/datum/map_template/ruin/snowdin/dungeon_type = item
+		if(!(initial(dungeon_type.mappath)))
+			continue
+		var/datum/map_template/ruin/snowdin/S = new dungeon_type()
+
+		snowdin_templates[S.name] = S
+		map_templates[S.name] = S

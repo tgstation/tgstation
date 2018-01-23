@@ -483,5 +483,47 @@
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
 
+//template spawner for snowdin dungeon segments//
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner
+	name = "snowdin dungeon template spawner"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "syndballoon"
+	color=rgb(0,0,255)
+	layer = POINT_LAYER
+	var/list/template_id = list("zoo") //list of potential templates to pull from
+	var/map_templates = "snowdin_templates" //the mapping template list from the mapping subsystem
+	var/datum/map_template/dungeon_template
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner/proc/get_template(id)
+	var/dungeon_template = SSmapping.[map_templates][id]
+	if(!dungeon_template)
+		CRASH("Template ([id]) not found!")
+		qdel(src)
+	return dungeon_template
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner/Initialize(mapload)
+	if(mapload)
+		var/turf/deploy_location = get_turf(src)
+		var/datum/map_template/dungeon_template = get_template(pick(template_id))
+		dungeon_template.load(deploy_location, centered = TRUE)
+		return INITIALIZE_HINT_QDEL
+	else
+		return ..()
+
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner/straight
+	name = " snowdin dungeon template spawner - straight"
+	template_id = list("Straight Cave Nouth-South 1")
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner/corner
+	name = " snowdin dungeon template spawner - corner"
+	template_id = list("cne1")
+
+/obj/effect/mapping_helpers/snowdin_dungeon_spawner/intersection
+	name = " snowdin dungeon template spawner - intersection"
+	template_id = list("i1")
+
+
 
 

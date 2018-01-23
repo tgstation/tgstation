@@ -72,7 +72,7 @@
 		return ..()
 	whitelist = typecacheof(whitelist)
 	return ..()
-	
+
 /obj/effect/baseturf_helper/picky/replace_baseturf(turf/thing)
 	if(!whitelist[thing.type])
 		return
@@ -100,4 +100,3 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	var/turf/T = get_turf(src)
 	GLOB.z_is_planet["[T.z]"] = TRUE
 	return INITIALIZE_HINT_QDEL
-
