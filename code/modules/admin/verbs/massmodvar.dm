@@ -53,7 +53,7 @@
 		if (prompt != "Continue")
 			return
 
-	default = vv_get_class(var_value)
+	default = vv_get_class(variable, var_value)
 
 	if(isnull(default))
 		to_chat(src, "Unable to determine variable type.")
@@ -263,4 +263,3 @@
 			if (typecache[thing.type])
 				. += thing
 			CHECK_TICK
-

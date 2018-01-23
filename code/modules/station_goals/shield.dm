@@ -122,7 +122,7 @@
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
-		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>")
+		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
 
@@ -147,14 +147,14 @@
 			continue
 		if(get_dist(M,src) > kill_range)
 			continue
-		if(!emagged && space_los(M))
+		if(!(obj_flags & EMAGGED) && space_los(M))
 			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))
 		return FALSE
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		if(active)
 			change_meteor_chance(2)
 		else
@@ -167,12 +167,12 @@
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()
-	if(active && emagged)
+	if(active && (obj_flags & EMAGGED))
 		change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(active)
 		change_meteor_chance(2)

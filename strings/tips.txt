@@ -188,4 +188,6 @@ As a Ghost, you can see the inside of a container on the ground by clicking on i
 As a Ghost, you can double click on people, bots, or the singularity to follow them.
 As a Devil, you gain power for every three souls you control, however you also become more obvious.
 As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
-At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth.
+At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
+As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
+As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!

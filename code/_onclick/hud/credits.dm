@@ -2,7 +2,7 @@
 #define CREDIT_SPAWN_SPEED 10
 #define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
 #define CREDIT_EASE_DURATION 22
-#define CREDITS_PATH "[GLOB.config_dir]contributors.dmi"
+#define CREDITS_PATH "[global.config.directory]/contributors.dmi"
 
 /client/proc/RollCredits()
 	set waitfor = FALSE

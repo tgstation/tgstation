@@ -8,7 +8,6 @@
 "ac" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2"
@@ -35,7 +34,6 @@
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1"
@@ -49,21 +47,18 @@
 	status = 2
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "al" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "am" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -84,7 +79,6 @@
 	status = 2
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -116,7 +110,6 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4"
@@ -124,7 +117,6 @@
 /area/awaymission/undergroundoutpost45/central)
 "ar" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3"
@@ -176,7 +168,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "az" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
 	icon = 'icons/obj/radio.dmi';
 	icon_state = "beacon";
@@ -811,7 +803,6 @@
 /area/awaymission/undergroundoutpost45/central)
 "bZ" = (
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -852,7 +843,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -905,7 +895,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -916,7 +905,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -936,7 +924,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -1084,7 +1071,6 @@
 "cC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1106,7 +1092,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/grille,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1114,7 +1099,6 @@
 "cG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -1202,7 +1186,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1229,7 +1212,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1339,7 +1321,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1379,7 +1360,6 @@
 	dir = 6
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1389,7 +1369,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -1459,7 +1438,7 @@
 "ds" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = 32
@@ -1500,7 +1479,6 @@
 	req_access = null
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -1680,7 +1658,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -1962,7 +1939,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -2225,11 +2201,7 @@
 "eV" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -2521,7 +2493,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -2659,7 +2630,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -2747,7 +2717,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -2892,7 +2862,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -3088,7 +3057,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -3408,7 +3376,6 @@
 "hy" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -3844,7 +3811,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark{
@@ -3874,7 +3841,7 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/scanning_module,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4016,7 +3983,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -4024,7 +3990,7 @@
 "iN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -4037,7 +4003,6 @@
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4186,7 +4151,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -4444,7 +4409,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -4567,7 +4531,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -4701,7 +4664,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -4901,7 +4863,6 @@
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -4928,7 +4889,7 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
-/obj/structure/sign/biohazard{
+/obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
 /obj/item/device/assembly/prox_sensor,
@@ -4941,7 +4902,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kz" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -4992,7 +4953,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white{
@@ -5214,7 +5175,7 @@
 	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5250,7 +5211,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -5372,7 +5333,7 @@
 	pixel_y = -1
 	},
 /obj/item/device/multitool,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5783,7 +5744,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -5881,7 +5842,6 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "mc" = (
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -5974,7 +5934,7 @@
 "mm" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/light/small,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5996,7 +5956,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -6587,7 +6547,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -7300,7 +7259,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -7655,7 +7613,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -7665,7 +7622,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -7741,7 +7698,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -8134,7 +8090,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -8197,7 +8152,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -8228,7 +8182,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "qj" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = 32
@@ -8444,7 +8398,7 @@
 /obj/machinery/computer/monitor{
 	name = "primary power monitoring console"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -8691,7 +8645,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -8791,7 +8744,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -9002,7 +8954,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -9018,7 +8969,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "rA" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
 	pixel_y = -32
@@ -9049,7 +9000,6 @@
 /obj/item/poster/random_contraband,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -9126,7 +9076,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -9142,7 +9091,6 @@
 "rM" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -9595,7 +9543,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_y = -32
@@ -10022,7 +9970,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -10055,7 +10002,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -10174,7 +10120,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -10296,7 +10242,7 @@
 	name = "Unfiltered to Mix";
 	on = 1
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -10377,7 +10323,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -10406,7 +10351,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -10423,7 +10367,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -10677,7 +10620,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -10734,7 +10676,6 @@
 /obj/structure/closet,
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -10875,15 +10816,10 @@
 "uN" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -10894,7 +10830,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},
@@ -10913,7 +10848,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
@@ -10927,7 +10861,6 @@
 "uS" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
@@ -11001,7 +10934,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11049,7 +10982,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vc" = (
 /obj/machinery/door/firedoor,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -11170,7 +11103,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
@@ -11465,10 +11397,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /obj/machinery/vending/engivend{
@@ -11493,7 +11422,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -11598,7 +11526,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -11776,7 +11703,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
 	pixel_x = -32
@@ -12270,7 +12197,7 @@
 	dir = 2;
 	id = "UO45_mining"
 	},
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12397,7 +12324,6 @@
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -12595,7 +12521,6 @@
 	amount = 6
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12645,7 +12570,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -12669,11 +12593,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -13045,7 +12965,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yV" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1"
@@ -13053,7 +12972,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yW" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2"
@@ -13061,7 +12979,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yX" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3"
@@ -13069,7 +12986,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yY" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4"
@@ -13077,7 +12993,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yZ" = (
 /turf/open/floor/plasteel{
-	broken = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged5"
@@ -13085,7 +13000,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "za" = (
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1"
@@ -13093,7 +13007,6 @@
 /area/awaymission/undergroundoutpost45/caves)
 "zb" = (
 /turf/open/floor/plasteel{
-	burnt = 1;
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2"
@@ -13109,28 +13022,24 @@
 /area/awaymission/undergroundoutpost45/caves)
 "ze" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zf" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zg" = (
 /turf/open/floor/plating{
-	broken = 1;
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zh" = (
 /turf/open/floor/plating{
-	burnt = 1;
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched"
 	},

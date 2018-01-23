@@ -1,0 +1,5 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - bugfix: "Space syndie listening post now has a real microwave, and a book management console. Lava listening post comms room intercom now no longer starts with broadcast on."
+  - rscadd: "the syndicate drop ship and fighter pods from the caravan ambush can now be flown to the syndicate listening post. The fighter pods also now have xray cameras because regular ones were super useless."

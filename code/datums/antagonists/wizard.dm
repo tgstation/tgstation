@@ -6,6 +6,7 @@
 /datum/antagonist/wizard
 	name = "Space Wizard"
 	roundend_category = "wizards/witches"
+	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
@@ -166,6 +167,14 @@
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_removed(M)
 	M.faction -= "wizard"
+
+
+/datum/antagonist/wizard/get_admin_commands()
+	. = ..()
+	.["Send to Lair"] = CALLBACK(src,.proc/admin_send_to_lair)
+
+/datum/antagonist/wizard/proc/admin_send_to_lair(mob/admin)
+	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"

@@ -79,8 +79,16 @@
 	anchored = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
-	use_tag = TRUE
+	datum_flags = DF_USE_TAG
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
+
+/obj/machinery/nuclearbomb/syndicate/GenerateTag()
+	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
+	if(existing)
+		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [COORD(existing.loc)]")
+		datum_flags &= ~DF_USE_TAG
+		return
+	tag = "syndienuke"
 
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
@@ -95,14 +103,6 @@
 		if(2)
 			return CINEMATIC_NUKE_FAR
 	return CINEMATIC_NUKE_FAR
-
-/obj/machinery/nuclearbomb/syndicate/Initialize()
-	. = ..()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
-	if(existing)
-		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
-		return INITIALIZE_HINT_QDEL
-	tag = "syndienuke"
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/nuclear))
