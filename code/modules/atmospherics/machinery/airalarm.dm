@@ -354,6 +354,8 @@
 			send_signal(device_id, list("reset_internal_pressure"))
 			. = TRUE
 		if("threshold")
+			if(IsAdminAdvancedProcCall())
+				return
 			var/env = params["env"]
 			if(text2path(env))
 				env = text2path(env)
