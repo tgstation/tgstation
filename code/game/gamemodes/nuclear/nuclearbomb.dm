@@ -79,22 +79,8 @@
 	anchored = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
-<<<<<<< HEAD
-	use_tag = TRUE
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/GenerateTag()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
-	if(existing)
-		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [COORD(existing.loc)]")
-		use_tag = FALSE
-		return
-	tag = "syndienuke"
-
-=======
-	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
-
->>>>>>> cbd5aece90... Fake nuclear disks are even more convincing (#34466)
 /obj/machinery/nuclearbomb/syndicate/get_cinematic_type(off_station)
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
