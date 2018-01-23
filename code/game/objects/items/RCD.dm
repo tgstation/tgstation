@@ -492,7 +492,7 @@ ARCD
 	var/floordelay = 10
 	var/decondelay = 15
 
-	var/color_choice = "#FFF"
+	var/color_choice = null
 
 
 /obj/item/construction/rld/ui_action_click(mob/user, var/datum/action/A)
