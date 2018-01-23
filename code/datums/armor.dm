@@ -15,6 +15,7 @@
   var/rad
   var/fire
   var/acid
+  datum_flags = DF_USE_TAG
 
 /datum/armor/New(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
   src.melee = melee
@@ -27,13 +28,12 @@
   src.fire = fire
   src.acid = acid
   tag = ARMORID
-  datum_flags = DF_USE_TAG
 
 /datum/armor/proc/modifyRating(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
   return getArmor(src.melee+melee, src.bullet+bullet, src.laser+laser, src.energy+energy, src.bomb+bomb, src.bio+bio, src.rad+rad, src.fire+fire, src.acid+acid)
 
 /datum/armor/proc/modifyAllRatings(modifier = 0)
-  return getArmor(src.melee+modifier, src.bullet+modifier, src.laser+modifier, src.energy+modifier, src.bomb+modifier, src.bio+modifier, src.rad+modifier, src.fire+modifier, src.acid+modifier)
+  return getArmor(melee+modifier, bullet+modifier, laser+modifier, energy+modifier, bomb+modifier, bio+modifier, rad+modifier, fire+modifier, acid+modifier)
 
 /datum/armor/proc/setRating(melee, bullet, laser, energy, bomb, bio, rad, fire, acid)
   return getArmor((isnull(melee) ? src.melee : melee),\
@@ -47,7 +47,7 @@
                   (isnull(acid) ? src.acid : acid))
 
 /datum/armor/proc/getRating(rating)
-  return src.vars[rating]
+  return vars[rating]
 
 /datum/armor/proc/getList()
   return list("melee" = melee, "bullet" = bullet, "laser" = laser, "energy" = energy, "bomb" = bomb, "bio" = bio, "rad" = rad, "fire" = fire, "acid" = acid)
