@@ -13,7 +13,7 @@
 
 /datum/objective/devil/soulquantity/check_completion()
 	var/count = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls) //Just a sanity check.
 		var/datum/mind/L = S
@@ -51,7 +51,7 @@
 
 /datum/objective/devil/soulquality/check_completion()
 	var/count = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S
@@ -92,19 +92,19 @@
 /datum/objective/devil/outsell/New()
 
 /datum/objective/devil/outsell/update_explanation_text()
-	var/datum/antagonist/devil/opponent = target.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/opponent = target.has_antag_datum(/datum/antagonist/devil)
 	explanation_text = "Purchase and retain control over more souls than [opponent.truename], known to mortals as [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/outsell/check_completion()
 	var/selfcount = 0
-	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilDatum = owner.has_antag_datum(/datum/antagonist/devil)
 	var/list/souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S
 		if(L.soulOwner == owner)
 			selfcount++
 	var/targetcount = 0
-	devilDatum = target.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devilDatum = target.has_antag_datum(/datum/antagonist/devil)
 	souls = devilDatum.soulsOwned
 	for(var/S in souls)
 		var/datum/mind/L = S

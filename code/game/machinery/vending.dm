@@ -224,7 +224,7 @@
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
-	if(!allowed(user) && !emagged && scan_id)
+	if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
@@ -342,9 +342,9 @@
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
@@ -455,7 +455,7 @@
 			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
-		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
+		if((!allowed(usr)) && !(obj_flags & EMAGGED) && scan_id)	//For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
 			flick(icon_deny,src)
 			return

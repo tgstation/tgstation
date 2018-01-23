@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
 	wait = 1
-	priority = 500
+	priority = FIRE_PRIORITY_OVERLAYS
 	init_order = INIT_ORDER_OVERLAY
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 

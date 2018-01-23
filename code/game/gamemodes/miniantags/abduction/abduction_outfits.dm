@@ -6,7 +6,7 @@
 	ears = /obj/item/device/radio/headset/abductor
 
 /datum/outfit/abductor/proc/link_to_console(mob/living/carbon/human/H, team_number)
-	var/datum/antagonist/abductor/A = H.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
+	var/datum/antagonist/abductor/A = H.mind.has_antag_datum(/datum/antagonist/abductor)
 	if(!team_number && A)
 		team_number = A.team.team_number
 	if(!team_number)

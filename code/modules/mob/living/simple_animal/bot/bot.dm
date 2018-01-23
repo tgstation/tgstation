@@ -378,6 +378,10 @@
 		dropped_cell.charge = 0
 		dropped_cell.update_icon()
 
+	else if(istype(dropped_item, /obj/item/storage))
+		var/obj/item/storage/S = dropped_item
+		S.contents = list()
+
 	else if(istype(dropped_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/dropped_gun = dropped_item
 		dropped_gun.cell.charge = 0

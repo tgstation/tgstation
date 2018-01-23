@@ -570,7 +570,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive.grab_ghost()
 	else if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", "[name]", null, "Blood Cultist", 50, mob_to_revive)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
 		var/mob/dead/observer/theghost = null
 		if(candidates.len)
 			theghost = pick(candidates)

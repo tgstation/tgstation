@@ -7,7 +7,15 @@
 	name = "Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
+	antagpanel_category = "Monkey"
 	var/datum/team/monkey/monkey_team
+	var/monkey_only = TRUE
+
+/datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
+	return ..() && (!monkey_only || ismonkey(new_owner.current))
+
+/datum/antagonist/monkey/get_team()
+	return monkey_team
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
@@ -29,19 +37,23 @@
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
 
 /datum/antagonist/monkey/on_removal()
-	. = ..()
 	owner.special_role = null
 	SSticker.mode.ape_infectees -= owner
 
-	var/datum/disease/D = (/datum/disease/transformation/jungle_fever in owner.current.viruses)
+	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.viruses
 	if(D)
-		D.cure()
+		D.remove_virus()
+		qdel(D)
+	
+	. = ..()
 
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
-		for(var/datum/antagonist/monkey/N in get_antagonists(/datum/antagonist/monkey, TRUE))
-			if(N.monkey_team)
-				monkey_team = N.monkey_team
+		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
+			if(!H.owner)
+				continue
+			if(H.monkey_team)
+				monkey_team = H.monkey_team
 				return
 		monkey_team = new /datum/team/monkey
 		monkey_team.update_objectives()
@@ -50,15 +62,45 @@
 		stack_trace("Wrong team type passed to [type] initialization.")
 	monkey_team = new_team
 
-/datum/antagonist/monkey/get_team()
-	return monkey_team
-
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
 	owner.objectives |= objectives
 
+/datum/antagonist/monkey/admin_remove(mob/admin)
+	var/mob/living/carbon/monkey/M = owner.current
+	if(istype(M))
+		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
+			if("Yes")
+				if(admin == M)
+					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+				else
+					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
+			if("No")
+				//nothing
+			else
+				return
+	. = ..()
+
 /datum/antagonist/monkey/leader
 	name = "Monkey Leader"
+	monkey_only = FALSE
+
+/datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
+	var/mob/living/carbon/human/H = new_owner.current
+	if(istype(H))
+		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
+			if("Yes")
+				if(admin == H)
+					admin = H.monkeyize()
+				else
+					H.monkeyize()
+			if("No")
+				//nothing
+			else
+				return
+	new_owner.add_antag_datum(src)
+	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
@@ -68,10 +110,11 @@
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
-	. = ..()
 	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
 	H.Insert(owner.current, drop_if_replaced = FALSE) //replace freedom heart with normal heart
+
+	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
 	to_chat(owner, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")

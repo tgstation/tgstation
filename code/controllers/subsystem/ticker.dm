@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 	init_order = INIT_ORDER_TICKER
 
-	priority = 200
+	priority = FIRE_PRIORITY_TICKER
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(ticker)
 		"aiff" = TRUE
 	)
 
-	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "config/title_music/sounds/[pick(music)]"
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 
 	if(!GLOB.syndicate_code_phrase)

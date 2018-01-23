@@ -130,7 +130,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -452,6 +452,14 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
+/datum/reagent/mutationtoxin/moth
+	name = "Moth Mutation Toxin"
+	id = "mothmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/moth
+	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
+
 /datum/reagent/mutationtoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
@@ -551,9 +559,9 @@
 	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
 		return
 
-	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+	if(isjellyperson(H))
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
-		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
 		H.reagents.del_reagent(id)
 
@@ -568,7 +576,7 @@
 			if(prob(10))
 				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
 		if(20 to INFINITY)
-			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+			var/species_type = pick(subtypesof(/datum/species/jelly))
 			H.set_species(species_type)
 			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
@@ -634,11 +642,13 @@
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 
 /datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 	return
 
 /datum/reagent/copper
@@ -660,11 +670,13 @@
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
 
 /datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
 	return
 
 /datum/reagent/hydrogen
@@ -1139,11 +1151,13 @@
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 	return
 
 /datum/reagent/nitrous_oxide
@@ -1158,11 +1172,13 @@
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
