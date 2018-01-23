@@ -329,11 +329,11 @@
 	new /obj/item/slimepotion/steroid(get_turf(holder.my_atom))
 	..()
 
-/datum/chemical_reaction/slime/slimejam
-	name = "Slime Jam"
-	id = "m_jam"
-	results = list("slimejelly" = 10)
-	required_reagents = list("sugar" = 1)
+/datum/chemical_reaction/slime/slimeregen
+	name = "Slime Regen"
+	id = "m_regen"
+	results = list("regen_jelly" = 5)
+	required_reagents = list("blood" = 1)
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
 
