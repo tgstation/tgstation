@@ -187,7 +187,7 @@
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
-		M.bodytemperature -= 15
+		M.bodytemperature = max(M.bodytemperature - 15,0)
 	..()
 
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
@@ -225,6 +225,27 @@
 		shock_timer = 0
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
+	..()
+
+/datum/reagent/teslium/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
+	reagent_state = LIQUID
+	color = "#CAFF43"
+	taste_description = "jelly"
+
+/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/M)
+	if(isjellyperson(M))
+		shock_timer = 0 //immune to shocks
+		M.AdjustStun(-40, 0)
+		M.AdjustKnockdown(-40, 0)
+		M.AdjustUnconscious(-40, 0)
+		M.adjustStaminaLoss(-2, 0)
+		if(isluminescent(M))
+			var/mob/living/carbon/human/H = M
+			var/datum/species/jelly/luminescent/L = H.dna.species
+			L.extract_cooldown = max(0, L.extract_cooldown - 20)
 	..()
 
 /datum/reagent/firefighting_foam

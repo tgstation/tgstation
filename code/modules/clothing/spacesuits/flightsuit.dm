@@ -435,7 +435,7 @@
 	var/nopass = FALSE
 	if(!A.density)
 		return TRUE
-	nopass = (A.locked || A.stat || A.emagged || A.welded)
+	nopass = (A.locked || A.stat || (A.obj_flags & EMAGGED) || A.welded)
 	if(A.requiresID())
 		if((!A.allowed(wearer)) && !A.emergency)
 			nopass = TRUE
