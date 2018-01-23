@@ -26,19 +26,6 @@ GAS ANALYZER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
-/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
-	if(ismob(loc))
-		var/mob/M = loc
-		var/image/I = new(loc = get_turf(pipe))
-		var/mutable_appearance/MA = new(pipe)
-		MA.alpha = 128
-		MA.dir = pipe.dir
-		I.appearance = MA
-		I.dir = pipe.dir
-		// Workaround for a weird bug with icon direction on T-Ray scan not matching the actual disposal pipe dir.
-		if(M.client)
-			flick_overlay(I, list(M.client), 8)
-
 /obj/item/device/t_scanner/process()
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
@@ -46,15 +33,25 @@ GAS ANALYZER
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()
+	t_ray_scan(loc)
 
-	for(var/turf/T in range(2, src.loc) )
-		for(var/obj/O in T.contents)
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 2)
+	if(!ismob(viewer) || !viewer.client)
+		return
+	var/list/t_ray_images = list()
+	for(var/obj/O in orange(distance, viewer) )
+		if(O.level != 1)
+			continue
 
-			if(O.level != 1)
-				continue
-
-			if(O.invisibility == INVISIBILITY_MAXIMUM)
-				flick_sonar(O)
+		if(O.invisibility == INVISIBILITY_MAXIMUM)
+			var/image/I = new(loc = get_turf(O))
+			var/mutable_appearance/MA = new(O)
+			MA.alpha = 128
+			MA.dir = O.dir
+			I.appearance = MA
+			t_ray_images += I
+	if(t_ray_images.len)
+		flick_overlay(t_ray_images, list(viewer.client), flick_time)
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
