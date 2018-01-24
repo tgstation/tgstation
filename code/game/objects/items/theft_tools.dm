@@ -203,7 +203,11 @@
 	toolspeed = 0.5
 	damtype = "fire"
 	usesound = 'sound/weapons/bladeslice.ogg'
-	var/usesLeft = 2
+	var/usesLeft
+
+/obj/item/scalpel/supermatter/Initialize()
+	. = ..()
+	usesLeft = rand(2, 4)
 
 /obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
