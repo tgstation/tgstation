@@ -1,4 +1,6 @@
-#define LIBVG(function, arguments...) call("./libvg.[world.system_type == "UNIX" ? "so" : "dll"]", function)(arguments)
+#define LIBVG(function, arguments...) call("./libvg.[world.system_type == UNIX ? "so" : "dll"]", function)(arguments)
+GLOBAL_VAR_INIT(libvg_loaded, FALSE)
+
 
 // Note about encodings:
 //  Encodings are passed by number as it's simplest to do it like this (citation needed)
