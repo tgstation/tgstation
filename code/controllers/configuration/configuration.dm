@@ -153,7 +153,7 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	return E.value
+	return E.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
