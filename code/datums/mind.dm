@@ -267,7 +267,7 @@
 		P = locate() in all_contents
 		if(!P) // I do not have a pen.
 			var/obj/item/pen/inowhaveapen
-			if(traitor_mob.back) //ok buddy you better have a backpack!
+			if(traitor_mob.back && istype(traitor_mob.back,/obj/item/storage/backpack)) //ok buddy you better have a backpack!
 				inowhaveapen = new /obj/item/pen(traitor_mob.back)
 				P = inowhaveapen
 			else
