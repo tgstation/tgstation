@@ -6,6 +6,7 @@
     . = new /datum/armor(melee, bullet, laser, energy, bomb, bio, rad, fire, acid)
 
 /datum/armor
+  datum_flags = DF_USE_TAG
   var/melee
   var/bullet
   var/laser
@@ -15,7 +16,6 @@
   var/rad
   var/fire
   var/acid
-  datum_flags = DF_USE_TAG
 
 /datum/armor/New(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
   src.melee = melee
@@ -62,6 +62,6 @@
   if (var_name == "tag")
     return FALSE
   . = ..()
-  src.tag = ARMORID // update tag in case armor values were edited
+  tag = ARMORID // update tag in case armor values were edited
 
 #undef ARMORID
