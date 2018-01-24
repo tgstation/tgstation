@@ -292,10 +292,10 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
+	desc = "A circuit with it's own inventory for items, used to grab and store things."
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 
 	complexity = 10
@@ -304,20 +304,26 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_BULKY
 	var/max_items = 10
-
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
+	var/max_w_class = assembly.w_class
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(AM)
 		var/mode = get_pin_data(IC_INPUT, 2)
-
 		if(mode == 1)
 			if(check_target(AM))
-				var/is_drone_or_large = istype(AM,/obj/item/device/electronic_assembly/large) || istype(AM,/obj/item/device/electronic_assembly/drone)
-				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class) && (!is_drone_or_large))
+				var/is_circuit = istype(AM,/obj/item/device/electronic_assembly/)
+				var/circuitcheck = 0
+				if (!is_circuit)
+					circuitcheck = 1
+				else
+					if (AM.w_class < max_w_class)
+						circuitcheck = 1
+					else
+						circuitcheck = 0
+				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class) && (circuitcheck))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
