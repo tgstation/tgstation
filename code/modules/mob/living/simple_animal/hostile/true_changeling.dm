@@ -100,20 +100,24 @@
 		qdel(src)
 	else
 		visible_message("<span class='warning'>[src] lets out a waning scream as it falls, twitching, to the floor.</span>", \
-						"<span class='userdanger'>We have fallen! We begin the revival process... (this will take around 45 seconds.)</span>")
-		spawn(450)
-			if(src)
-				visible_message("<span class='warning'>[src] reforms into a monster!</span>")
-				for(var/mob/M in view(7, src))
-					flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
-				new /obj/effect/gibspawner/human(get_turf(src))
-				revive() //Changelings can self-revive, and true changelings are no exception
+						"<span class='userdanger'>We have fallen! We begin the revival process...</span>")
+		addtimer(CALLBACK(src, .proc/lingreform), 450)
+
+/mob/living/simple_animal/hostile/true_changeling/proc/lingreform()
+	if(!src)
+		return FALSE
+	visible_message("<span class='userdanger'>the twitching corpse of [src] reforms!</span>")
+	for(var/mob/M in view(7, src))
+		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
+	new /obj/effect/gibspawner/human(get_turf(src))
+	revive() //Changelings can self-revive, and true changelings are no exception
 
 /mob/living/simple_animal/hostile/true_changeling/mob_negates_gravity()
 	return wallcrawl
 
 /mob/living/simple_animal/hostile/true_changeling/adjustFireLoss(amount)
-	playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
+	if(stat)
+		playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	..()
 
 /datum/action/innate/changeling
