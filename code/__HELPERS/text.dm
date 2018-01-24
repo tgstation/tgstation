@@ -329,28 +329,6 @@
 		return message
 	return copytext(message, 1, length + 1)
 
-/*
- * Misc
- */
-
-/proc/stringsplit(txt, character)
-	var/cur_text = txt
-	var/last_found = 1
-	var/found_char = findtext(cur_text,character)
-	var/list/list = list()
-	if(found_char)
-		var/fs = copytext(cur_text,last_found,found_char)
-		list += fs
-		last_found = found_char+length(character)
-		found_char = findtext(cur_text,character,last_found)
-	while(found_char)
-		var/found_string = copytext(cur_text,last_found,found_char)
-		last_found = found_char+length(character)
-		list += found_string
-		found_char = findtext(cur_text,character,last_found)
-	list += copytext(cur_text,last_found,length(cur_text)+1)
-	return list
-
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
