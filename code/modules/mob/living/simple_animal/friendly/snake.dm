@@ -47,7 +47,6 @@
 			living_mobs += HM
 
 	// if no tasty mice to chase, lets chase any living mob enemies in our vision range
-	var/enemies_in_range = list()
 	if(length(mice) == 0)
 		//Filter living mobs (in range mobs) by those we consider enemies (retaliate behaviour)
 		return  living_mobs & enemies
