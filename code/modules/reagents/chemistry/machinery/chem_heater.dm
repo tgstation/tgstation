@@ -29,9 +29,11 @@
 	else
 		icon_state = "mixer0b"
 
-/obj/machinery/chem_heater/proc/eject_beaker()
+/obj/machinery/chem_heater/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
 
@@ -129,5 +131,5 @@
 				target_temperature = CLAMP(target, 0, 1000)
 		if("eject")
 			on = FALSE
-			eject_beaker()
+			eject_beaker(usr)
 			. = TRUE

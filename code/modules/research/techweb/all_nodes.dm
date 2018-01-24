@@ -432,7 +432,7 @@
 	display_name = "Advanced Mining Technology"
 	description = "Efficiency Level 127"	//dumb mc references
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
-	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter", "plasmacutter_adv")
+	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter", "plasmacutter_adv", "bluespace_pod")
 	research_cost = 2500
 	export_price = 5000
 

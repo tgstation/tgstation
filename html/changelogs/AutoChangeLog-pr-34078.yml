@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "removed a bunch of unnecessary vars, combining them into a bitfield"

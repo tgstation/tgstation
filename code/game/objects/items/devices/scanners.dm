@@ -18,6 +18,10 @@ GAS ANALYZER
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
+/obj/item/device/t_scanner/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
@@ -71,6 +75,10 @@ GAS ANALYZER
 	var/scanmode = 0
 	var/advanced = FALSE
 
+/obj/item/device/healthanalyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
+
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
 		to_chat(user, "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>")
@@ -82,7 +90,7 @@ GAS ANALYZER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_disability(DISABILITY_CLUMSY) || user.has_disability(DISABILITY_DUMB)) && prob(50))
+	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -112,7 +120,7 @@ GAS ANALYZER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.status_flags & FAKEDEATH && !advanced)
+	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -173,10 +181,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_disability(DISABILITY_DEAF, GENETIC_MUTATION))
+				if(C.has_trait(TRAIT_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
-				else if(C.has_disability(DISABILITY_DEAF))
+				else if(C.has_trait(TRAIT_DEAF))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
@@ -194,10 +202,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_disability(DISABILITY_BLIND))
+				if(C.has_trait(TRAIT_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
-				if(C.has_disability(DISABILITY_NEARSIGHT))
+				if(C.has_trait(TRAIT_NEARSIGHT))
 					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -237,7 +245,7 @@ GAS ANALYZER
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || ((M.status_flags & FAKEDEATH) && !advanced)))
+	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
@@ -331,6 +339,10 @@ GAS ANALYZER
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+
+/obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
 
 /obj/item/device/analyzer/attack_self(mob/user)
 

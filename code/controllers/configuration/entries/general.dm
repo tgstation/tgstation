@@ -2,7 +2,7 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/autoadmin_rank	// the rank for autoadmins
-	value = "Game Master"
+	config_entry_value = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/servername	// server name (the name of the game window)
@@ -12,11 +12,11 @@
 /datum/config_entry/string/stationname	// station name (the name of the station in-game)
 
 /datum/config_entry/number/lobby_countdown	// In between round countdown.
-	value = 120
+	config_entry_value = 120
 	min_val = 0
 
 /datum/config_entry/number/round_end_countdown	// Post round murder death kill countdown
-	value = 25
+	config_entry_value = 25
 	min_val = 0
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
@@ -62,11 +62,11 @@
 /datum/config_entry/flag/allow_vote_mode	// allow votes to change mode
 
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
-	value = 6000
+	config_entry_value = 6000
 	min_val = 0
 
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
-	value = 600
+	config_entry_value = 600
 	min_val = 0
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
@@ -78,7 +78,7 @@
 /datum/config_entry/flag/popup_admin_pm	// adminPMs to non-admins show in a pop-up 'reply' window when set
 
 /datum/config_entry/number/fps
-	value = 20
+	config_entry_value = 20
 	min_val = 1
 	max_val = 100   //byond will start crapping out at 50, so this is just ridic
 	var/sync_validate = FALSE
@@ -89,7 +89,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/ticklag/TL = config.entries_by_type[/datum/config_entry/number/ticklag]
 		if(!TL.sync_validate)
-			TL.ValidateAndSet(10 / value)
+			TL.ValidateAndSet(10 / config_entry_value)
 		sync_validate = FALSE
 
 /datum/config_entry/number/ticklag
@@ -98,7 +98,7 @@
 
 /datum/config_entry/number/ticklag/New()	//ticklag weirdly just mirrors fps
 	var/datum/config_entry/CE = /datum/config_entry/number/fps
-	value = 10 / initial(CE.value)
+	config_entry_value = 10 / initial(CE.config_entry_value)
 	..()
 
 /datum/config_entry/number/ticklag/ValidateAndSet(str_val)
@@ -107,13 +107,13 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/fps/FPS = config.entries_by_type[/datum/config_entry/number/fps]
 		if(!FPS.sync_validate)
-			FPS.ValidateAndSet(10 / value)
+			FPS.ValidateAndSet(10 / config_entry_value)
 		sync_validate = FALSE
 
 /datum/config_entry/flag/allow_holidays
 
 /datum/config_entry/number/tick_limit_mc_init	//SSinitialization throttling
-	value = TICK_LIMIT_MC_INIT_DEFAULT
+	config_entry_value = TICK_LIMIT_MC_INIT_DEFAULT
 	min_val = 0 //oranges warned us
 	integer = FALSE
 
@@ -140,7 +140,7 @@
 /datum/config_entry/flag/use_exp_restrictions_heads
 
 /datum/config_entry/number/use_exp_restrictions_heads_hours
-	value = 0
+	config_entry_value = 0
 	min_val = 0
 
 /datum/config_entry/flag/use_exp_restrictions_heads_department
@@ -154,44 +154,44 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	value = "http://www.tgstation13.org/wiki"
+	config_entry_value = "http://www.tgstation13.org/wiki"
 
 /datum/config_entry/string/forumurl
-	value = "http://tgstation13.org/phpBB/index.php"
+	config_entry_value = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
-	value = "http://www.tgstation13.org/wiki/Rules"
+	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	value = "https://www.github.com/tgstation/-tg-station"
+	config_entry_value = "https://www.github.com/tgstation/-tg-station"
 
 /datum/config_entry/number/githubrepoid
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/flag/guest_ban
 
 /datum/config_entry/number/id_console_jobslot_delay
-	value = 30
+	config_entry_value = 30
 	min_val = 0
 
 /datum/config_entry/number/inactivity_period	//time in ds until a player is considered inactive
-	value = 3000
+	config_entry_value = 3000
 	min_val = 0
 
 /datum/config_entry/number/inactivity_period/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		value *= 10 //documented as seconds in config.txt
+		config_entry_value *= 10 //documented as seconds in config.txt
 
 /datum/config_entry/number/afk_period	//time in ds until a player is considered inactive
-	value = 3000
+	config_entry_value = 3000
 	min_val = 0
 
 /datum/config_entry/number/afk_period/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
-		value *= 10 //documented as seconds in config.txt
+		config_entry_value *= 10 //documented as seconds in config.txt
 
 /datum/config_entry/flag/kick_inactive	//force disconnect for inactive players
 
@@ -219,43 +219,43 @@
 /datum/config_entry/flag/see_own_notes	//Can players see their own admin notes
 
 /datum/config_entry/number/note_fresh_days
-	value = null
+	config_entry_value = null
 	min_val = 0
 	integer = FALSE
 
 /datum/config_entry/number/note_stale_days
-	value = null
+	config_entry_value = null
 	min_val = 0
 	integer = FALSE
 
 /datum/config_entry/flag/maprotation
 
 /datum/config_entry/number/maprotatechancedelta
-	value = 0.75
+	config_entry_value = 0.75
 	min_val = 0
 	max_val = 1
 	integer = FALSE
 
 /datum/config_entry/number/soft_popcap
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/number/hard_popcap
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/number/extreme_popcap
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/string/soft_popcap_message
-	value = "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
+	config_entry_value = "Be warned that the server is currently serving a high number of users, consider using alternative game servers."
 
 /datum/config_entry/string/hard_popcap_message
-	value = "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
+	config_entry_value = "The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers."
 
 /datum/config_entry/string/extreme_popcap_message
-	value = "The server is currently serving a high number of users, find alternative servers."
+	config_entry_value = "The server is currently serving a high number of users, find alternative servers."
 
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
 
@@ -275,21 +275,21 @@
 	return str_val != "ch@nge.me" && ..()
 
 /datum/config_entry/number/ipintel_rating_bad
-	value = 1
+	config_entry_value = 1
 	integer = FALSE
 	min_val = 0
 	max_val = 1
 
 /datum/config_entry/number/ipintel_save_good
-	value = 12
+	config_entry_value = 12
 	min_val = 0
 
 /datum/config_entry/number/ipintel_save_bad
-	value = 1
+	config_entry_value = 1
 	min_val = 0
 
 /datum/config_entry/string/ipintel_domain
-	value = "check.getipintel.net"
+	config_entry_value = "check.getipintel.net"
 
 /datum/config_entry/flag/aggressive_changelog
 
@@ -309,43 +309,43 @@
 /datum/config_entry/flag/generate_minimaps
 
 /datum/config_entry/number/client_warn_version
-	value = null
+	config_entry_value = null
 	min_val = 500
 	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_warn_message
-	value = "Your version of byond may have issues or be blocked from accessing this server in the future."
+	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
 /datum/config_entry/flag/client_warn_popup
 
 /datum/config_entry/number/client_error_version
-	value = null
+	config_entry_value = null
 	min_val = 500
 	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_error_message
-	value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 /datum/config_entry/number/minute_topic_limit
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/number/second_topic_limit
-	value = null
+	config_entry_value = null
 	min_val = 0
 
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
-	value = 600
+	config_entry_value = 600
 	min_val = 0
 
 /datum/config_entry/number/error_limit	// How many occurrences before the next will silence them
-	value = 50
+	config_entry_value = 50
 
 /datum/config_entry/number/error_silence_time	// How long a unique error will be silenced for
-	value = 6000
+	config_entry_value = 6000
 
 /datum/config_entry/number/error_msg_delay	// How long to wait between messaging admins about occurrences of a unique error
-	value = 50
+	config_entry_value = 50
 
 /datum/config_entry/flag/irc_announce_new_game
 
@@ -353,17 +353,17 @@
 
 /datum/config_entry/number/mc_tick_rate/base_mc_tick_rate
 	integer = FALSE
-	value = 1
+	config_entry_value = 1
 
 /datum/config_entry/number/mc_tick_rate/high_pop_mc_tick_rate
 	integer = FALSE
-	value = 1.1
+	config_entry_value = 1.1
 
 /datum/config_entry/number/mc_tick_rate/high_pop_mc_mode_amount
-	value = 65
+	config_entry_value = 65
 
 /datum/config_entry/number/mc_tick_rate/disable_high_pop_mc_mode_amount
-	value = 60
+	config_entry_value = 60
 
 /datum/config_entry/number/mc_tick_rate
 	abstract_type = /datum/config_entry/number/mc_tick_rate
@@ -378,11 +378,11 @@
 /datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
 	if(. && Master.current_runlevel)
-		world.sleep_offline = !value
+		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
-	value = -1
+	config_entry_value = -1
 	min_val = 0
 
 /datum/config_entry/string/default_view
-	value = "15x15"
+	config_entry_value = "15x15"
