@@ -13,14 +13,12 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
 #include "code\__DEFINES\_tick.dm"
 #include "code\__DEFINES\access.dm"
 #include "code\__DEFINES\admin.dm"
-#include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\callbacks.dm"
@@ -1027,7 +1025,6 @@
 #include "code\game\objects\structures\reflector.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\showcase.dm"
-#include "code\game\objects\structures\signs.dm"
 #include "code\game\objects\structures\spirit_board.dm"
 #include "code\game\objects\structures\statues.dm"
 #include "code\game\objects\structures\table_frames.dm"
@@ -1053,7 +1050,6 @@
 #include "code\game\objects\structures\crates_lockers\closets\utility_closets.dm"
 #include "code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\bar.dm"
-#include "code\game\objects\structures\crates_lockers\closets\secure\bsdroppod.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\cargo.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\engineering.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\freezer.dm"
