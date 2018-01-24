@@ -6,7 +6,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	if(message)
-		say(message)
+		say(to_utf8(message, src))
 
 
 /mob/verb/whisper_verb(message as text)
@@ -28,7 +28,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = utf8_sanitize(message, usr, MAX_MESSAGE_LEN)
 
 	usr.emote("me",1,message)
 

@@ -1,0 +1,14 @@
+[package]
+name = "libvg"
+version = "0.1.0"
+authors = ["PJB3005 <pieterjan.briers@gmail.com>"]
+publish = false
+
+[dependencies]
+byond = "0.3.0"
+encoding = "0.2.33"
+libc = "0.2.19"
+
+[lib]
+name = "libvg"
+crate-type = ["dylib"]
