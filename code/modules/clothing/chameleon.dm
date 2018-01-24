@@ -383,7 +383,7 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
 	clumsy_check = 0
-	needs_permit = 0
+	item_flags = NONE
 	pin = /obj/item/device/firing_pin
 	cell_type = /obj/item/stock_parts/cell/bluespace
 
