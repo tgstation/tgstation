@@ -7,3 +7,5 @@
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
 	to_chat(owner, "In your left hand you will have a Staff of Nothing. <b>A staff is required to cast spells. <span class='danger'>Do not lose it!</span></b>")
 	to_chat(owner,"<B>Remember:</B> do not forget to prepare your spells.")
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))

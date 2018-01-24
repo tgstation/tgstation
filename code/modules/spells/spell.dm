@@ -216,8 +216,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if(!locate(/obj/item/gun/magic/staff) in H.held_items)
 				if(!locate(/obj/item/twohanded/singularityhammer) in H.held_items)
 					if(!locate(/obj/item/twohanded/mjollnir) in H.held_items)
-						to_chat(H, "<span class='notice'>I don't feel strong enough without my staff.</span>")
-						return 0
+						if(!locate(/obj/item/staff) in H.held_items) // welcome to if hell
+							to_chat(H, "<span class='notice'>I don't feel strong enough without my staff.</span>")
+							return 0
 		/* hippie edit end */
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
