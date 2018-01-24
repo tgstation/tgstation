@@ -381,6 +381,8 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
 
+* You are only allowed to have one open feature or rebalancing PR open at a time. This is to alleviate pressure on maintainers and to direct coder focus onto things that need fixing (which is everything all the time)
+
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
