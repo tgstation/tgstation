@@ -190,6 +190,10 @@
 		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
+	var/area/A = get_area(user)
+	if(A && !A.blob_allowed)
+		to_chat(user, "<span class='warning'>Ratvar, the Clockwork Justiciar's words echo...<i>Gurer'f n gvzr naq cynpr sbe rirelguvat, ohg abg abj!</i></span>")
+		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
