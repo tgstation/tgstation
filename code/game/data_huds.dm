@@ -87,7 +87,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -167,7 +167,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -177,9 +177,9 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(status_flags & XENO_HOST)
+	if(has_trait(TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (status_flags & FAKEDEATH))
+	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)

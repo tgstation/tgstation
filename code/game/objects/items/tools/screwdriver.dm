@@ -23,12 +23,12 @@
 	var/random_color = TRUE //if the screwdriver uses random coloring
 	var/static/list/screwdriver_colors = list(
 		"blue" = rgb(24, 97, 213),
-		"red" = rgb(149, 23, 16),
+		"red" = rgb(255, 0, 0),
 		"pink" = rgb(213, 24, 141),
 		"brown" = rgb(160, 82, 18),
 		"green" = rgb(14, 127, 27),
 		"cyan" = rgb(24, 162, 213),
-		"yellow" = rgb(213, 140, 24)
+		"yellow" = rgb(255, 165, 0)
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
@@ -75,7 +75,7 @@
 		return ..()
 	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 

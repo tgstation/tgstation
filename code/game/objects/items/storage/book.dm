@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if (user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)
@@ -156,23 +156,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
-		if(istype(A, /obj/item/twohanded/required/cult_bastard))
-			var/obj/item/twohanded/required/cult_bastard/sword = A
-			to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
-			playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
-			if(do_after(user, 40, target = sword))
-				playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-				for(var/obj/item/device/soulstone/SS in sword.contents)
-					SS.usability = TRUE
-					for(var/mob/living/simple_animal/shade/EX in SS)
-						SSticker.mode.remove_cultist(EX.mind, 1, 0)
-						EX.icon_state = "ghost1"
-						EX.name = "Purified [EX.name]"
-					SS.release_shades(user)
-					qdel(SS)
-				new /obj/item/nullrod/claymore(get_turf(sword))
-				user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
-				qdel(sword)
+	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
+		var/obj/item/twohanded/required/cult_bastard/sword = A
+		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		if(do_after(user, 40, target = sword))
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
+			for(var/obj/item/device/soulstone/SS in sword.contents)
+				SS.usability = TRUE
+				for(var/mob/living/simple_animal/shade/EX in SS)
+					SSticker.mode.remove_cultist(EX.mind, 1, 0)
+					EX.icon_state = "ghost1"
+					EX.name = "Purified [EX.name]"
+				SS.release_shades(user)
+				qdel(SS)
+			new /obj/item/nullrod/claymore(get_turf(sword))
+			user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+			qdel(sword)
 
 
 /obj/item/storage/book/bible/booze

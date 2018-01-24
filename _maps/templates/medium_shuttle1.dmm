@@ -20,19 +20,6 @@
 "d" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_1)
-"e" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/ruin/powered/shuttle/medium_1)
-"f" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_1)
 "g" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_1)
@@ -99,19 +86,6 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/ruin/powered/shuttle/medium_1)
-"x" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_1)
-"y" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_1)
 
 (1,1,1) = {"
@@ -202,17 +176,17 @@ c
 (6,1,1) = {"
 d
 d
-f
-g
-k
-g
-g
-g
 g
 g
 k
 g
-x
+g
+g
+g
+g
+k
+g
+g
 d
 d
 "}
@@ -248,10 +222,10 @@ j
 j
 g
 d
-y
+d
 "}
 (9,1,1) = {"
-e
+d
 d
 g
 j
@@ -264,12 +238,12 @@ g
 j
 j
 g
-y
+d
 a
 "}
 (10,1,1) = {"
 a
-e
+d
 g
 g
 g

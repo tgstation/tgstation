@@ -45,7 +45,7 @@
 		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
-		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DISABILITY_DUMB BOTANY TUTS
+		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // TRAIT_DUMB BOTANY TUTS
 			max_potency = 100
 			max_yield = 10
 			min_production = 1
@@ -420,7 +420,7 @@
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/disk/plantgene/Initialize()
 	. = ..()

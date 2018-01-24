@@ -17,11 +17,14 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	C.remove_language(/datum/language/slime, TRUE)
+	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
+	C.grant_language(/datum/language/slime, TRUE)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -108,7 +111,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -140,7 +143,7 @@
 			bodies = list(C)
 		else
 			bodies |= C
-
+      
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
 		var/datum/mind/M
@@ -249,7 +252,7 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.self_state)
+/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

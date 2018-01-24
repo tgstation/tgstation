@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - tweak: "You now need to examine engravings to pop open the menu."

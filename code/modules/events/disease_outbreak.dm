@@ -51,7 +51,7 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-				if(!H.dna || (H.has_disability(DISABILITY_BLIND)))	//A blindness disease would be the worst.
+				if(!H.dna || (H.has_trait(TRAIT_BLIND)))	//A blindness disease would be the worst.
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D

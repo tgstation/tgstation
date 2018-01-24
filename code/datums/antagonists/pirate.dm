@@ -2,6 +2,7 @@
 	name = "Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
+	antagpanel_category = "Pirate"
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -15,6 +16,8 @@
 /datum/antagonist/pirate/create_team(datum/team/pirate/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
+			if(!P.owner)
+				continue
 			if(P.crew)
 				crew = P.crew
 				return
