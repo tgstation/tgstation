@@ -546,7 +546,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
 				new /obj/item/nuke_core/supermatter_sliver(drop_location())
 				matter_power += 200
-				scalpel.usesLeft -= 1
+				scalpel.usesLeft--
 			else 
 				to_chat(user, "<span class='notice'>You fail to extract a sliver from \the [src]. \The [W] isn't sharp enough anymore!</span>")
 	else if(user.dropItemToGround(W))
