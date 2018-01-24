@@ -343,6 +343,18 @@
 	dismemberment = 50
 	nodamage = 0
 
+/obj/item/projectile/magic/spellblade/on_hit(atom/target)
+	..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.dna.species.id == "human" && !H.lying && prob(10))
+			H.visible_message("<span class='boldwarning'>[H]'s head sails off in an a bloody arc as [src] sends them backwards!</span>", \
+			"<span class='userdanger'>Your head is blasted from your body... but you're somehow still alive!</span>")
+			H.set_species(/datum/species/dullahan)
+			H.Knockdown(10)
+			var/turf/T = get_edge_target_turf(get_turf(H), dir)
+			H.throw_at(T, 2, 3)
+
 /obj/item/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"

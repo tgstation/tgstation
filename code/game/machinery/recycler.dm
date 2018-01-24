@@ -109,6 +109,7 @@
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
 		if(brain_holder)
 			emergency_stop(AM)
+			return
 		else if(isliving(AM))
 			if(obj_flags & EMAGGED)
 				crush_living(AM)
