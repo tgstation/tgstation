@@ -35,7 +35,7 @@
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/cm = testmerge[line]["commit"]
-		var/details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		var/details = ": '" + rhtml_encode(testmerge[line]["title"]) + "' by " + rhtml_encode(testmerge[line]["author"]) + " at commit " + rhtml_encode(copytext(cm, 1, min(length(cm), 7)))
 		if(details && findtext(details, "\[s\]") && (!usr || !usr.client.holder))
 			continue
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[line]\">#[line][details]</a><br>"
