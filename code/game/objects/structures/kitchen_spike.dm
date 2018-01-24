@@ -146,7 +146,7 @@
 	if(has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
 			release_mob(L)
-	..()
+	return ..()
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)
