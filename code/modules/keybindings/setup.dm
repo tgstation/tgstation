@@ -5,6 +5,9 @@
 	var/next_move_dir_add // On next move, add this dir to the move that would otherwise be done
 	var/next_move_dir_sub // On next move, subtract this dir from the move that would otherwise be done
 
+/atom/movable
+	var/key_movement_disabled = FALSE
+
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
 /datum/proc/key_down(key, client/user) // Called when a key is pressed down initially

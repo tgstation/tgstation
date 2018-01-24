@@ -280,14 +280,21 @@
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
+/obj/item/projectile/proc/pause()
+	paused = TRUE
+
+/obj/item/projectile/proc/resume()
+	paused = FALSE
+
 /obj/item/projectile/process()
-	last_process = world.time
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
 		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+		last_process = world.time
 		return
+	last_process = world.time
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
 	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<

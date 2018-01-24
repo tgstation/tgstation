@@ -58,30 +58,36 @@ SUBSYSTEM_DEF(throwing)
 	var/diagonal_error
 	var/datum/callback/callback
 	var/paused = FALSE
-	var/delayed_time = 0
 	var/last_move = 0
+	var/last_tick = 0
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
+	var/ticked_delay = world.time - last_tick
+	last_tick = world.time
 	if (!isturf(AM.loc) || !AM.throwing)
 		finalize()
 		return
 
 	if(paused)
-		delayed_time += world.time - last_move
+		last_move += ticked_delay
 		return
 
 	if (dist_travelled && hitcheck()) //to catch sneaky things moving on our tile while we slept
 		finalize()
 		return
 
-	var/atom/step
 
 	last_move = world.time
 
 	//calculate how many tiles to move, making up for any missed ticks.
-	var/tilestomove = CEILING(min(((((world.time+world.tick_lag) - start_time + delayed_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait), 1)
-	while (tilestomove-- > 0)
+	var/tilestomove = CEILING(min(((((world.time+world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait), 1)
+	tile_move(tilestomove)
+
+/datum/thrownthing/proc/tile_move(amount)
+	var/atom/movable/AM = thrownthing
+	var/atom/step
+	for(var/i in 1 to amount)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
 			finalize()
 			return

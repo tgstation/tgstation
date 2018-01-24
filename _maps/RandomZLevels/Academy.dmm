@@ -3774,10 +3774,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/light,
+/turf/open/floor/colorswitch/light,
 /area/awaymission/academy/academyengine)
 "mt" = (
-/turf/open/floor/light,
+/turf/open/floor/colorswitch/light,
 /area/awaymission/academy/academyengine)
 "mu" = (
 /turf/open/floor/wood,
@@ -3794,7 +3794,7 @@
 /area/awaymission/academy/academyengine)
 "mx" = (
 /mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/light,
+/turf/open/floor/colorswitch/light,
 /area/awaymission/academy/academyengine)
 "my" = (
 /obj/structure/chair/wood/normal,
