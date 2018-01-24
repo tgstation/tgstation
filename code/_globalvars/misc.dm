@@ -21,5 +21,5 @@ GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
 
 GLOBAL_LIST_INIT(bitfields, list(
 	"obj_flags" = list("EMAGGED" = EMAGGED, "IN_USE" = IN_USE, "CAN_BE_HIT" = CAN_BE_HIT, "BEING_SHOCKED" = BEING_SHOCKED, "DANGEROUS_POSSESSION" = DANGEROUS_POSSESSION, "ON_BLUEPRINTS" = ON_BLUEPRINTS, "UNIQUE_RENAME" = UNIQUE_RENAME),
-	"datum_flags" = list("DF_USE_TAG" = DF_USE_TAG, "DF_VAR_EDITED" = VAR_EDITED)
+	"datum_flags" = list("DF_USE_TAG" = DF_USE_TAG, "DF_VAR_EDITED" = DF_VAR_EDITED)
 	))
