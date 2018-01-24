@@ -12,6 +12,7 @@
 		/obj/item/projectile,
 		/obj/effect/portal,
 		/obj/effect/abstract,
+		/obj/effect/hotspot,
 		/obj/effect/temp_visual,
 		/obj/effect/light_emitter/tendril,
 		/obj/effect/collapse))
