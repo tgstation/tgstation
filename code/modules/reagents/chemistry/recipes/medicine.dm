@@ -254,3 +254,10 @@
 	required_catalysts = list("gold" = 1)
 	required_temp = 520
 	mix_message = "The solution fizzes and then settles into an oily, smooth, purple liquid."
+	
+/datum/chemical_reaction/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	results = list("modafinil" = 5)
+	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
+	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
