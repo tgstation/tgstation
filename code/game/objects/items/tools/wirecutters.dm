@@ -49,6 +49,8 @@
 	add_overlay(base_overlay)
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
+	if(tearoutteeth(C, user)) //HIPPIE CHANGE
+		return FALSE //HIPPIE CHANGE
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)

@@ -164,7 +164,6 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "M" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/powered/mechtransport)

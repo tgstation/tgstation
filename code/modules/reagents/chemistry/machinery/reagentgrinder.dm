@@ -62,7 +62,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if (istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if (istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		if (!beaker)
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")

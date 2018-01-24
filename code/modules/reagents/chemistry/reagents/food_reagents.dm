@@ -124,7 +124,7 @@
 	if(!istype(T))
 		return
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
 		T.name = "deep-fried [initial(T.name)]"
 		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
@@ -213,29 +213,31 @@
 	taste_description = "mint"
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
-	switch(current_cycle)
-		if(1 to 15)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5)
-			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
-		if(15 to 25)
-			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
-		if(25 to 35)
-			M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
-		if(35 to INFINITY)
-			M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(5))
-				M.emote("shiver")
-			if(isslime(M))
-				M.bodytemperature -= rand(20,25)
+	if(M.bodytemperature > 50)
+		switch(current_cycle)
+			if(1 to 15)
+				M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(holder.has_reagent("capsaicin"))
+					holder.remove_reagent("capsaicin", 5)
+				if(isslime(M))
+					M.bodytemperature -= rand(5,20)
+			if(15 to 25)
+				M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(isslime(M))
+					M.bodytemperature -= rand(10,20)
+			if(25 to 35)
+				M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(prob(1))
+					M.emote("shiver")
+				if(isslime(M))
+					M.bodytemperature -= rand(15,20)
+			if(35 to INFINITY)
+				M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(prob(5))
+					M.emote("shiver")
+				if(isslime(M))
+					M.bodytemperature -= rand(20,25)
+		M.bodytemperature = max(50, M.bodytemperature)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
@@ -430,7 +432,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())

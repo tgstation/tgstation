@@ -8,7 +8,7 @@
 	var/mach = 0
 
 /datum/station_state/proc/count()
-	for(var/Z in GLOB.station_z_levels)
+	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1,1,Z), locate(world.maxx,world.maxy,Z)))
 			// don't count shuttles since they may have just left
 			if(istype(T.loc, /area/shuttle))

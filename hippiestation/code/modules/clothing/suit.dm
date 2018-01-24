@@ -33,3 +33,11 @@
 	armor = list(melee = 20, bullet = 10, laser = 30, energy = 15, bomb = 25, bio = 10, rad = 20, fire = 100, acid = 50)
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 0
+
+/obj/item/clothing/suit/armor/larp //Skyrim, coming to BYOND in 2078!
+	name = "guard armor"
+	desc = "Old armor with a yellow cloak. Provides decent protection against most types of damage. There's a tag at the bottom of the cloak, saying 'buy my game - Todd.'"
+	icon_state = "guardarmor"
+	item_state = "guardarmor"
+	icon = 'hippiestation/icons/obj/clothing/suits.dmi'
+	alternate_worn_icon = 'hippiestation/icons/mob/suit.dmi'

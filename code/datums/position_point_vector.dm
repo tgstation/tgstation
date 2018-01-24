@@ -133,7 +133,7 @@
 	if(y > maxy)
 		y -= maxy
 		move_zy += 1
-	var/datum/space_level/S = GLOB.z_levels_list["[z]"]
+	var/datum/space_level/S = SSmapping.get_level(z)
 	if(move_zx != 0)
 		var/datum/space_level/L = S.neigbours["[move_zx < 0? WEST : EAST]"]
 		z = L.z_value

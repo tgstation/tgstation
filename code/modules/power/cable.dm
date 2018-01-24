@@ -127,10 +127,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	update_icon()
 
 /obj/structure/cable/update_icon()
-	if(invisibility)
-		icon_state = "[d1]-[d2]-f"
-	else
-		icon_state = "[d1]-[d2]"
+	icon_state = "[d1]-[d2]"
 	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
 

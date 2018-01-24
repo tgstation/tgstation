@@ -24,7 +24,7 @@
 		for(var/i in GLOB.ic_jammers)
 			var/obj/item/integrated_circuit/input/tcomm_interceptor/T = i
 			var/obj/item/O = T.get_object()
-			if((O.z in GLOB.station_z_levels) && (!istype(get_area(O), /area/space)))
+			if(is_station_level(O.z)&& (!istype(get_area(O), /area/space)))
 				if(!istype(signal.source, /obj/item/device/radio/headset/integrated))
 					signal.data["reject"] = TRUE
 					break

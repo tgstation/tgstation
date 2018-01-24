@@ -926,6 +926,35 @@
 			src.cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
 
+		else if(href_list["modtransform"])
+			if(!check_rights(R_DEBUG))
+				return
+
+			var/atom/A = locate(href_list["modtransform"])
+			if(!istype(A))
+				to_chat(usr, "This can only be done to atoms.")
+				return
+
+			var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+			var/matrix/M = A.transform
+			switch(result)
+				if("Scale")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Scale(x,y)
+				if("Translate")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Translate(x,y)
+				if("Rotate")
+					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+					if(!isnull(angle))
+						A.transform = M.Turn(angle)
+			
+			href_list["datumrefresh"] = href_list["modtransform"]
+
 		else if(href_list["rotatedatum"])
 			if(!check_rights(0))
 				return

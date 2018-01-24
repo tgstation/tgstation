@@ -348,15 +348,17 @@ Hippie: Commented because we added our own reagent processing system.
 	id = "cryostylane_oxygen"
 	results = list("cryostylane" = 1)
 	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp -= 10*created_volume
+	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
 
 /datum/chemical_reaction/pyrosium_oxygen
 	name = "ephemeral pyrosium reaction"
 	id = "pyrosium_oxygen"
 	results = list("pyrosium" = 1)
 	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+	mob_react = FALSE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp += 10*created_volume
@@ -379,6 +381,13 @@ Hippie: Commented because we added our own reagent processing system.
 	required_reagents = list("stable_plasma" = 1, "silver" = 1, "blackpowder" = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
+
+/datum/chemical_reaction/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	results = list("energized_jelly" = 2)
+	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"

@@ -188,7 +188,6 @@ As a Ghost, you can see the inside of a container on the ground by clicking on i
 As a Ghost, you can double click on people, bots, or the singularity to follow them.
 As a Devil, you gain power for every three souls you control, however you also become more obvious.
 As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
-<<<<<<< HEAD
 At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
 Vampires which have not yet reached full power will catch on fire if they ingest holy water or if they are in the chapel!
 Vampires can heal by laying inside coffins!
@@ -200,6 +199,6 @@ As a Vampire, you can convert normal people into Vampires with Lillith's Pact. B
 As a Shadowling, be aware, Veil does not work on flares, glowsticks, or most other non-electric lights!
 As a Shadowling, you should help thralls if they call for help, as long as it does not put yourself in danger!
 If you see a Cluwne or Catbeast, kill it to death!
-=======
-At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth.
->>>>>>> b89370c050... Adds some new tips for fighting the clockcult (#34406)
+As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
+As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!
+

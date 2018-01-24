@@ -46,4 +46,25 @@
 			H.set_heartattack(TRUE)
 			if(H.stat == CONSCIOUS)
 				H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
-			
+		
+/obj/item/mounted_energy_chainsaw
+	name = "mounted energy chainsaw"
+	desc = "An energy chainsaw that has replaced your arm."
+	icon_state = "chainsaw_on"
+	item_state = "mounted_chainsaw"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
+	w_class = WEIGHT_CLASS_HUGE
+	force = 60
+	block_chance = 50
+	armour_penetration = 15
+	throwforce = 0
+	throw_range = 0
+	throw_speed = 0
+	sharpness = IS_SHARP
+	attack_verb = list("sawed", "shred", "rended", "gutted", "eviscerated")
+	
+/obj/item/mounted_energy_chainsaw/attack(mob/living/M, mob/living/user)
+	playsound(src, pick('hippiestation/sound/weapons/echainsawhit1.ogg','hippiestation/sound/weapons/echainsawhit2.ogg'))
+	..()

@@ -4,83 +4,59 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "c" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "d" = (
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "e" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 4;
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "f" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "g" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "h" = (
 /obj/item/pickaxe,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "i" = (
 /obj/effect/station_crash,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "k" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "l" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "m" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "n" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 20;
@@ -91,9 +67,7 @@
 	width = 40
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape{
-	luminosity = 0
-	})
+/area/shuttle/escape/meteor)
 
 (1,1,1) = {"
 a

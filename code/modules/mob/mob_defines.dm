@@ -31,8 +31,6 @@
 	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
-	var/other_mobs = null
-
 
 	var/next_move = null
 	var/notransform = null	//Carbon
@@ -71,6 +69,7 @@
 	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
+	var/atom/movable/buckling
 
 	//Hands
 	var/active_hand_index = 1
@@ -89,13 +88,9 @@
 
 	var/in_throw_mode = 0
 
-	var/music_lastplayed = "null"
-
 	var/job = null//Living
 
 	var/radiation = 0//Carbon
-
-	var/voice_name = "unidentifiable voice"
 
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.

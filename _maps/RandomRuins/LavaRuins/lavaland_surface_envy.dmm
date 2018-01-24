@@ -83,7 +83,6 @@
 /area/ruin/unpowered)
 "n" = (
 /turf/open/floor/plating{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
@@ -95,7 +94,6 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)

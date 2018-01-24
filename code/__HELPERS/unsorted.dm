@@ -1199,18 +1199,8 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
-/proc/get_areas_in_z(zlevel)
-	. = list()
-	var/validarea = FALSE
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		validarea = TRUE
-		for(var/turf/T in A)
-			if(T.z != zlevel)
-				validarea = FALSE
-				break
-		if(validarea)
-			. += A
+/proc/get_random_station_turf()
+	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1257,6 +1247,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
+
+GLOBAL_REAL_VAR(list/stack_trace_storage)
+/proc/gib_stack_trace()
+	stack_trace_storage = list()
+	stack_trace()
+	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
+	. = stack_trace_storage
+	stack_trace_storage = null
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 

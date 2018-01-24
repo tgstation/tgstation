@@ -307,7 +307,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /obj/machinery/light{

@@ -111,15 +111,17 @@
 				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
-			if(L.buckled)
-				if(isobj(L.buckled))
-					var/obj/O = L.buckled
-					if(O.resistance_flags & LAVA_PROOF)
-						continue
-				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/live = L.buckled
-					if("lava" in live.weather_immunities)
-						continue
+			var/buckle_check = L.buckling
+			if(!buckle_check)
+				buckle_check = L.buckled
+			if(isobj(buckle_check))
+				var/obj/O = buckle_check
+				if(O.resistance_flags & LAVA_PROOF)
+					continue
+			else if(isliving(buckle_check))
+				var/mob/living/live = buckle_check
+				if("lava" in live.weather_immunities)
+					continue
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.

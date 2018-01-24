@@ -6,7 +6,7 @@
 **Discord:** [Request access here.](https://hippiestation.com/threads/discord-invites.6055) <BR>
 
 [![Build Status](https://travis-ci.org/HippieStation/HippieStation.png)](https://travis-ci.org/HippieStation/HippieStation/) [![Krihelimeter](http://www.krihelinator.xyz/badge/HippieStation/HippieStation)](http://www.krihelinator.xyz/repositories/HippieStation/HippieStation)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---2%25-red.svg)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Percentage of issues still open") [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/HippieStation/HippieStation.svg)](https://isitmaintained.com/project/HippieStation/HippieStation "Average time to resolve an issue") ![Coverage](https://img.shields.io/badge/coverage---777%25-red.svg)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
 ## ABOUT
@@ -27,6 +27,8 @@ Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/hippiestation/hippiestation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
+
+Option 3: Download a pre-compiled nightly at https://tgstation13.download/nightlies/ (same caveats as option 2)
 
 ## INSTALLATION
 
@@ -112,6 +114,14 @@ To enable an away mission open `config/awaymissionconfig.txt` and uncomment one 
 
 The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
+## WEB/CDN RESOURCE DELIVERY 
+
+Web delivery of game resources makes it quicker for players to join and reduces some of the stress on the game server.
+
+1. Edit compile_options.dm to set the `PRELOAD_RSC` define to `0`
+1. Add a url to config/external_rsc_urls pointing to a .zip file containing the .rsc.
+    * If you keep up to date with /tg/ you could reuse /tg/'s rsc cdn at http://tgstation13.download/byond/tgstation.zip. Otherwise you can use cdn services like CDN77 or cloudflare (requires adding a page rule to enable caching of the zip), or roll your own cdn using route 53 and vps providers.
+	* Regardless even offloading the rsc to a website without a CDN will be a massive improvement over the in game system for transferring files.
 
 ## IRC BOT SETUP
 
