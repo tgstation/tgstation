@@ -109,3 +109,14 @@
 			if(initial(stamp_type.name) == input_stamp)
 				break
 		change_to(stamp_type)
+
+/obj/item/stamp/chameleon/broken/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/stamp/chameleon/broken/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/stamp/chameleon/broken/process()
+	change_to(pick(stamp_types))

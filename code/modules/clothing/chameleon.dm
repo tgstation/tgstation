@@ -153,13 +153,15 @@
 	select_look(owner)
 	return 1
 
-/datum/action/item_action/chameleon/change/proc/emp_randomise()
+/datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
 	if(istype(target, /obj/item/gun/energy/laser/chameleon))
 		return	//Please no crash!
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
-	emp_timer = world.time + EMP_RANDOMISE_TIME
+	var/new_value = world.time + amount
+	if(new_value > emp_timer)
+		emp_timer = new_value
 
 /datum/action/item_action/chameleon/change/process()
 	if(world.time > emp_timer)
@@ -189,8 +191,8 @@
 	item_state = "engi_suit"
 	item_color = "engine"
 
-/obj/item/clothing/under/chameleon/New()
-	..()
+/obj/item/clothing/under/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
 	chameleon_action.chameleon_name = "Jumpsuit"
@@ -199,6 +201,10 @@
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/under/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/suit/chameleon
 	name = "armor"
@@ -211,8 +217,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/suit/chameleon/New()
-	..()
+/obj/item/clothing/suit/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
@@ -221,6 +227,10 @@
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/suit/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/glasses/chameleon
 	name = "Optical Meson Scanner"
@@ -232,8 +242,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/chameleon/New()
-	..()
+/obj/item/clothing/glasses/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
@@ -242,6 +252,10 @@
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/glasses/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/gloves/chameleon
 	desc = "These gloves will protect the wearer from electric shock."
@@ -254,8 +268,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/gloves/chameleon/New()
-	..()
+/obj/item/clothing/gloves/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
 	chameleon_action.chameleon_name = "Gloves"
@@ -264,6 +278,10 @@
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/gloves/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/head/chameleon
 	name = "grey cap"
@@ -276,8 +294,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/head/chameleon/New()
-	..()
+/obj/item/clothing/head/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
@@ -287,6 +305,10 @@
 /obj/item/clothing/head/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
+/obj/item/clothing/head/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
+
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
@@ -294,8 +316,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
-/obj/item/clothing/head/chameleon/drone/New()
-	..()
+/obj/item/clothing/head/chameleon/drone/Initialize()
+	. = ..()
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -320,8 +342,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/mask/chameleon/New()
-	..()
+/obj/item/clothing/mask/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
@@ -330,6 +352,10 @@
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/mask/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	vchange = !vchange
@@ -343,8 +369,8 @@
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
-/obj/item/clothing/mask/chameleon/drone/New()
-	..()
+/obj/item/clothing/mask/chameleon/drone/Initialize()
+	. = ..()
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -367,8 +393,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/shoes/chameleon/New()
-	..()
+/obj/item/clothing/shoes/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
 	chameleon_action.chameleon_name = "Shoes"
@@ -377,6 +403,10 @@
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/shoes/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/gun/energy/laser/chameleon
 	name = "practice laser gun"
@@ -405,8 +435,6 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/gun/energy/laser/chameleon/Initialize()
-	. = ..()
 	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags")
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
 	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
@@ -505,8 +533,8 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/storage/backpack/chameleon/New()
-	..()
+/obj/item/storage/backpack/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/backpack
 	chameleon_action.chameleon_name = "Backpack"
@@ -515,14 +543,18 @@
 /obj/item/storage/backpack/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
+/obj/item/storage/backpack/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
+
 /obj/item/storage/belt/chameleon
 	name = "toolbelt"
 	desc = "Holds tools."
 	silent = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/storage/belt/chameleon/New()
-	..()
+/obj/item/storage/belt/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"
@@ -530,6 +562,10 @@
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/storage/belt/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/device/radio/headset/chameleon
 	name = "radio headset"
@@ -545,12 +581,16 @@
 /obj/item/device/radio/headset/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
+/obj/item/device/radio/headset/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
+
 /obj/item/device/pda/chameleon
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/pda/chameleon/New()
-	..()
+/obj/item/device/pda/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/pda
 	chameleon_action.chameleon_name = "PDA"
@@ -559,4 +599,8 @@
 
 /obj/item/device/pda/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
+
+/obj/item/device/pda/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 

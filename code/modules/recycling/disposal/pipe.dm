@@ -6,7 +6,7 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = TRUE
 	density = FALSE
-	on_blueprints = TRUE
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	level = 1			// underfloor only
 	dir = NONE			// dir will contain dominant direction for junction pipes
 	max_integrity = 200
@@ -26,7 +26,7 @@
 		make_from.forceMove(src)
 		stored = make_from
 	else
-		stored = new /obj/structure/disposalconstruct(src, make_from=src)
+		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
 	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
