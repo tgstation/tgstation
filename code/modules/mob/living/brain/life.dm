@@ -32,7 +32,7 @@
 /mob/living/brain/handle_status_effects()
 	return
 
-/mob/living/brain/handle_disabilities()
+/mob/living/brain/handle_traits()
 	return
 
 
