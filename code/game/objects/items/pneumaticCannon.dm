@@ -205,6 +205,16 @@
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
+/obj/item/pneumatic_cannon/handle_atom_del(atom/A)
+	. = ..()
+	if (A in loadedItems)
+		var/obj/item/I = A
+		loadedItems -= I
+		loadedWeightClass -= I.w_class
+	if (A == tank)
+		tank = null
+		update_icons()
+
 /obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
