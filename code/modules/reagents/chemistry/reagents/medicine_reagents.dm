@@ -41,7 +41,7 @@
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0)
+	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.remove_all_disabilities()
@@ -134,7 +134,7 @@
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
 		M.adjustFireLoss(-power, 0)
-		M.adjustToxLoss(-power, 0)
+		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
 		M.status_flags &= ~DISFIGURED
 		. = 1
@@ -155,6 +155,35 @@
 		M.status_flags &= ~DISFIGURED
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
+	..()
+
+/datum/reagent/medicine/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
+	color = "#f7832a"
+	taste_description = "spicy jelly"
+
+/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
+	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		var/power = 0
+		switch(M.bodytemperature)
+			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+				power = 2
+			if(400 to 460)
+				power = 3
+			else
+				power = 5
+		if(M.on_fire)
+			power *= 2
+
+		M.adjustOxyLoss(-2 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-1.5 * power, 0)
+		M.adjustToxLoss(-power, 0, TRUE)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -978,6 +1007,22 @@
 	M.adjustFireLoss(2*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy."
+	reagent_state = LIQUID
+	color = "#91D865"
+	taste_description = "jelly"
+
+/datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"

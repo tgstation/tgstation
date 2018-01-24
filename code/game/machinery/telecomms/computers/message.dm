@@ -33,17 +33,17 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(istype(O, /obj/item/screwdriver) && emagged)
+	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
 		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	if(!isnull(linkedServer))
-		emagged = TRUE
+		obj_flags |= EMAGGED
 		screen = 2
 		spark_system.set_up(5, 0, src)
 		src.spark_system.start()
@@ -71,7 +71,7 @@
 	if(..())
 		return
 	//If the computer is being hacked or is emagged, display the reboot message.
-	if(hacking || emagged)
+	if(hacking || (obj_flags & EMAGGED))
 		message = rebootmsg
 	var/dat = "<center><font color='blue'[message]</font>/</center>"
 
@@ -82,7 +82,7 @@
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
 		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
-	if(hacking || emagged)
+	if(hacking || (obj_flags & EMAGGED))
 		screen = 2
 	else if(!auth || !linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
 		if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
@@ -237,7 +237,7 @@
 	src.screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	emagged = FALSE
+	obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"

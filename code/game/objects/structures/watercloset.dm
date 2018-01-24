@@ -236,7 +236,7 @@
 		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5, wet_time_to_add = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)

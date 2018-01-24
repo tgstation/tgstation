@@ -88,10 +88,14 @@
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
+		if(!M || !M.current)
+			continue
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	for(var/V in GLOB.brass_recipes)
 		var/datum/stack_recipe/R = V
+		if(!R)
+			continue
 		if(R.title == "wall gear")
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
@@ -123,6 +127,8 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
+		if(!M || !M.current)
+			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
@@ -262,7 +268,7 @@
 		return
 	if(!first_sound_played || prob(7))
 		for(var/mob/M in GLOB.player_list)
-			if(M && !isnewplayer(M))
+			if(!isnewplayer(M))
 				var/turf/T = get_turf(M)
 				if(T && T.z == z)
 					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
@@ -324,7 +330,7 @@
 				QDEL_IN(src, 3)
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
-				var/turf/T =  locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), ZLEVEL_STATION_PRIMARY) //approximate center of the station
+				var/turf/T = SSmapping.get_station_center()
 				new /obj/structure/destructible/clockwork/massive/ratvar(T)
 				SSticker.force_ending = TRUE
 				var/x0 = T.x

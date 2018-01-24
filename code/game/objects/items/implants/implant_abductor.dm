@@ -25,7 +25,7 @@
 	if(..())
 		var/obj/machinery/abductor/console/console
 		if(ishuman(target))
-			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
+			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(/datum/antagonist/abductor)
 			if(A)
 				console = get_abductor_console(A.team.team_number)
 				home = console.pad

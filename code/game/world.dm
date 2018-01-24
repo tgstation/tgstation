@@ -17,7 +17,7 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	new /datum/controller/configuration
+	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
@@ -56,7 +56,7 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	GLOB.external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=GLOB.external_rsc_urls.len)
 		if(GLOB.external_rsc_urls[i])
