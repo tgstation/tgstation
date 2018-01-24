@@ -293,7 +293,6 @@
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
 	desc = "A circuit which is used to grab and store objects within it's self-contained inventory."
-
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
