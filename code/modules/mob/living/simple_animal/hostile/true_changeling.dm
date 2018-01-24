@@ -80,7 +80,7 @@
 	if(statpanel("Status"))
 		if(stored_changeling)
 			var/time_left = TRUE_CHANGELING_FORCED_REFORM - time_spent_as_true
-			time_left = Clamp(time_left, 0, INFINITY)
+			time_left = CLAMP(time_left, 0, INFINITY)
 			stat(null, "Time Remaining: [time_left]")
 		stat(null, "Ignoring Gravity: [wallcrawl ? "YES" : "NO"]")
 
