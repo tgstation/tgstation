@@ -1,6 +1,6 @@
 /obj/item/device/reverse_bear_trap
 	name = "reverse bear trap"
-	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp."
+	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp. To apply, hit someone with it."
 	icon_state = "reverse_bear_trap"
 	slot_flags = SLOT_HEAD
 	flags_1 = CONDUCT_1
@@ -43,7 +43,7 @@
 		soundloop.stop()
 		soundloop2.stop()
 		to_chat(loc, "<span class='userdanger'>*ding*</span>")
-		addtimer(CALLBACK(src, .proc/snap), 3)
+		addtimer(CALLBACK(src, .proc/snap), 2)
 
 /obj/item/device/reverse_bear_trap/attack_hand(mob/user)
 	if(iscarbon(user))
@@ -86,16 +86,17 @@
 		to_chat(user, "<span class='warning'>Remove their headgear first!</span>")
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
-	"<span class='userdanger'>[target] starts forcing [src] onto your head!</span>", "<i>You hear clanking.</i>", ignore_mob = user)
+	"<span class='userdanger'>[target] starts forcing [src] onto your head!</span>", "<i>You hear clanking.</i>")
 	to_chat(user, "<span class='danger'>You start forcing [src] onto [target]'s head...</span>")
 	if(!do_after(user, 30, target = target) || target.get_item_by_slot(slot_head))
 		return
 	target.visible_message("<span class='warning'>[user] forces and locks [src] onto [target]'s head!</span>", \
-	"<span class='userdanger'>[target] locks [src] onto your head!</span>", "<i>You hear a click, and then a timer ticking down.</i>", ignore_mob = user)
+	"<span class='userdanger'>[target] locks [src] onto your head!</span>", "<i>You hear a click, and then a timer ticking down.</i>")
 	to_chat(user, "<span class='danger'>You force [src] onto [target]'s head and click the padlock shut.</span>")
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, slot_head)
 	arm()
+	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg')
 
 /obj/item/device/reverse_bear_trap/proc/snap()
 	reset()
