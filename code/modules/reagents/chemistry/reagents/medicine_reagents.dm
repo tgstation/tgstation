@@ -182,7 +182,7 @@
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
-		M.status_flags &= ~DISFIGURED
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()
 
@@ -1206,8 +1206,6 @@
 	addiction_threshold = 5
 
 /datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
-	M.status_flags |= GOTTAGOFAST
 	M.adjustToxLoss(-3*REM, 0)
 	M.adjustBruteLoss(-5*REM, 0)
 	M.adjustFireLoss(-5*REM, 0)
@@ -1255,6 +1253,14 @@
 
 
 	..()
+
+/datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/ketrazine/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.remove_trait(TRAIT_GOTTAGOFAST, id)
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
