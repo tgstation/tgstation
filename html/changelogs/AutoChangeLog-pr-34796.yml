@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Emergency lights will give off light again"
