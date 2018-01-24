@@ -13,17 +13,19 @@
 	icon_state = "bed"
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
-	can_buckle = 1
-	buckle_lying = 1
+	can_buckle = TRUE
+	buckle_lying = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 30
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
+	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	if(bolts)
+		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

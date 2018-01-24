@@ -35,6 +35,10 @@
 	. = ..()
 	sord = new(src)
 
+/mob/living/simple_animal/hostile/pirate/Destroy()
+	QDEL_NULL(sord)
+	return ..()
+
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
 	icon_state = "pirateranged"
@@ -59,7 +63,6 @@
 
 /mob/living/simple_animal/hostile/pirate/space/Initialize()
 	. = ..()
-	sord = new(src)
 	set_light(3)
 
 /mob/living/simple_animal/hostile/pirate/space/ranged
@@ -74,8 +77,3 @@
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
 			/obj/item/gun/energy/laser)
-
-/mob/living/simple_animal/hostile/pirate/space/ranged/Initialize()
-	. = ..()
-	set_light(3)
-
