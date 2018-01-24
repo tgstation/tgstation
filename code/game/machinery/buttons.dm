@@ -56,6 +56,12 @@
 		else
 			icon_state = skin
 
+/obj/machinery/button/allowed(mob/M)
+	if(req_access_txt == ACCESS_SYNDICATE && issilicon(M)) //The syndicate figured out how to lock out borgs
+		if(!("syndicate" in M.faction))
+			return FALSE
+	..()
+
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
 		if(panel_open || allowed(user))
