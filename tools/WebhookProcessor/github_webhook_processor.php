@@ -363,7 +363,7 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
-function close_if_other_feature_prs($payload, $noWarn = false){
+function close_if_other_feature_prs($payload){
 	$singleton_labels = array('Feature', 'Balance/Rebalance');
 
 	$query = array('is' => array('pr', 'open'), 'author' => $payload['pull_request']['user']['login'], 'label' => $singleton_labels);
@@ -371,13 +371,8 @@ function close_if_other_feature_prs($payload, $noWarn = false){
 	if(count($res) < 2)
 		return FALSE;
 
-	if(!$noWarn)
-		create_comment($payload, 'You currently have one or more other negative balance pull requests open. This one will be automatically closed in 60s if the others remain open or you can close it yourself.');
-		sleep(60);
-		if(get_pr_code_friendliness($payload) <= 0)
-			return close_if_other_feature_prs($payload, true);
-		return false;
-	apisend($payload['pull_request']['url'], 'PATCH', array('state' => 'closed'));
+	create_comment($payload, 'You currently have one or more other negative balance pull requests open. Maintainers are free to close this or the other(s) at will. See `Pull Request Process` in CONTRIBUTING.md');
+	set_labels($payload, array('Closure Candidate'));
 	return true;
 }
 
