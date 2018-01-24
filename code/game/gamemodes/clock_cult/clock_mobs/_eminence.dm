@@ -32,12 +32,12 @@
 				T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", ignore_mob = src)
 				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
 				last_failed_turf = T
-			if ((REALTIMEOFDAY - lastWarning)) >= 30) 
+			if ((REALTIMEOFDAY - lastWarning) >= 30) 
 				lastWarning = REALTIMEOFDAY
 				to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
 			return
 		if(!GLOB.ratvar_awakens && istype(get_area(T), /area/chapel))
-			if ((REALTIMEOFDAY - lastWarning)) >= 30) 
+			if ((REALTIMEOFDAY - lastWarning) >= 30) 
 				lastWarning = REALTIMEOFDAY
 				to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
 			return
