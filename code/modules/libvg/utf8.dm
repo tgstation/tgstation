@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(libvg_loaded, FALSE)
 // 874 and 1250-1258 are Windows CodePage encodings. The number corresponds to the CodePage.
 // 2312 is gb2312 (Chinese)
 /proc/_determine_encoding(var/mob_or_client)
-	. = "1252"
+	. = CONFIG_GET(string/goonchat_encoding)
 	if (istype(mob_or_client, /client))
 		var/client/C = mob_or_client
 		. = C.encoding

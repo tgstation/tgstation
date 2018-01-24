@@ -386,3 +386,6 @@
 
 /datum/config_entry/string/default_view
 	value = "15x15"
+
+/datum/config_entry/string/goonchat_encoding
+	value = "1252"
