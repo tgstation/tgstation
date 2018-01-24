@@ -197,19 +197,20 @@ F
 	category = "Assistance"
 	cost = 1
 
-/datum/spellbook_entry/lichdom
+/* /datum/spellbook_entry/lichdom
 	name = "Bind Soul"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
-	category = "Defensive"
+	category = "Defensive" */ // REKT
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
 	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	cost = 1 //crappy spell
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
 	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
-	cost = 3
+	cost = 2
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
 	. = ..()
@@ -218,13 +219,13 @@ F
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
-	cost = 3
+	cost = 2
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
-	cost = 3
+	cost = 2
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
 
 /datum/spellbook_entry/barnyard
@@ -262,6 +263,7 @@ F
 /datum/spellbook_entry/eruption
 	name = "Eruption"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/eruption
+	cost = 1 //also crappy
 
 /datum/spellbook_entry/soulflare
 	name = "Soulflare"
@@ -430,7 +432,7 @@ F
 	name = "Plasma Fist Scroll"
 	desc = "Consider this more of a \"spell bundle.\" This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
 	item_path = /obj/item/plasma_fist_scroll
-	cost = 1
+	cost = 3 //infinite, no recharge ei-nath.
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -455,13 +457,15 @@ F
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
-	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
+	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power. Counts as a staff."
 	item_path = /obj/item/twohanded/mjollnir
+	cost = 1
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
-	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
+	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact. Counts as a staff."
 	item_path = /obj/item/twohanded/singularityhammer
+	cost = 1
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"

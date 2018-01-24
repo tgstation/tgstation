@@ -22,7 +22,7 @@
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 25, bomb = 100, bio = 100, rad = 70)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	
+
 /obj/item/clothing/suit/fire/atmos/syndicate
 	name = "warm firesuit"
 	desc = "A firesuit with blaze-themed colors. You can almost hear the crackling of a distant inferno...."
