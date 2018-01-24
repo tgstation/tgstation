@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Fixed missing wheat fridge on omega and removes a duplicate pipe."

@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Beakers and beaker-like objects now get put in your hand on ejection from chemistry devices."
