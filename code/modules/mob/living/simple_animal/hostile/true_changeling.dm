@@ -49,16 +49,13 @@
 
 /mob/living/simple_animal/hostile/true_changeling/Initialize()
 	. = ..()
-	icon_state = "horror[rand(1, 4)]"
+	icon_state = "horror[rand(1, 5)]"
 	reform = new
 	reform.Grant(src)
 	devour = new
 	devour.Grant(src)
 	spine_crawl = new
 	spine_crawl.Grant(src)
-	for(var/mob/M in view(7, src))
-		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
-	playsound(src, 'sound/creatures/rawrXD.ogg', 100, 1)
 
 /mob/living/simple_animal/hostile/true_changeling/Destroy()
 	QDEL_NULL(reform)
@@ -116,7 +113,7 @@
 	return wallcrawl
 
 /mob/living/simple_animal/hostile/true_changeling/adjustFireLoss(amount)
-	if(stat)
+	if(!stat)
 		playsound(src, 'sound/creatures/ling_scream.ogg', 100, 1)
 	..()
 
