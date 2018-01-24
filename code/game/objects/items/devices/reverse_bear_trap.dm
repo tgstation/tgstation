@@ -54,17 +54,17 @@
 				var/fear_string
 				switch(time_left)
 					if(0 to 5)
-						fear_string = "You agonizingly"
+						fear_string = "agonizingly"
 					if(5 to 20)
-						fear_string = "You desperately"
+						fear_string = "desperately"
 					if(20 to 40)
-						fear_string = "You panickedly"
+						fear_string = "panickedly"
 					if(40 to 50)
-						fear_string = "You shakily"
+						fear_string = "shakily"
 					if(50 to 60)
-						fear_string = "You"
+						fear_string = ""
 				C.visible_message("<span class='danger'>[C] fiddles with and pulls at [src]...</span>", \
-				"<span class='danger'>[fear_string] try to pull at [src]...</span>", "<i>You hear clicking and ticking.</i>")
+				"<span class='danger'>You [fear_string] try to pull at [src]...</span>", "<i>You hear clicking and ticking.</i>")
 				if(!do_after(user, 20, target = src))
 					struggling = FALSE
 					return
