@@ -314,16 +314,18 @@
 		var/mode = get_pin_data(IC_INPUT, 2)
 		if(mode == 1)
 			if(check_target(AM))
-				var/is_circuit = istype(AM,/obj/item/device/electronic_assembly/)
-				var/circuitcheck = 0
-				if (!is_circuit)
-					circuitcheck = 1
+				var/weightcheck = FALSE
+				if (!istype(AM,/obj/item/device/electronic_assembly/))
+					if (AM.w_class <= max_w_class)
+						weightcheck = TRUE
+					else
+						weightcheck = FALSE
 				else
 					if (AM.w_class < max_w_class)
-						circuitcheck = 1
+						weightcheck = TRUE
 					else
-						circuitcheck = 0
-				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class) && (circuitcheck))
+						weightcheck = FALSE
+				if((contents.len < max_items) && (weightcheck))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
