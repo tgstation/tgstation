@@ -233,9 +233,6 @@
 		return
 	if(ismovableatom(O) && O != sliver)
 		Consume(O, user)
-		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
-		QDEL_NULL(sliver)
-		update_icon()
 
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
@@ -255,8 +252,8 @@
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 	if (user)
-		user.visible_message("<span class='danger'>As [user] touches \the [AM] with \a [src], silence fills the room...</span>",\
-			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
+		user.visible_message("<span class='danger'>As [user] touches [AM] with \a [src], silence fills the room...</span>",\
+			"<span class='userdanger'>You touch [AM] with [src], and everything suddenly goes silent.</span>\n<span class='notice'>[AM] and [sliver] flash into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 		user.dust()
 	radiation_pulse(src, 500, 2)
