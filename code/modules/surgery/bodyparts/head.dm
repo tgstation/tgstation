@@ -61,7 +61,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.has_disability(DISABILITY_HUSK))
+	if(C.has_trait(TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"

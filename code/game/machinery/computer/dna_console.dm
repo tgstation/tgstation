@@ -81,7 +81,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.has_disability(DISABILITY_NOCLONE)) || (connected.scan_level == 3))) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.has_trait(TRAIT_NOCLONE)) || (connected.scan_level == 3))) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -528,7 +528,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || (RADIMMUNE in viable_occupant.dna.species.species_traits) || (viable_occupant.has_disability(DISABILITY_NOCLONE)))
+		if(!istype(viable_occupant) || !viable_occupant.dna || (RADIMMUNE in viable_occupant.dna.species.species_traits) || (viable_occupant.has_trait(TRAIT_NOCLONE)))
 			viable_occupant = null
 	return viable_occupant
 

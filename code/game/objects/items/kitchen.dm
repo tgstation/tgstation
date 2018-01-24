@@ -49,7 +49,7 @@
 		forkload = null
 
 	else if(user.zone_selected == "eyes")
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -75,7 +75,7 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
