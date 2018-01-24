@@ -190,6 +190,10 @@
 	keyslot = new /obj/item/device/encryptionkey/headset_com
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
+/obj/item/device/radio/headset/headset_cent/empty
+	keyslot = null
+	keyslot2 = null
+
 /obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 
