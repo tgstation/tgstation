@@ -69,7 +69,7 @@
 	return 0
 
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Can't go below remaining duration
-	if(((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
@@ -78,7 +78,7 @@
 		return S
 
 /mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Sets remaining duration
-	if(((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(amount <= 0)
 			if(S)
@@ -90,7 +90,7 @@
 		return S
 
 /mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Adds to remaining duration
-	if(((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration += amount
