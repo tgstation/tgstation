@@ -51,6 +51,11 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
+/datum/status_effect/incapacitating/sleeping/on_apply(mob/living/carbon/C)
+	if(C.has_trait(TRAIT_SLEEPIMMUNE))
+		return FALSE
+	return ..()
+
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
 	if(.)
