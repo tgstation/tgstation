@@ -417,9 +417,9 @@
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
+	var/max_w_class = assembly.w_class
 	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
