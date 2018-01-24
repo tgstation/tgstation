@@ -389,6 +389,12 @@
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
+		
+		if(issilicon(A))
+			var/mob/living/silicon/S = A
+			if(S.stat || in_faction(S) || S.emagged) //don't target if dead, in faction, or emagged
+				continue
+			targets += S
 
 		if(ismecha(A))
 			var/obj/mecha/M = A
