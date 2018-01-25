@@ -701,7 +701,7 @@
 	id = "borg_upgrade_expand"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/expand
-	materials = list(MAT_METAL=200000, MAT_TITANIUM=10000)
+	materials = list(MAT_METAL=200000, MAT_TITANIUM=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
