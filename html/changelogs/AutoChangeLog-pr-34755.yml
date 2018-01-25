@@ -1,4 +1,0 @@
-author: "Jittai"
-delete-after: True
-changes: 
-  - tweak: "All color inputs now use the current color, of the thing being colored, as default choice."

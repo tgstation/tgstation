@@ -1,6 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Fleshmend can no longer be stacked several times at once."
-  - balance: "Fleshmend no longer heals changelings who are on fire, and heals burn damage half as quickly as brute and oxygen damage."
-  - code_imp: "Fleshmend has been refactored into a status effect."

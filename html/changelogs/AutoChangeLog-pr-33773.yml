@@ -1,7 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Slimepeople and Jellypeople can now speak the slime language."
-  - tweak: "Slimes now only speak slime language, although they still understand common."
-  - balance: "Slimepeople are no longer virus immune."
-  - bugfix: "The above change fixes a bug that made black slime cure itself."

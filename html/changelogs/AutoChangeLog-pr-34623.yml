@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Loaded templates now get placed on top of existing terrain so as to preserve baseturfs. This fixes survival pods walls breaking to lava as well as allows some future fixes."
