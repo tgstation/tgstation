@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -302,13 +302,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
-"S" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/wood{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -474,7 +467,7 @@ d
 g
 o
 h
-S
+h
 C
 J
 h
