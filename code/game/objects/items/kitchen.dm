@@ -29,6 +29,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/datum/reagent/forkload //used to eat omelette
 
+/obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	return BRUTELOSS
+
 /obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
@@ -44,7 +49,7 @@
 		forkload = null
 
 	else if(user.zone_selected == "eyes")
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -70,7 +75,7 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else
@@ -163,4 +168,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
+/obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */

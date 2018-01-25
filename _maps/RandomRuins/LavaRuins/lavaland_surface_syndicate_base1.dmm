@@ -195,7 +195,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dC" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dD" = (
@@ -1679,7 +1678,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1982,7 +1980,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gS" = (
@@ -3034,7 +3031,6 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -4508,7 +4504,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lO" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lP" = (
@@ -4963,16 +4958,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
-"mO" = (
-/obj/structure/filingcabinet/security,
-/obj/machinery/button/door{
-	id = "lavalandsyndi_telecomms";
-	name = "Telecomms Blast Door Control";
-	pixel_y = 26;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mP" = (
 /obj/structure/filingcabinet/security,
 /turf/open/floor/plasteel/dark,
@@ -5171,7 +5156,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5464,13 +5448,6 @@
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nJ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	freerange = 1;
-	listening = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5798,11 +5775,8 @@
 "oj" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
 	freerange = 1;
-	listening = 0;
-	name = "Pirate Radio Broadcast Channel"
+	name = "Syndicate Radio Intercom"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -6031,45 +6005,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oJ" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/engine,
-/area/ruin/unpowered/syndicate_lava_base/testlab)
-"oK" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4;
-	piping_layer = 3;
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/main)
-"oL" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"oM" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"oN" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/red/side,
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oO" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/bar)
 "oP" = (
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -6976,7 +6911,7 @@ ae
 aq
 aq
 aq
-oJ
+aq
 aq
 aq
 ae
@@ -6997,7 +6932,7 @@ ha
 jy
 jM
 jN
-oL
+jZ
 kJ
 lh
 lz
@@ -7147,7 +7082,7 @@ mx
 jy
 jy
 nU
-oN
+oo
 ox
 ab
 ab
@@ -7313,7 +7248,7 @@ et
 eT
 fo
 fO
-oK
+gG
 hg
 hz
 hO
@@ -7565,7 +7500,7 @@ ku
 kR
 ln
 lI
-oM
+lI
 mC
 lI
 nA

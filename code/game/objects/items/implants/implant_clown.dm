@@ -14,7 +14,7 @@
 		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
 
 /obj/item/implanter/sad_trombone
-	name = "implanter (sad_trombone)"
+	name = "implanter (sad trombone)"
 	imp_type = /obj/item/implant/sad_trombone
 
 /obj/item/implantcase/sad_trombone

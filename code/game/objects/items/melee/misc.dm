@@ -52,7 +52,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
@@ -99,7 +99,7 @@
 		return ..()
 
 	add_fingerprint(user)
-	if((user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))

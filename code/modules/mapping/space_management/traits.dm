@@ -44,3 +44,8 @@
 			if (S.traits[trait])
 				. += S.z_value
 				break
+
+// Prefer not to use this one too often
+/datum/controller/subsystem/mapping/proc/get_station_center()
+	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]
+	return locate(round(world.maxx * 0.5, 1), round(world.maxy * 0.5, 1), station_z)

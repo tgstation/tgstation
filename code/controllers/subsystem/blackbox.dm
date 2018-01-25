@@ -11,7 +11,8 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
 							"time_dilation_current" = 3,
-							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"science_techweb_unlock" = 2,
+							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
@@ -225,7 +226,7 @@ Versioning
 				if(islist(data[i]))
 					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
 				else
-					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]"
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 

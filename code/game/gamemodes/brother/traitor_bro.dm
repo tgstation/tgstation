@@ -52,7 +52,7 @@
 		team.pick_meeting_area()
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
-			M.add_antag_datum(ANTAG_DATUM_BROTHER, team)
+			M.add_antag_datum(/datum/antagonist/brother, team)
 		team.update_name()
 	brother_teams += pre_brother_teams
 	return ..()
