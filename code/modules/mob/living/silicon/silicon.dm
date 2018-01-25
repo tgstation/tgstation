@@ -1,5 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
+	voice_name = "synthesized voice"
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"

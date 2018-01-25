@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	max_integrity = 200
 
-	obj_flags = 0
+	can_be_hit = FALSE
 
 	var/hitsound = null
 	var/usesound = null
@@ -63,8 +63,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/breakouttime = 0
 	var/being_removed = FALSE
 	var/list/materials
-	var/item_flags = 0
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
+	var/emagged = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -545,7 +545,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.has_trait(TRAIT_BLIND) || M.has_trait(TRAIT_NEARSIGHT)))
+		if(!(M.has_disability(DISABILITY_BLIND) || M.has_disability(DISABILITY_NEARSIGHT)))
 			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))

@@ -173,7 +173,8 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = FALSE
+	set waitfor = 0
+	return
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null

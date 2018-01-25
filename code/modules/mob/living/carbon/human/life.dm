@@ -52,7 +52,7 @@
 		return pressure
 
 
-/mob/living/carbon/human/handle_traits()
+/mob/living/carbon/human/handle_disabilities()
 	if(eye_blind)			//blindness, heals slowly over time
 		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
@@ -61,7 +61,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
+	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
 
@@ -299,6 +299,30 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+
+/mob/living/carbon/human/proc/can_heartattack()
+	CHECK_DNA_AND_SPECIES(src)
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(istype(heart) && heart.beating)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/set_heartattack(status)
+	if(!can_heartattack())
+		return FALSE
+
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!istype(heart))
+		return
+
+	heart.beating = !status
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)

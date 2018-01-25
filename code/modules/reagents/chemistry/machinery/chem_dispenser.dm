@@ -82,12 +82,12 @@
 		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
 	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
-	obj_flags |= EMAGGED
+	emagged = TRUE
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -182,8 +182,6 @@
 		if("eject")
 			if(beaker)
 				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
 				beaker = null
 				cut_overlays()
 				. = TRUE

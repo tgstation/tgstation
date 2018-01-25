@@ -315,7 +315,7 @@
 			update_state |= UPSTATE_OPENED1
 		if(opened==2)
 			update_state |= UPSTATE_OPENED2
-	else if((obj_flags & EMAGGED) || malfai)
+	else if(emagged || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
 		update_state |= UPSTATE_WIREEXP
@@ -395,8 +395,8 @@
 								"<span class='italics'>You hear a crack.</span>")
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
-						else if (obj_flags & EMAGGED) // We emag board, not APC's frame
-							obj_flags &= ~EMAGGED
+						else if (emagged) // We emag board, not APC's frame
+							emagged = FALSE
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -479,7 +479,7 @@
 					to_chat(user, "<span class='warning'>There is nothing to secure!</span>")
 					return
 				update_icon()
-		else if(obj_flags & EMAGGED)
+		else if(emagged)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
 		else if((stat & MAINT) && !opened)
 			..() //its an empty closed frame... theres no wires to expose!
@@ -669,7 +669,7 @@
 		togglelock(user)
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
 	else if(opened)
 		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
@@ -705,7 +705,7 @@
 			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED) && !malfhack)
+	if(!emagged && !malfhack)
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else if(panel_open)
@@ -715,7 +715,7 @@
 		else
 			flick("apc-spark", src)
 			playsound(src, "sparks", 75, 1)
-			obj_flags |= EMAGGED
+			emagged = TRUE
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
@@ -852,7 +852,7 @@
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
-				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
+				if(emagged || (stat & (BROKEN|MAINT)))
 					to_chat(usr, "The APC does not respond to the command.")
 				else
 					locked = !locked

@@ -17,15 +17,15 @@
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 	desc = "[desc] The display is flickering slightly."
 

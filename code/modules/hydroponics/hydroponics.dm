@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	pixel_y = 8
-	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
+	unique_rename = 1
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray

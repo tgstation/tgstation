@@ -132,7 +132,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(obj_flags & EMAGGED)
+		if(emagged)
 			return 0
 	if(!src.operating) //in case of emag
 		operating = TRUE
@@ -157,7 +157,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(obj_flags & EMAGGED)
+		if(emagged)
 			return 0
 	operating = TRUE
 	do_animate("closing")
@@ -206,8 +206,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(!operating && density && !(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
+	if(!operating && density && !emagged)
+		emagged = TRUE
 		operating = TRUE
 		flick("[src.base_state]spark", src)
 		playsound(src, "sparks", 75, 1)
@@ -258,7 +258,7 @@
 						WA.update_icon()
 						WA.created_name = src.name
 
-						if(obj_flags & EMAGGED)
+						if(emagged)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return

@@ -336,7 +336,7 @@
 				break
 			if(!L.client || L.client.is_afk())
 				set waitfor = FALSE
-				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, 50, L)
+				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", "[name]", null, "Clock Cultist", 50, L)
 				var/mob/dead/observer/theghost = null
 				if(candidates.len)
 					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")

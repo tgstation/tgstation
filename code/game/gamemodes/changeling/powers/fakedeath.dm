@@ -12,7 +12,7 @@
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
-	user.fakedeath("changeling") //play dead
+	user.status_flags |= FAKEDEATH //play dead
 	user.update_stat()
 	user.update_canmove()
 
@@ -26,8 +26,8 @@
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
-	if(user.has_trait(TRAIT_FAKEDEATH, "changeling"))
+/obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
+	if(user.status_flags & FAKEDEATH)
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death

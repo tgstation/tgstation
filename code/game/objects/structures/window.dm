@@ -26,7 +26,6 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
-	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -44,6 +43,9 @@
 			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
 		else
 			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+
+	if(!anchored)
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -78,8 +80,7 @@
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -290,23 +291,62 @@
 	qdel(src)
 	update_nearby_icons()
 
+/obj/structure/window/verb/rotate()
+	set name = "Rotate Window Counter-Clockwise"
+	set category = "Object"
+	set src in oview(1)
 
-/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
 	if(anchored)
-		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
+	var/target_dir = turn(dir, 90)
 
 	if(!valid_window_location(loc, target_dir))
-		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
-	return TRUE
 
-/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
+	setDir(target_dir)
 	air_update_turf(1)
 	ini_dir = dir
-	add_fingerprint(user)
+	add_fingerprint(usr)
+	return TRUE
+
+/obj/structure/window/verb/revrotate()
+	set name = "Rotate Window Clockwise"
+	set category = "Object"
+	set src in oview(1)
+
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+
+	if(anchored)
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
+		return FALSE
+
+	var/target_dir = turn(dir, 270)
+
+	if(!valid_window_location(loc, target_dir))
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
+		return FALSE
+
+	setDir(target_dir)
+	ini_dir = dir
+	add_fingerprint(usr)
+	return TRUE
+
+/obj/structure/window/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	else
+		revrotate()
 
 /obj/structure/window/Destroy()
 	density = FALSE
@@ -392,7 +432,9 @@
 	max_integrity = 50
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
-	rad_insulation = RAD_HEAVY_INSULATION
+
+/obj/structure/window/reinforced/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -416,7 +458,9 @@
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
-	rad_insulation = RAD_NO_INSULATION
+
+/obj/structure/window/plasma/ComponentInitialize()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST

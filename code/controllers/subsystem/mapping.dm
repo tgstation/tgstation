@@ -24,7 +24,6 @@ SUBSYSTEM_DEF(mapping)
 
 	// Z-manager stuff
 	var/list/z_list
-	var/datum/space_level/transit
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -48,10 +47,12 @@ SUBSYSTEM_DEF(mapping)
 	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
 		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
 	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", CROSSLINKED, list())  // no ruins
-	transit = add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
+	add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
 	createRandomZlevel()
+	if (z_list.len < world.maxz)
+		add_new_zlevel("Away Mission", UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -147,7 +148,7 @@ SUBSYSTEM_DEF(mapping)
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin, /area/asteroid/nearstation))
+	var/list/station_areas_blacklist = typecacheof(list(/area/space, /area/mine, /area/ruin))
 	for(var/area/A in world)
 		var/turf/picked = safepick(get_area_turfs(A.type))
 		if(picked && is_station_level(picked.z))
@@ -228,8 +229,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("[global.config.directory]/lavaruinblacklist.txt")
-	banned += generateMapList("[global.config.directory]/spaceruinblacklist.txt")
+	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
+	banned += generateMapList("config/spaceruinblacklist.txt")
 
 	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
@@ -250,7 +251,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			space_ruins_templates[R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
-	var/list/unbuyable = generateMapList("[global.config.directory]/unbuyableshuttles.txt")
+	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
 
 	for(var/item in subtypesof(/datum/map_template/shuttle))
 		var/datum/map_template/shuttle/shuttle_type = item

@@ -95,12 +95,12 @@
 /proc/remove_ninja(mob/living/L)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/datum = L.mind.has_antag_datum(/datum/antagonist/ninja)
+	var/datum/antagonist/datum = L.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 	datum.on_removal()
 	return TRUE
 
 /proc/is_ninja(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/ninja)
+	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 
 
 /datum/antagonist/ninja/greet()

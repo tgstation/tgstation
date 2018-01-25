@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -68,9 +68,9 @@ Credit where due:
 /proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
-	var/update_type = /datum/antagonist/clockcult
+	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
-		update_type = /datum/antagonist/clockcult/silent
+		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
@@ -106,7 +106,7 @@ Credit where due:
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent

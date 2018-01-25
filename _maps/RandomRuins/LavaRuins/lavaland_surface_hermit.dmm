@@ -174,6 +174,10 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered)
+"L" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plating/asteroid/basalt,
+/area/ruin/powered)
 
 (1,1,1) = {"
 a
@@ -326,7 +330,7 @@ f
 i
 g
 f
-f
+L
 o
 o
 o

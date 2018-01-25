@@ -125,4 +125,3 @@
 
 /obj/effect/landmark/error
 	name = "error"
-	icon_state = "error_room"

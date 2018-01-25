@@ -133,8 +133,8 @@ RSF
 	return
 
 /obj/item/cookiesynth/emag_act(mob/user)
-	obj_flags ^= EMAGGED
-	if(obj_flags & EMAGGED)
+	emagged = !emagged
+	if(emagged)
 		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
 	else
 		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
@@ -144,7 +144,7 @@ RSF
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if((obj_flags & EMAGGED)&&!toxin)
+	if(emagged&&!toxin)
 		toxin = 1
 		to_chat(user, "Cookie Synthesizer Hacked")
 	else if(P.emagged&&!toxin)

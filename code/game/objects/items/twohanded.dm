@@ -286,31 +286,6 @@
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
-/obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
-	if(wielded)
-		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		
-		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
-		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE//this cant possibly be a good idea
-		var/randdir
-		for(var/i in 1 to 24)//like a headless chicken!
-			if(user.is_holding(src))
-				randdir = pick(GLOB.alldirs)
-				user.Move(get_step(user, randdir),randdir)
-				user.emote("spin")
-				if (i == 3 && myhead)
-					myhead.drop_limb()
-				sleep(3)
-			else
-				user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
-				return OXYLOSS
-		
-		
-	else
-		user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self to death with \the [src]'s handle! It probably would've been cooler if [user.p_they()] turned it on first!</span>")
-	return BRUTELOSS
-
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
@@ -343,7 +318,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
+	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -469,17 +444,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
-
-/obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive)
-		user.say("[war_cry]")
-		explosive.forceMove(user)
-		explosive.prime()
-		user.gib()
-		qdel(src)
-		return BRUTELOSS
-	return BRUTELOSS
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()

@@ -15,6 +15,7 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
+	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()

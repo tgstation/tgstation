@@ -2719,6 +2719,14 @@
 	dir = 1
 	},
 /area/security/prison)
+"afQ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 2
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/security/prison)
 "afR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -3310,7 +3318,8 @@
 	real_name = "Sergeant Araneus";
 	movement_type = 1;
 	response_help = "pets";
-	turns_per_move = 10
+	turns_per_move = 10;
+	voice_name = "unidentifiable voice"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -11236,6 +11245,15 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
+/area/crew_quarters/dorms)
+"axH" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "axI" = (
 /obj/machinery/door/airlock{
@@ -22629,6 +22647,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aVI" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aVJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -27261,6 +27283,11 @@
 /area/quartermaster/office)
 "bfd" = (
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
+"bfe" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bff" = (
@@ -39011,6 +39038,17 @@
 	dir = 1
 	},
 /area/hallway/secondary/command)
+"bDc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/hallway/secondary/command)
 "bDd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -39173,6 +39211,14 @@
 	dir = 4
 	},
 /area/hallway/secondary/command)
+"bDt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/secondary/command)
 "bDu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -39289,6 +39335,9 @@
 /area/crew_quarters/bar)
 "bDD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"bDE" = (
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bDF" = (
@@ -39560,6 +39609,9 @@
 /obj/structure/light_construct{
 	dir = 8
 	},
+/turf/open/floor/wood,
+/area/security/vacantoffice)
+"bEr" = (
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "bEs" = (
@@ -42784,6 +42836,10 @@
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/wood,
 /area/library)
+"bLj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/carpet,
+/area/library)
 "bLk" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood,
@@ -44126,6 +44182,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"bNT" = (
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bNU" = (
@@ -52200,6 +52259,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"ceM" = (
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 2
+	},
+/area/science/research)
 "ceN" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -52219,6 +52283,14 @@
 	pixel_x = -1;
 	pixel_y = -29
 	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 2
+	},
+/area/science/research)
+"ceP" = (
+/obj/structure/table,
+/obj/item/stock_parts/cell/potato,
+/obj/machinery/light,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 2
 	},
@@ -53426,6 +53498,16 @@
 	},
 /area/science/lab)
 "chk" = (
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 1
+	},
+/area/science/lab)
+"chl" = (
+/obj/structure/noticeboard{
+	desc = "A board for pinning important notices upon.";
+	name = "notice board";
+	pixel_y = 31
+	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -57281,6 +57363,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"cps" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "cpt" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -60213,6 +60307,13 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
+"cuX" = (
+/obj/effect/landmark/xeno_spawn,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cuY" = (
 /obj/structure/rack,
 /obj/item/extinguisher,
@@ -60225,6 +60326,33 @@
 "cuZ" = (
 /turf/closed/wall/r_wall,
 /area/science/circuit)
+"cva" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"cvb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"cvc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cvd" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -60690,6 +60818,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
+"cvZ" = (
+/obj/structure/closet/crate,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/color/fyellow,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cwa" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
@@ -62310,6 +62444,15 @@
 /area/science/mixing)
 "czt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
+"czu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "czv" = (
@@ -65279,6 +65422,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"cFt" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cFu" = (
 /obj/structure/closet,
 /obj/item/device/assembly/prox_sensor{
@@ -66280,6 +66427,15 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"cHj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/starboard/aft)
 "cHk" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
@@ -69567,6 +69723,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"cNM" = (
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cNN" = (
@@ -79218,6 +79377,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/aft)
+"dxO" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "dxQ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -79270,6 +79433,17 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"dyQ" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/starboard/aft)
 "dzc" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -79289,6 +79463,14 @@
 /area/maintenance/port/aft)
 "dzQ" = (
 /obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"dzR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dAd" = (
@@ -80247,7 +80429,7 @@
 	id = "research_shutters";
 	name = "research shutters"
 	},
-/turf/open/floor/plasteel/whitepurple,
+/turf/open/floor/plating,
 /area/science/lab)
 "QsY" = (
 /obj/structure/table,
@@ -80349,6 +80531,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"Qtk" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "Qtl" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -80362,6 +80548,24 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "Qtm" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qtn" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qto" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qtp" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qtq" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qtr" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Qts" = (
 /turf/closed/wall,
 /area/science/circuit)
 "Qtt" = (
@@ -80471,11 +80675,26 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"QtC" = (
+/turf/closed/wall,
+/area/science/circuit)
 "QtD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+/area/science/circuit)
+"QtE" = (
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"QtF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"QtG" = (
+/turf/open/floor/plasteel/white,
 /area/science/circuit)
 "QtH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -80586,6 +80805,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"QtX" = (
+/turf/closed/wall,
+/area/science/circuit)
 "QtY" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/plasteel,
@@ -80607,11 +80829,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"Quc" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/science/circuit)
 "Qud" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
+/area/science/circuit)
+"Que" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/science/circuit)
 "Quf" = (
 /obj/structure/table/glass,
@@ -80619,6 +80849,13 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/turf/open/floor/plasteel,
+/area/science/misc_lab)
+"Qug" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "Quh" = (
@@ -80695,13 +80932,70 @@
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"Qut" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Quu" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/science/misc_lab)
+"Quv" = (
+/turf/closed/wall,
+/area/science/circuit)
 "Quw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /turf/closed/wall,
 /area/science/circuit)
+"Qux" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Quy" = (
+/turf/closed/wall,
+/area/science/circuit)
+"Quz" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuA" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuB" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuC" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuD" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuE" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuF" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuG" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuH" = (
+/turf/closed/wall,
+/area/science/circuit)
+"QuI" = (
+/turf/closed/wall,
+/area/science/circuit)
 "QuJ" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"QuK" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"QuL" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -80718,6 +81012,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"QuO" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"QuP" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
+"QuQ" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "QuR" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
@@ -80744,7 +81050,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"QuV" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "QuW" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"QuX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -96299,7 +96613,7 @@ bxJ
 bzx
 bBi
 bCM
-bBg
+bEr
 bBg
 bHM
 bJv
@@ -99106,7 +99420,7 @@ aQl
 aMv
 aSS
 aMv
-aQl
+aVI
 aXh
 aMv
 bar
@@ -100672,7 +100986,7 @@ bEy
 bGr
 bwd
 bwd
-bwd
+bLj
 bMK
 bOl
 bPR
@@ -102196,7 +102510,7 @@ aYT
 baC
 bbZ
 bdu
-bbZ
+bfe
 bgX
 biQ
 bkv
@@ -104779,7 +105093,7 @@ bAZ
 bkz
 bzN
 bBB
-bDa
+bDc
 bEG
 bGB
 bIb
@@ -105240,7 +105554,7 @@ ady
 adT
 adc
 aeW
-afK
+afQ
 agJ
 ahx
 ait
@@ -106631,7 +106945,7 @@ cKy
 cLo
 cLm
 cLm
-cLm
+cNM
 cOr
 cOU
 dDG
@@ -110690,7 +111004,7 @@ bwB
 byp
 bAd
 byo
-bDj
+bDt
 bEZ
 bGM
 bIp
@@ -113030,7 +113344,7 @@ cgo
 cgo
 cgo
 ccd
-cpr
+cps
 cci
 crQ
 ctc
@@ -114545,7 +114859,7 @@ bwN
 byz
 bAj
 bBU
-bwO
+bDE
 dDb
 bHb
 bMP
@@ -116635,9 +116949,9 @@ dwL
 dxQ
 cuZ
 Qtt
-cwZ
-cwZ
-cyM
+QtE
+QtE
+Quc
 Quk
 Qtm
 cQv
@@ -116892,9 +117206,9 @@ ctk
 cuc
 cuZ
 dyp
-cwZ
-cwZ
-cyM
+QtE
+QtE
+Quc
 Qul
 Qtm
 czF
@@ -117077,7 +117391,7 @@ asY
 aui
 avm
 asY
-aui
+axH
 ayO
 aAg
 aBA
@@ -117149,10 +117463,10 @@ dvY
 Qtc
 cuZ
 Qtu
-cxN
-cxN
+QtF
+QtF
 Qud
-cxO
+QtG
 Qtm
 czG
 cAN
@@ -117406,8 +117720,8 @@ dvY
 cud
 cuZ
 Qtv
-cxO
-cxO
+QtG
+QtG
 QuW
 Qum
 Qtm
@@ -117665,7 +117979,7 @@ Qtl
 cwd
 QtH
 cxP
-cxO
+QtG
 Qun
 Qtm
 czI
@@ -117922,7 +118236,7 @@ Qtm
 Qtw
 QtI
 QtR
-cxO
+QtG
 Quo
 Qtm
 aaf
@@ -118179,8 +118493,8 @@ Qtm
 Qtx
 QtJ
 QtS
-QuW
-cxO
+QuX
+QtG
 Qtm
 aaf
 aaa
@@ -118436,7 +118750,7 @@ Qtm
 Qty
 QtK
 QtT
-cxO
+QtG
 Qup
 Qtm
 aaa
@@ -118693,7 +119007,7 @@ Qtm
 Qtz
 QtL
 QtU
-cxO
+QtG
 Quq
 Qtm
 aaa
@@ -118950,7 +119264,7 @@ Qtm
 QtA
 QtM
 QtV
-cxO
+QtG
 Qur
 Qtm
 aaa
@@ -119207,7 +119521,7 @@ Qtm
 QtB
 QtN
 QtW
-cxO
+QtG
 Qus
 Qtm
 aaa
@@ -123803,7 +124117,7 @@ bHx
 bIU
 bKB
 bMh
-bCi
+bNT
 bCi
 bKD
 bCi

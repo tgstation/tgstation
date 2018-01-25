@@ -312,20 +312,16 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return FALSE
-	if(ismob(the_target))
-		var/mob/M = the_target
-		if(M.status_flags & GODMODE)
-			return FALSE
+		return 0
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return FALSE
+			return 0
 	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return FALSE
-	return TRUE
+			return 0
+	return 1
 
 /mob/living/simple_animal/handle_fire()
 	return

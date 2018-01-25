@@ -76,9 +76,9 @@
 	return TRUE
 
 /obj/machinery/mecha_part_fabricator/emag_act()
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	req_access = list()
 	say("DB error \[Code 0x00F1\]")
 	sleep(10)

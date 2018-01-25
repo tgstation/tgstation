@@ -41,6 +41,13 @@
 	slowdown = 10
 	},
 /area/ruin/unpowered)
+"h" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/sepia{
+	blocks_air = 0;
+	slowdown = 10
+	},
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -119,7 +126,7 @@ a
 b
 a
 d
-d
+h
 d
 d
 a

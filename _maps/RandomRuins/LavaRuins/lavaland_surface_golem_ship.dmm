@@ -105,6 +105,9 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"s" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "t" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -205,6 +208,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"J" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"K" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
 "L" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -230,7 +241,27 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"P" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "Q" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"R" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"S" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
+"T" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -244,6 +275,22 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"W" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"X" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Y" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 
 (1,1,1) = {"
@@ -520,7 +567,7 @@ j
 l
 l
 l
-l
+s
 l
 l
 l
@@ -564,7 +611,7 @@ b
 l
 l
 l
-l
+Y
 l
 l
 l

@@ -6,9 +6,7 @@
 	var/team_number = 1
 
 /obj/effect/landmark/abductor/agent
-	icon_state = "abductor_agent"
 /obj/effect/landmark/abductor/scientist
-	icon_state = "abductor"
 
 // OBJECTIVES
 /datum/objective/experiment

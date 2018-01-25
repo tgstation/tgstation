@@ -122,7 +122,7 @@
 	if(L == src)
 		return FALSE
 
-	if(has_trait(TRAIT_PACIFISM))
+	if(has_disability(DISABILITY_PACIFISM))
 		return FALSE
 
 	if(enemies[L])

@@ -17,6 +17,7 @@
 		/datum/language/beachbum,
 		/datum/language/ratvar,
 		/datum/language/aphasia,
+		/datum/language/moth
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -88,7 +89,7 @@
 		if(!T || T.type != type)
 			continue
 		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(/datum/antagonist/abductor)
+			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
 			if(!A || !(H.mind in A.team.members))
 				continue
 		to_chat(H, rendered)

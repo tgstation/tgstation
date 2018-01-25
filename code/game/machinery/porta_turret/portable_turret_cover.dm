@@ -87,10 +87,10 @@
 	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!(parent_turret.obj_flags & EMAGGED))
+	if(!parent_turret.emagged)
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("[parent_turret] hums oddly...")
-		parent_turret.obj_flags |= EMAGGED
+		parent_turret.emagged = TRUE
 		parent_turret.on = 0
 		spawn(40)
 			parent_turret.on = 1

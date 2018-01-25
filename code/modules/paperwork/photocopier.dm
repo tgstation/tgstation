@@ -254,10 +254,7 @@
 	to_chat(user, "<span class='notice'>You take [O] out of [src].</span>")
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
-		return
-
-	else if(istype(O, /obj/item/paper))
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(istype(O, /obj/item/paper/contract/infernal))
 				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
@@ -300,6 +297,17 @@
 		else
 			to_chat(user, "<span class='warning'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
+	else if(istype(O, /obj/item/wrench))
+		if(isinspace())
+			to_chat(user, "<span class='warning'>There's nothing to fasten [src] to!</span>")
+			return
+		playsound(loc, O.usesound, 50, 1)
+		to_chat(user, "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>")
+		if(do_after(user, 20*O.toolspeed, target = src))
+			if(QDELETED(src))
+				return
+			to_chat(user, "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>")
+			anchored = !anchored
 	else if(istype(O, /obj/item/areaeditor/blueprints))
 		to_chat(user, "<span class='warning'>The Blueprint is too large to put into the copier. You need to find something else to record the document</span>")
 	else

@@ -17,6 +17,6 @@
       "data"
     ],
     "dlls": [
-      "libmariadb.dll"
+      "libmysql.dll"
     ]
   }

@@ -206,9 +206,9 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	emp_act(EMP_HEAVY)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
@@ -273,7 +273,7 @@
 				power_output--
 				src.updateUsrDialog()
 		if (href_list["action"] == "higher_power")
-			if (power_output < 4 || (obj_flags & EMAGGED))
+			if (power_output < 4 || emagged)
 				power_output++
 				src.updateUsrDialog()
 		if (href_list["action"] == "close")

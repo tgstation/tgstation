@@ -201,8 +201,6 @@
 	if(!beaker)
 		return
 	beaker.forceMove(drop_location())
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(beaker)
 	beaker = null
 	update_icon()
 	updateUsrDialog()

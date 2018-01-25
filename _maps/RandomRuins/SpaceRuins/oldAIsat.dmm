@@ -181,7 +181,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "aJ" = (
-/obj/item/stack/cable_coil/cut/red{
+/obj/item/stack/cable_coil/cut{
 	amount = 1
 	},
 /turf/open/floor/plating/airless,

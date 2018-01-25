@@ -280,11 +280,11 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
 	visible_message("[src] hums oddly...")
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	controllock = 1
 	on = FALSE //turns off the turret temporarily
 	update_icon()
@@ -313,7 +313,7 @@
 	if(.) //damage received
 		if(prob(30))
 			spark_system.start()
-		if(on && !attacked && !(obj_flags & EMAGGED))
+		if(on && !attacked && !emagged)
 			attacked = TRUE
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
 
@@ -447,7 +447,7 @@
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
 
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return 10	//if emagged, always return 10.
 
 	if((stun_all || attacked) && !allowed(perp))
@@ -493,7 +493,7 @@
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
+	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
 		if(last_fired + shot_delay > world.time)
 			return
 		last_fired = world.time
@@ -545,6 +545,11 @@
 	src.on = on
 	src.mode = mode
 	power_change()
+
+/obj/machinery/porta_turret/stationary //is this even used anywhere
+	mode = TURRET_LETHAL
+	emagged = TRUE
+	installation = /obj/item/gun/energy/laser
 
 /obj/machinery/porta_turret/syndicate
 	installation = null
@@ -720,7 +725,7 @@
 
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (allowed(usr))
-			if(obj_flags & EMAGGED)
+			if(emagged)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
@@ -737,10 +742,10 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)

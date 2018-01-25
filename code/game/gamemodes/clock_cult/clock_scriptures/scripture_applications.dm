@@ -73,8 +73,8 @@
 	name = "Clockwork Marauder"
 	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct that can deflect projectiles with its shield."
 	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal.")
-	channel_time = 80
-	power_cost = 8000
+	channel_time = 50
+	power_cost = 1000
 	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
 	usage_tip = "Reciting this scripture multiple times in a short period will cause it to take longer!"
 	tier = SCRIPTURE_APPLICATION
@@ -94,13 +94,10 @@
 	var/human_servants = 0
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		var/mob/living/L = M.current
-		if(ishuman(L) && L.stat != DEAD)
+		if(ishuman(M.current))
 			human_servants++
 	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
-	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3) 
-	if(recent_marauders)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
+	construct_limit = CLAMP(construct_limit, 1, 3)
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)

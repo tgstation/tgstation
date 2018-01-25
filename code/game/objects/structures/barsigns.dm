@@ -83,7 +83,7 @@
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			if(!broken && !emagged)
 				set_sign(pick(barsigns))
-			else if(obj_flags & EMAGGED)
+			else if(emagged)
 				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 			else
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
@@ -91,7 +91,7 @@
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
-		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
+		if(emagged) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return
 		else if(!broken)
@@ -118,7 +118,7 @@
 	if(broken || emagged)
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
 	sleep(10 SECONDS)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)

@@ -274,6 +274,12 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
+"bS" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/open/floor/plating/asteroid/snow{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
+/area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small,
 /turf/open/floor/pod/dark,
@@ -759,7 +765,7 @@ bl
 ak
 aI
 ak
-ak
+bS
 ak
 Wg
 Wg

@@ -170,7 +170,8 @@
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
-				icon_state = "autolathe_n"
+				icon_state = "autolathe"
+				flick("autolathe_n",src)
 				var/time = is_stack ? 32 : 32*coeff*multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
 
@@ -206,7 +207,7 @@
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
-	icon_state = "autolathe"
+
 	busy = FALSE
 	updateDialog()
 

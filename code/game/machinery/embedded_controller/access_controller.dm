@@ -27,9 +27,9 @@
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, 1)

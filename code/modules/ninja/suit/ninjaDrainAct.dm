@@ -50,10 +50,10 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			else
 				break
 
-		if(!(obj_flags & EMAGGED))
+		if(!emagged)
 			flick("apc-spark", G)
 			playsound(loc, "sparks", 50, 1)
-			obj_flags |= EMAGGED
+			emagged = TRUE
 			locked = FALSE
 			update_icon()
 

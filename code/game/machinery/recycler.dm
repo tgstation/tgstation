@@ -39,7 +39,7 @@
 	..()
 	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
 	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
-	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")
+	to_chat(user, "The safety-sensors status light is [emagged ? "off" : "on"].")
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -64,9 +64,9 @@
 	return ..()
 
 /obj/machinery/recycler/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	if(safety_mode)
 		safety_mode = FALSE
 		update_icon()
@@ -110,7 +110,7 @@
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if(obj_flags & EMAGGED)
+			if(emagged)
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -180,14 +180,14 @@
 	L.Unconscious(100)
 
 	// For admin fun, var edit emagged to 2.
-	if(gib)
+	if(gib || emagged == 2)
 		L.gib()
-	else if(obj_flags & EMAGGED)
+	else if(emagged == 1)
 		L.adjustBruteLoss(crush_damage)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	obj_flags = CAN_BE_HIT | EMAGGED
+	emagged = TRUE
 	crush_damage = 120
 	flags_1 = NODECONSTRUCT_1
 

@@ -23,24 +23,21 @@
 	. = ..()
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
-	if (board.obj_flags & EMAGGED)
-		obj_flags |= EMAGGED
-	else
-		obj_flags &= ~EMAGGED
+	emagged = board.emagged
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if(emagged)
 		return
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
-	obj_flags |= EMAGGED
+	emagged = TRUE
 	contraband = TRUE
 
 	// This also permamently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
-	board.obj_flags |= EMAGGED
+	board.emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -72,7 +69,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !(obj_flags & EMAGGED)) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
+		if((P.hidden && !emagged) || (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly)
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -114,10 +111,7 @@
 				say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
-				if (obj_flags & EMAGGED)
-					SSshuttle.supply.obj_flags |= EMAGGED
-				else
-					SSshuttle.supply.obj_flags = (SSshuttle.supply.obj_flags & ~EMAGGED)
+				SSshuttle.supply.emagged = emagged
 				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
@@ -146,7 +140,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
+			if((pack.hidden && !emagged) || (pack.contraband && !contraband) || pack.DropPodOnly)
 				return
 
 			var/name = "*None Provided*"

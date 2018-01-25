@@ -421,7 +421,7 @@
 				L.fix()
 
 		if("floorlava")
-			SSweather.run_weather(/datum/weather/floor_is_lava)
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))

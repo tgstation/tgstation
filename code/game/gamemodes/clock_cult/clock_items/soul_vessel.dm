@@ -92,9 +92,11 @@
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
-	H.fakedeath("soul_vessel") //we want to make sure they don't deathgasp and maybe possibly explode
+	var/prev_fakedeath = (H.status_flags & FAKEDEATH)
+	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
-	H.cure_fakedeath("soul_vessel")
+	if(!prev_fakedeath)
+		H.status_flags &= ~FAKEDEATH
 	H.apply_status_effect(STATUS_EFFECT_SIGILMARK) //let them be affected by vitality matrices
 	picked_name = "Slave"
 	braintype = picked_name

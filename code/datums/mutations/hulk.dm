@@ -11,8 +11,8 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
-	owner.add_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	var/status = CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
+	owner.status_flags &= ~status
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
@@ -27,8 +27,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_STUNIMMUNE, TRAIT_HULK)
-	owner.remove_trait(TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	owner.status_flags |= CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)

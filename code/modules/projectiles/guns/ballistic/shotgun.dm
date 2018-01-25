@@ -44,7 +44,7 @@
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
 	if(chambered && chambered.BB)
-		process_fire(user, user, FALSE)
+		process_fire(user, user,0)
 		. = 1
 
 /obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
