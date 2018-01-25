@@ -558,7 +558,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
-			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+			var/obj/item/organ/heart/hasheart = L.getorganslot(ORGAN_SLOT_HEART)
+			if (hasheart)
+				helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+			else
+				helptext = "<span class='warning'>Subject unsuitable for experiments.</span>"
 
 	to_chat(user, "<span class='notice'>Probing result:</span>[species]")
 	to_chat(user, "[helptext]")
