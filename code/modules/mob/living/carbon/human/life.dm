@@ -302,6 +302,7 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+<<<<<<< HEAD
 				// Hippie Start - Handle un-impaling player if pinned item falls out
 				if (I.pinned)
 					do_pindown(pinned_to, 0)
@@ -335,6 +336,8 @@
 
 	heart.beating = !status
 
+=======
+>>>>>>> 8b5049a781... You can now defib monkeys (#34383)
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_life(src)
