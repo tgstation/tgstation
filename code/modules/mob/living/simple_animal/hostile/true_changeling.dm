@@ -15,7 +15,7 @@
 	icon_state = "horror1"
 	icon_living = "horror1"
 	icon_dead = "horror_dead"
-	speed = -0.5
+	speed = 0.5
 	gender = NEUTER
 	a_intent = "harm"
 	stop_automated_movement = TRUE

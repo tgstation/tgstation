@@ -19,7 +19,10 @@
 	user.loc = new_mob
 	user.status_flags |= GODMODE
 	user.mind.transfer_to(new_mob)
+	for(var/obj/item/I in user)
+		user.dropItemToGround(I)
+	new /obj/effect/gibspawner/human(get_turf(user))
 	for(var/mob/M in view(7, user))
-		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 5)
+		flash_color(M, flash_color = list("#db0000", "#db0000", "#db0000", rgb(0,0,0)), flash_time = 50)
 	playsound(user, 'sound/creatures/rawrXD.ogg', 100, 1)
 	return TRUE
