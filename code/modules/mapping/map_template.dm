@@ -53,7 +53,11 @@
 	var/y = round((world.maxy - height)/2)
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
+<<<<<<< HEAD
 	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS))
+=======
+	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+>>>>>>> origin/master
 	if(!bounds)
 		return FALSE
 
@@ -75,7 +79,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS))
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
 	if(!bounds)
 		return
 

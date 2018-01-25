@@ -183,10 +183,14 @@
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 		M.status_flags &= ~DISFIGURED
 =======
 		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 >>>>>>> refs/remotes/tgstation/master
+=======
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+>>>>>>> origin/master
 		. = 1
 	..()
 
@@ -1211,10 +1215,13 @@
 
 /datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	M.status_flags |= IGNORESLOWDOWN
 	M.status_flags |= GOTTAGOFAST
 =======
 >>>>>>> refs/remotes/tgstation/master
+=======
+>>>>>>> origin/master
 	M.adjustToxLoss(-3*REM, 0)
 	M.adjustBruteLoss(-5*REM, 0)
 	M.adjustFireLoss(-5*REM, 0)
@@ -1264,7 +1271,10 @@
 	..()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 /datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
 	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
 	M.add_trait(TRAIT_GOTTAGOFAST, id)
@@ -1273,7 +1283,10 @@
 	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
 	M.remove_trait(TRAIT_GOTTAGOFAST, id)
 
+<<<<<<< HEAD
 >>>>>>> refs/remotes/tgstation/master
+=======
+>>>>>>> origin/master
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
 		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
