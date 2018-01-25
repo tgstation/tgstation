@@ -3120,10 +3120,8 @@
 	id = "Awaylab";
 	name = "Acid-Proof containment chamber blast door"
 	},
-/obj/item/stack/cable_coil/cut{
-	amount = 1;
-	icon_state = "coil_red1";
-	item_state = "coil_red1"
+/obj/item/stack/cable_coil/cut/red{
+	amount = 1
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
