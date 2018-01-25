@@ -120,7 +120,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.has_disability(DISABILITY_MUTE)) || H.silent)
+					if((H.has_trait(TRAIT_MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -571,7 +571,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			return
 		revives_used++
-		mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
+		mob_to_revive.revive(1, 1) //This does remove traits and such, but the rune might actually see some use because of it!
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE

@@ -34,7 +34,9 @@
 		/obj/item/device/pda/ai,
 		/obj/item/device/pda/heads,
 		/obj/item/device/pda/clear,
-		/obj/item/device/pda/syndicate)
+		/obj/item/device/pda/syndicate,
+		/obj/item/device/pda/chameleon,
+		/obj/item/device/pda/chameleon/broken)
 
 	for(var/P in typesof(/obj/item/device/pda) - blocked)
 		var/obj/item/device/pda/D = new P

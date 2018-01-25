@@ -1035,6 +1035,14 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/organic/critter/snake
+    name = "Snake Crate"
+    cost = 3000
+    contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake)
+    crate_name = "snake crate"
+
 /datum/supply_pack/organic/critter/chick
 	name = "Chicken Crate"
 	cost = 2000
@@ -1387,14 +1395,14 @@
 
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
-	cost = 2500
+	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/under/burial,
 					/obj/item/clothing/under/burial)
 	crate_name = "religious supplies crate"
 

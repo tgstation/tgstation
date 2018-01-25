@@ -52,7 +52,11 @@ GLOBAL_PROTECT(security_mode)
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
+#ifdef UNIT_TESTS
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
+#else
 	SSticker.force_ending = TRUE
+#endif
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -83,6 +87,10 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
 	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
+#ifdef UNIT_TESTS
+	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
+	WRITE_FILE(GLOB.test_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+#endif
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
@@ -152,6 +160,10 @@ GLOBAL_PROTECT(security_mode)
 	if(GLOB)
 		if(GLOB.total_runtimes != 0)
 			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
+#ifdef UNIT_TESTS
+		if(GLOB.failed_any_test)
+			LAZYADD(fail_reasons, "Unit Tests failed!")
+#endif
 		if(!GLOB.log_directory)
 			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
 	else
