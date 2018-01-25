@@ -130,12 +130,16 @@
 	internal_radio.broadcasting = FALSE
 	internal_radio.recalculateChannels()
 
+/obj/item/implant/health_monitor/Destroy()
+	. = ..()
+	QDEL_NULL(internal_radio)
+
 /obj/item/implant/health_monitor/removed(source, silent = 0, special = 0)
-	if(..())
-		if(iscarbon(source))
-			var/mob/living/carbon/C = source
-			C.adv_health_hud = FALSE
-			to_chat(C, "<span class='notice'>You feel less in-tune with your body.</span>")
+	. = ..()
+	if(. && iscarbon(source))
+		var/mob/living/carbon/C = source
+		C.adv_health_hud = FALSE
+		to_chat(C, "<span class='notice'>You feel less in-tune with your body.</span>")
 
 /obj/item/implant/health_monitor/implant(mob/living/target, mob/user, silent = 0)
 	if(iscarbon(target))

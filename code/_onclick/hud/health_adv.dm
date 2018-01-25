@@ -1,6 +1,7 @@
 /obj/screen/adv_health
 	name = "YOU SHOULD NOT SEE THIS!"
 	icon = 'goon/icons/mob/mhealth.dmi'
+	invisibility = INVISIBILITY_ABSTRACT
 	var/dmg_type = BRUTE
 
 /obj/screen/adv_health/brute
