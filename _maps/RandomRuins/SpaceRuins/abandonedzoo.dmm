@@ -267,7 +267,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aL" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -305,7 +305,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -698,7 +698,7 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bQ" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -748,6 +748,9 @@
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
+"KN" = (
+/turf/template_noop,
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -1142,7 +1145,7 @@ ag
 ag
 bN
 bP
-aa
+KN
 aa
 "}
 (19,1,1) = {"
@@ -1165,27 +1168,5 @@ aa
 aa
 aa
 bV
-aa
-"}
-(20,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 "}

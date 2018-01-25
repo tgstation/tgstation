@@ -94,13 +94,6 @@
 "ar" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/hivebot)
-"as" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/banner,
-/turf/open/floor/plasteel/blue/side{
-	dir = 9
-	},
-/area/ruin/space/has_grav/ancientstation/comm)
 "at" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner{
@@ -137,13 +130,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
-	},
-/area/ruin/space/has_grav/ancientstation/comm)
-"ay" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/banner,
-/turf/open/floor/plasteel/blue/side{
-	dir = 5
 	},
 /area/ruin/space/has_grav/ancientstation/comm)
 "az" = (
@@ -360,11 +346,11 @@
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "bf" = (
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "bg" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "bh" = (
 /turf/closed/mineral/diamond,
 /area/ruin/unpowered)
@@ -435,7 +421,7 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "br" = (
 /turf/closed/wall/rust,
-/area/template_noop)
+/area/space/nearstation)
 "bs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -592,9 +578,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/space/has_grav/ancientstation)
-"bV" = (
-/turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "bW" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -1221,30 +1204,13 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/betanorth)
-"dE" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
-/turf/open/floor/plating,
-/area/template_noop)
 "dF" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-"dG" = (
-/turf/open/floor/plasteel/airless,
-/area/template_noop)
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
-"dI" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "floorscorched1"
-	},
-/area/template_noop)
-"dJ" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged5"
-	},
 /area/template_noop)
 "dK" = (
 /obj/structure/lattice/catwalk,
@@ -1417,11 +1383,6 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
-"eh" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged2"
-	},
-/area/template_noop)
 "ei" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -1498,14 +1459,6 @@
 /obj/item/seeds/ambrosia,
 /obj/item/seeds/poppy,
 /obj/item/seeds/grape,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/space/has_grav/ancientstation/hydroponics)
-"es" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/public/glass{
-	name = "Hydroponics"
-	},
-/obj/machinery/door/firedoor/closed,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "et" = (
@@ -1849,10 +1802,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
-/area/ruin/space/has_grav/ancientstation)
-"fo" = (
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "fp" = (
 /obj/structure/sign/poster/official/here_for_your_safety,
@@ -3075,23 +3024,12 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
-"ia" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "floorscorched2"
-	},
-/area/template_noop)
 "ib" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/template_noop,
-/area/template_noop)
-"ic" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plasteel/airless,
 /area/template_noop)
 "id" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3147,14 +3085,6 @@
 	name = "Dining Area"
 	},
 /turf/open/floor/plasteel/cafeteria,
-/area/ruin/space/has_grav/ancientstation/kitchen)
-"ij" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/public/glass{
-	name = "Dining Area"
-	},
-/obj/machinery/door/firedoor/closed,
-/turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ik" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3750,9 +3680,6 @@
 /obj/item/storage/box/firingpins,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"jA" = (
-/turf/open/floor/plasteel/floorgrime,
-/area/template_noop)
 "jB" = (
 /obj/structure/closet/crate/radiation,
 /obj/item/stack/sheet/mineral/uranium{
@@ -3862,7 +3789,7 @@
 /obj/structure/lattice,
 /obj/item/solar_assembly,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "jR" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -4433,16 +4360,6 @@
 /obj/item/pickaxe,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"lr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/ore/bluespace_crystal,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
-"ls" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/ore/bluespace_crystal/refined,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
 "lt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{
@@ -4451,10 +4368,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
-"lu" = (
-/obj/item/stock_parts/manipulator,
-/turf/open/floor/plasteel/airless/floorgrime,
-/area/template_noop)
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/glass,
@@ -4462,10 +4375,6 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/betanorth)
-"lw" = (
-/obj/item/stock_parts/matter_bin,
-/turf/open/floor/plating/airless,
-/area/template_noop)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/science{
@@ -4473,78 +4382,7 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hivebot)
-"ly" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/science,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/hivebot)
 "lz" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lA" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lB" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lC" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lD" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lE" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lF" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lG" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lH" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lI" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lJ" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lK" = (
 /turf/open/floor/plating/airless{
 	tag = "icon-floor";
 	icon_state = "floor"
@@ -4563,42 +4401,6 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
-"lN" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lO" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lP" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lQ" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lR" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lS" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4608,68 +4410,6 @@
 	dir = 4
 	},
 /area/ruin/space/has_grav/ancientstation/rnd)
-"lU" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/orange/side{
-	tag = "icon-orange (WEST)";
-	icon_state = "orange";
-	dir = 8
-	},
-/area/ruin/space/has_grav/ancientstation/rnd)
-"lV" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lW" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lX" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lY" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"lZ" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"ma" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"mb" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"mc" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
-"md" = (
-/turf/open/floor/plating/airless{
-	tag = "icon-floor";
-	icon_state = "floor"
-	},
-/area/template_noop)
 "me" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
@@ -4677,112 +4417,7 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betanorth)
-"mg" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mh" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mi" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mj" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mk" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"ml" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mm" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mn" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mo" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mp" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mq" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mr" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"ms" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mt" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mu" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mv" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mw" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mx" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"my" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mz" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mA" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mB" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mC" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mD" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mE" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mF" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
-"mG" = (
-/obj/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/ancientstation/betanorth)
 "mH" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mI" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mJ" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mK" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mL" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mM" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mN" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/atmo)
-"mO" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "mP" = (
@@ -4794,6 +4429,16 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
+"Dj" = (
+/obj/structure/transit_tube{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"Ga" = (
+/obj/structure/transit_tube/crossing/horizontal,
+/turf/template_noop,
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa
@@ -4807,14 +4452,13 @@ aa
 aa
 aa
 aa
+me
+me
+dF
+me
+me
 aa
-me
-me
-aA
-me
-me
-aa
-aA
+dF
 me
 me
 aa
@@ -4827,7 +4471,7 @@ aa
 aa
 aa
 jO
-aA
+dF
 jO
 jO
 jO
@@ -4837,10 +4481,7 @@ kK
 kV
 ld
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -4848,7 +4489,6 @@ aa
 aa
 "}
 (2,1,1) = {"
-aa
 aa
 aa
 aa
@@ -4870,14 +4510,14 @@ bq
 bq
 eG
 me
-aA
-aA
-aA
+dF
+dF
+dF
 bf
-aA
-aA
-aA
-aA
+dF
+dF
+dF
+dF
 iT
 km
 km
@@ -4895,12 +4535,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (3,1,1) = {"
-aa
 aa
 aa
 aa
@@ -4925,7 +4561,7 @@ eH
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -4947,9 +4583,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (4,1,1) = {"
 aa
@@ -4961,8 +4594,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 me
 me
 bJ
@@ -4977,7 +4609,7 @@ bJ
 mf
 me
 aa
-aA
+dF
 aa
 aa
 aa
@@ -4999,9 +4631,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (5,1,1) = {"
 aa
@@ -5014,8 +4643,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 me
 bw
 bI
@@ -5034,17 +4662,14 @@ aa
 aa
 aa
 aa
-aA
+dF
 km
 jO
 jO
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5056,7 +4681,6 @@ aa
 aa
 "}
 (6,1,1) = {"
-aa
 aa
 aa
 aa
@@ -5083,22 +4707,19 @@ fY
 bq
 me
 hL
-aA
-aA
-aA
-aA
+dF
+dF
+dF
+dF
 km
 km
 jO
 jO
 aa
-aA
+dF
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5108,7 +4729,6 @@ aa
 aa
 "}
 (7,1,1) = {"
-aa
 aa
 aa
 aa
@@ -5136,7 +4756,7 @@ fA
 bJ
 mf
 aa
-aA
+dF
 aa
 aa
 aa
@@ -5145,10 +4765,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5160,7 +4777,6 @@ aa
 aa
 "}
 (8,1,1) = {"
-aa
 aa
 aa
 aa
@@ -5188,7 +4804,7 @@ bq
 hj
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -5197,10 +4813,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5221,8 +4834,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 ac
 aa
 bJ
@@ -5231,15 +4843,15 @@ cf
 bI
 bJ
 me
-aA
+dF
 me
 fa
 me
 fZ
 gU
 me
-aA
-aA
+dF
+dF
 bf
 aa
 aa
@@ -5249,10 +4861,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5264,7 +4873,6 @@ aa
 aa
 "}
 (10,1,1) = {"
-aa
 ab
 aa
 aa
@@ -5272,7 +4880,7 @@ aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -5282,8 +4890,8 @@ bK
 cg
 bK
 bJ
-aA
-aA
+dF
+dF
 aa
 me
 me
@@ -5291,20 +4899,17 @@ ga
 me
 me
 aa
-aA
+dF
 bf
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5325,8 +4930,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5338,9 +4942,9 @@ mf
 aa
 aa
 aa
-aA
+dF
 ga
-aA
+dF
 aa
 aa
 br
@@ -5348,11 +4952,11 @@ bg
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -5360,9 +4964,6 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
 aa
 aa
 aa
@@ -5376,11 +4977,10 @@ aa
 aa
 aa
 aa
+dF
 aa
-aA
 aa
-aa
-aA
+dF
 aa
 aa
 bd
@@ -5391,19 +4991,16 @@ aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5427,9 +5024,8 @@ aa
 aa
 aa
 aa
-aa
-aA
-aA
+dF
+dF
 aa
 aa
 aa
@@ -5443,26 +5039,23 @@ aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5480,9 +5073,8 @@ aa
 aa
 aa
 aa
-aa
-aA
-aA
+dF
+dF
 aa
 aa
 aa
@@ -5510,10 +5102,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5532,8 +5121,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aZ
 aa
 aa
@@ -5557,18 +5145,15 @@ dH
 ei
 dH
 hN
-aA
+dF
 aa
 aa
 aa
-aA
+dF
 aa
 lg
 ac
 ac
-aa
-aa
-aa
 aa
 aa
 aa
@@ -5584,8 +5169,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5623,9 +5207,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (17,1,1) = {"
 aa
@@ -5636,8 +5217,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5665,15 +5245,12 @@ jR
 aa
 aa
 aa
-aA
+dF
 ac
 lh
 lh
 az
 ac
-aa
-aa
-aa
 aa
 aa
 aa
@@ -5688,8 +5265,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5716,15 +5292,12 @@ lz
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 ac
 ac
 ln
-aa
-aa
-aa
 aa
 aa
 aa
@@ -5740,8 +5313,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5765,10 +5337,7 @@ dH
 ei
 ei
 ib
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5792,8 +5361,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5821,12 +5389,9 @@ aa
 aa
 aa
 aa
-aA
+dF
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5844,8 +5409,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5873,16 +5437,13 @@ aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
 aa
 aa
 ab
-aa
-aa
-aa
 aa
 aa
 aa
@@ -5896,8 +5457,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5925,10 +5485,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -5948,8 +5505,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -5977,10 +5533,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6000,8 +5553,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -6029,10 +5581,7 @@ aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6052,8 +5601,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -6081,10 +5629,7 @@ dl
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6104,8 +5649,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -6133,10 +5677,7 @@ dl
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6156,8 +5697,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -6185,10 +5725,7 @@ dl
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6208,8 +5745,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -6237,10 +5773,7 @@ dl
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -6252,7 +5785,6 @@ aa
 aa
 "}
 (29,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6299,12 +5831,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (30,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6351,12 +5879,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (31,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6403,12 +5927,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (32,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6455,12 +5975,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (33,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6507,12 +6023,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (34,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6559,12 +6071,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (35,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6611,12 +6119,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (36,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6663,12 +6167,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (37,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6715,12 +6215,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (38,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6767,12 +6263,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (39,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6819,12 +6311,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (40,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6871,12 +6359,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (41,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6923,12 +6407,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (42,1,1) = {"
-aa
 aa
 aa
 aa
@@ -6975,12 +6455,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (43,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7027,12 +6503,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (44,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7079,12 +6551,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (45,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7131,12 +6599,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (46,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7173,10 +6637,7 @@ aG
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7188,7 +6649,6 @@ aa
 aa
 "}
 (47,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7225,10 +6685,7 @@ aG
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7240,7 +6697,6 @@ aa
 aa
 "}
 (48,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7277,10 +6733,7 @@ aG
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7292,7 +6745,6 @@ aa
 aa
 "}
 (49,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7323,16 +6775,13 @@ il
 dv
 dv
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7344,7 +6793,6 @@ aa
 aa
 "}
 (50,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7375,13 +6823,13 @@ im
 dv
 aa
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7391,12 +6839,8 @@ aa
 ab
 aa
 aa
-aa
-aa
-aa
 "}
 (51,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7427,16 +6871,13 @@ dv
 dv
 aa
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7448,7 +6889,6 @@ aa
 aa
 "}
 (52,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7479,13 +6919,13 @@ aa
 aa
 aa
 aa
-ch
+Ga
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7495,12 +6935,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (53,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7531,22 +6967,19 @@ aa
 aa
 aa
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 ac
 ac
 ac
 az
-aa
-aa
-aa
 aa
 aa
 aa
@@ -7566,7 +6999,6 @@ aa
 aa
 aa
 aa
-aa
 cu
 aa
 aa
@@ -7583,13 +7015,13 @@ aa
 aa
 aa
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 az
@@ -7598,20 +7030,16 @@ az
 az
 ac
 ac
-aa
-aa
-aa
 aa
 "}
 (55,1,1) = {"
-aa
 ab
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7635,13 +7063,13 @@ aa
 aa
 aa
 aa
-bd
+Dj
 aa
 aa
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7650,9 +7078,6 @@ lo
 lp
 az
 az
-aa
-aa
-aa
 aa
 "}
 (56,1,1) = {"
@@ -7664,8 +7089,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -7693,7 +7117,7 @@ bD
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7703,12 +7127,8 @@ lp
 az
 ac
 aa
-aa
-aa
-aa
 "}
 (57,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7745,7 +7165,7 @@ bD
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7754,9 +7174,6 @@ ac
 az
 az
 ac
-aa
-aa
-aa
 aa
 "}
 (58,1,1) = {"
@@ -7767,8 +7184,7 @@ aa
 aa
 aa
 aa
-aa
-aA
+dF
 aa
 aa
 aa
@@ -7797,10 +7213,7 @@ bD
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7817,9 +7230,8 @@ aa
 aa
 aa
 aa
-aa
-aA
-aA
+dF
+dF
 aa
 aa
 aa
@@ -7849,10 +7261,7 @@ bD
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7864,7 +7273,6 @@ aa
 aa
 "}
 (60,1,1) = {"
-aa
 aa
 aa
 aa
@@ -7901,7 +7309,7 @@ bD
 aa
 aa
 aa
-aA
+dF
 aa
 aa
 aa
@@ -7911,12 +7319,8 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
 "}
 (61,1,1) = {"
-aa
 aa
 aa
 ac
@@ -7953,10 +7357,7 @@ bD
 aa
 aa
 aa
-aA
-aa
-aa
-aa
+dF
 aa
 aa
 aa
@@ -7968,7 +7369,6 @@ aa
 aa
 "}
 (62,1,1) = {"
-aa
 aa
 ac
 ac
@@ -8015,12 +7415,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (63,1,1) = {"
-aa
 aa
 ac
 ad
@@ -8067,12 +7463,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (64,1,1) = {"
-aa
 aa
 ac
 ad
@@ -8119,12 +7511,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (65,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8171,12 +7559,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (66,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8223,12 +7607,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (67,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8275,12 +7655,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (68,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8327,12 +7703,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (69,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8379,12 +7751,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (70,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8431,12 +7799,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (71,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8483,12 +7847,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (72,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8535,12 +7895,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (73,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8587,12 +7943,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (74,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8639,12 +7991,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (75,1,1) = {"
-aa
 ac
 ac
 ad
@@ -8691,12 +8039,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (76,1,1) = {"
-aa
 aa
 ac
 ad
@@ -8743,12 +8087,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (77,1,1) = {"
-aa
 aa
 ac
 ac
@@ -8795,12 +8135,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (78,1,1) = {"
-aa
 aa
 ac
 ac
@@ -8847,12 +8183,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (79,1,1) = {"
-aa
 aa
 aa
 ac
@@ -8899,9 +8231,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 "}
 (80,1,1) = {"
 aa
@@ -8923,7 +8252,6 @@ aa
 aa
 aa
 aa
-aa
 bD
 bD
 bD
@@ -8931,9 +8259,6 @@ bD
 bD
 bD
 bD
-aa
-aa
-aa
 aa
 aa
 aa
