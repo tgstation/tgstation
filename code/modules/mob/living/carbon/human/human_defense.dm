@@ -28,7 +28,7 @@
 		if(bp && istype(bp , /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor[d_type]
+				protection += C.armor.getRating(d_type)
 	return protection
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
