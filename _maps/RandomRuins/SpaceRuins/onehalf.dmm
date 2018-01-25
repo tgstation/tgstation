@@ -24,10 +24,8 @@
 /turf/template_noop,
 /area/template_noop)
 "ae" = (
-/obj/item/stack/cable_coil/cut{
-	amount = 2;
-	dir = 2;
-	icon_state = "coil_red2"
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -427,10 +425,8 @@
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
-/obj/item/stack/cable_coil/cut{
-	amount = 2;
-	dir = 2;
-	icon_state = "coil_red2"
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
 	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
@@ -1022,10 +1018,8 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cK" = (
 /obj/structure/lattice,
-/obj/item/stack/cable_coil/cut{
-	amount = 2;
-	dir = 2;
-	icon_state = "coil_red2"
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -1229,10 +1223,8 @@
 /turf/template_noop,
 /area/template_noop)
 "dl" = (
-/obj/item/stack/cable_coil/cut{
-	amount = 2;
-	dir = 2;
-	icon_state = "coil_red2"
+/obj/item/stack/cable_coil/cut/red{
+	amount = 2
 	},
 /turf/template_noop,
 /area/template_noop)
