@@ -292,7 +292,7 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for items, used to grab and store things."
+	desc = "A circuit which is used to grab and store objects within it's self-contained inventory."
 	icon_state = "grabber"
 	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
 	w_class = WEIGHT_CLASS_SMALL
@@ -315,7 +315,7 @@
 		if(mode == 1)
 			if(check_target(AM))
 				var/weightcheck = FALSE
-				if (!istype(AM,/obj/item/device/electronic_assembly/))
+				if (!istype(AM,/obj/item/device/electronic_assembly/) && (!istype(AM,/obj/item/device/transfer_valve))
 					if (AM.w_class <= max_w_class)
 						weightcheck = TRUE
 					else
