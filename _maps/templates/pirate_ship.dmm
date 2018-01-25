@@ -664,7 +664,6 @@
 	name = "Pirate Ship";
 	port_direction = 8;
 	preferred_direction = 1;
-	roundstart_move = "pirateship_home";
 	width = 23
 	},
 /obj/docking_port/stationary{

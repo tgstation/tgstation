@@ -184,7 +184,6 @@
 	height = 11
 	dir = EAST
 	port_direction = WEST
-	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
@@ -537,7 +536,6 @@
 	width = 8
 	height = 8
 	dir = EAST
-	roundstart_move = "backup_away"
 
 /obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
