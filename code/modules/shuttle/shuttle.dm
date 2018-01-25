@@ -504,7 +504,7 @@
 
 // Never move the shuttle import landmark, otherwise things get WEIRD
 /obj/effect/landmark/shuttle_import/onShuttleMove()
-	. = FALSE
+	return FALSE
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
