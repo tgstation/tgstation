@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "The majority of shuttles are now loaded at the start of the round from template, rather than being premapped. As a side effect, Delta's mining shuttle now docks facing down at Lavaland."
