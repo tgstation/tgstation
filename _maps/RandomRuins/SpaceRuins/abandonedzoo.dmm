@@ -753,7 +753,6 @@
 /area/space/nearstation)
 
 (1,1,1) = {"
-aa
 ab
 ag
 ag
@@ -775,7 +774,6 @@ ab
 aa
 "}
 (2,1,1) = {"
-aa
 ac
 ah
 ai
@@ -797,7 +795,6 @@ ac
 aa
 "}
 (3,1,1) = {"
-aa
 ac
 ah
 ap
@@ -819,7 +816,6 @@ ac
 aa
 "}
 (4,1,1) = {"
-aa
 ac
 ai
 ah
@@ -841,7 +837,6 @@ ac
 aa
 "}
 (5,1,1) = {"
-aa
 ac
 aj
 ai
@@ -863,7 +858,6 @@ ac
 aa
 "}
 (6,1,1) = {"
-aa
 ad
 ak
 ak
@@ -888,7 +882,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -907,7 +900,6 @@ bR
 aa
 "}
 (8,1,1) = {"
-aa
 aa
 aa
 aa
@@ -932,7 +924,6 @@ aa
 aa
 aa
 aa
-aa
 ag
 ay
 aH
@@ -951,7 +942,6 @@ aa
 aa
 "}
 (10,1,1) = {"
-aa
 aa
 aa
 aa
@@ -976,7 +966,6 @@ aa
 aa
 aa
 aa
-aa
 ag
 az
 aI
@@ -998,7 +987,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -1017,7 +1005,6 @@ aa
 aa
 "}
 (13,1,1) = {"
-aa
 ae
 ak
 ak
@@ -1039,7 +1026,6 @@ bS
 aa
 "}
 (14,1,1) = {"
-aa
 ac
 al
 an
@@ -1061,7 +1047,6 @@ ac
 aa
 "}
 (15,1,1) = {"
-aa
 ac
 am
 am
@@ -1083,7 +1068,6 @@ bT
 aa
 "}
 (16,1,1) = {"
-aa
 ac
 an
 aq
@@ -1105,7 +1089,6 @@ bU
 bW
 "}
 (17,1,1) = {"
-aa
 ac
 ao
 an
@@ -1127,7 +1110,6 @@ bP
 aa
 "}
 (18,1,1) = {"
-aa
 af
 ak
 ak
@@ -1149,7 +1131,6 @@ KN
 aa
 "}
 (19,1,1) = {"
-aa
 aa
 aa
 aa
