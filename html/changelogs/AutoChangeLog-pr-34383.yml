@@ -1,5 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - rscadd: "You can now defib monkeys and aliums"
-  - tweak: "Monkeys can also use defibs now, too!"

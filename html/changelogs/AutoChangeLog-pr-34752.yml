@@ -1,6 +1,0 @@
-author: "imsxz"
-delete-after: True
-changes: 
-  - rscadd: "Traitor clowns are now able to purchase clown bombs from their uplinks. Honk!"
-  - rscadd: "Clown bombs can now be placed via a small beacon, the same way normal syndicate bombs can be."
-  - tweak: "clown bomb payload now summons 50 clowns instead of 100"
