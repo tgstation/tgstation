@@ -1,22 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @Pyko1
- Sign out
- Unwatch 12
-  Star 14  Fork 1,677 HippieStation/HippieStation
-forked from tgstation/tgstation
- Code  Issues 71  Pull requests 22  Projects 1  Insights
-Tree: 4d64324bc7 Find file Copy pathHippieStation/code/modules/mob/living/carbon/human/species_types/mothmen.dm
-4d64324  18 hours ago
-@praisenarsie praisenarsie removes moth language
-1 contributor
-RawBlameHistory      
-60 lines (50 sloc)  2.19 KB
 /datum/species/moth
 	name = "Mothmen"
 	id = "moth"
