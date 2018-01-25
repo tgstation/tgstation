@@ -416,6 +416,6 @@
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.resize = 2.5
+	R.resize = 2
 	R.update_transform()
 	return TRUE
