@@ -605,11 +605,11 @@
 	glass_name = "cafe latte"
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 
-/datum/reagent/consumable/soy_latte/on_mob_add(mob/living/M)
+/datum/reagent/consumable/cafe_latte/on_mob_add(mob/living/M)
 	M.add_trait(TRAIT_SLEEPIMMUNE)
 	..()
 
-/datum/reagent/consumable/soy_latte/on_mob_delete(mob/living/M)
+/datum/reagent/consumable/cafe_latte/on_mob_delete(mob/living/M)
 	M.remove_trait(TRAIT_SLEEPIMMUNE)
 	..()
 
