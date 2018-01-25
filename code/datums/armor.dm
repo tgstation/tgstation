@@ -46,7 +46,7 @@
                   (isnull(bio) ? src.bio : bio),\
                   (isnull(rad) ? src.rad : rad),\
                   (isnull(fire) ? src.fire : fire),\
-                  (isnull(acid) ? src.acid : acid,\
+                  (isnull(acid) ? src.acid : acid),\
 				  (isnull(magic) ? src.magic : magic))
 
 /datum/armor/proc/getRating(rating)
