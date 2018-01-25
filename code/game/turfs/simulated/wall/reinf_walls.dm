@@ -13,6 +13,10 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 
+/turf/closed/wall/r_wall/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
+
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
@@ -252,11 +256,10 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!the_rcd.canRturf)
-		return FALSE
-	return ..()
+	if(the_rcd.canRturf)
+		return ..()
+
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(!the_rcd.canRturf)
-		return FALSE
-	return ..()
+	if(the_rcd.canRturf)
+		return ..()

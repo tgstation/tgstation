@@ -11,7 +11,7 @@
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
-	var/opening = 0
+	var/opening = FALSE
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -29,9 +29,13 @@
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/falsewall/New(loc)
-	..()
-	air_update_turf(1)
+/obj/structure/falsewall/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
+/obj/structure/falsewall/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/Destroy()
 	density = FALSE
@@ -46,47 +50,42 @@
 	if(opening)
 		return
 
-	opening = 1
-	if(density)
-		do_the_flick()
-		sleep(5)
-		if(!QDELETED(src))
-			density = FALSE
-			set_opacity(0)
-			update_icon()
-	else
+	opening = TRUE
+	update_icon()
+	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
-			opening = 0
+			opening = FALSE
 			return
-		do_the_flick()
-		density = TRUE
-		sleep(5)
-		if(!QDELETED(src))
-			set_opacity(1)
-			update_icon()
+	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
 	air_update_turf(1)
-	opening = 0
 
-/obj/structure/falsewall/proc/do_the_flick()
-	if(density)
-		smooth = SMOOTH_FALSE
-		clear_smooth_overlays()
-		icon_state = "fwall_opening"
-	else
-		icon_state = "fwall_closing"
+/obj/structure/falsewall/proc/toggle_open()
+	if(!QDELETED(src))
+		density = !density
+		set_opacity(density)
+		opening = FALSE
+		update_icon()
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
-	if(density)
-		smooth = SMOOTH_TRUE
-		queue_smooth(src)
-		icon_state = initial(icon_state)
+	if(opening)
+		if(density)
+			icon_state = "fwall_opening"
+			smooth = SMOOTH_FALSE
+			clear_smooth_overlays()
+		else
+			icon_state = "fwall_closing"
 	else
-		icon_state = "fwall_open"
+		if(density)
+			icon_state = initial(icon_state)
+			smooth = SMOOTH_TRUE
+			queue_smooth(src)
+		else
+			icon_state = "fwall_open"
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	T.ChangeTurf(walltype)
+	T.PlaceOnTop(walltype)
 	if(delete)
 		qdel(src)
 	return T
@@ -195,7 +194,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 0, 3, 15, 1)
+			radiation_pulse(src, 150)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -262,14 +261,14 @@
 	if(exposed_temperature > 300)
 		burnbabyburn()
 
-/obj/structure/falsewall/clown
+/obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	mineral = /obj/item/stack/sheet/mineral/bananium
-	walltype = /turf/closed/wall/mineral/clown
-	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/closed/wall/mineral/clown)
+	walltype = /turf/closed/wall/mineral/bananium
+	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
 
 
 /obj/structure/falsewall/sandstone
@@ -321,11 +320,12 @@
 /obj/structure/falsewall/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "shuttle"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smooth = SMOOTH_FALSE
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/brass
 	name = "clockwork wall"

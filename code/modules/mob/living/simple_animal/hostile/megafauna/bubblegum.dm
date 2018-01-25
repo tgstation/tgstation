@@ -79,10 +79,10 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp((health/maxHealth) * 10, 5, 10)
+	move_to_delay = CLAMP((health/maxHealth) * 10, 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	anger_modifier = Clamp(((maxHealth - health)/60),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
 	if(charging)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -106,7 +106,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
 		if(B != src)
 			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new

@@ -24,7 +24,7 @@
 
 /obj/item/clothing/neck/cloak/hos
 	name = "head of security's cloak"
-	desc = "Worn by Securistan, ruling the station with an iron fist. It's slightly armored."
+	desc = "Worn by Securistan, ruling the station with an iron fist."
 	icon_state = "hoscloak"
 
 /obj/item/clothing/neck/cloak/qm
@@ -33,17 +33,17 @@
 
 /obj/item/clothing/neck/cloak/cmo
 	name = "chief medical officer's cloak"
-	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay. It's slightly shielded from contaminants."
+	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay."
 	icon_state = "cmocloak"
 
 /obj/item/clothing/neck/cloak/ce
 	name = "chief engineer's cloak"
-	desc = "Worn by Engitopia, wielders of an unlimited power. It's slightly shielded against radiation."
+	desc = "Worn by Engitopia, wielders of an unlimited power."
 	icon_state = "cecloak"
 
 /obj/item/clothing/neck/cloak/rd
 	name = "research director's cloak"
-	desc = "Worn by Sciencia, thaumaturges and researchers of the universe. It's slightly shielded from contaminants."
+	desc = "Worn by Sciencia, thaumaturges and researchers of the universe."
 	icon_state = "rdcloak"
 
 /obj/item/clothing/neck/cloak/cap

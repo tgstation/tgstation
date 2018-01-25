@@ -33,7 +33,7 @@
 /obj/effect/rend
 	name = "tear in the fabric of reality"
 	desc = "You should run now."
-	icon = 'icons/obj/biomass.dmi'
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
@@ -65,6 +65,12 @@
 		return
 	else
 		return ..()
+
+/obj/effect/rend/singularity_pull()
+	return
+
+/obj/effect/rend/singularity_pull()
+	return
 
 /obj/item/veilrender/vealrender
 	name = "veal render"
@@ -115,11 +121,20 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
+	var/xray_granted = FALSE
+
+/obj/item/scrying/equipped(mob/user)
+	if(!xray_granted && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!(H.dna.check_mutation(XRAY)))
+			H.dna.add_mutation(XRAY)
+			xray_granted = TRUE
+	. = ..()
+
 /obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
-	return
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
@@ -131,7 +146,6 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
@@ -193,8 +207,8 @@
 	H.equip_to_slot_or_del(new hat(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
-	H.put_in_hands_or_del(new /obj/item/shield/riot/roman(H))
-	H.put_in_hands_or_del(new /obj/item/claymore(H))
+	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
+	H.put_in_hands(new /obj/item/claymore(H), TRUE)
 	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
 
 
@@ -208,7 +222,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
 	var/list/mob/living/carbon/human/possible = list()
-	var/obj/item/link = null
+	var/obj/item/voodoo_link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
 	max_integrity = 10
@@ -232,10 +246,10 @@
 		cooldown = world.time +cooldown_time
 		return
 
-	if(!link)
+	if(!voodoo_link)
 		if(I.loc == user && istype(I) && I.w_class <= WEIGHT_CLASS_SMALL)
 			if (user.transferItemToLoc(I,src))
-				link = I
+				voodoo_link = I
 				to_chat(user, "You attach [I] to the doll.")
 				update_targets()
 
@@ -250,11 +264,11 @@
 		return
 
 	if(user.zone_selected == "chest")
-		if(link)
+		if(voodoo_link)
 			target = null
-			link.loc = get_turf(src)
-			to_chat(user, "<span class='notice'>You remove the [link] from the doll.</span>")
-			link = null
+			voodoo_link.forceMove(drop_location())
+			to_chat(user, "<span class='notice'>You remove the [voodoo_link] from the doll.</span>")
+			voodoo_link = null
 			update_targets()
 			return
 
@@ -286,10 +300,13 @@
 
 /obj/item/voodoo/proc/update_targets()
 	possible = list()
-	if(!link)
+	if(!voodoo_link)
 		return
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(md5(H.dna.uni_identity) in link.fingerprints)
+	var/list/prints = voodoo_link.return_fingerprints()
+	if(!length(prints))
+		return FALSE
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		if(prints[md5(H.dna.uni_identity)])
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
@@ -300,13 +317,17 @@
 		var/area/A = get_area(src)
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
+/obj/item/voodoo/suicide_act(mob/living/carbon/user)
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.gib()
+    return(BRUTELOSS)
+
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
 		target.adjust_fire_stacks(20)
 		target.IgniteMob()
 		GiveHint(target,1)
 	return ..()
-
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/heart/cursed/wizard

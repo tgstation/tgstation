@@ -128,12 +128,11 @@
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
 				var/obj/item/circuitboard/machine/B = P
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
-				B.loc = src
 				icon_state = "box_2"
 				state = 3
 				components = list()
@@ -158,15 +157,15 @@
 			if(istype(P, /obj/item/crowbar))
 				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
-				circuit.loc = src.loc
+				circuit.forceMove(drop_location())
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
-					for(var/atom/movable/A in components)
-						A.loc = src.loc
+					for(var/atom/movable/AM in components)
+						AM.forceMove(drop_location())
 				desc = initial(desc)
 				req_components = null
 				components = null
@@ -187,9 +186,9 @@
 						qdel(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.loc = null
+						O.moveToNullspace()
 						new_machine.component_parts += O
-					circuit.loc = null
+					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)
 				return
@@ -239,10 +238,9 @@
 								req_components[I] -= used_amt
 								to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
 							return
-						if(!user.drop_item())
+						if(!user.transferItemToLoc(P, src))
 							break
 						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
-						P.forceMove(src)
 						components += P
 						req_components[I]--
 						return 1
@@ -259,4 +257,5 @@
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)
+
 	..()

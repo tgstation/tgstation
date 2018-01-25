@@ -16,7 +16,7 @@
 	new /obj/item/device/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/handle_automated_action()
+/mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/Life()
 	consume()
 	return ..()
 

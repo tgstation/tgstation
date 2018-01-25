@@ -17,6 +17,7 @@
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
 #define MODE_VOCALCORDS "cords"
+#define MODE_MONKEY "monkeyhive"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -37,9 +38,9 @@
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
-#define TURF_LINK(alice, turfy) "<a href=?src=\ref[alice];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=\ref[alice];follow=\ref[bob];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
 #define LOGSAY "say"
 #define LOGWHISPER "whisper"
@@ -50,3 +51,15 @@
 #define LOGASAY "adminsay"
 #define LOGCOMMENT "comment"
 #define LOGOOC "ooc"
+
+
+#define LINGHIVE_NONE 0
+#define LINGHIVE_OUTSIDER 1
+#define LINGHIVE_LING 2
+#define LINGHIVE_LINK 3
+
+//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
+#define MAX_MESSAGE_LEN			1024
+#define MAX_NAME_LEN			42
+#define MAX_BROADCAST_LEN		512
+#define MAX_CHARTER_LEN			80

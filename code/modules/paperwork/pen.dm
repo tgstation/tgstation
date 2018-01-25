@@ -23,6 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
+	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
@@ -99,18 +100,12 @@
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 		if(hidden_uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
+			hidden_uplink.locked = FALSE
 			hidden_uplink.interact(user)
-
-
-/obj/item/pen/attackby(obj/item/I, mob/user, params)
-	if(hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-	else
-		return ..()
-
 
 /obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -131,7 +126,7 @@
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
-		if(O.unique_rename)
+		if(O.obj_flags & UNIQUE_RENAME)
 			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
 			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
 
@@ -167,8 +162,7 @@
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
@@ -181,18 +175,17 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/pen/sleepy/New()
+/obj/item/pen/sleepy/Initialize()
+	. = ..()
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
-	..()
 
 /*
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 

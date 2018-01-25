@@ -5,7 +5,6 @@
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if (notransform)
 		return
@@ -24,31 +23,27 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
-		if(radiation > 100)
+		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 			if(!IsKnockdown())
 				emote("collapse")
-			Knockdown(200)
+			Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
-		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.0002))
-			gorillize()
-			return
-		switch(radiation)
-			if(50 to 75)
-				if(prob(5))
-					if(!IsKnockdown())
-						emote("collapse")
-					Knockdown(60)
-					to_chat(src, "<span class='danger'>You feel weak.</span>")
-			if(75 to 100)
-				if(prob(1))
-					to_chat(src, "<span class='danger'>You mutate!</span>")
-					randmutb()
-					emote("gasp")
-					domutcheck()
-		..()
+		if(radiation > RAD_MOB_MUTATE)
+			if(prob(1))
+				to_chat(src, "<span class='danger'>You mutate!</span>")
+				randmutb()
+				emote("gasp")
+				domutcheck()
+
+				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
+					gorillize()
+					return
+		if(radiation > RAD_MOB_VOMIT && prob(RAD_MOB_VOMIT_PROB))
+			vomit(10, TRUE)
+	return ..()
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
-	if(abs(310.15 - breath.temperature) > 50)
+	if(abs(BODYTEMP_NORMAL - breath.temperature) > 50)
 		switch(breath.temperature)
 			if(-INFINITY to 120)
 				adjustFireLoss(3)
@@ -70,13 +65,14 @@
 	var/loc_temp = get_temperature(environment)
 
 	if(stat != DEAD)
-		natural_bodytemperature_stabilization()
+		bodytemperature += natural_bodytemperature_stabilization()
 
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < bodytemperature)
-			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
+			bodytemperature += max((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 		else
-			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+			bodytemperature += min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		switch(bodytemperature)

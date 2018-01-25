@@ -13,7 +13,7 @@
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
-/obj/item/reagent_containers/blood/on_reagent_change()
+/obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B && B.data && B.data["blood_type"])
@@ -40,6 +40,9 @@
 		if(51 to INFINITY)
 			icon_state = "full"
 
+/obj/item/reagent_containers/blood/random
+	icon_state = "random_bloodpack"
+
 /obj/item/reagent_containers/blood/random/Initialize()
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	. = ..()
@@ -64,6 +67,9 @@
 
 /obj/item/reagent_containers/blood/lizard
 	blood_type = "L"
+
+/obj/item/reagent_containers/blood/universal
+	blood_type = "U"
 
 /obj/item/reagent_containers/blood/empty
 	name = "blood pack"

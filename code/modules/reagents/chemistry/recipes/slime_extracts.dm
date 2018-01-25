@@ -3,7 +3,7 @@
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
-	SSblackbox.add_details("slime_cores_used","[type]")
+	SSblackbox.record_feedback("tally", "slime_cores_used", 1, "type")
 	if(deletes_extract)
 		delete_extract(holder)
 
@@ -48,21 +48,27 @@
 //Green
 /datum/chemical_reaction/slime/slimemutate
 	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	results = list("mutationtoxin" = 1)
+	id = "slimetoxin"
+	results = list("slime_toxin" = 1)
 	required_reagents = list("plasma" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
 
-//Mutated Green
-/datum/chemical_reaction/slime/slimemutate_unstable
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	results = list("unstablemutationtoxin" = 1)
+/datum/chemical_reaction/slime/slimehuman
+	name = "Human Mutation Toxin"
+	id = "humanmuttoxin"
+	results = list("stablemutationtoxin" = 1)
+	required_reagents = list("blood" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimelizard
+	name = "Lizard Mutation Toxin"
+	id = "lizardmuttoxin"
+	results = list("lizardmutationtoxin" = 1)
 	required_reagents = list("radium" = 1)
 	required_other = 1
 	required_container = /obj/item/slime_extract/green
-	mix_message = "<span class='info'>The mixture rapidly expands and contracts, its appearance shifting into a sickening green.</span>"
 
 //Metal
 /datum/chemical_reaction/slime/slimemetal
@@ -110,7 +116,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime"), 50)
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime", HOSTILE_SPAWN), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser
 	name = "Slime Crit Lesser"
@@ -119,7 +125,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", "neutral"), 50)
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral"), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly
 	name = "Slime Crit Friendly"
@@ -128,7 +134,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", "neutral"), 50)
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Friendly Gold Slime", FRIENDLY_SPAWN, "neutral"), 50)
 
 //Silver
 /datum/chemical_reaction/slime/slimebork
@@ -140,7 +146,6 @@
 
 /datum/chemical_reaction/slime/slimebork/on_reaction(datum/reagents/holder)
 	//BORK BORK BORK
-	var/list/borks = getborks()
 	var/turf/T = get_turf(holder.my_atom)
 
 	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
@@ -149,49 +154,28 @@
 		C.flash_act()
 
 	for(var/i in 1 to 4 + rand(1,2))
-		var/chosen = pick(borks)
+		var/chosen = getbork()
 		var/obj/B = new chosen(T)
 		if(prob(5))//Fry it!
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/D = new(T)
-			var/datum/reagents/reagents = new(25)
-			reagents.add_reagent("nutriment", 25)
-			D.fry(B, reagents)
-			B = D
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/fried
+			fried = new(T, B)
+			fried.fry() // actually set the name and colour it
+			B = fried
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
 	..()
 
-/datum/chemical_reaction/slime/slimebork/proc/getborks()
-	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
-		/obj/item/reagent_containers/food/snacks/store/bread,
-		/obj/item/reagent_containers/food/snacks/breadslice,
-		/obj/item/reagent_containers/food/snacks/store/cake,
-		/obj/item/reagent_containers/food/snacks/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
-		/obj/item/reagent_containers/food/snacks/pie,
-		/obj/item/reagent_containers/food/snacks/kebab,
-		/obj/item/reagent_containers/food/snacks/pizza,
-		/obj/item/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/reagent_containers/food/snacks/salad,
-		/obj/item/reagent_containers/food/snacks/meat,
-		/obj/item/reagent_containers/food/snacks/meat/slab,
-		/obj/item/reagent_containers/food/snacks/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
-		/obj/item/reagent_containers/food/snacks/deepfryholder
-		)
-	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
-
-	return typesof(/obj/item/reagent_containers/food/snacks) - blocked
+/datum/chemical_reaction/slime/slimebork/proc/getbork()
+	return get_random_food()
 
 /datum/chemical_reaction/slime/slimebork/drinks
 	name = "Slime Bork 2"
 	id = "m_tele4"
 	required_reagents = list("water" = 1)
 
-/datum/chemical_reaction/slime/slimebork/drinks/getborks()
-	return subtypesof(/obj/item/reagent_containers/food/drinks)
+/datum/chemical_reaction/slime/slimebork/drinks/getbork()
+	return get_random_drink()
 
 //Blue
 /datum/chemical_reaction/slime/slimefrost
@@ -243,7 +227,7 @@
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("freon=50;TEMP=120")
+			T.atmos_spawn_air("nitrogen=50;TEMP=2.7")
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"
@@ -345,11 +329,11 @@
 	new /obj/item/slimepotion/steroid(get_turf(holder.my_atom))
 	..()
 
-/datum/chemical_reaction/slime/slimejam
-	name = "Slime Jam"
-	id = "m_jam"
-	results = list("slimejelly" = 10)
-	required_reagents = list("sugar" = 1)
+/datum/chemical_reaction/slime/slimeregen
+	name = "Slime Regen"
+	id = "m_regen"
+	results = list("regen_jelly" = 5)
+	required_reagents = list("blood" = 1)
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
 
@@ -553,10 +537,9 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-	var/obj/effect/timestop/T = new /obj/effect/timestop
-	T.forceMove(get_turf(holder.my_atom))
-	T.immune += get_mob_by_key(holder.my_atom.fingerprintslast)
-	T.timestop()
+	var/turf/T = get_turf(holder.my_atom)
+	var/list/M = list(get_mob_by_key(holder.my_atom.fingerprintslast))
+	new /obj/effect/timestop(T, null, null, M)
 	..()
 
 /datum/chemical_reaction/slime/slimecamera
@@ -641,4 +624,3 @@
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
 	new /obj/item/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
-

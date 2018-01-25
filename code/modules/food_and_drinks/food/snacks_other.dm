@@ -28,6 +28,7 @@
 	filling_color = "#FF1493"
 	tastes = list("watermelon" = 1)
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -66,8 +67,8 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/popcorn/New()
-	..()
+/obj/item/reagent_containers/food/snacks/popcorn/Initialize()
+	. = ..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
@@ -192,7 +193,7 @@
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
 	icon_state = "spiderling"
-	list_reagents = list("nutrient" = 1, "toxin" = 4)
+	list_reagents = list("nutriment" = 1, "toxin" = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
@@ -380,7 +381,7 @@
 	foodtype = VEGETABLES | FRIED | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cubannachos
-	name = "cuban nachos"
+	name = "Cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon_state = "cubannachos"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
@@ -447,8 +448,8 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
+	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 
@@ -466,8 +467,8 @@
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
@@ -487,15 +488,15 @@
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/gumball/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)

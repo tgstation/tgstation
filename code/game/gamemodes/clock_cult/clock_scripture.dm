@@ -12,6 +12,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/name = "scripture"
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
+	var/chanting = FALSE //If the invocation's words are being spoken
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/power_cost = 5 //In watts, how much a scripture takes to invoke
 	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
@@ -52,6 +53,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		pre_recital()
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
@@ -64,7 +66,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		else
 			successful = TRUE
 			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				SSblackbox.add_details("clockcult_scripture_recited", name)
+				SSblackbox.record_feedback("tally", "clockcult_scripture_recited", 1, name)
 	if(slab)
 		slab.busy = null
 	post_recital()
@@ -124,7 +126,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
+	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
 		channel_time *= 2
 		power_cost *= 2
 		return TRUE
@@ -145,23 +147,37 @@ Applications: 8 servants, 3 caches, and 100 CV
 	to_chat(invoker, "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>")
 	if(!channel_time)
 		return TRUE
+	chant()
+	if(!do_after(invoker, channel_time, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
+		slab.busy = null
+		chanting = FALSE
+		scripture_fail()
+		chanting = FALSE
+		return
+	chanting = FALSE
+	return TRUE
+
+/datum/clockwork_scripture/proc/chant()
+	set waitfor = FALSE
+	chanting = TRUE
 	for(var/invocation in invocations)
-		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
-			slab.busy = null
-			scripture_fail()
-			return FALSE
+		sleep(channel_time / invocations.len)
+		if(QDELETED(src) || QDELETED(slab) || !chanting)
+			return
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
 				if(can_recite_scripture(L))
 					clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			clockwork_say(invoker, text2ratvar(invocation), whispered)
-	return TRUE
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
 
 
 /datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+
+
+/datum/clockwork_scripture/proc/pre_recital() //Called before the scripture is recited
 
 
 /datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited
@@ -246,7 +262,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [round(construct_limit)] at once.</span>")
 		return
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G && !G.active && combat_construct && invoker.z == ZLEVEL_CITYOFCOGS && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
+	if(G && !G.active && combat_construct && is_reebe(invoker.z) && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
 		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
 			return
 		if(!is_servant_of_ratvar(invoker) || !invoker.canUseTopic(slab))
@@ -307,7 +323,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 				qdel(progbar)
 			else
 				progbar.update(end_time - world.time)
-		sleep(1)
+		stoplag(1)
 	if(slab)
 		if(slab.slab_ability)
 			successful = slab.slab_ability.successful

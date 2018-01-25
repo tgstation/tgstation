@@ -2,7 +2,7 @@
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
-	icon = 'icons/obj/suitstorage.dmi'
+	icon = 'icons/obj/machines/suit_storage.dmi'
 	icon_state = "close"
 	anchored = TRUE
 	density = TRUE
@@ -102,6 +102,10 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/open
+	state_open = TRUE
+	density = FALSE
 
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
@@ -236,8 +240,10 @@
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, 1)
 			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				I.clean_blood()
-				I.fingerprints = list()
+				I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
+				var/datum/component/radioactive/contamination = I.GetComponent(/datum/component/radioactive)
+				if(contamination)
+					qdel(contamination)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
@@ -298,32 +304,31 @@
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			suit = I
 		else if(istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			helmet = I
 		else if(istype(I, /obj/item/clothing/mask))
 			if(mask)
 				to_chat(user, "<span class='warning'>The unit already contains a mask!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			mask = I
 		else
 			if(storage)
 				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(I, src))
 				return
 			storage = I
 
-		I.loc = src
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return

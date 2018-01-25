@@ -4,7 +4,7 @@
 	possible_locs = list("chest")
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(target.disabilities & FAT)
+	if(target.has_trait(TRAIT_FAT))
 		return 1
 	return 0
 
@@ -49,5 +49,5 @@
 	newmeat.subjectname = H.real_name
 	newmeat.subjectjob = H.job
 	newmeat.reagents.add_reagent ("nutriment", (removednutriment / 15)) //To balance with nutriment_factor of nutriment
-	newmeat.loc = target.loc
+	newmeat.forceMove(target.loc)
 	return 1

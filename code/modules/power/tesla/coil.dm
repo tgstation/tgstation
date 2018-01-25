@@ -68,7 +68,7 @@
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
-		being_shocked = TRUE
+		obj_flags |= BEING_SHOCKED
 		//don't lose arc power when it's not connected to anything
 		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
@@ -102,8 +102,6 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	buckle_requires_restraints = TRUE
-
-	circuit = /obj/item/circuitboard/machine/grounding_rod
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()

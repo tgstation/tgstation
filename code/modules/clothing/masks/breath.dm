@@ -12,7 +12,11 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
+
+obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is wrapping \the [src]'s tube around their neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)

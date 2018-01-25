@@ -21,6 +21,7 @@
 	maxHealth = INFINITY
 	layer = GHOST_LAYER
 	healable = FALSE
+	spacewalk = TRUE
 	sight = SEE_SELF
 
 	see_in_dark = 8
@@ -63,7 +64,7 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	to_chat(src, "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>")
+	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
 	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
 	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
@@ -85,7 +86,7 @@
 		to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
 		mind.assigned_role = "revenant"
 		mind.special_role = "Revenant"
-		SSticker.mode.traitors |= mind //Necessary for announcing
+		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -153,8 +154,6 @@
 
 
 //Immunities
-/mob/living/simple_animal/revenant/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -225,7 +224,6 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
-	return
 
 
 //reveal, stun, icon updates, cast checks, and essence changing
@@ -353,7 +351,7 @@
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
-	user.drop_item()
+	user.dropItemToGround(src)
 	scatter()
 
 /obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom)
@@ -375,7 +373,7 @@
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
-	loc = get_turf(src) //In case it's in a backpack or someone's hand
+	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 	revenant.forceMove(loc)
 	if(client_to_revive)
 		for(var/mob/M in GLOB.dead_mob_list)
@@ -411,6 +409,11 @@
 	revenant.key = key_of_revenant
 	revenant = null
 	qdel(src)
+
+/obj/item/ectoplasm/revenant/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!</span>")
+	scatter()
+	return (OXYLOSS)
 
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))

@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(get_turf(src))
+	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -34,7 +34,7 @@
 
 	dust_animation()
 	spawn_dust(just_ash)
-	qdel(src)
+	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
 /mob/living/proc/dust_animation()
 	return
@@ -49,15 +49,14 @@
 	timeofdeath = world.time
 	tod = worldtime2text()
 	var/turf/T = get_turf(src)
-	var/area/A = get_area(T)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
 	if(mind && mind.name && mind.active && (!(T.flags_1 & NO_DEATHRATTLE_1)))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[A.name]</b>.</span>"
+		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.living_mob_list -= src
+	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
 	set_drugginess(0)
@@ -72,6 +71,9 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+
+	if (client)
+		client.move_delay = initial(client.move_delay)
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s

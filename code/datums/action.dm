@@ -43,10 +43,27 @@
 				return
 			Remove(owner)
 		owner = M
+
+		//button id generation
+		var/counter = 0
+		var/bitfield = 0
+		for(var/datum/action/A in M.actions)
+			if(A.name == name && A.button.id)
+				counter += 1
+				bitfield |= A.button.id
+		bitfield = ~bitfield
+		var/bitflag = 1
+		for(var/i in 1 to (counter + 1))
+			if(bitfield & bitflag)
+				button.id = bitflag
+				break
+			bitflag *= 2
+
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked
+			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -60,6 +77,7 @@
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
+	button.id = null
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -86,7 +104,7 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
 		if(!status_only)
 			button.name = name
@@ -103,7 +121,7 @@
 				if(button.icon_state != background_icon_state)
 					button.icon_state = background_icon_state
 
-			ApplyIcon(button)
+			ApplyIcon(button, force)
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
@@ -111,8 +129,8 @@
 			button.color = rgb(255,255,255,255)
 			return 1
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
+/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
@@ -145,21 +163,22 @@
 		I.ui_action_click(owner, src)
 	return 1
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
-		..(current_button)
+		..()
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		current_button.appearance_cache = I.appearance
 		var/old_layer = I.layer
 		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
 		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.overlays = list(I)
+		current_button.cut_overlays()
+		current_button.add_overlay(I)
 		I.layer = old_layer
 		I.plane = old_plane
+		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -196,7 +215,7 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE, force)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
@@ -234,7 +253,7 @@
 	if(..())
 		UpdateButtonIcon()
 
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE, force)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.friendly_fire_check)
@@ -326,6 +345,19 @@
 /datum/action/item_action/change
 	name = "Change"
 
+/datum/action/item_action/nano_picket_sign
+	name = "Retext Nano Picket Sign"
+	var/obj/item/picket_sign/S
+
+/datum/action/item_action/nano_picket_sign/New(Target)
+	..()
+	if(istype(Target, /obj/item/picket_sign))
+		S = Target
+
+/datum/action/item_action/nano_picket_sign/Trigger()
+	if(istype(S))
+		S.retext(owner)
+
 /datum/action/item_action/adjust
 
 /datum/action/item_action/adjust/New(Target)
@@ -403,59 +435,6 @@
 		return
 	return ..()
 
-/datum/action/item_action/initialize_ninja_suit
-	name = "Toggle ninja suit"
-
-/datum/action/item_action/ninjasmoke
-	name = "Smoke Bomb"
-	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
-	button_icon_state = "smoke"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-
-/datum/action/item_action/ninjaboost
-	check_flags = NONE
-	name = "Adrenaline Boost"
-	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
-	button_icon_state = "repulse"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-
-/datum/action/item_action/ninjapulse
-	name = "EM Burst (25E)"
-	desc = "Disable any nearby technology with an electro-magnetic pulse."
-	button_icon_state = "emp"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-
-/datum/action/item_action/ninjastar
-	name = "Create Throwing Stars (1E)"
-	desc = "Creates some throwing stars"
-	button_icon_state = "throwingstar"
-	icon_icon = 'icons/obj/items_and_weapons.dmi'
-
-/datum/action/item_action/ninjanet
-	name = "Energy Net (20E)"
-	desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
-	button_icon_state = "energynet"
-	icon_icon = 'icons/effects/effects.dmi'
-
-/datum/action/item_action/ninja_sword_recall
-	name = "Recall Energy Katana (Variable Cost)"
-	desc = "Teleports the Energy Katana linked to this suit to its wearer, cost based on distance."
-	button_icon_state = "energy_katana"
-	icon_icon = 'icons/obj/items_and_weapons.dmi'
-
-/datum/action/item_action/ninja_stealth
-	name = "Toggle Stealth"
-	desc = "Toggles stealth mode on and off."
-	button_icon_state = "ninja_cloak"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-
-/datum/action/item_action/toggle_glove
-	name = "Toggle interaction"
-	desc = "Switch between normal interaction and drain mode."
-	button_icon_state = "s-ninjan"
-	icon_icon = 'icons/obj/clothing/gloves.dmi'
-
-
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
@@ -511,6 +490,8 @@
 	if(!target)
 		return FALSE
 	return TRUE
+
+/datum/action/spell_action/spell
 
 /datum/action/spell_action/spell/IsAvailable()
 	if(!target)

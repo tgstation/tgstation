@@ -48,7 +48,7 @@
 		item_count++
 		var/g_color = gland_colors[i]
 		var/amount = amounts[i]
-		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=\ref[src];dispense=[i]'>[amount]</a>"
+		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=[REF(src)];dispense=[i]'>[amount]</a>"
 		if(item_count == 4) // Four boxes per line
 			dat +="</br></br>"
 			item_count = 0

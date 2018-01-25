@@ -6,7 +6,7 @@
 SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
-	priority = 20
+	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/canBeUsed = list()
@@ -37,7 +37,8 @@ SUBSYSTEM_DEF(npcpool)
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 
 	if (!resumed)
-		src.currentrun = GLOB.simple_animals.Copy()
+		var/list/activelist = GLOB.simple_animals[AI_ON]
+		src.currentrun = activelist.Copy()
 		stage = PROCESSING_SIMPLES
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

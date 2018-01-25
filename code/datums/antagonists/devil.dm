@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 			BAN_CHAPEL = "This devil avoids holy ground.",
 			BAN_HURTPRIEST = "The annointed clergy appear to be immune to his powers.",
 			BAN_AVOIDWATER = "The devil seems to have some sort of aversion to water, though it does not appear to harm him.",
-			BAN_STRIKEUNCONCIOUS = "This devil only shows interest in those who are awake.",
+			BAN_STRIKEUNCONSCIOUS = "This devil only shows interest in those who are awake.",
 			BAN_HURTLIZARD = "This devil will not strike a lizardman first.",
 			BAN_HURTANIMAL = "This devil avoids hurting animals.",
 			BANISH_WATER = "To banish the devil, you must infuse its body with holy water.",
@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 			BAN_CHAPEL = "You must never attempt to enter the chapel.",
 			BAN_HURTPRIEST = "You must never attack a priest.",
 			BAN_AVOIDWATER = "You must never willingly touch a wet surface.",
-			BAN_STRIKEUNCONCIOUS = "You must never strike an unconscious person.",
+			BAN_STRIKEUNCONSCIOUS = "You must never strike an unconscious person.",
 			BAN_HURTLIZARD = "You must never harm a lizardman outside of self defense.",
 			BAN_HURTANIMAL = "You must never harm a non-sentient creature or robot outside of self defense.",
 			BANE_SILVER = "Silver, in all of its forms shall be your downfall.",
@@ -85,8 +85,12 @@ GLOBAL_LIST_INIT(devil_title, list("Lord ", "Prelate ", "Count ", "Viscount ", "
 GLOBAL_LIST_INIT(devil_syllable, list("hal", "ve", "odr", "neit", "ci", "quon", "mya", "folth", "wren", "geyr", "hil", "niet", "twou", "phi", "coa"))
 GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", ", the Lord of all things", ", Jr."))
 /datum/antagonist/devil
+	name = "Devil"
+	roundend_category = "devils"
+	antagpanel_category = "Devil"
+	job_rank = ROLE_DEVIL
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
-	delete_on_death = FALSE
+	delete_on_mind_deletion = FALSE
 	var/obligation
 	var/ban
 	var/bane
@@ -107,18 +111,35 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
 		/obj/effect/proc_holder/spell/targeted/summon_dancefloor))
 	var/ascendable = FALSE
-	name = "Devil"
+
+/datum/antagonist/devil/can_be_owned(datum/mind/new_owner)
+	. = ..()
+	return . && (ishuman(new_owner.current) || iscyborg(new_owner.current))
+
+/datum/antagonist/devil/get_admin_commands()
+	. = ..()
+	.["Toggle ascendable"] = CALLBACK(src,.proc/admin_toggle_ascendable)
 
 
-/datum/antagonist/devil/New()
-	..()
-	truename = randomDevilName()
-	ban = randomdevilban()
-	bane = randomdevilbane()
-	obligation = randomdevilobligation()
-	banish = randomdevilbanish()
-	GLOB.allDevils[lowertext(truename)] = src
+/datum/antagonist/devil/proc/admin_toggle_ascendable(mob/admin)
+	ascendable = !ascendable
+	message_admins("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable]")
+	log_admin("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable])")
 
+/datum/antagonist/devil/admin_add(datum/mind/new_owner,mob/admin)
+	switch(alert(admin,"Should the devil be able to ascend",,"Yes","No","Cancel"))
+		if("Yes")
+			ascendable = TRUE
+		if("No")
+			ascendable = FALSE
+		else
+			return
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+	log_admin("[key_name(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+
+/datum/antagonist/devil/antag_listing_name()
+	return ..() + "([truename])"
 
 /proc/devilInfo(name)
 	if(GLOB.allDevils[lowertext(name)])
@@ -147,7 +168,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	return pick(OBLIGATION_FOOD, OBLIGATION_FIDDLE, OBLIGATION_DANCEOFF, OBLIGATION_GREET, OBLIGATION_PRESENCEKNOWN, OBLIGATION_SAYNAME, OBLIGATION_ANNOUNCEKILL, OBLIGATION_ANSWERTONAME)
 
 /proc/randomdevilban()
-	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
+	return pick(BAN_HURTWOMAN, BAN_CHAPEL, BAN_HURTPRIEST, BAN_AVOIDWATER, BAN_STRIKEUNCONSCIOUS, BAN_HURTLIZARD, BAN_HURTANIMAL)
 
 /proc/randomdevilbane()
 	return pick(BANE_SALT, BANE_LIGHT, BANE_IRON, BANE_WHITECLOTHES, BANE_SILVER, BANE_HARVEST, BANE_TOOLBOX)
@@ -478,7 +499,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	.=..()
 
 /datum/antagonist/devil/on_gain()
-	owner.store_memory("Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>")
+	truename = randomDevilName()
+	ban = randomdevilban()
+	bane = randomdevilbane()
+	obligation = randomdevilobligation()
+	banish = randomdevilbanish()
+	GLOB.allDevils[lowertext(truename)] = src
+
+	antag_memory += "Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>"
 	if(issilicon(owner.current))
 		var/mob/living/silicon/robot_devil = owner.current
 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")
@@ -506,6 +534,35 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
 	.=..()
+
+/datum/antagonist/devil/proc/printdevilinfo()
+	var/list/parts = list()
+	parts += "The devil's true name is: [truename]"
+	parts += "The devil's bans were:"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][ban]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][bane]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][obligation]]"
+	parts += "[GLOB.TAB][GLOB.lawlorify[LORE][banish]]"
+	return parts.Join("<br>")
+
+/datum/antagonist/devil/roundend_report()
+	var/list/parts = list()
+	parts += printplayer(owner)
+	parts += printdevilinfo()
+	parts += printobjectives(owner)
+	return parts.Join("<br>")
+
+/datum/antagonist/devil/roundend_report_footer()
+	//sintouched go here for now as a hack , TODO proper antag datum for these
+	var/list/parts = list()
+	if(SSticker.mode.sintouched.len)
+		parts += "<span class='header'>The sintouched were:</span>"
+		var/list/sintouchedUnique = uniqueList(SSticker.mode.sintouched)
+		for(var/S in sintouchedUnique)
+			var/datum/mind/sintouched_mind = S
+			parts += printplayer(sintouched_mind)
+			parts += printobjectives(sintouched_mind)
+	return parts.Join("<br>")
 
 //A simple super light weight datum for the codex gigas.
 /datum/fakeDevil

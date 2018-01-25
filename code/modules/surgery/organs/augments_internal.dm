@@ -44,8 +44,7 @@
 	var/active = 0
 	var/list/stored_items = list()
 	implant_color = "#DE7E00"
-	slot = "brain_antidrop"
-	origin_tech = "materials=4;programming=5;biotech=4"
+	slot = ORGAN_SLOT_BRAIN_ANTIDROP
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
@@ -101,8 +100,7 @@
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
-	slot = "brain_antistun"
-	origin_tech = "materials=5;programming=4;biotech=5"
+	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
 	..()
@@ -133,9 +131,8 @@
 	name = "breathing tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
-	slot = "breathing_tube"
+	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=2;biotech=3"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	if(prob(60/severity))

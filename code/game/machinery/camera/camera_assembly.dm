@@ -1,7 +1,7 @@
 /obj/item/wallframe/camera
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
 	materials = list(MAT_METAL=400, MAT_GLASS=250)
 	result_path = /obj/structure/camera_assembly
@@ -10,7 +10,7 @@
 /obj/structure/camera_assembly
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera1"
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
@@ -45,14 +45,6 @@
 					anchored = TRUE
 					state = 2
 				return
-
-			else if(istype(W, /obj/item/wrench))
-				playsound(src.loc, W.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You unattach the assembly from its place.</span>")
-				new /obj/item/wallframe/camera(get_turf(src))
-				qdel(src)
-				return
-
 		if(2)
 			// State 2
 			if(istype(W, /obj/item/stack/cable_coil))
@@ -73,60 +65,69 @@
 					anchored = TRUE
 				return
 
-
-		if(3)
-			// State 3
-			if(istype(W, /obj/item/screwdriver))
-				playsound(src.loc, W.usesound, 50, 1)
-
-				var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
-				if(!input)
-					to_chat(user, "<span class='warning'>No input found, please hang up and try your call again!</span>")
-					return
-
-				var/list/tempnetwork = splittext(input, ",")
-				if(tempnetwork.len < 1)
-					to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
-					return
-
-				state = 4
-				var/obj/machinery/camera/C = new(src.loc)
-				forceMove(C)
-				C.assembly = src
-				C.setDir(src.dir)
-
-				C.network = tempnetwork
-				var/area/A = get_area(src)
-				C.c_tag = "[A.name] ([rand(1, 999)])"
-
-
-			else if(istype(W, /obj/item/wirecutters))
-				new/obj/item/stack/cable_coil(get_turf(src), 2)
-				playsound(src.loc, W.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
-				state = 2
-				return
-
 	// Upgrades!
 	if(is_type_in_typecache(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		if(!user.drop_item(W))
+		if(!user.transferItemToLoc(W, src))
 			return
 		to_chat(user, "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>")
 		upgrades += W
-		W.forceMove(src)
-		return
-
-	// Taking out upgrades
-	else if(istype(W, /obj/item/crowbar) && upgrades.len)
-		var/obj/U = locate(/obj) in upgrades
-		if(U)
-			to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")
-			playsound(src.loc, W.usesound, 50, 1)
-			U.forceMove(drop_location())
-			upgrades -= U
 		return
 
 	return ..()
+
+/obj/structure/camera_assembly/crowbar_act(mob/user, obj/item/tool)
+	if(!upgrades.len)
+		return FALSE
+	var/obj/U = locate(/obj) in upgrades
+	if(U)
+		to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")
+		playsound(src, tool.usesound, 50, 1)
+		U.forceMove(drop_location())
+		upgrades -= U
+	return TRUE
+
+/obj/structure/camera_assembly/screwdriver_act(mob/user, obj/item/tool)
+	if(state != 3)
+		return FALSE
+
+	playsound(src, tool.usesound, 50, 1)
+	var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
+	if(!input)
+		to_chat(user, "<span class='warning'>No input found, please hang up and try your call again!</span>")
+		return
+	var/list/tempnetwork = splittext(input, ",")
+	if(tempnetwork.len < 1)
+		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
+		return
+	state = 4
+	var/obj/machinery/camera/C = new(src.loc)
+	forceMove(C)
+	C.assembly = src
+	C.setDir(src.dir)
+
+	C.network = tempnetwork
+	var/area/A = get_area(src)
+	C.c_tag = "[A.name] ([rand(1, 999)])"
+	return TRUE
+
+/obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/tool)
+	if(state != 3)
+		return FALSE
+
+	new /obj/item/stack/cable_coil(get_turf(src), 2)
+	playsound(src, tool.usesound, 50, 1)
+	to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
+	state = 2
+	return TRUE
+
+/obj/structure/camera_assembly/wrench_act(mob/user, obj/item/tool)
+	if(state != 1)
+		return FALSE
+	playsound(src, tool.usesound, 50, 1)
+	to_chat(user, "<span class='notice'>You unattach the assembly from its place.</span>")
+	new /obj/item/wallframe/camera(get_turf(src))
+	qdel(src)
+	return TRUE
 
 /obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/WT, mob/living/user)
 	if(!WT.remove_fuel(0, user))

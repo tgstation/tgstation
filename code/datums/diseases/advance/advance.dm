@@ -95,15 +95,6 @@
 		return 0
 	return 1
 
-// To add special resistances.
-/datum/disease/advance/cure(resistance=1)
-	if(affected_mob)
-		var/id = "[GetDiseaseID()]"
-		if(resistance && !(id in affected_mob.resistances))
-			affected_mob.resistances[id] = id
-		remove_virus()
-	qdel(src)	//delete the datum to stop it processing
-
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy(process = 0)
 	return new /datum/disease/advance(process, src, 1)
@@ -123,7 +114,7 @@
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
-		if(symp.id == S.id)
+		if(symp.type == S.type)
 			return 1
 	return 0
 
@@ -183,21 +174,21 @@
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
-		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
+		if(!S.neutered)
+			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
 	return
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties()
 
 	if(properties && properties.len)
-		switch(properties["stealth"])
-			if(2 to INFINITY)
-				visibility_flags = HIDDEN_SCANNER
+		if(properties["stealth"] >= 2)
+			visibility_flags = HIDDEN_SCANNER
 
-		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
-		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
-		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
-		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		SetSpread(CLAMP(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
+
+		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -208,35 +199,43 @@
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/SetSpread(spread_id)
 	switch(spread_id)
-		if(NON_CONTAGIOUS)
+		if(VIRUS_SPREAD_NON_CONTAGIOUS)
+			spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
 			spread_text = "None"
-		if(SPECIAL)
+		if(VIRUS_SPREAD_SPECIAL)
+			spread_flags = VIRUS_SPREAD_SPECIAL
 			spread_text = "None"
-		if(CONTACT_GENERAL, CONTACT_HANDS, CONTACT_FEET)
-			spread_text = "On contact"
-		if(AIRBORNE)
-			spread_text = "Airborne"
-		if(BLOOD)
+		if(VIRUS_SPREAD_BLOOD)
+			spread_flags = VIRUS_SPREAD_BLOOD
 			spread_text = "Blood"
-
-	spread_flags = spread_id
+		if(VIRUS_SPREAD_CONTACT_FLUIDS)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS
+			spread_text = "Fluids"
+		if(VIRUS_SPREAD_CONTACT_SKIN)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
+			spread_text = "On contact"
+		if(VIRUS_SPREAD_AIRBORNE)
+			spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_AIRBORNE
+			spread_text = "Airborne"
 
 /datum/disease/advance/proc/SetSeverity(level_sev)
 
 	switch(level_sev)
 
 		if(-INFINITY to 0)
-			severity = NONTHREAT
+			severity = VIRUS_SEVERITY_POSITIVE
 		if(1)
-			severity = MINOR
+			severity = VIRUS_SEVERITY_NONTHREAT
 		if(2)
-			severity = MEDIUM
+			severity = VIRUS_SEVERITY_MINOR
 		if(3)
-			severity = HARMFUL
+			severity = VIRUS_SEVERITY_MEDIUM
 		if(4)
-			severity = DANGEROUS
-		if(5 to INFINITY)
-			severity = BIOHAZARD
+			severity = VIRUS_SEVERITY_HARMFUL
+		if(5)
+			severity = VIRUS_SEVERITY_DANGEROUS
+		if(6 to INFINITY)
+			severity = VIRUS_SEVERITY_BIOHAZARD
 		else
 			severity = "Unknown"
 
@@ -244,7 +243,7 @@
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
-		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -290,9 +289,10 @@
 	if(!id)
 		var/list/L = list()
 		for(var/datum/symptom/S in symptoms)
-			L += S.id
 			if(S.neutered)
-				L += "N"
+				L += "[S.id]N"
+			else
+				L += S.id
 		L = sortList(L) // Sort the list so it doesn't matter which order the symptoms are in.
 		var/result = jointext(L, ":")
 		id = result
@@ -407,8 +407,8 @@
 		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-			if(!(H.z in GLOB.station_z_levels))
+		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
+			if(!is_station_level(H.z))
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)

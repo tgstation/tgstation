@@ -6,8 +6,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;magnets=1;bluespace=2"
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
 	var/turf/locked_location
@@ -83,7 +82,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return data
 
 	var/turf/curr = get_turf(src)
-	data["current"] = "[get_area_name(curr)] ([curr.x], [curr.y], [curr.z])"
+	data["current"] = "[get_area_name(curr, TRUE)] ([curr.x], [curr.y], [curr.z])"
 
 	var/list/signals = list()
 	data["signals"] = list()
@@ -95,10 +94,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		var/turf/pos = get_turf(G)
 		if(!global_mode && pos.z != curr.z)
 			continue
-		var/area/gps_area = get_area_name(G)
 		var/list/signal = list()
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
-		signal["area"] = format_text(gps_area)
+		signal["area"] = get_area_name(G, TRUE)
 		signal["coord"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
@@ -124,6 +122,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
 			. = TRUE
+			name = "global positioning system ([gpstag])"
+
 		if("power")
 			toggletracking(usr)
 			. = TRUE
@@ -134,15 +134,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			global_mode = !global_mode
 			. = TRUE
 
-/obj/item/device/gps/Topic(href, href_list)
-	..()
-	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = uppertext(copytext(sanitize(a), 1, 5))
-		if(in_range(src, usr))
-			gpstag = a
-			name = "global positioning system ([gpstag])"
-			attack_self(usr)
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"

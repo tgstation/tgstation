@@ -44,7 +44,7 @@
 		return
 
 	var/obj/item/organ/zombie_infection/infection
-	infection = target.getorganslot("zombie_infection")
+	infection = target.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(!infection)
 		infection = new()
 		infection.Insert(target)

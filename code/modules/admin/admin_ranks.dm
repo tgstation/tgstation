@@ -3,7 +3,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 /datum/admin_rank
 	var/name = "NoRank"
-	var/rights = 0
+	var/rights = R_DEFAULT
 	var/list/adds
 	var/list/subs
 
@@ -56,11 +56,13 @@ GLOBAL_PROTECT(admin_ranks)
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
-			flag = 65535
+			flag = ALL
 		if("sound","sounds")
 			flag = R_SOUNDS
 		if("spawn","create")
 			flag = R_SPAWN
+		if("autologin", "autoadmin")
+			flag = R_AUTOLOGIN
 		if("@","prev")
 			flag = previous_rights
 		if("rejuv","rejuvinate")
@@ -120,7 +122,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(CONFIG_GET(flag/admin_legacy_system))
 		var/previous_rights = 0
 		//load text from file and process each line separately
-		for(var/line in world.file2list("config/admin_ranks.txt"))
+		for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
 			if(!line)
 				continue
 			if(findtextEx(line,"#",1,2))
@@ -141,8 +143,10 @@ GLOBAL_PROTECT(admin_ranks)
 			previous_rights = R.rights
 	else
 		if(!SSdbcore.Connect())
-			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			if(CONFIG_GET(flag/sql_enabled))
+				var/msg = "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+				log_world(msg)
+				WRITE_FILE(GLOB.world_game_log, msg)
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return
@@ -171,21 +175,19 @@ GLOBAL_PROTECT(admin_ranks)
 	#endif
 
 
-/proc/load_admins(target = null)
-	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
-		return
+/proc/load_admins()
 	//clear the datums references
-	if(!target)
-		GLOB.admin_datums.Cut()
-		for(var/client/C in GLOB.admins)
-			C.remove_admin_verbs()
-			C.holder = null
-		GLOB.admins.Cut()
-		load_admin_ranks()
-		//Clear profile access
-		for(var/A in world.GetConfig("admin"))
-			world.SetConfig("APP/admin", A, null)
+
+	GLOB.admin_datums.Cut()
+	for(var/client/C in GLOB.admins)
+		C.remove_admin_verbs()
+		C.holder = null
+	GLOB.admins.Cut()
+	GLOB.deadmins.Cut()
+	load_admin_ranks()
+	//Clear profile access
+	for(var/A in world.GetConfig("admin"))
+		world.SetConfig("APP/admin", A, null)
 
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -193,7 +195,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	if(CONFIG_GET(flag/admin_legacy_system))
 		//load text from file
-		var/list/lines = world.file2list("config/admins.txt")
+		var/list/lines = world.file2list("[global.config.directory]/admins.txt")
 
 		//process each line separately
 		for(var/line in lines)
@@ -208,13 +210,11 @@ GLOBAL_PROTECT(admin_ranks)
 
 			var/ckey = ckey(entry[1])
 			var/rank = ckeyEx(entry[2])
-			if(!ckey || !rank || (target && ckey != target))
+			if(!ckey || !rank)
 				continue
 
-			var/datum/admins/D = new(rank_names[rank], ckey)	//create the admin datum and store it for later use
-			if(!D)
-				continue									//will occur if an invalid rank is provided
-			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			new /datum/admins(rank_names[rank], ckey)
+
 	else
 		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
@@ -229,19 +229,12 @@ GLOBAL_PROTECT(admin_ranks)
 		while(query_load_admins.NextRow())
 			var/ckey = ckey(query_load_admins.item[1])
 			var/rank = ckeyEx(query_load_admins.item[2])
-			if(target && ckey != target)
-				continue
 
 			if(rank_names[rank] == null)
 				WARNING("Admin rank ([rank]) does not exist.")
 				continue
 
-			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
-			if(!D)
-				continue									//will occur if an invalid rank is provided
-			if(D.rank.rights & R_DEBUG) //grant profile access
-				world.SetConfig("APP/admin", ckey, "role=admin")
-			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			new /datum/admins(rank_names[rank], ckey)
 
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
@@ -298,6 +291,8 @@ GLOBAL_PROTECT(admin_ranks)
 				return
 
 	var/datum/admins/D = GLOB.admin_datums[adm_ckey]
+	if (!D)
+		D = GLOB.deadmins[adm_ckey]
 
 	switch(task)
 		if("remove")
@@ -309,6 +304,7 @@ GLOBAL_PROTECT(admin_ranks)
 					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
 					return
 				GLOB.admin_datums -= adm_ckey
+				GLOB.deadmins -= adm_ckey
 				D.disassociate()
 
 				updateranktodb(adm_ckey, "player")
@@ -350,11 +346,9 @@ GLOBAL_PROTECT(admin_ranks)
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated
 				D.rank = R			//set the admin_rank as our rank
+				D.associate()
 			else
-				D = new(R,adm_ckey)	//new admin
-
-			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			D.associate(C)						//link up with the client and add verbs
+				D = new(R, adm_ckey, TRUE)	//new admin
 
 			updateranktodb(adm_ckey, new_rank)
 			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
@@ -387,6 +381,22 @@ GLOBAL_PROTECT(admin_ranks)
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
 			log_admin_permission_modification(adm_ckey, D.rank.rights)
+		if("activate") //forcefully readmin
+			if(!D || !D.deadmined)
+				return
+
+			D.activate()
+
+			message_admins("[key_name_admin(usr)] forcefully readmined [adm_ckey]")
+			log_admin("[key_name(usr)] forcefully readmined [adm_ckey]")
+		if("deactivate") //forcefully deadmin
+			if(!D || D.deadmined)
+				return
+
+			message_admins("[key_name_admin(usr)] forcefully deadmined [adm_ckey]")
+			log_admin("[key_name(usr)] forcefully deadmined [adm_ckey]")
+
+			D.deactivate() //after logs so the deadmined admin can see the message.
 
 	edit_admin_permissions()
 

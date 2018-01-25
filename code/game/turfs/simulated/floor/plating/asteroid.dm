@@ -5,7 +5,7 @@
 
 /turf/open/floor/plating/asteroid //floor piece
 	name = "asteroid sand"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
@@ -14,6 +14,7 @@
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
 	archdrops = list(/obj/item/ore/glass = 5)
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -56,22 +57,22 @@
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
 
-	return ..()
-
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	if(turf_z_is_planet(src))
+	if(is_planet_level(z))
 		return ..()
-	ChangeTurf(/turf/open/space)
+	ScrapeAway()
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
+/turf/open/floor/plating/lavaland_baseturf
+	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturfs = /turf/open/floor/plating/asteroid/basalt
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	icon_plating = "basalt"
@@ -80,7 +81,7 @@
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturf = /turf/open/lava/smooth
+	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -88,6 +89,9 @@
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
 	set_basalt_light(src)
+	GET_COMPONENT(arch, /datum/component/archaeology)
+	ASSERT(isnull(arch.callback))
+	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
@@ -96,18 +100,12 @@
 		if("basalt5", "basalt9")
 			B.set_light(1.4, 0.6, LIGHT_COLOR_LAVA) //barely anything!
 
-/turf/open/floor/plating/asteroid/basalt/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/archaeology))
-		set_light(0)
-
-
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/lava/smooth/lava_land_surface
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 
 
@@ -192,8 +190,8 @@
 			break
 
 		var/list/L = list(45)
-		if(IsOdd(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
-			L -= 45
+		if(ISODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
+			L += -45
 
 		// Expand the edges of our tunnel
 		for(var/edge_angle in L)
@@ -210,7 +208,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
@@ -236,7 +234,7 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
+	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
@@ -283,7 +281,7 @@
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = "TEMP=180"

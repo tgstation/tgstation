@@ -81,7 +81,7 @@
 				return
 			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			L.loc = src.loc
+			L.forceMove(drop_location())
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
@@ -107,20 +107,20 @@
 		var/mob/living/M = buckled_mob
 		if(M != user)
 			M.visible_message(\
-				"[user.name] tries to pull [M.name] free of the [src]!",\
-				"<span class='notice'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+				"[user] tries to pull [M] free of [src]!",\
+				"<span class='notice'>[user] is trying to pull you off [src], opening up fresh wounds!</span>",\
 				"<span class='italics'>You hear a squishy wet noise.</span>")
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message(\
-					"[user.name] fails to free [M.name]!",\
-					"<span class='notice'>[user.name] fails to pull you off of the [src].</span>")
+					"[user] fails to free [M]!",\
+					"<span class='notice'>[user] fails to pull you off of [src].</span>")
 				return
 
 		else
 			M.visible_message(\
-			"<span class='warning'>[M.name] struggles to break free from the [src]!</span>",\
-			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+			"<span class='warning'>[M] struggles to break free from [src]!</span>",\
+			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='italics'>You hear a wet squishing noise..</span>")
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
@@ -129,15 +129,24 @@
 				return
 		if(!M.buckled)
 			return
-		var/matrix/m180 = matrix(M.transform)
-		m180.Turn(180)
-		animate(M, transform = m180, time = 3)
-		M.pixel_y = M.get_standard_pixel_y_offset(180)
-		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
-		unbuckle_mob(M,force=1)
-		M.emote("scream")
-		M.AdjustKnockdown(20)
+		release_mob(M)
+
+/obj/structure/kitchenspike/proc/release_mob(mob/living/M)
+	var/matrix/m180 = matrix(M.transform)
+	m180.Turn(180)
+	animate(M, transform = m180, time = 3)
+	M.pixel_y = M.get_standard_pixel_y_offset(180)
+	M.adjustBruteLoss(30)
+	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
+	unbuckle_mob(M,force=1)
+	M.emote("scream")
+	M.AdjustKnockdown(20)
+
+/obj/structure/kitchenspike/Destroy()
+	if(has_buckled_mobs())
+		for(var/mob/living/L in buckled_mobs)
+			release_mob(L)
+	return ..()
 
 /obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
 	if(disassembled)

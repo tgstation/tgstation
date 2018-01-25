@@ -100,7 +100,7 @@
 
 /obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
-		loc = A.loc
+		forceMove(A.loc)
 		return
 	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
@@ -469,7 +469,9 @@
 			layer = ABOVE_MOB_LAYER
 	hal_target.client.images += blood
 	animate(blood, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = 5)
-	sleep(5)
+	addtimer(CALLBACK(src, .proc/cleanup_blood), 5)
+
+/obj/item/projectile/hallucination/proc/cleanup_blood(image/blood)
 	hal_target.client.images -= blood
 	qdel(blood)
 
@@ -537,7 +539,7 @@
 	hal_target.stuttering += 20
 	if(hal_target.dna && hal_target.dna.check_mutation(HULK))
 		hal_target.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	else if(hal_target.status_flags & CANKNOCKDOWN)
+	else if((hal_target.status_flags & CANKNOCKDOWN) && !hal_target.has_trait(TRAIT_STUNIMMUNE))
 		addtimer(CALLBACK(hal_target, /mob/living/carbon.proc/do_jitter_animation, 20), 5)
 
 /obj/item/projectile/hallucination/disabler
@@ -610,4 +612,3 @@
 		knockdown = 0
 		nodamage = TRUE
 	return ..()
-

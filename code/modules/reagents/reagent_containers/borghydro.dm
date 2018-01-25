@@ -55,14 +55,6 @@ Borg Hypospray
 	//update_icon()
 	return 1
 
-// Purely for testing purposes I swear~ //don't lie to me
-/*
-/obj/item/reagent_containers/borghypo/verb/add_cyanide()
-	set src in world
-	add_reagent("cyanide")
-*/
-
-
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
@@ -138,6 +130,18 @@ Borg Hypospray
 	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
 	accepts_reagent_upgrades = FALSE
 
+/obj/item/reagent_containers/borghypo/clown
+	name = "laughter injector"
+	desc = "Keeps the crew happy and productive!"
+	reagent_ids = list("laughter")
+	accepts_reagent_upgrades = FALSE
+
+/obj/item/reagent_containers/borghypo/clown/hacked
+	name = "laughter injector"
+	desc = "Keeps the crew so happy they don't work!"
+	reagent_ids = list("superlaughter")
+	accepts_reagent_upgrades = FALSE
+
 /obj/item/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
 	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
@@ -181,7 +185,7 @@ Borg Shaker
 	if(!proximity)
 		return
 
-	else if(target.is_open_container() && target.reagents)
+	else if(target.is_refillable())
 		var/datum/reagents/R = reagent_list[mode]
 		if(!R.total_volume)
 			to_chat(user, "<span class='warning'>[src] is currently out of this ingredient! Please allow some time for the synthesizer to produce more.</span>")
@@ -207,7 +211,6 @@ Borg Shaker
 		to_chat(usr, "<span class='warning'>It is currently empty! Please allow some time for the synthesizer to produce more.</span>")
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
-	..()
 	name = "cyborg shaker"
 	desc = "Will mix drinks that knock them dead."
 	icon = 'icons/obj/drinks.dmi'

@@ -90,11 +90,11 @@
 			if(!no_table_check)
 				return TRUE
 		return FALSE
-	if(get_clockwork_power(RATVAR_POWER_CHECK))
+	if(GLOB.ratvar_awakens)
 		fabrication_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
-	if(!Y || (!(Y.z in GLOB.station_z_levels) && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
+	if(!Y || (!is_centcom_level(Y.z) && !is_station_level(Y.z) && !is_mining_level(Y.z)))
 		fabrication_values["operation_time"] *= 2
 		if(fabrication_values["power_cost"] > 0)
 			fabrication_values["power_cost"] *= 2
@@ -144,10 +144,14 @@
 	else
 		if(new_thing_type)
 			if(fabrication_values["dir_in_new"])
-				new new_thing_type(get_turf(target), fabrication_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
+				var/atom/A =  new new_thing_type(get_turf(target), fabrication_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
+				if(fabrication_values["transfer_name"])
+					A.name = target.name
 			else
 				var/atom/A = new new_thing_type(get_turf(target))
 				A.setDir(fabrication_values["spawn_dir"])
+				if(fabrication_values["transfer_name"])
+					A.name = target.name
 		if(!fabrication_values["no_target_deletion"]) //for some cases where fabrication_vals() modifies the object but doesn't want it deleted
 			qdel(target)
 	adjust_clockwork_power(-fabrication_values["power_cost"])
@@ -167,7 +171,7 @@
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
-	if(get_clockwork_power(RATVAR_POWER_CHECK))
+	if(GLOB.ratvar_awakens)
 		fabrication_values["power_cost"] = 0
 	if(!get_clockwork_power(fabrication_values["power_cost"]))
 		if(get_clockwork_power() - fabrication_values["power_cost"] < 0)
@@ -212,7 +216,7 @@
 		return FALSE
 	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], FABRICATOR_REPAIR_PER_TICK) //modify the healing for this cycle
 	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
-	if(!get_clockwork_power(RATVAR_POWER_CHECK) && !get_clockwork_power(repair_values["power_required"]))
+	if(!GLOB.ratvar_awakens && !get_clockwork_power(repair_values["power_required"]))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You need at least <b>[DisplayPower(repair_values["power_required"])]</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
 			<b>[DisplayPower(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")

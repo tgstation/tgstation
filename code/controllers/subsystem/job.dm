@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
+	generate_selectable_species()
 	..()
 
 
@@ -106,9 +107,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("FOC incompatible with antagonist role, Player: [player]")
 			continue
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("FOC non-human failed, Player: [player]")
-			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -142,11 +140,6 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && job.title in player.mind.restricted_roles)
 			Debug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
-
-		if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-			Debug("GRJ non-human failed, Player: [player]")
-			continue
-
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
@@ -318,10 +311,6 @@ SUBSYSTEM_DEF(job)
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
-				if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-					Debug("DO non-human failed, Player: [player], Job:[job.title]")
-					continue
-
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -392,6 +381,8 @@ SUBSYSTEM_DEF(job)
 				continue
 			S = sloc
 			break
+		if(length(GLOB.jobspawn_overrides[rank]))
+			S = pick(GLOB.jobspawn_overrides[rank])
 		if(S)
 			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
@@ -452,7 +443,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("config/jobs.txt")
+	var/jobstext = file2text("[global.config.directory]/jobs.txt")
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)
@@ -461,36 +452,37 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
-		var/tmp_str = "|[job.title]|"
-
-		var/level1 = 0 //high
-		var/level2 = 0 //medium
-		var/level3 = 0 //low
-		var/level4 = 0 //never
-		var/level5 = 0 //banned
-		var/level6 = 0 //account too young
+		var/high = 0 //high
+		var/medium = 0 //medium
+		var/low = 0 //low
+		var/never = 0 //never
+		var/banned = 0 //banned
+		var/young = 0 //account too young
 		for(var/mob/dead/new_player/player in GLOB.player_list)
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
-				level5++
+				banned++
 				continue
 			if(!job.player_old_enough(player.client))
-				level6++
+				young++
 				continue
 			if(job.required_playtime_remaining(player.client))
-				level6++
+				young++
 				continue
 			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
-				level1++
+				high++
 			else if(player.client.prefs.GetJobDepartment(job, 2) & job.flag)
-				level2++
+				medium++
 			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
-				level3++
-			else level4++ //not selected
-
-		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
-		SSblackbox.add_details("job_preferences",tmp_str)
+				low++
+			else never++ //not selected
+		SSblackbox.record_feedback("nested tally", "job_preferences", high, list("[job.title]", "high"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", medium, list("[job.title]", "medium"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", low, list("[job.title]", "low"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", never, list("[job.title]", "never"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", banned, list("[job.title]", "banned"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", young, list("[job.title]", "young"))
 
 /datum/controller/subsystem/job/proc/PopcapReached()
 	var/hpc = CONFIG_GET(number/hard_popcap)
@@ -534,6 +526,10 @@ SUBSYSTEM_DEF(job)
 	M.forceMove(get_turf(A))
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
+	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
+		SendToAtom(M,pick(GLOB.jobspawn_overrides[M.mind.assigned_role]),FALSE)
+		return
+
 	if(latejoin_trackers.len)
 		SendToAtom(M, pick(latejoin_trackers), buckle)
 	else
@@ -567,3 +563,42 @@ SUBSYSTEM_DEF(job)
 			var/msg = "Unable to send mob [M] to late join!"
 			message_admins(msg)
 			CRASH(msg)
+
+
+///////////////////////////////////
+//Keeps track of all living heads//
+///////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_heads()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.alive_mob_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+
+////////////////////////////
+//Keeps track of all heads//
+////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_heads()
+	. = list()
+	for(var/i in GLOB.mob_list)
+		var/mob/player = i
+		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
+			. |= player.mind
+
+//////////////////////////////////////////////
+//Keeps track of all living security members//
+//////////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_living_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.carbon_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind
+
+////////////////////////////////////////
+//Keeps track of all  security members//
+////////////////////////////////////////
+/datum/controller/subsystem/job/proc/get_all_sec()
+	. = list()
+	for(var/mob/living/carbon/human/player in GLOB.carbon_list)
+		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
+			. |= player.mind

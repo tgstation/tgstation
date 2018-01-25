@@ -41,23 +41,20 @@
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	to_chat(user, "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>")
 
-/obj/structure/table/Initialize()
-	. = ..()
-	for(var/obj/structure/table/T in src.loc)
-		if(T != src)
-			qdel(T)
-
 /obj/structure/table/update_icon()
 	if(smooth)
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/wood(A)
 
 /obj/structure/table/ratvar_act()
-	new /obj/structure/table/reinforced/brass(src.loc)
-
+	var/atom/A = loc
+	qdel(src)
+	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)
@@ -77,7 +74,7 @@
 		..()
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	if(mover.throwing)
 		return 1
@@ -90,7 +87,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
@@ -124,22 +121,21 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.forceMove(drop_location())
 
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(user.a_intent != INTENT_HARM && !(I.flags_1 & ABSTRACT_1))
-		if(user.drop_item())
-			I.Move(loc)
+		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			return 1
 	else
 		return ..()
@@ -252,8 +248,9 @@
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
 
-/obj/structure/table/wood/narsie_act()
-	return
+/obj/structure/table/wood/narsie_act(total_override = TRUE)
+	if(!total_override)
+		..()
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -263,7 +260,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 
 /obj/structure/table/wood/poker/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"
@@ -382,8 +379,8 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in GLOB.cardinals)
-		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)
 			computer.table = src
 			break
@@ -415,6 +412,7 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
@@ -427,7 +425,7 @@
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	else
 		return 0
@@ -436,12 +434,12 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
-	if(!user.drop_item())
+	if(!user.dropItemToGround(O))
 		return
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
@@ -454,8 +452,7 @@
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(user.drop_item())
-		W.Move(loc)
+	if(user.transferItemToLoc(W, drop_location()))
 		return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -518,7 +515,7 @@
 	building = TRUE
 	to_chat(user, "<span class='notice'>You start constructing a rack...</span>")
 	if(do_after(user, 50, target = user, progress=TRUE))
-		if(!user.drop_item())
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\

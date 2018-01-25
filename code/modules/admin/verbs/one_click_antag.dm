@@ -11,17 +11,17 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -35,7 +35,7 @@
 		return FALSE
 	if(onstation)
 		var/turf/T = get_turf(applicant)
-		if(!(T.z in GLOB.station_z_levels))
+		if(!is_station_level(T.z))
 			return FALSE
 	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
 		return FALSE
@@ -213,7 +213,6 @@
 
 
 /datum/admins/proc/makeNukeTeam()
-
 	var/datum/game_mode/nuclear/temp = new
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
 	var/list/mob/dead/observer/chosen = list()
@@ -239,32 +238,17 @@
 		if(agentcount < 3)
 			return 0
 
-		var/nuke_code = random_nukecode()
-
-		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
-		if(nuke)
-			nuke.r_code = nuke_code
-
 		//Let's find the spawn locations
-		var/list/turf/synd_spawn = list()
-		for(var/obj/effect/landmark/A in GLOB.landmarks_list)
-			if(A.name == "Syndicate-Spawn")
-				synd_spawn += get_turf(A)
-				continue
-
-		var/leader_chosen
-		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
-
+		var/leader_chosen = FALSE
+		var/datum/team/nuclear/nuke_team
 		for(var/mob/c in chosen)
-			if(spawnpos > synd_spawn.len)
-				spawnpos = 2 //Ran out of spawns. Let's loop back to the first non-leader position
 			var/mob/living/carbon/human/new_character=makeBody(c)
 			if(!leader_chosen)
-				leader_chosen = 1
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code,1)
+				leader_chosen = TRUE
+				var/datum/antagonist/nukeop/N = new_character.mind.add_antag_datum(/datum/antagonist/nukeop/leader)
+				nuke_team = N.nuke_team
 			else
-				new_character.mind.make_Nuke(synd_spawn[spawnpos],nuke_code)
-			spawnpos++
+				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
 		return 1
 	else
 		return 0
@@ -322,13 +306,15 @@
 					door.open()
 
 			//Assign antag status and the mission
-			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
+
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
+
+			Commando.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 			//Greet the commando
 			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
@@ -374,13 +360,15 @@
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
-		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
+
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
 		newmob.mind.objectives += missionobj
+
+		newmob.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 		if(CONFIG_GET(flag/enforce_human_authority))
 			newmob.set_species(/datum/species/human)
@@ -479,13 +467,15 @@
 						door.open()
 
 			//Assign antag status and the mission
-			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
+
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			ERTOperative.mind.objectives += missionobj
+
+			ERTOperative.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 			//Greet the commando
 			to_chat(ERTOperative, "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>")

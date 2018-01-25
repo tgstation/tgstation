@@ -161,3 +161,73 @@
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
+//Allowed equipment lists for security vests and hardsuits.
+
+GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun,
+	/obj/item/melee/baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals)))
+
+GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/melee/baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals)))
+
+GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/detective_scanner,
+	/obj/item/device/flashlight,
+	/obj/item/device/taperecorder,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/lighter,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
+
+GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/kitchen/knife/combat,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
+
+GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/lighter,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/toy)))

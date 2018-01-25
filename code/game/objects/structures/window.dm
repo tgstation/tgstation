@@ -26,6 +26,7 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
+	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -43,9 +44,6 @@
 			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
 		else
 			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
-
-	if(!anchored)
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -77,6 +75,11 @@
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+
+/obj/structure/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -116,7 +119,7 @@
 		..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(dir == FULLTILE_WINDOW_DIR)
 		return 0	//full tile window, you can't move into it!
@@ -135,7 +138,7 @@
 	return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && (O.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
 		return 0
@@ -208,6 +211,7 @@
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
 				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
+					air_update_turf(TRUE)
 					update_nearby_icons()
 					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
@@ -278,72 +282,31 @@
 		return
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
-		var/turf/T = loc
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/i in debris)
 				var/obj/item/I = i
-				I.loc = T
+				I.forceMove(drop_location())
 				transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 
-/obj/structure/window/verb/rotate()
-	set name = "Rotate Window Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
+/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
-	var/target_dir = turn(dir, 90)
+	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir))
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
-
-	setDir(target_dir)
-	air_update_turf(1)
-	ini_dir = dir
-	add_fingerprint(usr)
 	return TRUE
 
-/obj/structure/window/verb/revrotate()
-	set name = "Rotate Window Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
-	if(anchored)
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
-		return FALSE
-
-	var/target_dir = turn(dir, 270)
-
-	if(!valid_window_location(loc, target_dir))
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
-		return FALSE
-
-	setDir(target_dir)
+/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
 	air_update_turf(1)
 	ini_dir = dir
-	add_fingerprint(usr)
-	return TRUE
-
-/obj/structure/window/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		revrotate()
+	add_fingerprint(user)
 
 /obj/structure/window/Destroy()
 	density = FALSE
@@ -354,16 +317,14 @@
 
 /obj/structure/window/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	setDir(ini_dir)
 	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
-	if(get_dir(loc, T) == dir)
-		return !density
-	if(dir == FULLTILE_WINDOW_DIR)
-		return !density
-	return 1
+	if(!anchored || !density)
+		return TRUE
+	return !(FULLTILE_WINDOW_DIR == dir || dir == get_dir(loc, T))
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
@@ -378,7 +339,7 @@
 			return
 
 		var/ratio = obj_integrity / max_integrity
-		ratio = Ceiling(ratio*4) * 25
+		ratio = CEILING(ratio*4, 1) * 25
 
 		if(smooth)
 			queue_smooth(src)
@@ -431,6 +392,7 @@
 	max_integrity = 50
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -454,6 +416,7 @@
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
+	rad_insulation = RAD_NO_INSULATION
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -518,7 +481,7 @@
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 100
+	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
@@ -588,10 +551,10 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
-	explosion_block = 1
+	explosion_block = 3
 	level = 3
 	glass_type = /obj/item/stack/sheet/rglass
 	glass_amount = 2
@@ -601,6 +564,26 @@
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
+
+/obj/structure/window/plastitanium
+	name = "plastitanium window"
+	desc = "An evil looking window of plasma and titanium."
+	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
+	icon_state = "plastitanium_window"
+	dir = FULLTILE_WINDOW_DIR
+	max_integrity = 100
+	wtype = "shuttle"
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	reinf = TRUE
+	heat_resistance = 1600
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	explosion_block = 3
+	level = 3
+	glass_type = /obj/item/stack/sheet/rglass
+	glass_amount = 2
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
@@ -620,7 +603,7 @@
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
-	..()
+	. = ..()
 	QDEL_LIST(debris)
 	var/amount_of_gears = 2
 	if(fulltile)

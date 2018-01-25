@@ -1,3 +1,40 @@
+//Snow Valley Areas//--
+
+/area/awaymission/snowdin
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent1"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/snowdin/post
+	name = "Snowdin Outpost"
+	requires_power = TRUE
+	icon_state = "awaycontent2"
+
+/area/awaymission/snowdin/igloo
+	name = "Snowdin Igloos"
+	icon_state = "awaycontent3"
+
+/area/awaymission/snowdin/cave
+	name = "Snowdin Caves"
+	icon_state = "awaycontent4"
+
+/area/awaymission/snowdin/base
+	name = "Snowdin Main Base"
+	icon_state = "awaycontent5"
+	requires_power = TRUE
+
+/area/awaymission/snowdin/dungeon1
+	name = "Snowdin Depths"
+	icon_state = "awaycontent6"
+
+/area/awaymission/snowdin/sekret
+	name = "Snowdin Operations"
+	icon_state = "awaycontent7"
+	requires_power = TRUE
+
+
+
 ///////////	papers
 
 /obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice
@@ -181,15 +218,6 @@
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-/obj/item/device/radio/uplink/old
-	name = "dusty radio"
-	desc = "A dusty looking radio."
-
-/obj/item/device/radio/uplink/old/Initialize()
-	. = ..()
-	hidden_uplink.name = "dusty radio"
-	hidden_uplink.telecrystals = 10
-
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
 	outfit = /datum/outfit/snowsyndie/corpse
@@ -201,7 +229,7 @@
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	name = "sleeper"
 	mob_name = "Syndicate Snow Operative"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE

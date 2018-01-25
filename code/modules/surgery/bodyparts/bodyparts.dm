@@ -217,7 +217,7 @@
 		C = owner
 		no_update = 0
 
-	if(C.disabilities & HUSK)
+	if(C.has_trait(TRAIT_HUSK))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -539,15 +539,3 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
-
-
-/////////////////////////////////////////////////////////////////////////
-
-/obj/item/severedtail
-	name = "tail"
-	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
-		pleased with themselves."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "severedtail"
-	color = "#161"
-	var/markings = "Smooth"

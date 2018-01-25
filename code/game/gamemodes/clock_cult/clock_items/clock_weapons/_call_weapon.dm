@@ -28,7 +28,6 @@
 		if(weapon.loc == owner)
 			owner.visible_message("<span class='danger'>[owner]'s [weapon.name] flickers and disappears!</span>")
 			to_chat(owner, "<span class='brass'>You dismiss [weapon].</span>")
-			owner.drop_item()
 			QDEL_NULL(weapon)
 			weapon_reset(RATVARIAN_SPEAR_COOLDOWN * 0.5)
 			return

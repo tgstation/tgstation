@@ -15,7 +15,7 @@
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
 	var/obj/screen/alert/thealert
@@ -243,7 +243,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.canmove)
@@ -302,42 +302,50 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
-	if(GLOB.blood_target)
-		if(!get_turf(GLOB.blood_target))
-			GLOB.blood_target = null
+
+	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!antag)
+		return
+	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+
+	if(antag.cult_team.blood_target)
+		if(!get_turf(antag.cult_team.blood_target))
+			antag.cult_team.blood_target = null
 		else
-			blood_target = GLOB.blood_target
+			blood_target = antag.cult_team.blood_target
 	if(Cviewer && Cviewer.seeking && Cviewer.master)
 		blood_target = Cviewer.master
 		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)
-		if(!GLOB.sac_complete)
+		if(sac_objective && !sac_objective.check_completion())
 			if(icon_state == "runed_sense0")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense0"
-			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
-			add_overlay(GLOB.sac_image)
+			desc = "Nar-Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
+			add_overlay(sac_objective.sac_image)
 		else
+			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+			if(!summon_objective)
+				return
 			if(icon_state == "runed_sense1")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(GLOB.summon_spots)]!"
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
-	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
 		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
 		return
-	desc = "You are currently tracking [blood_target] in [A.name]."
+	desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
 	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
@@ -388,35 +396,26 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
-		var/validservants = 0
-		var/list/textlist
-		for(var/mob/living/L in GLOB.living_mob_list)
+		var/list/textlist = list()
+		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-				if(ishuman(L) || issilicon(L))
-					validservants++
-		if(servants > 1)
-			if(validservants > 1)
-				textlist = list("<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>")
-			else
-				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
-		else
-			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-			for(var/i in SSticker.scripture_states)
-				if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-					textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
+		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
+		for(var/i in SSticker.scripture_states)
+			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
+				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G)
-			var/time_info
+			var/time_info = G.get_arrival_time(FALSE)
 			var/time_name
 			if(G.seconds_until_activation)
-				time_info = G.seconds_until_activation
 				time_name = "until the Ark activates"
 			else if(G.grace_period)
-				time_info = G.grace_period
 				time_name = "of grace period remaining"
 			else if(G.progress_in_seconds)
-				time_info = GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
 				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
@@ -565,7 +564,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if((L.canmove) && (L.last_special <= world.time))
@@ -573,7 +572,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)
@@ -629,4 +628,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""

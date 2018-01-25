@@ -12,9 +12,9 @@
 /obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	if(in_use)
+	if(obj_flags & IN_USE)
 		return
-	in_use = TRUE
+	obj_flags |= IN_USE
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
@@ -24,9 +24,11 @@
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
+
+/obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_state = "slots1"
-	in_use = FALSE
+	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))
@@ -36,6 +38,7 @@
 	else
 		if(user)
 			to_chat(user, "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>")
+
 
 /obj/structure/cursed_money
 	name = "bag of money"
@@ -64,8 +67,6 @@
 	var/obj/item/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
 	qdel(src)
-
-
 
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
 	name = "gluttony's wall"
@@ -101,7 +102,7 @@
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)
-	var/turf/open/chasm/straight_down/C = T
+	var/turf/open/chasm/C = T
 	C.drop(user)
 
 //can't be bothered to do sloth right now, will make later

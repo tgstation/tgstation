@@ -37,8 +37,9 @@
 		return 1
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
-	if(!user.drop_item())
-		to_chat(user, "<span class='warning'>The [user.get_active_held_item()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
+	var/obj/item/held = user.get_active_held_item()
+	if(held && !user.dropItemToGround(held))
+		to_chat(user, "<span class='warning'>[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
 		return
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
@@ -82,7 +83,7 @@
 
 //checks if we already have an organic suit and casts it off.
 /obj/effect/proc_holder/changeling/suit/proc/check_suit(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ishuman(user) || !changeling)
 		return 1
 	var/mob/living/carbon/human/H = user
@@ -121,7 +122,7 @@
 	user.equip_to_slot_if_possible(new suit_type(user), slot_wear_suit, 1, 1, 1)
 	user.equip_to_slot_if_possible(new helmet_type(user), slot_head, 1, 1, 1)
 
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
 	return TRUE
 
@@ -338,7 +339,7 @@
 					if(INTENT_DISARM)
 						var/obj/item/I = C.get_active_held_item()
 						if(I)
-							if(C.drop_item())
+							if(C.dropItemToGround(I))
 								C.visible_message("<span class='danger'>[I] is yanked off [C]'s hand by [src]!</span>","<span class='userdanger'>A tentacle pulls [I] away from you!</span>")
 								on_hit(I) //grab the item as if you had hit it directly with the tentacle
 								return 1
@@ -384,7 +385,7 @@
 	weapon_name_simple = "shield"
 
 /obj/effect/proc_holder/changeling/weapon/shield/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling //So we can read the absorbedcount.
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling) //So we can read the absorbedcount.
 	if(!changeling)
 		return
 

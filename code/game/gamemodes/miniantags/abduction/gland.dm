@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
-	origin_tech = "materials=4;biotech=7;abductor=3"
 	beating = TRUE
 	var/cooldown_low = 300
 	var/cooldown_high = 300
@@ -13,28 +12,68 @@
 	var/human_only = 0
 	var/active = 0
 
+	var/mind_control_uses = 1
+	var/mind_control_duration = 1800
+	var/active_mind_control = FALSE
+
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
-		return 1
+		return TRUE
 	if(!human_only && iscarbon(owner))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/organ/heart/gland/proc/Start()
 	active = 1
 	next_activation = world.time + rand(cooldown_low,cooldown_high)
 
+/obj/item/organ/heart/gland/proc/update_gland_hud()
+	if(!owner)
+		return
+	var/image/holder = owner.hud_list[GLAND_HUD]
+	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(active_mind_control)
+		holder.icon_state = "hudgland_active"
+	else if(mind_control_uses)
+		holder.icon_state = "hudgland_ready"
+	else
+		holder.icon_state = "hudgland_spent"
 
-/obj/item/organ/heart/gland/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
+	if(!ownerCheck() || !mind_control_uses || active_mind_control)
+		return
+	mind_control_uses--
+	to_chat(owner, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
+	to_chat(owner, "<span class='mind_control'>[command]</span>")
+	active_mind_control = TRUE
+	log_admin("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
+	update_gland_hud()
+
+	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
+
+/obj/item/organ/heart/gland/proc/clear_mind_control()
+	if(!ownerCheck() || !active_mind_control)
+		return
+	to_chat(owner, "<span class='userdanger'>You feel the compulsion fade, and you completely forget about your previous orders.</span>")
+	active_mind_control = FALSE
+
+/obj/item/organ/heart/gland/Remove(mob/living/carbon/M, special = 0)
 	active = 0
 	if(initial(uses) == 1)
 		uses = initial(uses)
+	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+	hud.remove_from_hud(owner)
+	clear_mind_control()
 	..()
 
-/obj/item/organ/heart/gland/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/heart/gland/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
+	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
+	hud.add_to_hud(owner)
+	update_gland_hud()
 
 /obj/item/organ/heart/gland/on_life()
 	if(!beating)
@@ -60,6 +99,8 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "health"
+	mind_control_uses = 3
+	mind_control_duration = 3000
 
 /obj/item/organ/heart/gland/heals/activate()
 	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
@@ -72,6 +113,8 @@
 	cooldown_high = 1200
 	uses = -1
 	icon_state = "slime"
+	mind_control_uses = 1
+	mind_control_duration = 2400
 
 /obj/item/organ/heart/gland/slime/activate()
 	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
@@ -83,11 +126,12 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 300
 	cooldown_high = 300
 	uses = -1
 	icon_state = "mindshock"
+	mind_control_uses = 1
+	mind_control_duration = 6000
 
 /obj/item/organ/heart/gland/mindshock/activate()
 	to_chat(owner, "<span class='notice'>You get a headache.</span>")
@@ -105,6 +149,8 @@
 	uses = -1
 	human_only = 1
 	icon_state = "species"
+	mind_control_uses = 5
+	mind_control_duration = 300
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
@@ -112,11 +158,12 @@
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
-	origin_tech = "materials=4;biotech=5;bluespace=4;abductor=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
 	icon_state = "vent"
+	mind_control_uses = 4
+	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/ventcrawling/activate()
 	to_chat(owner, "<span class='notice'>You feel very stretchy.</span>")
@@ -128,6 +175,8 @@
 	cooldown_high = 2400
 	uses = 1
 	icon_state = "viral"
+	mind_control_uses = 1
+	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
@@ -140,11 +189,12 @@
 
 
 /obj/item/organ/heart/gland/emp //TODO : Replace with something more interesting
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
 	cooldown_low = 900
 	cooldown_high = 1600
 	uses = 10
 	icon_state = "emp"
+	mind_control_uses = 1
+	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/emp/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
@@ -155,6 +205,8 @@
 	cooldown_high = 900
 	uses = 10
 	icon_state = "spider"
+	mind_control_uses = 2
+	mind_control_duration = 2400
 
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
@@ -168,6 +220,8 @@
 	icon_state = "egg"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	mind_control_uses = 2
+	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
@@ -179,6 +233,8 @@
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
+	mind_control_uses = 1
+	mind_control_duration = 450
 
 /obj/item/organ/heart/gland/bloody/activate()
 	owner.blood_volume -= 20
@@ -196,6 +252,8 @@
 	cooldown_high = 600
 	human_only = 1
 	uses = 1
+	mind_control_uses = 1
+	mind_control_duration = 600
 
 /obj/item/organ/heart/gland/bodysnatch/activate()
 	to_chat(owner, "<span class='warning'>You feel something moving around inside you...</span>")
@@ -229,23 +287,23 @@
 		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
-			M.loc = src.loc
+			M.forceMove(drop_location())
 		qdel(src)
 
 
 /obj/item/organ/heart/gland/plasma
 	cooldown_low = 1200
 	cooldown_high = 1800
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = -1
+	mind_control_uses = 1
+	mind_control_duration = 800
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	if(!owner)
-		return
-	to_chat(owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, owner, "<span class='userdanger'>A massive stomachache overcomes you.</span>"), 150)
+	addtimer(CALLBACK(src, .proc/vomit_plasma), 200)
+
+/obj/item/organ/heart/gland/plasma/proc/vomit_plasma()
 	if(!owner)
 		return
 	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")

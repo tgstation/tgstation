@@ -18,6 +18,8 @@
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
+	pipe_state = "injector"
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
@@ -30,7 +32,7 @@
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!NODE1 || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational())
 		icon_state = "inje_off"
 		return
 
@@ -45,12 +47,13 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
+
 	injecting = 0
 
 	if(!on || !is_operational())
 		return
 
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -63,20 +66,18 @@
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
+
 	if(on || injecting || !is_operational())
 		return
 
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	injecting = 1
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
 		loc.assume_air(removed)
-
 		update_parents()
 
 	flick("inje_inject", src)
@@ -88,22 +89,18 @@
 		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
+
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
-	 )
-
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
@@ -112,6 +109,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
+
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return
 
@@ -127,8 +125,8 @@
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
-		var/datum/gas_mixture/air_contents = AIR1
-		volume_rate = Clamp(number, 0, air_contents.volume)
+		var/datum/gas_mixture/air_contents = airs[1]
+		volume_rate = CLAMP(number, 0, air_contents.volume)
 
 	if("status" in signal.data)
 		spawn(2)
@@ -137,6 +135,7 @@
 
 	spawn(2)
 		broadcast_status()
+
 	update_icon()
 
 
@@ -176,7 +175,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()
@@ -186,4 +185,3 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-

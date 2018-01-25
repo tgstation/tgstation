@@ -4,8 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=7"
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000)
+	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -101,8 +100,8 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	. = ..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -120,13 +119,6 @@
 	..()
 	if(statpanel("Status"))
 		stat("Resources:",resources)
-
-/mob/living/simple_animal/hostile/swarmer/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		swarmer_chat(message)
-		return ITALICS | REDUCE_RANGE
-	else
-		. = ..()
 
 /mob/living/simple_animal/hostile/swarmer/get_spans()
 	return ..() | SPAN_ROBOT
@@ -175,9 +167,13 @@
 /turf/closed/indestructible/swarmer_act()
 	return FALSE
 
-/obj/swarmer_act()
+/obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
+	for(var/mob/living/L in contents)
+		if(!issilicon(L) && !isbrain(L))
+			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
+			return FALSE
 	return ..()
 
 /obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
@@ -326,10 +322,6 @@
 	to_chat(S, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/message_server/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
-	return FALSE
-
 /obj/machinery/deepfryer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>This kitchen appliance should be preserved, it will make delicious unhealthy snacks for our masters in the future. Aborting.</span>")
 	return FALSE
@@ -458,7 +450,7 @@
 	if(target == src)
 		return
 
-	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_LAVALAND)
+	if(!is_station_level(z) && !is_mining_level(z))
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>")
 		return
 
@@ -654,7 +646,8 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
 	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

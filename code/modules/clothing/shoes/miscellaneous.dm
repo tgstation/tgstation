@@ -1,13 +1,6 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
 	SendSignal(COMSIG_SHOES_STEP_ACTION)
 
-/obj/item/clothing/shoes/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?</span>")
-	for(var/i = 0, i < 3, i++)
-		sleep(3)
-		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
-	return(BRUTELOSS)
-
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
@@ -22,7 +15,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
 	strip_delay = 70
-	resistance_flags = 0
+	resistance_flags = NONE
+	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
@@ -38,6 +32,7 @@
 	icon_state = "wizard"
 	strip_delay = 50
 	equip_delay_other = 50
+	permeability_coefficient = 0.9
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -54,12 +49,12 @@
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
 	name = "galoshes"
 	icon_state = "galoshes"
-	permeability_coefficient = 0.05
+	permeability_coefficient = 0.01
 	flags_1 = NOSLIP_1
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	equip_delay_other = 50
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
 
 /obj/item/clothing/shoes/galoshes/dry
@@ -101,7 +96,8 @@
 	item_color = "hosred"
 	strip_delay = 50
 	equip_delay_other = 50
-	resistance_flags = 0
+	resistance_flags = NONE
+	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pockets = /obj/item/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/jackboots/fast
@@ -112,6 +108,7 @@
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	item_state = "winterboots"
+	permeability_coefficient = 0.15
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
@@ -125,6 +122,7 @@
 	item_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	permeability_coefficient = 0.15
 	strip_delay = 40
 	equip_delay_other = 40
 	pockets = /obj/item/storage/internal/pocket/shoes
@@ -171,6 +169,7 @@
 	item_state = "roman"
 	strip_delay = 100
 	equip_delay_other = 100
+	permeability_coefficient = 0.9
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -188,6 +187,7 @@
 	resistance_flags = FIRE_PROOF
 	pockets = /obj/item/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
+	permeability_coefficient = 0.05
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash

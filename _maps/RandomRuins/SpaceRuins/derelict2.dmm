@@ -7,7 +7,7 @@
 	dir = 4
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "c" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -17,7 +17,7 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "e" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52,7 +52,7 @@
 "k" = (
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "l" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -92,7 +92,7 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "q" = (
 /obj/machinery/light/small{
 	dir = 8

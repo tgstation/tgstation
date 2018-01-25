@@ -62,7 +62,7 @@
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(!CONFIG_GET(flag/join_with_mutant_race) || H.dna.species.use_skintones)
+	if(H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]")
 	else
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]")
@@ -104,9 +104,9 @@
 		dat += "<table><tr><td>"
 		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
 		dat += "</td><td>"
-		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=1'>Probe</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=2'>Dissect</a><br>"
+		dat += "<a href='?src=[REF(src)];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
@@ -127,8 +127,8 @@
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
-	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+	dat += "<a href='?src=[REF(src)];refresh=1'>Scan</a>"
+	dat += "<a href='?src=[REF(src)];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
@@ -151,13 +151,18 @@
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.stat != DEAD)
 			if(href_list["experiment"])
-				flash = Experiment(occupant,href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"],usr)
 	updateUsrDialog()
 	add_fingerprint(usr)
 
-/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type,mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
+
+	var/datum/antagonist/abductor/user_abductor = user.mind.has_antag_datum(/datum/antagonist/abductor)
+	if(!user_abductor)
+		return "<span class='bad'>Authorization failure. Contact mothership immidiately.</span>"
+
 	var/point_reward = 0
 	if(H in history)
 		return "<span class='bad'>Specimen already in database.</span>"
@@ -182,14 +187,8 @@
 			if(3)
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
-		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
-		var/datum/objective/abductee/O = new objtype()
-		SSticker.mode.abductees += H.mind
-		H.mind.objectives += O
-		H.mind.announce_objectives()
-		SSticker.mode.update_abductor_icons_added(H.mind)
+		user_abductor.team.abductees += H.mind
+		H.mind.add_antag_datum(/datum/antagonist/abductee)
 
 		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
 			G.Start()

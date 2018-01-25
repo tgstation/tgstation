@@ -26,12 +26,13 @@
 	item_color = "red"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
+	grind_results = list()
 	var/paint_color = "#FF0000" //RGB
 
 	var/drawtype
 	var/text_buffer = ""
 
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
@@ -77,10 +78,6 @@
 	// Makes crayons identifiable in things like grinders
 	if(name == "crayon")
 		name = "[item_color] crayon"
-
-	if(CONFIG_GET(flag/join_with_mutant_race))
-		graffiti |= "antilizard"
-		graffiti |= "prolizard"
 
 	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
@@ -148,10 +145,11 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap)
-		is_capped = !is_capped
-		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
-		update_icon()
+	if(user.canUseTopic(src, be_close=TRUE))
+		if(has_cap)
+			is_capped = !is_capped
+			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
+			update_icon()
 
 /obj/item/toy/crayon/ui_data()
 	var/list/data = list()
@@ -223,7 +221,7 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"Choose Color") as color
+				paint_color = input(usr,"","Choose Color",paint_color) as color|null
 				. = TRUE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
@@ -242,7 +240,7 @@
 			out += a
 	return jointext(out,"")
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !check_allowed_items(target))
 		return
 
@@ -291,6 +289,14 @@
 			else
 				graf_rot = 0
 
+	var/list/click_params = params2list(params)
+	var/clickx
+	var/clicky
+
+	if(click_params && click_params["icon-x"] && click_params["icon-y"])
+		clickx = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+
 	if(!instant)
 		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
 
@@ -317,13 +323,17 @@
 	if(actually_paints)
 		switch(paint_mode)
 			if(PAINT_NORMAL)
-				new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
+				C.add_hiddenprint(user)
+				C.pixel_x = clickx
+				C.pixel_y = clicky
 				affected_turfs += target
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
 				var/turf/right = locate(target.x+1,target.y,target.z)
 				if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
-					new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					var/obj/effect/decal/cleanable/crayon/C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					C.add_hiddenprint(user)
 					affected_turfs += left
 					affected_turfs += right
 					affected_turfs += target
@@ -550,7 +560,7 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		to_chat(user, "It has [charges_left] uses left.")
+		to_chat(user, "It has [charges_left] use\s left.")
 	else
 		to_chat(user, "It is empty.")
 

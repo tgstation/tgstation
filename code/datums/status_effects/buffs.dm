@@ -60,8 +60,8 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br><b>[Floor(vanguard["stuns_absorbed"] * 0.1)]</b> seconds of stuns held back.\
-		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.025, 20))]</b> seconds of stun will affect you."]"
+		desc += "<br><b>[FLOOR(vanguard["stuns_absorbed"] * 0.1, 1)]</b> seconds of stuns held back.\
+		[GLOB.ratvar_awakens ? "":"<br><b>[FLOOR(min(vanguard["stuns_absorbed"] * 0.025, 20), 1)]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -87,7 +87,7 @@
 	var/vanguard = owner.stun_absorption["vanguard"]
 	var/stuns_blocked = 0
 	if(vanguard)
-		stuns_blocked = Floor(min(vanguard["stuns_absorbed"] * 0.25, 400))
+		stuns_blocked = FLOOR(min(vanguard["stuns_absorbed"] * 0.25, 400), 1)
 		vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 	if(owner.stat != DEAD)
 		var/message_to_owner = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
@@ -412,3 +412,27 @@
 
 /datum/status_effect/sword_spin/on_remove()
 	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
+
+
+//Used by changelings to rapidly heal
+//Heals 10 brute and oxygen damage every second, and 5 fire
+//Being on fire will suppress this healing
+/datum/status_effect/fleshmend
+	id = "fleshmend"
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/fleshmend
+
+/datum/status_effect/fleshmend/tick()
+	if(owner.on_fire)
+		linked_alert.icon_state = "fleshmend_fire"
+		return
+	else
+		linked_alert.icon_state = "fleshmend"
+	owner.adjustBruteLoss(-10, FALSE)
+	owner.adjustFireLoss(-5, FALSE)
+	owner.adjustOxyLoss(-10)
+
+/obj/screen/alert/status_effect/fleshmend
+	name = "Fleshmend"
+	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
+	icon_state = "fleshmend"

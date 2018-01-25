@@ -4,9 +4,7 @@
 
 /obj/machinery/droneDispenser //Most customizable machine 2015
 	name = "drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, \
-		will periodically create a drone shell. \
-		Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a drone shell. Does not need to be manually operated."
 
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
@@ -46,8 +44,7 @@
 	var/begin_create_message = "whirs to life!"
 	var/end_create_message = "dispenses a drone shell."
 	var/recharge_message = "pings."
-	var/recharging_text = "It is whirring and clicking. \
-		It seems to be recharging."
+	var/recharging_text = "It is whirring and clicking. It seems to be recharging."
 
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
@@ -56,6 +53,7 @@
 	. = ..()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE)
 	materials.insert_amount(starting_amount)
+	materials.precise_insertion = TRUE
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
 
 /obj/machinery/droneDispenser/preloaded
@@ -72,18 +70,14 @@
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
-	desc = "A suspicious machine that will create Syndicate \
-		exterminator drones when supplied with metal and glass. \
-		Disgusting. This one seems ominous."
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
 	dispense_type = /obj/item/drone_shell/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/droneDispenser/snowflake
 	name = "snowflake drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, \
-		will periodically create a snowflake drone shell. \
-		Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
 	dispense_type = /obj/item/drone_shell/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
@@ -96,8 +90,7 @@
 // This one requires no materials and creates basic hivebots
 /obj/machinery/droneDispenser/hivebot
 	name = "hivebot fabricator"
-	desc = "A large, bulky machine that whirs with activity, \
-		steam hissing from vents in its sides."
+	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "hivebot_fab"
 	icon_off = "hivebot_fab"
@@ -110,14 +103,13 @@
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/simple_animal/hostile/hivebot
 	begin_create_message = "closes and begins fabricating something within."
-	end_create_message = "slams open, revealing out a hivebot!"
+	end_create_message = "slams open, revealing a hivebot!"
 	recharge_sound = null
 	recharge_message = null
 
 /obj/machinery/droneDispenser/swarmer
 	name = "swarmer fabricator"
-	desc = "An alien machine of unknown origin. \
-		It whirs and hums with green-blue light, the air above it shimmering."
+	desc = "An alien machine of unknown origin. It whirs and hums with green-blue light, the air above it shimmering."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "toffcenter"
 	icon_off = "toffcenter"
@@ -129,10 +121,8 @@
 	cooldownTime = 300 //30 seconds
 	maximum_idle = 0 // Swarmers have no restraint
 	dispense_type = /obj/effect/mob_spawn/swarmer
-	begin_create_message = "hums softly as an interface appears above it, \
-		scrolling by at unreadable speed."
-	end_create_message = "materializes a strange shell, which drops to the \
-		ground."
+	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
+	end_create_message = "materializes a strange shell, which drops to the ground."
 	recharging_text = "Its lights are slowly increasing in brightness."
 	work_sound = 'sound/effects/empulse.ogg'
 	create_sound = 'sound/effects/phasein.ogg'
@@ -171,8 +161,7 @@
 			if(maximum_idle && (count_shells() >= maximum_idle))
 				return // then do nothing; check again next tick
 			if(begin_create_message)
-				visible_message("<span class='notice'>\
-					[src] [begin_create_message]</span>")
+				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
 			if(work_sound)
 				playsound(src, work_sound, 50, 1)
 			mode = DRONE_PRODUCTION
@@ -190,8 +179,7 @@
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)
 			if(end_create_message)
-				visible_message("<span class='notice'>[src] \
-					[end_create_message]</span>")
+				visible_message("<span class='notice'>[src] [end_create_message]</span>")
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
@@ -201,8 +189,7 @@
 			if(recharge_sound)
 				playsound(src, recharge_sound, 50, 1)
 			if(recharge_message)
-				visible_message("<span class='notice'>\
-					[src] [recharge_message]</span>")
+				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
 			mode = DRONE_READY
 			update_icon()
@@ -246,10 +233,8 @@
 
 		playsound(src, WT.usesound, 50, 1)
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up \
-				[src] with [WT].</span>",
-			"<span class='notice'>You begin restoring the \
-				damage to [src]...</span>")
+			"<span class='notice'>[user] begins patching up [src] with [WT].</span>",
+			"<span class='notice'>You begin restoring the damage to [src]...</span>")
 
 		if(!do_after(user, 40*O.toolspeed, target = src))
 			return
@@ -270,8 +255,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			if(break_message)
-				audible_message("<span class='warning'>[src] \
-					[break_message]</span>")
+				audible_message("<span class='warning'>[src] [break_message]</span>")
 			if(break_sound)
 				playsound(src, break_sound, 50, 1)
 			stat |= BROKEN

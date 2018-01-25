@@ -3,7 +3,6 @@
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	origin_tech = "magnets=1;biotech=1"
 	attachable = 1
 	secured = 0
 
@@ -78,7 +77,7 @@
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
+	var/dat = "<TT><B>Health Sensor</B> <A href='?src=[REF(src)];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")

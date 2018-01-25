@@ -17,6 +17,7 @@
 	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
+	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -43,13 +44,13 @@
 	icon_state = "arch_devil"
 
 /mob/living/carbon/true_devil/proc/set_name()
-	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	name = devilinfo.truename
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
 	..()
-	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	devilinfo.greet()
 	mind.announce_objectives()
 
@@ -57,7 +58,7 @@
 	stat = DEAD
 	..(gibbed)
 	drop_all_held_items()
-	INVOKE_ASYNC(mind.has_antag_datum(ANTAG_DATUM_DEVIL), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
+	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
 
 
 /mob/living/carbon/true_devil/examine(mob/user)
@@ -66,10 +67,7 @@
 	//Left hand items
 	for(var/obj/item/I in held_items)
 		if(!(I.flags_1 & ABSTRACT_1))
-			if(I.blood_DNA)
-				msg += "<span class='warning'>It is holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-			else
-				msg += "It is holding [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+			msg += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
@@ -94,7 +92,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
 		return 0
 	if(be_close && !in_range(M, src))
@@ -134,9 +132,6 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
-
-/mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
@@ -184,7 +179,7 @@
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
 						if (prob(25))
-							drop_item()
+							dropItemToGround(get_active_held_item())
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 							"<span class='userdanger'>[M] has disarmed [src]!</span>")

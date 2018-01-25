@@ -14,7 +14,7 @@
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		number = INFINITY //Can't get flashed without eyes
 	else
@@ -28,7 +28,7 @@
 		number += 1
 	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
-	var/obj/item/organ/ears/E = getorganslot("ears")
+	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		number = INFINITY
 	else
@@ -112,13 +112,13 @@
 
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			user.ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			user.ContactContractDisease(D)
 
 	for(var/thing in user.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
 		if(user.a_intent == INTENT_HELP)
@@ -129,15 +129,17 @@
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			M.ContractDisease(D)
+
+	if(can_inject(M, TRUE))
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
+				M.ContactContractDisease(D)
 
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
+		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
@@ -226,7 +228,7 @@
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack.</span>" \
-	)
+		)
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
@@ -246,7 +248,7 @@
 		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(status_flags & FAKEDEATH))
+	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
 
 		if(lying)
 			if(buckled)
@@ -273,7 +275,7 @@
 
 	var/damage = intensity - get_eye_protection()
 	if(.) // we've been flashed
-		var/obj/item/organ/eyes/eyes = getorganslot("eye_sight")
+		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if (!eyes)
 			return
 		if(visual)
@@ -288,7 +290,7 @@
 			to_chat(src, "<span class='warning'>Your eyes burn.</span>")
 			adjust_eye_damage(rand(2, 4))
 
-		else if( damage > 3)
+		else if( damage >= 3)
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
 			adjust_eye_damage(rand(12, 16))
 
@@ -298,11 +300,15 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(become_nearsighted())
+					if(!has_trait(TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
+					become_nearsighted(EYE_DAMAGE)
+
 				else if(prob(eyes.eye_damage - 25))
-					if(become_blind())
+					if(!has_trait(TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
+					become_blind(EYE_DAMAGE)
+
 			else
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 		if(has_bane(BANE_LIGHT))
@@ -317,7 +323,7 @@
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
-	var/obj/item/organ/ears/ears = getorganslot("ears")
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
@@ -357,6 +363,6 @@
 
 /mob/living/carbon/can_hear()
 	. = FALSE
-	var/obj/item/organ/ears/ears = getorganslot("ears")
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE

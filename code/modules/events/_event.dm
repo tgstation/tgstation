@@ -29,8 +29,8 @@
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = Ceiling(earliest_start * CONFIG_GET(number/events_min_time_mul))
-		min_players = Ceiling(min_players * CONFIG_GET(number/events_min_players_mul))
+		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
+		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
 	wizardevent = 1
@@ -40,7 +40,7 @@
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(earliest_start >= world.time)
+	if(earliest_start >= world.time-SSticker.round_start_time)
 		return FALSE
 	if(wizardevent != SSevents.wizardmode)
 		return FALSE
@@ -60,7 +60,7 @@
 
 	triggering = TRUE
 	if (alertadmins)
-		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
+		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
@@ -82,13 +82,13 @@
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
-		SSblackbox.add_details("event_admin_cancelled","[typepath]")
+		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	SSblackbox.add_details("event_ran","[E]")
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
@@ -99,16 +99,21 @@
 
 	return E
 
+//Special admins setup
+/datum/round_event_control/proc/admin_setup()
+	return
+
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/fakeable = TRUE		//Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -129,7 +134,7 @@
 //Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
-/datum/round_event/proc/announce()
+/datum/round_event/proc/announce(fake)
 	return
 
 //Called on or after the tick counter is equal to startWhen.
@@ -163,7 +168,7 @@
 
 	if(activeFor == announceWhen)
 		processing = FALSE
-		announce()
+		announce(FALSE)
 		processing = TRUE
 
 	if(startWhen < activeFor && activeFor < endWhen)

@@ -78,7 +78,7 @@
 /datum/reagent/blob/networked_fibers
 	name = "Networked Fibers"
 	id = "networked_fibers"
-	description = "will do high brute and burn damage but non-manual expansion will only generate resources."
+	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
 	shortdesc = "will do high brute and burn damage."
 	effectdesc = "will move your core when manually expanding near it."
 	analyzerdescdamage = "Does high brute and burn damage."
@@ -459,7 +459,7 @@
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	M.apply_damage(0.4*reac_volume, BRUTE)
@@ -481,7 +481,7 @@
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
-			T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)

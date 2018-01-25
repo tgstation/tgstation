@@ -7,22 +7,23 @@
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate, placement_override)
+/mob/camera/blob/proc/place_blob_core(point_rate, placement_override , pop_override = FALSE)
 	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
-		for(var/mob/living/M in range(7, src))
-			if("blob" in M.faction)
-				continue
-			if(M.client)
-				to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-				return 0
-		for(var/mob/living/M in view(13, src))
-			if("blob" in M.faction)
-				continue
-			if(M.client)
-				to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-				return 0
+		if(!pop_override)
+			for(var/mob/living/M in range(7, src))
+				if("blob" in M.faction)
+					continue
+				if(M.client)
+					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
+					return 0
+			for(var/mob/living/M in view(13, src))
+				if("blob" in M.faction)
+					continue
+				if(M.client)
+					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
+					return 0
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
@@ -37,17 +38,18 @@
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 				return 0
-		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
-		loc = T //got overrided? you're somewhere random, motherfucker
+		forceMove(T) //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/structure/blob/core/core = new(get_turf(src), src, point_rate, 1)
 		core.overmind = src
+		blobs_legit += src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
@@ -73,7 +75,7 @@
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			loc = chosen_node.loc
+			forceMove(chosen_node.loc)
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)
@@ -153,33 +155,34 @@
 		return
 	if(!can_buy(40))
 		return
-	B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
-	B.obj_integrity = min(B.obj_integrity, B.max_integrity)
-	B.update_icon()
-	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	flick("blobbernaut_produce", blobber)
-	B.naut = blobber
-	blobber.factory = B
-	blobber.overmind = src
-	blobber.update_icons()
-	blobber.notransform = 1 //stop the naut from moving around
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
+
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
+		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
+		B.update_icon()
+		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+		flick("blobbernaut_produce", blobber)
+		B.naut = blobber
+		blobber.factory = B
+		blobber.overmind = src
+		blobber.update_icons()
+		blobber.adjustHealth(blobber.maxHealth * 0.5)
+		blob_mobs += blobber
 		var/client/C = pick(candidates)
 		blobber.key = C.key
 		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
-		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed.")
+		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the blob</span> or if the factory that made you is killed.")
 		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
 		to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!")
 		to_chat(blobber, "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]")
-	if(blobber)
-		blobber.notransform = 0
+	else
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		add_points(40)
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"

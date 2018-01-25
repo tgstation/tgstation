@@ -10,6 +10,11 @@
 /obj/effect/clockwork/overlay/ex_act()
 	return FALSE
 
+/obj/effect/clockwork/overlay/singularity_act()
+	return
+/obj/effect/clockwork/overlay/singularity_pull()
+	return
+
 /obj/effect/clockwork/overlay/singularity_pull(S, current_size)
 	return
 

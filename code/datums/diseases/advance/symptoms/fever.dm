@@ -32,7 +32,8 @@ Bonus
 					  <b>Resistance 10:</b> Further increases fever intensity."
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 5) //dangerous fever
 		power = 1.5
 		unsafe = TRUE

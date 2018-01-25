@@ -1,6 +1,6 @@
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -10,6 +10,7 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
+	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -41,7 +42,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	SSblackbox.set_details("chaplain_weapon","[choice]")
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -51,6 +52,8 @@
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
@@ -226,6 +229,9 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
+/obj/item/nullrod/scythe/talking/relaymove(mob/user)
+	return //stops buckled message spam for the ghost.
+
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
@@ -295,6 +301,26 @@
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/nullrod/pride_hammer
+	icon_state = "pride"
+	name = "Pride-struck Hammer"
+	desc = "It resonates an aura of Pride."
+	force = 16
+	throwforce = 15
+	w_class = 4
+	slot_flags = SLOT_BACK
+	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
+	hitsound = 'sound/weapons/blade1.ogg'
+
+/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity)
+		return
+	if(prob(30) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+		to_chat(user, "<span class='notice'>Your pride reflects on [H].</span>")
+		to_chat(H, "<span class='userdanger'>You feel insecure, taking on [user]'s burden.</span>")
+
 /obj/item/nullrod/whip
 	name = "holy whip"
 	desc = "What a terrible night to be on Space Station 13."
@@ -322,7 +348,7 @@
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
-	desc = "Particularly twisted dieties grant gifts of dubious value."
+	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'

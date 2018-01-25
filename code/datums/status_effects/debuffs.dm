@@ -230,7 +230,7 @@
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
-			owner.adjust_drugginess(Clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
+			owner.adjust_drugginess(CLAMP(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
 				owner.hallucination = min(owner.hallucination + max(severity * 0.075, 1), 50) //7.5% of severity per second, minimum 1
 			if(owner.dizziness < 50)
@@ -310,7 +310,7 @@
 	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
 	var/icon_height = I.Height()
 	bleed_overlay.pixel_x = -owner.pixel_x
-	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
+	bleed_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
 	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
@@ -433,11 +433,7 @@
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
-	C.current = spawn_turf
-	C.starting = spawn_turf
-	C.yo = ownerloc.y - spawn_turf.y
-	C.xo = ownerloc.x - spawn_turf.x
-	C.original = owner
+	C.preparePixelProjectile(ownerloc, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -482,4 +478,28 @@
 	name = "Dazzling Lights"
 	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
 	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"
+
+
+//Ichorial Stain: Applied to servants revived by a vitality matrix. Prevents them from being revived by one again until the effect fades.
+/datum/status_effect/ichorial_stain
+	id = "ichorial_stain"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 600
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is drenched in thick, blue ichor!</span>"
+	alert_type = /obj/screen/alert/status_effect/ichorial_stain
+
+/datum/status_effect/ichorial_stain/on_apply()
+	owner.visible_message("<span class='danger'>[owner] gets back up, [owner.p_their()] body dripping blue ichor!</span>", \
+	"<span class='userdanger'>Thick blue ichor covers your body; you can't be revived like this again until it dries!</span>")
+	return TRUE
+
+/datum/status_effect/ichorial_stain/on_remove()
+	owner.visible_message("<span class='danger'>The blue ichor on [owner]'s body dries out!</span>", \
+	"<span class='boldnotice'>The ichor on your body is dry - you can now be revived by vitality matrices again!</span>")
+
+/obj/screen/alert/status_effect/ichorial_stain
+	name = "Ichorial Stain"
+	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
+	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"

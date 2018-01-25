@@ -12,6 +12,7 @@
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
+	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -54,7 +55,7 @@
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/vehicle/atv,
+	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
@@ -937,32 +938,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/bz_canister
-	name = "BZ Canister"
-	cost = 2000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
-	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
-/datum/supply_pack/science/research
-	name = "Machine Prototype Crate"
-	cost = 8000
-	access = ACCESS_RESEARCH
-	contains = list(/obj/item/device/machineprototype)
-	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	cost = 5000
@@ -1246,6 +1221,14 @@
 					/obj/item/vending_refill/cigarette,
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
+
+/datum/supply_pack/organic/vending/games
+	name = "Games Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games)
+	crate_name = "games supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////
@@ -1613,7 +1596,7 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano)
+					/obj/structure/piano/unanchored)
 	name = "Big band instrument collection"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"

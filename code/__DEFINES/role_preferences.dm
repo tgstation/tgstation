@@ -38,11 +38,11 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ALIEN,
 	ROLE_PAI,
 	ROLE_CULTIST = /datum/game_mode/cult,
-	ROLE_BLOB = /datum/game_mode/blob,
+	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_REVENANT,
-	ROLE_ABDUCTOR = /datum/game_mode/abduction,
+	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult
 ))

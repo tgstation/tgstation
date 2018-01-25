@@ -57,8 +57,6 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
 	if(!CONFIG_GET(flag/allow_random_events))
-//		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
-//		if(E)	E.runEvent()
 		return
 
 	var/gamemode = SSticker.mode.config_tag
@@ -133,7 +131,7 @@ SUBSYSTEM_DEF(events)
 	var/magic 	= ""
 	var/holiday = ""
 	for(var/datum/round_event_control/E in SSevents.control)
-		dat = "<BR><A href='?src=\ref[src];[HrefToken()];forceevent=\ref[E]'>[E]</A>"
+		dat = "<BR><A href='?src=[REF(src)];[HrefToken()];forceevent=[REF(E)]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
 		else if(E.wizardevent)
@@ -177,7 +175,7 @@ SUBSYSTEM_DEF(events)
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	var/DDD = text2num(time2text(world.timeofday, "DDD")) 	// get the current weekday
+	var/DDD = time2text(world.timeofday, "DDD")	// get the current weekday
 	var/W = weekdayofthemonth()	// is this the first monday? second? etc.
 
 	for(var/H in subtypesof(/datum/holiday))

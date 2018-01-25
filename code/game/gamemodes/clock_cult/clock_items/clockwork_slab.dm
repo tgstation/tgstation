@@ -1,24 +1,31 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
+	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.<br>\
+	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
+
 	icon_state = "dread_ipad"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
+
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
+
 	var/busy //If the slab is currently being used by something
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
 	var/selected_scripture = SCRIPTURE_DRIVER
-	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
+
+	var/recollecting = FALSE //if we're looking at fancy recollection
+	var/recollection_category = "Default"
+
 	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
 	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
-	var/recollection_category = "Default"
+
+	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
 
 /obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
@@ -35,8 +42,7 @@
 		add_servant_of_ratvar(user)
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
+	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/stargazer)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
@@ -47,7 +53,7 @@
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra)
+	/datum/clockwork_scripture/create_object/vitality_matrix)
 
 /obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
@@ -122,7 +128,7 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		to_chat(user, "<b>Available Power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())]</span>")
+		to_chat(user, "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>")
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -136,7 +142,7 @@
 		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
-		user.drop_item()
+		user.dropItemToGround(src)
 		user.emote("scream")
 		user.apply_damage(5, BURN, "l_arm")
 		user.apply_damage(5, BURN, "r_arm")
@@ -153,6 +159,11 @@
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
+
+/obj/item/clockwork/slab/AltClick(mob/living/user)
+	if(is_servant_of_ratvar(user) && linking)
+		linking = null
+		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
@@ -231,7 +242,7 @@
 			this will cause you to whisper your message aloud, so doing so in a public place is very suspicious and you should try to restrict it to private use.<br><br>"
 			dat += "If you aren't willing or don't have the time to read through every section, you can still help your teammates! Ask if they've set up a base. If they have, head there \
 			and ask however you can help; chances are there's always something. If not, it's your job as a Servant to get one up and running! Try to find a secluded, low-traffic area, \
-			like the auxilary base or somewhere deep in maintenance. You'll want to go into the Drivers section of the slab and look for <i>Tinkerer's Cache.</i> Find a nice spot and \
+			like the auxiliary base or somewhere deep in maintenance. You'll want to go into the Drivers section of the slab and look for <i>Tinkerer's Cache.</i> Find a nice spot and \
 			create one. This serves as a storage for <i>components,</i> the cult's primary resource. (Your slab's probably produced a few by now.) By attacking that cache with this \
 			slab, you'll offload all your components into it, and all Servants will be able to use those components from any distance - all Tinkerer's Caches are linked!<br><br>"
 			dat += "Once you have a base up and running, contact your fellows and let them know. You should come back here often to drop off the slab's components, and your fellows \
@@ -250,7 +261,7 @@
 			teamwork is an instrumental component of your success.<br><br>" //get it? component? ha!
 			dat += "As a Servant of Ratvar, the tools you are given focus around building and maintaining bases and outposts. A great deal of your power comes from stationary \
 			structures, and without constructing a base somewhere, it's essentially impossible to succeed. Finding a good spot to build a base can be difficult, and it's recommended \
-			that you choose an area in low-traffic part of the station (such as the auxilary base). Make sure to disconnect any cameras in the area beforehand.<br><br>"
+			that you choose an area in low-traffic part of the station (such as the auxiliary base). Make sure to disconnect any cameras in the area beforehand.<br><br>"
 			dat += "Because of how complex being a Servant is, it isn't possible to fit much information into this section. It's highly recommended that you read the <b>Components</b> \
 			and <b>Scripture</b> sections next. Not knowing how these two systems work will cripple both you and your fellows, and lead to a frustrating experience for everyone.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
@@ -398,20 +409,23 @@
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
-			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 		if(SCRIPTURE_SCRIPT)
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
 
 	data["selected"] = selected_scripture
-
+	data["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
+	<font color=#6E001A>Scriptures in <b>red</b> are related to attacking and offense.</font><br>\
+	<font color=#1E8CE1>Scriptures in <b>blue</b> are related to healing and defense.</font><br>\
+	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font>"
 	generate_all_scripture()
 
 	data["scripture"] = list()

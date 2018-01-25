@@ -28,7 +28,7 @@
 
 	V.update_icon()
 	
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/newbomb/timer
 	assembly_type = /obj/item/device/assembly/timer

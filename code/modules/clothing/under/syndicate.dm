@@ -6,7 +6,7 @@
 	item_color = "syndicate"
 	has_sensor = NO_SENSORS
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 40)
-	alt_covers_chest = 1
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
@@ -35,13 +35,13 @@
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
 	icon_state = "trackpants"
 	item_color = "trackpants"
-	can_adjust = 0
+	can_adjust = FALSE
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/under/syndicate/combat
 	name = "combat uniform"
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	item_color = "syndicate_combat"
-	can_adjust = 0
+	can_adjust = FALSE

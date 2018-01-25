@@ -70,7 +70,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(current_cycle-10))
-				M.cure_nearsighted()
+				M.cure_nearsighted(list(EYE_DAMAGE))
 	..()
 	return
 
@@ -148,7 +148,7 @@
 	description = "Absolutely nothing."
 	taste_description = "nothing"
 	glass_icon_state = "nothing"
-	glass_name = "Nothing"
+	glass_name = "nothing"
 	glass_desc = "Absolutely nothing."
 	shot_glass_icon_state = "shotglass"
 
@@ -170,6 +170,22 @@
 	if(!iscarbon(M))
 		return
 	M.emote("laugh")
+	..()
+
+/datum/reagent/consumable/superlaughter
+	name = "Super Laughter"
+	id = "superlaughter"
+	description = "Funny until you're the one laughing."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "#FF4DD2"
+	taste_description = "laughter"
+
+/datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M)
+	if(!iscarbon(M))
+		return
+	if(prob(30))
+		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
+		M.Stun(5)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -264,8 +280,8 @@
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	if(holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 5)
 	..()
@@ -289,8 +305,8 @@
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
-	if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)  //310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
 
@@ -319,15 +335,15 @@
 	nutriment_factor = 0
 	taste_description = "bitter coldness"
 	glass_icon_state = "icedcoffeeglass"
-	glass_name = "Iced Coffee"
+	glass_name = "iced coffee"
 	glass_desc = "A drink to perk you up and refresh you!"
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
 	. = 1
@@ -340,7 +356,7 @@
 	nutriment_factor = 0
 	taste_description = "sweet tea"
 	glass_icon_state = "icedteaglass"
-	glass_name = "Iced Tea"
+	glass_name = "iced tea"
 	glass_desc = "All natural, antioxidant-rich flavour sensation."
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/M)
@@ -349,8 +365,8 @@
 	M.AdjustSleeping(-40, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
 
@@ -361,13 +377,13 @@
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
-	glass_name = "glass of space Cola"
+	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-5)
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/consumable/nuka_cola
@@ -377,8 +393,20 @@
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "the future"
 	glass_icon_state = "nuka_colaglass"
-	glass_name = "Nuka Cola"
+	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
+
+/datum/reagent/consumable/nuka_cola/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/consumable/nuka_cola/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/M)
 	M.Jitter(20)
@@ -386,9 +414,8 @@
 	M.dizziness +=5
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
-	M.status_flags |= GOTTAGOFAST
-	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
 
@@ -405,8 +432,8 @@
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-20, FALSE)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	..()
 	. = 1
@@ -423,8 +450,8 @@
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-6)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/space_up
@@ -434,13 +461,13 @@
 	color = "#00FF00" // rgb: 0, 255, 0
 	taste_description = "cherry soda"
 	glass_icon_state = "space-up_glass"
-	glass_name = "glass of Space-up"
+	glass_name = "glass of Space-Up"
 	glass_desc = "Space-up. It helps you keep your cool."
 
 
 /datum/reagent/consumable/space_up/on_mob_life(mob/living/M)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/lemon_lime
@@ -450,13 +477,13 @@
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
 	glass_icon_state = "glass_yellow"
-	glass_name = "glass of Lemon-Lime"
+	glass_name = "glass of lemon-lime"
 	glass_desc = "You're pretty certain a real fruit has never actually touched this."
 
 
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/M)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/pwr_game
@@ -470,8 +497,8 @@
 	glass_desc = "Goes well with a Vlad's salad."
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/M)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 
 /datum/reagent/consumable/shamblers
@@ -481,12 +508,12 @@
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
 	glass_icon_state = "glass_red"
-	glass_name = "glass of Shambler's Juice"
+	glass_name = "glass of Shambler's juice"
 	glass_desc = "Mmm mm, shambly."
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/M)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (8 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	..()
 /datum/reagent/consumable/sodawater
 	name = "Soda Water"
@@ -495,14 +522,14 @@
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "carbonated water"
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of Soda Water"
+	glass_name = "glass of soda water"
 	glass_desc = "Soda water. Why not make a scotch and soda?"
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/consumable/tonic
@@ -512,15 +539,15 @@
 	color = "#0064C8" // rgb: 0, 100, 200
 	taste_description = "tart and fresh"
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of Tonic Water"
+	glass_name = "glass of tonic water"
 	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 	. = 1
 
@@ -546,15 +573,15 @@
 	color = "#664300" // rgb: 102, 67, 0
 	taste_description = "creamy coffee"
 	glass_icon_state = "soy_latte"
-	glass_name = "Soy Latte"
+	glass_name = "soy latte"
 	glass_desc = "A nice and refreshing beverage while you're reading."
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.SetSleeping(0, FALSE)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
@@ -568,15 +595,15 @@
 	color = "#664300" // rgb: 102, 67, 0
 	taste_description = "bitter cream"
 	glass_icon_state = "cafe_latte"
-	glass_name = "Cafe Latte"
+	glass_name = "cafe latte"
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.SetSleeping(0, FALSE)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
@@ -612,7 +639,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet chocolate"
 	glass_icon_state = "chocolatepudding"
-	glass_name = "Chocolate Pudding"
+	glass_name = "chocolate pudding"
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/vanillapudding
@@ -623,7 +650,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet vanilla"
 	glass_icon_state = "vanillapudding"
-	glass_name = "Vanilla Pudding"
+	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/cherryshake
@@ -634,7 +661,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "creamy cherry"
 	glass_icon_state = "cherryshake"
-	glass_name = "Cherry Shake"
+	glass_name = "cherry shake"
 	glass_desc = "A cherry flavored milkshake."
 
 /datum/reagent/consumable/bluecherryshake
@@ -645,7 +672,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "creamy blue cherry"
 	glass_icon_state = "bluecherryshake"
-	glass_name = "Blue Cherry Shake"
+	glass_name = "blue cherry shake"
 	glass_desc = "An exotic blue milkshake."
 
 /datum/reagent/consumable/pumpkin_latte
@@ -656,7 +683,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "creamy pumpkin"
 	glass_icon_state = "pumpkin_latte"
-	glass_name = "Pumpkin Latte"
+	glass_name = "pumpkin latte"
 	glass_desc = "A mix of coffee and pumpkin juice."
 
 /datum/reagent/consumable/gibbfloats

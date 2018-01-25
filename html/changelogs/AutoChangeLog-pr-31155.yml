@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Updates to station name are now reflected on Cargo's stock exchange computers."

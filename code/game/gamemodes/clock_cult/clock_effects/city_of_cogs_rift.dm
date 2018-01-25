@@ -10,6 +10,12 @@
 	light_power = 3
 	light_color = "#6A4D2F"
 
+/obj/effect/clockwork/city_of_cogs_rift/singularity_act()
+	return
+
+/obj/effect/clockwork/city_of_cogs_rift/singularity_pull()
+	return
+
 /obj/effect/clockwork/city_of_cogs_rift/Initialize()
 	. = ..()
 	visible_message("<span class='warning'>The air above [loc] shimmers and pops as a [name] forms there!</span>")
@@ -35,11 +41,21 @@
 
 /obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
 	if(!QDELETED(AM))
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client && !L.incapacitated())
+				L.visible_message("<span class='notice'>[L] starts climbing through [src]...</span>", \
+				"<span class='notice'>You begin climbing through [src]...</span>")
+				if(!do_after(L, 30, target = L))
+					return
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
-	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignore_mob = AM)
-	AM.forceMove(pick(!is_servant_of_ratvar(AM) ? GLOB.city_of_cogs_spawns : GLOB.servant_spawns))
+	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
+	if(is_servant_of_ratvar(AM))
+		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
+	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", null, null, null, AM)
+	AM.forceMove(T)
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
 	"<span class='boldannounce'>You pass through [src] and appear [is_servant_of_ratvar(AM) ? "back at the City of Cogs" : "somewhere unfamiliar. Looks like it was a one-way trip.."].</span>")
 	do_sparks(5, TRUE, src)
@@ -48,3 +64,6 @@
 		var/mob/living/L = AM
 		L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		L.clear_fullscreen("flash", 5)
+		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
+		if(TTV)
+			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")

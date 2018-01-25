@@ -20,11 +20,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"t" = "Syndicate",
 	"y" = "CentCom",
 
-	// Species
-	"b" = "binary",
-	"g" = "changeling",
-	"a" = "alientalk",
-
 	// Admin
 	"p" = "admin",
 	"d" = "deadmin",
@@ -55,11 +50,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"å" = "Syndicate",
 	"í" = "CentCom",
 
-	// Species
-	"è" = "binary",
-	"ï" = "changeling",
-	"ô" = "alientalk",
-
 	// Admin
 	"ç" = "admin",
 	"â" = "deadmin",
@@ -69,9 +59,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"÷" = "cords"
 ))
 
-/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/talk_key = get_key(message)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
@@ -80,13 +71,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
+	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
 	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
-	else if(message_mode)
+	else if(message_mode || saymode)
 		message = copytext(message, 3)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
@@ -105,7 +97,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		say_dead(original_message)
 		return
 
-	if(check_emote(original_message) || !can_speak_basic(original_message))
+	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
 		return
 
 	if(in_critical)
@@ -134,7 +126,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
 
-	if(handle_inherent_channels(message, message_mode, language)) //Hiveminds, binary chat & holopad.
+	if(saymode && !saymode.handle_message(src, message, language))
 		return
 
 	if(!can_speak_vocal(message))
@@ -264,24 +256,24 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
-	return 0
+	return FALSE
 
 /mob/living/can_speak(message) //For use outside of Say()
 	if(can_speak_basic(message) && can_speak_vocal(message))
 		return 1
 
-/mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
+/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
-		if(client.handle_spam_prevention(message,MUTE_IC))
+		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))
 			return 0
 
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(disabilities & MUTE)
+	if(has_trait(TRAIT_MUTE))
 		return 0
 
 	if(is_muzzled())
@@ -291,11 +283,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 0
 
 	return 1
-
-/mob/living/proc/check_emote(message)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
-		return 1
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
@@ -307,6 +294,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		var/key_symbol = lowertext(copytext(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]
 
+/mob/living/proc/get_key(message)
+	var/key = copytext(message, 1, 2)
+	if(key in GLOB.department_radio_prefixes)
+		return lowertext(copytext(message, 2, 3))
+
 /mob/living/proc/get_message_language(message)
 	if(copytext(message, 1, 2) == ",")
 		var/key = copytext(message, 2, 3)
@@ -316,61 +308,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				return LD
 	return null
 
-/mob/living/proc/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_CHANGELING)
-		switch(lingcheck())
-			if(3)
-				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
-				for(var/_M in GLOB.mob_list)
-					var/mob/M = _M
-					if(M in GLOB.dead_mob_list)
-						var/link = FOLLOW_LINK(M, src)
-						to_chat(M, "[link] [msg]")
-					else
-						switch(M.lingcheck())
-							if(3)
-								to_chat(M, msg)
-							if(2)
-								to_chat(M, msg)
-							if(1)
-								if(prob(40))
-									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
-			if(2)
-				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_talk(src,"[mind.changeling.changelingID]/[key] : [message]",LOGSAY)
-				for(var/_M in GLOB.mob_list)
-					var/mob/M = _M
-					if(M in GLOB.dead_mob_list)
-						var/link = FOLLOW_LINK(M, src)
-						to_chat(M, "[link] [msg]")
-					else
-						switch(M.lingcheck())
-							if(3)
-								to_chat(M, msg)
-							if(2)
-								to_chat(M, msg)
-							if(1)
-								if(prob(40))
-									to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
-			if(1)
-				to_chat(src, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
-		return TRUE
-	if(message_mode == MODE_ALIEN)
-		if(hivecheck())
-			alien_talk(message)
-		return TRUE
-	if(message_mode == MODE_VOCALCORDS)
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
-			if(V && V.can_speak_with())
-				V.handle_speech(message) //message
-				V.speak_with(message) //action
-		return TRUE
-	return FALSE
-
 /mob/living/proc/treat_message(message)
-	if(getBrainLoss() >= 60)
+	if(derpspeech)
 		message = derpspeech(message, stuttering)
 
 	if(stuttering)
@@ -387,6 +326,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
+	var/obj/item/implant/radio/imp = locate() in src
+	if(imp && imp.radio.on)
+		if(message_mode == MODE_HEADSET)
+			imp.radio.talk_into(src, message, , spans, language)
+			return ITALICS | REDUCE_RANGE
+		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+			imp.radio.talk_into(src, message, message_mode, spans, language)
+			return ITALICS | REDUCE_RANGE
+
 	switch(message_mode)
 		if(MODE_WHISPER)
 			return ITALICS
@@ -407,18 +355,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)
-			if(binarycheck())
-				robot_talk(message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
-	return 0
 
-/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
-	if(mind && mind.changeling)
-		if(mind.changeling.changeling_speak)
-			return 2
-		return 1
-	if(mind && mind.linglink)
-		return 3
 	return 0
 
 /mob/living/say_mod(input, message_mode)
@@ -428,7 +366,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		. = "[verb_whisper] in [p_their()] last breath"
 	else if(stuttering)
 		. = "stammers"
-	else if(getBrainLoss() >= 60)
+	else if(derpspeech)
 		. = "gibbers"
 	else
 		. = ..()

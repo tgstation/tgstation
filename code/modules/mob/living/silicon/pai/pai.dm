@@ -1,23 +1,26 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	var/network = "SS13"
-	var/obj/machinery/camera/current = null
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
-	luminosity = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	weather_immunities = list("ash")
 	health = 500
 	maxHealth = 500
+	layer = BELOW_MOB_LAYER
+	can_be_held = TRUE
+
+	var/network = "SS13"
+	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
+	var/hacking = FALSE		//Are we hacking a door?
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
@@ -49,13 +52,16 @@
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
-	var/obj/item/radio/integrated/signal/sradio // AI's signaller
+	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
+	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
+	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -77,6 +83,12 @@
 	. = ..()
 	. += slowdown
 
+/mob/living/silicon/pai/can_unbuckle()
+	return FALSE
+
+/mob/living/silicon/pai/can_buckle()
+	return FALSE
+
 /mob/living/silicon/pai/Destroy()
 	GLOB.pai_list -= src
 	return ..()
@@ -91,9 +103,9 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
-	loc = P
+	forceMove(P)
 	card = P
-	sradio = new(src)
+	signaler = new(src)
 	if(!radio)
 		radio = new /obj/item/device/radio(src)
 
@@ -106,12 +118,14 @@
 
 	. = ..()
 
+	var/datum/action/innate/pai/software/SW = new
 	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
 
 	var/datum/action/language_menu/ALM = new
+	SW.Grant(src)
 	AS.Grant(src)
 	AC.Grant(src)
 	AR.Grant(src)
@@ -119,6 +133,29 @@
 	ALM.Grant(src)
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
+
+/mob/living/silicon/pai/Life()
+	if(hacking)
+		process_hack()
+	return ..()
+
+/mob/living/silicon/pai/proc/process_hack()
+
+	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
+		hackprogress = CLAMP(hackprogress + 4, 0, 100)
+	else
+		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
+		hackprogress = 0
+		hacking = FALSE
+		hackdoor = null
+		return
+	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
+		paiInterface()
+	if(hackprogress >= 100)
+		hackprogress = 0
+		var/obj/machinery/door/D = cable.machine
+		D.open()
+		hacking = FALSE
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -147,7 +184,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return TRUE
 
 /mob/proc/makePAI(delold)
@@ -168,6 +205,15 @@
 	if(!ispAI(owner))
 		return 0
 	P = owner
+
+/datum/action/innate/pai/software
+	name = "Software Interface"
+	button_icon_state = "pai"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/software/Trigger()
+	..()
+	P.paiInterface()
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
@@ -241,8 +287,8 @@
 
 
 /mob/living/silicon/pai/process()
-	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = Clamp((hit_slowdown - 1), 0, 100)
+	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
+	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)
 
 /mob/living/silicon/pai/generateStaticOverlay()
 	return

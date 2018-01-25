@@ -9,14 +9,13 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
 
-	var/reusable = TRUE
+	var/old_shard = FALSE
 	var/spent = FALSE
 
 /obj/item/device/soulstone/proc/was_used()
-	if(!reusable)
+	if(old_shard)
 		spent = TRUE
 		name = "dull [name]"
 		desc = "A fragment of the legendary treasure known simply as \
@@ -28,7 +27,7 @@
 
 /obj/item/device/soulstone/anybody/chaplain
 	name = "mysterious old shard"
-	reusable = FALSE
+	old_shard = TRUE
 
 /obj/item/device/soulstone/pickup(mob/living/user)
 	..()
@@ -39,10 +38,18 @@
 /obj/item/device/soulstone/examine(mob/user)
 	..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
+		if (old_shard)
+			to_chat(user, "<span class='cult'>A soulstone, used to capture a soul, either from dead humans or from freed shades.</span>")
+		else
+			to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
 		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
 		if(spent)
 			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
+
+/obj/item/device/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
+	for(var/mob/living/simple_animal/shade/A in src)
+		A.death()
+	return ..()
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
@@ -137,7 +144,8 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(is_sacrifice_target(T.mind))
+			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(C && C.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -146,7 +154,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				if(T.stat != CONSCIOUS)
+				if((!old_shard && T.stat != CONSCIOUS) || (old_shard && T.stat == DEAD))
 					if(T.client == null)
 						to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back...")
 						getCultGhost(T,user)
@@ -206,7 +214,7 @@
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
-		newstruct.faction |= "\ref[stoner]"
+		newstruct.faction |= "[REF(stoner)]"
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
@@ -227,6 +235,7 @@
 
 /obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
@@ -237,7 +246,7 @@
 	S.key = T.key
 	S.language_holder = U.language_holder.copy(S)
 	if(U)
-		S.faction |= "\ref[U]" //Add the master as a faction, allowing inter-mob cooperation
+		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(U && iscultist(U))
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()

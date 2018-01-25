@@ -202,11 +202,33 @@
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE)
+/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
 	if(!I)
 		return FALSE
+
+	// If the item is a stack and we're already holding a stack then merge
+	if (istype(I, /obj/item/stack))
+		var/obj/item/stack/I_stack = I
+		var/obj/item/stack/active_stack = get_active_held_item()
+
+		if (I_stack.zero_amount())
+			return FALSE
+
+		if (merge_stacks)
+			if (istype(active_stack) && istype(I_stack, active_stack.merge_type))
+				if (I_stack.merge(active_stack))
+					to_chat(usr, "<span class='notice'>Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s.</span>")
+					return TRUE
+			else
+				var/obj/item/stack/inactive_stack = get_inactive_held_item()
+				if (istype(inactive_stack) && istype(I_stack, inactive_stack.merge_type))
+					if (I_stack.merge(inactive_stack))
+						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
+						return TRUE
+
 	if(put_in_active_hand(I))
 		return TRUE
+
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
@@ -216,32 +238,16 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(get_turf(src))
+	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
 	I.plane = initial(I.plane)
 	I.dropped(src)
 	return FALSE
 
-
-/mob/proc/put_in_hands_or_del(obj/item/I)
-	return put_in_hands(I, TRUE)
-
-
-/mob/proc/drop_item_v()		//this is dumb.
-	if(stat == CONSCIOUS && isturf(loc))
-		return drop_item()
-	return FALSE
-
-
 /mob/proc/drop_all_held_items()
+	. = FALSE
 	for(var/obj/item/I in held_items)
-		dropItemToGround(I)
-
-//Drops the item in our active hand.
-/mob/proc/drop_item()
-	var/obj/item/held = get_active_held_item()
-	return dropItemToGround(held)
-
+		. |= dropItemToGround(I)
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 

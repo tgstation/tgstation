@@ -1,8 +1,7 @@
-GLOBAL_VAR_INIT(config_dir, "config/")
-GLOBAL_PROTECT(config_dir)
-
 /datum/controller/configuration
 	name = "Configuration"
+
+	var/directory = "config"
 
 	var/hiding_entries_by_type = TRUE	//Set for readability, admins can set this to FALSE if they want to debug it
 	var/list/entries
@@ -18,13 +17,20 @@ GLOBAL_PROTECT(config_dir)
 	var/list/mode_reports
 	var/list/mode_false_report_weight
 
-/datum/controller/configuration/New()
-	config = src
-	var/list/config_files = InitEntries()
+	var/motd
+
+/datum/controller/configuration/proc/Load()
+	if(entries)
+		CRASH("[THIS_PROC_TYPE_WEIRD] called more than once!")
+	InitEntries()
 	LoadModes()
-	for(var/I in config_files)
-		LoadEntries(I)
+	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
+		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
+		LoadEntries("game_options.txt")
+		LoadEntries("dbconfig.txt")
+		LoadEntries("comms.txt")
 	loadmaplist(CONFIG_MAPS_FILE)
+	LoadMOTD()
 
 /datum/controller/configuration/Destroy()
 	entries_by_type.Cut()
@@ -42,14 +48,11 @@ GLOBAL_PROTECT(config_dir)
 	var/list/_entries_by_type = list()
 	entries_by_type = _entries_by_type
 
-	. = list()
-
 	for(var/I in typesof(/datum/config_entry))	//typesof is faster in this case
 		var/datum/config_entry/E = I
 		if(initial(E.abstract_type) == I)
 			continue
 		E = new I
-		_entries_by_type[I] = E
 		var/esname = E.name
 		var/datum/config_entry/test = _entries[esname]
 		if(test)
@@ -57,24 +60,31 @@ GLOBAL_PROTECT(config_dir)
 			qdel(E)
 			continue
 		_entries[esname] = E
-		.[E.resident_file] = TRUE
+		_entries_by_type[I] = E
 
 /datum/controller/configuration/proc/RemoveEntry(datum/config_entry/CE)
 	entries -= CE.name
 	entries_by_type -= CE.type
 
-/datum/controller/configuration/proc/LoadEntries(filename)
+/datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
+	if(filename_to_test in stack)
+		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
+		return
+	stack = stack + filename_to_test
+
 	log_config("Loading config file [filename]...")
-	var/list/lines = world.file2list("[GLOB.config_dir][filename]")
+	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	for(var/L in lines)
 		if(!L)
 			continue
-
-		if(copytext(L, 1, 2) == "#")
+		
+		var/firstchar = copytext(L, 1, 2)
+		if(firstchar == "#")
 			continue
 
-		var/lockthis = copytext(L, 1, 2) == "@"
+		var/lockthis = firstchar == "@"
 		if(lockthis)
 			L = copytext(L, 2)
 
@@ -91,13 +101,17 @@ GLOBAL_PROTECT(config_dir)
 		if(!entry)
 			continue
 		
+		if(entry == "$include")
+			if(!value)
+				log_config("Warning: Invalid $include directive: [value]")
+			else
+				LoadEntries(value, stack)
+				++.
+			continue
+		
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
-			continue
-		
-		if(filename != E.resident_file)
-			log_config("Found [entry] in [filename] when it should have been in [E.resident_file]! Ignoring.")
 			continue
 
 		if(lockthis)
@@ -107,16 +121,21 @@ GLOBAL_PROTECT(config_dir)
 		if(!validated)
 			log_config("Failed to validate setting \"[value]\" for [entry]")
 		else if(E.modified && !E.dupes_allowed)
-			log_config("Duplicate setting for [entry] ([value]) detected! Using latest.")
+			log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+
+		E.resident_file = filename
 		
 		if(validated)
 			E.modified = TRUE
+	
+	++.
 
 /datum/controller/configuration/can_vv_get(var_name)
-	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
+	return (var_name != NAMEOF(src, entries_by_type) || !hiding_entries_by_type) && ..()
 
 /datum/controller/configuration/vv_edit_var(var_name, var_value)
-	return !(var_name in list("entries_by_type", "entries")) && ..()
+	var/list/banned_edits = list(NAMEOF(src, entries_by_type), NAMEOF(src, entries), NAMEOF(src, directory))
+	return !(var_name in banned_edits) && ..()
 
 /datum/controller/configuration/stat_entry()
 	if(!statclick)
@@ -124,7 +143,7 @@ GLOBAL_PROTECT(config_dir)
 	stat("[name]:", statclick)
 
 /datum/controller/configuration/proc/Get(entry_type)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "\ref[src]")
+	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
 		return
 	var/datum/config_entry/E = entry_type
@@ -134,10 +153,10 @@ GLOBAL_PROTECT(config_dir)
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	return E.value
+	return E.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
-	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "\ref[src]")
+	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 		log_admin_private("Config rewrite of [entry_type] to [new_val] attempted by [key_name(usr)]")
 		return
 	var/datum/config_entry/E = entry_type
@@ -147,7 +166,7 @@ GLOBAL_PROTECT(config_dir)
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	return E.ValidateAndSet(new_val)
+	return E.ValidateAndSet("[new_val]")
 
 /datum/controller/configuration/proc/LoadModes()
 	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
@@ -168,15 +187,24 @@ GLOBAL_PROTECT(config_dir)
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
-				mode_false_report_weight[M.config_tag] = M.false_report_weight
+				if(M.probability)
+					mode_false_report_weight[M.config_tag] = M.false_report_weight
+				else
+					mode_false_report_weight[M.config_tag] = 1
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
 	votable_modes += "secret"
 
+/datum/controller/configuration/proc/LoadMOTD()
+	motd = file2text("[directory]/motd.txt")
+	var/tm_info = GLOB.revdata.GetTestMergeInfo()
+	if(motd || tm_info)
+		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+
 /datum/controller/configuration/proc/loadmaplist(filename)
-	filename = "[GLOB.config_dir][filename]"
 	log_config("Loading config file [filename]...")
+	filename = "[directory]/[filename]"
 	var/list/Lines = world.file2list(filename)
 
 	var/datum/map_config/currentmap = null

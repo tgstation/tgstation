@@ -1,7 +1,7 @@
 /obj/machinery/dna_scannernew
 	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
 	density = TRUE
 	anchored = TRUE
@@ -84,23 +84,23 @@
 		open_machine()
 
 /obj/machinery/dna_scannernew/proc/locate_computer(type_)
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		var/C = locate(type_, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		var/C = locate(type_, get_step(src, direction))
 		if(C)
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine()
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
 	if(!state_open)
-		return 0
+		return FALSE
 
-	..()
+	..(user)
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	if(istype(mob_occupant))
 		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.disabilities & NOCLONE) && !mob_occupant.hellbound)
+			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
@@ -113,11 +113,11 @@
 
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)
-		return 0
+		return FALSE
 
 	..()
 
-	return 1
+	return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if(user.stat || locked)
@@ -149,3 +149,8 @@
 		return
 
 	toggle_open(user)
+
+/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	close_machine(target)

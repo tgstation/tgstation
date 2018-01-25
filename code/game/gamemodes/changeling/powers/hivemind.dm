@@ -8,7 +8,7 @@
 
 /obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
-	var/datum/changeling/changeling=user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.changeling_speak = 1
 	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
 	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	dna_cost = -1
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
 		if(!(prof in GLOB.hivemind_bank))
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]
 	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
 		to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	return 1
 
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in GLOB.hivemind_bank)
 		if(!(prof in changeling.stored_profiles))

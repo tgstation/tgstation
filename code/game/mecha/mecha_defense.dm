@@ -25,6 +25,8 @@
 
 /obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
+	if(!damage_amount)
+		return 0
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
@@ -161,7 +163,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				if(!user.drop_item())
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
@@ -226,11 +228,10 @@
 	else if(istype(W, /obj/item/stock_parts/cell))
 		if(state==4)
 			if(!cell)
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(W, src))
 					return
 				var/obj/item/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
-				C.forceMove(src)
 				cell = C
 				log_message("Powercell installed")
 			else
@@ -241,15 +242,17 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weldingtool/WT = W
 		if(obj_integrity<max_integrity)
-			if (WT.remove_fuel(0,user))
+			if(WT.remove_fuel(1, user))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>")
+					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
 					obj_integrity += min(10, max_integrity-obj_integrity)
+					if(obj_integrity == max_integrity)
+						to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 			else
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
+				to_chat(user, "<span class='warning'>[WT] needs to be on for this task!</span>")
 				return 1
 		else
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")

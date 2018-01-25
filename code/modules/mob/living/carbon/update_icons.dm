@@ -153,6 +153,7 @@
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		update_hud_back(back)
+
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
@@ -278,7 +279,7 @@
 		else
 			. += "-robotic"
 
-	if(disabilities & HUSK)
+	if(has_trait(TRAIT_HUSK))
 		. += "-husk"
 
 

@@ -4,7 +4,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/used = 0
 
-/obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	return
 
 /obj/item/antag_spawner/proc/equip_antag(mob/target)
@@ -29,13 +29,13 @@
 		dat += "<I>Using this contract, you may summon an apprentice to aid you on your mission.</I><BR>"
 		dat += "<I>If you are unable to establish contact with your apprentice, you can feed the contract back to the spellbook to refund your points.</I><BR>"
 		dat += "<B>Which school of magic is your apprentice studying?:</B><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=destruction'>Destruction</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_DESTRUCTION]'>Destruction</A><BR>"
 		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_BLUESPACE]'>Bluespace Manipulation</A><BR>"
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_HEALING]'>Healing</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
+		dat += "<A href='byond://?src=[REF(src)];school=[APPRENTICE_ROBELESS]'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
@@ -63,73 +63,34 @@
 					return
 				used = 1
 				var/mob/dead/observer/theghost = pick(candidates)
-				spawn_antag(theghost.client, get_turf(src), href_list["school"])
-				if(H && H.mind)
-					SSticker.mode.update_wiz_icons_added(H.mind)
+				spawn_antag(theghost.client, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
-/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind ,datum/mind/user)
 	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/wizard_name = "the wizard"
-	if(usr)
-		wizard_name = usr.real_name
-	to_chat(M, "<B>You are [wizard_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.")
-	switch(type)
-		if("destruction")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
-		if("bluespace")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
-		if("healing")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			M.put_in_hands_or_del(new /obj/item/gun/magic/staff/healing(M))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
-		if("robeless")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
+	var/datum/mind/app_mind = M.mind
+	
+	var/datum/antagonist/wizard/apprentice/app = new()
+	app.master = user
+	app.school = kind
 
-	equip_antag(M)
-	var/wizard_name_first = pick(GLOB.wizard_first)
-	var/wizard_name_second = pick(GLOB.wizard_second)
-	var/randomname = "[wizard_name_first] [wizard_name_second]"
-	if(usr)
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
-		M.mind.objectives += new_objective
-	SSticker.mode.apprentices += M.mind
-	M.mind.assigned_role = "Apprentice"
-	M.mind.special_role = "apprentice"
-	SSticker.mode.update_wiz_icons_added(M.mind)
+	var/datum/antagonist/wizard/master_wizard = user.has_antag_datum(/datum/antagonist/wizard)
+	if(master_wizard)
+		if(!master_wizard.wiz_team)
+			master_wizard.create_wiz_team()
+		app.wiz_team = master_wizard.wiz_team
+		master_wizard.wiz_team.add_member(app_mind)
+	app_mind.add_antag_datum(app)
+	//TODO Kill these if possible
+	app_mind.assigned_role = "Apprentice"
+	app_mind.special_role = "apprentice"
+	//
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
-	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
-	if (!newname)
-		newname = randomname
-	M.mind.name = newname
-	M.real_name = newname
-	M.name = newname
-	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
-	M.dna.update_dna_identity()
 
-/obj/item/antag_spawner/contract/equip_antag(mob/target)
-	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
-	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(target), slot_shoes)
-	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
-	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
-	target.equip_to_slot_or_del(new /obj/item/storage/backpack(target), slot_back)
-	target.equip_to_slot_or_del(new /obj/item/storage/box(target), slot_in_backpack)
-	target.equip_to_slot_or_del(new /obj/item/teleportation_scroll/apprentice(target), slot_r_store)
 ///////////BORGS AND OPERATIVES
 
 
@@ -144,10 +105,10 @@
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
 		return FALSE
-	if(!(user.mind in SSticker.mode.syndicates))
+	if(!user.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!user.onSyndieBase())
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
 		return FALSE
 	return TRUE
@@ -164,25 +125,25 @@
 			return
 		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg")
+		spawn_antag(theghost.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
-/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/code = "BOMB-NOT-FOUND"
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
-	if(nuke)
-		code = nuke.r_code
-	M.mind.make_Nuke(null, code, 0, FALSE)
-	var/newname = M.dna.species.random_name(M.gender,0,SSticker.mode.nukeops_lastname)
-	M.mind.name = newname
-	M.real_name = newname
-	M.name = newname
+
+	var/datum/antagonist/nukeop/new_op = new()
+	new_op.send_to_spawnpoint = FALSE
+	new_op.nukeop_outfit = /datum/outfit/syndicate/no_crystals
+
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(creator_op)
+		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
+		M.mind.special_role = "Nuclear Operative"
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -199,8 +160,12 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
-/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
+/obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(!creator_op)
+		return
+
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
@@ -211,8 +176,8 @@
 	if(prob(50))
 		brainfirstname = pick(GLOB.first_names_female)
 	var/brainopslastname = pick(GLOB.last_names)
-	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
-		brainopslastname = SSticker.mode.nukeops_lastname
+	if(creator_op.nuke_team.syndicate_name)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
 	R.mmi.name = "Man-Machine Interface: [brainopsname]"
@@ -222,7 +187,11 @@
 	R.real_name = R.name
 
 	R.key = C.key
-	R.mind.make_Nuke(null, nuke_code = null,leader=0, telecrystals = TRUE)
+	
+	var/datum/antagonist/nukeop/new_borg = new()
+	new_borg.send_to_spawnpoint = FALSE
+	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
+	R.mind.special_role = "Syndicate Cyborg"
 
 ///////////SLAUGHTER DEMON
 
@@ -239,7 +208,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(!(user.z in GLOB.station_z_levels))
+	if(!is_station_level(user.z))
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
@@ -250,7 +219,7 @@
 			return
 		used = 1
 		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
+		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -259,26 +228,25 @@
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
 
 
-/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
-
+/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
-	if(usr)
+	if(user)
 		new_objective = new /datum/objective/assassinate
 		new_objective.owner = S.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "[objective_verb] [usr.real_name], the one who summoned you."
+		new_objective.target = user
+		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
 		S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[usr ? " else while you're at it":""]."
+	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
 	S.mind.objectives += new_objective2
+	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")

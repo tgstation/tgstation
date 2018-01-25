@@ -56,10 +56,11 @@
 
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
-
+	
+	if (needs_update)
+		GLOB.lighting_update_lights -= src
+	
 	. = ..()
-	if(!force)
-		return QDEL_HINT_IWILLGC
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
@@ -136,42 +137,6 @@
 	);
 
 // This is the define used to calculate falloff.
-
-/*
-/datum/light_source/proc/apply_lum()
-	var/static/update_gen = 1
-	applied = 1
-
-	// Keep track of the last applied lum values so that the lighting can be reversed
-	var/thing
-	var/datum/lighting_corner/C
-	var/corners = list()
-	LAZYINITLIST(effect_str)
-	FOR_DVIEW(var/turf/T, light_range+1, source_turf, INVISIBILITY_LIGHTING)
-		var/list/turf_corners = T.get_corners()
-
-		for (thing in turf_corners)
-			C = thing
-			if (C.update_gen == update_gen)
-				continue
-
-			C.update_gen = update_gen
-			LAZYADD(C.affecting,src)
-
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-
-			APPLY_CORNER(C)
-
-		LAZYADD(T.affecting_lights, src)
-		LAZYADD(affecting_turfs, T)
-	FOR_DVIEW_END
-	update_gen++
-	applied_lum_r = lum_r
-	applied_lum_g = lum_g
-	applied_lum_b = lum_b
-*/
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
@@ -267,11 +232,9 @@
 	var/turf/T
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = Ceiling(light_range)
-		for(T in view(Ceiling(light_range), source_turf))
+		source_turf.luminosity = CEILING(light_range, 1)
+		for(T in view(CEILING(light_range, 1), source_turf))
 			for (thing in T.get_corners(source_turf))
-				if(!thing)
-					continue
 				C = thing
 				corners[C] = 0
 			turfs += T
@@ -293,8 +256,6 @@
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (thing in  corners - effect_str) // New corners
-			if(!thing)
-				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -304,8 +265,6 @@
 	else
 		L = corners - effect_str
 		for (thing in L) // New corners
-			if(!thing)
-				continue
 			C = thing
 			LAZYADD(C.affecting, src)
 			if (!C.active)
@@ -314,8 +273,6 @@
 			APPLY_CORNER(C)
 
 		for (thing in corners - L) // Existing corners
-			if(!thing)
-				continue
 			C = thing
 			if (!C.active)
 				effect_str[C] = 0
@@ -324,8 +281,6 @@
 
 	L = effect_str - corners
 	for (thing in L) // Old, now gone, corners.
-		if(!thing)
-			continue
 		C = thing
 		REMOVE_CORNER(C)
 		LAZYREMOVE(C.affecting, src)

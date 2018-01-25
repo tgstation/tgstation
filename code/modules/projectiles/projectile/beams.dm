@@ -50,7 +50,8 @@
 	damage = 15
 	irradiate = 30
 	range = 15
-	forcedodge = 1
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
+
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 
@@ -95,8 +96,6 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
-	legacy = 1
-	animate_movement = SLIDE_STEPS
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 

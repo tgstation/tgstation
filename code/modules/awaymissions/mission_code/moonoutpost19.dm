@@ -1,4 +1,43 @@
-/////////// moonoutpost19 papers
+// moonoutpost19
+
+//Areas
+/area/awaymission/moonoutpost19
+	name = "space"
+	icon_state = "awaycontent1"
+
+/area/awaymission/moonoutpost19/arrivals
+	name = "MO19 Arrivals"
+	icon_state = "awaycontent2"
+
+/area/awaymission/moonoutpost19/research
+	name = "MO19 Research"
+	icon_state = "awaycontent3"
+
+/area/awaymission/moonoutpost19/syndicate
+	name = "Syndicate Outpost"
+	icon_state = "awaycontent4"
+
+/area/awaymission/moonoutpost19/main
+	name = "Khonsu 19"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	poweralm = FALSE
+	ambientsounds = list('sound/ambience/ambimine.ogg')
+	icon_state = "awaycontent5"
+
+/area/awaymission/moonoutpost19/hive
+	name = "The Hive"
+	always_unpowered = FALSE
+	has_gravity = FALSE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	poweralm = FALSE
+	icon_state = "awaycontent6"
+
+//Papers
 
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note
 	name = "Hastily Written Note"

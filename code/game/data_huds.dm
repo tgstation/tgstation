@@ -50,7 +50,18 @@
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
+
+/datum/atom_hud/data/diagnostic/basic
 	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD)
+
+/datum/atom_hud/data/diagnostic/advanced
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_PATH_HUD)
+
+/datum/atom_hud/data/bot_path
+	hud_icons = list(DIAG_PATH_HUD)
+
+/datum/atom_hud/abductor
+	hud_icons = list(GLAND_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -66,21 +77,17 @@
 
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
-	var/threat = 0
+	var/threat
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if (D.severity != NONTHREAT) //a buffing virus gets an icon
-				threat = 2
-				return threat //harmful viruses have priority
-			else
-				threat = 1 //aka good virus
-
+			if(!threat || D.severity > threat) //a buffing virus gets an icon
+				threat = D.severity
 	return threat
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -160,7 +167,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -168,18 +175,30 @@
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
-	var/virus_state = check_virus()
+	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(status_flags & XENO_HOST)
+	if(has_trait(TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (status_flags & FAKEDEATH))
+	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
-	else if(virus_state == 2)
-		holder.icon_state = "hudill"
-	else if(virus_state == 1)
-		holder.icon_state = "hudbuff"
 	else
-		holder.icon_state = "hudhealthy"
+		switch(virus_threat)
+			if(VIRUS_SEVERITY_BIOHAZARD)
+				holder.icon_state = "hudill5"
+			if(VIRUS_SEVERITY_DANGEROUS)
+				holder.icon_state = "hudill4"
+			if(VIRUS_SEVERITY_HARMFUL)
+				holder.icon_state = "hudill3"
+			if(VIRUS_SEVERITY_MEDIUM)
+				holder.icon_state = "hudill2"
+			if(VIRUS_SEVERITY_MINOR)
+				holder.icon_state = "hudill1"
+			if(VIRUS_SEVERITY_NONTHREAT)
+				holder.icon_state = "hudill0"
+			if(VIRUS_SEVERITY_POSITIVE)
+				holder.icon_state = "hudbuff"
+			if(null)
+				holder.icon_state = "hudhealthy"
 
 
 /***********************************************

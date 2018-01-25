@@ -5,7 +5,7 @@
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera"
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
@@ -26,6 +26,7 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
+	var/area/myarea = null
 
 	//OTHER
 
@@ -47,24 +48,26 @@
 	assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
+	if (isturf(loc))
+		myarea = get_area(src)
+		LAZYADD(myarea.cameras, src)
 	proximity_monitor = new(src, 1)
 
-	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
+	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
-	toggle_cam(null, 0) //kick anyone viewing out
-	if(assembly)
-		qdel(assembly)
-		assembly = null
+	if(can_use())
+		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.cameras -= src
+	if(isarea(myarea))
+		LAZYREMOVE(myarea.cameras, src)
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
-	GLOB.cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	GLOB.cameranet.cameras -= src
-	GLOB.cameranet.removeCamera(src)
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -92,11 +95,12 @@
 							GLOB.cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
-			for(var/mob/O in GLOB.mob_list)
-				if (O.client && O.client.eye == src)
-					O.unset_machine()
-					O.reset_perspective(null)
-					to_chat(O, "The screen bursts into static.")
+			for(var/i in GLOB.player_list)
+				var/mob/M = i
+				if (M.client.eye == src)
+					M.unset_machine()
+					M.reset_perspective(null)
+					to_chat(M, "The screen bursts into static.")
 			..()
 
 /obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
@@ -118,6 +122,11 @@
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
+
+/obj/machinery/camera/singularity_pull(S, current_size)
+	if (status && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
+		toggle_cam(null, 0)
+	..()
 
 /obj/machinery/camera/attackby(obj/item/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
@@ -149,10 +158,10 @@
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.drop_item(W))
+				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
-				upgradeXRay()
 				qdel(W)
+				upgradeXRay()
 				to_chat(user, "[msg]")
 			else
 				to_chat(user, "[msg2]")
@@ -203,7 +212,7 @@
 				if(U.name == "Unknown")
 					to_chat(AI, "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
-					to_chat(AI, "<b><a href='?src=\ref[AI];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
@@ -268,9 +277,16 @@
 	status = !status
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
+		if (isturf(loc))
+			myarea = get_area(src)
+			LAZYADD(myarea.cameras, src)
+		else
+			myarea = null
 	else
 		set_light(0)
 		GLOB.cameranet.removeCamera(src)
+		if (isarea(myarea))
+			LAZYREMOVE(myarea.cameras, src)
 	GLOB.cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
 	if(status)
@@ -298,12 +314,12 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.mob_list)
+	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.mob_list)
+	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use()

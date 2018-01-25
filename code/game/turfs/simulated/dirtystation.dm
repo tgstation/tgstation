@@ -72,7 +72,7 @@
 		return
 
 		//Hangars and pods covered in oil.
-	var/static/list/oily_areas = typecacheof(list(/area/quartermaster))
+	var/static/list/oily_areas = typecacheof(/area/quartermaster)
 	if(is_type_in_typecache(A, oily_areas))
 		if(prob(25))
 			new /obj/effect/decal/cleanable/oil(src)

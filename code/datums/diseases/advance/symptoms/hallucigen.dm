@@ -23,7 +23,7 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 5
-	severity = 3
+	severity = 2
 	base_message_chance = 25
 	symptom_delay_min = 25
 	symptom_delay_max = 90
@@ -32,7 +32,8 @@ Bonus
 					  <b>Stealth 4:</b> The virus mimics positive symptoms.."
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stealth"] >= 4) //fake good symptom messages
 		fake_healthy = TRUE
 		base_message_chance = 50

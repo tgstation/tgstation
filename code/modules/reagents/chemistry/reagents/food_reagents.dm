@@ -83,6 +83,51 @@
 		M.satiety += 30
 	. = ..()
 
+/datum/reagent/consumable/cooking_oil
+	name = "Cooking Oil"
+	id = "cooking_oil"
+	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
+	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	taste_mult = 0.8
+	taste_description = "oil"
+	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
+	metabolization_rate = 10 * REAGENTS_METABOLISM
+	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
+	var/boiling //Used in mob life to determine if the oil kills, and only on touch application
+
+/datum/reagent/consumable/cooking_oil/reaction_obj(obj/O, reac_volume)
+	if(holder && holder.chem_temp >= fry_temperature)
+		if(isitem(O) && !istype(O, /obj/item/reagent_containers/food/snacks/deepfryholder))
+			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
+			F.fry(volume)
+			F.reagents.add_reagent("cooking_oil", reac_volume)
+
+/datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!istype(M))
+		return
+	if(holder && holder.chem_temp >= fry_temperature)
+		boiling = TRUE
+	if(method == VAPOR || method == TOUCH) //Directly coats the mob, and doesn't go into their bloodstream
+		if(boiling)
+			M.visible_message("<span class='warning'>The boiling oil sizzles as it covers [M]!</span>", \
+			"<span class='userdanger'>You're covered in boiling oil!</span>")
+			M.emote("scream")
+			playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+			var/oil_damage = (holder.chem_temp / fry_temperature) * 0.33 //Damage taken per unit
+			M.adjustFireLoss(min(35, oil_damage * reac_volume)) //Damage caps at 35
+	else
+		..()
+	return TRUE
+
+/datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 5)
+		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.name = "deep-fried [initial(T.name)]"
+		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+
 /datum/reagent/consumable/sugar
 	name = "Sugar"
 	id = "sugar"
@@ -168,29 +213,31 @@
 	taste_description = "mint"
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
-	switch(current_cycle)
-		if(1 to 15)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5)
-			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
-		if(15 to 25)
-			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
-		if(25 to 35)
-			M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(1))
-				M.emote("shiver")
-			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
-		if(35 to INFINITY)
-			M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(prob(5))
-				M.emote("shiver")
-			if(isslime(M))
-				M.bodytemperature -= rand(20,25)
+	if(M.bodytemperature > 50)
+		switch(current_cycle)
+			if(1 to 15)
+				M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(holder.has_reagent("capsaicin"))
+					holder.remove_reagent("capsaicin", 5)
+				if(isslime(M))
+					M.bodytemperature -= rand(5,20)
+			if(15 to 25)
+				M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(isslime(M))
+					M.bodytemperature -= rand(10,20)
+			if(25 to 35)
+				M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(prob(1))
+					M.emote("shiver")
+				if(isslime(M))
+					M.bodytemperature -= rand(15,20)
+			if(35 to INFINITY)
+				M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
+				if(prob(5))
+					M.emote("shiver")
+				if(isslime(M))
+					M.bodytemperature -= rand(20,25)
+		M.bodytemperature = max(50, M.bodytemperature)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
@@ -256,7 +303,6 @@
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
 			victim.Knockdown(60)
-			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -270,7 +316,6 @@
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
 			victim.Knockdown(100)
-			victim.drop_item()
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
@@ -328,8 +373,8 @@
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/mushroomhallucinogen
@@ -387,7 +432,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
@@ -420,8 +465,8 @@
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -552,7 +597,7 @@
 			if(!M.is_mouth_covered() && !M.is_eyes_covered())
 				unprotected = TRUE
 	if(unprotected)
-		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
 			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
 		else
 			if(!M.eye_blurry)
@@ -586,7 +631,7 @@
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
-		M.adjustBrainLoss(2*REM)
+		M.adjustBrainLoss(2*REM, 150)
 		M.adjustToxLoss(3*REM,0)
 		M.adjustStaminaLoss(10*REM,0)
 		M.blur_eyes(5)

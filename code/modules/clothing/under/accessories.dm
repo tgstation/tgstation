@@ -15,11 +15,11 @@
 		if(U.pockets) // storage items conflict
 			return FALSE
 
-		pockets.loc = U
+		pockets.forceMove(U)
 		U.pockets = pockets
 
 	U.attached_accessory = src
-	loc = U
+	forceMove(U)
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
@@ -39,7 +39,7 @@
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(pockets && pockets == U.pockets)
-		pockets.loc = src
+		pockets.forceMove(src)
 		U.pockets = null
 
 	for(var/armor_type in armor)
@@ -64,10 +64,11 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick()
-	if(initial(above_suit))
-		above_suit = !above_suit
-		to_chat(usr, "\The [src] will be worn [above_suit ? "above" : "below"] your suit.")
+/obj/item/clothing/accessory/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE))
+		if(initial(above_suit))
+			above_suit = !above_suit
+			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 
 /obj/item/clothing/accessory/examine(mob/user)
 	..()
@@ -133,8 +134,8 @@
 						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
-							SSblackbox.add_details("commendation", json_encode(list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input)))
-							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <font color='blue'>[name]</font>! \n- [input]"
+							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
+							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")

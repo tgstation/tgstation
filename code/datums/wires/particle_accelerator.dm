@@ -43,3 +43,6 @@
 			C.strength_upper_limit = (mend ? 2 : 3)
 			if(C.strength_upper_limit < C.strength)
 				C.remove_strength()
+
+/datum/wires/particle_accelerator/control_box/emp_pulse() // to prevent singulo from pulsing wires
+	return

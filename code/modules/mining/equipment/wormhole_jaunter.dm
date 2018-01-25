@@ -11,17 +11,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	origin_tech = "bluespace=2"
 	slot_flags = SLOT_BELT
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
-	SSblackbox.add_details("jaunter", "User") // user activated
+	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
-	if(!device_turf || device_turf.z == ZLEVEL_CENTCOM || device_turf.z == ZLEVEL_TRANSIT)
+	if(!device_turf || is_centcom_level(device_turf.z) || is_transit_level(device_turf.z))
 		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
@@ -29,19 +28,9 @@
 /obj/item/device/wormhole_jaunter/proc/get_destinations(mob/user)
 	var/list/destinations = list()
 
-	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
-			var/turf/T = get_turf(B)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
-				destinations += B
-
-	// In the event golem beacon is destroyed, send to station instead
-	if(destinations.len)
-		return destinations
-
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
-		if(T.z in GLOB.station_z_levels)
+		if(is_station_level(T.z))
 			destinations += B
 
 	return destinations
@@ -55,7 +44,7 @@
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -71,34 +60,30 @@
 			triggered = TRUE
 
 	if(triggered)
-		usr.visible_message("<span class='warning'>The [src] overloads and activates!</span>")
-		SSblackbox.add_details("jaunter","EMP") // EMP accidental activation
+		usr.visible_message("<span class='warning'>[src] overloads and activates!</span>")
+		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(usr)
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
-		SSblackbox.add_details("jaunter","Chasm") // chasm automatic activation
+		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
 		activate(user, FALSE)
 	else
-		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
+		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 //jaunter tunnel
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
+	innate_accuracy_penalty = 6
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
-	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
-		return
-
-	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
-		return
-
-	if(do_teleport(M, hard_target, 6))
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+	. = ..()
+	if(.)
 		// KERPLUNK
 		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 		if(iscarbon(M))

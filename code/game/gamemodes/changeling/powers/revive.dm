@@ -8,8 +8,7 @@
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
-	user.status_flags &= ~(FAKEDEATH)
-	user.tod = null
+	user.cure_fakedeath("changeling")
 	user.revive(full_heal = 1)
 	var/list/missing = user.get_missing_limbs()
 	missing -= "head" // headless changelings are funny
@@ -25,11 +24,13 @@
 		user.regenerate_limbs(0, list("head"))
 	user.regenerate_organs()
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
-	user.mind.changeling.purchasedpowers -= src
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.purchasedpowers -= src
 	return TRUE
 
-/obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/user)
-	if((user.stat != DEAD) && !(user.status_flags & FAKEDEATH))
-		user.mind.changeling.purchasedpowers -= src
+/obj/effect/proc_holder/changeling/revive/can_be_used_by(mob/living/user)
+	if((user.stat != DEAD) && !(user.has_trait(TRAIT_FAKEDEATH)))
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.purchasedpowers -= src
 		return 0
 	. = ..()

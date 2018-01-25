@@ -12,10 +12,15 @@ The regular pipe you see everywhere, including bent ones.
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
+	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
 
 	device_type = BINARY
 
+	construction_type = /obj/item/pipe/binary/bendable
+	pipe_state = "simple"
+
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
+	normalize_cardinal_directions()
 	if(dir in GLOB.diagonals)
 		initialize_directions = dir
 	switch(dir)
@@ -23,20 +28,6 @@ The regular pipe you see everywhere, including bent ones.
 			initialize_directions = SOUTH|NORTH
 		if(EAST,WEST)
 			initialize_directions = EAST|WEST
-
-/obj/machinery/atmospherics/pipe/simple/atmosinit()
-	normalize_dir()
-	..()
-
-/obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	if(dir==SOUTH)
-		setDir(NORTH)
-	else if(dir==WEST)
-		setDir(EAST)
-
-/obj/machinery/atmospherics/pipe/simple/update_icon()
-	normalize_dir()
-	..()
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/simple/general
@@ -74,8 +65,8 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/supplymain
 	name="main air supply pipe"
-	pipe_color=rgb(130,43,272)
-	color=rgb(130,43,272)
+	pipe_color=rgb(130,43,255)
+	color=rgb(130,43,255)
 
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible
 	level = PIPE_VISIBLE_LEVEL
@@ -96,8 +87,8 @@ The regular pipe you see everywhere, including bent ones.
 	level = PIPE_HIDDEN_LEVEL
 
 /obj/machinery/atmospherics/pipe/simple/cyan
-	pipe_color=rgb(0,256,249)
-	color=rgb(0,256,249)
+	pipe_color=rgb(0,255,249)
+	color=rgb(0,255,249)
 
 /obj/machinery/atmospherics/pipe/simple/cyan/visible
 	level = PIPE_VISIBLE_LEVEL
@@ -107,8 +98,8 @@ The regular pipe you see everywhere, including bent ones.
 	level = PIPE_HIDDEN_LEVEL
 
 /obj/machinery/atmospherics/pipe/simple/green
-	pipe_color=rgb(30,256,0)
-	color=rgb(30,256,0)
+	pipe_color=rgb(30,255,0)
+	color=rgb(30,255,0)
 
 /obj/machinery/atmospherics/pipe/simple/green/visible
 	level = PIPE_VISIBLE_LEVEL

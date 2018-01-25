@@ -23,7 +23,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 
-/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
 	icon = 'icons/mob/simple_human.dmi'

@@ -28,7 +28,7 @@
 	..()
 	add_avail(power_gen)
 	if(panel_open && irradiate)
-		radiation_pulse(get_turf(src), 2, 3, 6) // Weak but noticeable.
+		radiation_pulse(src, 60)
 
 /obj/machinery/power/rtg/RefreshParts()
 	var/part_level = 0

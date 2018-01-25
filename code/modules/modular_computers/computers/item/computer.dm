@@ -175,11 +175,11 @@
 			turn_on(user)
 
 /obj/item/device/modular_computer/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>\The [src] was already emagged.</span>")
 		return 0
 	else
-		emagged = TRUE
+		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"OVERRIDE ACCEPTED: New software downloads available.\" message.</span>")
 		return 1
 
@@ -357,7 +357,7 @@
 	if(!get_ntnet_status())
 		return FALSE
 	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
-	return GLOB.ntnet_global.add_log(text, network_card)
+	return SSnetworks.station_network.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

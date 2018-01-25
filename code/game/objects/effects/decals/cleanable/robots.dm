@@ -9,7 +9,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = 0
@@ -53,3 +53,8 @@
 
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+
+/obj/effect/decal/cleanable/oil/slippery
+
+/obj/effect/decal/cleanable/oil/slippery/Initialize()
+	AddComponent(/datum/component/slippery, 80, (NO_SLIP_WHEN_WALKING | SLIDE))

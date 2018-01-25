@@ -110,23 +110,32 @@
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
-		if(is_servant_of_ratvar(L) || (L.disabilities & BLIND) || L.null_rod_check())
+		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.null_rod_check())
 			continue
 		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L
+			if(("ratvar" in H.faction) || (!H.mind && "neutral" in H.faction))
+				continue
 			if(ismegafauna(H) || (!H.mind && H.AIStatus == AI_OFF))
 				continue
-			if(("ratvar" in H.faction) || ("neutral" in H.faction))
+		else if(isrevenant(L))
+			var/mob/living/simple_animal/revenant/R = L
+			if(R.stasis) //Don't target any revenants that are respawning
 				continue
 		else if(!L.mind)
 			continue
 		. += L
+	var/list/viewcache = list()
 	for(var/N in GLOB.mechas_list)
 		var/obj/mecha/M = N
-		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
-			. += M
+		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant))
+			if(!length(viewcache))
+				for (var/obj/Z in view(sight_range, src))
+					viewcache += Z
+			if (M in viewcache)
+				. += M
 
 /obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
 	if(!target)

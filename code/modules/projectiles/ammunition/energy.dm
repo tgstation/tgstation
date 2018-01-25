@@ -7,13 +7,14 @@
 	var/select_name = "energy"
 	fire_sound = 'sound/weapons/laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	heavy_metal = FALSE
 
 /obj/item/ammo_casing/energy/chameleon
 	projectile_type = /obj/item/projectile/energy/chameleon
 	e_cost = 0
 	var/list/projectile_vars = list()
 
-/obj/item/ammo_casing/energy/chameleon/ready_proj()
+/obj/item/ammo_casing/energy/chameleon/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	. = ..()
 	if(!BB)
 		newshot()

@@ -83,16 +83,15 @@
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
 		if(prob(2))
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(C, drop_location()))
 				return
-			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(C))
 				return
 			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
 			balance += C.value
@@ -101,9 +100,9 @@
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
@@ -135,11 +134,11 @@
 		<B>Credit Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
-		<A href='?src=\ref[src];spin=1'>Play!</A><BR>
+		<A href='?src=[REF(src)];spin=1'>Play!</A><BR>
 		<BR>
 		[reeltext]
 		<BR>
-		<font size='1'><A href='?src=\ref[src];refund=1'>Refund balance</A><BR>"}
+		<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"}
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
@@ -164,7 +163,7 @@
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = TRUE
+		obj_flags |= EMAGGED
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
@@ -287,9 +286,9 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = emagged ? /obj/item/coin/iron : /obj/item/coin/silver
+	var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
 
 	else

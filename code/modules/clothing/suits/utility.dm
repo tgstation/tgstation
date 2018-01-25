@@ -18,7 +18,7 @@
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/extinguisher, /obj/item/crowbar)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/extinguisher, /obj/item/crowbar)
 	slowdown = 1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
@@ -59,6 +59,8 @@
 	flags_1 = THICKMATERIAL_1
 	armor = list(melee = 20, bullet = 0, laser = 20,energy = 10, bomb = 100, bio = 0, rad = 0, fire = 80, acid = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -66,7 +68,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
 
 
 /obj/item/clothing/suit/bomb_suit
@@ -88,22 +90,31 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	strip_delay = 70
 	equip_delay_other = 70
-	resistance_flags = 0
+	resistance_flags = NONE
 
 
 /obj/item/clothing/head/bomb_hood/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
-
+	icon_state = "bombsuit_sec"
+	item_state = "bombsuit_sec"
 
 /obj/item/clothing/suit/bomb_suit/security
-	icon_state = "bombsuitsec"
-	item_state = "bombsuitsec"
+	icon_state = "bombsuit_sec"
+	item_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
+
+/obj/item/clothing/head/bomb_hood/white
+	icon_state = "bombsuit_white"
+	item_state = "bombsuit_white"
+
+/obj/item/clothing/suit/bomb_suit/white
+	icon_state = "bombsuit_white"
+	item_state = "bombsuit_white"
+
 /*
- * Radiation protection
- */
+* Radiation protection
+*/
+
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
 	icon_state = "rad"
@@ -114,7 +125,11 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	resistance_flags = 0
+	resistance_flags = NONE
+
+/obj/item/clothing/head/radiation/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -126,10 +141,16 @@
 	permeability_coefficient = 0.5
 	flags_1 = THICKMATERIAL_1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/device/geiger_counter)
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/device/geiger_counter)
 	slowdown = 1.5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100, fire = 30, acid = 30)
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
-	resistance_flags = 0
+	resistance_flags = NONE
+
+/obj/item/clothing/suit/radiation/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+	// Just don't want things to be irradiated inside this
+	// Except things on the mob aren't even inside the suit so ehhhhhh

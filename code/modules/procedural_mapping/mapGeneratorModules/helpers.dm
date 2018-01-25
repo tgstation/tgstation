@@ -28,11 +28,11 @@
 		return
 	for(var/V in mother.map)
 		var/turf/T = V
-		T.empty(deleteturfs? null : T.type, ignore_typecache = ignore_typecache, forceop = TRUE)
+		T.empty(deleteturfs? null : T.type, null, ignore_typecache, CHANGETURF_FORCEOP)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/no_delete_mobs/New()
 	..()
-	ignore_typecache = typecacheof(list(/mob))
+	ignore_typecache = GLOB.typecache_mob
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/leave_turfs
 	deleteturfs = FALSE
@@ -42,7 +42,7 @@
 
 /datum/mapGeneratorModule/bottomLayer/massdelete/regeneration_delete/New()
 	..()
-	ignore_typecache = typecacheof(list(/mob))
+	ignore_typecache = GLOB.typecache_mob
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border

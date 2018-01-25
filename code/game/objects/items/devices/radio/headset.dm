@@ -4,12 +4,16 @@
 	icon_state = "headset"
 	item_state = "headset"
 	materials = list(MAT_METAL=75)
-	subspace_transmission = 1
+	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
+
+/obj/item/device/radio/headset/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!</span>")
+	return TOXLOSS
 
 /obj/item/device/radio/headset/examine(mob/user)
 	..()
@@ -22,10 +26,7 @@
 	recalculateChannels()
 
 /obj/item/device/radio/headset/Destroy()
-	qdel(keyslot)
-	qdel(keyslot2)
-	keyslot = null
-	keyslot2 = null
+	QDEL_NULL(keyslot2)
 	return ..()
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans,datum/language/language)
@@ -33,25 +34,23 @@
 		return ITALICS | REDUCE_RANGE
 	return ..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, AIuser)
+/obj/item/device/radio/headset/can_receive(freq, level, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
 	else if(AIuser)
 		return ..(freq, level)
-	return -1
+	return FALSE
 
 /obj/item/device/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
-	origin_tech = "syndicate=3"
 
 /obj/item/device/radio/headset/syndicate/alt //undisguised bowman with flash protection
 	name = "syndicate headset"
-	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.\nTo access the syndicate channel, use ; before speaking."
-	origin_tech = "syndicate=3"
+	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
-	flags_2 = BANG_PROTECT_2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -62,7 +61,6 @@
 	make_syndie()
 
 /obj/item/device/radio/headset/binary
-	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/Initialize()
 	. = ..()
 	qdel(keyslot)
@@ -80,7 +78,7 @@
 	desc = "This is used by your elite security force. Protects ears from flashbangs.\nTo access the security channel, use :s."
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
-	flags_2 = BANG_PROTECT_2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -132,7 +130,7 @@
 	desc = "The headset of the boss. Protects ears from flashbangs.\nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-	flags_2 = BANG_PROTECT_2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -151,7 +149,7 @@
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs.\nTo access the security channel, use :s. For command, use :c."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-	flags_2 = BANG_PROTECT_2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -196,6 +194,10 @@
 	keyslot = new /obj/item/device/encryptionkey/headset_com
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
+/obj/item/device/radio/headset/headset_cent/empty
+	keyslot = null
+	keyslot2 = null
+
 /obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 
@@ -205,40 +207,32 @@
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
-	flags_2 = BANG_PROTECT_2
+	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/device/encryptionkey/ai
 	command = TRUE
 
-/obj/item/device/radio/headset/ai/receive_range(freq, level)
-	return ..(freq, level, 1)
+/obj/item/device/radio/headset/ai/can_receive(freq, level)
+	return ..(freq, level, TRUE)
 
 /obj/item/device/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
 	if(istype(W, /obj/item/screwdriver))
 		if(keyslot || keyslot2)
-
-
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
-
-			if(keyslot)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot.loc = T
+			var/turf/T = user.drop_location()
+			if(T)
+				if(keyslot)
+					keyslot.forceMove(T)
 					keyslot = null
-
-
-
-			if(keyslot2)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot2.loc = T
+				if(keyslot2)
+					keyslot2.forceMove(T)
 					keyslot2 = null
 
 			recalculateChannels()
@@ -247,7 +241,7 @@
 		else
 			to_chat(user, "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>")
 
-	else if(istype(W, /obj/item/device/encryptionkey/))
+	else if(istype(W, /obj/item/device/encryptionkey))
 		if(keyslot && keyslot2)
 			to_chat(user, "<span class='warning'>The headset can't hold another key!</span>")
 			return
@@ -272,25 +266,18 @@
 	..()
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
-			if(ch_name in src.channels)
-				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot2.channels[ch_name]
+			if(!(ch_name in src.channels))
+				channels[ch_name] = keyslot2.channels[ch_name]
 
 		if(keyslot2.translate_binary)
-			src.translate_binary = 1
-
+			translate_binary = TRUE
 		if(keyslot2.syndie)
-			src.syndie = 1
-
+			syndie = TRUE
 		if (keyslot2.independent)
 			independent = TRUE
 
-
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
-
-	return
 
 /obj/item/device/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())

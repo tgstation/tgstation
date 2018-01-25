@@ -8,6 +8,8 @@
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	set waitfor = FALSE
+	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
+		return
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone("head", 1)
 

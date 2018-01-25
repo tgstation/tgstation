@@ -94,6 +94,12 @@
 	set_colour(new_colour)
 	. = ..()
 
+/mob/living/simple_animal/slime/Destroy()
+	for (var/A in actions)
+		var/datum/action/AC = A
+		AC.Remove(src)
+	return ..()
+
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
 	update_name()

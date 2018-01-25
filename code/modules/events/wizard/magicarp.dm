@@ -12,7 +12,7 @@
 /datum/round_event/wizard/magicarp/setup()
 	startWhen = rand(40, 60)
 
-/datum/round_event/wizard/magicarp/announce()
+/datum/round_event/wizard/magicarp/announce(fake)
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
 /datum/round_event/wizard/magicarp/start()

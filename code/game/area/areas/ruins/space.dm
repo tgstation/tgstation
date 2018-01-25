@@ -22,7 +22,7 @@
 	power_environ = FALSE
 	valid_territory = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
+	ambientsounds = SPACE
 	blob_allowed = FALSE
 
 /////////////
@@ -71,6 +71,24 @@
 /area/ruin/space/has_grav/hotel/guestroom
 	name = "Hotel Guest Room"
 	icon_state = "Sleep"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_1
+	name = "Hotel Guest Room 1"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_2
+	name = "Hotel Guest Room 2"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_3
+	name = "Hotel Guest Room 3"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_4
+	name = "Hotel Guest Room 4"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_5
+	name = "Hotel Guest Room 5"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_6
+	name = "Hotel Guest Room 6"
 
 /area/ruin/space/has_grav/hotel/security
 	name = "Hotel Security Post"
@@ -427,3 +445,18 @@
 /area/ruin/space/old_ai_sat/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+
+//ABANDONED BOX WHITESHIP
+
+/area/ruin/space/has_grav/whiteship/box
+
+	name = "Abandoned Ship"
+	icon_state = "red"
+
+
+//SYNDICATE LISTENING POST STATION
+
+/area/ruin/space/has_grav/listeningstation
+	name = "Listening Post"
+	icon_state = "yellow"

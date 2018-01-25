@@ -90,7 +90,7 @@
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
@@ -118,7 +118,7 @@
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -132,7 +132,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	if(!src.operating) //in case of emag
 		operating = TRUE
@@ -157,7 +157,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	operating = TRUE
 	do_animate("closing")
@@ -192,7 +192,8 @@
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
-	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	var/obj/machinery/door/window/clockwork/C = new(loc, dir)
+	C.name = name
 	qdel(src)
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -205,8 +206,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(!operating && density && !emagged)
-		emagged = TRUE
+	if(!operating && density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[src.base_state]spark", src)
 		playsound(src, "sparks", 75, 1)
@@ -257,7 +258,7 @@
 						WA.update_icon()
 						WA.created_name = src.name
 
-						if(emagged)
+						if(obj_flags & EMAGGED)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
@@ -275,7 +276,7 @@
 						else
 							ae = electronics
 							electronics = null
-							ae.loc = src.loc
+							ae.forceMove(drop_location())
 
 						qdel(src)
 				return

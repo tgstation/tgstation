@@ -1,12 +1,14 @@
 /datum/component/archaeology
-	dupe_type = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/archdrops
 	var/prob2drop
 	var/dug
+	var/datum/callback/callback
 
-/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list())
-	prob2drop = Clamp(_prob2drop, 0, 100)
+/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list(), datum/callback/_callback)
+	prob2drop = CLAMP(_prob2drop, 0, 100)
 	archdrops = _archdrops
+	callback = _callback
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
 	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
 	RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
@@ -20,27 +22,26 @@
 /datum/component/archaeology/proc/Dig(obj/item/W, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
-		return FALSE
-	else
-		var/digging_speed
-		if (istype(W, /obj/item/shovel))
-			var/obj/item/shovel/S = W
-			digging_speed = S.digspeed
-		else if (istype(W, /obj/item/pickaxe))
-			var/obj/item/pickaxe/P = W
-			digging_speed = P.digspeed
+		return
+		
+	var/digging_speed
+	if (istype(W, /obj/item/shovel))
+		var/obj/item/shovel/S = W
+		digging_speed = S.digspeed
+	else if (istype(W, /obj/item/pickaxe))
+		var/obj/item/pickaxe/P = W
+		digging_speed = P.digspeed
+	
+	if (digging_speed && isturf(user.loc))
+		to_chat(user, "<span class='notice'>You start digging...</span>")
+		playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
 
-		if (digging_speed && isturf(user.loc))
-			to_chat(user, "<span class='notice'>You start digging...</span>")
-			playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
-
-			if(do_after(user, digging_speed, target = parent))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				gets_dug()
-				dug = TRUE
-				SSblackbox.add_details("pick_used_mining",W.type)
-				return TRUE
-		return FALSE
+		if(do_after(user, digging_speed, target = parent))
+			to_chat(user, "<span class='notice'>You dig a hole.</span>")
+			gets_dug()
+			dug = TRUE
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/archaeology/proc/gets_dug()
 	if(dug)
@@ -68,6 +69,8 @@
 			if(OT.slowdown) //Things like snow slow you down until you dig them.
 				OT.slowdown = 0
 	dug = TRUE
+	if(callback)
+		callback.Invoke()
 
 /datum/component/archaeology/proc/SingDig(S, current_size)
 	switch(current_size)

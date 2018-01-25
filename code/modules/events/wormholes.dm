@@ -21,14 +21,14 @@
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)
-		if(T.z in GLOB.station_z_levels)
+		if(is_station_level(T.z))
 			pick_turfs += T
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
 		var/turf/T = pick(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, null, 0, null, FALSE)
 
-/datum/round_event/wormholes/announce()
+/datum/round_event/wormholes/announce(fake)
 	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
 
 /datum/round_event/wormholes/tick()

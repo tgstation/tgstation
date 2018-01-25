@@ -19,8 +19,8 @@
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
+	var/nuke_off_station = 0 //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
-	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
@@ -73,7 +73,6 @@
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
 	return 1
-
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
@@ -161,7 +160,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=\ref[usr]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
 
 	. = 1
 	sleep(rand(600,1800))
@@ -174,7 +173,8 @@
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
-		replacementmode.make_antag_chance(H)
+		if(H.client)
+			replacementmode.make_antag_chance(H)
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
@@ -183,8 +183,14 @@
 /datum/game_mode/process()
 	return 0
 
+//For things that do not die easily
+/datum/game_mode/proc/are_special_antags_dead()
+	return TRUE
+
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+	if(!SSticker.setup_done)
+		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -197,7 +203,7 @@
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in GLOB.mob_list)
 				if(Player.mind)
-					if(Player.mind.special_role)
+					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
 						continuous_sanity_checked = 1
 						return 0
 			if(!continuous_sanity_checked)
@@ -211,11 +217,14 @@
 		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
-		for(var/mob/Player in GLOB.living_mob_list)
+		for(var/mob/Player in GLOB.alive_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role) //Someone's still antaging!
+				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
+
+		if(!are_special_antags_dead())
+			return FALSE
 
 		if(!continuous[config_tag] || force_ending)
 			return 1
@@ -232,53 +241,8 @@
 	return 0
 
 
-/datum/game_mode/proc/declare_completion()
-	var/clients = 0
-	var/surviving_humans = 0
-	var/surviving_total = 0
-	var/ghosts = 0
-	var/escaped_humans = 0
-	var/escaped_total = 0
-
-	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			clients++
-			if(ishuman(M))
-				if(!M.stat)
-					surviving_humans++
-					if(M.z == ZLEVEL_CENTCOM)
-						escaped_humans++
-			if(!M.stat)
-				surviving_total++
-				if(M.z == ZLEVEL_CENTCOM)
-					escaped_total++
-
-
-			if(isobserver(M))
-				ghosts++
-
-	if(clients > 0)
-		SSblackbox.set_val("round_end_clients",clients)
-	if(ghosts > 0)
-		SSblackbox.set_val("round_end_ghosts",ghosts)
-	if(surviving_humans > 0)
-		SSblackbox.set_val("survived_human",surviving_humans)
-	if(surviving_total > 0)
-		SSblackbox.set_val("survived_total",surviving_total)
-	if(escaped_humans > 0)
-		SSblackbox.set_val("escaped_human",escaped_humans)
-	if(escaped_total > 0)
-		SSblackbox.set_val("escaped_total",escaped_total)
-	send2irc("Server", "Round just ended.")
-	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
-		datum_cult_completion()
-
-	return 0
-
-
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0
-
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
@@ -393,58 +357,16 @@
 		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
-/datum/game_mode/proc/get_living_heads()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
-/datum/game_mode/proc/get_all_heads()
-	. = list()
-	for(var/mob/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.command_positions))
-			. |= player.mind
-
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
-/datum/game_mode/proc/get_living_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
-/datum/game_mode/proc/get_all_sec()
-	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.mob_list)
-		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
-			. |= player.mind
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
 	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 
-		if(L.ckey)
-			var/found = 0
-			for(var/client/C in GLOB.clients)
-				if(C.ckey == L.ckey)
-					found = 1
-					break
-			if(!found)
-				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+		if(L.ckey && !GLOB.directory[L.ckey])
+			msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
 
 
 		if(L.ckey && L.client)
@@ -480,36 +402,8 @@
 						continue //Ghosted while alive
 
 
-
-	for(var/mob/M in GLOB.mob_list)
-		if(M.client && M.client.holder)
-			to_chat(M, msg)
-
-/datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
-	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
-	if(ply.current)
-		if(ply.current.stat == DEAD)
-			text += " <span class='boldannounce'>died</span>"
-		else
-			text += " <span class='greenannounce'>survived</span>"
-		if(fleecheck && (!(ply.current.z in GLOB.station_z_levels)))
-			text += " while <span class='boldannounce'>fleeing the station</span>"
-		if(ply.current.real_name != ply.name)
-			text += " as <b>[ply.current.real_name]</b>"
-	else
-		text += " <span class='boldannounce'>had their body destroyed</span>"
-	return text
-
-/datum/game_mode/proc/printobjectives(datum/mind/ply)
-	var/text = ""
-	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
-		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
-		count++
-	return text
+	for (var/C in GLOB.admins)
+		to_chat(C, msg)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
@@ -530,19 +424,11 @@
 
 	return max(0, enemy_minimum_age - C.player_age)
 
-/datum/game_mode/proc/replace_jobbaned_player(mob/living/M, role_type, pref)
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [role_type]?", "[role_type]", null, pref, 50, M)
-	var/mob/dead/observer/theghost = null
-	if(candidates.len)
-		theghost = pick(candidates)
-		to_chat(M, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)]) to replace a jobbaned player.")
-		M.ghostize(0)
-		M.key = theghost.key
-
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
-	SSticker.mode.remove_revolutionary(newborgie, 0)
+	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
+	if(rev)
+		rev.remove_revolutionary(TRUE)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
@@ -558,15 +444,25 @@
 		station_goals += new picked
 
 
-/datum/game_mode/proc/declare_station_goal_completion()
-	for(var/V in station_goals)
-		var/datum/station_goal/G = V
-		G.print_result()
-
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
 
 //By default nuke just ends the round
 /datum/game_mode/proc/OnNukeExplosion(off_station)
+	nuke_off_station = off_station
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
+
+//Additional report section in roundend report
+/datum/game_mode/proc/special_report()
+	return
+
+//Set result and news report here
+/datum/game_mode/proc/set_round_result()
+	SSticker.mode_result = "undefined"
+	if(station_was_nuked)
+		SSticker.news_report = STATION_DESTROYED_NUKE
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		SSticker.news_report = STATION_EVACUATED
+		if(SSshuttle.emergency.is_hijacked())
+			SSticker.news_report = SHUTTLE_HIJACK

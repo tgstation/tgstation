@@ -12,6 +12,8 @@
 //reports to servants when scripture is locked or unlocked
 /proc/scripture_unlock_alert(list/previous_states)
 	. = scripture_unlock_check()
+	if(!GLOB.servants_active)
+		return
 	for(var/i in .)
 		if(.[i] != previous_states[i])
 			update_slab_info()
@@ -43,7 +45,9 @@
 
 //changes construction value
 /proc/change_construction_value(amount)
-	GLOB.clockwork_construction_value += amount
+	if(!SSticker.current_state != GAME_STATE_PLAYING) //This is primarily so that structures added pre-roundstart don't contribute to construction value
+		return
+	GLOB.clockwork_construction_value = max(0, GLOB.clockwork_construction_value + amount)
 
 /proc/can_recite_scripture(mob/living/L, can_potentially)
 	return (is_servant_of_ratvar(L) && (can_potentially || (L.stat == CONSCIOUS && L.can_speak_vocal())) && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))

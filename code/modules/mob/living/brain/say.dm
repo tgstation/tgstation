@@ -21,7 +21,7 @@
 			return ITALICS | REDUCE_RANGE
 
 /mob/living/brain/lingcheck()
-	return 0
+	return LINGHIVE_NONE
 
 /mob/living/brain/treat_message(message)
 	message = capitalize(message)
