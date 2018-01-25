@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - bugfix: "Now if you lose arms you won't be able to see through your uniform."
