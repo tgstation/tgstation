@@ -30,7 +30,6 @@
 /obj/structure/fluff/broken_flooring{
 	icon_state = "pile";
 	dir = 8;
-	step_y = 0
 	},
 /turf/template_noop,
 /area/template_noop)
