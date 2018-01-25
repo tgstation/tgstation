@@ -122,10 +122,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
-"z" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/engine/cult,
-/area/ruin/powered/greed)
 "J" = (
 /obj/machinery/door/airlock/gold,
 /obj/structure/fans/tiny/invisible,
@@ -323,7 +319,7 @@ h
 l
 m
 m
-z
+m
 l
 m
 v

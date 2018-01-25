@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -101,10 +101,6 @@
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"r" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/rust,
-/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -160,7 +156,7 @@ d
 d
 d
 d
-r
+d
 d
 d
 d
