@@ -117,7 +117,7 @@
 
 /obj/item/implant/health_monitor
 	name = "health monitor implant"
-	activated = TRUE
+	activated = FALSE
 	var/obj/item/device/radio/internal_radio
 	var/triggered_in_crit = FALSE
 
@@ -152,6 +152,6 @@
 	if(!triggered_in_crit && source.InCritical())
 		triggered_in_crit = TRUE
 		var/area/location = get_area(src)
-		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", SPAN_ROBOT)
+		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", list(SPAN_ROBOT))
 	else if(!source.InCritical())
 		triggered_in_crit = FALSE
