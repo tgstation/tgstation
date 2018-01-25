@@ -267,7 +267,7 @@
 	force = 2
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
-	embedding = list(embedded_pain_multiplier = 4, embed_chance = 100, embedded_fall_chance = 0)
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
