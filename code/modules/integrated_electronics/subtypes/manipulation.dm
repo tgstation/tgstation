@@ -315,7 +315,7 @@
 		if(mode == 1)
 			if(check_target(AM))
 				var/weightcheck = FALSE
-				if ((!istype(AM,/obj/item/device/electronic_assembly/) && (!istype(AM,/obj/item/device/transfer_valve))
+				if ((!istype(AM,/obj/item/device/electronic_assembly/)) && (!istype(AM,/obj/item/device/transfer_valve)))
 					if (AM.w_class <= max_w_class)
 						weightcheck = TRUE
 					else
