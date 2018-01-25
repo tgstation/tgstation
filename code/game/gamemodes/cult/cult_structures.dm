@@ -104,8 +104,6 @@
 		for(var/N in pickedtype)
 			new N(get_turf(src))
 			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
-		var/obj/item/N = new pickedtype(get_turf(src))
-		to_chat(user, "<span class='cult italic'>You kneel before the altar and your faith is rewarded with an [N]!</span>")
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
