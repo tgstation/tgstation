@@ -250,7 +250,7 @@
 	name = "Ketrazine"
 	id = "ketrazine"
 	results = list("ketrazine" = 3)
-	required_reagents = list("epinephrine" = 1, "ephedrine" = 1, "tricordazine" = 1, "atropine" = 1)
+	required_reagents = list("epinephrine" = 1, "ephedrine" = 1, "tricordrazine" = 1, "atropine" = 1)
 	required_catalysts = list("gold" = 1)
 	required_temp = 520
 	mix_message = "The solution fizzes and then settles into an oily, smooth, purple liquid."
