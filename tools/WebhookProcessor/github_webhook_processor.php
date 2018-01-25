@@ -145,13 +145,21 @@ function validate_user($payload) {
 	}
 	$query['author'] = $payload['pull_request']['user']['login'];
 	$query['is'] = 'merged';
+	$res = issue_search($query);
+	return $res['total_count'] >= (int)$validation_count;
+}
+
+function issue_search($query){
 	$querystring = '';
 	foreach($query as $key => $value)
-		$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
+		if(is_array($value))
+			foreach($value as $innerVal)
+				$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($innerVal);
+		else
+			$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
 	$res = apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
-	return $res['total_count'] >= (int)$validation_count;
-	
+	return $res;
 }
 
 function get_labels($payload){
@@ -179,7 +187,9 @@ function set_labels($payload, $labels, $remove) {
 
 	$tags = array_merge($labels, $existing);
 	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
+	if($remove) {
+		$tags = array_diff($tags, $remove);
+	}
 
 	$final = array();
 	foreach($tags as $t)
@@ -355,6 +365,19 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
+function close_if_other_feature_prs($payload){
+	$singleton_labels = array('Feature', 'Balance/Rebalance');
+
+	$query = array('is' => array('pr', 'open'), 'author' => $payload['pull_request']['user']['login'], 'label' => $singleton_labels);
+	$res = issue_search($query);
+	if(count($res) < 2)
+		return FALSE;
+
+	create_comment($payload, 'You currently have one or more other negative balance pull requests open. Maintainers are free to close this or the other(s) at will. See `Pull Request Process` in CONTRIBUTING.md');
+	set_labels($payload, array('Closure Candidate'));
+	return true;
+}
+
 function handle_pr($payload) {
 	global $no_changelog;
 	$action = 'opened';
@@ -365,12 +388,16 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) <= 0){
+			if(get_pr_code_friendliness($payload) <= 0 && !close_if_other_feature_prs($payload)){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
 					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
 			}
+			break;
+		case 'labelled':
+			if(get_pr_code_friendliness($payload) <= 0)
+				close_if_other_feature_prs($payload);
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
@@ -381,7 +408,8 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
-			$action = $payload['action'];
+			if(get_pr_code_friendliness($payload) <= 0)
+				close_if_other_feature_prs($payload);
 			break;
 		case 'closed':
 			if (!$payload['pull_request']['merged']) {
