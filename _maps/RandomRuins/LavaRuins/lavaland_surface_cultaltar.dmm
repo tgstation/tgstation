@@ -91,7 +91,10 @@
 /area/ruin/unpowered)
 "t" = (
 <<<<<<< HEAD
+<<<<<<< HEAD
 /obj/effect/baseturf_helper/lava_land/surface,
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 /turf/closed/wall/mineral/cult,

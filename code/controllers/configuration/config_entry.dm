@@ -114,9 +114,15 @@
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
 <<<<<<< HEAD
+<<<<<<< HEAD
 		value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
 		if(value != temp && !(datum_flags & DF_VAR_EDITED))
 			log_config("Changing [name] from [temp] to [value]!")
+=======
+		config_entry_value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
+		if(config_entry_value != temp && !(datum_flags & DF_VAR_EDITED))
+			log_config("Changing [name] from [temp] to [config_entry_value]!")
+>>>>>>> origin/master
 =======
 		config_entry_value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
 		if(config_entry_value != temp && !(datum_flags & DF_VAR_EDITED))

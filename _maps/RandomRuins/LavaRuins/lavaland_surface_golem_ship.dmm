@@ -106,9 +106,12 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 <<<<<<< HEAD
+<<<<<<< HEAD
 "s" = (
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 "t" = (

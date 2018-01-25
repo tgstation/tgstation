@@ -456,7 +456,10 @@
 		if(B)
 			B.damaged_brain = TRUE
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
@@ -484,4 +487,7 @@
 		return
 
 	heart.beating = !status
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master

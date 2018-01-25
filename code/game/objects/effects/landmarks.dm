@@ -268,6 +268,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	icon_state = "carp_spawn"
+>>>>>>> origin/master
 =======
 	icon_state = "carp_spawn"
 >>>>>>> origin/master

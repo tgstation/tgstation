@@ -184,10 +184,14 @@
 		M.adjustCloneLoss(-power, 0)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		M.status_flags &= ~DISFIGURED
 =======
 		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 >>>>>>> refs/remotes/tgstation/master
+=======
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+>>>>>>> origin/master
 =======
 		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 >>>>>>> origin/master
@@ -1216,10 +1220,13 @@
 /datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	M.status_flags |= IGNORESLOWDOWN
 	M.status_flags |= GOTTAGOFAST
 =======
 >>>>>>> refs/remotes/tgstation/master
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 	M.adjustToxLoss(-3*REM, 0)
@@ -1272,7 +1279,10 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 /datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
@@ -1284,7 +1294,10 @@
 	M.remove_trait(TRAIT_GOTTAGOFAST, id)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> refs/remotes/tgstation/master
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)

@@ -54,7 +54,11 @@
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS))
+=======
+	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+>>>>>>> origin/master
 =======
 	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
 >>>>>>> origin/master
