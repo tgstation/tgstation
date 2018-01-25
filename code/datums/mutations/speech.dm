@@ -277,5 +277,5 @@
 		message = replacetext(message,"whose","whose-a")
 
 		if(prob(30))
-			message += " Ravioli [pick("",", ravioli",", ravioli, ravioli")]!"
+			message += " Ravioli [pick( "ravioli",", ravioli, ravioli")]!"
 	return message
