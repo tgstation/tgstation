@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (MODE_VT)
 						font_mode = FONT_VT
 			if ("Change_Color")
-				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').",background_color)as color
 				background_color = new_color
 
 			if ("Toggle_Underline")
