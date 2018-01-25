@@ -546,7 +546,7 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bq" = (
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil/cut/red,
 /obj/item/stack/tile/plasteel{
 	pixel_x = 3;
 	pixel_y = -4

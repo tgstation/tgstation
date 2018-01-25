@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - balance: "Clockwork marauders now take more time (+3s) and power (7x) to create."
-  - balance: "The \"recent marauder\" time limit is now 60 seconds, up from 20. The limit now has a significantly smaller effect on summon time but will act as a further cap on marauder summoning until it has passed."
-  - tweak: "The marauder cap will now only account for living cultists."
