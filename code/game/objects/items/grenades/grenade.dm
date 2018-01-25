@@ -17,6 +17,14 @@
 	var/det_time = 50
 	var/display_timer = 1
 
+/obj/item/grenade/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	preprime(user, det_time)
+	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
+	sleep(det_time)//so you dont die instantly
+	return BRUTELOSS
+
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
