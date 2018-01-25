@@ -179,7 +179,46 @@
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag(1)
 
+<<<<<<< HEAD
 /datum/browser/alert/Topic(href,href_list)
+=======
+/datum/browser/modal/listpicker
+	var/valueslist = list()
+
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox")
+	if (!User)
+		return
+
+	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
+
+	if (inputtype == "checkbox" || inputtype == "radio")
+		for (var/i in values)
+			output += {"<li>
+	        				<label class="switch">
+	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
+	      							<div class="slider"></div>
+	      								<span>[i["name"]]</span>
+	    						</label>
+	    					</li>"}
+	else
+		for (var/i in values)
+			output += {"<li><input id="name="[i["name"]]"" style="width: 50px" type="[type]" name="[i["name"]]" value="[i["value"]]">
+      <label for="[i["name"]]">[i["name"]]</label></li>"}
+	output += {"</ul><div style="text-align:center">
+		<button type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
+
+	if (Button2)
+		output += {"<button type="submit" name="button" value="2" style="font-size:large;[( Button3 ? "" : "float:right" )]">[Button2]</button>"}
+
+	if (Button3)
+		output += {"<button type="submit" name="button" value="3" style="font-size:large;float:right">[Button3]</button>"}
+
+	output += {"</form></div>"}
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 350, src, StealFocus, Timeout)
+	set_content(output)
+
+/datum/browser/modal/listpicker/Topic(href,href_list)
+>>>>>>> 97d4e59d87... Armor datums (#34793)
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -190,6 +229,7 @@
 	opentime = 0
 	close()
 
+<<<<<<< HEAD
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
 /proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!User)
@@ -204,13 +244,20 @@
 
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
 /proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+=======
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox")
+>>>>>>> 97d4e59d87... Armor datums (#34793)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
+<<<<<<< HEAD
 	var/datum/browser/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+=======
+	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype)
+>>>>>>> 97d4e59d87... Armor datums (#34793)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)

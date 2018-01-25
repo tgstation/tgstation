@@ -548,6 +548,10 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(variable in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
+	if(istype(O, /datum/armor))
+		var/prompt = alert(src, "Editing this var changes this value on potentially thousands of items that share the same combination of armor values. If you want to edit the armor of just one item, use the \"Modify armor values\" dropdown item", "DANGER", "ABORT ", "Continue", " ABORT")
+		if (prompt != "Continue")
+			return
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
