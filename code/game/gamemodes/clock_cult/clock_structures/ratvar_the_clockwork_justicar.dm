@@ -15,7 +15,7 @@
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is fighting with Nar-Sie
 	var/convert_range = 10
-	dangerous_possession = TRUE
+	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
 	. = ..()

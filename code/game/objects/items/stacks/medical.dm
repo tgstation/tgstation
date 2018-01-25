@@ -127,6 +127,10 @@
 	self_delay = 20
 	max_amount = 12
 
+/obj/item/stack/medical/gauze/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
+	return OXYLOSS
+
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
@@ -149,3 +153,7 @@
 	heal_burn = 40
 	self_delay = 20
 	grind_results = list("silver_sulfadiazine" = 10)
+
+/obj/item/stack/medical/ointment/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! Don't they know that stuff is toxic?</span>")
+	return TOXLOSS

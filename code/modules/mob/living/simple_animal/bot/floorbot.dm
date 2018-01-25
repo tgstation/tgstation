@@ -31,6 +31,7 @@
 	var/max_targets = 50
 	var/turf/target
 	var/oldloc = null
+	var/toolbox = /obj/item/storage/toolbox/mechanical
 
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
@@ -366,8 +367,7 @@
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	var/obj/item/storage/toolbox/mechanical/N = new (Tsec)
-	N.contents = list()
+	drop_part(toolbox, Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 

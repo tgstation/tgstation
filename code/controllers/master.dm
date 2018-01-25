@@ -62,10 +62,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
+	config = new
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	
+
 	if(!random_seed)
-		random_seed = rand(1, 1e9)
+		random_seed = (TEST_RUN_PARAMETER in world.params) ? 29051994 : rand(1, 1e9)
 		rand_seed(random_seed)
 	
 	var/list/_subsystems = list()

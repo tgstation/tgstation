@@ -10,7 +10,7 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
-	on_blueprints = TRUE
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/datum/powernet/powernet = null
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
