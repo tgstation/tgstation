@@ -867,7 +867,7 @@
 	
 /datum/supply_pack/science/bz
 	name = "BZ canister"
-	cost = 2000
+	cost = 4000
 	access = ACCESS_TOX_STORAGE
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "BZ canister crate"
