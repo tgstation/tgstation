@@ -363,7 +363,10 @@
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon()
+	var/old_state = icon_state
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
+	if(old_state != icon_state)
+		playsound(get_turf(src), 'sound/items/unsheath.ogg', 25, 1)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -961,9 +964,9 @@
 		else if(!..())
 			if(!L.null_rod_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(80)
+					L.Knockdown(60)
 				else
-					L.Knockdown(40)
+					L.Knockdown(30)
 				if(D.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))

@@ -59,7 +59,7 @@
 	var/mob/living/current = owner.current
 	add_objectives()
 	if(give_equipment)
-		equip_cultist()
+		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -153,16 +153,16 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Tome"] = CALLBACK(src,.proc/admin_give_tome)
-	.["Amulet"] = CALLBACK(src,.proc/admin_give_amulet)
+	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
+	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
 
-/datum/antagonist/cult/proc/admin_give_tome(mob/admin)
-	if(equip_cultist(owner.current,1))
-		to_chat(admin, "<span class='danger'>Spawning tome failed!</span>")
+/datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
+	if(!equip_cultist(FALSE))
+		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
-/datum/antagonist/cult/proc/admin_give_amulet(mob/admin)
-	if (equip_cultist(owner.current))
-		to_chat(admin, "<span class='danger'>Spawning amulet failed!</span>")
+/datum/antagonist/cult/proc/admin_give_metal(mob/admin)
+	if (!equip_cultist(TRUE))
+		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE

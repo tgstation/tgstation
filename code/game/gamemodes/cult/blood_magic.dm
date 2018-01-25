@@ -40,7 +40,7 @@
 		if(rune)
 			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, you cannot store more than [MAX_BLOODCHARGE] spells at once. <b>Pick a spell to nullify.</b></span>")
 		else
-			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, <b>you cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells at once without an empowering rune! Pick a spell to nullify.</b></span>")
+			to_chat(owner, "<span class='cultitalic'>Your body has reached its limit, <b><u>you cannot have more than [RUNELESS_MAX_BLOODCHARGE] spells at once without an empowering rune! Pick a spell to nullify.</b></u></span>")
 		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
 		if(nullify_spell)
 			qdel(nullify_spell)
@@ -52,7 +52,13 @@
 		var/datum/action/innate/cult/blood_spell/J = I
 		var/cult_name = initial(J.name)
 		possible_spells[cult_name] = J
+	possible_spells += "(REMOVE SPELL)"
 	entered_spell_name = input(owner, "Pick a blood spell to prepare...", "Spell Choices") as null|anything in possible_spells
+	if(entered_spell_name == "(REMOVE SPELL)")
+		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
+		if(nullify_spell)
+			qdel(nullify_spell)
+		return
 	BS = possible_spells[entered_spell_name]
 	if(QDELETED(src) || owner.incapacitated() || !BS)
 		return
@@ -63,7 +69,7 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
 		return
-	if(do_after(owner, 100 - rune*50, target = owner))
+	if(do_after(owner, 100 - rune*65, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.bleed(30 - rune*25)
@@ -137,7 +143,7 @@
 	desc = "A useful spell that teleport cultists to a chosen destination on contact."
 	button_icon_state = "tele"
 	magic_path = "/obj/item/melee/blood_magic/teleport"
-	health_cost = 5
+	health_cost = 7
 
 /datum/action/innate/cult/blood_spell/emp
 	name = "Electromagnetic Pulse"
@@ -169,40 +175,37 @@
 	charges = 50
 	magic_path = "/obj/item/melee/blood_magic/construction"
 
-/datum/action/innate/cult/blood_spell/dagger
-	name = "Summon Dagger"
-	desc = "A crucial spell that will summon a ritual dagger. It is rumored some cultists have favored this spell in order to use the ritual dagger as a throwing weapon."
-	button_icon_state = "dagger"
-	charges = 3
-
-/datum/action/innate/cult/blood_spell/dagger/Activate()
-	var/turf/T = get_turf(owner)
-	owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
-		"<span class='cultitalic'>Red light begins to shimmer and take form within your hand!</span>")
-	var/obj/O = new /obj/item/melee/cultblade/dagger(T)
-	if(owner.put_in_hands(O))
-		to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
-	else
-		owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
-			 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
-	SEND_SOUND(owner, sound('sound/effects/magic.ogg',0,1,25))
-	charges--
-	desc = base_desc
-	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-	if(charges<=0)
-		qdel(src)
-
-/datum/action/innate/cult/blood_spell/armor
-	name = "Summon Armor"
-	desc = "A scheming spell that will instantly equip your target will Nar'sien vestments. Can be used to bolster allies or confuse your foes."
-	button_icon_state = "armor"
-	charges = 3
+/datum/action/innate/cult/blood_spell/equipment
+	name = "Summon Equipment"
+	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the nar'sien bola, and an eldritch longsword."
+	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
-	health_cost = 5
+	charges = 1
+
+/datum/action/innate/cult/blood_spell/equipment/Activate()
+	var/choice = alert(owner,"Choose your equipment type",,"Combat Equipment","Ritual Dagger","Cancel")
+	if(choice == "Ritual Dagger")
+		var/turf/T = get_turf(owner)
+		owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
+			"<span class='cultitalic'>Red light begins to shimmer and take form within your hand!</span>")
+		var/obj/O = new /obj/item/melee/cultblade/dagger(T)
+		if(owner.put_in_hands(O))
+			to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
+		else
+			owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
+				 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
+		SEND_SOUND(owner, sound('sound/effects/magic.ogg',0,1,25))
+		charges--
+		desc = base_desc
+		desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
+		if(charges<=0)
+			qdel(src)
+	else if(choice == "Combat Equipment")
+		..()
 
 /datum/action/innate/cult/blood_spell/horror
 	name = "Hallucinations"
-	desc = "A horrifying spell that will break the mind of the victim with nightmarish hallucinations."
+	desc = "A <u>ranged yet stealthy</u> spell that will break the mind of the victim with nightmarish hallucinations."
 	button_icon_state = "horror"
 	var/obj/effect/proc_holder/horror/PH
 	charges = 4
@@ -256,7 +259,7 @@
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
-		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400)
+		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
 		to_chat(ranged_ability_user,"<span class='cult'><b>[H] has been cursed with living nightmares!</b></span>")
 		attached_action.charges--
 		attached_action.desc = attached_action.base_desc
@@ -269,7 +272,7 @@
 
 /datum/action/innate/cult/blood_spell/veiling
 	name = "Conceal Runes"
-	desc = "A multi-use spell that alternates between hiding and revealing nearby runes."
+	desc = "A multi-function spell that alternates between hiding and revealing nearby runes."
 	invocation = "Kla'atu barada nikt'o!"
 	button_icon_state = "gone"
 	charges = 10
@@ -359,17 +362,16 @@
 	..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
-	attack(user, user)
+	afterattack(user, user, TRUE)
 
-/obj/item/melee/blood_magic/attack(mob/target, mob/living/carbon/user)
+/obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
 	if(!iscarbon(user) || !iscultist(user))
 		uses = 0
 		qdel(src)
 		return
-	if(user.incapacitated() || user.lying || user.handcuffed)
-		to_chat(user, "<span class='warning'>You can't reach out!</span>")
-		return
-	afterattack(target, user)
+	add_logs(user, M, "used a cult spell on", source.name, "")
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 
 /obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(invocation)
@@ -390,7 +392,6 @@
 /obj/item/melee/blood_magic/stun
 	color = "#ff0000" // red
 	invocation = "Fuu ma'jin!"
-	health_cost = 10
 
 /obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
@@ -427,7 +428,6 @@
 	color = RUNE_COLOR_TELEPORT
 	desc = "A potent spell that teleport cultists on contact."
 	invocation = "Sas'so c'arta forbici!"
-	health_cost = 5
 
 /obj/item/melee/blood_magic/teleport/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!iscultist(target) || !proximity)
@@ -587,7 +587,6 @@
 	name = "Sinister Armaments"
 	desc = "A spell that will equip the target with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
-	health_cost = 5
 
 /obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target) && proximity)
@@ -610,14 +609,14 @@
 	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Clicking the hand will potentially let you focus the spell into something stronger.</b>"
 	color = "#7D1717"
 
-/obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(NOBLOOD in H.dna.species.species_traits)
 				to_chat(user,"<span class='warning'>Blood rites do not work on species with no blood!</span>")
 				return
-			if(iscultist(target))
+			if(iscultist(H))
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>Only a revive rune can bring back the dead!</span>")
 					return
@@ -631,22 +630,22 @@
 					else
 						H.blood_volume = BLOOD_VOLUME_SAFE
 						uses -= round(restore_blood/2)
-						to_chat(user,"<span class='warning'>Your blood rites have restored their blood to safe levels!</span>")
+						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "their"] blood to safe levels!</span>")
 				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
 				if(overall_damage == 0)
 					to_chat(user,"<span class='cult'>That cultist doesn't require healing!</span>")
 				else
 					var/ratio = uses/overall_damage
-					if(target == user)
-						to_chat(user,"<span class='cult'>Your blood healing is far less efficient when used on yourself!</span>")
-						ratio *= 0.5 // Healing is half as effective if you can't perform a full heal
-						uses -= round(overall_damage) // Healing is twice as expensive even if you can still perform the full heal
+					if(H == user)
+						to_chat(user,"<span class='cult'><b>Your blood healing is far less efficient when used on yourself!</b></span>")
+						ratio *= 0.35 // Healing is half as effective if you can't perform a full heal
+						uses -= round(overall_damage) // Healing is 65% more "expensive" even if you can still perform the full heal
 					if(ratio>1)
 						ratio = 1
 						uses -= round(overall_damage)
-						H.visible_message("<span class='warning'>[H] is fully-healed by [user]'s blood magic!</span>")
+						H.visible_message("<span class='warning'>[H] is fully healed by [H==user ? "their":"[H]'s"]'s blood magic!</span>")
 					else
-						H.visible_message("<span class='warning'>[H] is healed by [user]'s blood magic!</span>")
+						H.visible_message("<span class='warning'>[H] is partially healed by [H==user ? "their":"[H]'s"] blood magic.</span>")
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
@@ -656,7 +655,7 @@
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
-					user.Beam(H,icon_state="sendbeam",time=10)
+					user.Beam(H,icon_state="sendbeam",time=15)
 			else
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>Their blood has stopped flowing, you'll have to find another way to extract it.</span>")
@@ -670,6 +669,7 @@
 					user.Beam(H,icon_state="drainbeam",time=10)
 					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
 					H.visible_message("<span class='danger'>[user] has drained some of [H]'s blood!</span>")
+					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 				else
 					to_chat(user,"<span class='danger'>They're missing too much blood - you cannot drain them further!</span>")
@@ -692,27 +692,30 @@
 			blood_draw(target, user)
 		..()
 
-/obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/user)
+/obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/temp = 0
 	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
-			if(B.bloodiness)
-				temp += B.bloodiness/10
-				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
-				new /datum/beam(user,T,time=10,beam_icon_state="drainbeam",btype=/obj/effect/ebeam)
-				qdel(B)
-			else if(B.blood_state == "blood")
-				temp++
+			if(B.blood_state == "blood")
+				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
+					temp += 30
+				else
+					temp += max((B.bloodiness**2)/800,0.5)
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
 				qdel(B)
-		for(var/obj/effect/decal/cleanable/trail_holder/TH in range(T, 2))
+		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
+	var/obj/item/clothing/shoes/shoecheck = user.shoes
+	if(shoecheck && shoecheck.bloody_shoes["blood"])
+		temp += shoecheck.bloody_shoes["blood"]/20
+		shoecheck.bloody_shoes["blood"] = 0
 	if(temp)
+		user.Beam(T,icon_state="drainbeam",time=15)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(user))
 		playsound(T, 'sound/magic/enter_blood.ogg', 50)
-		to_chat(user, "<span class='cultitalic'>Your blood rite has gained [temp] charge\s from blood sources around you!</span>")
-		uses += temp
+		to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
+		uses += round(temp)
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))

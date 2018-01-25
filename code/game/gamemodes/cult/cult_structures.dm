@@ -2,6 +2,7 @@
 	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
+	light_power = 2
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)

@@ -77,25 +77,8 @@ This file contains the cult dagger and rune list code
 		if(!(A in summon_objective.summon_spots))
 			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site (where Nar-sie can be summoned), it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 			return
-		if(summon_objective.summon_spots.len <= 1)
+		if(summon_objective.summon_spots.len < 2)
 			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
-			return
-		var/mob/living/CM = user_antag.cult_team.cult_master
-		var/mob/living/decider = user
-		if(CM && !CM.incapacitated() && iscultist(CM) && CM.stat != DEAD)
-			decider = CM
-			to_chat(user, "<span class='cult'><b>The cult master is deciding whether to permit this rune...</b></span>")
-		var/confirm_final = alert(decider, "The Apocalypse Rune will prevent Nar-sie from being summoned at this location", "Are you sure you wish to lose this summoning site?", "It must be done!", "No")
-		if(confirm_final == "No")
-			if(decider == user)
-				to_chat(user, "<span class='cult'>You decide against scribing the rune.</span>")
-			else
-				to_chat(user, "<span class='cultlarge'>Master [decider] has forbade you from scribing the rune here.</span>")
-			return
-		Turf = get_turf(user) //we may have moved. adjust as needed...
-		A = get_area(src)
-		if(!(A in summon_objective.summon_spots)) //Repeat check to make sure they didn't move
-			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 			return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
@@ -165,11 +148,11 @@ This file contains the cult dagger and rune list code
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 
 		return FALSE
-		
+
 	var/area/A = get_area(T)
 	if(A && !A.blob_allowed)
 		to_chat(user, "<span class='warning'>There's a passage in [src] specifically forbidding oyster consumption, triple-frying, and building outside of designated cult zones.</span>")
 		return FALSE
-		
+
 
 	return TRUE

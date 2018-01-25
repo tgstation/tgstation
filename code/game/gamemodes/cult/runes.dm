@@ -449,7 +449,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	outer_portal = new(T, 600, color)
 	light_range = 4
 	update_light()
-	addtimer(CALLBACK(src, .proc/close_portal,"cult_apoc",TRUE), 600, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
 	desc = initial(desc)
