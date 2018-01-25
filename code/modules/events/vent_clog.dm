@@ -26,7 +26,7 @@
 		if(vent && vent.loc)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent(pick(get_random_reagent_id()), 1000)
+			R.add_reagent(get_random_reagent_id(), 1000)
 
 			var/datum/effect_system/foam_spread/long/foam = new
 			foam.set_up(200, get_turf(vent), R)
