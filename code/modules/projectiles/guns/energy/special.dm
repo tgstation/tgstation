@@ -89,7 +89,7 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
-	unique_rename = 0
+	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE

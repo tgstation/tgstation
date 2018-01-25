@@ -125,9 +125,9 @@
 	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
 /obj/machinery/poolfilter/emag_act(user as mob)
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='warning'>You disable the [src]'s shark filter! Run!</span>")
-		emagged = TRUE
+		set_obj_flags = "EMAGGED"
 		do_sparks(5, TRUE, src)
 		src.icon_state = "filter_b"
 		spawn(50)
