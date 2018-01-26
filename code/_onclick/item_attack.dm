@@ -12,8 +12,7 @@
 	if(!tool_behaviour)
 		return FALSE
 
-	if(target.tool_act(user, src, tool_behaviour))
-		return TRUE
+	return target.tool_act(user, src, tool_behaviour)
 
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
