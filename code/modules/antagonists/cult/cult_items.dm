@@ -643,8 +643,6 @@
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
-	embed_chance = 0
-	embedded_fall_chance = 0
 	attack_verb = list("attacked", "impaled", "stabbed", "torn", "gored")
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
