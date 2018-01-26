@@ -319,8 +319,6 @@
 		should_draw_gender = FALSE
 
 	if(status == BODYPART_ORGANIC)
-		if(aux_zone)
-			. += image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -335,6 +333,8 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+		if(aux_zone)
+			. += image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 
 	else
 		limb.icon = icon
