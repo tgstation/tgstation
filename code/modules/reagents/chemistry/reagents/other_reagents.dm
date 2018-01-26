@@ -1750,7 +1750,7 @@
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"
 	taste_description = "water"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
 
 /datum/reagent/pax/on_mob_add(mob/M)
 	..()
