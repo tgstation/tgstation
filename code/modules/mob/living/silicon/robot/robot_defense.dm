@@ -121,7 +121,7 @@
 	var/ai_is_antag = 0
 	if(connected_ai && connected_ai.mind)
 		if(connected_ai.mind.special_role)
-			ai_is_antag = (connected_ai.mind.special_role == "traitor")
+			ai_is_antag = (connected_ai.mind.special_role == ROLE_TRAITOR)
 	if(ai_is_antag)
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")

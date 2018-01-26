@@ -244,7 +244,7 @@
 					if(isAI(M))
 						M_job = "AI"
 					else if(ispAI(M))
-						M_job = "pAI"
+						M_job = ROLE_PAI
 					else if(iscyborg(M))
 						M_job = "Cyborg"
 					else

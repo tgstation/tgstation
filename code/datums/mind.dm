@@ -824,5 +824,5 @@
 //PAI
 /mob/living/silicon/pai/mind_initialize()
 	..()
-	mind.assigned_role = "pAI"
+	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""

@@ -69,7 +69,7 @@
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 / (csc * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, ROLE_SYNDICATE))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()

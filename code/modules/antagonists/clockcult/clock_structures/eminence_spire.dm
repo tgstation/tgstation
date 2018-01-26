@@ -124,7 +124,7 @@
 		hierophant_message("<span class='brass'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
 		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", "Servant of Ratvar", null, ROLE_SERVANT_OF_RATVAR, poll_time = 100)
 		kingmaking = FALSE
-		if(!candidates.len)
+		if(!LAZYLEN(candidates))
 			for(var/mob/M in servants_and_ghosts())
 				M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
 			hierophant_message("<span class='brass'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")

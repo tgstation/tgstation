@@ -382,8 +382,8 @@
 				key_of_revenant = client_to_revive.key
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", "revenant", null, ROLE_REVENANT, 50, revenant)
-		if(!candidates.len)
+		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, null, ROLE_REVENANT, 50, revenant)
+		if(!LAZYLEN(candidates))
 			qdel(revenant)
 			message_admins("No candidates were found for the new revenant. Oh well!")
 			inert = TRUE

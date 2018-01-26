@@ -6,6 +6,7 @@
 
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
+#define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"traitor"
 #define ROLE_OPERATIVE			"operative"
 #define ROLE_CHANGELING			"changeling"

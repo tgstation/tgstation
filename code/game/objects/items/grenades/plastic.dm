@@ -132,12 +132,12 @@
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
+			var/role = user.mind.special_role
+			if(role == ROLE_TRAITOR || role == ROLE_SYNDICATE)
 				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
+			else if(role == ROLE_CHANGELING)
 				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
+			else if(role == ROLE_CULTIST)
 				message_say = "FOR NAR-SIE!"
 			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"
@@ -179,12 +179,12 @@
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
 		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
+			var/role = user.mind.special_role
+			if(role == ROLE_TRAITOR || role == ROLE_SYNDICATE)
 				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
+			else if(role == ROLE_CHANGELING)
 				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
+			else if(role == ROLE_CULTIST)
 				message_say = "FOR NAR-SIE!"
 			else if(is_revolutionary(user))
 				message_say = "VIVA LA REVOLUTION!"

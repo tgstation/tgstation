@@ -594,10 +594,9 @@
 	being_used = 1
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-	var/mob/dead/observer/theghost = null
-	if(candidates.len)
-		theghost = pick(candidates)
-		SM.key = theghost.key
+	if(LAZYLEN(candidates))
+		var/client/C = pick(candidates)
+		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")

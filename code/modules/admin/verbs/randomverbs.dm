@@ -380,15 +380,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 	switch(new_character.mind.special_role)
-		if("Wizard")
+		if(ROLE_WIZARD)
 			new_character.forceMove(pick(GLOB.wizardstart))
 			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
 			A.equip_wizard()
-		if("Syndicate")
+		if(ROLE_SYNDICATE)
 			new_character.forceMove(pick(GLOB.nukeop_start))
 			var/datum/antagonist/nukeop/N = new_character.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 			N.equip_op()
-		if("Space Ninja")
+		if(ROLE_NINJA)
 			var/list/ninja_spawn = list()
 			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 				ninja_spawn += L
