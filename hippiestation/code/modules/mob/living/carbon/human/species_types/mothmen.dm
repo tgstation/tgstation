@@ -12,7 +12,6 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
 	liked_food = VEGETABLES | DAIRY
 	disliked_food = FRUIT | GROSS
-	toxic_food = MEAT | RAW
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
