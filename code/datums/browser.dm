@@ -120,13 +120,7 @@
 	else
 		WARNING("Browser [title] tried to close with a null ID")
 
-/datum/browser/alert
-	var/selectedbutton = 0
-	var/opentime = 0
-	var/timeout
-	var/stealfocus
-
-/datum/browser/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
+/datum/browser/modal/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
 	if (!User)
 		return
 
@@ -142,14 +136,65 @@
 
 	output += {"</div>"}
 
-	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src)
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src, StealFocus, Timeout)
 	set_content(output)
+
+/datum/browser/modal/alert/Topic(href,href_list)
+	if (href_list["close"] || !user || !user.client)
+		opentime = 0
+		return
+	if (href_list["button"])
+		var/button = text2num(href_list["button"])
+		if (button <= 3 && button >= 1)
+			selectedbutton = button
+	opentime = 0
+	close()
+
+//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+	if (!User)
+		User = usr
+	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+		if (1)
+			return Button1
+		if (2)
+			return Button2
+		if (3)
+			return Button3
+
+//Same shit, but it returns the button number, could at some point support unlimited button amounts.
+/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+	if (!istype(User))
+		if (istype(User, /client/))
+			var/client/C = User
+			User = C.mob
+		else
+			return
+	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	A.open()
+	A.wait()
+	if (A.selectedbutton)
+		return A.selectedbutton
+
+/datum/browser/modal
+	var/opentime = 0
+	var/timeout
+	var/selectedbutton = 0
+	var/stealfocus
+
+/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, StealFocus = 1, Timeout = 6000)
+	..()
 	stealfocus = StealFocus
 	if (!StealFocus)
 		window_options += "focus=false;"
 	timeout = Timeout
 
-/datum/browser/alert/open()
+
+/datum/browser/modal/close()
+	.=..()
+	opentime = 0
+
+/datum/browser/modal/open()
 	set waitfor = 0
 	opentime = world.time
 
@@ -171,17 +216,10 @@
 	if (timeout)
 		addtimer(CALLBACK(src, .proc/close), timeout)
 
-/datum/browser/alert/close()
-	.=..()
-	opentime = 0
-
-/datum/browser/alert/proc/wait()
+/datum/browser/modal/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag(1)
 
-<<<<<<< HEAD
-/datum/browser/alert/Topic(href,href_list)
-=======
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
@@ -218,7 +256,6 @@
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
->>>>>>> 97d4e59d87... Armor datums (#34793)
 	if (href_list["close"] || !user || !user.client)
 		opentime = 0
 		return
@@ -226,42 +263,47 @@
 		var/button = text2num(href_list["button"])
 		if (button <= 3 && button >= 1)
 			selectedbutton = button
+	for (var/item in href_list)
+		switch(item)
+			if ("close", "button", "src")
+				continue
+			else
+				valueslist[item] = href_list[item]
 	opentime = 0
 	close()
 
-<<<<<<< HEAD
-//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
-/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-	if (!User)
-		User = usr
-	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
-		if (1)
-			return Button1
-		if (2)
-			return Button2
-		if (3)
-			return Button3
-
-//Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
-=======
 /proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox")
->>>>>>> 97d4e59d87... Armor datums (#34793)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-<<<<<<< HEAD
-	var/datum/browser/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
-=======
 	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype)
->>>>>>> 97d4e59d87... Armor datums (#34793)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
-		return A.selectedbutton
+		return list("button" = A.selectedbutton, "values" = A.valueslist)
+
+/proc/input_bitfield(var/mob/User, title, bitfield, current_value)
+	if (!User || !(bitfield in GLOB.bitfields))
+		return
+	var/list/pickerlist = list()
+	for (var/i in GLOB.bitfields[bitfield])
+		if (current_value & GLOB.bitfields[bitfield][i])
+			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i))
+		else
+			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i))
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist)
+
+	if (islist(result))
+		if (result["button"] == 2) // If the user pressed the cancel button
+			return
+		. = 0
+		for (var/flag in result["values"])
+			. |= GLOB.bitfields[bitfield][flag]
+	else
+		return
 
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
