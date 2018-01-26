@@ -5,11 +5,8 @@
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
-<<<<<<< HEAD
-	use_tag = TRUE
-=======
+	use_tag = TRUE //HIPPIE NO IDE WHY?
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
->>>>>>> 3f10f29d5b... Shifts vars off /mob and to the correct subtype (#34773)
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -26,13 +23,11 @@
 	*/
 	var/zone_selected = null
 
-<<<<<<< HEAD
+	//hippie start
 	var/macro_default = "default"
 	var/macro_hotkeys = "hotkeys"
+	//hippie end
 
-	var/damageoverlaytemp = 0
-=======
->>>>>>> 3f10f29d5b... Shifts vars off /mob and to the correct subtype (#34773)
 	var/computer_id = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
