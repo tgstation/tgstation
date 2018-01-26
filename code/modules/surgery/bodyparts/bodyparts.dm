@@ -299,6 +299,7 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/aux
 	. += limb
 
 	if(animal_origin)
@@ -334,7 +335,8 @@
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
 		if(aux_zone)
-			. += image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += aux
 
 	else
 		limb.icon = icon
@@ -349,6 +351,8 @@
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
+			if(aux_zone)
+				aux.color = "#[draw_color]"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
