@@ -1,7 +1,7 @@
 // Tool types
-#define TOOL_CROWBAR 1
-#define TOOL_MULTITOOL 2
-#define TOOL_SCREWDRIVER 3
-#define TOOL_WIRECUTTER 4
-#define TOOL_WRENCH 5
-#define TOOL_WELDER 6
+#define TOOL_CROWBAR 		"crowbar"
+#define TOOL_MULTITOOL 		"multitool"
+#define TOOL_SCREWDRIVER 	"screwdriver"
+#define TOOL_WIRECUTTER 	"wirecutter"
+#define TOOL_WRENCH 		"wrench"
+#define TOOL_WELDER 		"welder"
