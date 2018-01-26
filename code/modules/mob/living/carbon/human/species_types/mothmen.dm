@@ -13,6 +13,7 @@
 	liked_food = VEGETABLES | DAIRY
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
+	mutanteyes = /obj/item/organ/eyes/moth
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
@@ -57,15 +58,3 @@
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
