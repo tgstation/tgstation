@@ -10,8 +10,6 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
-	liked_food = VEGETABLES | DAIRY
-	disliked_food = FRUIT | GROSS
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
