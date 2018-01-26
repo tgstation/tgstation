@@ -225,9 +225,17 @@
 /obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/holodisk))
 		var/obj/item/disk/holodisk/holodiskOriginal = W
-		record = holodiskOriginal.record
-		to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
-		name = holodiskOriginal.name
+		if (holodiskOriginal.record)
+			if (!record)
+				record = new
+			record.caller_name = holodiskOriginal.record.caller_name
+			record.caller_image = holodiskOriginal.record.caller_image
+			record.entries = holodiskOriginal.record.entries
+			record.language = holodiskOriginal.record.language
+			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			name = holodiskOriginal.name
+		else 
+			to_chat(user, "[holodiskOriginal] has no record on it!")
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()
