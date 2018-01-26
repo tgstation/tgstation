@@ -733,7 +733,6 @@
 /area/security/execution/transfer)
 "acc" = (
 /obj/structure/bed,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "acd" = (
@@ -14061,7 +14060,6 @@
 /area/chapel/office)
 "aIB" = (
 /obj/structure/bodycontainer/crematorium,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -15738,7 +15736,6 @@
 /area/hallway/primary/port)
 "aMW" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aMX" = (
@@ -23823,7 +23820,6 @@
 /area/security/checkpoint/medical)
 "biz" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "biA" = (
@@ -26697,7 +26693,6 @@
 	},
 /obj/item/soap/deluxe,
 /obj/item/bikehorn/rubberducky,
-/obj/effect/landmark/revenantspawn,
 /obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/heads/captain)
@@ -39437,7 +39432,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bSZ" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bTa" = (
@@ -40746,7 +40740,6 @@
 "bWk" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bWl" = (
@@ -41115,7 +41108,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bXe" = (
-/obj/effect/landmark/revenantspawn,
 /mob/living/simple_animal/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
