@@ -84,8 +84,8 @@
 		objective2.owner = mind
 		mind.objectives += objective2
 		to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
-		mind.assigned_role = "revenant"
-		mind.special_role = "Revenant"
+		mind.assigned_role = ROLE_REVENANT
+		mind.special_role = ROLE_REVENANT
 		mind.add_antag_datum(/datum/antagonist/auto_custom)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))

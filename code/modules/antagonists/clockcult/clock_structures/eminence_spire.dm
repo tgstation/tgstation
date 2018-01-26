@@ -122,7 +122,7 @@
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
 		hierophant_message("<span class='brass'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
-		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", "Servant of Ratvar", null, ROLE_SERVANT_OF_RATVAR, poll_time = 100)
+		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, poll_time = 100)
 		kingmaking = FALSE
 		if(!LAZYLEN(candidates))
 			for(var/mob/M in servants_and_ghosts())

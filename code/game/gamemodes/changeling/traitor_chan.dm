@@ -49,7 +49,7 @@
 			var/datum/mind/changeling = pick(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
-			changeling.special_role = "Changeling"
+			changeling.special_role = ROLE_CHANGELING
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
 		return ..()

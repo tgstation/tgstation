@@ -92,7 +92,7 @@
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600
-	var/faction = "wizard"
+	var/faction = ROLE_WIZARD
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()

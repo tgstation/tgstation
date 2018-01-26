@@ -48,7 +48,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
-			changeling.special_role = "Changeling"
+			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else

@@ -158,8 +158,8 @@ Credit where due:
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		servant.assigned_role = "Servant of Ratvar"
-		servant.special_role = "Servant of Ratvar"
+		servant.assigned_role = ROLE_SERVANT_OF_RATVAR
+		servant.special_role = ROLE_SERVANT_OF_RATVAR
 		starter_servants--
 	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
 	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer

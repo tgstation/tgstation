@@ -13,6 +13,7 @@
 #define ROLE_WIZARD				"wizard"
 #define ROLE_MALF				"malf AI"
 #define ROLE_REV				"revolutionary"
+#define ROLE_REV_HEAD			"Head Revolutionary"
 #define ROLE_ALIEN				"xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"cultist"
