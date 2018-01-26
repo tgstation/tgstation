@@ -1087,6 +1087,8 @@
 /obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
 		return
+	if(density)
+		return TRUE
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
 			return
@@ -1108,8 +1110,6 @@
 	if(killthis)
 		killthis.ex_act(EXPLODE_HEAVY)//Smashin windows
 
-	if(density)
-		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
