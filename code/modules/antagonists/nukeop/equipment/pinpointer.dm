@@ -71,7 +71,7 @@
 	target = null
 	var/list/possible_targets = list()
 	var/turf/here = get_turf(src)
-	for(var/V in get_antagonists(/datum/antagonist/nukeop))
+	for(var/V in get_antag_minds(/datum/antagonist/nukeop))
 		var/datum/mind/M = V
 		if(ishuman(M.current) && M.current.stat != DEAD)
 			possible_targets |= M.current

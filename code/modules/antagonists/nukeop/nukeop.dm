@@ -1,13 +1,3 @@
-#define NUKE_RESULT_FLUKE 0
-#define NUKE_RESULT_NUKE_WIN 1
-#define NUKE_RESULT_CREW_WIN 2
-#define NUKE_RESULT_CREW_WIN_SYNDIES_DEAD 3
-#define NUKE_RESULT_DISK_LOST 4
-#define NUKE_RESULT_DISK_STOLEN 5
-#define NUKE_RESULT_NOSURVIVORS 6
-#define NUKE_RESULT_WRONG_STATION 7
-#define NUKE_RESULT_WRONG_STATION_DEAD 8
-
 /datum/antagonist/nukeop
 	name = "Nuclear Operative"
 	roundend_category = "syndicate operatives" //just in case
