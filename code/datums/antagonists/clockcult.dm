@@ -149,7 +149,7 @@
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
-	for(var/datum/action/innate/clockwork_arnaments/C in owner.current.actions) //Removes any bound clockwork armor
+	for(var/datum/action/innate/clockwork_armaments/C in owner.current.actions) //Removes any bound clockwork armor
 		qdel(C)
 	for(var/datum/action/innate/call_weapon/W in owner.current.actions) //and weapons too
 		qdel(W)
