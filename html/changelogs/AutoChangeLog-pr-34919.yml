@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The Syndicate Listening Post's medicine closet now has the correct access."
