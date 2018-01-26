@@ -20,8 +20,13 @@
 	disliked_food = GRAIN | DAIRY
 	liked_food = GROSS | MEAT
 
-/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+/datum/species/lizard/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	H.grant_language(/datum/language/draconic)
+	return ..()
+
+/datum/species/lizard/on_species_loss(mob/living/carbon/human/H)
+	H.remove_language(/datum/language/draconic)
+	return ..()
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
