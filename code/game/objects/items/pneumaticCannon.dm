@@ -210,7 +210,7 @@
 	if (loadedItems.Remove(A))
 		var/obj/item/I = A
 		loadedWeightClass -= I.w_class
-	if (A == tank)
+	else if (A == tank)
 		tank = null
 		update_icons()
 
