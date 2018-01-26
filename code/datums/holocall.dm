@@ -230,7 +230,7 @@
 				record = new
 			record.caller_name = holodiskOriginal.record.caller_name
 			record.caller_image = holodiskOriginal.record.caller_image
-			record.entries = holodiskOriginal.record.entries
+			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
 			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
 			name = holodiskOriginal.name
