@@ -11,8 +11,16 @@ SUBSYSTEM_DEF(mobs)
 	..("P:[GLOB.mob_living_list.len]")
 
 /datum/controller/subsystem/mobs/Initialize(start_timeofday)
-	clients_by_zlevel = new /list(world.maxz,0)
+	MaxZChanged()
 	return ..()
+
+/datum/controller/subsystem/mobs/proc/MaxZChanged()
+	if (!islist(clients_by_zlevel))
+		clients_by_zlevel = new /list(world.maxz,0)
+	while (clients_by_zlevel.len < world.maxz)
+		clients_by_zlevel.len++
+		clients_by_zlevel[clients_by_zlevel.len] = list()
+		warning("new clients_by_zlevel list created at MaxZChanged()")
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
