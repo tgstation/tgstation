@@ -392,7 +392,7 @@ Auto Patrol: []"},
 		else
 			continue
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(slot_item && slot_item.needs_permit)
+	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
 		return 1
 	return 0
 

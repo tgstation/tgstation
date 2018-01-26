@@ -62,7 +62,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	embed_chance = 75
+	embedding = list("embed_chance" = 75)
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)
 	..()
