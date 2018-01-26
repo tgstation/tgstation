@@ -1,24 +1,25 @@
 #define EGG_INCUBATION_TIME 120
 
 /mob/living/simple_animal/hostile/headcrab
-	name = "headslug"
-	desc = "Absolutely not de-beaked or harmless. Keep away from corpses."
+	name = "head-spider"
+	desc = "An amalgamation of human and, well, something not human. it gazes intensely into the distance chittering it's teeth."
+	icon = 'icons/mob/changeling.dmi'
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
 	gender = NEUTER
-	health = 50
-	maxHealth = 50
+	health = 55
+	maxHealth = 55
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "chomps"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/creatures/hit4.ogg'
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = DEAD
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	speak_emote = list("squeaks")
+	speak_emote = list("vehemets")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
