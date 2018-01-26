@@ -25,7 +25,8 @@ GLOBAL_PROTECT(mentor_href_token)
 	if(owner)
 		owner.mentor_datum = src
 		owner.add_mentor_verbs()
-		GLOB.mentors += owner
+		if(!check_rights_for(owner, R_ADMIN,0)) // don't add admins to mentor list.
+			GLOB.mentors += owner
 
 /datum/mentors/proc/CheckMentorHREF(href, href_list)
 	var/auth = href_list["mentor_token"]
@@ -100,7 +101,7 @@ GLOBAL_PROTECT(mentor_href_token)
 			CONFIG_SET(flag/mentor_legacy_system, TRUE)
 			load_mentors()
 			return
-		var/datum/DBQuery/query_load_mentors = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor")]")//REMEMBER TO CREATE TABLE,CARBON
+		var/datum/DBQuery/query_load_mentors = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor")]")
 		if(!query_load_mentors.Execute())
 			return
 		while(query_load_mentors.NextRow())

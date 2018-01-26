@@ -31,7 +31,7 @@
 		return
 	if(!ckey)
 		return
-	if(SSdbcore.Connect() && !CONFIG_GET(flag/mentor_legacy_system))
+	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_get_mentor = SSdbcore.NewQuery("SELECT id FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
 		if(query_get_mentor.NextRow())
 			to_chat(usr, "<span class='danger'>[ckey] is already a mentor.</span>")
@@ -54,7 +54,7 @@
 		return
 	if(!ckey)
 		return
-	if(SSdbcore.Connect() && !CONFIG_GET(flag/mentor_legacy_system))
+	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_remove_mentor = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
 		if(!query_remove_mentor.warn_execute())
 			return
@@ -63,11 +63,9 @@
 			return
 	else
 		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
-	to_chat(world, ckey)
-	to_chat(world, GLOB.directory[ckey])
 	var/client/C = GLOB.directory[ckey]
 	if(C)
 		C.remove_mentor_verbs()
-		qdel(C.mentor_datum)
+		C.mentor_datum = null
 		GLOB.mentors -= C
 	to_chat(usr, "<span class='adminnotice'>Mentor removed.</span>")

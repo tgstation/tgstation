@@ -2,7 +2,7 @@
 /client/proc/cmd_mentor_pm_panel()
 	set category = "Mentor"
 	set name = "Mentor PM"
-	if(!mentor_datum && !holder)
+	if(!is_mentor())
 		to_chat(src, "<font color='red'>Error: Mentor-PM-Panel: Only Mentors and Admins may use this command.</font>")
 		return
 	var/list/client/targets[0]
@@ -27,7 +27,7 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder || mentor_datum)	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+		if(is_mentor())	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
 		else		mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
 		return
 
@@ -37,7 +37,7 @@
 
 		if(!msg)	return
 		if(!C)
-			if(holder || mentor_datum)	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+			if(is_mentor())	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
 			else		mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
 			return
 
@@ -66,6 +66,6 @@
 	//we don't use message_Mentors here because the sender/receiver might get it too
 	var/show_char_sender = !is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
 	var/show_char_recip = !C.is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
-	for(var/client/X in GLOB.mentors + GLOB.admins)
+	for(var/client/X in GLOB.mentors | GLOB.admins)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
 			to_chat(X, "<B><font color='green'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> <font color ='blue'> [msg]</font>") //inform X

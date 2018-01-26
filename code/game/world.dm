@@ -19,9 +19,6 @@ GLOBAL_PROTECT(security_mode)
 
 	new /datum/controller/configuration
 
-
-	hippie_initialize()
-
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
 	SSdbcore.CheckSchemaVersion()
@@ -31,6 +28,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_NEW
 
 	load_admins()
+	hippie_initialize() // hippie - loads mentor and other stuff. Due to mentors, it has to be after load_admins().
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
@@ -41,7 +39,7 @@ GLOBAL_PROTECT(security_mode)
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
-	
+
 	if(NO_INIT_PARAMETER in params)
 		return
 

@@ -1,25 +1,14 @@
-/client/proc/hippie_mentor_datum_set()
+/client/proc/mentor_datum_set(admin)
 	mentor_datum = GLOB.mentor_datums[ckey]
+	if(!mentor_datum && check_rights_for(src, R_ADMIN,0)) // admin with no mentor datum?let's fix that
+		new /datum/mentors(ckey)
 	if(mentor_datum)
-		GLOB.mentors |= src
+		if(!check_rights_for(src, R_ADMIN,0) && !admin)
+			GLOB.mentors |= src // don't add admins to this list too.
 		mentor_datum.owner = src
 		add_mentor_verbs()
 		mentor_memo_output("Show")
 
-/client/proc/is_mentor()
-	if(mentor_datum)
+/client/proc/is_mentor() // admins are mentors too.
+	if(mentor_datum || check_rights_for(src, R_ADMIN,0))
 		return TRUE
-
-/*/client/Topic/proc/HippieMentorMessage()
-	if(config.mentors_mobname_only)
-		var/mob/M = locate(href_list["mentor_msg"])
-		cmd_mentor_pm(M,null)
-	else
-		cmd_mentor_pm(href_list["mentor_msg"],null)
-
-/client/Topic/proc/HippieMentorFollow()
-	var/mob/living/M = locate(href_list["mentor_follow"])
-
-	if(istype(M))
-		mentor_follow(M)
-*/

@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	else if(GLOB.deadmins[ckey])
 		verbs += /client/proc/readmin
 		connecting_admin = TRUE
-	hippie_mentor_datum_set()// hippie - Hippie mentor_holder set
+	mentor_datum_set()// hippie - Hippie mentor_holder set
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
