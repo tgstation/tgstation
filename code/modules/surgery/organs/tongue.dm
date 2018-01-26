@@ -87,7 +87,7 @@
 		var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
 		if(!T || T.type != type)
 			continue
-		if(H.dna && H.dna.species.id == ROLE_ABDUCTOR && user.dna && user.dna.species.id == ROLE_ABDUCTOR)
+		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
 			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(/datum/antagonist/abductor)
 			if(!A || !(H.mind in A.team.members))
 				continue

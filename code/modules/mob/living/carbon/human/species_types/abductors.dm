@@ -1,6 +1,6 @@
 /datum/species/abductor
 	name = "Abductor"
-	id = ROLE_ABDUCTOR
+	id = "abductor"
 	say_mod = "gibbers"
 	sexes = FALSE
 	species_traits = list(SPECIES_ORGANIC,NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS,NOHUNGER)
