@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemaphippie.dm"
+#include "_maps\_basemaphippie.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -58,6 +58,7 @@
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\monkeys.dm"
 #include "code\__DEFINES\networks.dm"
+#include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"

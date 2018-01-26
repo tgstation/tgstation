@@ -395,6 +395,13 @@
 	spillable = FALSE
 	isGlass = FALSE
 	grind_results = list("aluminum" = 10)
+	
+/obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
+	crushed_can.icon_state = icon_state
+	qdel(src)
+	return BRUTELOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")

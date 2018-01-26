@@ -273,7 +273,7 @@
 		return
 
 	if(W.GetID())
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
@@ -305,10 +305,10 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 

@@ -149,6 +149,15 @@
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 
+/obj/item/device/destTagger/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if (islizard(user))
+		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
+	else
+		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
+	playsound(src, 'sound/machines/twobeep.ogg', 100, 1)
+	return BRUTELOSS
+
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 

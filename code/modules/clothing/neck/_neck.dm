@@ -51,6 +51,10 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 
+/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
+	return OXYLOSS
+
 /obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == INTENT_HELP)

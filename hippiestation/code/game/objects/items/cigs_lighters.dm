@@ -652,7 +652,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			screw = TRUE
 			container_type |= OPENCONTAINER
 			to_chat(user, "<span class='notice'>You open the cap on the [name].</span>")
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				var/image/I = (image(icon, "vapeopen_high"))
 				add_overlay(I, priority=0)
 			else if(super)
@@ -668,7 +668,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cut_overlays()
 
 	if(istype(O, /obj/item/device/multitool))
-		if(screw && !emagged)
+		if(screw && (!(obj_flags & EMAGGED)))
 			if(!super)
 				cut_overlays()
 				super = TRUE
@@ -682,7 +682,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				var/image/I = (image(icon, "vapeopen_low"))
 				add_overlay(I, priority=0)
 
-		if(screw && emagged)
+		if(screw && (obj_flags & EMAGGED))
 			to_chat(user, "<span class='notice'>The [name] can't be modified!</span>")
 	else
 		..()
@@ -690,9 +690,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)
 	if(screw)
-		if(!emagged)
+		if(!(obj_flags & EMAGGED))
 			cut_overlays()
-			emagged = TRUE
+			set_obj_flags = "EMAGGED"
 			super = FALSE
 			to_chat(user, "<span class='warning'>You maximize the voltage in the [name]!</span>")
 			var/image/I = (image(icon, "vapeopen_high"))
@@ -777,7 +777,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
 			qdel(src)
 
-	if(emagged && vapetime > 3)
+	if((obj_flags & EMAGGED) && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/s = new
 		s.set_up(reagents, 3, loc, silent=TRUE)
 		s.start()
