@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Syndicate intelligence potions also grant an internal syndicate ID
-card to the simple animal granted intelligence. This effectively means
-that Cayenne can open the airlocks on the Infiltrator."
