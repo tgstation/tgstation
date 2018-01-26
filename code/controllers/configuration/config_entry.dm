@@ -113,15 +113,9 @@
 		return FALSE
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
-<<<<<<< HEAD
-		value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
-		if(value != temp && !var_edited)
-			log_config("Changing [name] from [temp] to [value]!")
-=======
 		config_entry_value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
 		if(config_entry_value != temp && !(datum_flags & DF_VAR_EDITED))
 			log_config("Changing [name] from [temp] to [config_entry_value]!")
->>>>>>> 30f3156ce2... Rename /datum/config_entry/var/value to config_entry_value (#34699)
 		return TRUE
 	return FALSE
 
