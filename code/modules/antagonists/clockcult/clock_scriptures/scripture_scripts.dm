@@ -97,12 +97,12 @@
 	quickbind_desc = "Creates a Judicial Visor, which can smite an area, applying Belligerent and briefly stunning."
 
 
-//Clockwork Arnaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
-/datum/clockwork_scripture/clockwork_arnaments
+//Clockwork Armaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
+/datum/clockwork_scripture/clockwork_armaments
 	descname = "Summonable Armor and Weapons - Important!"
-	name = "Clockwork Arnaments"
+	name = "Clockwork Armaments"
 	desc = "Allows the invoker to summon clockwork armor and a Ratvarian spear at will. The spear's attacks will generate Vitality, used for healing."
-	invocations = list("Grant me arnaments...", "...from the forge of Armorer!")
+	invocations = list("Grant me armaments...", "...from the forge of Armorer!")
 	channel_time = 20
 	power_cost = 250
 	whispered = TRUE
@@ -113,24 +113,24 @@
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
 
-/datum/clockwork_scripture/clockwork_arnaments/check_special_requirements()
-	for(var/datum/action/innate/clockwork_arnaments/F in invoker.actions)
+/datum/clockwork_scripture/clockwork_armaments/check_special_requirements()
+	for(var/datum/action/innate/clockwork_armaments/F in invoker.actions)
 		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
 		return FALSE
 	return invoker.can_hold_items()
 
-/datum/clockwork_scripture/clockwork_arnaments/scripture_effects()
+/datum/clockwork_scripture/clockwork_armaments/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind clockwork equipment to yourself. Use Clockwork Arnaments and Call Spear to summon them.</span>")
+	"<span class='brass'>You bind clockwork equipment to yourself. Use Clockwork Armaments and Call Spear to summon them.</span>")
 	var/datum/action/innate/call_weapon/ratvarian_spear/S = new()
 	S.Grant(invoker)
-	var/datum/action/innate/clockwork_arnaments/A = new()
+	var/datum/action/innate/clockwork_armaments/A = new()
 	A.Grant(invoker)
 	return TRUE
 
-//Clockwork Arnaments: Equips a set of clockwork armor. Three-minute cooldown.
-/datum/action/innate/clockwork_arnaments
-	name = "Clockwork Arnaments"
+//Clockwork Armaments: Equips a set of clockwork armor. Three-minute cooldown.
+/datum/action/innate/clockwork_armaments
+	name = "Clockwork Armaments"
 	desc = "Outfits you in a full set of Ratvarian armor."
 	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
 	button_icon_state = "clockwork_armor"
@@ -148,7 +148,7 @@
 	/obj/item/clothing/head/helmet/space,
 	/obj/item/clothing/shoes/magboots)) //replace this only if ratvar is up
 
-/datum/action/innate/clockwork_arnaments/IsAvailable()
+/datum/action/innate/clockwork_armaments/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		qdel(src)
 		return
@@ -156,7 +156,7 @@
 		return
 	return ..()
 
-/datum/action/innate/clockwork_arnaments/Activate()
+/datum/action/innate/clockwork_armaments/Activate()
 	var/do_message = 0
 	var/obj/item/I = owner.get_item_by_slot(slot_wear_suit)
 	if(remove_item_if_better(I, owner))
@@ -178,7 +178,7 @@
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), CLOCKWORK_ARMOR_COOLDOWN)
 	return TRUE
 
-/datum/action/innate/clockwork_arnaments/proc/remove_item_if_better(obj/item/I, mob/user)
+/datum/action/innate/clockwork_armaments/proc/remove_item_if_better(obj/item/I, mob/user)
 	if(!I)
 		return TRUE
 	if(is_type_in_typecache(I, ratvarian_armor_typecache))

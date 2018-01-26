@@ -71,7 +71,7 @@
 	icon_state = "marauder_armor"
 	construct_name = "clockwork marauder"
 	construct_desc = "<span class='neovgre_small'>It will become a <b>clockwork marauder,</b> a well-rounded frontline combatant.</span>"
-	creation_message = "<span class='neovgre_small bold'>Crimson fire begins to rage in the armor as it rises into the air with its arnaments!</span>"
+	creation_message = "<span class='neovgre_small bold'>Crimson fire begins to rage in the armor as it rises into the air with its armaments!</span>"
 	construct_type = /mob/living/simple_animal/hostile/clockwork/marauder
 
 

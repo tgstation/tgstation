@@ -202,8 +202,8 @@
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
 			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
-	var/list/leaders = get_antagonists(/datum/antagonist/monkey/leader, TRUE)
-	var/list/monkeys = get_antagonists(/datum/antagonist/monkey, TRUE)
+	var/list/leaders = get_antag_minds(/datum/antagonist/monkey/leader, TRUE)
+	var/list/monkeys = get_antag_minds(/datum/antagonist/monkey, TRUE)
 
 	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
