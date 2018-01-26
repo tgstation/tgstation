@@ -336,7 +336,6 @@
 				limb.icon_state = "[species_id]_[body_zone]"
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
-			. += aux
 
 	else
 		limb.icon = icon
@@ -353,6 +352,9 @@
 			limb.color = "#[draw_color]"
 			if(aux_zone)
 				aux.color = "#[draw_color]"
+
+	if(aux_zone)
+		. += aux
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
@@ -416,7 +418,7 @@
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
 	aux_zone = "l_hand"
-	aux_layer = HANDS_LAYER
+	aux_layer = HANDS_PART_LAYER
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -452,7 +454,7 @@
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
 	aux_zone = "r_hand"
-	aux_layer = HANDS_LAYER
+	aux_layer = HANDS_PART_LAYER
 	held_index = 2
 	px_x = 6
 	px_y = 0
