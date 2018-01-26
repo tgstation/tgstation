@@ -710,9 +710,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/storage/box/syndie_kit/chameleon
-	cost = 4
+	cost = 2 // Reduced cost by 2TC to compensate for missing noslip shoes
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
