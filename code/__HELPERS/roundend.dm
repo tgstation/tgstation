@@ -281,7 +281,7 @@
 	if(M.mind && !isnewplayer(M))
 		if(M.stat != DEAD && !isbrain(M))
 			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-				if(!M.onCentCom() || !M.onSyndieBase())
+				if(!M.onCentCom() && !M.onSyndieBase())
 					parts += "<div class='panel stationborder'>"
 					parts += "<span class='marooned'>You managed to survive, but were marooned on [station_name()]...</span>"
 				else
