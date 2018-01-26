@@ -59,6 +59,7 @@
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	var/just_spawned = TRUE
 	var/bypassing = FALSE
+	var/visual_update_tick = 0
 
 /obj/effect/hotspot/Initialize()
 	. = ..()
@@ -101,6 +102,50 @@
 	var/b = (x1 + x2) * 0.5
 	var/c = (x2 - x1) / 6
 	return NUM_E ** -((x - b) ** 2 / (2 * c) ** 2)
+
+/obj/effect/hotspot/proc/update_color()
+	cut_overlays()
+
+	var/heat_r = heat2colour_r(temperature)
+	var/heat_g = heat2colour_g(temperature)
+	var/heat_b = heat2colour_b(temperature)
+	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
+
+	if(temperature > 1000 && temperature < 3000) //This is where fire is very orange, we turn it into the normal fire texture here.
+		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
+		heat_r = LERP(heat_r,255,normal_amt)
+		heat_g = LERP(heat_g,255,normal_amt)
+		heat_b = LERP(heat_b,255,normal_amt)
+		greyscale_fire -= normal_amt
+	if(temperature > 150000) //Past this temperature the fire will gradually turn a bright purple
+		heat_r = max(heat_r,min(1,log((temperature - 150000) / 100))*255)
+	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
+		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
+		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
+		sparkle_overlay.blend_mode = BLEND_ADD
+		sparkle_overlay.alpha = sparkle_amt * 255
+		add_overlay(sparkle_overlay)
+	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
+		var/mutable_appearance/lightning_overlay = mutable_appearance(icon, "overcharged")
+		lightning_overlay.blend_mode = BLEND_ADD
+		add_overlay(lightning_overlay)
+	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
+		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
+		fusion_overlay.blend_mode = BLEND_ADD
+		fusion_overlay.alpha = fusion_amt * 255
+		heat_r = LERP(heat_r,255,fusion_amt)
+		heat_g = LERP(heat_g,200,fusion_amt)
+		heat_b = LERP(heat_b,10,fusion_amt)
+		add_overlay(fusion_overlay)
+
+	set_light(l_color = rgb(LERP(250,heat_r,greyscale_fire),LERP(160,heat_g,greyscale_fire),LERP(25,heat_b,greyscale_fire)))
+
+	heat_r /= 255
+	heat_g /= 255
+	heat_b /= 255
+
+	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 
 #define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
 /obj/effect/hotspot/process()
@@ -148,46 +193,8 @@
 		else
 			icon_state = "1"
 
-	cut_overlays()
-
-	var/heat_r = heat2colour_r(temperature)
-	var/heat_g = heat2colour_g(temperature)
-	var/heat_b = heat2colour_b(temperature)
-	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
-
-	if(temperature > 1000 && temperature < 3000) //This is where fire is very orange, we turn it into the normal fire texture here.
-		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
-		heat_r = LERP(heat_r,255,normal_amt)
-		heat_g = LERP(heat_g,255,normal_amt)
-		heat_b = LERP(heat_b,255,normal_amt)
-		greyscale_fire -= normal_amt
-	if(temperature > 150000) //Past this temperature the fire will gradually turn a bright purple
-		heat_r = max(heat_r,min(1,log((temperature - 150000) / 100))*255)
-	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
-		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
-		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
-		sparkle_overlay.blend_mode = BLEND_ADD
-		sparkle_overlay.alpha = sparkle_amt * 255
-		add_overlay(sparkle_overlay)
-	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
-		var/mutable_appearance/lightning_overlay = mutable_appearance(icon, "overcharged")
-		lightning_overlay.blend_mode = BLEND_ADD
-		add_overlay(lightning_overlay)
-	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
-		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
-		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
-		fusion_overlay.blend_mode = BLEND_ADD
-		fusion_overlay.alpha = fusion_amt * 255
-		heat_r = LERP(heat_r,255,fusion_amt)
-		heat_g = LERP(heat_g,200,fusion_amt)
-		heat_b = LERP(heat_b,10,fusion_amt)
-		add_overlay(fusion_overlay)
-
-	heat_r /= 255
-	heat_g /= 255
-	heat_b /= 255
-
-	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
+	if((visual_update_tick++ % 7) == 0)
+		update_color()
 
 	if(temperature > location.max_fire_temperature_sustained)
 		location.max_fire_temperature_sustained = temperature
