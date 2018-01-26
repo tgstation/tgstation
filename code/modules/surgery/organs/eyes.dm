@@ -316,3 +316,8 @@
 	parent = loc
 	if(!istype(parent))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/organ/eyes/moth
+	name = "moth eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	flash_protect = -1
