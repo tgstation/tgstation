@@ -272,6 +272,5 @@ GLOBAL_PROTECT(security_mode)
 
 /world/proc/incrementMaxZ()
 	maxz++
-	warning("New Z-level created at /world/incrementMaxZ()")
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
