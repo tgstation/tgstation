@@ -320,7 +320,7 @@
 
 	if(status == BODYPART_ORGANIC)
 		if(aux_zone)
-			. += mutable_appearance(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
