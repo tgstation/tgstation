@@ -72,6 +72,9 @@
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
+		if(I.w_class >= WEIGHT_CLASS_HUGE)
+			to_chat(user, "<span class='warning'>That's too big to wrap!</span>")
+			return
 		if(user.is_holding(I))
 			if(!user.dropItemToGround(I))
 				return
@@ -86,7 +89,7 @@
 			I.forceMove(P)
 			var/size = round(I.w_class)
 			P.name = "[weightclass2text(size)] parcel"
-			P.w_class = size
+			P.w_class = max(I.w_class+0.3, WEIGHT_CLASS_HUGE)
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
 
