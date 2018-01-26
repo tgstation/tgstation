@@ -334,19 +334,16 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
-<<<<<<< HEAD
 		if(should_draw_hippie)
 			limb.icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
-=======
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 			. += aux
 
->>>>>>> 9be14c0604... Fixes hands missing (#34973)
 	else
 		limb.icon = icon
 		if(should_draw_gender)
