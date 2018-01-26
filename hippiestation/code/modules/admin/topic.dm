@@ -31,6 +31,11 @@
 		return
 	if(!ckey)
 		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin! Cannot mentorize.</span>")
+			return
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_get_mentor = SSdbcore.NewQuery("SELECT id FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
 		if(query_get_mentor.NextRow())
@@ -54,6 +59,14 @@
 		return
 	if(!ckey)
 		return
+	var/client/C = GLOB.directory[ckey]
+	if(C)
+		if(check_rights_for(C, R_ADMIN,0))
+			to_chat(usr, "<span class='danger'>The client chosen is an admin, not a mentor! Cannot de-mentorize.</span>")
+			return
+		C.remove_mentor_verbs()
+		C.mentor_datum = null
+		GLOB.mentors -= C
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_remove_mentor = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[ckey]'")
 		if(!query_remove_mentor.warn_execute())
@@ -63,9 +76,4 @@
 			return
 	else
 		to_chat(usr, "<span class='danger'>Failed to establish database connection. The changes will last only for the current round.</span>")
-	var/client/C = GLOB.directory[ckey]
-	if(C)
-		C.remove_mentor_verbs()
-		C.mentor_datum = null
-		GLOB.mentors -= C
 	to_chat(usr, "<span class='adminnotice'>Mentor removed.</span>")

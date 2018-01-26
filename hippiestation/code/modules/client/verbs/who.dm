@@ -4,6 +4,9 @@
 	var/msg = "<b>Current Mentors:</b>\n"
 	for(var/X in GLOB.mentors)
 		var/client/C = X
+		if(!C)
+			GLOB.mentors -= C
+			continue // weird runtime that happens randomly
 		var/suffix = ""
 		if(holder)
 			if(isobserver(C.mob))
