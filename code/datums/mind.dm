@@ -809,7 +809,7 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
-	mind.special_role = "Alien"
+	mind.special_role = ROLE_ALIEN
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
