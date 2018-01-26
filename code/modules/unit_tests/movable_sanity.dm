@@ -4,7 +4,8 @@
     //list of things not to be tested
     //These should not be buggy things but rather things that are dependencies of others
     var/list/blacklist = list(
-
+        /obj/effect/hallucination,
+        /obj/docking_port
     )
 
     //list of instantiation arguments keyed by type
