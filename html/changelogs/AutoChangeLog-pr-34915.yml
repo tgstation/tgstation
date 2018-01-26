@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to rotate things in only one direction."
