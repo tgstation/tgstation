@@ -100,13 +100,8 @@
 			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
 		if(newdir)
 			direct = newdir
-<<<<<<< HEAD
-			n = get_step(mob, direct)
-	
-=======
 			n = get_step(L, direct)
 
->>>>>>> 3f10f29d5b... Shifts vars off /mob and to the correct subtype (#34773)
 	. = ..()
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
