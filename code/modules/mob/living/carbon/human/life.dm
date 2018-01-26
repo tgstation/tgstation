@@ -302,7 +302,6 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
-<<<<<<< HEAD
 				// Hippie Start - Handle un-impaling player if pinned item falls out
 				if (I.pinned)
 					do_pindown(pinned_to, 0)
@@ -312,32 +311,6 @@
 					I.pinned = null
 				// Hippie End
 
-/mob/living/carbon/human/proc/can_heartattack()
-	CHECK_DNA_AND_SPECIES(src)
-	if(NOBLOOD in dna.species.species_traits)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
-	if(!can_heartattack())
-		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && heart.beating)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/set_heartattack(status)
-	if(!can_heartattack())
-		return FALSE
-
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!istype(heart))
-		return
-
-	heart.beating = !status
-
-=======
->>>>>>> 8b5049a781... You can now defib monkeys (#34383)
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_life(src)
