@@ -30,8 +30,8 @@
 // INTERACTIONS
 
 /obj/machinery/geoscape/emag_act(mob/user)
-	if(!emagged && (state == GEO_OFF || state == GEO_ON))
-		emagged = TRUE
+	if(!(obj_flags & EMAGGED) && (state == GEO_OFF || state == GEO_ON))
+		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You emag [src].</span>")
 		// update description and visuals
 		desc = "<i>Scientia Potentia Est.</i>"
@@ -41,7 +41,7 @@
 			turnoff()
 
 /obj/machinery/geoscape/attackby(obj/item/W, mob/living/user, params)
-	if (emagged)
+	if (obj_flags & EMAGGED)
 		to_chat(user, "<span class='notice'>\The [src] isn't responding.</span>")
 		return
 
@@ -57,7 +57,7 @@
 		to_chat(user, "<span class='notice'>You turn on [src].</span>")
 
 /obj/machinery/geoscape/attack_ai(mob/user)
-	if (emagged)
+	if (obj_flags & EMAGGED)
 		to_chat(user, "<span class='notice'>\The [src] isn't responding.</span>")
 		return
 
@@ -71,7 +71,7 @@
 // STATE MACHINE
 
 /obj/machinery/geoscape/proc/un_emag() // for debugging
-	emagged = FALSE
+	obj_flags &= ~EMAGGED
 	update_icon()
 
 /obj/machinery/geoscape/proc/turnon()
@@ -89,7 +89,7 @@
 	addtimer(CALLBACK(src, .proc/finish_turnoff), GEO_ANIM_LENGTH)
 
 /obj/machinery/geoscape/proc/finish_turnoff()
-	if (emagged)
+	if (obj_flags & EMAGGED)
 		turnon()
 		return
 	state = GEO_OFF
@@ -107,7 +107,7 @@
 		if (GEO_ON)
 			icon_state = "holograph_on"
 			projector = mutable_appearance(icon, "hologram_on")
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				display = mutable_appearance('icons/obj/machines/geoscape.dmi', "exalt")
 			else
 				display = mutable_appearance('icons/obj/machines/geoscape.dmi', "globe")

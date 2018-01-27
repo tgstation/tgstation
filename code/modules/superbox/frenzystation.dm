@@ -350,19 +350,18 @@ GLOBAL_VAR(frenzy_exports)
 		L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
 	for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-		if(!I.imp_in || !ismob(I.loc))
+		if(!I.imp_in || !isliving(I.loc))
 			continue
-		else
-			var/mob/M = I.loc
-			if(M.stat == DEAD)
-				if(M.timeofdeath + 6000 < world.time)
-					continue
-			var/turf/T = get_turf(M)
-			if(!T)
+		var/mob/living/M = I.loc
+		if(M.stat == DEAD)
+			if(M.timeofdeath + 6000 < world.time)
 				continue
-			if(is_centcom_level(T.z))
-				continue
-			L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+		var/turf/T = get_turf(M)
+		if(!T)
+			continue
+		if(is_centcom_level(T.z))
+			continue
+		L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 	if (GLOB.frenzy_exports)
 		L["Supply Shuttle"] = GLOB.frenzy_exports
