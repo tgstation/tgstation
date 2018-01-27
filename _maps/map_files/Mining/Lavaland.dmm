@@ -76,9 +76,6 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
-"ao" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1164,10 +1161,6 @@
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
 	},
-/area/mine/production)
-"dt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/mine/production)
 "du" = (
 /obj/effect/turf_decal/loading_area,
@@ -3304,24 +3297,6 @@
 /obj/effect/baseturf_helper/picky/lava_land/plating,
 /turf/closed/wall,
 /area/mine/laborcamp/security)
-"Wu" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp)
-"Ww" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Wx" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/eva)
-"Wy" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "Wz" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/lava/smooth/lava_land_surface,
