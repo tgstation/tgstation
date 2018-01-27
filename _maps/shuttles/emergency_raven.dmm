@@ -1099,7 +1099,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
-/area/space)
+/area/template_noop)
 "eN" = (
 /obj/machinery/light{
 	dir = 4

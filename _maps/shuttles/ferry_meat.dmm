@@ -113,7 +113,6 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
-	roundstart_move = "ferry_away";
 	port_direction = 2;
 	width = 5;
 	timid = 1

@@ -267,10 +267,8 @@
 	force = 2
 	throwforce = 20 //This is never used on mobs since this has a 100% embed chance.
 	throw_speed = 4
-	embedded_pain_multiplier = 4
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
 	w_class = WEIGHT_CLASS_SMALL
-	embed_chance = 100
-	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	resistance_flags = FIRE_PROOF
@@ -454,7 +452,7 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	needs_permit = 0
+	item_flags = NONE
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"

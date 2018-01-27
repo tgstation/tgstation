@@ -47,8 +47,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "i" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 a
