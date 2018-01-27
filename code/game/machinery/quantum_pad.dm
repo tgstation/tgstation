@@ -7,7 +7,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
-	unique_rename = 1
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
@@ -15,17 +15,17 @@
 	var/teleporting = 0 //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad
-	
+
 	//mapping
 	var/static/list/mapped_quantum_pads = list()
 	var/map_pad_id = "" as text //what's my name
 	var/map_pad_link_id = "" as text //who's my friend
-	
+
 /obj/machinery/quantumpad/Initialize()
 	. = ..()
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
-		
+
 /obj/machinery/quantumpad/Destroy()
 	mapped_quantum_pads -= map_pad_id
 	return ..()

@@ -214,7 +214,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=[REF(src)];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=7'>7. Print Corporate Materials</A><BR>"
-			if(src.emagged)
+			if(obj_flags & EMAGGED)
 				dat += "<A href='?src=[REF(src)];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				print_forbidden_lore(user)
@@ -339,8 +339,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(density && !emagged)
-		emagged = TRUE
+	if(density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
@@ -370,7 +370,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			if("8")
 				screenstate = 8
 	if(href_list["arccheckout"])
-		if(src.emagged)
+		if(obj_flags & EMAGGED)
 			src.arcanecheckout = 1
 		src.screenstate = 0
 	if(href_list["increasetime"])

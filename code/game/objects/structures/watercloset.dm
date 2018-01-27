@@ -236,7 +236,7 @@
 		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5, wet_time_to_add = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
@@ -605,7 +605,7 @@
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
-		color = input(user,"Choose Color") as color
+		color = input(user,"","Choose Color",color) as color
 	else if(istype(W, /obj/item/screwdriver))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)

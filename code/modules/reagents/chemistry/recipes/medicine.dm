@@ -184,6 +184,12 @@
 	results = list("cryoxadone" = 3)
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 
+/datum/chemical_reaction/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	results = list("pyroxadone" = 2)
+	required_reagents = list("cryoxadone" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
@@ -221,6 +227,12 @@
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 
+/datum/chemical_reaction/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	results = list("regen_jelly" = 2)
+	required_reagents = list("tricordrazine" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = "corazone"
@@ -233,3 +245,12 @@
 	results = list("morphine" = 3)
 	required_reagents = list("carbon" = 2, "hydrogen" = 2, "nitrogen" = 1, "oxygen" = 1)
 	required_temp = 480
+
+/datum/chemical_reaction/ketrazine
+	name = "Ketrazine"
+	id = "ketrazine"
+	results = list("ketrazine" = 3)
+	required_reagents = list("epinephrine" = 1, "ephedrine" = 1, "tricordrazine" = 1, "atropine" = 1)
+	required_catalysts = list("gold" = 1)
+	required_temp = 520
+	mix_message = "The solution fizzes and then settles into an oily, smooth, purple liquid."

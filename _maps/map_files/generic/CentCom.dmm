@@ -3245,11 +3245,12 @@
 "jC" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 5;
+	dwidth = 8;
 	height = 7;
 	id = "supply_away";
+	json_key = "cargo";
 	name = "CentCom";
-	width = 12
+	width = 20
 	},
 /turf/open/space,
 /area/space)
@@ -4384,6 +4385,10 @@
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"mB" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership)
 "mC" = (
 /obj/item/disk/data,
 /obj/effect/light_emitter{
@@ -4604,6 +4609,10 @@
 	icon_state = "alien5"
 	},
 /area/abductor_ship)
+"ng" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
+/area/syndicate_mothership/control)
 "nh" = (
 /obj/item/toy/figure/syndie,
 /obj/effect/light_emitter{
@@ -5628,6 +5637,12 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
+"pE" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 6
+	},
+/area/syndicate_mothership/control)
 "pF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Auxillary Dock";
@@ -6067,6 +6082,27 @@
 /area/centcom/evac)
 "qE" = (
 /turf/closed/indestructible/riveted/uranium,
+/area/wizard_station)
+"qF" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 8;
+	icon_state = "fakewindows"
+	},
+/area/wizard_station)
+"qG" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 8;
+	icon_state = "fakewindows2"
+	},
+/area/wizard_station)
+"qH" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 4;
+	icon_state = "fakewindows"
+	},
 /area/wizard_station)
 "qI" = (
 /turf/open/floor/plasteel/vault/side,
@@ -7096,6 +7132,24 @@
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
+"tb" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 9
+	},
+/area/syndicate_mothership/control)
+"tc" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/syndicate_mothership/control)
+"td" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
+/area/syndicate_mothership/control)
 "te" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
@@ -7150,6 +7204,14 @@
 	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
+/area/shuttle/assault_pod)
+"tm" = (
+/turf/open/floor/plating/asteroid/snow/airless,
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
 /area/shuttle/assault_pod)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
@@ -7451,6 +7513,13 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"tW" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 6;
+	icon_state = "fakewindows2"
+	},
+/area/wizard_station)
 "tX" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -7755,6 +7824,12 @@
 	},
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
+"uK" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 8
+	},
+/area/syndicate_mothership/control)
 "uL" = (
 /obj/machinery/button/door{
 	id = "nukeop_ready";
@@ -7951,7 +8026,8 @@
 	height = 50;
 	id = "emergency_away";
 	name = "CentCom Emergency Shuttle Dock";
-	width = 50
+	width = 50;
+	json_key = "emergency"
 	},
 /turf/open/space,
 /area/space)
@@ -8311,6 +8387,14 @@
 	},
 /turf/open/floor/carpet,
 /area/wizard_station)
+"we" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'FOURTH WALL'.";
+	name = "\improper FOURTH WALL";
+	pixel_x = -32
+	},
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
 "wf" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light{
@@ -8333,6 +8417,31 @@
 	dir = 8
 	},
 /area/shuttle/syndicate/hallway)
+"wi" = (
+/obj/item/storage/toolbox/syndicate,
+/obj/item/crowbar/red,
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"wj" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"wk" = (
+/obj/structure/chair{
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
 "wl" = (
 /obj/machinery/light,
 /turf/open/floor/wood,
@@ -8622,6 +8731,21 @@
 	dir = 2
 	},
 /area/syndicate_mothership/control)
+"wZ" = (
+/turf/open/floor/plating/asteroid/snow/airless,
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/assault_pod)
+"xa" = (
+/turf/open/floor/plating/asteroid/snow/airless,
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/assault_pod)
 "xb" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -8810,6 +8934,21 @@
 /obj/structure/grille,
 /obj/structure/window/plastitanium,
 /turf/open/floor/plating,
+/area/shuttle/syndicate/airlock)
+"xE" = (
+/obj/structure/chair{
+	dir = 1;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"xF" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "xG" = (
 /turf/open/floor/plasteel/dark,
@@ -9454,6 +9593,13 @@
 	dir = 1
 	},
 /area/centcom/evac)
+"zn" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 1;
+	icon_state = "fakewindows"
+	},
+/area/wizard_station)
 "zo" = (
 /obj/structure/destructible/cult/tome,
 /turf/open/floor/engine/cult,
@@ -9615,6 +9761,13 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/centcom/evac)
+"zM" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 1;
+	icon_state = "fakewindows2"
+	},
+/area/wizard_station)
 "zN" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/engine/cult,
@@ -12949,6 +13102,18 @@
 "Il" = (
 /turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeobserve)
+"Im" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
+"In" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
+/area/tdome/tdomeobserve)
 "Io" = (
 /obj/item/storage/box/matches{
 	pixel_x = -3;
@@ -13108,6 +13273,13 @@
 	dir = 4
 	},
 /area/tdome/arena)
+"IK" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
 "IL" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -13126,6 +13298,13 @@
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"IO" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
@@ -13409,6 +13588,13 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
+"JE" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomehea";
+	name = "Heavy Supply"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
 "JF" = (
 /obj/machinery/computer/camera_advanced/abductor{
 	team_number = 1
@@ -13434,6 +13620,18 @@
 /area/tdome/arena)
 "JI" = (
 /turf/closed/indestructible/fakeglass,
+/area/tdome/tdomeadmin)
+"JJ" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/tdome/tdomeadmin)
+"JK" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
 /area/tdome/tdomeadmin)
 "JL" = (
 /obj/structure/rack,
@@ -13881,11 +14079,8 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "KT" = (
-/obj/machinery/computer/camera_advanced{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/wizard_station)
+/turf/closed/wall/mineral/titanium/interior,
+/area/centcom/evac)
 "KU" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
@@ -14295,6 +14490,106 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
+"Mj" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mk" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ml" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mm" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mn" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mo" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mp" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mq" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Mr" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"Ms" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
 "Mt" = (
 /obj/structure/chair{
 	dir = 4;
@@ -14312,12 +14607,23 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
+"Mv" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
 "Mw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
+"Mx" = (
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
@@ -14328,39 +14634,27 @@
 	height = 17;
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
+	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
 	},
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "outer blast door"
-	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_y = 26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	hidden = 1;
-	id = "syndicate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "syndicate infiltrator";
-	port_direction = 4;
-	roundstart_move = null;
-	width = 23
-	},
-/obj/structure/fans/tiny,
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
+"Mz" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"MA" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
-"Mz" = (
+"MB" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "MC" = (
@@ -14385,6 +14679,12 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"ME" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/wizard_station)
 
 (1,1,1) = {"
 aa
@@ -19443,7 +19743,7 @@ lI
 lI
 qE
 qE
-KT
+ME
 vj
 ya
 qZ
@@ -24249,7 +24549,7 @@ aa
 aa
 aa
 aa
-hh
+mB
 hh
 hh
 hh
@@ -26638,16 +26938,16 @@ kt
 kt
 kt
 kt
-yc
-yd
-yd
-yd
-yd
-yd
-yd
-yd
-yd
-yd
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -26889,22 +27189,22 @@ hl
 hl
 hl
 kt
-tY
-tZ
-tZ
-tZ
-tZ
-tZ
-yd
-yL
-zs
-yL
-AC
-Bj
-BT
-Cj
-CS
-Di
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -27146,22 +27446,22 @@ hl
 hl
 hl
 kt
-tZ
-uG
-vo
-vo
-vo
-xA
-yd
-yM
-zt
-zR
-zR
-Bk
-zR
-Ck
-CS
-Dj
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -27403,22 +27703,22 @@ kt
 kt
 kt
 kt
-tZ
-uH
-uH
-uH
-uH
-uH
-ye
-yN
-zt
-zS
-AD
-Bl
-BU
-Cl
-CS
-Dk
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -27653,29 +27953,29 @@ hl
 hl
 my
 hl
-oS
-oT
-oT
-oT
-oT
 hl
 hl
-tZ
-uH
-uH
-uH
-uH
-uH
-yd
-yO
-zt
-zT
-AE
-Bm
-yf
-yd
-yd
-Dl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -27910,26 +28210,26 @@ hl
 hl
 hl
 hl
-oT
-px
-pR
-qI
-oT
-rY
 hl
-tZ
-uI
-vp
-wf
-wR
-xB
-yd
-yP
-zt
-zT
-AE
-Bn
-yd
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 kt
@@ -28167,28 +28467,28 @@ hl
 hl
 hl
 hl
-oU
-py
-pS
-qI
-oT
-rZ
-rZ
-tZ
-tZ
-tZ
-tZ
-wS
-xC
-yf
-yQ
-yQ
-zU
-yQ
-yd
-yd
-rZ
-rZ
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -28424,28 +28724,28 @@ hl
 hl
 hl
 nx
-oU
-pz
-pT
-qI
-rb
-sa
-sY
-ua
-sY
-sY
-wg
-sb
-sb
-sb
-sb
-zu
-zV
-AF
-Bo
-BV
-Cm
-CT
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -28681,28 +28981,28 @@ hl
 hl
 hl
 hl
-oU
-pA
-pU
-qI
-rc
-sb
-sZ
-sZ
-sZ
-sb
-wh
-sb
-sZ
-sZ
-sZ
-sZ
-zV
-AF
-Bo
-BW
-Cm
-CU
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -28938,28 +29238,28 @@ hl
 my
 hl
 hl
-oU
-pB
-pT
-qI
-oT
-sc
-ta
-ub
-ta
-ta
-wg
-sb
-sb
-sb
-sb
-zv
-zV
-AF
-Bo
-BV
-Cm
-CV
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -29195,28 +29495,28 @@ hl
 hl
 hl
 hl
-oU
-pC
-pV
-qI
-oT
-rZ
-rZ
-vq
-vq
-vq
-vq
-wT
-xD
-yg
-yR
-yR
-zW
-yR
-yh
-yh
-rZ
-rZ
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -29452,26 +29752,26 @@ hl
 hl
 hl
 hl
-oT
-pD
-pW
-qI
-oT
-sd
 hl
-vq
-Mt
-Mt
-uc
-Mz
-Mt
-yh
-yS
-zw
-zX
-AG
-Bp
-yh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 kt
@@ -29709,29 +30009,29 @@ hl
 hl
 hl
 hl
-oV
-oT
-oT
-oT
-oT
 hl
 hl
-vq
-wU
-wU
-wU
-wU
-wU
-yh
-yT
-zw
-zX
-AG
-Bq
-yg
-yh
-yh
-Dm
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -29973,22 +30273,22 @@ kt
 kt
 kt
 kt
-vq
-wU
-wU
-wU
-wU
-wU
-yi
-yU
-zw
-zY
-AH
-Br
-zZ
-Cn
-CW
-Dn
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -30230,22 +30530,22 @@ nx
 hl
 hl
 kt
-vq
-Mu
-Mw
-Mw
-Mw
-MC
-yh
-yV
-zw
-zZ
-zZ
-Bs
-zZ
-Co
-CW
-Do
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -30487,22 +30787,22 @@ hl
 hl
 hl
 kt
-vt
-vq
-vq
+hl
+hl
+hl
 My
-vs
-vq
-yh
-yW
-zw
-Aa
-AI
-Bt
-BX
-Cn
-CW
-Dp
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -30750,16 +31050,16 @@ nz
 uJ
 nz
 kt
-yj
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hh
@@ -31770,7 +32070,7 @@ hl
 hl
 oW
 ku
-ku
+ng
 qJ
 re
 se
