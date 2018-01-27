@@ -192,7 +192,7 @@
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
-	var/datum/disease/advance/A = new random_virus(pick(2,6),6)
+	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
 	owner.viruses += A
 	A.affected_mob = owner
@@ -232,7 +232,7 @@
 	if(prob(33))
 		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRUE)
 	else
-		if(prob(25))
+		if(prob(20))
 			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRUE)
 		else
 			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRUE)
@@ -248,7 +248,7 @@
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
-	var/obj/structure/spider/spiderling/S = new(owner.dropLocation())
+	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
 	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
@@ -263,7 +263,7 @@
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.dropLocation())
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 
@@ -286,7 +286,11 @@
 	owner.visible_message("<span class='danger'>[owner]'s skin starts emitting electric arcs!</span>",\
 	"<span class='warning'>You feel electric energy building up inside you!</span>")
 	playsound(get_turf(owner), "sparks", 100, 1, -1)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/tesla_zap, owner, 4, 10000, FALSE, TRUE), rand(30, 100))
+	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
+
+/obj/item/organ/heart/gland/electric/proc/zap()
+	tesla_zap(owner, 4, 8000, FALSE, TRUE)
+	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem
 	cooldown_low = 50
@@ -300,17 +304,18 @@
 	..()
 	for(var/X in subtypesof(/datum/reagent/drug))
 		var/datum/reagent/R = X
-		possible_reagents += R.id
+		possible_reagents += initial(R.id)
 	for(var/X in subtypesof(/datum/reagent/medicine))
 		var/datum/reagent/R = X
-		possible_reagents += R.id
+		possible_reagents += initial(R.id)
 	for(var/X in typesof(/datum/reagent/toxin))
 		var/datum/reagent/R = X
-		possible_reagents += R.id
+		possible_reagents += initial(R.id)
 
 /obj/item/organ/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)
 	owner.reagents.add_reagent(chem_to_add, 2)
+	owner.adjustToxLoss(-2, TRUE, TRUE)
 	..()
 
 /obj/item/organ/heart/gland/plasma
