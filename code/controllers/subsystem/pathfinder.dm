@@ -6,14 +6,17 @@ SUBSYSTEM_DEF(pathfinder)
 	var/run
 	var/free
 	var/list/flow
+	var/static/list/revdir
 	var/static/space_type_cache
 	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
 /datum/controller/subsystem/pathfinder/Initialize()
+	revdir = list(SOUTH, NORTH, WEST, EAST)
 	space_type_cache = typecacheof(/turf/open/space)
 	run = 0
 	free = 1
-	flow = new/list(lcount)
+	flow = new()
+	flow.len=lcount
 
 
 
@@ -22,11 +25,11 @@ SUBSYSTEM_DEF(pathfinder)
 		run += 1
 		while(flow[free])
 			free = (free % lcount) + 1
-		flow[free] = TRUE
-
+		flow[free] = addtimer(CALLBACK(SSpathfinder, /datum/controller/subsystem/pathfinder.proc/found, free), 60, TIMER_STOPPABLE)
 		return free
 	else
 		return 0
 /datum/controller/subsystem/pathfinder/proc/found(l)
-	flow[l] = FALSE
+	deltimer(flow[l])
+	flow[l] = null
 	run -= 1

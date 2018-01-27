@@ -36,10 +36,18 @@ Actual Adjacent procs :
 	var/g		//A* movement cost variable
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
-	var/check = 0
+	var/bf		//bitflag for dir to expand
+	var/i		//id in turflist
 
-/datum/PathNode/New(s)
+/datum/PathNode/New(s,p,pg,ph,pnt,_bf,_i)
 	source = s
+	prevNode = p
+	g = pg
+	h = ph
+	f = g + h*(1+SSpathfinder.tiew)
+	nt = pnt
+	bf = _bf
+	i = i
 
 /datum/PathNode/proc/setp(p,pg,ph,pnt)
 	prevNode = p
@@ -74,9 +82,7 @@ Actual Adjacent procs :
 /proc/AStar(caller, var/turf/end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
 	//sanitation
 	var/turf/start = get_turf(caller)
-	if(!start)
-		return 0
-	if(start.z != end.z) //no PF between z levels
+	if((!start)||(start.z != end.z)||(start == end)) //no PF between z levels
 		return 0
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
@@ -88,24 +94,27 @@ Actual Adjacent procs :
 	while(!l)
 		stoplag(3)
 		l = SSpathfinder.getfree()
-	var/datum/PathNode/cur = start.Pathl[l]//current processed turf
-	if(cur.check)
-		SSpathfinder.found(l)
-		return 0
-	cur.check = 1
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
-	var/list/checked = new() //list of turfs with changed vars
+	var/list/openc = new() //open list for node check
+	var/list/checked = new() //list of processed nodes.To spare them from GC
 	var/list/path = null //the returned path, if any
 
-	checked.Add(cur)
 	//initialization
-	cur.setp(null,0,call(start,dist)(end),0)
+	var/datum/PathNode/cur = new /datum/PathNode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	var/datum/PathNode/CN
+	var/turf/T
 	open.Insert(cur)
+	openc[start] = cur
+	checked.Add(cur)
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		//get the lower f node on the open list
 		cur = open.Pop() //get the lower f turf in the open list
-		cur.check = 2 //and tell we've processed it
+		var/datum/PathNode/sw = openc[openc[openc.len]]
+		if(openc.len>1)
+			sw.i = cur.i
+			openc.Swap(cur.i,openc.len)
+		openc.len-=1//we need to serch only in open list.
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
@@ -123,31 +132,29 @@ Actual Adjacent procs :
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		//var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
-		for(var/k in 1 to GLOB.cardinals.len)
-			var/turf/T = get_step(cur.source,GLOB.cardinals[k])
-			var/datum/PathNode/CN = T.Pathl[l]  //current checking turf
-			if(T == exclude || (CN.check == 2))
-				continue
-			var/newg = cur.g + call(cur.source,dist)(T)
-
-			if(CN.check == 1)
-			//is already in open list, check if it's a better way from the current turf
-				if(newg < CN.g)
-					CN.setp(cur,newg,CN.h,cur.nt+1)
-					open.ReSort(CN)//reorder the changed element in the list
-			else
-			//is not already in open list, so add it
-				if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-					CN.check = 1
-					CN.setp(cur,newg,call(T,dist)(end),cur.nt+1)
-					open.Insert(CN)
-				else
-					CN.check = 2
-				checked.Add(CN)
+		for(var/i = 1 to 4)
+			if(cur.bf & GLOB.cardinals[i])
+				T = get_step(cur.source,i)
+				if(T != exclude)
+					CN = openc[T]  //current checking turf
+					var/newg = cur.g + call(cur.source,dist)(T)
+					if(CN)
+					//is already in open list, check if it's a better way from the current turf
+						CN.bf &= 15 ^ SSpathfinder.revdir[i] //we have no closed, so just cut off exceed dir
+						if(newg < CN.g)
+							CN.setp(cur,newg,CN.h,cur.nt+1)
+							open.ReSort(CN)//reorder the changed element in the list
+					else
+					//is not already in open list, so add it
+						if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+							CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15 ^ GLOB.cardinals[i],openc.len+1)
+							open.Insert(CN)
+							openc[T] = CN
+							checked.Add(CN)
+		cur.bf = 0
+		CN = null
 		CHECK_TICK
-	for(var/k in 1 to checked.len)
-		var/datum/PathNode/CN = checked[k]
-		CN.check = 0
+	//QDEL_LIST(checked)
 	checked = null
 	SSpathfinder.found(l)
 	//cleaning after us
@@ -195,15 +202,12 @@ Actual Adjacent procs :
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)
 	var/rdir = get_dir(T, src)
-
-	for(var/obj/structure/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return 1
-	for(var/obj/machinery/door/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return 1
 	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+		if(istype(O,/obj/structure/window)||istype(O,/obj/machinery/door/window))
+			if(!O.CanAStarPass(ID, adir))
+				return 1
+		else
+			if(!O.CanAStarPass(ID, rdir, caller))
+				return 1
 
 	return 0

@@ -29,7 +29,6 @@
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
-	var/list/Pathl
 	//var/datum/PathNode/PN//for a*
 
 /turf/vv_edit_var(var_name, new_value)
@@ -68,11 +67,7 @@
 		has_opaque_atom = TRUE
 
 	ComponentInitialize()
-	Pathl=new()
-	for(var/k in 1 to SSpathfinder.lcount)
-		Pathl.Add(new /datum/PathNode(src))
 
-	//PN = new /datum/PathNode(src)
 
 	return INITIALIZE_HINT_NORMAL
 
