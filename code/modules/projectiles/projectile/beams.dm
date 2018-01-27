@@ -101,6 +101,9 @@
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
+	
+/obj/item/projectile/beam/emitter/Range()
+//they go on forever
 
 /obj/item/projectile/beam/lasertag
 	name = "laser tag beam"
