@@ -11665,9 +11665,7 @@
 "CW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1;
-	piping_layer = 3;
-	pixel_x = 0;
-	pixel_y = 0
+	piping_layer = 3
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
@@ -11705,18 +11703,14 @@
 "Da" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
-	pixel_x = 0;
-	pixel_y = 0
+	piping_layer = 3
 	},
 /turf/closed/mineral/snowmountain/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Db" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
-	piping_layer = 3;
-	pixel_x = 0;
-	pixel_y = 0
+	piping_layer = 3
 	},
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = 32
@@ -11726,9 +11720,7 @@
 "Dc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
-	pixel_x = 0;
-	pixel_y = 0
+	piping_layer = 3
 	},
 /turf/closed/wall,
 /area/awaymission/snowdin/post/mining_dock)
@@ -13440,9 +13432,7 @@
 "HK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
-	piping_layer = 3;
-	pixel_x = 0;
-	pixel_y = 0
+	piping_layer = 3
 	},
 /obj/machinery/space_heater,
 /obj/structure/sign/warning/xeno_mining{
