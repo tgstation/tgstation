@@ -3,7 +3,7 @@
 	name = "color pin"
 
 /datum/integrated_io/color/ask_for_pin_data(mob/user)
-	var/new_data = input("Please select a color.","[src] color writing") as null|color
+	var/new_data = input("Please select a color.","[src] color writing") as color|null
 	if(holder.check_interactivity(user) )
 		to_chat(user, "<span class='notice'>You input a <font color='[new_data]'>new color</font> into the pin.</span>")
 		write_data_to_pin(new_data)

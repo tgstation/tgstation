@@ -280,14 +280,14 @@
 	var/cooldown = 0
 
 /obj/item/device/harmalarm/emag_act(mob/user)
-	emagged = !emagged
-	if(emagged)
+	obj_flags ^= EMAGGED
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
 	else
 		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
 
 /obj/item/device/harmalarm/attack_self(mob/user)
-	var/safety = !emagged
+	var/safety = !(obj_flags & EMAGGED)
 	if(cooldown > world.time)
 		to_chat(user, "<font color='red'>The device is still recharging!</font>")
 		return

@@ -149,6 +149,20 @@
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	list_reagents = list("cleaner" = 250)
 
+/obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(do_mob(user,user,30))	
+		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
+			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
+			src.spray(user)
+			return BRUTELOSS
+		else
+			user.visible_message("<span class='suicide'>[user] pulls the trigger...but \the [src] is empty!</span>")
+			return SHAME
+	else
+		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
+		return
+
 //spray tan
 /obj/item/reagent_containers/spray/spraytan
 	name = "spray tan"
@@ -183,6 +197,10 @@
 	stream_range = 4
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
+
+/obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")
+	return OXYLOSS
 
 // Fix pepperspraying yourself
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)

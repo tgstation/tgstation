@@ -43,7 +43,7 @@
 			return FALSE
 		. = ValidateAndSet("[var_value]")
 		if(.)
-			var_edited = TRUE
+			datum_flags |= DF_VAR_EDITED
 		return
 	if(var_name in banned_edits)
 		return FALSE

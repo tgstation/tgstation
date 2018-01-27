@@ -23,9 +23,6 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
-"g" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav)
 "h" = (
 /mob/living/simple_animal/pet/gondola,
 /turf/open/floor/plating/asteroid/airless,
@@ -761,7 +758,7 @@ b
 b
 b
 b
-g
+c
 c
 c
 c
