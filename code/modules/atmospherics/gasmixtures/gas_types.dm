@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 /datum/gas/plasma
 	id = "plasma"
 	specific_heat = 200
-	name = "Plasma"
+	name = "Phoron"
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 /datum/gas/hypernoblium
 	id = "nob"
 	specific_heat = 2000
-	name = "Hyper-noblium"
+	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
