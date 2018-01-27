@@ -117,8 +117,9 @@
 		heat_g = LERP(heat_g,255,normal_amt)
 		heat_b = LERP(heat_b,255,normal_amt)
 		greyscale_fire -= normal_amt
-	if(temperature > 150000) //Past this temperature the fire will gradually turn a bright purple
-		heat_r = max(heat_r,min(1,log((temperature - 150000) / 100))*255)
+	if(temperature > 40000) //Past this temperature the fire will gradually turn a bright purple
+		var/purple_amt = temperature < LERP(40000,200000,0.5) ? gauss_lerp(temperature, 40000, 200000) : 1
+		heat_r = LERP(heat_r,255,purple_amt)
 	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
 		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
 		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
@@ -134,10 +135,15 @@
 		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
-		heat_r = LERP(heat_r,255,fusion_amt)
-		heat_g = LERP(heat_g,200,fusion_amt)
-		heat_b = LERP(heat_b,10,fusion_amt)
+		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "druggy")
+		rainbow_overlay.blend_mode = BLEND_ADD
+		rainbow_overlay.alpha = fusion_amt * 255
+		rainbow_overlay.appearance_flags = RESET_COLOR
+		heat_r = LERP(heat_r,150,fusion_amt)
+		heat_g = LERP(heat_g,150,fusion_amt)
+		heat_b = LERP(heat_b,150,fusion_amt)
 		add_overlay(fusion_overlay)
+		add_overlay(rainbow_overlay)
 
 	set_light(l_color = rgb(LERP(250,heat_r,greyscale_fire),LERP(160,heat_g,greyscale_fire),LERP(25,heat_b,greyscale_fire)))
 
