@@ -58,15 +58,14 @@
 	..()
 
 /obj/item/greentext/process()
-	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
+	if(new_holder && is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
-		if(!(new_holder in SSticker.mode.traitors))
-			SSticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind
 		new_holder.mind.objectives += O
+		new_holder.mind.add_antag_datum(/datum/antagonist/auto_custom)
 		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE

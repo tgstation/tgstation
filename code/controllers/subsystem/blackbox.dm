@@ -8,12 +8,17 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	var/list/versions = list("time_dilation_current" = 2,
-							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
-
+	var/list/versions = list("antagonists" = 3,
+							"admin_secrets_fun_used" = 2,
+							"time_dilation_current" = 3,
+							"science_techweb_unlock" = 2,
+							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
+	record_feedback("amount", "random_seed", Master.random_seed)
+	record_feedback("amount", "dm_version", DM_VERSION)
+	record_feedback("amount", "byond_version", world.byond_version)
 	. = ..()
 
 //poll population
@@ -56,7 +61,7 @@ SUBSYSTEM_DEF(blackbox)
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
-	for (var/obj/machinery/message_server/MS in GLOB.message_servers)
+	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
 		if (MS.pda_msgs.len)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
@@ -185,7 +190,7 @@ Versioning
 						"gun_fired" = 2)
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(key_type, key, increment, data, overwrite)
-	if(sealed || !key_type || !istext(key) || !isnum(increment) || !data)
+	if(sealed || !key_type || !istext(key) || !isnum(increment || !data))
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(key, key_type)
 	switch(key_type)
@@ -218,7 +223,10 @@ Versioning
 			var/pos = length(FV.json["data"]) + 1
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+				if(islist(data[i]))
+					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
+				else
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]"
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 

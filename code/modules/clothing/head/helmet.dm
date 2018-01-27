@@ -29,7 +29,7 @@
 
 		if(S.secured)
 			qdel(S)
-			var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+			var/obj/item/bot_assembly/secbot/A = new
 			user.put_in_hands(A)
 			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
 			qdel(src)
@@ -283,7 +283,7 @@
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
-				S.loc = get_turf(user)
+				S.forceMove(user.drop_location())
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()

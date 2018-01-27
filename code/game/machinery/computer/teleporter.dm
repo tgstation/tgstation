@@ -162,13 +162,14 @@
 	if(regime_set == "Teleporter")
 		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
-				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
+				var/area/A = get_area(R)
+				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !ismob(I.loc))
+			if(!I.imp_in || !isliving(I.loc))
 				continue
 			else
-				var/mob/M = I.loc
+				var/mob/living/M = I.loc
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
@@ -185,7 +186,8 @@
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			if(is_eligible(R))
-				L[avoid_assoc_duplicate_keys(R.loc.loc.name, areaindex)] = R
+				var/area/A = get_area(R)
+				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
@@ -203,7 +205,7 @@
 	var/turf/T = get_turf(AM)
 	if(!T)
 		return FALSE
-	if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
+	if(is_centcom_level(T.z) || is_away_level(T.z))
 		return FALSE
 	var/area/A = get_area(T)
 	if(!A || A.noteleport)

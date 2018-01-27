@@ -164,7 +164,7 @@
 		assembled = TRUE
 		boost_chargerate *= cap
 		boost_drain -= manip
-		powersetting_high = Clamp(laser, 0, 3)
+		powersetting_high = CLAMP(laser, 0, 3)
 		emp_disable_threshold = bin*1.25
 		stabilizer_decay_amount = scan*3.5
 		airbrake_decay_amount = manip*8
@@ -194,15 +194,15 @@
 /obj/item/device/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
 	if(reduce_amount_total != 0)
 		if(momentum_x > 0)
-			momentum_x = Clamp(momentum_x - reduce_amount_total, 0, momentum_max)
+			momentum_x = CLAMP(momentum_x - reduce_amount_total, 0, momentum_max)
 		else if(momentum_x < 0)
-			momentum_x = Clamp(momentum_x + reduce_amount_total, -momentum_max, 0)
+			momentum_x = CLAMP(momentum_x + reduce_amount_total, -momentum_max, 0)
 		if(momentum_y > 0)
-			momentum_y = Clamp(momentum_y - reduce_amount_total, 0, momentum_max)
+			momentum_y = CLAMP(momentum_y - reduce_amount_total, 0, momentum_max)
 		else if(momentum_y < 0)
-			momentum_y = Clamp(momentum_y + reduce_amount_total, -momentum_max, 0)
-	momentum_x = Clamp(momentum_x + amountx, -momentum_max, momentum_max)
-	momentum_y = Clamp(momentum_y + amounty, -momentum_max, momentum_max)
+			momentum_y = CLAMP(momentum_y + reduce_amount_total, -momentum_max, 0)
+	momentum_x = CLAMP(momentum_x + amountx, -momentum_max, momentum_max)
+	momentum_y = CLAMP(momentum_y + amounty, -momentum_max, momentum_max)
 	calculate_momentum_speed()
 
 /obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
@@ -314,7 +314,7 @@
 
 /obj/item/device/flightpack/proc/handle_damage()
 	if(emp_damage)
-		emp_damage = Clamp(emp_damage-emp_heal_amount, 0, emp_disable_threshold * 10)
+		emp_damage = CLAMP(emp_damage-emp_heal_amount, 0, emp_disable_threshold * 10)
 		if(emp_damage >= emp_disable_threshold)
 			emp_disabled = TRUE
 		if(emp_disabled && (emp_damage <= 0.5))
@@ -347,11 +347,11 @@
 
 /obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
-		boost_charge = Clamp(boost_charge-boost_drain, 0, boost_maxcharge)
+		boost_charge = CLAMP(boost_charge-boost_drain, 0, boost_maxcharge)
 		if(boost_charge < 1)
 			deactivate_booster()
 	if(boost_charge < boost_maxcharge)
-		boost_charge = Clamp(boost_charge+boost_chargerate, 0, boost_maxcharge)
+		boost_charge = CLAMP(boost_charge+boost_chargerate, 0, boost_maxcharge)
 
 /obj/item/device/flightpack/proc/cycle_power()
 	powersetting < powersetting_high? (powersetting++) : (powersetting = 1)
@@ -435,7 +435,7 @@
 	var/nopass = FALSE
 	if(!A.density)
 		return TRUE
-	nopass = (A.locked || A.stat || A.emagged || A.welded)
+	nopass = (A.locked || A.stat || (A.obj_flags & EMAGGED) || A.welded)
 	if(A.requiresID())
 		if((!A.allowed(wearer)) && !A.emergency)
 			nopass = TRUE
@@ -856,21 +856,22 @@
 	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/unlock_suit(mob/wearer)
-	if(suittoggled)
-		usermessage("You must retract the helmet before unlocking your suit!", "boldwarning")
-		return FALSE
-	if(pack && pack.flight)
-		usermessage("You must shut off the flight-pack before unlocking your suit!", "boldwarning")
-		return FALSE
-	if(deployedpack)
-		usermessage("Your flightpack must be fully retracted first!", "boldwarning")
-		return FALSE
-	if(deployedshoes)
-		usermessage("Your flight shoes must be fully retracted first!", "boldwarning")
-		return FALSE
-	if(wearer)
-		user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
-	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
+	if(user)
+		if(suittoggled)
+			usermessage("You must retract the helmet before unlocking your suit!", "boldwarning")
+			return FALSE
+		if(pack && pack.flight)
+			usermessage("You must shut off the flight-pack before unlocking your suit!", "boldwarning")
+			return FALSE
+		if(deployedpack)
+			usermessage("Your flightpack must be fully retracted first!", "boldwarning")
+			return FALSE
+		if(deployedshoes)
+			usermessage("Your flight shoes must be fully retracted first!", "boldwarning")
+			return FALSE
+		if(wearer)
+			user.visible_message("<span class='notice'>[wearer]'s flight suit detaches from their body, becoming nothing more then a bulky metal skeleton.</span>")
+	playsound(src, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = initial(strip_delay)
 	locked = FALSE
@@ -911,7 +912,7 @@
 			user.update_inv_wear_suit()
 			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.forceMove(src)
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	deployedpack = FALSE
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/extend_flightshoes(forced = FALSE)
@@ -936,7 +937,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/retract_flightshoes(forced = FALSE)
 	shoes.flags_1 &= ~NODROP_1
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
 		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()
@@ -1092,11 +1093,12 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
 	..()
-	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = GLOB.huds[hudtype]
-		H.remove_hud_from(wearer)
-	if(zoom)
-		toggle_zoom(wearer, TRUE)
+	if(wearer)
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = GLOB.huds[hudtype]
+			H.remove_hud_from(wearer)
+		if(zoom)
+			toggle_zoom(wearer, TRUE)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)

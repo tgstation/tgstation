@@ -169,9 +169,8 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
-	var/area/A = get_area(src)
 	if(name == initial(name))
-		name = "[A.name] Air Alarm"
+		name = "[get_area_name(src)] Air Alarm"
 
 	update_icon()
 
@@ -203,7 +202,7 @@
 	var/data = list(
 		"locked" = locked,
 		"siliconUser" = user.has_unlimited_silicon_privilege,
-		"emagged" = emagged,
+		"emagged" = (obj_flags & EMAGGED ? 1 : 0),
 		"danger_level" = danger_level,
 	)
 
@@ -289,7 +288,7 @@
 		data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
 		data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
 		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 
 		var/datum/tlv/selected
@@ -433,14 +432,9 @@
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = command
+	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
-
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return 1
@@ -452,11 +446,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -470,11 +460,18 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 1,
-					"n2o_scrub" = 1,
-					"rare_scrub"= 1,
-					"water_vapor_scrub"= 1,
+					"set_filters" = list(
+						/datum/gas/carbon_dioxide,
+						/datum/gas/plasma,
+						/datum/gas/water_vapor,
+						/datum/gas/hypernoblium,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/nitryl,
+						/datum/gas/tritium,
+						/datum/gas/bz,
+						/datum/gas/stimulum,
+						/datum/gas/pluoxium
+					),
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -501,11 +498,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"co2_scrub" = 1,
-					"tox_scrub" = 0,
-					"n2o_scrub" = 0,
-					"rare_scrub"= 0,
-					"water_vapor_scrub"= 0,
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -630,14 +623,10 @@
 	if(!frequency)
 		return
 
-	var/area/A = get_area(src)
-
-	var/datum/signal/alert_signal = new
-	alert_signal.source = src
-	alert_signal.transmission_method = TRANSMISSION_RADIO
-	alert_signal.data["zone"] = A.name
-	alert_signal.data["type"] = "Atmospheric"
-
+	var/datum/signal/alert_signal = new(list(
+		"zone" = get_area_name(src),
+		"type" = "Atmospheric"
+	))
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)
@@ -645,7 +634,7 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal,null,-1)
+	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)
@@ -698,7 +687,7 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the fire alarm!</span>")
+					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
 					return
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
@@ -708,7 +697,7 @@
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
 						aidisabled = 0
-						locked = TRUE
+						locked = FALSE
 						mode = 1
 						shorted = 0
 						post_alert(0)
@@ -767,9 +756,9 @@
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
 	playsound(src, "sparks", 50, 1)
 

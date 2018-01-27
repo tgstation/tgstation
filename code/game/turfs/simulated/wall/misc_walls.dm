@@ -55,7 +55,7 @@
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
-	baseturf = /turf/open/floor/clockwork/reebe
+	baseturfs = /turf/open/floor/clockwork/reebe
 	var/heated
 	var/obj/effect/clockwork/overlay/wall/realappearence
 
@@ -70,6 +70,10 @@
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null
+	if(heated)
+		var/mob/camera/eminence/E = get_eminence()
+		if(E)
+			E.superheated_walls--
 	return ..()
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
@@ -88,20 +92,20 @@
 /turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
-		ChangeTurf(/turf/open/floor/plating)
+		ScrapeAway()
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
-		ChangeTurf(/turf/open/floor/clockwork)
+		ScrapeAway()
 
 	for(var/obj/O in src) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
-			O.loc = src
+			O.forceMove(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)

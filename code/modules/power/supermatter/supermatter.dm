@@ -317,10 +317,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
 	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
-		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling + Clamp(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+		powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
-		powerloss_dynamic_scaling = Clamp(powerloss_dynamic_scaling - 0.05,0, 1)
-	powerloss_inhibitor = Clamp(1-(powerloss_dynamic_scaling * Clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
+		powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,0, 1)
+	powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
 	if(matter_power)
 		var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
@@ -368,7 +368,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
-			l.hallucination = Clamp(0, 200, l.hallucination)
+			l.hallucination = CLAMP(0, 200, l.hallucination)
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
@@ -386,7 +386,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 					supermatter_zap(src, 5, min(power*2, 20000))
 		else if (damage > damage_penalty_point && prob(20))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, 1, extrarange = 10)
-			supermatter_zap(src, 5, Clamp(power*2, 4000, 20000))
+			supermatter_zap(src, 5, CLAMP(power*2, 4000, 20000))
 
 		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_pull(src, power/750)
@@ -521,6 +521,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
+	if(nom.incorporeal_move || nom.status_flags & GODMODE)
+		return
 	if(!vis_msg)
 		vis_msg = "<span class='danger'>[nom] reaches out and touches [src], inducing a resonance... [nom.p_their()] body starts to glow and bursts into flames before flashing into ash"
 	if(!mob_msg)
@@ -536,12 +538,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
 	if(istype(W, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = W
 		playsound(src, W.usesound, 100, 1)
-		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
+		to_chat(user, "<span class='notice'>You carefully begin to scrape [src] with [W]...</span>")
 		if(do_after(user, 60 * W.toolspeed, TRUE, src))
-			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
-			new /obj/item/nuke_core/supermatter_sliver(drop_location())
-			matter_power += 200
+			if (scalpel.usesLeft)
+				to_chat(user, "<span class='notice'>You extract a sliver from [src]. [src] begins to react violently!</span>")
+				new /obj/item/nuke_core/supermatter_sliver(drop_location())
+				matter_power += 200
+				scalpel.usesLeft--
+				if (!scalpel.usesLeft) 
+					to_chat(user, "<span class='notice'>A tiny piece of [W] falls off, rendering it useless!</span>")
+			else 
+				to_chat(user, "<span class='notice'>You fail to extract a sliver from [src]. [W] isn't sharp enough anymore!</span>")
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
@@ -571,6 +580,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/user = AM
+		if(user.status_flags & GODMODE)
+			return
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust()

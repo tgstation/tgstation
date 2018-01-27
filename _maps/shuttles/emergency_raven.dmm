@@ -893,7 +893,7 @@
 	},
 /area/shuttle/escape)
 "cf" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/titanium/glass{
 	name = "Shuttle Engine Room"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
@@ -901,7 +901,7 @@
 	},
 /area/shuttle/escape)
 "cg" = (
-/obj/machinery/door/airlock/glass_titanium{
+/obj/machinery/door/airlock/titanium/glass{
 	name = "Shuttle Engine Room"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
@@ -1099,7 +1099,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
-/area/space)
+/area/template_noop)
 "eN" = (
 /obj/machinery/light{
 	dir = 4

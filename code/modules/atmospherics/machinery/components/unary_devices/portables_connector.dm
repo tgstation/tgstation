@@ -13,7 +13,7 @@
 
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	air_contents.volume = 0
 

@@ -142,9 +142,12 @@
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
-	baseturf = /turf/open/floor/clockwork
+	baseturfs = /turf/open/floor/clockwork
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/clockwork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
+	return
 
 /turf/open/floor/clockwork/Initialize()
 	. = ..()
@@ -161,9 +164,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
-	if(baseturf == type)
-		return
-	..()
+	. = ..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
 
@@ -196,7 +197,7 @@
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(baseturf == type)
+	if(baseturfs == type)
 		return
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
@@ -225,8 +226,9 @@
 	name = "cogplate"
 	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
 	icon_state = "reebe"
-	baseturf = /turf/open/floor/clockwork/reebe
+	baseturfs = /turf/open/floor/clockwork/reebe
 	uses_overlay = FALSE
+	planetary_atmos = TRUE
 
 /turf/open/floor/bluespace
 	slowdown = -1

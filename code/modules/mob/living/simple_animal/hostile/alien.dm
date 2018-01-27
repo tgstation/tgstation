@@ -164,6 +164,10 @@
 	icon_living = "maid"
 	icon_dead = "maid_dead"
 
+/mob/living/simple_animal/hostile/alien/maid/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cleaning)
+
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
@@ -171,6 +175,6 @@
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target
-		M.clean_blood()
+		M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		visible_message("[src] polishes \the [target].")
 		return TRUE

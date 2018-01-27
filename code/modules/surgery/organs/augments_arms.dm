@@ -61,7 +61,7 @@
 /obj/item/organ/cyberimp/arm/emag_act()
 	return 0
 
-/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
+/obj/item/organ/cyberimp/arm/emp_act(severity)
 	if(prob(15/severity) && owner)
 		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
 		// give the owner an idea about why his implant is glitching
@@ -110,7 +110,7 @@
 
 	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
 	if(!result)
-		to_chat(owner, "<span class='warning'>Your [src] fails to activate!</span>")
+		to_chat(owner, "<span class='warning'>Your [name] fails to activate!</span>")
 		return
 
 	// Activate the hand that now holds our item.

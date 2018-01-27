@@ -1,6 +1,6 @@
 /obj/structure/chair/e_chair
 	name = "electric chair"
-	desc = "Looks absolutely SHOCKING!\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "Looks absolutely SHOCKING!"
 	icon_state = "echair0"
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1
@@ -15,7 +15,7 @@
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
 		playsound(loc, W.usesound, 50, 1)
 		C.setDir(dir)
-		part.loc = loc
+		part.forceMove(loc)
 		part.master = null
 		part = null
 		qdel(src)

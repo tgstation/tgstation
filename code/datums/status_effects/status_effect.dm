@@ -9,6 +9,7 @@
 	var/mob/living/owner //The mob affected by the status effect.
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
 	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
+	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 

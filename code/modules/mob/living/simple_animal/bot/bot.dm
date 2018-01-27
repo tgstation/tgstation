@@ -88,6 +88,7 @@
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
+	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
@@ -131,7 +132,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.subspace_transmission = 1
+	Radio.subspace_transmission = TRUE
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 
@@ -225,7 +226,6 @@
 	return //we use a different hud
 
 /mob/living/simple_animal/bot/handle_automated_action() //Master process which handles code common across most bots.
-	set background = BACKGROUND_ENABLED
 	diag_hud_set_botmode()
 
 	if (ignorelistcleanuptimer % 300 == 0) // Every 300 actions, clean up the ignore list from old junk
@@ -369,6 +369,24 @@
 		Radio.talk_into(src, message, message_mode, spans, language)
 		return REDUCE_RANGE
 
+/mob/living/simple_animal/bot/proc/drop_part(obj/item/drop_item, dropzone)
+	var/dropped_item = new drop_item(dropzone)
+	drop_item = null
+
+	if(istype(dropped_item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/dropped_cell = dropped_item
+		dropped_cell.charge = 0
+		dropped_cell.update_icon()
+
+	else if(istype(dropped_item, /obj/item/storage))
+		var/obj/item/storage/S = dropped_item
+		S.contents = list()
+
+	else if(istype(dropped_item, /obj/item/gun/energy))
+		var/obj/item/gun/energy/dropped_gun = dropped_item
+		dropped_gun.cell.charge = 0
+		dropped_gun.update_icon()
+
 //Generalized behavior code, override where needed!
 
 /*
@@ -488,7 +506,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
-	var/area/end_area = get_area(waypoint)
 
 	//For giving the bot temporary all-access.
 	var/obj/item/card/id/all_access = new /obj/item/card/id
@@ -500,14 +517,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 	ai_waypoint = waypoint
 
 	if(path && path.len) //Ensures that a valid path is calculated!
+		var/end_area = get_area_name(waypoint)
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 600, TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area.name]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
+			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
 		if(message)
-			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>")
+			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination.</span>")
 		pathset = 1
 		mode = BOT_RESPONDING
 		tries = 0

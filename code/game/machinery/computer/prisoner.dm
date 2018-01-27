@@ -56,7 +56,7 @@
 
 			var/loc_display = "Unknown"
 			var/mob/living/M = T.imp_in
-			if((Tr.z in GLOB.station_z_levels) && !isspaceturf(M.loc))
+			if(is_station_level(Tr.z) && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
 
@@ -100,7 +100,7 @@
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
-						inserted_id.loc = get_turf(src)
+						inserted_id.forceMove(drop_location())
 						inserted_id.verb_pickup()
 						inserted_id = null
 					if("reset")

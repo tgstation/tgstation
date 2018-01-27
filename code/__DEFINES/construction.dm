@@ -23,6 +23,11 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//airlock assembly construction states
+#define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
+#define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
+#define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
+
 //plastic flaps construction states
 #define PLASTIC_FLAPS_NORMAL 0
 #define PLASTIC_FLAPS_DETACHED 1

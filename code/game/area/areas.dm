@@ -62,6 +62,7 @@
 	var/list/firealarms
 	var/firedoors_last_closed_on = 0
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
+	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
 	var/holomap_color
 	var/holomap_marker
@@ -79,7 +80,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z in GLOB.station_z_levels))
+		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
@@ -110,6 +111,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
+	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	if(requires_power)
 		luminosity = 0
@@ -387,9 +389,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			icon_state = "blue-red"
 	else
 		var/weather_icon
-		for(var/V in SSweather.existing_weather)
+		for(var/V in SSweather.processing)
 			var/datum/weather/W = V
-			if(src in W.impacted_areas)
+			if(W.stage != END_STAGE && (src in W.impacted_areas))
 				W.update_areas()
 				weather_icon = TRUE
 		if(!weather_icon)

@@ -173,7 +173,7 @@
 				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
 
 		wisp.stop_orbit()
-		wisp.loc = src
+		wisp.forceMove(src)
 		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -413,7 +413,7 @@
 
 /obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
 	if(bag)
-		bag.loc = user
+		bag.forceMove(user)
 		bag.attackby(W, user, params)
 
 
@@ -422,7 +422,7 @@
 		return
 	if(loc == user && user.back && user.back == src)
 		if(bag)
-			bag.loc = user
+			bag.forceMove(user)
 			bag.attack_hand(user)
 	else
 		..()
@@ -466,75 +466,6 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
-
-//Boat
-
-/obj/vehicle/ridden/lavaboat
-	name = "lava boat"
-	desc = "A boat used for traversing lava."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	can_buckle = TRUE
-
-/obj/vehicle/ridden/lavaboat/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = /obj/item/oar
-	D.allowed_turf_typecache = typecacheof(/turf/open/lava)
-
-/obj/item/oar
-	name = "oar"
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "oar"
-	item_state = "oar"
-	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
-	desc = "Not to be confused with the kind Research hassles you for."
-	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-
-/datum/crafting_recipe/oar
-	name = "goliath bone oar"
-	result = /obj/item/oar
-	reqs = list(/obj/item/stack/sheet/bone = 2)
-	time = 15
-	category = CAT_PRIMAL
-
-/datum/crafting_recipe/boat
-	name = "goliath hide boat"
-	result = /obj/vehicle/ridden/lavaboat
-	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
-	time = 50
-	category = CAT_PRIMAL
-
-//Dragon Boat
-
-
-/obj/item/ship_in_a_bottle
-	name = "ship in a bottle"
-	desc = "A tiny ship inside a bottle."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "ship_bottle"
-
-/obj/item/ship_in_a_bottle/attack_self(mob/user)
-	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	new /obj/vehicle/ridden/lavaboat/dragon(get_turf(src))
-	qdel(src)
-
-/obj/vehicle/ridden/lavaboat/dragon
-	name = "mysterious boat"
-	desc = "This boat moves where you will it, without the need for an oar."
-	icon_state = "dragon_boat"
-
-/obj/vehicle/ridden/lavaboat/dragon/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
-	D.keytype = null
 
 //Potion of Flight
 /obj/item/reagent_containers/glass/bottle/potion
@@ -587,7 +518,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT || i == ZLEVEL_CITYOFCOGS)
+		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -657,7 +588,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -800,13 +731,13 @@
 	force = 0
 	var/ghost_counter = ghost_check()
 
-	force = Clamp((ghost_counter * 4), 0, 75)
+	force = CLAMP((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
 /obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
-	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
+	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 

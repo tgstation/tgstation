@@ -125,7 +125,7 @@
 	var/msg = "[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Godmode", "[M.status_flags & GODMODE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
@@ -373,7 +373,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
 	if(traitordatum)
 		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 		traitordatum.equip()
@@ -392,7 +392,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/list/ninja_spawn = list()
 			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 				ninja_spawn += L
-			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(/datum/antagonist/ninja)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
 				new_character.forceMove(pick(ninja_spawn))
@@ -472,7 +472,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "") as message|null
 	if(!input)
 		return
 
@@ -523,7 +523,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		if(isturf(D))
 			var/turf/T = D
-			T.ChangeTurf(T.baseturf)
+			T.ScrapeAway()
 		else
 			qdel(D)
 
@@ -747,7 +747,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -980,7 +980,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Antag HUD", "[adding_hud]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Antag HUD", "[adding_hud ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/has_antag_hud()
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
@@ -1199,7 +1199,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if (GLOB.hub_visibility && !world.reachable)
 		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
 
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
@@ -1207,7 +1207,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1229,6 +1229,12 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			bluespace_artillery(target)
 		if(ADMIN_PUNISHMENT_FIREBALL)
 			new /obj/effect/temp_visual/target(get_turf(target))
+		if(ADMIN_PUNISHMENT_ROD)
+			var/turf/T = get_turf(target)
+			var/startside = pick(GLOB.cardinals)
+			var/turf/startT = spaceDebrisStartLoc(startside, T.z)
+			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
+			new /obj/effect/immovablerod(startT, endT,target)
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)
@@ -1255,6 +1261,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN))
 		return
 
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
+		return
+
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
@@ -1267,6 +1277,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 	if(!C)
 		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
 		return
 
 	var/list/body = list()

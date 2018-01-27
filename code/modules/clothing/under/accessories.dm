@@ -15,11 +15,11 @@
 		if(U.pockets) // storage items conflict
 			return FALSE
 
-		pockets.loc = U
+		pockets.forceMove(U)
 		U.pockets = pockets
 
 	U.attached_accessory = src
-	loc = U
+	forceMove(U)
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
@@ -28,8 +28,7 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] += armor[armor_type]
+	U.armor = U.armor.attachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_equip(U, user)
@@ -39,11 +38,10 @@
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(pockets && pockets == U.pockets)
-		pockets.loc = src
+		pockets.forceMove(src)
 		U.pockets = null
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] -= armor[armor_type]
+	U.armor = U.armor.detachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_dropped(U, user)
@@ -135,7 +133,7 @@
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
-							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <font color='blue'>[name]</font>! \n- [input]"
+							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")

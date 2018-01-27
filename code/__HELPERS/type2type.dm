@@ -65,6 +65,7 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
+//returns an empty list if the file doesn't exist
 /world/proc/file2list(filename, seperator="\n", trim = TRUE)
 	if (trim)
 		return splittext(trim(file2text(filename)),seperator)
@@ -117,7 +118,7 @@
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
 
-	degree = SimplifyDegrees(degree)
+	degree = SIMPLIFY_DEGREES(degree)
 	switch(degree)
 		if(0 to 22.5) //north requires two angle ranges
 			return NORTH

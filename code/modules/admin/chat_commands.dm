@@ -47,7 +47,9 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	return IrcPm(target, all_params.Join(" "), sender)
+	var/res = IrcPm(target, all_params.Join(" "), sender)
+	if(res != "Message Successful")
+		return res
 
 /datum/server_tools_command/namecheck
 	name = "namecheck"
@@ -81,3 +83,30 @@ GLOBAL_LIST(round_end_notifiees)
 	LAZYINITLIST(GLOB.round_end_notifiees)
 	GLOB.round_end_notifiees[sender] = TRUE
 	return "I will notify [sender] when the round ends."
+
+/datum/server_tools_command/sdql
+	name = "sdql"
+	help_text = "Runs an SDQL query"
+	admin_only = TRUE
+
+/datum/server_tools_command/sdql/Run(sender, params)
+	if(GLOB.AdminProcCaller)
+		return "Unable to run query, another admin proc call is in progress. Try again later."
+	GLOB.AdminProcCaller = "CHAT_[sender]"	//_ won't show up in ckeys so it'll never match with a real admin
+	var/list/results = world.SDQL2_query(params, GLOB.AdminProcCaller, GLOB.AdminProcCaller)
+	GLOB.AdminProcCaller = null
+	if(!results)
+		return "Query produced no output"
+	var/list/text_res = results.Copy(1, 3)
+	var/list/refs = results.len > 3 ? results.Copy(4) : null
+	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
+	
+/datum/server_tools_command/reload_admins
+	name = "reload_admins"
+	help_text = "Forces the server to reload admins."
+	admin_only = TRUE
+
+/datum/server_tools_command/reload_admins/Run(sender, params)
+	load_admins()
+	log_admin("[sender] reloaded admins via chat command.")
+	return "Admins reloaded."

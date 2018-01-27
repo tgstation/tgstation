@@ -38,12 +38,12 @@
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		if(H.mind)
 			var/datum/mind/M = H.mind
-			if(M.assigned_role && !(M in SSticker.mode.traitors))
+			if(M.assigned_role && !(M.has_antag_datum(/datum/antagonist)))
 				for(var/job in jobs_to_revolt)
 					if(M.assigned_role == job)
 						citizens += H
-						SSticker.mode.traitors += M
 						M.special_role = "separatist"
+						M.add_antag_datum(/datum/antagonist/auto_custom)
 						H.log_message("<font color='red'>Was made into a separatist, long live [nation]!</font>", INDIVIDUAL_ATTACK_LOG)
 						to_chat(H, "<B>You are a separatist! [nation] forever! Protect the sovereignty of your newfound land with your comrades in arms!</B>")
 	if(citizens.len)

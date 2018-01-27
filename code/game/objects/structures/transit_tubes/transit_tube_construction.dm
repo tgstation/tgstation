@@ -14,54 +14,21 @@
 	var/flipped_build_type
 	var/base_icon
 
-/obj/structure/c_transit_tube/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/obj/structure/c_transit_tube/proc/tube_rotate()
-	setDir(turn(dir, -90))
+/obj/structure/c_transit_tube/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,null,null,CALLBACK(src,.proc/after_rot))
 
-/obj/structure/c_transit_tube/proc/tube_flip()
-	if(flipped_build_type)
+/obj/structure/c_transit_tube/proc/after_rot(mob/user,rotation_type)
+	if(flipped_build_type && rotation_type == ROTATION_FLIP)
+		setDir(turn(dir,-180)) //Turn back we don't actually flip
 		flipped = !flipped
 		var/cur_flip = initial(flipped) ? !flipped : flipped
 		if(cur_flip)
 			build_type = flipped_build_type
 		else
 			build_type = initial(build_type)
-		icon_state = "[base_icon][flipped]"
-	else
-		setDir(turn(dir, 180))
-
-// disposals-style flip and rotate verbs
-/obj/structure/c_transit_tube/verb/rotate()
-	set name = "Rotate Tube"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-
-	tube_rotate()
-
-/obj/structure/c_transit_tube/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	tube_rotate()
-
-/obj/structure/c_transit_tube/verb/flip()
-	set name = "Flip"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-	tube_flip()
-
+		icon_state = "[base_icon][flipped]"	
 
 /obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))

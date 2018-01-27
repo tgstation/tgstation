@@ -39,7 +39,7 @@
 	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || (can_be_hit && I.attack_obj(src, user))
+	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -58,6 +58,11 @@
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
+
+	if(force && user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+		return
+
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)
@@ -119,9 +124,9 @@
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
 		if(force)
-			return Clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+			return CLAMP((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 		else
-			return Clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"

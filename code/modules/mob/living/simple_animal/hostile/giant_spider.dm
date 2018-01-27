@@ -480,7 +480,7 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]", MAX_MESSAGE_LEN)
+	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()

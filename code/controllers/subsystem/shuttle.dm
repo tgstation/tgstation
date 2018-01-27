@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	var/obj/machinery/shuttle_manipulator/manipulator
+
 	var/list/mobile = list()
 	var/list/stationary = list()
 	var/list/transit = list()
@@ -44,6 +46,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/orderhistory = list()
 
+	var/list/hidden_shuttle_turfs = list() //all turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
+	var/list/hidden_shuttle_turf_images = list() //only the images from the above list
+
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
@@ -52,15 +57,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
-	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
-	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
-	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-
 	ordernum = rand(1, 9000)
 
 	for(var/pack in subtypesof(/datum/supply_pack))
@@ -71,16 +67,37 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!transit_turfs.len)
 		setup_transit_zone()
-	initial_move()
+
+	initial_load()
+
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+
+	if(!arrivals)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+	if(!supply)
+		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	..()
+
+/datum/controller/subsystem/shuttle/proc/initial_load()
+	if(!istype(manipulator))
+		CRASH("No shuttle manipulator found.")
+
+	for(var/s in stationary)
+		var/obj/docking_port/stationary/S = s
+		S.load_roundstart()
+		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -89,8 +106,9 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -243,7 +261,10 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
+	var/area/A = get_area(user)
+
 	log_game("[key_name(user)] has called the shuttle.")
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -281,6 +302,8 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		var/area/A = get_area(user)
+		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -302,6 +325,9 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
+	if (!SSticker.IsRoundInProgress())
+		return
+
 	var/callShuttle = 1
 
 	for(var/thing in GLOB.shuttle_caller_list)
@@ -317,7 +343,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && (T.z in GLOB.station_z_levels))
+		if(T && is_station_level(T.z))
 			callShuttle = 0
 			break
 
@@ -392,7 +418,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
+		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -407,7 +433,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D) != DOCKING_SUCCESS)
+		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -535,15 +561,7 @@ SUBSYSTEM_DEF(shuttle)
 		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
-	return TRUE
-
-/datum/controller/subsystem/shuttle/proc/initial_move()
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(!M.roundstart_move)
-			continue
-		M.dockRoundstart()
-		M.roundstart_move = FALSE
-		CHECK_TICK
+	return new_transit_dock
 
 /datum/controller/subsystem/shuttle/Recover()
 	if (istype(SSshuttle.mobile))
@@ -640,3 +658,39 @@ SUBSYSTEM_DEF(shuttle)
 		var/list/ys = overlap[2]
 		if(xs.len && ys.len)
 			.[port] = overlap
+
+/datum/controller/subsystem/shuttle/proc/update_hidden_docking_ports(list/remove_turfs, list/add_turfs)
+	var/list/remove_images = list()
+	var/list/add_images = list()
+
+	if(remove_turfs)
+		for(var/T in remove_turfs)
+			var/list/L = hidden_shuttle_turfs[T]
+			if(L)
+				remove_images += L[1]
+		hidden_shuttle_turfs -= remove_turfs
+
+	if(add_turfs)
+		for(var/V in add_turfs)
+			var/turf/T = V
+			var/image/I
+			if(remove_images.len)
+				//we can just reuse any images we are about to delete instead of making new ones
+				I = remove_images[1]
+				remove_images.Cut(1, 2)
+				I.loc = T
+			else
+				I = image(loc = T)
+				add_images += I
+			I.appearance = T.appearance
+			I.override = TRUE
+			hidden_shuttle_turfs[T] = list(I, T.type)
+
+	hidden_shuttle_turf_images -= remove_images
+	hidden_shuttle_turf_images += add_images
+
+	for(var/V in GLOB.navigation_computers)
+		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
+		C.update_hidden_docking_ports(remove_images, add_images)
+
+	QDEL_LIST(remove_images)

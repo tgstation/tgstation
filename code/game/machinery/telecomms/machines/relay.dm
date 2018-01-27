@@ -14,17 +14,17 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
-	machinetype = 8
 	netspeed = 5
 	long_range_link = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/relay
 	var/broadcasting = 1
 	var/receiving = 1
 
-/obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
-	if(can_send(signal))
-		signal.data["level"] |= listening_level
+	var/turf/T = get_turf(src)
+	if(can_send(signal) && T)
+		signal.levels |= T.z
 
 // Checks to see if it can send/receive.
 
@@ -52,7 +52,6 @@
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	listening_level = 1
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms

@@ -341,12 +341,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			sending += "<br>"
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
-			var/pass = 0
-			for (var/obj/machinery/message_server/MS in GLOB.machines)
-				if(!MS.active)
-					continue
-				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
-				pass = 1
+			var/pass = FALSE
+			var/datum/data_rc_msg/log = new(href_list["department"], department, log_msg, msgStamped, msgVerified, priority)
+			for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
+				if (MS.toggled)
+					MS.rc_msgs += log
+					pass = TRUE
 
 			if(pass)
 				var/radio_freq = 0

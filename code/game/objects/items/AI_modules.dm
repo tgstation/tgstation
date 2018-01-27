@@ -238,7 +238,7 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_MESSAGE_LEN)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
 		return
 	laws[1] = targName
@@ -357,7 +357,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_MESSAGE_LEN)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
 	if(!targName)
 		return
 	subject = targName
@@ -398,9 +398,9 @@ AI MODULES
 /obj/item/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/aiModule/core/full/custom/New()
-	..()
-	for(var/line in world.file2list("config/silicon_laws.txt"))
+/obj/item/aiModule/core/full/custom/Initialize()
+	. = ..()
+	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -408,9 +408,8 @@ AI MODULES
 
 		laws += line
 
-	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
-		qdel(src)
+	if(!laws.len)
+		return INITIALIZE_HINT_QDEL
 
 
 /****************** T.Y.R.A.N.T. *****************/
@@ -459,7 +458,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
 		return
 	laws[1] = targName
@@ -554,3 +553,16 @@ AI MODULES
 /obj/item/aiModule/core/full/peacekeeper
 	name = "'Peacekeeper' Core AI Module"
 	law_id = "peacekeeper"
+
+// Bad times ahead
+
+/obj/item/aiModule/core/full/damaged
+		name = "damaged Core AI Module"
+		desc = "An AI Module for programming laws to an AI. It looks slightly damaged."
+
+/obj/item/aiModule/core/full/damaged/install(datum/ai_laws/law_datum, mob/user)
+	laws += generate_ion_law()
+	while (prob(75))
+		laws += generate_ion_law()
+	..()
+	laws = list()

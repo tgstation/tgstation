@@ -442,7 +442,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bp" = (
-/turf/closed/mineral/clown,
+/turf/closed/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "bq" = (
 /obj/item/pickaxe,
@@ -628,10 +628,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bS" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -671,7 +671,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/bananium,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -803,10 +803,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dL" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -825,16 +825,6 @@
 /area/ruin/powered/clownplanet)
 "dO" = (
 /obj/machinery/light,
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
-"dR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -1153,7 +1143,7 @@ bx
 bA
 bB
 bH
-dR
+bH
 bB
 bH
 bB

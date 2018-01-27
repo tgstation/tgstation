@@ -21,7 +21,7 @@
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
 	var/on = FALSE
-	var/pulling = 0
+	var/magneting = FALSE
 
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
 	var/center_x = 0
@@ -165,12 +165,12 @@
 	updateicon()
 
 
-/obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the pulling
-	if(pulling)
+/obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the magneting
+	if(magneting)
 		return
 	while(on)
 
-		pulling = 1
+		magneting = TRUE
 		center = locate(x+center_x, y+center_y, z)
 		if(center)
 			for(var/obj/M in orange(magnetic_field, center))
@@ -185,7 +185,7 @@
 		use_power(electricity_level * 5)
 		sleep(13 - electricity_level)
 
-	pulling = 0
+	magneting = FALSE
 
 
 
@@ -278,11 +278,7 @@
 	if(href_list["radio-op"])
 
 		// Prepare signal beforehand, because this is a radio operation
-		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_RADIO
-		signal.source = src
-		signal.frequency = frequency
-		signal.data["code"] = code
+		var/datum/signal/signal = new(list("code" = code))
 
 		// Apply any necessary commands
 		switch(href_list["radio-op"])
@@ -345,11 +341,7 @@
 		looping = 1
 
 		// Prepare the radio signal
-		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_RADIO
-		signal.source = src
-		signal.frequency = frequency
-		signal.data["code"] = code
+		var/datum/signal/signal = new(list("code" = code))
 
 		if(pathpos > rpath.len) // if the position is greater than the length, we just loop through the list!
 			pathpos = 1

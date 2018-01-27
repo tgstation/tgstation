@@ -1,10 +1,11 @@
-#define WHITE_TEAM "white"
-#define RED_TEAM "red"
-#define BLUE_TEAM "blue"
+#define WHITE_TEAM "White"
+#define RED_TEAM "Red"
+#define BLUE_TEAM "Blue"
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
 #define AMMO_DROP_LIFETIME 300
+#define CTF_REQUIRED_PLAYERS 4
 
 
 
@@ -26,6 +27,7 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
+	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
@@ -48,7 +50,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
-	if(!is_ctf_target(user))
+	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "Non players shouldn't be moving the flag!")
 		return
 	if(team in user.faction)
@@ -132,6 +134,7 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
 	var/team = WHITE_TEAM
+	var/team_span = ""
 	//Capture the Flag scoring
 	var/points = 0
 	var/points_to_win = 3
@@ -150,6 +153,7 @@
 
 	var/static/ctf_object_typecache
 	var/static/arena_reset = FALSE
+	var/static/list/people_who_want_to_play = list()
 
 /obj/machinery/capture_the_flag/Initialize()
 	. = ..()
@@ -188,6 +192,7 @@
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
 	team = RED_TEAM
+	team_span = "redteamradio"
 	ctf_gear = /datum/outfit/ctf/red
 	instagib_gear = /datum/outfit/ctf/red/instagib
 
@@ -195,6 +200,7 @@
 	name = "Blue CTF Controller"
 	icon_state = "bluebeacon"
 	team = BLUE_TEAM
+	team_span = "blueteamradio"
 	ctf_gear = /datum/outfit/ctf/blue
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
@@ -204,6 +210,18 @@
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
 				toggle_all_ctf(user)
+			return
+
+
+		people_who_want_to_play |= user.ckey
+		var/num = people_who_want_to_play.len
+		var/remaining = CTF_REQUIRED_PLAYERS - num
+		if(remaining <= 0)
+			people_who_want_to_play.Cut()
+			toggle_all_ctf()
+		else
+			to_chat(user, "<span class='notice'>CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up.</span>")
+
 		return
 
 	if(!SSticker.HasRoundStarted())
@@ -225,7 +243,7 @@
 			to_chat(user, "No switching teams while the round is going!")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
+			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] team to even things up.")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -268,7 +286,7 @@
 			for(var/mob/M in GLOB.player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, /area/ctf))
-					to_chat(M, "<span class='userdanger'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
+					to_chat(M, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 		if(points >= points_to_win)
 			victory()
 
@@ -276,8 +294,8 @@
 	for(var/mob/M in GLOB.mob_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-			to_chat(M, "<span class='narsie'>[team] team wins!</span>")
-			to_chat(M, "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>")
+			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
+			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
 			for(var/obj/item/twohanded/ctf/W in M)
 				M.dropItemToGround(W)
 			M.dust()
@@ -291,7 +309,6 @@
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
 			CTF.arena_reset = FALSE
-			addtimer(CALLBACK(CTF, .proc/start_ctf), 300)
 
 /obj/machinery/capture_the_flag/proc/toggle_ctf()
 	if(!ctf_enabled)
@@ -667,3 +684,4 @@
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
 #undef AMMO_DROP_LIFETIME
+#undef CTF_REQUIRED_PLAYERS

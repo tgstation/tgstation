@@ -82,14 +82,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
@@ -195,7 +195,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
-/turf/closed/wall/mineral/titanium,
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/regular{
@@ -204,7 +203,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
 /turf/closed/wall/mineral/titanium,
@@ -214,7 +213,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Escape Shuttle Cockpit";
 	req_access_txt = "19"
 	},
@@ -246,11 +245,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
-/turf/closed/wall/mineral/titanium,
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "O" = (
 /obj/machinery/computer/crew{

@@ -39,7 +39,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.loc = chassis
+					O.forceMove(chassis)
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -91,7 +91,7 @@
 				O.anchored = TRUE
 				if(do_after_cooldown(target))
 					cargo_holder.cargo += O
-					O.loc = chassis
+					O.forceMove(chassis)
 					O.anchored = FALSE
 					occupant_message("<span class='notice'>[target] successfully loaded.</span>")
 					log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
@@ -222,14 +222,14 @@
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
-					W.ChangeTurf(/turf/open/floor/plating)
+					W.ScrapeAway()
 					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
-					F.ChangeTurf(F.baseturf)
+					F.ScrapeAway()
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("Deconstructing [target]...")
@@ -242,14 +242,14 @@
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
-					S.ChangeTurf(/turf/open/floor/plating)
+					S.PlaceOnTop(/turf/open/floor/plating)
 					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					F.ChangeTurf(/turf/closed/wall)
+					F.PlaceOnTop(/turf/closed/wall)
 					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)

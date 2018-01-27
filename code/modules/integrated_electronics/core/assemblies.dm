@@ -20,6 +20,8 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	max_integrity = 50
+	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src,be_close = TRUE)
@@ -30,14 +32,13 @@
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
-
-
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
+	check_pulling()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -122,9 +123,8 @@
 		if(!battery)
 			to_chat(usr, "<span class='warning'>There's no power cell to remove from \the [src].</span>")
 		else
-			var/turf/T = get_turf(src)
-			battery.forceMove(T)
-			playsound(T, 'sound/items/Crowbar.ogg', 50, 1)
+			battery.forceMove(drop_location())
+			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
 
@@ -274,22 +274,9 @@
 
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/sensor/S in assembly_components)
-		if(!proximity)
-			if(istype(S,/obj/item/integrated_circuit/input/sensor/ranged)||(!user))
-				if(user.client)
-					if(!(target in view(user.client)))
-						continue
-				else
-					if(!(target in view(user)))
-						continue
-			else
-				continue
-		S.set_pin_data(IC_OUTPUT, 1, WEAKREF(target))
-		S.check_then_do_work()
-		S.scan(target)
-
-	visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+	for(var/obj/item/integrated_circuit/input/S in assembly_components)
+		if(S.sense(target,user,proximity))
+			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
 /obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
@@ -327,7 +314,10 @@
 		interact(user)
 		return TRUE
 	else
+		for(var/obj/item/integrated_circuit/input/S in assembly_components)
+			S.attackby_react(I,user,user.a_intent)
 		return ..()
+
 
 /obj/item/device/electronic_assembly/attack_self(mob/user)
 	if(!check_interactivity(user))
@@ -387,13 +377,46 @@
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+/obj/item/device/electronic_assembly/stop_pulling()
+	..()
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.stop_pulling()
+
+
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
 	return src
 
+// Returns the location to be used for dropping items.
+// Same as the regular drop_location(), but with checks being run on acting_object if necessary.
+/obj/item/integrated_circuit/drop_location()
+	var/atom/movable/acting_object = get_object()
 
+	// plz no infinite loops
+	if(acting_object == src)
+		return ..()
 
+	return acting_object.drop_location()
+
+/obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
+  name = "type-a electronic assembly"
+
+/obj/item/device/electronic_assembly/calc
+	name = "type-b electronic assembly"
+	icon_state = "setup_small_calc"
+	desc = "It's a case, for building small electronics with. This one resembles a pocket calculator."
+
+/obj/item/device/electronic_assembly/clam
+	name = "type-c electronic assembly"
+	icon_state = "setup_small_clam"
+	desc = "It's a case, for building small electronics with. This one has a clamshell design."
+
+/obj/item/device/electronic_assembly/simple
+	name = "type-d electronic assembly"
+	icon_state = "setup_small_simple"
+	desc = "It's a case, for building small electronics with. This one has a simple design."
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -402,6 +425,24 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_components = IC_MAX_SIZE_BASE * 2
 	max_complexity = IC_COMPLEXITY_BASE * 2
+
+/obj/item/device/electronic_assembly/medium/default
+	name = "type-a electronic mechanism"
+
+/obj/item/device/electronic_assembly/medium/box
+	name = "type-b electronic mechanism"
+	icon_state = "setup_medium_box"
+	desc = "It's a case, for building medium-sized electronics with. This one has a boxy design."
+
+/obj/item/device/electronic_assembly/medium/clam
+	name = "type-c electronic mechanism"
+	icon_state = "setup_medium_clam"
+	desc = "It's a case, for building medium-sized electronics with. This one has a clamshell design."
+
+/obj/item/device/electronic_assembly/medium/medical
+	name = "type-d electronic mechanism"
+	icon_state = "setup_medium_med"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles some type of medical apparatus."
 
 /obj/item/device/electronic_assembly/large
 	name = "electronic machine"
@@ -428,6 +469,24 @@
 		return
 	..()
 
+/obj/item/device/electronic_assembly/large/default
+	name = "type-a electronic machine"
+
+/obj/item/device/electronic_assembly/large/scope
+	name = "type-b electronic machine"
+	icon_state = "setup_large_scope"
+	desc = "It's a case, for building large electronics with. This one resembles an oscilloscope."
+
+/obj/item/device/electronic_assembly/large/terminal
+	name = "type-c electronic machine"
+	icon_state = "setup_large_terminal"
+	desc = "It's a case, for building large electronics with. This one resembles a computer terminal."
+
+/obj/item/device/electronic_assembly/large/arm
+	name = "type-d electronic machine"
+	icon_state = "setup_large_arm"
+	desc = "It's a case, for building large electronics with. This one resembles a robotic arm."
+
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"
 	icon_state = "setup_drone"
@@ -438,3 +497,11 @@
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE
+
+/obj/item/device/electronic_assembly/drone/default
+	name = "type-a electronic drone"
+
+/obj/item/device/electronic_assembly/drone/arms
+	name = "type-b electronic drone"
+	icon_state = "setup_drone_arms"
+	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."

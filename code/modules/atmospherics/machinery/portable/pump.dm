@@ -41,17 +41,17 @@
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
 	if(!on)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
 	if(direction == PUMP_OUT) // Hook up the internal pump.
-		pump.AIR1 = holding ? holding.air_contents : air_contents
-		pump.AIR2 = holding ? air_contents : T.return_air()
+		pump.airs[1] = holding ? holding.air_contents : air_contents
+		pump.airs[2] = holding ? air_contents : T.return_air()
 	else
-		pump.AIR1 = holding ? air_contents : T.return_air()
-		pump.AIR2 = holding ? holding.air_contents : air_contents
+		pump.airs[1] = holding ? air_contents : T.return_air()
+		pump.airs[2] = holding ? holding.air_contents : air_contents
 
 	pump.process_atmos() // Pump gas.
 	if(!holding)
@@ -131,11 +131,11 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				pump.target_pressure = Clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				pump.target_pressure = CLAMP(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
-				holding.loc = get_turf(src)
+				holding.forceMove(drop_location())
 				holding = null
 				. = TRUE
 	update_icon()

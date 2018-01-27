@@ -125,7 +125,7 @@
 
 	if(!target) //Search for decals then.
 		target = scan(/obj/effect/decal/cleanable)
-	
+
 	if(!target) //Checks for remains
 		target = scan(/obj/effect/decal/remains)
 
@@ -242,12 +242,12 @@
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-			victim.acid_act(5, 2, 100)
+			victim.acid_act(5, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))
 				var/turf/open/T = loc
 				if(istype(T))
-					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
+					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/particle_effect/foam(loc)
@@ -265,7 +265,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()

@@ -6,6 +6,10 @@
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
+// for /datum/var/datum_flags
+#define DF_USE_TAG 1
+#define DF_VAR_EDITED 2
+
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE_1 1	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
@@ -22,7 +26,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1			512		// item has priority to check when entering or leaving
 
 #define NOSLIP_1			1024 		//prevents from slipping on wet floors, in space etc
-#define CLEAN_ON_MOVE_1		2048
+#define _UNUSED_1		2048
 
 // BLOCK_GAS_SMOKE_EFFECT_1 only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT_1 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!

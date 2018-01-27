@@ -219,8 +219,8 @@
 			return
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
-			dropturf = get_turf(src)
-		loaded_item.loc = dropturf
+			dropturf = drop_location()
+		loaded_item.forceMove(dropturf)
 		if(delete)
 			qdel(loaded_item)
 		loaded_item = null
@@ -510,7 +510,7 @@
 			throwSmoke(loc)
 			if(trackedRuntime)
 				throwSmoke(trackedRuntime.loc)
-				trackedRuntime.loc = loc
+				trackedRuntime.forceMove(drop_location())
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/simple_animal/pet/cat(loc)
@@ -664,11 +664,11 @@
 
 /obj/item/relic/proc/teleport(mob/user)
 	to_chat(user, "<span class='notice'>[src] begins to vibrate!</span>")
-	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
+	addtimer(CALLBACK(src, .proc/do_the_teleport, user), rand(10, 30))
 
-/obj/item/relic/proc/do_teleport(mob/user)
+/obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
-	if(loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
+	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')

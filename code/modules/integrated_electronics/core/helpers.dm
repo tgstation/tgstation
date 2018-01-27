@@ -15,9 +15,9 @@
 			io_type_override = io_list_copy[io_entry]
 
 		if(io_type_override)
-			io_list.Add(new io_type_override(src, io_entry, default_data, pin_type))
+			io_list.Add(new io_type_override(src, io_entry, default_data, pin_type,i))
 		else
-			io_list.Add(new io_type(src, io_entry, default_data, pin_type))
+			io_list.Add(new io_type(src, io_entry, default_data, pin_type,i))
 
 
 /obj/item/integrated_circuit/proc/set_pin_data(pin_type, pin_number, datum/new_data)

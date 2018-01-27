@@ -5,7 +5,7 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	container_type = DRAWABLE_1
+	container_type = DRAINABLE | AMOUNT_VISIBLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
@@ -18,7 +18,7 @@
 			boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers))
+	if(W.is_refillable())
 		return 0 //so we can refill them via their afterattack.
 	else
 		return ..()
@@ -27,14 +27,6 @@
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
-
-/obj/structure/reagent_dispensers/examine(mob/user)
-	..()
-	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
-	else
-		to_chat(user, "<span class='danger'>It's empty.</span>")
-
 
 /obj/structure/reagent_dispensers/proc/boom()
 	visible_message("<span class='danger'>\The [src] ruptures!</span>")

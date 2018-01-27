@@ -20,7 +20,7 @@
 		var/obj/item/canvas/C = I
 		user.dropItemToGround(C)
 		painting = C
-		C.loc = get_turf(src)
+		C.forceMove(get_turf(src))
 		C.layer = layer+0.1
 		user.visible_message("<span class='notice'>[user] puts \the [C] on \the [src].</span>","<span class='notice'>You place \the [C] on \the [src].</span>")
 	else
@@ -32,7 +32,7 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(painting && painting.loc == T) //Only move if it's near us.
-		painting.loc = get_turf(src)
+		painting.forceMove(get_turf(src))
 	else
 		painting = null
 

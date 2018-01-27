@@ -26,6 +26,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	var/atom/holder
 	var/effect_type
 	var/total_effects = 0
+	var/autocleanup = FALSE //will delete itself after use
 
 /datum/effect_system/Destroy()
 	holder = null
@@ -69,3 +70,5 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /datum/effect_system/proc/decrement_total_effect()
 	total_effects--
+	if(autocleanup && total_effects <= 0)
+		qdel(src)

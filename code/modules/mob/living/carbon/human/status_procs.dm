@@ -11,12 +11,12 @@
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 
-/mob/living/carbon/human/cure_husk()
+/mob/living/carbon/human/cure_husk(list/sources)
 	. = ..()
 	if(.)
 		update_hair()
 
-/mob/living/carbon/human/become_husk()
+/mob/living/carbon/human/become_husk(source)
 	if(istype(dna.species, /datum/species/skeleton)) //skeletons shouldn't be husks.
 		cure_husk()
 		return

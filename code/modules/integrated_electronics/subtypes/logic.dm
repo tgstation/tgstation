@@ -2,7 +2,7 @@
 	name = "logic gate"
 	desc = "This tiny chip will decide for you!"
 	extended_desc = "Logic circuits will treat a null, 0, and a \"\" string value as FALSE and anything else as TRUE."
-	complexity = 3
+	complexity = 1
 	outputs = list("result")
 	activators = list("compare" = IC_PINTYPE_PULSE_IN)
 	category_text = "Logic"

@@ -15,7 +15,7 @@
 
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = 1
+	R.freqlock = TRUE
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name

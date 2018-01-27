@@ -175,7 +175,7 @@
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(refill.charges[charge_type] == 0)
 				break
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
 			if(restock > refill.charges[charge_type])
 				restock = refill.charges[charge_type]
 			machine_content.amount += restock
@@ -224,7 +224,7 @@
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
-	if(!allowed(user) && !emagged && scan_id)
+	if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
@@ -342,9 +342,9 @@
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
@@ -455,7 +455,7 @@
 			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
-		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
+		if((!allowed(usr)) && !(obj_flags & EMAGGED) && scan_id)	//For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
 			flick(icon_deny,src)
 			return
@@ -684,10 +684,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
-    ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
@@ -737,10 +737,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    . = ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
@@ -1189,6 +1189,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	contraband = list(/obj/item/dice/fudge = 9)
 	refill_canister = /obj/item/vending_refill/games
 
+
+/obj/machinery/vending/onTransitZ()
+	return
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

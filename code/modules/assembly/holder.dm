@@ -87,10 +87,10 @@
 			return 0
 		if(a_left)
 			a_left.holder = null
-			a_left.loc = T
+			a_left.forceMove(T)
 		if(a_right)
 			a_right.holder = null
-			a_right.loc = T
+			a_right.forceMove(T)
 		qdel(src)
 	else
 		..()

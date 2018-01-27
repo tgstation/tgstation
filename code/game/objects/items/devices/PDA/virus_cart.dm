@@ -95,7 +95,7 @@
 		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
 		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
 		if(!hidden_uplink)
-			hidden_uplink = target.LoadComponent(/datum/component/uplink)
+			hidden_uplink = target.AddComponent(/datum/component/uplink)
 			target.lock_code = lock_code
 		else
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.

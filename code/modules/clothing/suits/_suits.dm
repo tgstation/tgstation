@@ -7,6 +7,7 @@
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	var/suittoggled = FALSE
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
@@ -14,7 +15,7 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		if(blood_DNA)
+		IF_HAS_BLOOD_DNA(src)
 			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)

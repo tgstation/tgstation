@@ -35,7 +35,7 @@
 		return FALSE
 	if(onstation)
 		var/turf/T = get_turf(applicant)
-		if(!(T.z in GLOB.station_z_levels))
+		if(!is_station_level(T.z))
 			return FALSE
 	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
 		return FALSE
@@ -240,7 +240,7 @@
 
 		//Let's find the spawn locations
 		var/leader_chosen = FALSE
-		var/datum/objective_team/nuclear/nuke_team
+		var/datum/team/nuclear/nuke_team
 		for(var/mob/c in chosen)
 			var/mob/living/carbon/human/new_character=makeBody(c)
 			if(!leader_chosen)
@@ -306,13 +306,15 @@
 					door.open()
 
 			//Assign antag status and the mission
-			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
+
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
+
+			Commando.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 			//Greet the commando
 			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
@@ -358,13 +360,15 @@
 		newmob.equipOutfit(/datum/outfit/centcom_official)
 
 		//Assign antag status and the mission
-		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
+
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
 		newmob.mind.objectives += missionobj
+
+		newmob.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 		if(CONFIG_GET(flag/enforce_human_authority))
 			newmob.set_species(/datum/species/human)
@@ -463,13 +467,15 @@
 						door.open()
 
 			//Assign antag status and the mission
-			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
+
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			ERTOperative.mind.objectives += missionobj
+
+			ERTOperative.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 			//Greet the commando
 			to_chat(ERTOperative, "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>")

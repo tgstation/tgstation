@@ -17,7 +17,7 @@
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/list/pre_nukeops = list()
 
-	var/datum/objective_team/nuclear/nuke_team
+	var/datum/team/nuclear/nuke_team
 
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
@@ -52,7 +52,7 @@
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antagonists(/datum/antagonist/nukeop))
+	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
@@ -69,7 +69,8 @@
 			return FALSE	//its a static var btw
 	..()
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/nuclear/set_round_result()
+	..()
 	var result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -102,21 +103,11 @@
 		else
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
-	return ..()
 
 /datum/game_mode/nuclear/generate_report()
 	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
 			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
 			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
-
-/datum/game_mode/proc/auto_declare_completion_nuclear()
-	var/list/nuke_teams = list()
-	for(var/datum/antagonist/nukeop/N in GLOB.antagonists) //collect all nuke teams
-		nuke_teams |= N.nuke_team
-	for(var/datum/objective_team/nuclear/nuke_team in nuke_teams)
-		nuke_team.roundend_display()
-	return TRUE
-
 
 /proc/is_nuclear_operative(mob/M)
 	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/nukeop)

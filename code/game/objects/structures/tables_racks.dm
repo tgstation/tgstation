@@ -121,7 +121,7 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.forceMove(drop_location())
 
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -134,8 +134,8 @@
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			return 1
 	else
 		return ..()
@@ -248,8 +248,9 @@
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
 
-/obj/structure/table/wood/narsie_act()
-	return
+/obj/structure/table/wood/narsie_act(total_override = TRUE)
+	if(!total_override)
+		..()
 
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
@@ -259,7 +260,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 
 /obj/structure/table/wood/poker/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"

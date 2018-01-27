@@ -350,9 +350,6 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "bn" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/centcomAway/hangar)
 "bo" = (
@@ -581,7 +578,7 @@
 	},
 /area/awaymission/centcomAway/cafe)
 "cg" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/cafe)
 "ch" = (
@@ -649,7 +646,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "cv" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/maint)
 "cw" = (
@@ -1437,7 +1434,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "ft" = (
-/obj/structure/sign/electricshock,
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fu" = (
@@ -1463,7 +1460,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "fy" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fz" = (
@@ -1513,7 +1510,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/courtroom)
 "fG" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "32"
 	},
@@ -1578,7 +1575,7 @@
 	},
 /area/awaymission/centcomAway/general)
 "fQ" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fR" = (
@@ -1600,7 +1597,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/courtroom)
 "fU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
 	req_access_txt = "9"
 	},
@@ -1803,7 +1800,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "gF" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
 	req_access_txt = "19"
 	},
@@ -1884,7 +1881,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "gS" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
@@ -1969,7 +1965,7 @@
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hi" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "hj" = (
@@ -2067,7 +2063,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "hy" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "hz" = (
@@ -2195,7 +2191,7 @@
 /turf/open/floor/wood,
 /area/awaymission/centcomAway/courtroom)
 "hU" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/hangar)
 "hV" = (
@@ -2615,7 +2611,7 @@
 /area/awaymission/centcomAway/general)
 "jr" = (
 /obj/structure/table,
-/obj/item/firstaid_arm_assembly,
+/obj/item/bot_assembly/medbot,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "js" = (
@@ -2809,7 +2805,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "jU" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "jV" = (

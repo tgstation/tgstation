@@ -51,7 +51,7 @@
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM)
+	if(user.a_intent != INTENT_HELP)
 		return
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
@@ -67,9 +67,10 @@
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
 		return
-	INVOKE_ASYNC(src, .proc/user_insert, I, user)		//It wasn't returning COMPONENT_NO_AFTERATTACK properly without this being specifically asynced.
+	user_insert(I, user)
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	set waitfor = FALSE
 	var/requested_amount
 	var/Itype = I.type
 	if(ispath(Itype, /obj/item/stack) && precise_insertion)
@@ -338,7 +339,7 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/clown
+	coin_type = /obj/item/coin/bananium
 
 /datum/material/titanium
 	name = "Titanium"

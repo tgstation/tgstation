@@ -20,7 +20,7 @@
 		return
 
 	if(!isobserver(usr))
-		log_game("[key_name_admin(usr)] checked the player panel while in game.")
+		log_game("[key_name(usr)] checked the player panel while in game.")
 
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
@@ -48,7 +48,10 @@
 
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
-	body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+	if(M.mind)
+		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+	else
+		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
@@ -225,13 +228,13 @@
 			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_name=1'>Channel Name</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>"
 			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_signature=1'>Channel Author</A>:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_lock=1'>Will Accept Public Feeds</A>:</B> [(src.admincaster_feed_channel.locked) ? ("NO") : ("YES")]<BR><BR>"
-			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=[REF(src)];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_channel=1'>Submit</A><BR><BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(3)
 			dat+="Creating new Feed Message..."
 			dat+="<HR><B><A href='?src=[REF(src)];[HrefToken()];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
 			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admin_signature]</FONT><BR>"
 			dat+="<B><A href='?src=[REF(src)];[HrefToken()];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
-			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=[REF(src)];ac_setScreen=[0]'>Cancel</A><BR>"
+			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(4)
 			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
 			dat+="<BR><A href='?src=[REF(src)];[HrefToken()];ac_setScreen=[0]'>Return</A><BR>"
@@ -312,7 +315,7 @@
 			else
 				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];ac_censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_body=[REF(MESSAGE)]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=[REF(src)];[HrefToken()];ac_censor_channel_story_author=[REF(MESSAGE)]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
 					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=[REF(src)];[HrefToken()];ac_lock_comment=[REF(MESSAGE)]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
 					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
 						dat+="[comment.body] <a href='?src=[REF(src)];[HrefToken()];ac_del_comment=[REF(comment)];ac_del_comment_msg=[REF(MESSAGE)]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
@@ -508,8 +511,7 @@
 	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed]"))
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle OOC", "[GLOB.ooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleoocdead()
 	set category = "Server"
@@ -519,7 +521,7 @@
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/startnow()
 	set category = "Server"
@@ -553,7 +555,7 @@
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[GLOB.enter_allowed]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[GLOB.enter_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleAI()
 	set category = "Server"
@@ -567,7 +569,7 @@
 		to_chat(world, "<B>The AI job is chooseable now.</B>")
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleaban()
 	set category = "Server"
@@ -582,7 +584,7 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [!new_nores ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [!new_nores ? "On" : "Off"].")
 	world.update_status()
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[!new_nores]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[!new_nores ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
 	set category = "Server"
@@ -606,7 +608,7 @@
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == ZLEVEL_CENTCOM)
+	if (is_centcom_level(M.z))
 		SSjob.SendToLateJoin(M)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -650,7 +652,7 @@
 		to_chat(usr, "This mob has no mind!")
 		return
 
-	M.mind.edit_memory()
+	M.mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -665,7 +667,7 @@
 		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Tinted Welding Helmets", "[GLOB.tinted_weldhelh]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Tinted Welding Helmets", "[GLOB.tinted_weldhelh ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
 	set category = "Server"
@@ -679,7 +681,7 @@
 		to_chat(world, "<B>Guests may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.</span>")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
@@ -705,56 +707,60 @@
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
-	for(var/D in SSticker.mode.devils)
+	for(var/datum/mind/D in SSticker.mode.devils)
 		devil_number++
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + SSticker.mode.printdevilinfo(D))
+		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + devil.printdevilinfo())
 	if(!devil_number)
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(is_devil(M))
-		to_chat(usr, SSticker.mode.printdevilinfo(M))
+		var/datum/antagonist/devil/devil = M.mind.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, devil.printdevilinfo())
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
+	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
+	var/list/dat = list()
 	var/count = 0
 
-	if(!SSticker.HasRoundStarted())
-		alert(usr, "You cannot manage jobs before the round starts!")
+	if(!SSjob.initialized)
+		alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
 		return
 
-	for(var/datum/job/job in SSjob.occupations)
+	dat += "<table>"
+
+	for(var/j in SSjob.occupations)
+		var/datum/job/job = j
 		count++
 		var/J_title = html_encode(job.title)
 		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 		var/J_totPos = html_encode(job.total_positions)
-		if(job.total_positions < 0)
-			dat += "[J_title]: [J_opPos]   (unlimited)"
-		else
-			dat += "[J_title]: [J_opPos]/[J_totPos]"
+		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
 		if(job.title == "AI" || job.title == "Cyborg")
-			dat += "   (Cannot Late Join)<br>"
+			dat += " (Cannot Late Join)</td>"
 			continue
-		if(job.total_positions >= 0)
-			dat += "   <A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A>  |  "
-			if(job.total_positions > job.current_positions)
-				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A>  |  "
-			else
-				dat += "Remove  |  "
-			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A>"
 		else
-			dat += "   <A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A>"
-		dat += "<br>"
+			dat += "</td>"
+		dat += "<td>"
+		if(job.total_positions >= 0)
+			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A> | "
+			if(job.total_positions > job.current_positions)
+				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
+			else
+				dat += "Remove | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A></td>"
+		else
+			dat += "<A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A></td>"
 
-	dat += "</body>"
-	var/winheight = 100 + (count * 20)
-	winheight = min(winheight, 690)
-	usr << browse(dat, "window=players;size=375x[winheight]")
+	browser.height = min(100 + count * 20, 650)
+	browser.set_content(dat.Join())
+	browser.open()
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"

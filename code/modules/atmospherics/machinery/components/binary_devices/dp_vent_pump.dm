@@ -49,8 +49,8 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 	air1.volume = 1000
 	air2.volume = 1000
 
@@ -73,8 +73,8 @@ Acts like a normal vent, but has an input AND output.
 
 	if(!on)
 		return
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -99,7 +99,7 @@ Acts like a normal vent, but has an input AND output.
 				loc.assume_air(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent1 = PARENT1
+				var/datum/pipeline/parent1 = parents[1]
 				parent1.update = 1
 
 	else //external -> output
@@ -122,7 +122,7 @@ Acts like a normal vent, but has an input AND output.
 				air2.merge(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent2 = PARENT2
+				var/datum/pipeline/parent2 = parents[2]
 				parent2.update = 1
 
 	//Radio remote control
@@ -137,11 +137,7 @@ Acts like a normal vent, but has an input AND output.
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "ADVP",
 		"power" = on,
@@ -151,7 +147,7 @@ Acts like a normal vent, but has an input AND output.
 		"output" = output_pressure_max,
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
-	)
+	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
@@ -185,13 +181,13 @@ Acts like a normal vent, but has an input AND output.
 		pump_direction = 1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = Clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
+		input_pressure_min = CLAMP(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		output_pressure_max = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("status" in signal.data)
 		spawn(2)

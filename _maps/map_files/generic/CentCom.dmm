@@ -2733,10 +2733,7 @@
 	},
 /area/centcom/prison)
 "ir" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 6
-	},
+/turf/closed/indestructible/fakeglass,
 /area/centcom/prison)
 "is" = (
 /obj/structure/table/reinforced,
@@ -2863,7 +2860,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iI" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iJ" = (
@@ -2995,12 +2992,7 @@
 /area/centcom/control)
 "jb" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/centcom/supply)
 "jc" = (
@@ -3253,11 +3245,12 @@
 "jC" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 5;
+	dwidth = 8;
 	height = 7;
 	id = "supply_away";
+	json_key = "cargo";
 	name = "CentCom";
-	width = 12
+	width = 20
 	},
 /turf/open/space,
 /area/space)
@@ -4393,11 +4386,9 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mB" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
-	},
-/area/syndicate_mothership/control)
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership)
 "mC" = (
 /obj/item/disk/data,
 /obj/effect/light_emitter{
@@ -4619,10 +4610,8 @@
 	},
 /area/abductor_ship)
 "ng" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
-	},
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
 /area/syndicate_mothership/control)
 "nh" = (
 /obj/item/toy/figure/syndie,
@@ -4758,7 +4747,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/syndicate_mothership/control)
 "nA" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "nB" = (
@@ -5942,7 +5931,7 @@
 /area/centcom/ferry)
 "ql" = (
 /obj/structure/dresser,
-/obj/structure/sign/goldenplaque/captain{
+/obj/structure/sign/plaques/golden/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -6445,7 +6434,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "rz" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "rA" = (
@@ -6807,7 +6796,9 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "sq" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -7229,7 +7220,9 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "to" = (
-/obj/machinery/computer/shuttle/ferry,
+/obj/machinery/computer/shuttle/ferry{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -7478,7 +7471,7 @@
 	},
 /area/centcom/control)
 "tP" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tQ" = (
@@ -7568,11 +7561,16 @@
 	},
 /area/shuttle/syndicate/hallway)
 "uc" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 4
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
 	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/hallway)
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "nukeop_ready";
@@ -8028,7 +8026,8 @@
 	height = 50;
 	id = "emergency_away";
 	name = "CentCom Emergency Shuttle Dock";
-	width = 50
+	width = 50;
+	json_key = "emergency"
 	},
 /turf/open/space,
 /area/space)
@@ -8076,53 +8075,8 @@
 "vq" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
-"vr" = (
-/obj/docking_port/stationary{
-	area_type = /area/syndicate_mothership;
-	baseturf_type = /turf/open/floor/plating/asteroid/snow;
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_away";
-	name = "syndicate recon outpost";
-	turf_type = /turf/open/floor/plating/asteroid/snow;
-	width = 18
-	},
-/obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "outer blast door"
-	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_x = -26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate";
-	name = "syndicate infiltrator";
-	port_direction = 1;
-	roundstart_move = "syndicate_away";
-	width = 18
-	},
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate/airlock)
 "vs" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vt" = (
@@ -8434,7 +8388,7 @@
 /turf/open/floor/carpet,
 /area/wizard_station)
 "we" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'FOURTH WALL'.";
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
@@ -9189,7 +9143,7 @@
 /area/syndicate_mothership/control)
 "yn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "yo" = (
@@ -9210,7 +9164,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -28
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9621,7 +9575,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zk" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9834,7 +9788,7 @@
 /area/wizard_station)
 "zQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	name = "Experiment 35b"
 	},
 /turf/open/floor/grass,
@@ -10184,7 +10138,7 @@
 	},
 /area/centcom/ferry)
 "AT" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "AU" = (
@@ -10936,7 +10890,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/emps,
 /obj/item/gun/energy/ionrifle,
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12359,7 +12313,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gw" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "Gx" = (
@@ -12534,7 +12488,7 @@
 /area/tdome/tdomeobserve)
 "GL" = (
 /obj/structure/table/wood,
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/lawyers_badge{
@@ -12555,7 +12509,7 @@
 /area/tdome/tdomeobserve)
 "GO" = (
 /obj/structure/table/wood,
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/medal/silver{
@@ -12760,7 +12714,7 @@
 /area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque/thunderdome{
+/obj/structure/sign/plaques/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -12778,7 +12732,7 @@
 /area/tdome/tdomeobserve)
 "Ht" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque/thunderdome{
+/obj/structure/sign/plaques/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{
@@ -13146,10 +13100,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Il" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
-	},
+/turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeobserve)
 "Im" = (
 /turf/closed/indestructible/fakeglass{
@@ -13668,10 +13619,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "JI" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
-	},
+/turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeadmin)
 "JJ" = (
 /turf/closed/indestructible/fakeglass{
@@ -13768,11 +13716,11 @@
 /area/tdome/tdomeadmin)
 "JV" = (
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "JW" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "JX" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -13815,16 +13763,16 @@
 /area/tdome/tdomeadmin)
 "Kd" = (
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Ke" = (
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Kf" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Kg" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Thunderdome Admin"
@@ -13864,18 +13812,18 @@
 	},
 /obj/docking_port/mobile/emergency/backup,
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Kl" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Km" = (
 /obj/structure/table/wood,
 /obj/item/paper/fluff/stations/centcom/broken_evac,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "Kn" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/plasteel/vault{
@@ -14011,7 +13959,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/random,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "KA" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -14043,13 +13991,13 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "KF" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
+/area/shuttle/escape/backup)
 "KG" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -14411,7 +14359,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "LP" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "LQ" = (
@@ -14640,6 +14590,101 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
+"Mt" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"Mu" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/crowbar/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"Mv" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"Mw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"Mx" = (
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
+"My" = (
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership;
+	baseturf_type = /turf/open/floor/plating/asteroid/snow;
+	dheight = 1;
+	dir = 8;
+	dwidth = 12;
+	height = 17;
+	id = "syndicate_away";
+	name = "syndicate recon outpost";
+	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
+	turf_type = /turf/open/floor/plating/asteroid/snow;
+	width = 23
+	},
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
+"Mz" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"MA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"MB" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/airlock)
+"MC" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate/airlock)
+"MD" = (
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'FOURTH WALL'.";
+	name = "\improper FOURTH WALL";
+	pixel_x = -32
+	},
+/turf/open/floor/plating/asteroid/snow/airless,
+/area/syndicate_mothership)
+"ME" = (
+/obj/machinery/computer/camera_advanced{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/wizard_station)
 
 (1,1,1) = {"
 aa
@@ -19188,8 +19233,8 @@ lI
 lI
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -19450,7 +19495,7 @@ zN
 zo
 Bf
 qE
-zn
+Ax
 Ax
 qE
 lI
@@ -19698,7 +19743,7 @@ lI
 lI
 qE
 qE
-uC
+ME
 vj
 ya
 qZ
@@ -20230,7 +20275,7 @@ DZ
 Eh
 qE
 qE
-tW
+Ax
 qE
 lI
 lI
@@ -20473,8 +20518,8 @@ vj
 xu
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -21232,11 +21277,11 @@ lI
 lI
 lI
 lI
-qF
+Ax
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21248,7 +21293,7 @@ qZ
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21489,7 +21534,7 @@ lI
 lI
 lI
 lI
-qG
+Ax
 ra
 qZ
 qZ
@@ -21513,7 +21558,7 @@ DD
 uE
 Ec
 uE
-tW
+Ax
 EX
 qZ
 qZ
@@ -21746,11 +21791,11 @@ lI
 lI
 lI
 lI
-qH
+Ax
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -21762,7 +21807,7 @@ qZ
 qZ
 qZ
 qZ
-tW
+Ax
 qZ
 qZ
 qZ
@@ -22286,7 +22331,7 @@ Ee
 Em
 qE
 qE
-tW
+Ax
 qE
 qE
 qE
@@ -22529,8 +22574,8 @@ uE
 xz
 qE
 qE
-zn
-zM
+Ax
+Ax
 Ax
 qE
 qE
@@ -22784,13 +22829,13 @@ vn
 uE
 vl
 uE
-qF
+Ax
 yH
 yK
 zQ
 Az
 yK
-qF
+Ax
 qZ
 qZ
 qZ
@@ -23041,13 +23086,13 @@ qE
 uF
 wQ
 wd
-qG
+Ax
 yI
 zq
 yI
 AA
 yI
-qG
+Ax
 qZ
 uE
 qZ
@@ -23298,13 +23343,13 @@ qE
 qE
 vn
 uE
-qH
+Ax
 yJ
 zr
 yK
 zq
 yK
-qH
+Ax
 qZ
 qZ
 qE
@@ -23562,7 +23607,7 @@ yI
 AB
 Bi
 qE
-zn
+Ax
 Ax
 qE
 lI
@@ -24504,7 +24549,7 @@ aa
 aa
 aa
 aa
-hh
+mB
 hh
 hh
 hh
@@ -26360,38 +26405,38 @@ hl
 hl
 hl
 hh
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
 aa
 aa
 aa
@@ -26616,41 +26661,41 @@ hl
 hl
 hl
 hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
+MD
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
 hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
+aa
+aa
 aa
 aa
 aa
@@ -26886,6 +26931,13 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+kt
+kt
+kt
+kt
 hl
 hl
 hl
@@ -26893,21 +26945,14 @@ hl
 hl
 hl
 hl
-we
+hl
+hl
 hl
 kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -27143,28 +27188,28 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
-kt
-kt
 kt
 hl
 hl
 hl
 hl
-yc
-yd
-yd
-yd
-yd
-yd
-yd
-yd
-yd
-yd
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -27400,28 +27445,28 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
-hl
-tY
-tZ
-tZ
-tZ
-tZ
-tZ
-yd
-yL
-zs
-yL
-AC
-Bj
-BT
-Cj
-CS
-Di
 kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -27651,6 +27696,20 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 hl
@@ -27661,24 +27720,10 @@ hl
 hl
 hl
 kt
-tZ
-uG
-vo
-vo
-vo
-xA
-yd
-yM
-zt
-zR
-zR
-Bk
-zR
-Ck
-CS
-Dj
-kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -27909,33 +27954,33 @@ hl
 my
 hl
 hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
-kt
 hl
-hl
-hl
-hl
-hl
-hl
-kt
-tZ
-uH
-uH
-uH
-uH
-uH
-ye
-yN
-zt
-zS
-AD
-Bl
-BU
-Cl
-CS
-Dk
-kt
 hh
+aa
+aa
 aa
 aa
 aa
@@ -28166,33 +28211,33 @@ hl
 hl
 hl
 hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 kt
 hl
-oS
-oT
-oT
-oT
-oT
-hl
-hl
-tZ
-uH
-uH
-uH
-uH
-uH
-yd
-yO
-zt
-zT
-AE
-Bm
-yf
-yd
-yd
-Dl
-kt
 hh
+aa
+aa
 aa
 aa
 aa
@@ -28423,33 +28468,33 @@ hl
 hl
 hl
 hl
-kt
 hl
-oT
-px
-pR
-qI
-oT
-rY
 hl
-tZ
-uI
-vp
-wf
-wR
-xB
-yd
-yP
-zt
-zT
-AE
-Bn
-yd
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 kt
-kt
+hl
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -28680,33 +28725,33 @@ hl
 hl
 nx
 hl
-kt
 hl
-oU
-py
-pS
-qI
-oT
-rZ
-rZ
-tZ
-tZ
-tZ
-tZ
-wS
-xC
-yf
-yQ
-yQ
-zU
-yQ
-yd
-yd
-rZ
-rZ
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 hl
 hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -28937,33 +28982,33 @@ hl
 hl
 hl
 hl
-kt
 hl
-oU
-pz
-pT
-qI
-rb
-sa
-sY
-ua
-sY
-sY
-wg
-sb
-sb
-sb
-sb
-zu
-zV
-AF
-Bo
-BV
-Cm
-CT
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 hl
 hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -29194,33 +29239,33 @@ my
 hl
 hl
 hl
-kt
 hl
-oU
-pA
-pU
-qI
-rc
-sb
-sZ
-sZ
-sZ
-sb
-wh
-sb
-sZ
-sZ
-sZ
-sZ
-zV
-AF
-Bo
-BW
-Cm
-CU
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 hl
 hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -29451,33 +29496,33 @@ hl
 hl
 hl
 hl
-kt
 hl
-oU
-pB
-pT
-qI
-oT
-sc
-ta
-ub
-ta
-ta
-wg
-sb
-sb
-sb
-sb
-zv
-zV
-AF
-Bo
-BV
-Cm
-CV
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 hl
 hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -29708,33 +29753,33 @@ hl
 hl
 hl
 hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
 kt
 hl
-oU
-pC
-pV
-qI
-oT
-rZ
-rZ
-uc
-rZ
-vq
-vq
-wT
-xD
-yg
-yR
-yR
-zW
-yR
-yh
-yh
-rZ
-rZ
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -29965,33 +30010,33 @@ hl
 hl
 hl
 hl
-kt
 hl
-oT
-pD
-pW
-qI
-oT
-sd
-tb
-ng
-nz
-vq
-wi
-wU
-xE
-yh
-yS
-zw
-zX
-AG
-Bp
-yh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 kt
-kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -30221,34 +30266,34 @@ hl
 mz
 hl
 my
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 kt
 hl
-oV
-oT
-oT
-oT
-oT
-hl
-tc
-ll
-uJ
-vr
-wj
-wU
-xE
-yh
-yT
-zw
-zX
-AG
-Bq
-yg
-yh
-yh
-Dm
-kt
 hh
+aa
+aa
 aa
 aa
 aa
@@ -30479,33 +30524,33 @@ mA
 hl
 hl
 hl
+hl
+hl
+nx
+hl
+hl
 kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
-kt
-kt
-kt
-kt
-kt
-kt
-tc
-ll
-uK
-vs
-wk
-wU
-xF
-yi
-yU
-zw
-zY
-AH
-Br
-zZ
-Cn
-CW
-Dn
-kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -30736,33 +30781,33 @@ hl
 hl
 hl
 hl
-my
 hl
 hl
 hl
 hl
-nx
 hl
 kt
-tc
-ll
-tc
-vt
-vq
-vq
-vq
-yh
-yV
-zw
-zZ
-zZ
-Bs
-zZ
-Co
-CW
-Do
+hl
+hl
+hl
+My
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -30998,28 +31043,28 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+nz
+uJ
+nz
+kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 kt
-tc
-ll
-tc
 hl
-hl
-hl
-vq
-yh
-yW
-zw
-Aa
-AI
-Bt
-BX
-Cn
-CW
-Dp
-kt
 hh
+aa
+aa
 aa
 aa
 aa
@@ -31249,7 +31294,7 @@ kt
 hl
 hl
 hl
-mz
+hl
 hl
 hl
 hl
@@ -31258,25 +31303,25 @@ hl
 hl
 hl
 kt
-tc
+nz
 ll
-tc
-hl
-hl
-hl
-hl
-yj
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
-yh
+nz
 kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -31513,27 +31558,27 @@ hl
 kt
 kt
 kt
+kt
+kt
+nz
+uJ
+nz
+kt
 rd
 kt
-td
-ll
-td
 kt
-rd
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
-kt
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -31788,9 +31833,9 @@ hl
 hl
 hl
 hl
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -32025,7 +32070,7 @@ hl
 hl
 oW
 ku
-ku
+ng
 qJ
 re
 se
@@ -32045,9 +32090,9 @@ hl
 hl
 hl
 hl
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -32302,9 +32347,9 @@ hl
 hl
 BY
 hl
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -32538,7 +32583,7 @@ kt
 kt
 kt
 kt
-pE
+nz
 pY
 pZ
 rf
@@ -32559,9 +32604,9 @@ hl
 BY
 Cp
 BY
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -32816,9 +32861,9 @@ hl
 hl
 BY
 hl
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -33073,9 +33118,9 @@ hl
 hl
 hl
 hl
-hl
-hl
 hh
+aa
+aa
 aa
 aa
 aa
@@ -33302,8 +33347,8 @@ kR
 ll
 ku
 ku
-mB
-ng
+nz
+nz
 nz
 ku
 ku
@@ -33322,7 +33367,7 @@ pZ
 ku
 ku
 ku
-pE
+nz
 ku
 ku
 hh
@@ -33331,8 +33376,8 @@ hh
 hh
 hh
 hh
-hh
-hh
+aa
+aa
 aa
 aa
 aa
@@ -34087,9 +34132,9 @@ rh
 ku
 ku
 ku
-uK
+nz
 uJ
-uK
+nz
 ku
 xH
 xG
@@ -34344,9 +34389,9 @@ ri
 ri
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xI
 xG
@@ -34601,9 +34646,9 @@ ri
 sj
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xJ
 xG
@@ -34852,15 +34897,15 @@ hl
 mA
 hl
 pG
-pE
+nz
 qP
 rj
 ku
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 xK
 xG
@@ -35115,9 +35160,9 @@ ku
 ku
 ku
 ku
-tc
+nz
 ll
-tc
+nz
 ku
 ku
 ku
@@ -35372,9 +35417,9 @@ ku
 sk
 sk
 sk
-tc
+nz
 ll
-tc
+nz
 sk
 sk
 sk
@@ -35629,9 +35674,9 @@ ku
 sk
 th
 ue
-tc
+nz
 uJ
-tc
+nz
 ue
 xL
 sk
@@ -56477,7 +56522,7 @@ Ep
 HM
 HW
 HN
-Im
+Il
 It
 It
 It
@@ -56486,7 +56531,7 @@ It
 It
 It
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -56734,7 +56779,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 Iu
 IF
 IF
@@ -56743,7 +56788,7 @@ IF
 IF
 IF
 Iu
-JJ
+JI
 JQ
 Ka
 Ki
@@ -56991,7 +57036,7 @@ Ep
 HO
 HW
 Id
-Im
+Il
 It
 IG
 IG
@@ -57000,7 +57045,7 @@ IG
 IG
 IG
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -57248,7 +57293,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57257,7 +57302,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -57505,7 +57550,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57514,7 +57559,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -57762,7 +57807,7 @@ Gy
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -57771,7 +57816,7 @@ Ji
 IH
 IH
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -58019,7 +58064,7 @@ Gx
 HL
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58028,7 +58073,7 @@ Jq
 IH
 IH
 It
-JJ
+JI
 JS
 Kb
 Ki
@@ -58276,7 +58321,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58285,7 +58330,7 @@ Ji
 IH
 IH
 It
-JJ
+JI
 JT
 JY
 Ki
@@ -58533,7 +58578,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58542,7 +58587,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -58790,7 +58835,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 IH
 IH
@@ -58799,7 +58844,7 @@ IH
 IH
 IH
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59047,7 +59092,7 @@ Ep
 HO
 HW
 Id
-Im
+Il
 It
 II
 II
@@ -59056,7 +59101,7 @@ II
 II
 II
 It
-JJ
+JI
 JR
 JY
 Ki
@@ -59304,7 +59349,7 @@ Ep
 HM
 HW
 HN
-Im
+Il
 Iu
 IF
 IF
@@ -59313,7 +59358,7 @@ IF
 IF
 IF
 Iu
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59561,7 +59606,7 @@ Ep
 HN
 HW
 HN
-Im
+Il
 It
 It
 It
@@ -59570,7 +59615,7 @@ It
 It
 It
 It
-JJ
+JI
 JQ
 Ka
 Ki
@@ -59818,7 +59863,7 @@ Gx
 HL
 HW
 HW
-In
+Il
 Is
 IJ
 IY
@@ -59827,7 +59872,7 @@ Jk
 Jt
 IJ
 Is
-JK
+JI
 JP
 Kc
 JY

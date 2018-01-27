@@ -51,7 +51,7 @@ As mentioned before, you are expected to follow these specifications in order to
 ### Object Oriented Code
 As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
-### All BYOND paths must contain the full path.
+### All BYOND paths must contain the full path
 (i.e. absolute pathing)
 
 DM will allow you nest almost any type keyword into a block, such as:
@@ -105,7 +105,7 @@ The previous code made compliant:
 	code
 ```
 
-### No overriding type safety checks.
+### No overriding type safety checks
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ### Type paths must begin with a /
@@ -264,6 +264,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
+* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
+
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
@@ -343,9 +345,7 @@ eg:
 var/mob/living/carbon/human/H = YOU_THE_READER
 H.gib()
 ```
-However, DM also has a dot variable, accessed just as ```.``` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the ```return``` statement) at the end of a proc, provided the proc does not already manually return (```return count``` for example.) Why is this special? 
-
-Well, the ```return``` statement should ideally be free from overhead (functionally free, although of course nothing's free), but DM fails to fulfill this. DM's return statement is actually fairly costly for what it does and for what it's used for.
+However, DM also has a dot variable, accessed just as ```.``` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the ```return``` statement) at the end of a proc, provided the proc does not already manually return (```return count``` for example.) Why is this special?
 
 With ```.``` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the ```.``` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.```, provided that it's a list.
 
@@ -385,8 +385,9 @@ There is no strict process when it comes to merging pull requests. Pull requests
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 * Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
+* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
 
-Just becuase something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
 Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.

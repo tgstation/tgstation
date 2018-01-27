@@ -21,9 +21,9 @@
 		S.Fade(TRUE)
 
 	if(length(GLOB.newplayer_start))
-		loc = pick(GLOB.newplayer_start)
+		forceMove(pick(GLOB.newplayer_start))
 	else
-		loc = locate(1,1,1)
+		forceMove(locate(1,1,1))
 
 	ComponentInitialize()
 
@@ -72,26 +72,6 @@
 	popup.set_content(output)
 	popup.open(0)
 	return
-
-/mob/dead/new_player/Stat()
-	..()
-
-	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
-		stat("Map:", SSmapping.config.map_name)
-
-		if(SSticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")
-			else if(time_remaining == -10)
-				stat("Time To Start:", "DELAYED")
-			else
-				stat("Time To Start:", "SOON")
-
-			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])
@@ -185,7 +165,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid) && IsInteger(pollid))
+		if(isnum(pollid) && ISINTEGER(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -223,7 +203,7 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating) || !IsInteger(rating))
+							if(!isnum(rating) || !ISINTEGER(rating))
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
@@ -282,7 +262,7 @@
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
-		observer.loc = O.loc
+		observer.forceMove(O.loc)
 	else
 		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
@@ -376,6 +356,11 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
+
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
 
 	GLOB.joined_player_list += character.ckey
 

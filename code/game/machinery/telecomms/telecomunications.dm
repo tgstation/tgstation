@@ -26,15 +26,13 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
-	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
-	var/toggled = TRUE 	// Is it toggled on
 	var/on = TRUE
-	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
-	var/hide = 0				// Is it a hidden machine?
-	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
+	var/toggled = TRUE 	// Is it toggled on
+	var/long_range_link = FALSE  // Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
+	var/hide = FALSE  // Is it a hidden machine?
 
 
-/obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
+/obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 
 	if(!on)
@@ -46,69 +44,25 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(netlag > signal.data["slow"])
 		signal.data["slow"] = netlag
 
-// Loop through all linked machines and send the signal or copy.
+	// Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
-		if(filter && !istype( machine, text2path(filter) ))
+		if(filter && !istype( machine, filter ))
 			continue
 		if(!machine.on)
 			continue
 		if(amount && send_count >= amount)
 			break
-		if(machine.loc.z != listening_level)
-			if(long_range_link == 0 && machine.long_range_link == 0)
-				continue
-		// If we're sending a copy, be sure to create the copy for EACH machine and paste the data
-		var/datum/signal/copy = new
-		if(copysig)
-
-			copy.transmission_method = TRANSMISSION_SUBSPACE
-			copy.frequency = signal.frequency
-			// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
-			copy.data = list(
-
-			"mob" = signal.data["mob"],
-			"mobtype" = signal.data["mobtype"],
-			"realname" = signal.data["realname"],
-			"name" = signal.data["name"],
-			"job" = signal.data["job"],
-			"key" = signal.data["key"],
-			"vmask" = signal.data["vmask"],
-			"compression" = signal.data["compression"],
-			"message" = signal.data["message"],
-			"radio" = signal.data["radio"],
-			"slow" = signal.data["slow"],
-			"traffic" = signal.data["traffic"],
-			"type" = signal.data["type"],
-			"server" = signal.data["server"],
-			"reject" = signal.data["reject"],
-			"level" = signal.data["level"],
-			"spans" = signal.data["spans"],
-			"verb_say" = signal.data["verb_say"],
-			"verb_ask" = signal.data["verb_ask"],
-			"verb_exclaim" = signal.data["verb_exclaim"],
-			"verb_yell" = signal.data["verb_yell"],
-			"language" = signal.data["language"]
-			)
-
-			// Keep the "original" signal constant
-			if(!signal.data["original"])
-				copy.data["original"] = signal
-			else
-				copy.data["original"] = signal.data["original"]
-
-		else
-			copy = null
-
+		if(z != machine.loc.z && !long_range_link && !machine.long_range_link)
+			continue
 
 		send_count++
 		if(machine.is_freq_listening(signal))
 			machine.traffic++
 
-		if(copysig && copy)
-			machine.receive_information(copy, src)
+		if(copysig)
+			machine.receive_information(signal.copy(), src)
 		else
 			machine.receive_information(signal, src)
-
 
 	if(send_count > 0 && is_freq_listening(signal))
 		traffic++
@@ -121,27 +75,15 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/proc/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// receive information from linked machinery
-	..()
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
 	// return TRUE if found, FALSE if not found
-	if(!signal)
-		return FALSE
-	if((signal.frequency in freq_listening) || (!freq_listening.len))
-		return TRUE
-	else
-		return FALSE
+	return signal && (!freq_listening.len || (signal.frequency in freq_listening))
 
 
 /obj/machinery/telecomms/New()
 	GLOB.telecomms_list += src
 	..()
-
-	//Set the listening_level if there's none.
-	if(!listening_level)
-		//Defaults to our Z level!
-		var/turf/position = get_turf(src)
-		listening_level = position.z
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()

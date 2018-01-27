@@ -14,7 +14,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	prepare_huds()
 
-	if(CONFIG_GET(string/cross_server_address))
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		verbs += /mob/dead/proc/server_hop
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
@@ -28,7 +28,30 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/ConveyorMove()	//lol
 	return
 
+/mob/dead/forceMove(atom/destination)
+	loc = destination
 
+/mob/dead/Stat()
+	..()
+
+	if(!statpanel("Status"))
+		return
+	stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
+
+	if(SSticker.HasRoundStarted())
+		return
+
+	var/time_remaining = SSticker.GetTimeLeft()
+	if(time_remaining > 0)
+		stat(null, "Time To Start: [round(time_remaining/10)]s")
+	else if(time_remaining == -10)
+		stat(null, "Time To Start: DELAYED")
+	else
+		stat(null, "Time To Start: SOON")
+
+	stat(null, "Players: [SSticker.totalPlayers]")
+	if(client.holder)
+		stat(null, "Players Ready: [SSticker.totalPlayersReady]")
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
@@ -36,20 +59,36 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/csa = CONFIG_GET(string/cross_server_address)
-	if(csa)
-		verbs -= /mob/dead/proc/server_hop
-		to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
+	var/list/csa = CONFIG_GET(keyed_string_list/cross_server)
+	var/pick
+	switch(csa.len)
+		if(0)
+			verbs -= /mob/dead/proc/server_hop
+			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
+		if(1)
+			pick = csa[0]
+		else
+			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
+
+	if(!pick)
 		return
-	if (alert(src, "Jump to server running at [csa]?", "Server Hop", "Yes", "No") != "Yes")
-		return 0
-	if (client && csa)
-		to_chat(src, "<span class='notice'>Sending you to [csa].</span>")
-		new /obj/screen/splash(client)
-		notransform = TRUE
-		sleep(29)	//let the animation play
-		notransform = FALSE
-		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(csa + "?server_hop=[key]")
-	else
-		to_chat(src, "<span class='error'>There is no other server configured!</span>")
+	
+	var/addr = csa[pick]
+
+	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
+		return
+
+	var/client/C = client
+	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
+	new /obj/screen/splash(C)
+
+	notransform = TRUE
+	sleep(29)	//let the animation play
+	notransform = FALSE
+
+	if(!C)
+		return
+
+	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
+
+	C << link("[addr]?server_hop=[key]")

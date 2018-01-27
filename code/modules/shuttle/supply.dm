@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
-	roundstart_move = "supply_away"
 
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
@@ -45,7 +44,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()
-	if(z in GLOB.station_z_levels)
+	if(is_station_level(z))
 		return check_blacklist(shuttle_areas)
 	return ..()
 
@@ -64,7 +63,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/dock()
+/obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
 	. = ..() // Fly/enter transit.

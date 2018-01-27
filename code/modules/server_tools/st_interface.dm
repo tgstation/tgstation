@@ -15,7 +15,12 @@ SERVER_TOOLS_DEFINE_AND_SET_GLOBAL(server_tools_api_compatible, FALSE)
 	ExportService("[SERVICE_REQUEST_API_VERSION] [SERVER_TOOLS_API_VERSION]", TRUE)
 
 /proc/RunningService(skip_compat_check = FALSE)
-	return (skip_compat_check || SERVER_TOOLS_READ_GLOBAL(server_tools_api_compatible)) && world.params[SERVICE_WORLD_PARAM] != null
+	if(!skip_compat_check && !SERVER_TOOLS_READ_GLOBAL(server_tools_api_compatible))
+		return FALSE
+	. = world.params[SERVICE_WORLD_PARAM] != null
+	if(. && world.system_type != MS_WINDOWS)
+		SERVER_TOOLS_LOG("Warning: Server tools world parameter detected but not running on Windows. Aborting initialization!")
+		return FALSE
 
 /proc/ServiceVersion()
 	if(RunningService(TRUE))

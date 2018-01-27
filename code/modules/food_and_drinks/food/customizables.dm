@@ -15,7 +15,6 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
-	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -291,7 +290,7 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 

@@ -56,7 +56,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart("head")
-	if( !O || (status_flags&DISFIGURED) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -91,19 +91,8 @@
 		return wear_id.GetID()
 
 
-/mob/living/carbon/human/abiotic(full_body = 0)
-	var/abiotic_hands = FALSE
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			abiotic_hands = TRUE
-			break
-	if(full_body && abiotic_hands && ((back && !(back.flags_1&NODROP_1)) || (wear_mask && !(wear_mask.flags_1&NODROP_1)) || (head && !(head.flags_1&NODROP_1)) || (shoes && !(shoes.flags_1&NODROP_1)) || (w_uniform && !(w_uniform.flags_1&NODROP_1)) || (wear_suit && !(wear_suit.flags_1&NODROP_1)) || (glasses && !(glasses.flags_1&NODROP_1)) || (ears && !(ears.flags_1&NODROP_1)) || (gloves && !(gloves.flags_1&NODROP_1)) ) )
-		return TRUE
-	return abiotic_hands
-
-
 /mob/living/carbon/human/IsAdvancedToolUser()
-	if(disabilities & MONKEYLIKE)
+	if(has_trait(TRAIT_MONKEYLIKE))
 		return FALSE
 	return TRUE//Humans can use guns and such
 

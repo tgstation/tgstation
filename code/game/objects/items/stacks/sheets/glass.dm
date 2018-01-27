@@ -22,6 +22,11 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
+	grind_results = list("silicon" = 20)
+
+/obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -79,6 +84,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
+	grind_results = list("silicon" = 20, "plasma" = 10)
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -128,6 +134,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
+	grind_results = list("silicon" = 20, "iron" = 10)
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -168,6 +175,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmarglass
+	grind_results = list("silicon" = 20, "plasma" = 10, "iron" = 10)
 
 /obj/item/stack/sheet/plasmarglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.prglass_recipes
@@ -251,7 +259,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	else
 		return ..()
 
-/obj/item/shard/Crossed(mob/AM)
-	if(istype(AM) && has_gravity(loc))
+/obj/item/shard/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 	. = ..()

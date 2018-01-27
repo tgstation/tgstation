@@ -42,10 +42,13 @@
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
-/obj/machinery/camera/Initialize(mapload)
+/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
-	assembly = new(src)
-	assembly.state = 4
+	if(CA)
+		assembly = CA
+	else
+		assembly = new(src)
+		assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -53,23 +56,21 @@
 		LAZYADD(myarea.cameras, src)
 	proximity_monitor = new(src, 1)
 
-	if(mapload && (z in GLOB.station_z_levels) && prob(3) && !start_active)
+	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Destroy()
-	toggle_cam(null, 0) //kick anyone viewing out
+	if(can_use())
+		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
+	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
-	if(assembly)
-		qdel(assembly)
-		assembly = null
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
-	GLOB.cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	GLOB.cameranet.cameras -= src
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)

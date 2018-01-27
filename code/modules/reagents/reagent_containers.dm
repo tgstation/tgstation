@@ -48,15 +48,6 @@
 /obj/item/reagent_containers/afterattack(obj/target, mob/user , flag)
 	return
 
-/obj/item/reagent_containers/proc/reagentlist(obj/item/reagent_containers/snack) //Attack logs for regents in pills
-	var/data
-	if(snack.reagents.reagent_list && snack.reagents.reagent_list.len) //find a reagent list if there is and check if it has entries
-		for (var/datum/reagent/R in snack.reagents.reagent_list) //no reagents will be left behind
-			data += "[R.id]([R.volume] units); " //Using IDs because SOME chemicals(I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
-		return data
-	else
-		return "No reagents"
-
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
 		return 0
@@ -126,8 +117,7 @@
 	reagents.clear_reagents()
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
-	if(is_open_container())
-		reagents.expose_temperature(1000)
+	reagents.expose_temperature(1000)
 	..()
 
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

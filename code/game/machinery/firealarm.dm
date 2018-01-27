@@ -70,7 +70,7 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z in GLOB.station_z_levels)
+		if(is_station_level(z))
 			add_overlay("overlay_[GLOB.security_level]")
 		else
 			add_overlay("overlay_[SEC_LEVEL_GREEN]")
@@ -86,16 +86,16 @@
 	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !emagged && detecting && !stat)
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
 		alarm()
 	..()
 
@@ -122,9 +122,9 @@
 
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
-	data["emagged"] = emagged
+	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
 
-	if(src.z in GLOB.station_z_levels)
+	if(is_station_level(z))
 		data["seclevel"] = get_security_level()
 	else
 		data["seclevel"] = "green"
@@ -237,7 +237,7 @@
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
-					frame.loc = user.loc
+					frame.forceMove(user.drop_location())
 					playsound(src.loc, W.usesound, 50, 1)
 					qdel(src)
 					return

@@ -10,7 +10,7 @@
 /obj/item/integrated_circuit/converter/num2text
 	name = "number to string"
 	desc = "This circuit can convert a number variable into a string."
-	extended_desc = "Because of game limitations null/false variables will output a '0' string."
+	extended_desc = "Because of circuit limitations, null/false variables will output a '0' string."
 	icon_state = "num-string"
 	inputs = list("input" = IC_PINTYPE_NUMBER)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -88,7 +88,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode
 	name = "reference decoder"
-	desc = "This circuit can convert a encoded reference to actual reference."
+	desc = "This circuit can convert an encoded reference to actual reference."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
@@ -104,7 +104,7 @@
 
 /obj/item/integrated_circuit/converter/lowercase
 	name = "lowercase string converter"
-	desc = "this will cause a string to come out in all lowercase."
+	desc = "this circuit will cause a string to come out in all lowercase."
 	icon_state = "lowercase"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -160,10 +160,10 @@
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
-	for(var/datum/integrated_io/I in inputs)
-		I.pull_data()
-		if(!isnull(I.data))
-			result = result + I.data
+	for(var/k in 1 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(!isnull(I))
+			result = result + I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -207,7 +207,7 @@
 	name = "find text"
 	desc = "This gives position of sample in the string. Or returns 0."
 	extended_desc = "The first pin is the string to be examined. The second pin is the sample to be found. \
-	For example, 'eat this burger',' ' will give you position 4. This circuit isn't case sensitive."
+	For example, 'eat this burger' will give you position 4. This circuit isn't case sensitive."
 	complexity = 4
 	inputs = list(
 		"string" = IC_PINTYPE_STRING,
@@ -232,7 +232,7 @@
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
-	For example, 'eat this burger',' ' will be converted to list('eat','this','burger')."
+	For example, 'eat this burger' will be converted to list('eat','this','burger')."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(
@@ -265,7 +265,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToDegrees(incoming)
+		result = TODEGREES(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -283,7 +283,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToRadians(incoming)
+		result = TORADIANS(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -318,5 +318,57 @@
 		set_pin_data(IC_OUTPUT, 1, x1 - x2)
 		set_pin_data(IC_OUTPUT, 2, y1 - y2)
 
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/hsv2hex
+	name = "hsv to hexadecimal"
+	desc = "This circuit can convert a HSV (Hue, Saturation, and Value) color to a Hexadecimal RGB color."
+	extended_desc = "The first pin controls tint (0-359), the second pin controls how intense the tint is (0-255), and the third controls how bright the tint is (0 for black, 127 for normal, 255 for white)."
+	icon_state = "hsv-hex"
+	inputs = list(
+		"hue" = IC_PINTYPE_NUMBER,
+		"saturation" = IC_PINTYPE_NUMBER,
+		"value" = IC_PINTYPE_NUMBER
+	)
+	outputs = list("hexadecimal rgb" = IC_PINTYPE_COLOR)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/hsv2hex/do_work()
+	var/result = null
+	pull_data()
+	var/hue = get_pin_data(IC_INPUT, 1)
+	var/saturation = get_pin_data(IC_INPUT, 2)
+	var/value = get_pin_data(IC_INPUT, 3)
+	if(isnum(hue)&&isnum(saturation)&&isnum(value))
+		result = HSVtoRGB(hsv(AngleToHue(hue),saturation,value))
+
+	set_pin_data(IC_OUTPUT, 1, result)
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/rgb2hex
+	name = "rgb to hexadecimal"
+	desc = "This circuit can convert a RGB (Red, Green, Blue) color to a Hexadecimal RGB color."
+	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. All go from 0-255."
+	icon_state = "rgb-hex"
+	inputs = list(
+		"red" = IC_PINTYPE_NUMBER,
+		"green" = IC_PINTYPE_NUMBER,
+		"blue" = IC_PINTYPE_NUMBER
+	)
+	outputs = list("hexadecimal rgb" = IC_PINTYPE_COLOR)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/rgb2hex/do_work()
+	var/result = null
+	pull_data()
+	var/red = get_pin_data(IC_INPUT, 1)
+	var/green = get_pin_data(IC_INPUT, 2)
+	var/blue = get_pin_data(IC_INPUT, 3)
+	if(isnum(red)&&isnum(green)&&isnum(blue))
+		result = rgb(red,green,blue)
+
+	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)

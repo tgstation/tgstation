@@ -32,10 +32,26 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
+	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 
 /obj/machinery/door/examine(mob/user)
 	..()
+	if(red_alert_access)
+		if(GLOB.security_level >= SEC_LEVEL_RED)
+			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
+		else
+			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
 	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+
+/obj/machinery/door/check_access(access)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
+
+/obj/machinery/door/check_access_list(list/access_list)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
 
 /obj/machinery/door/New()
 	..()
@@ -64,7 +80,7 @@
 	return ..()
 
 /obj/machinery/door/CollidedWith(atom/movable/AM)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -111,7 +127,7 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density && !emagged)
+	if(density && !(obj_flags & EMAGGED))
 		if(allowed(user))
 			open()
 		else
@@ -133,7 +149,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
@@ -195,7 +211,7 @@
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(40/severity))
+	if(prob(severity*10 - 20))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
@@ -252,10 +268,8 @@
 
 /obj/machinery/door/proc/close()
 	if(density)
-		return 1
-	if(operating)
-		return
-	if(welded)
+		return TRUE
+	if(operating || welded)
 		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))

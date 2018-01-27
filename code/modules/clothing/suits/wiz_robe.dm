@@ -149,7 +149,7 @@
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
-	item_state = "wizrobe"
+	item_state = "wizard-paper"
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 

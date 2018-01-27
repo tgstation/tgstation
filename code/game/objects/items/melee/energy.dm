@@ -20,8 +20,8 @@
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/melee/transforming/energy/add_blood(list/blood_dna)
-	return 0
+/obj/item/melee/transforming/energy/add_blood_DNA(list/blood_dna)
+	return FALSE
 
 /obj/item/melee/transforming/energy/is_sharp()
 	return active * sharpness
@@ -95,8 +95,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embed_chance = 75
-	embedded_impact_pain_multiplier = 10
+	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
 	armour_penetration = 35
 	block_chance = 50
 

@@ -28,6 +28,8 @@
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
 
+#define STATUS_EFFECT_FLESHMEND /datum/status_effect/fleshmend //Very fast healing; suppressed by fire, and heals less fire damage
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -63,6 +65,8 @@
 #define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
+
+#define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
 /////////////
 // NEUTRAL //

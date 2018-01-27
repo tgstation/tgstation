@@ -47,7 +47,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ai" = (
@@ -201,7 +201,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -252,7 +252,7 @@
 	},
 /area/shuttle/abandoned)
 "aA" = (
-/obj/machinery/door/airlock/glass_maintenance{
+/obj/machinery/door/airlock/maintenance/glass{
 	name = "Maintenance"
 	},
 /turf/open/floor/plasteel,
@@ -584,10 +584,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Dormitory";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
@@ -703,8 +701,7 @@
 /area/shuttle/abandoned)
 "bp" = (
 /obj/structure/urinal{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -722,10 +719,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Crew Quarters";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Crew Quarters"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -896,7 +891,7 @@
 	},
 /area/shuttle/abandoned)
 "bI" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -1018,7 +1013,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -1089,7 +1084,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/abandoned)
 "cc" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cd" = (
@@ -1102,7 +1097,7 @@
 	},
 /area/shuttle/abandoned)
 "ce" = (
-/obj/structure/sign/engineering,
+/obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cf" = (
@@ -1299,7 +1294,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage"
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1435,7 +1430,7 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/shuttle/abandoned)
 "cL" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cM" = (
@@ -1523,7 +1518,6 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 32
 	},
@@ -1618,7 +1612,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
 	welded = 1
 	},

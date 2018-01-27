@@ -13,6 +13,7 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
+#define TURF_PLATING_DECAL_LAYER 2.031
 #define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
@@ -64,6 +65,9 @@
 #define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
+#define LOW_LANDMARK_LAYER 9
+#define MID_LANDMARK_LAYER 9.1
+#define HIGH_LANDMARK_LAYER 9.2
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12

@@ -41,8 +41,8 @@ Passive gate is similar to the regular pump except:
 	if(!on)
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
@@ -78,18 +78,13 @@ Passive gate is similar to the regular pump except:
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
 		"sigtype" = "status"
-	)
-
+	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -127,7 +122,7 @@ Passive gate is similar to the regular pump except:
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -149,7 +144,7 @@ Passive gate is similar to the regular pump except:
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

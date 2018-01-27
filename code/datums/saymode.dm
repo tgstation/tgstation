@@ -33,7 +33,7 @@
 		if(LINGHIVE_LING)
 			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 			var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
-			log_talk(src,"[changeling.changelingID]/[user.key] : [message]",LOGSAY)
+			log_talk(user,"[changeling.changelingID]/[user.key] : [message]",LOGSAY)
 			for(var/_M in GLOB.mob_list)
 				var/mob/M = _M
 				if(M in GLOB.dead_mob_list)
@@ -110,3 +110,25 @@
 		AI.holopad_talk(message, language)
 		return FALSE
 	return TRUE
+
+/datum/saymode/monkey
+	key = "k"
+	mode = MODE_MONKEY
+
+/datum/saymode/monkey/handle_message(mob/living/user, message, datum/language/language)
+	var/datum/mind = user.mind
+	if(!mind)
+		return TRUE
+	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
+		log_talk(user, "(MONKEY) [user]/[user.key]: [message]",LOGSAY)
+		if(prob(75) && ismonkey(user))
+			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
+		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
+		for(var/_M in GLOB.mob_list)
+			var/mob/M = _M
+			if(M in GLOB.dead_mob_list)
+				var/link = FOLLOW_LINK(M, user)
+				to_chat(M, "[link] [msg]")
+			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
+				to_chat(M, msg)
+		return FALSE

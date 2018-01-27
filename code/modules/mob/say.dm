@@ -73,8 +73,10 @@
 
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
-/mob/proc/emote(var/act)
-	return
+/mob/proc/check_emote(message)
+	if(copytext(message, 1, 2) == "*")
+		emote(copytext(message, 2))
+		return 1
 
 /mob/proc/hivecheck()
 	return 0

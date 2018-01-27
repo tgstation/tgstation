@@ -147,10 +147,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/line[] = list(locate(px,py,M.z))
 	var/dx=N.x-px	//x distance
 	var/dy=N.y-py
-	var/dxabs=abs(dx)//Absolute value of x distance
-	var/dyabs=abs(dy)
-	var/sdx=sign(dx)	//Sign of x distance (+ or -)
-	var/sdy=sign(dy)
+	var/dxabs = abs(dx)//Absolute value of x distance
+	var/dyabs = abs(dy)
+	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdy = SIGN(dy)
 	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
 	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
 	var/j			//Generic integer for counting
@@ -955,8 +955,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -968,8 +968,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
-	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
+	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
+	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -1199,18 +1199,8 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
-/proc/get_areas_in_z(zlevel)
-	. = list()
-	var/validarea = FALSE
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		validarea = TRUE
-		for(var/turf/T in A)
-			if(T.z != zlevel)
-				validarea = FALSE
-				break
-		if(validarea)
-			. += A
+/proc/get_random_station_turf()
+	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1258,6 +1248,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
 
+GLOBAL_REAL_VAR(list/stack_trace_storage)
+/proc/gib_stack_trace()
+	stack_trace_storage = list()
+	stack_trace()
+	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
+	. = stack_trace_storage
+	stack_trace_storage = null
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
 //Increases delay as the server gets more overloaded,
@@ -1274,7 +1272,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	. = 0
 	var/i = DS2TICKS(initial_delay)
 	do
-		. += Ceiling(i*DELTA_CALC)
+		. += CEILING(i*DELTA_CALC, 1)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
@@ -1436,11 +1434,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
-
-
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -1499,14 +1492,14 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
 // If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
 /proc/REF(input)
 	if(istype(input, /datum))
 		var/datum/thing = input
-		if(thing.use_tag)
+		if(thing.datum_flags & DF_USE_TAG)
 			if(!thing.tag)
-				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
-				thing.use_tag = FALSE
+				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
+				thing.datum_flags &= ~DF_USE_TAG
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
@@ -1522,6 +1515,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		processing_list.Cut(1, 2)
 		if(LAZYLEN(A.contents))
 			processing_list += A.contents
+// Makes a call in the context of a different usr
+// Use sparingly
+/world/proc/PushUsr(mob/M, datum/callback/CB)
+	var/temp = usr
+	usr = M
+	. = CB.Invoke()
+	usr = temp
 
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
@@ -1530,3 +1530,45 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
 
+//datum may be null, but it does need to be a typed var
+#define NAMEOF(datum, X) (#X || ##datum.##X)
+
+#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
+//dupe code because dm can't handle 3 level deep macros
+#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
+
+/proc/___callbackvarset(list_or_datum, var_name, var_value)
+	if(length(list_or_datum))
+		list_or_datum[var_name] = var_value
+		return
+	var/datum/D = list_or_datum
+	if(IsAdminAdvancedProcCall())
+		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+	else
+		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))

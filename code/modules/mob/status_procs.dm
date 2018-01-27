@@ -1,7 +1,7 @@
 
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 /////////////////////////////////// STUN ////////////////////////////////////
 
@@ -28,7 +28,7 @@
 	return 0
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
-	if((status_flags & CANUNCONSCIOUS) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration = max(world.time + amount, U.duration)
@@ -37,7 +37,7 @@
 		return U
 
 /mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Sets remaining duration
-	if((status_flags & CANUNCONSCIOUS) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(amount <= 0)
 			if(U)
@@ -49,7 +49,7 @@
 		return U
 
 /mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Adds to remaining duration
-	if((status_flags & CANUNCONSCIOUS) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration += amount
@@ -160,8 +160,12 @@
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
+		if((stat != CONSCIOUS && stat != SOFT_CRIT))
 			blind_minimum = 1
+		if(isliving(src))
+			var/mob/living/L = src
+			if(L.has_trait(TRAIT_BLIND))
+				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
@@ -177,8 +181,12 @@
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
+		if(stat != CONSCIOUS && stat != SOFT_CRIT)
 			blind_minimum = 1
+		if(isliving(src))
+			var/mob/living/L = src
+			if(L.has_trait(TRAIT_BLIND))
+				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")
@@ -225,31 +233,6 @@
 	return
 
 /mob/proc/set_disgust(amount)
-	return
-
-/////////////////////////////////// BLIND DISABILITY ////////////////////////////////////
-
-/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
-	return
-
-/mob/proc/become_blind()
-	return
-
-/////////////////////////////////// NEARSIGHT DISABILITY ////////////////////////////////////
-
-/mob/proc/cure_nearsighted()
-	return
-
-/mob/proc/become_nearsighted()
-	return
-
-
-//////////////////////////////// HUSK DISABILITY ///////////////////////////:
-
-/mob/proc/cure_husk()
-	return
-
-/mob/proc/become_husk()
 	return
 
 

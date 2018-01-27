@@ -184,10 +184,10 @@
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
-    . = ..()
-    turret = loc
-    if(!istype(turret))
-        return INITIALIZE_HINT_QDEL
+	. = ..()
+	turret = loc
+	if(!istype(turret))
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun_control/Destroy()
 	turret = null

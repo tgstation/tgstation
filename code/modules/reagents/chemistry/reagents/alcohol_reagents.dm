@@ -51,9 +51,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(reac_volume >= 5)
 			var/obj/item/book/affectedbook = O
 			affectedbook.dat = null
-			to_chat(usr, "<span class='notice'>Through thorough application, you wash away [affectedbook]'s writing.</span>")
+			O.visible_message("<span class='notice'>[O]'s writing is washed away by [name]!</span>")
 		else
-			to_chat(usr, "<span class='warning'>The ink smears, but doesn't wash away!</span>")
+			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
@@ -149,8 +149,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-40)
-	if (M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	return ..()
 
@@ -541,8 +541,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "toxinsspecialglass"
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(var/mob/living/M as mob)
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature < (BODYTEMP_NORMAL + 20))
+		M.bodytemperature = min((BODYTEMP_NORMAL + 20), M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -721,8 +721,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The ultimate refreshment."
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature < (BODYTEMP_NORMAL + 20))
+		M.bodytemperature = min((BODYTEMP_NORMAL + 20), M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -835,8 +835,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A spicy mix of Vodka and Spice. Very hot."
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 360)
-		M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/red_mead
@@ -874,8 +874,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A beer so frosty, the air around it freezes."
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
-	if(M.bodytemperature > 270)
-		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if(M.bodytemperature > T0C)
+		M.bodytemperature = max(T0C, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/grog
@@ -961,7 +961,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/datum/antagonist/changeling/changeling = M.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.chem_charges += metabolization_rate
-			changeling.chem_charges = Clamp(changeling.chem_charges, 0, changeling.chem_storage)
+			changeling.chem_charges = CLAMP(changeling.chem_charges, 0, changeling.chem_storage)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -1281,3 +1281,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_yellow"
 	glass_name = "eggnog"
 	glass_desc = "For enjoying the most wonderful time of the year."
+
+
+/datum/reagent/consumable/ethanol/narsour
+	name = "Nar'Sour"
+	id = "narsour"
+	description = "Side effects include self-mutilation and hoarding plasteel."
+	color = RUNE_COLOR_DARKRED
+	boozepwr = 10
+	taste_description = "bloody"
+	glass_icon_state = "narsour"
+	glass_name = "Nar'Sour"
+	glass_desc = "A new hit cocktail inspired by THE ARM Breweries will have you shouting Fuu ma'jin in no time!"
+
+/datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/M)
+	M.cultslurring = min(M.cultslurring + 3, 3)
+	M.stuttering = min(M.stuttering + 3, 3)
+	..()

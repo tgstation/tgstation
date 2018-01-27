@@ -57,7 +57,7 @@
 
 		brainmob = newbrain.brainmob
 		newbrain.brainmob = null
-		brainmob.loc = src
+		brainmob.forceMove(src)
 		brainmob.container = src
 		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
@@ -90,7 +90,7 @@
 
 /obj/item/device/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
-	brainmob.loc = brain //Throw mob into brain.
+	brainmob.forceMove(brain) //Throw mob into brain.
 	brainmob.stat = DEAD
 	brainmob.emp_damage = 0
 	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
@@ -120,7 +120,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
-		newbrain.loc = src
+		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
 		brain = new(src)
@@ -198,7 +198,7 @@
 		else
 			to_chat(user, "<span class='notice'>The MMI indicates the brain is active.</span>")
 
-/obj/item/device/mmi/relaymove()
+/obj/item/device/mmi/relaymove(mob/user)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
 /obj/item/device/mmi/syndie

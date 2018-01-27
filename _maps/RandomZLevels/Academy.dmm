@@ -741,7 +741,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cH" = (
-/obj/structure/sign/nosmoking_1,
+/obj/structure/sign/warning/nosmoking/circle,
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "cI" = (
@@ -1273,12 +1273,12 @@
 /turf/open/floor/plating,
 /area/awaymission/academy)
 "eA" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eB" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eC" = (
@@ -3738,7 +3738,7 @@
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "ml" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mm" = (

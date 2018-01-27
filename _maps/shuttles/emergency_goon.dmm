@@ -12,6 +12,9 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -104,7 +107,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "w" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium,
@@ -157,7 +160,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
@@ -193,7 +196,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "K" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -265,6 +268,29 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"W" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"X" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Y" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -280,7 +306,7 @@ d
 a
 "}
 (2,1,1) = {"
-b
+W
 d
 p
 p
@@ -290,7 +316,7 @@ p
 p
 p
 d
-b
+X
 "}
 (3,1,1) = {"
 c
@@ -303,7 +329,7 @@ H
 H
 H
 d
-c
+Y
 "}
 (4,1,1) = {"
 d

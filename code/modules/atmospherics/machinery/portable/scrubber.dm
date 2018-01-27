@@ -45,7 +45,7 @@
 
 	filtered.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		ADD_GAS(gas, filtered.gases)
+		filtered.add_gas(gas)
 		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
@@ -96,7 +96,7 @@
 			. = TRUE
 		if("eject")
 			if(holding)
-				holding.loc = get_turf(src)
+				holding.forceMove(drop_location())
 				holding = null
 				. = TRUE
 		if("toggle_filter")

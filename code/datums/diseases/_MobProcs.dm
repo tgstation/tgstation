@@ -3,29 +3,29 @@
 	for(var/thing in viruses)
 		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /mob/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
-		return 0
+		return FALSE
 
 	if(D.GetDiseaseID() in resistances)
-		return 0
+		return FALSE
 
 	if(HasDisease(D))
-		return 0
+		return FALSE
 
 	if(!(type in D.viable_mobtypes))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 
 /mob/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
-		return 0
+		return FALSE
 	AddDisease(D)
 
 
@@ -53,12 +53,13 @@
 			else
 				DD.vars[V] = D.vars[V]
 
+		DD.after_add()
 		DD.affected_mob.med_hud_set_status()
 
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
-		return 0
+		return FALSE
 
 	var/obj/item/clothing/Cl = null
 	var/passed = TRUE

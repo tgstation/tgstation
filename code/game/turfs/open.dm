@@ -30,7 +30,7 @@
 	desc = "It's regarding you suspiciously."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
-	baseturf = /turf/open/indestructible/necropolis
+	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/necropolis/Initialize()
@@ -45,7 +45,7 @@
 	name = "necropolis floor"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "boss"
-	baseturf = /turf/open/indestructible/boss
+	baseturfs = /turf/open/indestructible/boss
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss/air
@@ -54,7 +54,7 @@
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	baseturf = /turf/open/indestructible/hierophant
+	baseturfs = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/two
@@ -71,7 +71,7 @@
 	name = "cogmetal"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
-	baseturf = /turf/open/indestructible/clock_spawn_room
+	baseturfs = /turf/open/indestructible/clock_spawn_room
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
@@ -88,7 +88,7 @@
 /turf/open/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
-		if(is_servant_of_ratvar(L))
+		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
 			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
 			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
@@ -168,12 +168,12 @@
 	return 1
 
 /turf/open/proc/water_vapor_gas_act()
-	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+	MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	clean_blood()
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
@@ -355,6 +355,6 @@
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
-		ASSERT_GAS(/datum/gas/pluoxium,air)
+		air.assert_gas(/datum/gas/pluoxium)
 		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
 		air.garbage_collect()

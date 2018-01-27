@@ -111,6 +111,7 @@
 /obj/item/pickaxe,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
+/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
@@ -119,6 +120,7 @@
 /obj/item/device/flashlight,
 /obj/item/pickaxe,
 /obj/item/clothing/glasses/meson,
+/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
@@ -144,7 +146,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aB" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -286,7 +288,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "aY" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
@@ -450,7 +452,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
 "bx" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 4;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
@@ -470,7 +472,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "bA" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Labor Camp Backroom";
 	req_access_txt = "2"
 	},
@@ -557,7 +559,7 @@
 /turf/open/floor/plasteel/purple/corner,
 /area/mine/eva)
 "bL" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Labor Camp Monitoring";
 	req_access_txt = "2"
 	},
@@ -577,10 +579,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "bN" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA"
-	},
+/obj/structure/sign/warning/docking,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
@@ -617,7 +616,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station EVA";
 	req_access_txt = "54"
 	},
@@ -800,6 +799,9 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cr" = (
@@ -830,6 +832,9 @@
 /area/lavaland/surface/outdoors)
 "cw" = (
 /obj/machinery/computer/secure_data,
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cx" = (
@@ -922,11 +927,7 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cN" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
-	},
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (
@@ -1032,6 +1033,9 @@
 	},
 /obj/effect/turf_decal/loading_area{
 	dir = 8
+	},
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -1186,7 +1190,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dy" = (
@@ -1212,6 +1215,9 @@
 	c_tag = "Communications Relay";
 	dir = 8;
 	network = list("MINE")
+	},
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
 	},
 /turf/open/floor/circuit,
 /area/mine/maintenance)
@@ -1371,7 +1377,7 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "dR" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Infirmary";
 	req_access_txt = "0"
@@ -1511,7 +1517,7 @@
 /turf/open/floor/plasteel/purple/corner,
 /area/mine/living_quarters)
 "el" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
@@ -1614,7 +1620,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
@@ -1647,7 +1653,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Mining Station Bridge";
 	req_access_txt = "48"
 	},
@@ -1689,7 +1695,7 @@
 	},
 /area/mine/production)
 "eF" = (
-/obj/machinery/door/airlock/glass_mining{
+/obj/machinery/door/airlock/mining/glass{
 	name = "Processing Area";
 	req_access_txt = "48"
 	},
@@ -1762,10 +1768,8 @@
 /area/mine/living_quarters)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock{
-	glass = 1;
-	name = "Break Room";
-	opacity = 0
+/obj/machinery/door/airlock/glass{
+	name = "Break Room"
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -3297,7 +3301,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Wt" = (
-/obj/effect/baseturf_helper/lava_land/surface,
+/obj/effect/baseturf_helper/picky/lava_land/plating,
 /turf/closed/wall,
 /area/mine/laborcamp/security)
 "Wu" = (
@@ -3330,7 +3334,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WB" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 8;
 	name = "Labor Camp Shuttle Security Airlock";
 	req_access_txt = "2"
@@ -3338,7 +3342,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "WC" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	cyclelinkeddir = 8;
 	name = "Labor Camp Shuttle Prisoner Airlock";
 	req_access_txt = "0"
@@ -3365,6 +3369,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"WF" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"WG" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WH" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/eva)
+"WI" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/production)
+"WJ" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall/r_wall,
+/area/mine/maintenance)
+"WK" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/living_quarters)
+"WL" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
+/turf/open/floor/plasteel/purple/corner{
+	dir = 8
+	},
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -8466,7 +8504,7 @@ aq
 WB
 aq
 bi
-aq
+WF
 WC
 aq
 bZ
@@ -8723,7 +8761,7 @@ aq
 ba
 aq
 bj
-az
+WG
 az
 aq
 ca
@@ -9755,7 +9793,7 @@ aq
 bA
 aq
 aq
-Wu
+aq
 aq
 aj
 aj
@@ -10791,7 +10829,7 @@ dg
 dg
 cQ
 dZ
-Ww
+dZ
 dZ
 cM
 fa
@@ -11817,7 +11855,7 @@ ai
 cQ
 dk
 dA
-cQ
+WJ
 ed
 er
 eM
@@ -12849,7 +12887,7 @@ dR
 ef
 es
 dZ
-cM
+WK
 fg
 cM
 cM
@@ -13106,7 +13144,7 @@ dQ
 ec
 er
 dZ
-eL
+WL
 fh
 ft
 eL
@@ -19012,7 +19050,7 @@ cI
 cP
 cn
 bP
-Wy
+bP
 bP
 bP
 eD
@@ -20035,9 +20073,9 @@ bt
 bH
 bV
 cq
-bf
+WH
 bq
-bq
+WI
 db
 bP
 bP
@@ -20290,7 +20328,7 @@ bf
 bp
 bu
 bI
-Wx
+bW
 cr
 bf
 ad
@@ -21565,7 +21603,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -22072,7 +22110,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ai
@@ -22856,7 +22894,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 ab
 ab
 ab
@@ -24646,7 +24684,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -24903,7 +24941,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -25180,7 +25218,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 ai
@@ -25424,7 +25462,7 @@ ab
 ab
 ab
 ai
-ao
+ai
 ab
 ab
 ab
@@ -25674,7 +25712,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -25958,7 +25996,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -26201,7 +26239,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 am
@@ -26215,7 +26253,7 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
@@ -26974,7 +27012,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 am
 am
 am
@@ -28513,7 +28551,7 @@ ab
 ab
 ab
 ai
-ao
+ai
 ab
 ab
 ab
@@ -29023,7 +29061,7 @@ ab
 ab
 ab
 ab
-ao
+ai
 ab
 ab
 ai
@@ -29032,13 +29070,13 @@ am
 am
 am
 am
-ao
+ai
 ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ab
 ab
@@ -29280,8 +29318,8 @@ ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ai
 am
@@ -30062,8 +30100,8 @@ ab
 ab
 ab
 ab
-ao
-ao
+ai
+ai
 ab
 ab
 ab
@@ -30575,7 +30613,7 @@ ai
 ai
 ab
 ab
-ao
+ai
 am
 am
 am

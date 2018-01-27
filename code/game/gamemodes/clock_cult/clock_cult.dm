@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -65,18 +65,48 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/proc/add_servant_of_ratvar(mob/L, silent = FALSE)
+/proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
-	var/update_type = ANTAG_DATUM_CLOCKCULT
+	var/update_type = /datum/antagonist/clockcult
 	if(silent)
-		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
-	. = L.mind.add_antag_datum(update_type)
+		update_type = /datum/antagonist/clockcult/silent
+	var/datum/antagonist/clockcult/C = new update_type(L.mind)
+	C.make_team = create_team
+	C.show_in_roundend = create_team //tutorial scarabs begone
+	
+	if(iscyborg(L))
+		var/mob/living/silicon/robot/R = L
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>") //The AI needs to be in its core to properly be converted
+	
+	. = L.mind.add_antag_datum(C)
+
+	if(!silent && L)
+		if(.)
+			to_chat(L, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(L) ? "You cannot compute this truth!" : \
+			"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
+			Ratvar, the Clockwork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
+			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
+		else
+			L.visible_message("<span class='boldwarning'>[L] seems to resist an unseen force!</span>", null, null, 7, L)
+			to_chat(L, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(L) ? "You cannot compute this truth!" : \
+			"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and the sound</span> <span class='boldwarning'>\
+			is a meaningless cacophony.</span><br>\
+			<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
+			" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
+			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
+			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
+	
+
+
 
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent
@@ -88,7 +118,6 @@ Credit where due:
 ///////////////
 
 /datum/game_mode
-	var/datum/mind/eminence //The clockwork Eminence
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
 
@@ -110,6 +139,8 @@ Credit where due:
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
+
+	var/datum/team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -190,16 +221,16 @@ Credit where due:
 	return ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
+	return main_clockcult.check_clockwork_victory()
+
+/datum/game_mode/clockwork_cult/set_round_result()
+	..()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
-		return TRUE
+		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 	else
 		SSticker.news_report = CULT_FAILURE
-	return FALSE
-
-/datum/game_mode/clockwork_cult/declare_completion()
-	..()
-	return //Doesn't end until the round does
+		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 
 /datum/game_mode/clockwork_cult/generate_report()
 	return "Bluespace monitors near your sector have detected a continuous stream of patterned fluctuations since the station was completed. It is most probable that a powerful entity \
@@ -208,30 +239,6 @@ Credit where due:
 	harm to company personnel or property.<br><br>Keep a sharp on any crew that appear to be oddly-dressed or using what appear to be magical powers, as these crew may be defectors \
 	working for this entity and utilizing highly-advanced technology to cross the great distance at will. If they should turn out to be a credible threat, the task falls on you and \
 	your crew to dispatch it in a timely manner."
-
-/datum/game_mode/proc/auto_declare_completion_clockwork_cult()
-	var/text = ""
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='bold large_brass'>Ratvar's servants defended the Ark until its activation!</span>"
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
-		else
-			text += "<span class='userdanger'>The Ark was destroyed! Ratvar will rust away for all eternity!</span>"
-			SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
-		text += "<br><b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
-		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
-		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-		for(var/i in SSticker.scripture_states)
-			if(i != SCRIPTURE_DRIVER)
-				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
-	if(SSticker.mode.eminence)
-		text += "<br><b>The Eminence was:</b> [printplayer(SSticker.mode.eminence)]"
-	if(servants_of_ratvar.len)
-		text += "<br><b>Ratvar's servants were:</b>"
-		for(var/datum/mind/M in servants_of_ratvar - SSticker.mode.eminence)
-			text += printplayer(M)
-	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
 	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]

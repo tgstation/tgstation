@@ -9,7 +9,7 @@
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
-	var/datum/comm_message/currmsg 
+	var/datum/comm_message/currmsg
 	var/datum/comm_message/aicurrmsg
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
@@ -52,10 +52,13 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if(!(z in GLOB.station_z_levels) && z != ZLEVEL_CENTCOM) //Can only use on centcom and SS13
+	if(!is_station_level(z) && !is_centcom_level(z)) //Can only use on centcom and SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	usr.set_machine(src)
+
+	var/area/A = get_area(usr)
+	var/area_name = A.name
 
 	if(!href_list["operation"])
 		return
@@ -79,7 +82,7 @@
 					if((20 in I.access))
 						authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					authenticated = 2
 					auth_id = "Unknown"
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>")
@@ -111,9 +114,11 @@
 					if(GLOB.security_level != old_level)
 						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-						//Only notify the admins if an actual change happened
-						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+						//Only notify people if an actual change happened
+						var/security_level = get_security_level()
+						log_game("[key_name(usr)] has changed the security level to [security_level].")
+						message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
+						deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has changed the security level to [security_level] at <span class='name'>[area_name]</span>.</span>", usr)
 					tmp_alertlevel = 0
 				else
 					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
@@ -135,7 +140,8 @@
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
-				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -143,6 +149,7 @@
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_talk(usr,"[key_name(usr)] has sent a message to the other server: [input]",LOGSAY)
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
+				deadchat_broadcast("<span class='deadsay bold'>[usr.name] has sent an outgoing message to the other station(s).</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		if("purchase_menu")
@@ -245,11 +252,13 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> enabled emergency maintenance access at <span class='name'>[area_name]</span>.</span>", usr)
 			state = STATE_DEFAULT
 		if("disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> disabled emergency maintenance access at <span class='name'>[area_name]</span>.</span>", usr)
 			state = STATE_DEFAULT
 
 		// Status display stuff
@@ -283,12 +292,12 @@
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				log_talk(usr,"[key_name(usr)] has made a CentCom announcement: [input]",LOGSAY)
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has messaged CentCom, \"[input]\" at <span class='name'>[area_name]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
-
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((authenticated==2) && (emagged))
+			if((authenticated==2) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -300,12 +309,13 @@
 				Syndicate_announce(input, usr)
 				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
 				log_talk(usr,"[key_name(usr)] has made a Syndicate announcement: [input]",LOGSAY)
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has messaged the Syndicate, \"[input]\" at <span class='name'>[area_name]</span>.</span>", usr)
 				CM.lastTimeUsed = world.time
 
 		if("RestoreBackup")
 			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-			emagged = FALSE
+			obj_flags &= ~EMAGGED
 			updateDialog()
 
 		if("nukerequest") //When there's no other way
@@ -378,9 +388,11 @@
 				tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
 			set_security_level(tmp_alertlevel)
 			if(GLOB.security_level != old_level)
-				//Only notify the admins if an actual change happened
-				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+				//Only notify people if an actual change happened
+				var/security_level = get_security_level()
+				log_game("[key_name(usr)] has changed the security level to [security_level].")
+				message_admins("[key_name_admin(usr)] has changed the security level to [security_level].")
+				deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.name]</span> has changed the security level to [security_level].</span>", usr)
 			tmp_alertlevel = 0
 			aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
@@ -391,11 +403,13 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] enabled emergency maintenance access.</span>", usr)
 			aistate = STATE_DEFAULT
 		if("ai-disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+			deadchat_broadcast("<span class='deadsay bold'>[usr.name] disabled emergency maintenance access.</span>", usr)
 			aistate = STATE_DEFAULT
 
 	updateUsrDialog()
@@ -407,9 +421,9 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(authenticated == 1)
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
@@ -463,14 +477,15 @@
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
-					if(CONFIG_GET(string/cross_server_address))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
+					var/cross_servers_count = length(CONFIG_GET(keyed_string_list/cross_server))
+					if(cross_servers_count)
+						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
-					if(!emagged)
+					if(!(obj_flags & EMAGGED))
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
@@ -689,6 +704,8 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
+	var/area/A = get_area(user)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> made an priority announcement at <span class='name'>[A.name]</span>.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
@@ -697,11 +714,7 @@
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = TRANSMISSION_RADIO
-	status_signal.data["command"] = command
-
+	var/datum/signal/status_signal = new(list("command" = command))
 	switch(command)
 		if("message")
 			status_signal.data["msg1"] = data1

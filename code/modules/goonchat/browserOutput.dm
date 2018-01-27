@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
+	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 	pingLoop()
 
@@ -132,7 +132,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
-		adminMusicVolume = Clamp(text2num(volume), 0, 100)
+		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()

@@ -53,7 +53,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 

@@ -127,7 +127,7 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
 	var/mob/dead/observer/chosen = null
 
 	if(candidates.len)
@@ -207,7 +207,7 @@
 			//Swarm of creatures
 			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
+				new /mob/living/simple_animal/hostile/netherworld(get_step(T,direction))
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)
@@ -271,9 +271,8 @@
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			var/mob/dead/observer/chosen = null
-
 			if(candidates.len)
 				chosen = pick(candidates)
 				message_admins("[key_name_admin(chosen)] was spawned as Dice Servant")

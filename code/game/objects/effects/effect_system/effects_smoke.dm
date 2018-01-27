@@ -169,7 +169,7 @@
 				qdel(H)
 				var/list/G_gases = G.gases
 				if(G_gases[/datum/gas/plasma])
-					ASSERT_GAS(/datum/gas/nitrogen, G)
+					G.assert_gas(/datum/gas/nitrogen)
 					G_gases[/datum/gas/nitrogen][MOLES] += (G_gases[/datum/gas/plasma][MOLES])
 					G_gases[/datum/gas/plasma][MOLES] = 0
 					G.garbage_collect()
@@ -271,7 +271,7 @@
 	else
 		location = get_turf(loca)
 	amount = radius
-	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume, 4) //The smoke holds 4 times the total reagents volume for balance purposes.
 
 	if(!silent)
 		var/contained = ""

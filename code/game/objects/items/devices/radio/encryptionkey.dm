@@ -4,8 +4,8 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
-	var/translate_binary = 0
-	var/syndie = 0
+	var/translate_binary = FALSE
+	var/syndie = FALSE
 	var/independent = FALSE
 	var/list/channels = list()
 
@@ -20,7 +20,7 @@
 	name = "binary translator key"
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
 	icon_state = "bin_cypherkey"
-	translate_binary = 1
+	translate_binary = TRUE
 
 /obj/item/device/encryptionkey/headset_sec
 	name = "security radio encryption key"

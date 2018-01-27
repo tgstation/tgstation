@@ -25,9 +25,9 @@
 	name = "brain"
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
+		if(brainmob && !(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH))))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
-		loc = C
+		forceMove(C)
 		C.update_hair()
 		return
 
@@ -79,8 +79,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.disabilities & NOCLONE)
-			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
+		if(L.has_trait(TRAIT_NOCLONE))
+			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -126,7 +126,7 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !C.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
@@ -154,7 +154,7 @@
 	var/adjusted_amount
 	if(amount >= 0 && maximum)
 		var/brainloss = get_brain_damage()
-		var/new_brainloss = Clamp(brainloss + amount, 0, maximum)
+		var/new_brainloss = CLAMP(brainloss + amount, 0, maximum)
 		if(brainloss > new_brainloss) //brainloss is over the cap already
 			return 0
 		adjusted_amount = new_brainloss - brainloss
@@ -195,8 +195,10 @@
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
+		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
 		traumas += new trauma_type(arglist(list(src, permanent) + arguments))
 	else
+		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
 		traumas += trauma
 		trauma.permanent = permanent
 
@@ -209,6 +211,7 @@
 			possible_traumas += BT
 
 	var/trauma_type = pick(possible_traumas)
+	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
 	traumas += new trauma_type(src, permanent)
 
 //Cure a random trauma of a certain subtype

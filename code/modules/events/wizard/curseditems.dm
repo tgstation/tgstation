@@ -38,7 +38,7 @@
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(ruins_spaceworthiness && !(H.z in GLOB.station_z_levels) || isspaceturf(H.loc) || isplasmaman(H))
+		if(ruins_spaceworthiness && !is_station_level(H.z) || isspaceturf(H.loc) || isplasmaman(H))
 			continue	//#savetheminers
 		if(ruins_wizard_loadout && iswizard(H))
 			continue

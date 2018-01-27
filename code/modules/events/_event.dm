@@ -29,8 +29,8 @@
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = Ceiling(earliest_start * CONFIG_GET(number/events_min_time_mul))
-		min_players = Ceiling(min_players * CONFIG_GET(number/events_min_players_mul))
+		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
+		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
 	wizardevent = 1
@@ -60,7 +60,7 @@
 
 	triggering = TRUE
 	if (alertadmins)
-		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)

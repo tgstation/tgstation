@@ -58,7 +58,7 @@
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))
-		var/str = trim(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+		var/str = stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN)
 		if(!str || !length(str)) //cancel
 			return
 		if(length(str) > 50)

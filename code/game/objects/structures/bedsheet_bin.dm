@@ -231,10 +231,10 @@ LINEN BINS
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
 /obj/item/bedsheet/random/Initialize()
-	. = INITIALIZE_HINT_QDEL
 	..()
 	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"

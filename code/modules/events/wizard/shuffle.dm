@@ -13,7 +13,7 @@
 	var/list/mobs	 = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(!(H.z in GLOB.station_z_levels))
+		if(!is_station_level(H.z))
 			continue //lets not try to strand people in space or stuck in the wizards den
 		moblocs += H.loc
 		mobs += H

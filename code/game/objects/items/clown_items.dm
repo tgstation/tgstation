@@ -21,6 +21,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list("lye" = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -85,7 +86,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.clean_blood()
+			target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			target.wash_cream()
 	return
 

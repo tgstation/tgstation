@@ -114,10 +114,7 @@
 /turf/open/floor/mineral/plasma,
 /area/shuttle/escape)
 "v" = (
-/obj/machinery/disco{
-	anchored = 1;
-	req_access = null
-	},
+/obj/machinery/disco/indestructible,
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "w" = (

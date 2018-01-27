@@ -285,11 +285,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	firstname.Find(real_name)
 	return firstname.match
 
-/mob/proc/abiotic(full_body = 0)
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			return 1
-	return 0
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -328,8 +323,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
-		return	B.eye_blind
-	return 0
+		return B.eye_blind
+	return FALSE
 
 /mob/proc/hallucinating()
 	return FALSE
@@ -376,9 +371,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					return 2
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
-					return 2
-			if("abductor")
-				if(M.mind in SSticker.mode.abductors)
 					return 2
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
@@ -453,6 +445,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	else if(M.mind)
+		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+		if(A)
+			poll_message = "[poll_message] Status:[A.name]."
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 

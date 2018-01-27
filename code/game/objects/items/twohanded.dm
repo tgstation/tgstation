@@ -43,6 +43,8 @@
 	update_icon()
 	if(user.get_item_by_slot(slot_back) == src)
 		user.update_inv_back()
+	else
+		user.update_inv_hands()
 	if(show_message)
 		if(iscyborg(user))
 			to_chat(user, "<span class='notice'>You free up your module.</span>")
@@ -119,8 +121,22 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | NODROP_1
+	flags_1 = ABSTRACT_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/item/twohanded/offhand/Destroy()
+	wielded = FALSE
+	return ..()
+
+/obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	var/obj/I = user.get_active_held_item()
+	if(I && istype(I, /obj/item/twohanded))
+		var/obj/item/twohanded/thw = I
+		thw.unwield(user, show_message)
+		if(istype(thw, /obj/item/twohanded/required))
+			user.dropItemToGround(thw)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/twohanded/offhand/unwield()
 	if(wielded)//Only delete if we're wielded
@@ -270,6 +286,31 @@
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 
+/obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
+	if(wielded)
+		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+
+		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
+		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
+		B.vital = FALSE//this cant possibly be a good idea
+		var/randdir
+		for(var/i in 1 to 24)//like a headless chicken!
+			if(user.is_holding(src))
+				randdir = pick(GLOB.alldirs)
+				user.Move(get_step(user, randdir),randdir)
+				user.emote("spin")
+				if (i == 3 && myhead)
+					myhead.drop_limb()
+				sleep(3)
+			else
+				user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
+				return OXYLOSS
+
+
+	else
+		user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self to death with \the [src]'s handle! It probably would've been cooler if [user.p_they()] turned it on first!</span>")
+	return BRUTELOSS
+
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
@@ -293,7 +334,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -302,7 +343,7 @@
 			unwield()
 			return
 	..()
-	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -418,7 +459,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedded_impact_pain_multiplier = 3
+	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -428,6 +469,21 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+
+/obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(explosive)
+		user.say("[war_cry]")
+		explosive.forceMove(user)
+		explosive.prime()
+		user.gib()
+		qdel(src)
+		return BRUTELOSS
+	return BRUTELOSS
+
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
 
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
@@ -447,7 +503,7 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.loc = AM
+		explosive.forceMove(AM)
 		explosive.prime()
 		qdel(src)
 
@@ -653,7 +709,8 @@
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
-		return 1
+		W.ScrapeAway()
+		return
 	..()
 
 //HF blade
@@ -721,7 +778,7 @@
 	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22
 	throw_speed = 4
-	embedded_impact_pain_multiplier = 3
+	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
