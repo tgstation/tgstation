@@ -54,14 +54,6 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 9;
-	id = "arrivals_stationary";
-	name = "boz arrivals";
-	width = 5
-	},
 /obj/docking_port/mobile/arrivals{
 	dir = 8;
 	dwidth = 2;
