@@ -9816,7 +9816,6 @@
 "xA" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp{
-	step_x = 0;
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -9887,7 +9886,6 @@
 "xI" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
-	step_x = 0;
 	pixel_x = 3;
 	pixel_y = 7
 	},
