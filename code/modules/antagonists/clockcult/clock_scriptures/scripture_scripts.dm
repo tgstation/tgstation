@@ -5,7 +5,7 @@
 
 //Replica Fabricator: Creates a replica fabricator, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/replica_fabricator
-	descname = "Creates Brass and Converts Objects - Important!"
+	descname = "Creates Brass and Converts Objects"
 	name = "Replica Fabricator"
 	desc = "Forms a device that, when used on certain objects, replaces them with their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
@@ -19,6 +19,7 @@
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 1
+	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Replica Fabricator, which can convert various objects to Ratvarian variants."
 
@@ -99,7 +100,7 @@
 
 //Clockwork Armaments: Grants the invoker the ability to call forth a Ratvarian spear and clockwork armor.
 /datum/clockwork_scripture/clockwork_armaments
-	descname = "Summonable Armor and Weapons - Important!"
+	descname = "Summonable Armor and Weapons"
 	name = "Clockwork Armaments"
 	desc = "Allows the invoker to summon clockwork armor and a Ratvarian spear at will. The spear's attacks will generate Vitality, used for healing."
 	invocations = list("Grant me armaments...", "...from the forge of Armorer!")
@@ -110,6 +111,7 @@
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 5
+	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Permanently binds clockwork armor and a Ratvarian spear to you."
 
