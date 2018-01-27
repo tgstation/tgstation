@@ -293,7 +293,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(src, range_heavy, range_medium, range_light, flame_range = range_flame)
+	explosion(src, range_heavy, range_medium, range_light, flame_range = range_flame, ignorecap = TRUE)
 	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
@@ -371,10 +371,11 @@
 
 /obj/item/bombcore/large
 	name = "large bomb payload"
-	range_heavy = 5
-	range_medium = 10
-	range_light = 20
-	range_flame = 20
+	desc = "An explosive payload designed to thoroughly destroy anything in a large radius, with minimal damage to the surroundings."
+	range_heavy = 40
+	range_medium = 50
+	range_light = 60
+	range_flame = 60
 
 /obj/item/bombcore/miniature
 	name = "small bomb core"
