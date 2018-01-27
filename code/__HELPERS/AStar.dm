@@ -86,7 +86,7 @@ Actual Adjacent procs :
 	var/l
 	l = SSpathfinder.getfree()
 	while(!l)
-		stoplag(10)
+		stoplag(3)
 		l = SSpathfinder.getfree()
 	var/datum/PathNode/cur = start.Pathl[l]//current processed turf
 	if(cur.check)
