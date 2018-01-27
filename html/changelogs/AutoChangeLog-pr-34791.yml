@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - balance: "Mobs will now start with a random nutrition amount, between
-hungry and mildly well fed."
