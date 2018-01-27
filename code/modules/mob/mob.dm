@@ -33,6 +33,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
 
 /mob/GenerateTag()
@@ -173,8 +174,7 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null

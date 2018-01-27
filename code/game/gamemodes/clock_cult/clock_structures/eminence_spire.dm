@@ -35,6 +35,13 @@
 	else
 		nomination(user)
 
+/obj/structure/destructible/clockwork/eminence_spire/attack_drone(mob/living/simple_animal/drone/user)
+	if(!is_servant_of_ratvar(user))
+		..()
+	else
+		to_chat(user, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
+		return
+
 /obj/structure/destructible/clockwork/eminence_spire/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return

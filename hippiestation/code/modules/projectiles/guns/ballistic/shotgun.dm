@@ -10,5 +10,5 @@
 	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=10000)
-	unique_rename = 0
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = 0

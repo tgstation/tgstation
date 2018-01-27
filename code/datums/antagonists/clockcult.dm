@@ -149,7 +149,7 @@
 	current.faction -= "ratvar"
 	current.remove_language(/datum/language/ratvar)
 	current.clear_alert("clockinfo")
-	for(var/datum/action/innate/clockwork_arnaments/C in owner.current.actions) //Removes any bound clockwork armor
+	for(var/datum/action/innate/clockwork_armaments/C in owner.current.actions) //Removes any bound clockwork armor
 		qdel(C)
 	for(var/datum/action/innate/call_weapon/W in owner.current.actions) //and weapons too
 		qdel(W)
@@ -177,7 +177,7 @@
 	SSticker.mode.servants_of_ratvar -= owner
 	SSticker.mode.update_servant_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner] seems to have remembered their true allegiance!</span>", ignored_mob = owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner] seems to have remembered their true allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
 	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	owner.wipe_memory()

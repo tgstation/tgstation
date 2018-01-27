@@ -41,6 +41,7 @@
 
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
+	layer = FLY_LAYER
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 

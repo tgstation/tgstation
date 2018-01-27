@@ -428,3 +428,11 @@ Hippie: Commented because we added our own reagent processing system.
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
+
+/datum/chemical_reaction/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	results = list("firefighting_foam" = 3)
+	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	required_temp = 200
+	is_cold_recipe = 1

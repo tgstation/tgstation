@@ -15,6 +15,17 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
+/obj/item/device/assembly/flash/suicide_act(mob/living/user)
+	if (crit_fail)
+		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but its burnt out!</span>")
+		return SHAME
+	else if (user.eye_blind)
+		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but [user.p_theyre()] blind!</span>")
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	attack(user,user)
+	return FIRELOSS
+
 /obj/item/device/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
@@ -133,7 +144,6 @@
 		return TRUE
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
-
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)

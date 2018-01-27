@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
