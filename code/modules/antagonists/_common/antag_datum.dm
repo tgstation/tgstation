@@ -201,15 +201,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	antag_memory = new_memo
 
-//Should probably be on ticker or job ss ?
-/proc/get_antagonists(antag_type,specific = FALSE)
-	. = list()
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
-			continue
-		if(!antag_type || !specific && istype(A,antag_type) || specific && A.type == antag_type)
-			. += A.owner
-
 //This datum will autofill the name with special_role
 //Used as placeholder for minor antagonists, please create proper datums for these
 /datum/antagonist/auto_custom

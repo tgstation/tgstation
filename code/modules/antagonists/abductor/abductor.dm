@@ -40,7 +40,6 @@
 	return team
 
 /datum/antagonist/abductor/on_gain()
-	SSticker.mode.abductors += owner
 	owner.special_role = "[name] [sub_role]"
 	owner.assigned_role = "[name] [sub_role]"
 	owner.objectives += team.objectives
@@ -48,7 +47,6 @@
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	SSticker.mode.abductors -= owner
 	owner.objectives -= team.objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [owner.special_role]!</span>")
@@ -74,7 +72,7 @@
 			H.forceMove(LM.loc)
 			break
 
-	SSticker.mode.update_abductor_icons_added(owner)
+	update_abductor_icons_added(owner,"abductor")
 
 /datum/antagonist/abductor/scientist/finalize_abductor()
 	..()
@@ -176,7 +174,43 @@
 	owner.objectives += objectives
 
 /datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
-	SSticker.mode.update_abductor_icons_added(mob_override ? mob_override.mind : owner)
+	update_abductor_icons_added(mob_override ? mob_override.mind : owner,"abductee")
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
-	SSticker.mode.update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
+	update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
+
+
+// LANDMARKS
+/obj/effect/landmark/abductor
+	var/team_number = 1
+
+/obj/effect/landmark/abductor/agent
+	icon_state = "abductor_agent"
+/obj/effect/landmark/abductor/scientist
+	icon_state = "abductor"
+
+// OBJECTIVES
+/datum/objective/experiment
+	target_amount = 6
+
+/datum/objective/experiment/New()
+	explanation_text = "Experiment on [target_amount] humans."
+
+/datum/objective/experiment/check_completion()
+	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
+		if(!istype(team, /datum/team/abductor_team))
+			return FALSE
+		var/datum/team/abductor_team/T = team
+		if(E.team_number == T.team_number)
+			return E.points >= target_amount
+	return FALSE
+
+/datum/antagonist/proc/update_abductor_icons_added(datum/mind/alien_mind,hud_type)
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
+	hud.join_hud(alien_mind.current)
+	set_antag_hud(alien_mind.current, hud_type)
+
+/datum/antagonist/proc/update_abductor_icons_removed(datum/mind/alien_mind)
+	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
+	hud.leave_hud(alien_mind.current)
+	set_antag_hud(alien_mind.current, null)

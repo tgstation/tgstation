@@ -372,9 +372,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
-			if("abductor")
-				if(M.mind in SSticker.mode.abductors)
-					return 2
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
 		return TRUE

@@ -315,8 +315,8 @@
 
 
 	var/list/targets = list()
-	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
-	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
+	var/list/datum/mind/headrevs = get_antag_minds(/datum/antagonist/rev/head)
+	var/list/datum/mind/revs = get_antag_minds(/datum/antagonist/rev,TRUE)
 	if(headrevs.len)
 		var/list/headrev_part = list()
 		headrev_part += "<span class='header'>The head revolutionaries were:</span>"

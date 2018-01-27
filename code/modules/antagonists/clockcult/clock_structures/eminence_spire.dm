@@ -46,10 +46,12 @@
 	if(!IsAdminGhost(user))
 		return
 
-	var/datum/antagonist/clockcult/random_cultist = locate() in get_antagonists(/datum/antagonist/clockcult) //if theres no cultists new team without eminence will be created anyway.
-	if(random_cultist && random_cultist.clock_team && random_cultist.clock_team.eminence)
-		to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
-		return
+	var/datum/mind/rando = locate() in get_antag_minds(/datum/antagonist/clockcult) //if theres no cultists new team without eminence will be created anyway.
+	if(rando)
+		var/datum/antagonist/clockcult/random_cultist = rando.has_antag_datum(/datum/antagonist/clockcult)
+		if(random_cultist && random_cultist.clock_team && random_cultist.clock_team.eminence)
+			to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
+			return
 	if(!GLOB.servants_active)
 		to_chat(user, "<span class='warning'>The Ark must be active first!</span>")
 		return
