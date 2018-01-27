@@ -4,10 +4,13 @@
 /obj/docking_port/mobile/crashland
 	name = "crash shuttle"
 
+// TODO: fix
+/*
 /obj/docking_port/mobile/crashland/dockRoundstart()
 	var/port = SSshuttle.getDock(roundstart_move)
 	if (port)
 		initiate_docking(port, force=TRUE)
+*/
 
 // Spawn-point sleeper. Holds a phantom occupant until someone spawns in it,
 // then becomes a regular usable sleeper.

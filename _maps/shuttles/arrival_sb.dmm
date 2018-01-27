@@ -1,0 +1,171 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/space)
+"b" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"c" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"d" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"e" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"f" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"g" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/firstaid/regular,
+/obj/machinery/light{
+	dir = 1;
+	light_color = "#cee5d2"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"h" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"i" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"j" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"k" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 9;
+	id = "arrivals_stationary";
+	name = "boz arrivals";
+	width = 5
+	},
+/obj/docking_port/mobile/arrivals{
+	dir = 8;
+	dwidth = 2;
+	height = 9;
+	name = "boz arrivals shuttle";
+	width = 5
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"l" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 2;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"m" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"n" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals - Shuttle";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"o" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrival Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+b
+d
+d
+d
+b
+"}
+(2,1,1) = {"
+c
+e
+j
+j
+o
+"}
+(3,1,1) = {"
+d
+f
+j
+l
+c
+"}
+(4,1,1) = {"
+d
+f
+j
+m
+d
+"}
+(5,1,1) = {"
+d
+f
+j
+m
+d
+"}
+(6,1,1) = {"
+d
+f
+j
+n
+c
+"}
+(7,1,1) = {"
+c
+g
+j
+j
+o
+"}
+(8,1,1) = {"
+b
+h
+h
+h
+b
+"}
+(9,1,1) = {"
+a
+i
+k
+i
+a
+"}

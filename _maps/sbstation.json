@@ -1,5 +1,10 @@
 {
     "map_name": "SB Station",
     "map_path": "map_files/SBStation",
-    "map_file": "SBStation.dmm"
+    "map_file": "SBStation.dmm",
+    "shuttles": {
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_sb",
+        "emergency": "emergency_sb"
+    }
 }
