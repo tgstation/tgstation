@@ -20,12 +20,94 @@
 
 	//Nuke disk
 	record_nuke_disk_location()
+<<<<<<< HEAD
+=======
+	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
+	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
+	var/num_survivors = 0
+	var/num_escapees = 0
+	var/num_shuttle_escapees = 0
+	var/list/area/shuttle_areas
+	if(SSshuttle && SSshuttle.emergency)
+		shuttle_areas = SSshuttle.emergency.shuttle_areas
+	for(var/mob/m in GLOB.mob_list)
+		var/escaped
+		var/category
+		var/list/mob_data = list()
+		if(isnewplayer(m))
+			continue
+		if(m.mind)
+			if(m.stat != DEAD && !isbrain(m))
+				num_survivors++
+			mob_data += list("name" = m.name, "ckey" = ckey(m.mind.key))
+			if(isobserver(m))
+				escaped = "ghosts"
+			else if(isliving(m))
+				var/mob/living/L = m
+				mob_data += list("location" = get_area(L), "health" = L.health)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					category = "humans"
+					mob_data += list("job" = H.mind.assigned_role, "species" = H.dna.species.name)
+				else if(issilicon(L))
+					category = "silicons"
+					if(isAI(L))
+						mob_data += list("module" = "AI")
+					if(isAI(L))
+						mob_data += list("module" = "pAI")
+					if(iscyborg(L))
+						var/mob/living/silicon/robot/R = L
+						mob_data += list("module" = R.module)
+				else
+					category = "others"
+					mob_data += list("typepath" = L.type)
+		if(!escaped)
+			if(EMERGENCY_ESCAPED_OR_ENDGAMED && (m.onCentCom() || m.onSyndieBase()))
+				escaped = "escapees"
+				num_escapees++
+				if(shuttle_areas[get_area(m)])
+					num_shuttle_escapees++
+			else
+				escaped = "abandoned"
+		if(!m.mind && (!ishuman(m) || !issilicon(m)))
+			var/list/npc_nest = file_data["[escaped]"]["npcs"]
+			if(npc_nest.Find(initial(m.name)))
+				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] += 1
+			else
+				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
+		else
+			if(isobserver(m))
+				file_data["[escaped]"] = mob_data
+			else
+				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
+				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
+	file_data["additional data"]["station integrity"] = station_integrity
+	WRITE_FILE(json_file, json_encode(file_data))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", num_escapees, list("escapees", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len, list("players", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len - num_survivors, list("players", "dead"))
+	. = list()
+	.[POPCOUNT_SURVIVORS] = num_survivors
+	.[POPCOUNT_ESCAPEES] = num_escapees
+	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
+	.["station_integrity"] = station_integrity
+>>>>>>> 6fae1c27d5... Merge pull request #34923 from Jordie0608/escapedisreallyamisnomerbecauseyoucanneverescapefromss13
 
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
 	var/list/team_ids = list()
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
+<<<<<<< HEAD
+=======
+		if(!A.owner)
+			continue
+
+>>>>>>> 6fae1c27d5... Merge pull request #34923 from Jordie0608/escapedisreallyamisnomerbecauseyoucanneverescapefromss13
 		var/list/antag_info = list()
 		antag_info["key"] = A.owner.key
 		antag_info["name"] = A.owner.name
