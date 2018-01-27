@@ -31,6 +31,8 @@
 	. = ..()
 	alpha = 0
 	animate(src, alpha = 255, time = 10)
+	var/obj/item/device/radio/headset/ai/radio = new(src) //so the progenitor can hear people's screams over radio
+	radio.wires.cut(WIRE_TX) //but not talk over it
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget()
 	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))

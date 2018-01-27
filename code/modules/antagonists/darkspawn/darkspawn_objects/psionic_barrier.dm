@@ -16,14 +16,14 @@
 	light_range = 2
 
 /obj/structure/psionic_barrier/Initialize(mapload, time = 500)
-	..()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	QDEL_IN(src, time)
 
 /obj/structure/psionic_barrier/Destroy()
 	if(!obj_integrity)
 		visible_message("<span class='warning'>[src] vanishes in a burst of violet energy!</span>")
-		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 50, 1)
+		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 50, TRUE)
 		new/obj/effect/temp_visual/revenant/cracks(get_turf(src))
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
