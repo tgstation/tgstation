@@ -1,7 +1,7 @@
 /obj/structure/punching_bag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'goon/icons/obj/fitness.dmi'
+	icon = 'icons/obj/fitness.dmi'
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -9,7 +9,7 @@
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 /obj/structure/punching_bag/attack_hand(mob/user as mob)
-		flick("[icon_state]2", src)
+		flick("[icon_state]_[prob(50) ? 4 : 8]", src)
 		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
 
 /obj/structure/stacklifter
