@@ -17,7 +17,7 @@
 		to_chat(user, "<span class='info'>You can't do this right now!</span>")
 		return
 
-	if(stat & (NOPOWER|BROKEN) || emagged)
+	if(stat & (NOPOWER|BROKEN) || (obj_flags & EMAGGED))
 		to_chat(user, "<span class='info'>The door isn't working!</span>")
 		return
 

@@ -7637,7 +7637,7 @@
 /obj/item/bikehorn/golden,
 /obj/item/ammo_box/a357,
 /obj/item/tank/internals/plasma/full,
-/obj/item/disk/fakenucleardisk,
+/obj/item/disk/nuclear/fake,
 /obj/item/ore/diamond,
 /obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/vault{
@@ -50382,7 +50382,7 @@
 /area/library)
 "czp" = (
 /obj/structure/table/wood,
-/obj/item/disk/fakenucleardisk,
+/obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/plasteel/dark,
 /area/library)

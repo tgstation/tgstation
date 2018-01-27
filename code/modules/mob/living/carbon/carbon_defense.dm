@@ -290,7 +290,7 @@
 			to_chat(src, "<span class='warning'>Your eyes burn.</span>")
 			adjust_eye_damage(rand(2, 4))
 
-		else if( damage > 3)
+		else if( damage >= 3)
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
 			adjust_eye_damage(rand(12, 16))
 

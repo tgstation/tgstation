@@ -59,10 +59,13 @@
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker()
+/obj/machinery/chem_master/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		adjust_item_drop_location(beaker)
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(beaker)
 		beaker = null
 		update_icon()
 
@@ -169,7 +172,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker()
+			eject_beaker(usr)
 			. = TRUE
 
 		if("ejectp")

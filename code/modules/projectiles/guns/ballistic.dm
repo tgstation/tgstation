@@ -159,7 +159,7 @@
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
-			process_fire(user, user, 0, zone_override = "head")
+			process_fire(user, user, FALSE, null, "head")
 			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
@@ -215,7 +215,7 @@
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
-			process_fire(user, user,0)
+			process_fire(user, user, FALSE)
 			. = 1
 
 

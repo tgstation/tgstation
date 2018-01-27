@@ -88,7 +88,7 @@
 	set_security_level("delta")
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(!M)
+		if(!M || !M.current)
 			continue
 		if(ishuman(M.current))
 			M.current.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
@@ -127,7 +127,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(!M)
+		if(!M || !M.current)
 			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
