@@ -66,6 +66,6 @@
 /datum/species/darkspawn/proc/handle_upgrades(mob/living/carbon/human/H)
 	var/datum/antagonist/darkspawn/darkspawn
 	if(H.mind)
-		darkspawn = H.mind.has_antag_datum(ANTAG_DATUM_DARKSPAWN)
+		darkspawn = H.mind.has_antag_datum(/datum/antagonist/darkspawn)
 		if(darkspawn)
 			upgrades = darkspawn.upgrades
