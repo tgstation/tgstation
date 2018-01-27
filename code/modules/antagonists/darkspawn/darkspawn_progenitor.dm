@@ -23,12 +23,14 @@
 	light_range = 15
 	light_color = "#21007F"
 	weather_immunities = list("lava", "ash")
+	anchored = TRUE
 	movement_type = FLYING
 	var/time_since_last_roar = 0
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/Initialize()
 	. = ..()
-	flick("spawn_animation", src)
+	alpha = 0
+	animate(src, alpha = 255, time = 10)
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/AttackingTarget()
 	if(istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))

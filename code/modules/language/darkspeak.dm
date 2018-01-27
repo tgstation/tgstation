@@ -3,7 +3,7 @@
 //the darkspeak language doesn't fall under this, though
 /datum/language/darkspawn
 	name = "Darkspeak"
-	desc = "A language used by the darkspawn. Oddly, words sound harsher in the light."
+	desc = "A language used by the darkspawn. Even with harsh syllables, it rolls silkily off the tongue."
 	speech_verb = "clicks"
 	ask_verb = "chirps"
 	exclaim_verb = "chitters"

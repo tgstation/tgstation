@@ -193,7 +193,7 @@
 	for(var/i in 1 to psi_cap) //tick it up very quickly instead of just increasing it by the regen; also include a failsafe to avoid infinite loops
 		if(!total_regen || psi >= psi_cap)
 			break
-		psi++
+		psi = min(psi + 1, psi_cap)
 		total_regen--
 		update_psi_hud()
 		sleep(0.5)
