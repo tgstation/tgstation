@@ -24,5 +24,7 @@
 	var/link = FOLLOW_LINK(src, to_follow)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	if(speaker in view(src))
+		message = "<B>[message]</B>"
 	to_chat(src, "[link] [message]")
 
