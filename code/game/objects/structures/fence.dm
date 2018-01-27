@@ -1,7 +1,6 @@
 //Chain link fences
 //Sprites ported from /VG/
 
-//Fence smashing sound downloaded from http://freesound.org/people/hintringer/sounds/274768/
 
 #define CUT_TIME 100
 #define CLIMB_TIME 150
@@ -148,9 +147,6 @@
 		if(TRUE)
 			density = FALSE
 			icon_state = "door_opened"
-
-/obj/structure/fence/door/proc/can_open(mob/user)
-	return TRUE
 
 
 #undef CUT_TIME
