@@ -217,7 +217,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/creator_message = "<span class='brass'>You create a meme.</span>" //Shown to the invoker
 	var/observer_message
 	var/one_per_tile = FALSE
-	var/prevent_path
+	var/atom/movable/prevent_path
 	var/space_allowed = FALSE
 
 /datum/clockwork_scripture/create_object/New()
