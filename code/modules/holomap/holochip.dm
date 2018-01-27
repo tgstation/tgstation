@@ -113,7 +113,11 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 	else
 		to_chat(H, "<span class='notice'>You enable the holomap.</span>")
 		activator = H
+		update_holomap()
 		START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/accessory/holochip/process()
+	update_holomap()
 
 /obj/item/clothing/accessory/holochip/proc/update_holomap()
 	var/turf/T = get_turf(src)
@@ -131,8 +135,8 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 	var/image/bgmap
 	var/holomap_bgmap
 
-	if(T.z == ZLEVEL_CENTCOM)
-		holomap_bgmap = "background_[REF(src)]_[ZLEVEL_CENTCOM]"
+	if(is_centcom_level(T.z))
+		holomap_bgmap = "background_[REF(src)]_CENTCOM"
 
 		if(!(holomap_bgmap in GLOB.holomap_cache))
 			GLOB.holomap_cache[holomap_bgmap] = image(SSholomap.centcommMiniMaps["[holomap_filter]"])
@@ -150,10 +154,12 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 	bgmap.overlays.Cut()
 
 	//Prevents the map background from sliding across the screen when the map is enabled for the first time.
+	var/list/viewscale = getviewsize(activator.client.view)
+	var/cview = max(viewscale[1]*0.5,viewscale[2]*0.5)
 	if(!bgmap.pixel_x)
-		bgmap.pixel_x = -1*T.x + activator.client.view*world.icon_size + 16*(world.icon_size/32)
+		bgmap.pixel_x = -1*T.x + cview*world.icon_size + 16*(world.icon_size/32)
 	if(!bgmap.pixel_y)
-		bgmap.pixel_y = -1*T.y + activator.client.view*world.icon_size + 17*(world.icon_size/32)
+		bgmap.pixel_y = -1*T.y + cview*world.icon_size + 17*(world.icon_size/32)
 
 
 	for(var/marker in SSholomap.holomap_markers)
@@ -167,7 +173,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 			markerImage.appearance_flags = RESET_COLOR
 			bgmap.overlays += markerImage
 
-	animate(bgmap,pixel_x = -1*T.x + activator.client.view*world.icon_size + 16*(world.icon_size/32), pixel_y = -1*T.y + activator.client.view*world.icon_size + 17*(world.icon_size/32), time = 5, easing = LINEAR_EASING)
+	animate(bgmap,pixel_x = -1*T.x + cview*world.icon_size + 16*(world.icon_size/32), pixel_y = -1*T.y + cview*world.icon_size + 17*(world.icon_size/32), time = 5, easing = LINEAR_EASING)
 	holomap_images += bgmap
 
 	for(var/obj/item/clothing/accessory/holochip/HC in GLOB.holochips)
@@ -228,10 +234,12 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 
 /obj/item/clothing/accessory/holochip/proc/handle_marker(var/image/I,var/turf/T,var/turf/TU)
 	//if a new marker is created, we immediately set its offset instead of letting animate() take care of it, so it doesn't slide accross the screen.
+	var/list/viewscale = getviewsize(activator.client.view)
+	var/cview = max(viewscale[1]*0.5,viewscale[2]*0.5)
 	if(!I.pixel_x || !I.pixel_y)
-		I.pixel_x = TU.x - T.x + activator.client.view*world.icon_size + 8*(world.icon_size/32)
-		I.pixel_y = TU.y - T.y + activator.client.view*world.icon_size + 9*(world.icon_size/32)
-	animate(I,alpha = 255, pixel_x = TU.x - T.x + activator.client.view*world.icon_size + 8*(world.icon_size/32), pixel_y = TU.y - T.y + activator.client.view*world.icon_size + 9*(world.icon_size/32), time = 5, loop = -1, easing = LINEAR_EASING)
+		I.pixel_x = TU.x - T.x + cview*world.icon_size + 8*(world.icon_size/32)
+		I.pixel_y = TU.y - T.y + cview*world.icon_size + 9*(world.icon_size/32)
+	animate(I,alpha = 255, pixel_x = TU.x - T.x + cview*world.icon_size + 8*(world.icon_size/32), pixel_y = TU.y - T.y + cview*world.icon_size + 9*(world.icon_size/32), time = 5, loop = -1, easing = LINEAR_EASING)
 	animate(alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 	animate(alpha = 0, time = 5, easing = SINE_EASING)
 	animate(alpha = 255, time = 2, easing = SINE_EASING)
@@ -267,3 +275,42 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/destroyed/Initialize()
 	. = ..()
 	QDEL_IN(src, 600)
+
+
+/obj/item/clothing/accessory/holochip/deathsquad
+	name = "deathsquad holomap chip"
+	icon_state = "holochip_ds"
+	marker_prefix = "ds"
+	holomap_filter = HOLOMAP_FILTER_DEATHSQUAD
+	holomap_color = "#0B74B4"
+
+
+/obj/item/clothing/accessory/holochip/operative
+	name = "nuclear operative holomap chip"
+	icon_state = "holochip_op"
+	marker_prefix = "op"
+	holomap_filter = HOLOMAP_FILTER_NUKEOPS
+	holomap_color = "#13B40B"
+
+
+/obj/item/clothing/accessory/holochip/ert
+	name = "emergency response team holomap chip"
+	icon_state = "holochip_ert"
+	marker_prefix = "ert"
+	holomap_filter = HOLOMAP_FILTER_ERT
+	holomap_color = "#5FFF28"
+
+	prefix_update = list(
+		"/obj/item/clothing/head/helmet/space/ert/commander" = "ertc",
+		"/obj/item/clothing/head/helmet/space/ert/security" = "erts",
+		"/obj/item/clothing/head/helmet/space/ert/engineer" = "erte",
+		"/obj/item/clothing/head/helmet/space/ert/medical" = "ertm",
+		)
+
+
+/obj/item/clothing/accessory/holochip/elite
+	name = "elite syndicate strike team holomap chip"
+	icon_state = "holochip_syndi"
+	marker_prefix = "syndi"
+	holomap_filter = HOLOMAP_FILTER_ELITESYNDICATE
+	holomap_color = "#E30000"

@@ -28,8 +28,9 @@ SUBSYSTEM_DEF(holomap)
 		generateHoloMinimap(z)
 
 	//Station Holomaps display the map of the Z-Level they were built on.
+	for(var/A in SSmapping.levels_by_trait(ZTRAIT_REEBE))
+		generateStationMinimap(A)
 	generateStationMinimap(ZLEVEL_STATION_PRIMARY)
-	generateStationMinimap(ZLEVEL_CITYOFCOGS)
 	//If they were built on another Z-Level, they will display an error screen.
 	return ..()
 
@@ -64,7 +65,7 @@ SUBSYSTEM_DEF(holomap)
 /datum/controller/subsystem/holomap/proc/generateHoloMinimap(zLevel=ZLEVEL_STATION_PRIMARY)
 	var/icon/canvas = icon('icons/480x480.dmi', "blank")
 
-	if(zLevel != ZLEVEL_CENTCOM)
+	if(!is_centcom_level(zLevel))
 		for(var/i = 1 to ((2 * world.view + 1)*world.icon_size))
 			for(var/r = 1 to ((2 * world.view + 1)*world.icon_size))
 				var/turf/tile = locate(i, r, zLevel)
@@ -95,14 +96,15 @@ SUBSYSTEM_DEF(holomap)
 		if(HOLOMAP_FILTER_CLOCKCULT)
 			allowed_areas = list(/area/reebe)
 
-	for(var/i = 1 to ((2 * world.view + 1)*world.icon_size))
-		for(var/r = 1 to ((2 * world.view + 1)*world.icon_size))
-			var/turf/tile = locate(i, r, ZLEVEL_CENTCOM)
-			if(tile && (is_type_in_list(tile.loc, allowed_areas) && !is_type_in_list(tile.loc, restricted_areas)))
-				if(is_type_in_typecache(tile, GLOB.holomap_obstacles) || is_type_in_typecache(get_area(tile), GLOB.holomap_obstacles) || tile.contents_in_typecache(GLOB.holomap_obstacles))
-					canvas.DrawBox(HOLOMAP_OBSTACLE, i, r)
-				else if(is_type_in_typecache(tile, GLOB.holomap_paths) || tile.contents_in_typecache(GLOB.holomap_paths))
-					canvas.DrawBox(HOLOMAP_PATH, i, r)
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))
+		for(var/i = 1 to ((2 * world.view + 1)*world.icon_size))
+			for(var/r = 1 to ((2 * world.view + 1)*world.icon_size))
+				var/turf/tile = locate(i, r, z)
+				if(tile && (is_type_in_list(tile.loc, allowed_areas) && !is_type_in_list(tile.loc, restricted_areas)))
+					if(is_type_in_typecache(tile, GLOB.holomap_obstacles) || is_type_in_typecache(get_area(tile), GLOB.holomap_obstacles) || tile.contents_in_typecache(GLOB.holomap_obstacles))
+						canvas.DrawBox(HOLOMAP_OBSTACLE, i, r)
+					else if(is_type_in_typecache(tile, GLOB.holomap_paths) || tile.contents_in_typecache(GLOB.holomap_paths))
+						canvas.DrawBox(HOLOMAP_PATH, i, r)
 
 	centcommMiniMaps["[filter]"] = canvas
 
