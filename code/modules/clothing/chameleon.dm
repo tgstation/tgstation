@@ -386,7 +386,6 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
-	flags_1 = NOSLIP_1
 	resistance_flags = NONE
 	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -404,10 +403,17 @@
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/clothing/shoes/chameleon/broken/Initialize()
+/obj/item/clothing/shoes/chameleon/noslip
+	name = "black shoes"
+	icon_state = "black"
+	item_color = "black"
+	desc = "A pair of black shoes."
+	flags_1 = NOSLIP_1
+	
+/obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
+	chameleon_action.emp_randomise(INFINITY)	
+	
 /obj/item/gun/energy/laser/chameleon
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."

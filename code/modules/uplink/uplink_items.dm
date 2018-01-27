@@ -717,13 +717,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
 			They do not work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 4
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
