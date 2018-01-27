@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip
 	name = "holochip"
 	desc = "A small chip, attachable to a jumpsuit, that allows for displaying a holographic map to the wearer."
+	icon_state = "holochip"
 	var/destroyed = FALSE
 
 	//Holomap stuff
