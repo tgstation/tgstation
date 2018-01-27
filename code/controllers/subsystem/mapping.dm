@@ -227,7 +227,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
-	preloadSnowdinDungeonTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -276,13 +275,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
-
-/datum/controller/subsystem/mapping/proc/preloadSnowdinDungeonTemplates()
-	for(var/item in subtypesof(/datum/map_template/ruin/snowdin))
-		var/datum/map_template/ruin/snowdin/dungeon_type = item
-		if(!(initial(dungeon_type.mappath)))
-			continue
-		var/datum/map_template/ruin/snowdin/S = new dungeon_type()
-
-		snowdin_templates[S.name] = S
-		map_templates[S.name] = S

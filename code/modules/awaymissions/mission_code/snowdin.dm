@@ -1,10 +1,14 @@
 //Snow Valley Areas//--
 
 /area/awaymission/snowdin
-	name = "Snowdin Tundra Plains"
+	name = "Snowdin"
 	icon_state = "awaycontent1"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/awaymission/snowdin/outside
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent25"
 
 /area/awaymission/snowdin/post
 	name = "Snowdin Outpost"
@@ -63,6 +67,22 @@
 /area/awaymission/snowdin/post/mining_main
 	name = "Snowdin Outpost - Mining Post"
 	icon_state = "awaycontent21"
+
+/area/awaymission/snowdin/post/mining_main/mechbay
+	name = "Snowdin Outpost - Mining Post Mechbay"
+	icon_state = "awaycontent25"
+
+/area/awaymission/snowdin/post/mining_main/robotics
+	name = "Snowdin Outpost - Mining Post Robotics"
+	icon_state = "awaycontent26"
+
+/area/awaymission/snowdin/post/cavern1
+	name = "Snowdin Outpost - Cavern Outpost 1"
+	icon_state = "awaycontent27"
+
+/area/awaymission/snowdin/post/cavern2
+	name = "Snowdin Outpost - Cavern Outpost 2"
+	icon_state = "awaycontent28"
 
 /area/awaymission/snowdin/post/mining_dock
 	name = "Snowdin Outpost - Underground Mine Post"
@@ -131,18 +151,70 @@
 
 /turf/open/lava/plasma
 	name = "liquid plasma"
-	desc = "A flowing stream of chilled plasma, this probably isn't safe to breath in."
-	icon_state = "lava"
-	color = rgb(114,228,250)
-	baseturfs = /turf/open/lava/plasma //lava all the way down
+	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
+	icon_state = "liquidplasma"
+	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	baseturfs = /turf/open/lava/plasma
 	slowdown = 2
 
 	light_range = 3
 	light_power = 0.75
 	light_color = LIGHT_COLOR_PURPLE
 
+/turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
+	var/obj/item/reagent_containers/glass/C = I
+	if(C.reagents.total_volume >= C.volume)
+		to_chat(user, "<span class='danger'>[C] is full.</span>")
+		return
+	C.reagents.add_reagent("plasma", rand(5, 10))
+	user.visible_message("[user] scoops some plasma from the [src] with \the [C].", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
+/turf/open/lava/plasma/burn_stuff(AM)
+	. = 0
 
+	if(is_safe())
+		return FALSE
+
+	var/thing_to_check = src
+	if (AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
+		if(isobj(thing))
+			var/obj/O = thing
+			if((O.resistance_flags & (FREEZE_PROOF)) || O.throwing)
+				continue
+
+		else if (isliving(thing))
+			. = 1
+			var/mob/living/L = thing
+			if(L.movement_type & FLYING)
+				continue	//YOU'RE FLYING OVER IT
+			if("snow" in L.weather_immunities)
+				continue
+			var/buckle_check = L.buckling
+			if(!buckle_check)
+				buckle_check = L.buckled
+			if(isobj(buckle_check))
+				var/obj/O = buckle_check
+				if(O.resistance_flags & FREEZE_PROOF)
+					continue
+			else if(isliving(buckle_check))
+				var/mob/living/live = buckle_check
+				if("snow" in live.weather_immunities)
+					continue
+
+			L.adjustFireLoss(2)
+			if(L)
+				L.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
+				L.bodytemperature -=(rand(50,65)) //its cold, man
+
+/obj/vehicle/ridden/lavaboat/plasma
+	name = "plasma boat"
+	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
+	icon_state = "goliath_boat"
+	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	resistance_flags = FREEZE_PROOF
+	can_buckle = TRUE
 ///////////	papers
 
 
@@ -287,6 +359,79 @@
 	SAY Paid in experience! That's the Nanotrasen Motto!
 	DELAY 30;"}
 
+/obj/item/disk/holodisk/snowdin/overrun
+	name = "Conversation #AOP#55"
+	preset_image_type = /datum/preset_holoimage/nanotrasenprivatesecurity
+	preset_record_text = {"
+	NAME James Reed
+	DELAY 10
+	SAY Jesus christ, what is that thing??
+	DELAY 30
+	PRESET /datum/preset_holoimage/researcher
+	NAME Elizabeth Queef
+	DELAY 10
+	SAY Hell if I know! Just shoot it already!
+	DELAY 30
+	PRESET /datum/preset_holoimage/nanotrasenprivatesecurity
+	NAME James Reed
+	DELAY 10
+	SOUND 'sound/weapons/laser.ogg'
+	DELAY 10
+	SOUND 'sound/weapons/laser.ogg'
+	DELAY 10
+	SOUND 'sound/weapons/laser.ogg'
+	DELAY 10
+	SOUND 'sound/weapons/laser.ogg'
+	DELAY 15
+	SAY Just go! I'll keep it busy, there's an outpost south of here with an elevator to the surface.
+	NAME Jacob Ullman
+	PRESET /datum/preset_holoimage/researcher.
+	DELAY 15
+	Say I don't have to be told twice! Let's get the fuck out of here.
+	DELAY 20;"}
+
+/obj/item/disk/holodisk/snowdin/ripjacob
+	name = "Conversation #AOP#62"
+	preset_image_type = /datum/preset_holoimage/researcher
+	preset_record_text = {"
+	NAME Jacob Ullman
+	DELAY 10
+	SAY Get the elevator called. We got no idea how many of those fuckers are down here and I'd rather get off this planet as soon as possible.
+	DELAY 45
+	NAME Elizabeth Queef
+	DELAY 10
+	SAY You don't need to tell me twice, I just need to swipe access and then..
+	DELAY 15
+	SOUND 'sound/effects/glassbr1.ogg'
+	DELAY 10
+	SOUND 'sound/effects/glassbr2.ogg'
+	DELAY 15
+	NAME Jacob Ullman
+	DELAY 10
+	SAY What the FUCK was that?
+	DELAY 20
+	SAY OH FUCK THERE'S MORE OF THEM. CALL FASTER JESUS CHRIST.
+	DELAY 20
+	NAME Elizabeth Queef
+	DELAY 10
+	SAY DON'T FUCKING RUSH ME ALRIGHT IT'S BEING CALLED.
+	DELAY 15
+	SOUND 'sound/effects/huuu.ogg'
+	DELAY 5
+	SOUND 'sound/effects/huuu.ogg'
+	DELAY 15
+	SOUND 'sound/effects/woodhit.ogg'
+	DELAY 2
+	SOUND 'sound/effects/bodyfall3.ogg'
+	DELAY 5
+	SOUND 'sound/effects/meow1.ogg'
+	DELAY 15
+	NAME Jacob Ullman
+	DELAY 10
+	SAY OH FUCK IT'S GOT ME JESUS CHRIIIiiii-
+	NAME Elizabeth Queef
+	SAY AAAAAAAAAAAAAAAA FUCK THAT
+	DELAY 15;"}
 
 //lootspawners//--
 
@@ -434,11 +579,11 @@
 
 /obj/structure/flora/rock/icy
 	name = "icy rock"
-	color = rgb(114,228,250)
+	color = rgb(204,233,235)
 
 /obj/structure/flora/rock/pile/icy
 	name = "icey rocks"
-	color = rgb(114,228,250)
+	color = rgb(204,233,235)
 
 //decals//--
 /obj/effect/turf_decal/snowdin_station_sign
@@ -482,48 +627,5 @@
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
-
-//template spawner for snowdin dungeon segments//
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner
-	name = "snowdin dungeon template spawner"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
-	color=rgb(0,0,255)
-	layer = POINT_LAYER
-	var/list/template_id = list("zoo") //list of potential templates to pull from
-	var/map_templates = "snowdin_templates" //the mapping template list from the mapping subsystem
-	var/datum/map_template/dungeon_template
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner/proc/get_template(id)
-	var/dungeon_template = SSmapping.[map_templates][id]
-	if(!dungeon_template)
-		CRASH("Template ([id]) not found!")
-		qdel(src)
-	return dungeon_template
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner/Initialize(mapload)
-	if(mapload)
-		var/turf/deploy_location = get_turf(src)
-		var/datum/map_template/dungeon_template = get_template(pick(template_id))
-		dungeon_template.load(deploy_location, centered = TRUE)
-		return INITIALIZE_HINT_QDEL
-	else
-		return ..()
-
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner/straight
-	name = " snowdin dungeon template spawner - straight"
-	template_id = list("Straight Cave Nouth-South 1")
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner/corner
-	name = " snowdin dungeon template spawner - corner"
-	template_id = list("cne1")
-
-/obj/effect/mapping_helpers/snowdin_dungeon_spawner/intersection
-	name = " snowdin dungeon template spawner - intersection"
-	template_id = list("i1")
-
-
 
 

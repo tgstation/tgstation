@@ -127,6 +127,7 @@
 	desc = "A sheet of solid ice. Looks slippery."
 	icon = 'icons/turf/floors/ice_turf.dmi'
 	icon_state = "unsmooth"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	temperature = 180
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/floor/plating/ice
@@ -134,10 +135,11 @@
 	wet = TURF_WET_PERMAFROST
 	attachment_holes = FALSE
 
-/turf/open/floor/plating/ice/Entered(atom/movable/AM)
-	if(ishuman(AM))
-		var/mob/living/carbon/C = AM
-		C.slip(160,4,SLIDE_ICE)
+/turf/open/floor/plating/ice/HandleWet()
+	if(wet == TURF_WET_ICE)
+		return
+	..()
+	MakeSlippery(TURF_WET_ICE) //rewet after ..() clears out lube/ice etc.
 
 /turf/open/floor/plating/ice/smooth
 	icon_state = "smooth"
@@ -167,6 +169,9 @@
 	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
+
+/turf/open/floor/plating/snowed/cavern
+	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
 
 /turf/open/floor/plating/snowed/smoothed
 	smooth = SMOOTH_MORE | SMOOTH_BORDER

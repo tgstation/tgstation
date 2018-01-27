@@ -54,9 +54,6 @@
 		var/area/A = V
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
-		if(target_z == AWAY_MISSION)
-			if(is_away_level(A.z))
-				impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	START_PROCESSING(SSweather, src)
 	update_areas()
@@ -67,12 +64,6 @@
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
 				SEND_SOUND(M, sound(telegraph_sound))
-		if(target_z == AWAY_MISSION)
-			if(is_away_level(M.z))
-				if(telegraph_message)
-					to_chat(M, telegraph_message)
-				if(telegraph_sound)
-					SEND_SOUND(M, sound(telegraph_sound))
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()

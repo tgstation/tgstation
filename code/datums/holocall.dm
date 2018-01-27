@@ -312,6 +312,9 @@
 /datum/preset_holoimage/captain
 	outfit_type = /datum/outfit/job/captain
 
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
 

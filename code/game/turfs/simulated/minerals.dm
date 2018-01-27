@@ -237,6 +237,15 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 
+/turf/closed/mineral/iron/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_iron"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	defer_change = 1
+
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/ore/uranium
@@ -263,6 +272,15 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = 1
+
+/turf/closed/mineral/diamond/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_diamond"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	defer_change = 1
 
 
@@ -320,6 +338,16 @@
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
+
+/turf/closed/mineral/plasma/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_plasma"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	defer_change = 1
+
 
 
 /turf/closed/mineral/bananium
@@ -391,7 +419,6 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 
