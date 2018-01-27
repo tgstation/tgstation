@@ -196,12 +196,12 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(/datum/antagonist/traitor)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
-		remove_antag_datum(ANTAG_DATUM_BROTHER)
+		remove_antag_datum(/datum/antagonist/brother)
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -254,7 +254,7 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
-	. = 1
+	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
@@ -265,6 +265,14 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
+		if(!P) // I do not have a pen.
+			var/obj/item/pen/inowhaveapen
+			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+				inowhaveapen = new /obj/item/pen(traitor_mob.back)
+			else
+				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
+				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -671,7 +679,7 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
-	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
+	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/make_Changling()

@@ -490,6 +490,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list("iron" = 1, "welding_fuel" = 5, "oil" = 5)
 
+/obj/item/lighter/suicide_act(mob/living/carbon/user)
+	if (lit)
+		user.visible_message("<span class='suicide'>[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		playsound(src, 'sound/items/welder.ogg', 50, 1)
+		return FIRELOSS
+	else
+		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return BRUTELOSS
+
 /obj/item/lighter/update_icon()
 	if(lit)
 		icon_state = "[initial(icon_state)]_on"
@@ -684,7 +693,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cut_overlays()
 
 	if(istype(O, /obj/item/device/multitool))
-		if(screw && !emagged)//also kinky
+		if(screw && !(obj_flags & EMAGGED))//also kinky
 			if(!super)
 				cut_overlays()
 				super = 1
@@ -696,15 +705,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='notice'>You decrease the voltage of [src].</span>")
 				add_overlay("vapeopen_low")
 
-		if(screw && emagged)
+		if(screw && (obj_flags & EMAGGED))
 			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
-		if(!emagged)
+		if(!(obj_flags & EMAGGED))
 			cut_overlays()
-			emagged = TRUE
+			obj_flags |= EMAGGED
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
 			add_overlay("vapeopen_high")
@@ -781,7 +790,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		s.start()
 		vapetime = 0
 
-	if(emagged && vapetime > 3)
+	if((obj_flags & EMAGGED) && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/s = new
 		s.set_up(reagents, 4, loc, silent=TRUE)
 		s.start()

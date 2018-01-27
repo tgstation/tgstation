@@ -59,7 +59,7 @@
 			if(prob(botEmagChance))
 				bot.emag_act()
 
-/proc/generate_ion_law(ionMessage)
+/proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.
 	var/ionthreats = pick_list(ION_FILE, "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.

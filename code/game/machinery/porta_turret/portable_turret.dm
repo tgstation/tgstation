@@ -281,11 +281,11 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
 	visible_message("[src] hums oddly...")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	controllock = 1
 	on = FALSE //turns off the turret temporarily
 	update_icon()
@@ -314,7 +314,7 @@
 	if(.) //damage received
 		if(prob(30))
 			spark_system.start()
-		if(on && !attacked && !emagged)
+		if(on && !attacked && !(obj_flags & EMAGGED))
 			attacked = TRUE
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
 
@@ -448,7 +448,7 @@
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
 
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
 	if((stun_all || attacked) && !allowed(perp))
@@ -494,7 +494,7 @@
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
+	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
 		if(last_fired + shot_delay > world.time)
 			return
 		last_fired = world.time
@@ -551,11 +551,6 @@
 	for (var/obj/machinery/turretid/cp in cps)
 		cp.set_state(on, mode)
 
-/obj/machinery/porta_turret/stationary //is this even used anywhere
-	mode = TURRET_LETHAL
-	emagged = TRUE
-	installation = /obj/item/gun/energy/laser
-
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
@@ -574,6 +569,15 @@
 	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser
+	lethal_projectile_sound = 'sound/weapons/laser.ogg'
+	desc = "An energy blaster auto-turret."
+
+/obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
@@ -721,7 +725,7 @@
 
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (allowed(usr))
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
@@ -738,10 +742,10 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)

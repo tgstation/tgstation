@@ -148,7 +148,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
-			user.reagents.add_reagent("tricordrazine",10)
+			user.reagents.add_reagent("regen_jelly",10)
 			return 600
 
 /obj/item/slime_extract/darkpurple
@@ -261,7 +261,7 @@
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
 			user.ExtinguishMob()
 			user.adjust_fire_stacks(-20)
-			user.reagents.add_reagent("frostoil",5)
+			user.reagents.add_reagent("frostoil",4)
 			user.reagents.add_reagent("cryoxadone",5)
 			return 100
 
@@ -616,11 +616,14 @@
 
 /obj/item/slimepotion/sentience/nuclear
 	name = "syndicate intelligence potion"
-	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target."
+	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
 /obj/item/slimepotion/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
 	var/obj/item/implant/radio/imp = new(src)
 	imp.implant(SM, user)
+
+	SM.access_card = new /obj/item/card/id/syndicate(SM)
+	SM.access_card.flags_1 |= NODROP_1
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"

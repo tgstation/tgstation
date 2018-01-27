@@ -166,10 +166,10 @@
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !ismob(I.loc))
+			if(!I.imp_in || !isliving(I.loc))
 				continue
 			else
-				var/mob/M = I.loc
+				var/mob/living/M = I.loc
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue

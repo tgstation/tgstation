@@ -28,7 +28,7 @@
 /area/shuttle/transport)
 "ah" = (
 /obj/structure/foamedmetal,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/transport)
 "ai" = (
 /obj/machinery/vending/liberationstation,
@@ -178,7 +178,6 @@
 	height = 27;
 	id = "ferry";
 	name = "The Lighthouse";
-	roundstart_move = "ferry_away";
 	timid = 1;
 	port_direction = 2;
 	width = 16

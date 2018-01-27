@@ -7,6 +7,7 @@
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	var/suittoggled = FALSE
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)

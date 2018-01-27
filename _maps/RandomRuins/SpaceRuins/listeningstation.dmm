@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "ac" = (
 /turf/closed/wall,
@@ -23,14 +23,12 @@
 /area/ruin/space/has_grav/listeningstation)
 "ae" = (
 /obj/structure/table/reinforced,
-/obj/item/paper_bin,
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/paper/fluff/ruins/listeningstation/reports/november,
-/obj/item/pen,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "af" = (
@@ -53,6 +51,14 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/item/device/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_x = -30
+	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ai" = (
@@ -145,11 +151,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)
 "as" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/med_data/syndie{
 	dir = 4;
 	req_one_access = null
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "at" = (
@@ -183,6 +189,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 25
 	},
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "aw" = (
@@ -367,16 +377,16 @@
 /area/ruin/space/has_grav/listeningstation)
 "aK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
-	name = "Telecommunications";
-	req_access_txt = "150"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "Telecommunications";
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -391,15 +401,15 @@
 /area/ruin/space/has_grav/listeningstation)
 "aM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
-	name = "E.V.A. Equipment";
-	req_access_txt = "150"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "E.V.A. Equipment";
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -411,7 +421,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
-/obj/structure/showcase/machinery/microwave,
+/obj/machinery/microwave,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -459,9 +469,6 @@
 /area/ruin/space/has_grav/listeningstation)
 "aR" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Personal Quarters"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -470,6 +477,9 @@
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
+	},
+/obj/machinery/door/airlock{
+	name = "Personal Quarters"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
@@ -746,15 +756,15 @@
 /area/ruin/space/has_grav/listeningstation)
 "bo" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/listeningstation)
@@ -834,11 +844,12 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "bu" = (
-/obj/machinery/sleeper/syndie{
-	dir = 8
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/medical1{
+	req_access = null;
+	req_access_txt = "150"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/listeningstation)
 "bv" = (
@@ -988,6 +999,25 @@
 	dir = 5
 	},
 /area/ruin/space/has_grav/listeningstation)
+"bJ" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 6;
+	height = 7;
+	id = "caravansyndicate3_listeningpost";
+	name = "Syndicate Listening Post";
+	width = 15
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 4;
+	height = 5;
+	id = "caravansyndicate1_listeningpost";
+	name = "Syndicate Listening Post";
+	width = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
 aa
@@ -2239,7 +2269,7 @@ aa
 aa
 aa
 aa
-aa
+bJ
 aa
 aa
 aa
