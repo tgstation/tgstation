@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Away missions no longer require manually adjusting subsystem mob/client lists in order to not have the AI break."
