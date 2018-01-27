@@ -6,7 +6,7 @@
 /obj/item/circular_saw,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Aft)
@@ -16,7 +16,7 @@
 "ag" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
@@ -46,7 +46,7 @@
 "am" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "an" = (
 /obj/structure/window/reinforced,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -1860,7 +1860,7 @@
 "gl" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
@@ -2200,6 +2200,13 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/BMPship/Fore)
+"vh" = (
+/turf/template_noop,
+/area/space/nearstation)
+"EQ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/awaymission/BMPship/Midship)
 
 (1,1,1) = {"
 aa
@@ -3589,7 +3596,7 @@ aa
 aa
 am
 aa
-am
+EQ
 aq
 gt
 aq
@@ -3638,8 +3645,8 @@ aa
 aa
 am
 aa
-aa
-am
+vh
+EQ
 gt
 at
 ha
@@ -3689,7 +3696,7 @@ aa
 aa
 aa
 am
-am
+EQ
 gL
 hg
 ha

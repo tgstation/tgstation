@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
@@ -13,16 +13,16 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "ag" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/chamber)
@@ -101,7 +101,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "au" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -125,7 +125,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ay" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/airless,
@@ -181,7 +181,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 "aJ" = (
-/obj/item/stack/cable_coil/cut{
+/obj/item/stack/cable_coil/cut/red{
 	amount = 1
 	},
 /turf/open/floor/plating/airless,
@@ -402,7 +402,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bs" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -435,7 +435,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bz" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -482,7 +482,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -669,7 +669,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -765,11 +765,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/template_noop)
-"cA" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating/airless,
-/area/tcommsat/chamber)
+/area/space/nearstation)
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -20,10 +20,6 @@
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/unpowered)
-"g" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -208,7 +204,7 @@ d
 d
 d
 d
-g
+c
 b
 b
 a

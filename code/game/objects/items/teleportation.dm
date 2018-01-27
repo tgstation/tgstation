@@ -84,10 +84,10 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-					if (!W.imp_in || !ismob(W.loc))
+					if (!W.imp_in || !isliving(W.loc))
 						continue
 					else
-						var/mob/M = W.loc
+						var/mob/living/M = W.loc
 						if (M.stat == DEAD)
 							if (M.timeofdeath + 6000 < world.time)
 								continue

@@ -12,9 +12,9 @@
 /obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	if(in_use)
+	if(obj_flags & IN_USE)
 		return
-	in_use = TRUE
+	obj_flags |= IN_USE
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
@@ -28,7 +28,7 @@
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_state = "slots1"
-	in_use = FALSE
+	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))

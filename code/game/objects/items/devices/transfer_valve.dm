@@ -80,16 +80,12 @@
 		tank_one.forceMove(drop_location())
 		tank_one = null
 		update_icon()
-		if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-			w_class = WEIGHT_CLASS_NORMAL
 	else if(tank_two && href_list["tanktwo"])
 		split_gases()
 		valve_open = FALSE
 		tank_two.forceMove(drop_location())
 		tank_two = null
 		update_icon()
-		if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-			w_class = WEIGHT_CLASS_NORMAL
 	else if(href_list["open"])
 		toggle_valve()
 	else if(attached_device)

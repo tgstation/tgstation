@@ -10,7 +10,8 @@
 	height = 22;
 	id = "whiteship_away";
 	name = "Deep Space";
-	width = 35
+	width = 35;
+	json_key = "whiteship"
 	},
 /turf/open/space,
 /area/space)

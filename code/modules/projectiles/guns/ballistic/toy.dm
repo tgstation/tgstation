@@ -11,7 +11,7 @@
 	burst_size = 3
 	can_suppress = TRUE
 	clumsy_check = 0
-	needs_permit = 0
+	item_flags = NONE
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
@@ -53,7 +53,7 @@
 	throwforce = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
 	clumsy_check = 0
-	needs_permit = 0
+	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
 
@@ -81,7 +81,7 @@
 	desc = "A bullpup two-round burst toy SMG, designated 'C-20r'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
 	can_suppress = TRUE
-	needs_permit = 0
+	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 	casing_ejector = FALSE
 
@@ -97,7 +97,7 @@
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
 	icon = 'icons/obj/guns/toy.dmi'
 	can_suppress = FALSE
-	needs_permit = 0
+	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 	casing_ejector = FALSE
 
