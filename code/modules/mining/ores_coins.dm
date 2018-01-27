@@ -311,6 +311,25 @@
 	var/cmineral = null
 	var/cooldown = 0
 	var/value = 1
+	var/coinflip
+
+/obj/item/coin/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
+	if (!attack_self(user))
+		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
+		return SHAME
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
+	return MANUAL_SUICIDE
+
+/obj/item/coin/proc/manual_suicide(mob/living/user)
+	var/index = sideslist.Find(coinflip)
+	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
+	if (index==2)//tails
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promply falls over, dead!</span>")
+		user.adjustOxyLoss(200)
+		user.death(0)
+	else
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
 /obj/item/coin/Initialize()
 	. = ..()
@@ -432,8 +451,8 @@
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
-			return //do not flip the coin
-		var/coinflip = pick(sideslist)
+			return FALSE//do not flip the coin
+		coinflip = pick(sideslist)
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
@@ -444,3 +463,4 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+	return TRUE//did the coin flip? useful for suicide_act

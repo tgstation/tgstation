@@ -36,6 +36,18 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/packageWrap/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins wrapping themselves in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(use(3))
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(user.loc))
+		P.icon_state = "deliverypackage5"
+		user.forceMove(P)
+		P.add_fingerprint(user)
+		return OXYLOSS
+	else
+		to_chat(user, "<span class='warning'>You need more paper!</span>")
+		return SHAME
+
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
 

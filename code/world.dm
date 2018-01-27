@@ -9,7 +9,7 @@
 	hub = "Exadv1.spacestation13"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 1
-#ifdef GC_FAILURE_HARD_LOOKUP
+	visibility = 1 //HIPPIE - <server visibility on byond>
+#ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

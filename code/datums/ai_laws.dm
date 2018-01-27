@@ -383,7 +383,7 @@
 		zeroth_borg = null
 		return
 	else
-		if(owner && owner.mind.special_role)
+		if(owner && owner.mind && owner.mind.special_role)
 			return
 		else
 			zeroth = null

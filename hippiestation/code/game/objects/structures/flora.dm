@@ -31,7 +31,7 @@
 			hitsound='hippiestation/sound/weapons/sharpBushHit.ogg' //cool sound
 			qdel(W)
 			disable = !disable
-	if(istype(W, /obj/item/reagent_containers) && emagged)
+	if(istype(W, /obj/item/reagent_containers) && (obj_flags & EMAGGED))
 		if(W.reagents.has_reagent("lean"))
 			W.reagents.clear_reagents()
 			playsound(src.loc, 'hippiestation/sound/effects/pottedLeanSpawnSound.ogg', 25)
@@ -53,7 +53,7 @@
 	qdel(src)
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/user, slot)
-	if(emagged && wielded)
+	if((obj_flags & EMAGGED) && wielded)
 		unwield(user) //This is a ghetto way to make it one-handed and it works
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.copy_overlays(src)
