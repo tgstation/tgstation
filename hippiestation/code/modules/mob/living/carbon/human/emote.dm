@@ -73,6 +73,7 @@
 	if(istype(user,/mob/living/carbon/alien))
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
+	user.newtonian_move(turn(direction, 0))
 	if(istype(Y))
 		user.Stun(20)
 		playsound(Y,'hippiestation/sound/effects/thunder.ogg', 90, 1)
