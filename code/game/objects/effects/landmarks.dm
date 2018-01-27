@@ -20,7 +20,6 @@
 
 /obj/effect/landmark/New()
 	..()
-	tag = text("landmark*[]", name)
 	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()

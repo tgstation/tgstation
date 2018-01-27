@@ -1,7 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "You can now rename and copy holodisks!"
-  - rscadd: "Holorecordings now can be looped."
-  - tweak: "Holodisks now have materials and the autolathe cost has been adjusted."
-  - bugfix: "Fixed holodisk speaker name not getting set when on non-prerecorded messages."
