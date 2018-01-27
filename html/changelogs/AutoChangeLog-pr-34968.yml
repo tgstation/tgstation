@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - bugfix: "The lavaland syndie base is now packed with considerably fewer explosives, and should lag far less brutally when exploding."
