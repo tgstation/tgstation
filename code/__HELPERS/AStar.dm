@@ -36,7 +36,7 @@ Actual Adjacent procs :
 	var/g		//A* movement cost variable
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
-	var/bf		//bitflag for dir to expand
+	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
 	var/i		//id in turflist
 
 /datum/PathNode/New(s,p,pg,ph,pnt,_bf,_i)
@@ -102,19 +102,21 @@ Actual Adjacent procs :
 	//initialization
 	var/datum/PathNode/cur = new /datum/PathNode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
 	var/datum/PathNode/CN
+	var/datum/PathNode/last = cur
 	var/turf/T
+	var/ne = TRUE
 	open.Insert(cur)
 	openc[start] = cur
-	checked.Add(cur)
+	//checked.Add(cur)
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		//get the lower f node on the open list
 		cur = open.Pop() //get the lower f turf in the open list
-		var/datum/PathNode/sw = openc[openc[openc.len]]
 		if(openc.len>1)
-			sw.i = cur.i
+			last.i = cur.i
 			openc.Swap(cur.i,openc.len)
-		openc.len-=1//we need to serch only in open list.
+		openc.len -= 1//we need to serch only in open list.So let's keep turf list tidy
+		ne = FALSE
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
@@ -147,15 +149,18 @@ Actual Adjacent procs :
 					else
 					//is not already in open list, so add it
 						if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-							CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15 ^ GLOB.cardinals[i],openc.len+1)
+							CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15 ^ SSpathfinder.revdir[i],openc.len+1)
 							open.Insert(CN)
 							openc[T] = CN
-							checked.Add(CN)
-		cur.bf = 0
+							last = CN
+							ne = TRUE
+							//checked.Add(CN)
+		if(!ne)
+			last = openc[openc[openc.len]]	//list search by key is still costly.Let's avoid it whenever it possible.So if no new open nodes, so be it.
 		CN = null
 		CHECK_TICK
 	//QDEL_LIST(checked)
-	checked = null
+	//checked = null
 	SSpathfinder.found(l)
 	//cleaning after us
 	//reverse the path to get it from start to finish
