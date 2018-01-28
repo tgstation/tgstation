@@ -374,8 +374,12 @@
 				var/mob/living/silicon/sillycone = A
 				if(sillycone.stat || in_faction(sillycone))
 					continue
-				if(faction == "syndicate" && sillycone.emagged == 1) //syndicate turrets are bros with emagged (not ratvar-magged) borgs
-					break
+
+				if(iscyborg(sillycone))
+					var/mob/living/silicon/robot/sillyconerobot = A
+					if(faction == "syndicate" && sillyconerobot.emagged == 1)
+						continue
+
 				targets += sillycone
 
 		if(iscarbon(A))
