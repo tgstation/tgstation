@@ -18,7 +18,7 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
-	var/list/debris = list(new /obj/effect/decal/cleanable/glass(src))
+	var/list/debris = list()
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -56,6 +56,8 @@
 	air_update_turf(1)
 
 	// Precreate our own debris
+
+	debris += new /obj/effect/decal/cleanable/glass(src)
 
 	var/shards = 1
 	if(fulltile)
