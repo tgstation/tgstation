@@ -58,6 +58,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
+	flags_1 |= NODROP_1
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -88,6 +89,7 @@
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	flags_1 |= NODROP_1
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
