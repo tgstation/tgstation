@@ -1291,14 +1291,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
-	
-/datum/uplink_item/role_restricted/omniboard
-    name = "Omnilathe Board"
-    desc = "A circuit-board for an Omnilathe, able to print anything that is researched."
-    item = /obj/item/circuitboard/machine/protolathe
-    cost = 20
-    surplus = 20
-    restricted_roles = list("Research Director")
 
 // Pointless
 /datum/uplink_item/badass
