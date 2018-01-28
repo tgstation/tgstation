@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(pathfinder)
 	name = "pathfinder"
 	init_order = INIT_ORDER_PATH
 	flags = SS_NO_FIRE
-	var/lcount = 20
+	var/lcount = 10
 	var/run
 	var/free
 	var/list/flow
@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(pathfinder)
 	if(run < lcount)
 		run += 1
 		while(flow[free])
+			CHECK_TICK
 			free = (free % lcount) + 1
 		flow[free] = addtimer(CALLBACK(SSpathfinder, /datum/controller/subsystem/pathfinder.proc/found, free), 60, TIMER_STOPPABLE)
 		return free

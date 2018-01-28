@@ -47,7 +47,7 @@ Actual Adjacent procs :
 	f = g + h*(1+SSpathfinder.tiew)
 	nt = pnt
 	bf = _bf
-	i = i
+	i = _i
 
 /datum/PathNode/proc/setp(p,pg,ph,pnt)
 	prevNode = p
@@ -96,7 +96,6 @@ Actual Adjacent procs :
 		l = SSpathfinder.getfree()
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/openc = new() //open list for node check
-	var/list/checked = new() //list of processed nodes.To spare them from GC
 	var/list/path = null //the returned path, if any
 
 	//initialization
@@ -104,19 +103,20 @@ Actual Adjacent procs :
 	var/datum/PathNode/CN
 	var/datum/PathNode/last = cur
 	var/turf/T
-	var/ne = TRUE
+	var/ne
 	open.Insert(cur)
 	openc[start] = cur
-	//checked.Add(cur)
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		//get the lower f node on the open list
+		if(ne)
+			last = openc[openc[openc.len]]//list search by key is still costly.Let's avoid it whenever it possible.So if no new open nodes, so be it.
 		cur = open.Pop() //get the lower f turf in the open list
 		if(openc.len>1)
 			last.i = cur.i
 			openc.Swap(cur.i,openc.len)
 		openc.len -= 1//we need to serch only in open list.So let's keep turf list tidy
-		ne = FALSE
+		ne = TRUE
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
@@ -133,10 +133,9 @@ Actual Adjacent procs :
 				path.Add(cur.source)
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		//var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
 		for(var/i = 1 to 4)
 			if(cur.bf & GLOB.cardinals[i])
-				T = get_step(cur.source,i)
+				T = get_step(cur.source,GLOB.cardinals[i])
 				if(T != exclude)
 					CN = openc[T]  //current checking turf
 					var/newg = cur.g + call(cur.source,dist)(T)
@@ -144,8 +143,9 @@ Actual Adjacent procs :
 					//is already in open list, check if it's a better way from the current turf
 						CN.bf &= 15 ^ SSpathfinder.revdir[i] //we have no closed, so just cut off exceed dir
 						if(newg < CN.g)
-							CN.setp(cur,newg,CN.h,cur.nt+1)
-							open.ReSort(CN)//reorder the changed element in the list
+							if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+								CN.setp(cur,newg,CN.h,cur.nt+1)
+								open.ReSort(CN)//reorder the changed element in the list
 					else
 					//is not already in open list, so add it
 						if(call(cur.source,adjacent)(caller, T, id, simulated_only))
@@ -153,10 +153,7 @@ Actual Adjacent procs :
 							open.Insert(CN)
 							openc[T] = CN
 							last = CN
-							ne = TRUE
-							//checked.Add(CN)
-		if(!ne)
-			last = openc[openc[openc.len]]	//list search by key is still costly.Let's avoid it whenever it possible.So if no new open nodes, so be it.
+							ne = FALSE
 		CN = null
 		CHECK_TICK
 	//QDEL_LIST(checked)
