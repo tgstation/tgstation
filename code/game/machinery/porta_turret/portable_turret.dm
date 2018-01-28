@@ -370,7 +370,7 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
-			if(issilicon(A)
+			if(issilicon(A))
 				var/mob/living/silicon/sillycone = A
 				if(sillycone.stat || in_faction(sillycone))
 					continue
