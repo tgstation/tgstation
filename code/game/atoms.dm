@@ -540,7 +540,7 @@
 			return crowbar_act(user, tool)
 		if(TOOL_MULTIMETER)
 			return multimeter_act(user, tool)
-    if(TOOL_MULTITOOL)
+    	if(TOOL_MULTITOOL)
 			return multitool_act(user, tool)
 		if(TOOL_SCREWDRIVER)
 			return screwdriver_act(user, tool)
@@ -559,9 +559,6 @@
 	return
 
 /atom/proc/multimeter_act(mob/user, obj/item/tool)
-	return
-
-/atom/proc/multitool_act(mob/user, obj/item/tool)
 	return
 
 /atom/proc/wrench_act(mob/living/user, obj/item/tool)
