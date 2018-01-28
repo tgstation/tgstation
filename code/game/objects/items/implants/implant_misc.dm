@@ -152,6 +152,6 @@
 	if(!triggered_in_crit && source.InCritical())
 		triggered_in_crit = TRUE
 		var/area/location = get_area(src)
-		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", list(SPAN_ROBOT))
+		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", (get_spans() + SPAN_ROBOT), get_default_language())
 	else if(!source.InCritical())
 		triggered_in_crit = FALSE

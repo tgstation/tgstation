@@ -476,7 +476,7 @@
 			S.invisibility = 0
 			var/dmg_amt = get_damage_amount(S.dmg_type)
 			var/g = LERP(200, 0, CLAMP(dmg_amt, 0, 75)/75)
-			var/r = -g*0.11+115
+			var/r = -g*0.11+95
 			if(stat == DEAD)
 				S.icon_state = "ded"
 				continue
