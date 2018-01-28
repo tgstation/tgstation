@@ -363,7 +363,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	generic_icon_names = TRUE
 
 /datum/asset/simple/icon_states/multiple_icons/pipes
-	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi')
+	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi')
 	prefix = "pipe"
 
 /datum/asset/simple/icon_states/multiple_icons/pipes/New()
