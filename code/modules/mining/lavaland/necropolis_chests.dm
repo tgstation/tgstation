@@ -912,7 +912,7 @@
 	used = TRUE
 	
 	var/list/da_list = list()
-	for(var/I in GLOB.alive_mob_list | GLOB.player_list)
+	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
 		da_list[L.real_name] = L
 		
