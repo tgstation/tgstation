@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(air)
 //working thing
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "AT:[round(cost_turfs,1)]|"//ignore
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
