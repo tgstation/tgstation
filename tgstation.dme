@@ -95,6 +95,7 @@
 #include "code\__HELPERS\areas.dm"
 #include "code\__HELPERS\AStar.dm"
 #include "code\__HELPERS\cmp.dm"
+#include "code\__HELPERS\dates.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
