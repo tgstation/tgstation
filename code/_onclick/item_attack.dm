@@ -4,7 +4,7 @@
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
-		  afterattack(target, user, 1, params) // 1: clicking something Adjacent
+			afterattack(target, user, 1, params) // 1: clicking something Adjacent
 
 
 //Checks if the item can work as a tool, calling the appropriate tool behavior on the target
