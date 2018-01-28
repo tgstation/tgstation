@@ -531,9 +531,31 @@
 /atom/proc/return_temperature()
 	return
 
-// Default tool behaviors proc
+// Tool behavior procedure. Redirects to tool-specific procs by default.
+// You can override it to catch all tool interactions, for use in complex deconstruction procs.
+// Just don't forget to return ..() in the end.
+/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type)
+	switch(tool_type)
+		if(TOOL_CROWBAR)
+			return crowbar_act(user, tool)
+		if(TOOL_MULTIMETER)
+			return multimeter_act(user, tool)
+    if(TOOL_MULTITOOL)
+			return multitool_act(user, tool)
+		if(TOOL_SCREWDRIVER)
+			return screwdriver_act(user, tool)
+		if(TOOL_WRENCH)
+			return wrench_act(user, tool)
+		if(TOOL_WIRECUTTER)
+			return wirecutter_act(user, tool)
+		if(TOOL_WELDER)
+		  return welder_act(user, tool)
 
-/atom/proc/crowbar_act(mob/user, obj/item/tool)
+// Tool-specific behavior procs. To be overridden in subtypes.
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/living/user, obj/item/tool)
 	return
 
 /atom/proc/multimeter_act(mob/user, obj/item/tool)
@@ -542,13 +564,13 @@
 /atom/proc/multitool_act(mob/user, obj/item/tool)
 	return
 
-/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/wrench_act(mob/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/wirecutter_act(mob/user, obj/item/tool)
+/atom/proc/welder_act(mob/living/user, obj/item/tool)
 	return
 
 /atom/proc/GenerateTag()

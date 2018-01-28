@@ -1,27 +1,17 @@
 
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	if(!tool_check(user, target) && pre_attackby(target, user, params))
+	if(!tool_attack_chain(user, target) && pre_attackby(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
-			afterattack(target, user, 1, params) // 1: clicking something Adjacent
+		  afterattack(target, user, 1, params) // 1: clicking something Adjacent
 
 
 //Checks if the item can work as a tool, calling the appropriate tool behavior on the target
-/obj/item/proc/tool_check(mob/user, atom/target)
-	. = 0
-	if(tool_behaviour&TOOL_CROWBAR)
-		. |= target.crowbar_act(user, src)
-	if(tool_behaviour&TOOL_MULTIMETER)
-		. |= target.multimeter_act(user, src)
-	if(tool_behaviour&TOOL_MULTITOOL)
-		. |= target.multitool_act(user, src)
-	if(tool_behaviour&TOOL_SCREWDRIVER)
-		. |= target.screwdriver_act(user, src)
-	if(tool_behaviour&TOOL_WRENCH)
-		. |= target.wrench_act(user, src)
-	if(tool_behaviour&TOOL_WIRECUTTER)
-		. |= target.wirecutter_act(user, src)
+/obj/item/proc/tool_attack_chain(mob/user, atom/target)
+	if(!tool_behaviour)
+		return FALSE
+	return target.tool_act(user, src, tool_behaviour)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
