@@ -2,9 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "ac" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -39,14 +36,6 @@
 /obj/item/crowbar,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"aj" = (
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f5"
-	},
-/area/shuttle/escape)
-"ak" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/computer/atmos_alert{
@@ -111,15 +100,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"av" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aw" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ay" = (
 /obj/machinery/door/airlock/public/glass{
@@ -218,12 +198,6 @@
 /obj/structure/table,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aN" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aO" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aP" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -292,18 +266,11 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aY" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"ba" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bb" = (
 /turf/open/floor/mineral/titanium/yellow,
@@ -343,9 +310,6 @@
 "bg" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/window/reinforced{
@@ -414,35 +378,35 @@ aa
 aa
 aa
 aa
-ak
-ak
-ak
+ad
+ad
+ad
 aI
-ak
+ad
 aP
-ak
+ad
 ac
 ac
 ac
-ak
+ad
 aV
-ak
+ad
 aV
-ak
-ak
-ak
+ad
+ad
+ad
 aa
 "}
 (2,1,1) = {"
 aa
-ak
-ak
-ak
-ak
+ad
+ad
+ad
+ad
 aA
 aF
 aG
-ak
+ad
 bn
 aL
 aL
@@ -450,23 +414,23 @@ aL
 aL
 aL
 bo
-ak
+ad
 bb
 bq
 bf
-ak
-ak
+ad
+ad
 "}
 (3,1,1) = {"
-ak
+ad
 ae
 al
 aq
-ak
+ad
 aA
 aG
 aJ
-ak
+ad
 aQ
 an
 an
@@ -474,7 +438,7 @@ an
 an
 an
 aW
-ak
+ad
 bb
 bb
 bf
@@ -486,11 +450,11 @@ ac
 af
 am
 ar
-ak
+ad
 aA
 aG
 aJ
-ak
+ad
 an
 aS
 aS
@@ -510,7 +474,7 @@ ac
 ag
 an
 as
-ak
+ad
 ac
 aH
 ac
@@ -522,7 +486,7 @@ aT
 aT
 aT
 an
-ak
+ad
 bc
 br
 bg
@@ -534,7 +498,7 @@ ac
 ah
 an
 at
-ak
+ad
 aB
 an
 aK
@@ -547,9 +511,9 @@ an
 an
 bp
 az
-ak
-ak
-ak
+ad
+ad
+ad
 bi
 bk
 "}
@@ -602,11 +566,11 @@ bi
 bk
 "}
 (9,1,1) = {"
-ak
+ad
 ae
 ap
 au
-ak
+ad
 aD
 an
 an
@@ -627,10 +591,10 @@ bk
 "}
 (10,1,1) = {"
 aa
-ak
-ak
-ak
-ak
+ad
+ad
+ad
+ad
 aE
 bl
 aC
@@ -646,30 +610,30 @@ ac
 bd
 be
 bd
-ak
-ak
+ad
+ad
 "}
 (11,1,1) = {"
 aa
 aa
 aa
 aa
-ak
+ad
 ac
-ak
+ad
 ac
-ak
-ak
-ak
+ad
+ad
+ad
 ac
 ac
 ac
-ak
-ak
-ak
+ad
+ad
+ad
 ac
-ak
+ad
 ac
-ak
+ad
 aa
 "}
