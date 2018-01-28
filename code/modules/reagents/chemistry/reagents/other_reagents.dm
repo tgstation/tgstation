@@ -1781,7 +1781,7 @@
 	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
-	if(L.mind) //Changeling Sting assists in the recharging of changeling chemicals.
+	if(L.mind)
 		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
