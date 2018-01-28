@@ -86,6 +86,7 @@
 	item_state = "sexyclown"
 	item_color = "sexyclown"
 	can_adjust = FALSE
+	flags_1 |= NODROP_1
 
 /obj/item/clothing/under/jabroni
 	name = "Jabroni Outfit"
