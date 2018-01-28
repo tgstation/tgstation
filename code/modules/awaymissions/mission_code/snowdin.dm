@@ -191,6 +191,7 @@
 				continue	//YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue
+
 			var/buckle_check = L.buckling
 			if(!buckle_check)
 				buckle_check = L.buckled
@@ -198,6 +199,7 @@
 				var/obj/O = buckle_check
 				if(O.resistance_flags & FREEZE_PROOF)
 					continue
+
 			else if(isliving(buckle_check))
 				var/mob/living/live = buckle_check
 				if("snow" in live.weather_immunities)
@@ -207,6 +209,25 @@
 			if(L)
 				L.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
 				L.bodytemperature -=(rand(50,65)) //its cold, man
+				if(ishuman(L))//are they a carbon?
+					var/list/plasma_parts = list()//a list that'll store the limbs of our victim
+					var/mob/living/carbon/human/PP = L
+					if(istype(PP.dna.species, /datum/species/plasmaman))//is the species of the mob a podperson?
+						return //don't bother with plasmamen here
+
+					for(var/BP in PP.bodyparts) //getting the victim's current body parts
+						var/obj/item/bodypart/NN = BP
+						if(NN.status == BODYPART_ORGANIC || NN.species_id != "plasmaman") //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+							plasma_parts += NN //adding the limbs we got to the above-mentioned list
+
+					if(prob(35) && plasma_parts) //checking if the delay is over & if the victim actually has any parts to nom
+						PP.adjustToxLoss(15)
+						PP.adjustFireLoss(25)
+						var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
+						NB.species_id = "plasmaman"//change the species_id of the limb to that of a plasmaman
+						PP.visible_message("<span class='warning'>[L] screams in pain as their [NB] melts down to the bone!</span>", \
+										  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
+
 
 /obj/vehicle/ridden/lavaboat/plasma
 	name = "plasma boat"

@@ -23,8 +23,8 @@
 	var/hole_size= NO_HOLE
 	var/invulnerable = FALSE
 
-/obj/structure/fence/New()
-	..()
+/obj/structure/fence/Initalize()
+	. = ..()
 
 	update_cut_status()
 
@@ -111,8 +111,8 @@
 	cuttable = FALSE
 	var/open = FALSE
 
-/obj/structure/fence/door/New()
-	..()
+/obj/structure/fence/door/Initalize()
+	. = ..()
 
 	update_door_status()
 
