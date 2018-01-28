@@ -44,6 +44,8 @@
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 
+	var/obj/screen/holomap/holomap_obj
+
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 
 /datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')
@@ -269,3 +271,5 @@
 
 /datum/hud/proc/update_locked_slots()
 	return
+
+/obj/screen/holomap

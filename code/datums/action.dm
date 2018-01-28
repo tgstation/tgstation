@@ -559,6 +559,10 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
 
+/datum/action/item_action/toggle_minimap
+	name = "Toggle Minimap"
+	desc = "Toggle your holochip's holomap."
+
 /datum/action/language_menu
 	name = "Language Menu"
 	desc = "Open the language menu to review your languages, their keys, and select your default language."

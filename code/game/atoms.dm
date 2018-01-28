@@ -568,5 +568,8 @@
 /atom/proc/welder_act(mob/living/user, obj/item/tool)
 	return
 
+/atom/proc/holomapAlwaysDraw()
+	return TRUE
+
 /atom/proc/GenerateTag()
 	return

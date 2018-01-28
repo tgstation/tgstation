@@ -64,6 +64,10 @@
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	var/holomap_color
+	var/holomap_marker
+	var/list/holomap_filter
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 GLOBAL_LIST_EMPTY(teleportlocs)
@@ -101,6 +105,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /area/Initialize()
+	LAZYINITLIST(holomap_filter)
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
@@ -529,3 +534,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
+
+/area/proc/getAreaCenter(zLevel=ZLEVEL_STATION_PRIMARY)
+	var/list/area_turfs = get_area_turfs(type)
+	if(!area_turfs.len)
+		return null
+
+	var/center_x = 0
+	var/center_y = 0
+
+	for(var/_T in area_turfs)
+		var/turf/T = _T
+		if(T.z == zLevel)
+			center_x += T.x
+			center_y += T.y
+
+	center_x = round(center_x / area_turfs.len)
+	center_y = round(center_y / area_turfs.len)
+
+	if(!center_x || !center_y)
+		return null
+
+	return locate(center_x,center_y,zLevel)

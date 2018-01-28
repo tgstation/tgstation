@@ -11,6 +11,9 @@
 	valid_territory = FALSE
 	icon_state = "shuttle"
 
+/area/shuttle/holomapAlwaysDraw()
+	return FALSE
+
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
 		canSmoothWithAreas = type
