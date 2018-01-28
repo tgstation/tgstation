@@ -108,7 +108,7 @@
 "z" = (
 /obj/structure/closet/crate,
 /obj/item/device/aicard,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/weldingtool,
 /obj/item/wrench,
 /obj/item/circuitboard/computer/teleporter,

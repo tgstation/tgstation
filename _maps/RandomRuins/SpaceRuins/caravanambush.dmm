@@ -1854,8 +1854,8 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "gw" = (
@@ -2287,7 +2287,7 @@
 "hK" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,

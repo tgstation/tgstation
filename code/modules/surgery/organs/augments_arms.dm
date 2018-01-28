@@ -181,7 +181,7 @@
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
+		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/device/multimeter/multitool/cyborg)
 
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = "l_arm"

@@ -12,7 +12,7 @@
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
-/obj/item/device/multitool/uplink/Initialize(mapload, _owner, _tc_amount = 20)
+/obj/item/device/multimeter/multitool/uplink/Initialize(mapload, _owner, _tc_amount = 20)
 	. = ..()
 	AddComponent(/datum/component/uplink, _owner, FALSE, TRUE, null, _tc_amount)
 

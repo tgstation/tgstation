@@ -9432,7 +9432,7 @@
 /obj/item/weldingtool/largetank{
 	pixel_y = 3
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/armory)

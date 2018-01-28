@@ -2671,7 +2671,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iK" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "iL" = (

@@ -272,8 +272,8 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/device/multimeter/multitool) && !locked)
+		var/obj/item/device/multimeter/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
 	else
@@ -708,8 +708,8 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	if (istype(I, /obj/item/device/multimeter/multitool))
+		var/obj/item/device/multimeter/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")

@@ -536,6 +536,9 @@
 /atom/proc/crowbar_act(mob/user, obj/item/tool)
 	return
 
+/atom/proc/multimeter_act(mob/user, obj/item/tool)
+	return
+
 /atom/proc/multitool_act(mob/user, obj/item/tool)
 	return
 

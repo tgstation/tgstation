@@ -21691,7 +21691,7 @@
 "aTQ" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/pen/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -45212,7 +45212,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/electrical,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -45538,7 +45538,7 @@
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
@@ -46158,8 +46158,8 @@
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/timer,
 /obj/item/device/assembly/timer,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/light,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -48814,7 +48814,7 @@
 /obj/item/screwdriver{
 	pixel_y = 5
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -62224,7 +62224,7 @@
 /area/hallway/primary/central)
 "cwB" = (
 /obj/item/stack/cable_coil,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -71029,7 +71029,7 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil/white,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
@@ -80730,7 +80730,7 @@
 /area/crew_quarters/abandoned_gambling_den)
 "djn" = (
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
@@ -84632,7 +84632,7 @@
 /area/crew_quarters/abandoned_gambling_den)
 "drz" = (
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
@@ -92312,7 +92312,7 @@
 /obj/item/screwdriver{
 	pixel_y = 5
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/clothing/head/welding,
 /obj/machinery/light{
 	dir = 8
@@ -102170,7 +102170,7 @@
 	},
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 5

@@ -1,3 +1,18 @@
+
+/obj/item/device/multimeter
+	name = "multimeter"
+	desc = "Used for measuring power."
+	icon_state = "multimeter"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	tool_behaviour = TOOL_MULTIMETER
+	force = 5
+	throwforce = 0
+	throw_range = 7
+	throw_speed = 3
+	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	hitsound = 'sound/weapons/tap.ogg'
+
 #define PROXIMITY_NONE ""
 #define PROXIMITY_ON_SCREEN "_red"
 #define PROXIMITY_NEAR "_yellow"
@@ -7,34 +22,20 @@
  *
  */
 
-
-
-
-/obj/item/device/multitool
+/obj/item/device/multimeter/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
 	icon_state = "multitool"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_MULTITOOL
-	throwforce = 0
-	throw_range = 7
-	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
-	hitsound = 'sound/weapons/tap.ogg'
-	toolspeed = 1
-	tool_behaviour = TOOL_MULTITOOL
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
-	var/mode = 0
 
-/obj/item/device/multitool/suicide_act(mob/living/carbon/user)
+/obj/item/device/multimeter/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
 	return OXYLOSS//theres a reason it wasnt recommended by doctors
 
-/obj/item/device/multitool/attack_self(mob/user)
+/obj/item/device/multimeter/multitool/attack_self(mob/user)
 	if(selected_io)
 		selected_io = null
 		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
@@ -42,13 +43,13 @@
 		..()
 	update_icon()
 
-/obj/item/device/multitool/update_icon()
+/obj/item/device/multimeter/multitool/update_icon()
 	if(selected_io)
 		icon_state = "multitool_red"
 	else
 		icon_state = "multitool"
 
-/obj/item/device/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
+/obj/item/device/multimeter/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)
 		to_chat(user, "<span class='warning'>\The [io.holder] needs to be secured inside an assembly first.</span>")
 		return
@@ -77,7 +78,7 @@
 	update_icon()
 
 
-/obj/item/device/multitool/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
+/obj/item/device/multimeter/multitool/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
 	if(!io1.linked.len || !io2.linked.len)
 		to_chat(user, "<span class='warning'>There is nothing connected to the data channel.</span>")
 		return
@@ -97,22 +98,22 @@
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 
-/obj/item/device/multitool/ai_detect
+/obj/item/device/multimeter/multitool/ai_detect
 	var/track_cooldown = 0
 	var/track_delay = 10 //How often it checks for proximity
 	var/detect_state = PROXIMITY_NONE
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
 
-/obj/item/device/multitool/ai_detect/New()
+/obj/item/device/multimeter/multitool/ai_detect/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/multitool/ai_detect/Destroy()
+/obj/item/device/multimeter/multitool/ai_detect/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/device/multitool/ai_detect/process()
+/obj/item/device/multimeter/multitool/ai_detect/process()
 	if(track_cooldown > world.time)
 		return
 	detect_state = PROXIMITY_NONE
@@ -120,7 +121,7 @@
 	icon_state = "[initial(icon_state)][detect_state]"
 	track_cooldown = world.time + track_delay
 
-/obj/item/device/multitool/ai_detect/proc/multitool_detect()
+/obj/item/device/multimeter/multitool/ai_detect/proc/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		if(AI.cameraFollow == src)
@@ -140,11 +141,11 @@
 						detect_state = PROXIMITY_NEAR
 						break
 
-/obj/item/device/multitool/ai_detect/admin
+/obj/item/device/multimeter/multitool/ai_detect/admin
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. Has a strange tag that says 'Grief in Safety'." //What else should I say for a meme item?
 	track_delay = 5
 
-/obj/item/device/multitool/ai_detect/admin/multitool_detect()
+/obj/item/device/multimeter/multitool/ai_detect/admin/multitool_detect()
 	var/turf/our_turf = get_turf(src)
 	for(var/mob/J in urange(rangewarning,our_turf))
 		if(GLOB.admin_datums[J.ckey])
@@ -154,14 +155,18 @@
 				detect_state = PROXIMITY_ON_SCREEN
 				break
 
-/obj/item/device/multitool/cyborg
+/obj/item/device/multimeter/multitool/cyborg
 	name = "multitool"
 	desc = "Optimised and stripped-down version of a regular multitool."
 	toolspeed = 0.5
 
-/obj/item/device/multitool/abductor
+/obj/item/device/multimeter/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+#undef PROXIMITY_NONE
+#undef PROXIMITY_ON_SCREEN
+#undef PROXIMITY_NEAR

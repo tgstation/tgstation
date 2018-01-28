@@ -908,7 +908,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "dq" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
 "dr" = (
@@ -1809,7 +1809,7 @@
 /turf/closed/mineral/random,
 /area/awaymission/BMPship)
 "gc" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},

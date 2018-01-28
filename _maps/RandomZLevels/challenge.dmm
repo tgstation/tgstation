@@ -266,7 +266,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/challenge/main)
 "bb" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/main)
 "bc" = (

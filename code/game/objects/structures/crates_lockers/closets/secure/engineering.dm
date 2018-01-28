@@ -21,7 +21,7 @@
 	new /obj/item/airlock_painter(src)
 	new /obj/item/holosign_creator/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)
@@ -46,7 +46,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/electronics/apc(src)
 	for(var/i in 1 to 3)
-		new /obj/item/device/multitool(src)
+		new /obj/item/device/multimeter/multitool(src)
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"

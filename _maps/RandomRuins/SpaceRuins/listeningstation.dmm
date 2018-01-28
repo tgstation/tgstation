@@ -272,7 +272,7 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/device/radio/headset/syndicate/alt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,

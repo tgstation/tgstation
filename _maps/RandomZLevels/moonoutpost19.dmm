@@ -823,7 +823,7 @@
 	pixel_y = -1
 	},
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -5633,7 +5633,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/blue/side{
 	dir = 0;
 	heat_capacity = 1e+006

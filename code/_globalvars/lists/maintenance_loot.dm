@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/device/flashlight = 4,
 	/obj/item/device/flashlight/pen = 1,
 	/obj/item/device/flashlight/glowstick/random = 4,
-	/obj/item/device/multitool = 2,
+	/obj/item/device/multimeter/multitool = 2,
 	/obj/item/device/radio/off = 2,
 	/obj/item/device/t_scanner = 5,
 	/obj/item/airlock_painter = 1,

@@ -256,7 +256,7 @@
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
-	else if(istype(W, /obj/item/device/multitool))
+	else if(istype(W, /obj/item/device/multimeter/multitool))
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"

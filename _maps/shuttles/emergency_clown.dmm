@@ -167,7 +167,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/multitool/ai_detect,
+/obj/item/device/multimeter/multitool/ai_detect,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aF" = (

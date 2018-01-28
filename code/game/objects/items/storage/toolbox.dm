@@ -110,7 +110,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
 /obj/item/storage/toolbox/drone
@@ -126,7 +126,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 
 /obj/item/storage/toolbox/brass
 	name = "brass box"

@@ -152,7 +152,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/device/multitool))
+	else if (istype(W, /obj/item/device/multimeter/multitool))
 		if(check_completion())
 			Interact(user)
 		else
@@ -304,7 +304,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/device/multitool))
+	if(!istype(item_in_hand, /obj/item/device/multimeter/multitool))
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

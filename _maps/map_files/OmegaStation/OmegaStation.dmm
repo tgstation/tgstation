@@ -138,7 +138,7 @@
 "aas" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/wrench,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -4504,7 +4504,7 @@
 "aiN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 6
 	},
 /obj/item/pen/red,
@@ -6531,7 +6531,7 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/stack/cable_coil/white,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/button/door{
 	id = "evashutters";
 	name = "E.V.A. Shutters";
@@ -26316,7 +26316,7 @@
 /obj/item/screwdriver{
 	pixel_y = 5
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/clothing/head/welding,
 /obj/machinery/firealarm{
 	pixel_y = 24

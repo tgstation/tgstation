@@ -9,20 +9,19 @@
 
 //Checks if the item can work as a tool, calling the appropriate tool behavior on the target
 /obj/item/proc/tool_check(mob/user, atom/target)
-	switch(tool_behaviour)
-		if(TOOL_NONE)
-			return FALSE
-		if(TOOL_CROWBAR)
-			return target.crowbar_act(user, src)
-		if(TOOL_MULTITOOL)
-			return target.multitool_act(user, src)
-		if(TOOL_SCREWDRIVER)
-			return target.screwdriver_act(user, src)
-		if(TOOL_WRENCH)
-			return target.wrench_act(user, src)
-		if(TOOL_WIRECUTTER)
-			return target.wirecutter_act(user, src)
-
+	. = 0
+	if(tool_behaviour&TOOL_CROWBAR)
+		. |= target.crowbar_act(user, src)
+	if(tool_behaviour&TOOL_MULTIMETER)
+		. |= target.multimeter_act(user, src)
+	if(tool_behaviour&TOOL_MULTITOOL)
+		. |= target.multitool_act(user, src)
+	if(tool_behaviour&TOOL_SCREWDRIVER)
+		. |= target.screwdriver_act(user, src)
+	if(tool_behaviour&TOOL_WRENCH)
+		. |= target.wrench_act(user, src)
+	if(tool_behaviour&TOOL_WIRECUTTER)
+		. |= target.wirecutter_act(user, src)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)

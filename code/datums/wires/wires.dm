@@ -1,7 +1,7 @@
 #define MAXIMUM_EMP_WIRES 3
 
 /proc/is_wire_tool(obj/item/I)
-	if(istype(I, /obj/item/device/multitool))
+	if(istype(I, /obj/item/device/multimeter/multitool))
 		return TRUE
 	if(istype(I, /obj/item/wirecutters))
 		return TRUE
@@ -211,7 +211,7 @@
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
-			"wire" = (IsAdminGhost(user) || (user.is_holding_item_of_type(/obj/item/device/multitool/abductor)) ? get_wire(color) : null),
+			"wire" = (IsAdminGhost(user) || (user.is_holding_item_of_type(/obj/item/device/multimeter/multitool/abductor)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))
@@ -234,7 +234,7 @@
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
+			if(istype(I, /obj/item/device/multimeter/multitool) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire, L)
 				. = TRUE

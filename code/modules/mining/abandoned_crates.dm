@@ -191,7 +191,7 @@
 		if(istype(W, /obj/item/card/emag))
 			boom(user)
 			return
-		else if(istype(W, /obj/item/device/multitool))
+		else if(istype(W, /obj/item/device/multimeter/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")

@@ -712,7 +712,7 @@
 "cD" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (

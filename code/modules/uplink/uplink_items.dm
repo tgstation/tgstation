@@ -935,7 +935,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
 			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
-	item = /obj/item/device/multitool/ai_detect
+	item = /obj/item/device/multimeter/multitool/ai_detect
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
@@ -1373,7 +1373,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
-	
+
 /datum/uplink_item/badass/surplus/super
 	name = "Super Surplus Crate"
 	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \

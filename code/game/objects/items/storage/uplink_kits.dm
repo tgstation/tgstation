@@ -8,7 +8,7 @@
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/clothing/shoes/chameleon(src) // 2 tc
 			new /obj/item/device/camera_bug(src) // 1 tc
-			new /obj/item/device/multitool/ai_detect(src) // 1 tc
+			new /obj/item/device/multimeter/multitool/ai_detect(src) // 1 tc
 			new /obj/item/device/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //I'll count this as 2 tc
@@ -72,7 +72,7 @@
 			new /obj/item/card/emag(src)
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
-			new /obj/item/device/multitool/ai_detect(src)
+			new /obj/item/device/multimeter/multitool/ai_detect(src)
 
 		if("lordsingulo") // 24 tc
 			new /obj/item/device/sbeacondrop(src)

@@ -276,7 +276,7 @@
 	..()
 
 //DEBUG FIELD ITEM
-/obj/item/device/multitool/field_debug
+/obj/item/device/multimeter/multitool/field_debug
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
 	var/list/field_params = list("field_shape" = FIELD_SHAPE_RADIUS_SQUARE, "current_range" = 5, "set_fieldturf_color" = "#aaffff", "set_edgeturf_color" = "#ffaaff")
@@ -284,21 +284,21 @@
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
 
-/obj/item/device/multitool/field_debug/New()
+/obj/item/device/multimeter/multitool/field_debug/New()
 	START_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/device/multitool/field_debug/Destroy()
+/obj/item/device/multimeter/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
 	..()
 
-/obj/item/device/multitool/field_debug/proc/setup_debug_field()
+/obj/item/device/multimeter/multitool/field_debug/proc/setup_debug_field()
 	var/list/new_params = field_params.Copy()
 	new_params["host"] = src
 	current = make_field(field_type, new_params)
 
-/obj/item/device/multitool/field_debug/attack_self(mob/user)
+/obj/item/device/multimeter/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
 	to_chat(user, "You turn [src] [operating? "on":"off"].")
 	if(!istype(current) && operating)
@@ -306,11 +306,11 @@
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/device/multitool/field_debug/on_mob_move()
+/obj/item/device/multimeter/multitool/field_debug/on_mob_move()
 	check_turf(get_turf(src))
 
-/obj/item/device/multitool/field_debug/process()
+/obj/item/device/multimeter/multitool/field_debug/process()
 	check_turf(get_turf(src))
 
-/obj/item/device/multitool/field_debug/proc/check_turf(turf/T)
+/obj/item/device/multimeter/multitool/field_debug/proc/check_turf(turf/T)
 	current.HandleMove()

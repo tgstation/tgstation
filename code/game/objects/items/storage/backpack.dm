@@ -403,7 +403,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"

@@ -2937,7 +2937,7 @@
 /area/awaymission/centcomAway/hangar)
 "kp" = (
 /obj/structure/table,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "kq" = (

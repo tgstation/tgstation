@@ -279,7 +279,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bc" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bd" = (
