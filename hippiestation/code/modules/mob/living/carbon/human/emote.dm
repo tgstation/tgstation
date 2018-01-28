@@ -232,3 +232,7 @@
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")
 				qdel(B)
+		if(!has_gravity())
+			var/atom/asstarget =  get_edge_target_turf(src, dir)
+			usr.throw_at(asstarget, 1000, 20)
+			to_chat(src, "<span class='warning'>You fly off into the distance!</span>")
