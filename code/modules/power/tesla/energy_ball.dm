@@ -149,7 +149,7 @@
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(isliving(A))
 		var/mob/living/L = A
-		if(L.incorporeal_move)
+		if(L.incorporeal_move || L.status_flags & GODMODE)
 			return
 	if(!iscarbon(A))
 		return

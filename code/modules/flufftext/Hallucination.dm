@@ -573,7 +573,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/obj/item/gun/energy/kinetic_accelerator/crossbow, /obj/item/melee/transforming/energy/sword/saber,\
 	/obj/item/storage/box/syndicate, /obj/item/storage/box/emps,\
 	/obj/item/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/chameleon, /obj/item/card/id/syndicate,\
+	/obj/item/clothing/shoes/chameleon/noslip, /obj/item/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
 	/obj/item/storage/toolbox/syndicate, /obj/item/aiModule,\

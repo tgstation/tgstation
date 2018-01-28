@@ -63,7 +63,7 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		handle_disabilities() // eye, ear, brain damages
+		handle_traits() // eye, ear, brain damages
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -119,10 +119,10 @@
 	if(confused)
 		confused = max(0, confused - 1)
 
-/mob/living/proc/handle_disabilities()
+/mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_disability(DISABILITY_BLIND)))
+		if(!stat && !(has_trait(TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")
@@ -133,7 +133,7 @@
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
-	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
 
