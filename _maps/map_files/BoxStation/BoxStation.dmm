@@ -54070,18 +54070,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"kSb" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
-"nGb" = (
+"gWd" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/construction)
-"vJu" = (
+"kSb" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"nxv" = (
 /obj/machinery/power/apc{
+	name = Construction Area APC;
 	pixel_y = -24
 	},
 /obj/structure/cable{
@@ -54089,7 +54090,13 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"CAl" = (
+"rKP" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
+"xhV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -54098,7 +54105,7 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"Nmk" = (
+"Pvz" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -54607,12 +54614,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"VOt" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/construction)
 
 (1,1,1) = {"
 aaa
@@ -81243,8 +81244,8 @@ bCs
 cCe
 bNJ
 apV
-CAl
-nGb
+xhV
+gWd
 bNI
 bUz
 bVJ
@@ -81501,7 +81502,7 @@ bNJ
 bNJ
 bKx
 cjL
-Nmk
+Pvz
 bNI
 bUz
 bVJ
@@ -81758,7 +81759,7 @@ bNL
 bNJ
 apV
 cjL
-vJu
+nxv
 bNI
 bUz
 bVJ
@@ -82014,7 +82015,7 @@ bCs
 cCd
 bQc
 bKA
-VOt
+rKP
 bSv
 bNI
 bUB
