@@ -2,9 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/template_noop,
-/area/template_noop)
 "ac" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 9
@@ -981,13 +978,13 @@ bk
 bk
 "}
 (2,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aF
 aG
 aG
@@ -1006,13 +1003,13 @@ cu
 cz
 "}
 (3,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aG
 aL
 aR
@@ -1031,13 +1028,13 @@ cu
 cA
 "}
 (4,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aG
 aM
 aM
@@ -1061,8 +1058,8 @@ ad
 ad
 ad
 ad
-ab
-ab
+aa
+aa
 aG
 aM
 aM
@@ -1087,7 +1084,7 @@ an
 at
 ad
 aw
-ab
+aa
 aG
 aN
 aS
@@ -1101,9 +1098,9 @@ bJ
 bT
 cc
 bk
-ab
-ab
-ab
+aa
+aa
+aa
 "}
 (7,1,1) = {"
 ae
@@ -1128,7 +1125,7 @@ bk
 bk
 ax
 ax
-ab
+aa
 "}
 (8,1,1) = {"
 ae
@@ -1153,7 +1150,7 @@ cd
 cl
 cr
 cv
-ab
+aa
 "}
 (9,1,1) = {"
 ae
@@ -1178,7 +1175,7 @@ cd
 cm
 cr
 cw
-ab
+aa
 "}
 (10,1,1) = {"
 ae
@@ -1203,7 +1200,7 @@ cd
 cl
 cr
 cx
-ab
+aa
 "}
 (11,1,1) = {"
 ae
@@ -1228,7 +1225,7 @@ bo
 bo
 ax
 ax
-ab
+aa
 "}
 (12,1,1) = {"
 ad
@@ -1237,7 +1234,7 @@ as
 at
 ad
 aB
-ab
+aa
 aJ
 aO
 aO
@@ -1251,9 +1248,9 @@ bN
 bV
 ce
 bo
-ab
-ab
-ab
+aa
+aa
+aa
 "}
 (13,1,1) = {"
 af
@@ -1261,8 +1258,8 @@ ad
 ad
 ad
 ad
-ab
-ab
+aa
+aa
 aJ
 aP
 aP
@@ -1281,13 +1278,13 @@ bo
 cD
 "}
 (14,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aJ
 aP
 aP
@@ -1306,13 +1303,13 @@ cy
 cE
 "}
 (15,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aJ
 aQ
 aT
@@ -1331,13 +1328,13 @@ cy
 cF
 "}
 (16,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aK
 aJ
 aJ
@@ -1356,19 +1353,19 @@ cy
 cG
 "}
 (17,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aK
 bo
 bo

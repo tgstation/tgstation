@@ -6,7 +6,7 @@
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
-			new /obj/item/clothing/shoes/chameleon(src) // 2 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/device/camera_bug(src) // 1 tc
 			new /obj/item/device/multimeter/multitool/ai_detect(src) // 1 tc
 			new /obj/item/device/encryptionkey/syndicate(src) // 2 tc
@@ -55,7 +55,7 @@
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
-			new /obj/item/clothing/shoes/chameleon(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
 
@@ -96,7 +96,7 @@
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/chameleon(src) //because slipping while being a dark lord sucks
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
 			new /obj/item/spellbook/oneuse/summonitem(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
@@ -323,7 +323,7 @@
 	new /obj/item/clothing/under/chameleon/broken(src)
 	new /obj/item/clothing/suit/chameleon/broken(src)
 	new /obj/item/clothing/gloves/chameleon/broken(src)
-	new /obj/item/clothing/shoes/chameleon/broken(src)
+	new /obj/item/clothing/shoes/chameleon/noslip/broken(src)
 	new /obj/item/clothing/glasses/chameleon/broken(src)
 	new /obj/item/clothing/head/chameleon/broken(src)
 	new /obj/item/clothing/mask/chameleon/broken(src)
