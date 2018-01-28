@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 	name = "holochip"
 	desc = "A small chip, attachable to a jumpsuit, that allows for displaying a holographic map to the wearer."
 	icon_state = "holochip"
+	item_color = "holochip"
 	var/destroyed = FALSE
 
 	//Holomap stuff
@@ -123,9 +124,11 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/proc/update_holomap()
 	var/turf/T = get_turf(src)
 	if(!T)//nullspace begone!
+		to_chat(world, "NULLSPACE BEGONE!!")
 		return
 
 	if((!attached_to) || (!activator) || (activator.get_item_by_slot(slot_w_uniform) != attached_to) || (!activator.client) || (SSholomap.holoMiniMaps[T.z] == null))
+		to_chat(world, "DEACTIVATING HOLOMAP!")
 		deactivate_holomap()
 		return
 
@@ -140,10 +143,10 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 		holomap_bgmap = "background_[REF(src)]_CENTCOM"
 
 		if(!(holomap_bgmap in GLOB.holomap_cache))
-			GLOB.holomap_cache[holomap_bgmap] = image(SSholomap.centcommMiniMaps["[holomap_filter]"])
+			GLOB.holomap_cache[holomap_bgmap] = image(SSholomap.centcom_minimaps["[holomap_filter]"])
 	else
 		holomap_bgmap = "background_[REF(src)]_[T.z]"
-
+		to_chat(world, "background_[REF(src)]_[T.z]")
 		if(!(holomap_bgmap in GLOB.holomap_cache))
 			GLOB.holomap_cache[holomap_bgmap] = image(SSholomap.holoMiniMaps[T.z])
 
@@ -281,6 +284,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/deathsquad
 	name = "deathsquad holomap chip"
 	icon_state = "holochip_ds"
+	item_state = "holochip_ds"
 	marker_prefix = "ds"
 	holomap_filter = HOLOMAP_FILTER_DEATHSQUAD
 	holomap_color = "#0B74B4"
@@ -289,6 +293,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/operative
 	name = "nuclear operative holomap chip"
 	icon_state = "holochip_op"
+	item_state = "holochip_op"
 	marker_prefix = "op"
 	holomap_filter = HOLOMAP_FILTER_NUKEOPS
 	holomap_color = "#13B40B"
@@ -297,6 +302,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/ert
 	name = "emergency response team holomap chip"
 	icon_state = "holochip_ert"
+	item_color = "holochip_ert"
 	marker_prefix = "ert"
 	holomap_filter = HOLOMAP_FILTER_ERT
 	holomap_color = "#5FFF28"
@@ -312,6 +318,7 @@ GLOBAL_LIST_EMPTY(holomap_cache)
 /obj/item/clothing/accessory/holochip/elite
 	name = "elite syndicate strike team holomap chip"
 	icon_state = "holochip_syndi"
+	item_color = "holochip_syndi"
 	marker_prefix = "syndi"
 	holomap_filter = HOLOMAP_FILTER_ELITESYNDICATE
 	holomap_color = "#E30000"

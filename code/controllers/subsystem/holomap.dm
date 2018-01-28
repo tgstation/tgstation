@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(holomap)
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_HOLOMAP
 	var/list/holoMiniMaps = list()
-	var/list/centcommMiniMaps = list()
+	var/list/centcom_minimaps = list()
 	var/list/extraMiniMaps = list()
 	var/list/holomap_markers = list()
 
@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(holomap)
 		)
 
 	for (var/f in filters)
-		generateCentcommMinimap(f)
+		generate_centcom_minimap(f)
 
 	for (var/z = 1 to world.maxz)
 		holoMiniMaps |= z
@@ -64,7 +64,6 @@ SUBSYSTEM_DEF(holomap)
 
 /datum/controller/subsystem/holomap/proc/generateHoloMinimap(zLevel=ZLEVEL_STATION_PRIMARY)
 	var/icon/canvas = icon('icons/480x480.dmi', "blank")
-
 	if(!is_centcom_level(zLevel))
 		for(var/i = 1 to ((2 * world.view + 1)*world.icon_size))
 			for(var/r = 1 to ((2 * world.view + 1)*world.icon_size))
@@ -77,7 +76,7 @@ SUBSYSTEM_DEF(holomap)
 
 	holoMiniMaps[zLevel] = canvas
 
-/datum/controller/subsystem/holomap/proc/generateCentcommMinimap(var/filter="all")
+/datum/controller/subsystem/holomap/proc/generate_centcom_minimap(var/filter="all")
 	var/icon/canvas = icon('icons/480x480.dmi', "blank")
 
 	var/list/allowed_areas = list()
@@ -106,7 +105,7 @@ SUBSYSTEM_DEF(holomap)
 					else if(is_type_in_typecache(tile, GLOB.holomap_paths) || tile.contents_in_typecache(GLOB.holomap_paths))
 						canvas.DrawBox(HOLOMAP_PATH, i, r)
 
-	centcommMiniMaps["[filter]"] = canvas
+	centcom_minimaps["[filter]"] = canvas
 
 /datum/controller/subsystem/holomap/proc/generateStationMinimap(var/StationZLevel)
 	var/icon/canvas = icon('icons/480x480.dmi', "blank")
@@ -139,7 +138,7 @@ SUBSYSTEM_DEF(holomap)
 	big_map.Blend(map_base,ICON_OVERLAY)
 	big_map.Blend(canvas,ICON_OVERLAY)
 
-	if(StationZLevel == ZLEVEL_STATION_PRIMARY)
+	if(is_station_level(StationZLevel))
 		var/icon/strategic_map = icon(big_map)
 
 		for(var/marker in holomap_markers)
