@@ -5,6 +5,7 @@
 	default_color = "00FF00"
 	blacklisted = 0
 	sexes = 0
+	species_traits = list(MUTCOLORS,NOEYES)
 	mutant_bodyparts = list("ipc_screen")
 	default_features = list("ipc_screen" = "Sunburst")
 	species_traits = list(MUTCOLORS)
