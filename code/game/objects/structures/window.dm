@@ -415,7 +415,6 @@
 	reinf = FALSE
 	heat_resistance = 25000
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 00, "acid" = 100)
-	debris = list()
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
