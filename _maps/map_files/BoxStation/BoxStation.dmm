@@ -54082,7 +54082,8 @@
 /area/quartermaster/miningdock)
 "nxv" = (
 /obj/machinery/power/apc{
-	name = Construction Area APC;
+	name = "Construction Area APC";
+	areastring = "/area/construction";
 	pixel_y = -24
 	},
 /obj/structure/cable{
