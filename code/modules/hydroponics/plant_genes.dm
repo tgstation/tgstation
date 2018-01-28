@@ -355,7 +355,7 @@
 			// The secret of potato supercells!
 			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
 			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
-				pocell.maxcharge = G.seed.potency * (CG.rate*20)
+				pocell.maxcharge = CG.rate * (G.seed.potency*20)
 
 			else
 				pocell.maxcharge = G.seed.potency * 20
