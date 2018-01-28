@@ -370,6 +370,13 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
+			if(issilicon(A)
+				var/mob/living/silicon/sillycone = A
+				if(sillycone.stat || in_faction(sillycone))
+					continue
+				if(faction == "syndicate" && sillycone.emagged == 1) //syndicate turrets are bros with emagged (not ratvar-magged) borgs
+					break
+				targets += sillycone
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
