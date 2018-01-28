@@ -54,8 +54,7 @@
 			if(isopenturf(target))
 				tendril_jump(user, target)
 		if(INTENT_HARM)
-			if(isliving(target) && !proximity)
-				tendril_swing(user, target)
+			tendril_swing(user, target)
 
 /obj/item/umbral_tendrils/proc/tendril_jump(mob/living/user, turf/open/target) //throws the user towards the target turf
 	if(!darkspawn.has_psi(10))
@@ -70,43 +69,63 @@
 	darkspawn.use_psi(10)
 
 /obj/item/umbral_tendrils/proc/tendril_swing(mob/living/user, mob/living/target) //swing the tendrils to knock someone down
-	if(!(target in view(5, user)))
-		to_chat(user, "<span class='warning'>[target] is not accessible or needs to be closer!</span>")
-		return
-	if(target.lying)
+	if(isliving(target) && target.lying)
 		to_chat(user, "<span class='warning'>[target] is already knocked down!</span>")
 		return
 	user.visible_message("<span class='warning'>[user] draws back [src] and swings them towards [target]!</span>", \
 	"<span class='velvet'><b>opehhjaoo</b><br>You swing your tendrils towards [target]!</span>")
 	playsound(user, 'sound/magic/tail_swing.ogg', 50, TRUE)
-	addtimer(CALLBACK(src, .proc/tendril_knockdown, user, target), 5)
-
-/obj/item/umbral_tendrils/proc/tendril_knockdown(mob/living/user, mob/living/target)
-	if(QDELETED(src))
-		return
-	if(!(target in view(5, user)))
-		user.visible_message("<span class='warning'>[user]'s tendrils crack as they whip harmlessly through the air!</span>", \
-		"<span class='velvet italics'>[target] escaped your range!</span>")
-		return
-	if(!iscyborg(target))
-		playsound(target, 'sound/magic/pass_attack.ogg', 50, TRUE)
-		if(!twin)
-			target.visible_message("<span class='warning'>[user]'s [name] slam into [target], knocking them off their feet!</span>", \
-			"<span class='userdanger'>You feel something slam into your stomach, knocking you off your feet!</span>")
-			target.Knockdown(50)
-		else
-			target.visible_message("<span class='warning'>[user]'s [name] slam into [target] and drag them across the ground!</span>", \
-			"<span class='userdanger'>You feel something slam into your stomach as you're suddenly dragged across the floor!</span>")
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 1)
-			target.Knockdown(80) //hit 'em twice
-			target.throw_at(get_step_towards(user, target), 7, 2)
-	else
-		var/mob/living/silicon/robot/R = target
-		R.update_headlamp(TRUE) //disable headlamps
-		target.visible_message("<span class='warning'>[user]'s [name] smashes into [target]'s chassis!</span>", \
-		"<span class='userdanger'>Heavy percussive impact detected. Recalibrating motor input.</span>")
-		target.playsound_local(target, 'sound/misc/interference.ogg', 25, FALSE)
-		target.Knockdown(40)
-		playsound(user, 'sound/effects/bang.ogg', 50, TRUE)
-		target.adjustBruteLoss(10)
+	var/obj/item/projectile/umbral_tendrils/T = new(get_turf(user))
+	T.preparePixelProjectile(target, user)
+	T.twinned = twin
+	T.firer = user
+	T.fire()
 	qdel(src)
+
+/obj/item/projectile/umbral_tendrils
+	name = "umbral tendrils"
+	icon_state = "cursehand0"
+	hitsound = 'sound/magic/pass_attack.ogg'
+	layer = LARGE_MOB_LAYER
+	damage = 0
+	knockdown = 40
+	speed = 1
+	range = 5
+	var/twinned = FALSE
+	var/beam
+
+/obj/item/projectile/umbral_tendrils/fire(setAngle)
+	beam = firer.Beam(src, icon_state = "curse0", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/umbral_tendrils/Destroy()
+	qdel(beam)
+	. = ..()
+
+/obj/item/projectile/umbral_tendrils/on_hit(atom/movable/target, blocked = FALSE)
+	if(blocked >= 100)
+		return
+	. = TRUE
+	if(isliving(target))
+		var/mob/living/L = target
+		if(!iscyborg(target))
+			playsound(target, 'sound/magic/pass_attack.ogg', 50, TRUE)
+			if(!twinned)
+				target.visible_message("<span class='warning'>[firer]'s [name] slam into [target], knocking them off their feet!</span>", \
+				"<span class='userdanger'>You're knocked off your feet!</span>")
+				L.Knockdown(40)
+			else
+				target.throw_at(get_step_towards(firer, target), 7, 2) //pull them towards us!
+				target.visible_message("<span class='warning'>[firer]'s [name] slam into [target] and drag them across the ground!</span>", \
+				"<span class='userdanger'>You're suddenly dragged across the floor!</span>")
+				L.Knockdown(60)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target, 'sound/magic/pass_attack.ogg', 50, TRUE), 1)
+		else
+			var/mob/living/silicon/robot/R = target
+			R.update_headlamp(TRUE) //disable headlamps
+			target.visible_message("<span class='warning'>[firer]'s [name] smashes into [target]'s chassis!</span>", \
+			"<span class='userdanger'>Heavy percussive impact detected. Recalibrating motor input.</span>")
+			R.playsound_local(target, 'sound/misc/interference.ogg', 25, FALSE)
+			playsound(R, 'sound/effects/bang.ogg', 50, TRUE)
+			R.Knockdown(30)
+			R.adjustBruteLoss(10)
