@@ -28,7 +28,7 @@
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
 	desc = "Back to sand."
-	icon = "icons/obj/shards.dmi"
+	icon = 'icons/obj/shards.dmi'
 	icon_state = "tiny"
 
 /obj/effect/decal/cleanable/dirt
