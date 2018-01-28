@@ -41,10 +41,10 @@ SUBSYSTEM_DEF(air)
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
-
+//working thing
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "AT:[round(cost_turfs,1)]|"//ignore
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
@@ -395,3 +395,4 @@ SUBSYSTEM_DEF(air)
 #undef SSAIR_HIGHPRESSURE
 #undef SSAIR_HOTSPOT
 #undef SSAIR_SUPERCONDUCTIVITY
+
