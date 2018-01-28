@@ -6,12 +6,10 @@ SUBSYSTEM_DEF(pathfinder)
 	var/run
 	var/free
 	var/list/flow
-	var/static/list/revdir
 	var/static/space_type_cache
 	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
 /datum/controller/subsystem/pathfinder/Initialize()
-	revdir = list(SOUTH, NORTH, WEST, EAST)
 	space_type_cache = typecacheof(/turf/open/space)
 	run = 0
 	free = 1
