@@ -918,6 +918,8 @@
 		
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
 	
+	choice = da_list[choice]
+	
 	if(!choice)
 		return
 
