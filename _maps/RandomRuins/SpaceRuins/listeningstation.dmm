@@ -178,6 +178,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -646,6 +647,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "bc" = (
@@ -892,11 +894,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms{
-	assignedrole = "Space Syndicate";
-	dir = 8;
-	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8;
 	piping_layer = 3;
