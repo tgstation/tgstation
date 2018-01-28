@@ -10,12 +10,26 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF
 	damage_deflection = 70
 	var/password = "Swordfish"
+	var/interaction_activated = TRUE //use the door to enter the password
+	var/voice_activated = FALSE //Say the password nearby to open the door.
+
+/obj/machinery/door/password/voice
+	voice_activated = TRUE
+
+
+/obj/machinery/door/password/Initialize(mapload)
+	. = ..()
+	if(voice_activated)
+		flags_1 |= HEAR_1
+
+/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!density || !voice_activated || radio_freq)
+		return
+	if(findtext(raw_message,password))
+		open()
 
 /obj/machinery/door/password/CollidedWith(atom/movable/AM)
-	if(density)
-		return 0
-	else
-		return ..()
+	return !density && ..()
 
 /obj/machinery/door/password/try_to_activate_door(mob/user)
 	add_fingerprint(user)
