@@ -549,7 +549,7 @@
 		if(TOOL_WIRECUTTER)
 			return wirecutter_act(user, tool)
 		if(TOOL_WELDER)
-		  return welder_act(user, tool)
+			return welder_act(user, tool)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
 /atom/proc/crowbar_act(mob/living/user, obj/item/tool)
