@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(air)
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
-
+//working thing
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
