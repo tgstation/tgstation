@@ -605,7 +605,7 @@
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
-		color = input(user,"Choose Color") as color
+		color = input(user,"","Choose Color",color) as color
 	else if(istype(W, /obj/item/screwdriver))
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)

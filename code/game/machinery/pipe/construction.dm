@@ -36,9 +36,9 @@ Buildable meters
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
 
-/obj/item/pipe/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+/obj/item/pipe/ComponentInitialize()
+	//Flipping handled manually due to custom handling for trinary pipes
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE ,null,null, CALLBACK(src, .proc/fixdir))
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)
@@ -84,19 +84,6 @@ Buildable meters
 	name = "[initial(fakeA.name)] fitting"
 	icon_state = initial(fakeA.pipe_state)
 
-// rotate the pipe item clockwise
-
-/obj/item/pipe/verb/rotate()
-	set category = "Object"
-	set name = "Rotate Pipe"
-	set src in view(1)
-
-	if ( usr.stat || usr.restrained() || !usr.canmove )
-		return
-
-	setDir(turn(dir, -90))
-	fixdir()
-
 /obj/item/pipe/verb/flip()
 	set category = "Object"
 	set name = "Flip Pipe"
@@ -114,16 +101,6 @@ Buildable meters
 /obj/item/pipe/trinary/flippable/do_a_flip()
 	setDir(turn(dir, flipped ? 45 : -45))
 	flipped = !flipped
-
-/obj/item/pipe/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
 
 /obj/item/pipe/Move()
 	var/old_dir = dir
@@ -145,7 +122,8 @@ Buildable meters
 		setDir(turn(dir, 45))
 
 /obj/item/pipe/attack_self(mob/user)
-	return rotate()
+	setDir(turn(dir,-90))
+	fixdir()
 
 /obj/item/pipe/attackby(obj/item/W, mob/user, params)
 	if (!istype(W, /obj/item/wrench))

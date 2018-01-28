@@ -714,7 +714,7 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 	if(!A)
@@ -813,6 +813,9 @@ The _flatIcons list is a cache for generated icon files.
 				curIndex++ //Try the next layer
 				continue
 			var/image/I = current
+			if(I.plane != FLOAT_PLANE && I.plane != A.plane)
+				curIndex++
+				continue
 			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000)
@@ -864,7 +867,7 @@ The _flatIcons list is a cache for generated icon files.
 			curblend = BLEND_OVERLAY
 			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
@@ -886,7 +889,10 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
-	return icon(flat, "", SOUTH)
+	if(no_anim)
+		return icon(flat, "", SOUTH, frame=1)
+	else
+		return icon(flat, "", SOUTH)
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.

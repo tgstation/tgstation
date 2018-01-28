@@ -284,7 +284,7 @@
 "aY" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aZ" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -2154,16 +2154,10 @@ aa
 aa
 aa
 aa
-aa
-aa
 ad
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -2186,8 +2180,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 aA
 aA
 aA
@@ -2212,17 +2204,11 @@ ad
 ad
 aa
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa
 "}
 (3,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2257,14 +2243,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (4,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2299,14 +2279,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (5,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2341,14 +2315,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (6,1,1) = {"
-aa
-aa
 aa
 ad
 ad
@@ -2383,14 +2351,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (7,1,1) = {"
-aa
-aa
 aa
 ab
 ab
@@ -2425,14 +2387,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (8,1,1) = {"
-aa
-aa
 aa
 ab
 af
@@ -2467,14 +2423,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (9,1,1) = {"
-aa
-aa
 ab
 ab
 ab
@@ -2509,14 +2459,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (10,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2551,14 +2495,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (11,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2593,14 +2531,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (12,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2635,14 +2567,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (13,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2677,14 +2603,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (14,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2719,14 +2639,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (15,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2761,14 +2675,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (16,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2803,14 +2711,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (17,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2845,14 +2747,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (18,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2887,14 +2783,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (19,1,1) = {"
-aa
-aa
 ab
 ab
 ab
@@ -2929,14 +2819,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (20,1,1) = {"
-aa
-aa
 aa
 ab
 ah
@@ -2971,14 +2855,8 @@ aC
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (21,1,1) = {"
-aa
-aa
 aa
 ab
 ab
@@ -3013,14 +2891,8 @@ aC
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (22,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3055,14 +2927,8 @@ ad
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (23,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3097,14 +2963,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (24,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3139,14 +2999,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (25,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3181,14 +3035,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (26,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3223,14 +3071,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (27,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3265,14 +3107,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (28,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3307,14 +3143,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (29,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3349,14 +3179,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (30,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3391,14 +3215,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (31,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3433,14 +3251,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (32,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3475,14 +3287,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (33,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3517,14 +3323,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (34,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3559,14 +3359,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (35,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3601,14 +3395,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (36,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3643,14 +3431,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (37,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3685,14 +3467,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (38,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3727,14 +3503,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (39,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3769,14 +3539,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (40,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3800,10 +3564,6 @@ cm
 aa
 ad
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa

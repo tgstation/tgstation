@@ -38,10 +38,10 @@
 		src.linkeddrain = pooldrain
 
 /obj/machinery/poolcontroller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
-	if(!emagged) //If it is not already emagged, emag it.
+	if(!(obj_flags & EMAGGED)) //If it is not already emagged, emag it.
 		to_chat(user, "<span class='warning'>You disable the [src]'s safety features.</span>")
 		do_sparks(5, TRUE, src)
-		emagged = TRUE
+		set_obj_flags = "EMAGGED"
 		tempunlocked = TRUE
 		drainable = TRUE
 		do_sparks(1, 1)

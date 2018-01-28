@@ -41,7 +41,7 @@
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
 
-			var/message = generate_ion_law(ionMessage)
+			var/message = ionMessage || generate_ion_law()
 			if(message)
 				if(prob(removeDontImproveChance))
 					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
@@ -59,10 +59,7 @@
 			if(prob(botEmagChance))
 				bot.emag_act()
 
-/proc/generate_ion_law(ionMessage)
-	if(ionMessage)
-		return ionMessage
-
+/proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.
 	var/ionthreats = pick_list(ION_FILE, "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.
