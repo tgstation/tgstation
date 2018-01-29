@@ -28,6 +28,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/quickbind = FALSE //if this scripture can be quickbound to a clockwork slab
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
 	var/primary_component
+	var/important = FALSE //important scripture will be italicized in the slab's interface
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
