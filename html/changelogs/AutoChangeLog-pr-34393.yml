@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "fixed a strange pipenet issue that happens when a singular pipe or manifold is placed directly between two or more components and wrenched last."
