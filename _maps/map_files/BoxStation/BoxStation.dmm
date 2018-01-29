@@ -1977,7 +1977,7 @@
 "aMa" = (/turf/open/floor/wood,/area/library)
 "aMb" = (/obj/structure/chair/office/dark{dir = 1},/turf/open/floor/wood,/area/library)
 "aMc" = (/obj/structure/chair/office/dark{dir = 1},/obj/structure/disposalpipe/segment,/turf/open/floor/wood,/area/library)
-"aMd" = (/obj/structure/bodycontainer/morgue{tag = "icon-morgue1"; icon_state = "morgue1"; dir = 2},/turf/open/floor/plasteel/dark,/area/chapel/office)
+"aMd" = (/obj/structure/bodycontainer/morgue{tag = "icon-morgue1 (NORTH)"; icon_state = "morgue1"; dir = 1},/turf/open/floor/plasteel/dark,/area/chapel/office)
 "aMe" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel/dark,/area/chapel/office)
 "aMf" = (/obj/structure/table/wood,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/turf/open/floor/plasteel/grimy,/area/chapel/office)
 "aMg" = (/obj/machinery/camera{c_tag = "Chapel North"; dir = 2; network = list("SS13")},/turf/open/floor/plasteel/dark,/area/chapel/main)

@@ -7683,7 +7683,7 @@
 "cRM" = (/obj/structure/chair/stool,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/structure/cable/yellow{icon_state = "1-2"},/turf/open/floor/plasteel/whitegreen/side,/area/medical/virology)
 "cRN" = (/obj/structure/chair/stool,/turf/open/floor/plasteel/whitegreen/side,/area/medical/virology)
 "cRO" = (/obj/structure/chair/stool,/obj/machinery/firealarm{dir = 4; pixel_x = 24},/turf/open/floor/plasteel/whitegreen/side{dir = 6},/area/medical/virology)
-"cRP" = (/obj/structure/bodycontainer/crematorium,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel/dark,/area/chapel/office)
+"cRP" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/bodycontainer/crematorium{tag = "icon-crema1 (EAST)"; icon_state = "crema1"; dir = 4},/turf/open/floor/plasteel/dark,/area/chapel/office)
 "cRQ" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/light_switch{pixel_x = 25},/turf/open/floor/plasteel/dark,/area/chapel/office)
 "cRR" = (/obj/item/device/radio/intercom{pixel_y = 25},/obj/machinery/firealarm{dir = 8; pixel_x = -26},/obj/structure/table/wood,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/obj/item/clothing/under/burial,/turf/open/floor/plasteel/grimy,/area/chapel/office)
 "cRS" = (/obj/machinery/requests_console{department = "Chapel"; departmentType = 2; pixel_y = 30},/obj/structure/disposalpipe/segment{dir = 6},/turf/open/floor/plasteel/grimy,/area/chapel/office)

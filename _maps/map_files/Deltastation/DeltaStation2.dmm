@@ -10472,7 +10472,7 @@
 "dTt" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 1},/turf/open/floor/plating,/area/maintenance/port/aft)
 "dTu" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable/white{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/turf/open/floor/plating,/area/maintenance/port/aft)
 "dTv" = (/turf/closed/wall/r_wall,/area/chapel/office)
-"dTw" = (/obj/structure/bodycontainer/crematorium{id = "cremawheat"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/vault{dir = 8},/area/chapel/office)
+"dTw" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/bodycontainer/crematorium{tag = "icon-crema1 (EAST)"; icon_state = "crema1"; dir = 4},/turf/open/floor/plasteel/vault{dir = 8},/area/chapel/office)
 "dTx" = (/obj/machinery/light_switch{pixel_x = -26; pixel_y = 26},/obj/structure/cable/white{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/vault{dir = 5},/area/chapel/office)
 "dTy" = (/obj/machinery/power/apc{dir = 8; name = "Chapel APC"; areastring = "/area/chapel/main"; pixel_x = -26; pixel_y = 3},/obj/structure/cable/white{icon_state = "0-4"},/turf/open/floor/plasteel{dir = 1; icon_state = "chapel"},/area/chapel/main)
 "dTz" = (/obj/structure/cable/white{icon_state = "4-8"},/turf/open/floor/plasteel{dir = 4; icon_state = "chapel"},/area/chapel/main)
