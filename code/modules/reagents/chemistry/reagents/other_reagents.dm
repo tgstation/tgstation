@@ -1764,6 +1764,12 @@
 		L.remove_trait(TRAIT_PACIFISM, id)
 	..()
 
+/datum/reagent/pax/borg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+  
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"

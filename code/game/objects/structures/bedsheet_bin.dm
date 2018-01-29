@@ -223,6 +223,14 @@ LINEN BINS
 	item_color = "ian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
+/obj/item/bedsheet/cosmos
+	name = "cosmic space bedsheet"
+	desc = "Made from the dreams of those who wonder at the stars."
+	icon_state = "sheetcosmos"
+	item_color = "cosmos"
+	dream_messages = list("the infinite cosmos", "Hans Zimmer music", "a flight through space", "the galaxy", "being fabulous", "shooting stars")
+	light_power = 2
+	light_range = 1.4
 
 /obj/item/bedsheet/random
 	icon_state = "random_bedsheet"

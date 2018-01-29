@@ -13,6 +13,8 @@
  * Parent class for morgue and crematorium
  * For overriding only
  */
+GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
+
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
@@ -26,7 +28,12 @@
 	var/message_cooldown
 	var/breakout_time = 600
 
+/obj/structure/bodycontainer/Initialize()
+	. = ..()
+	GLOB.bodycontainers += src
+
 /obj/structure/bodycontainer/Destroy()
+	GLOB.bodycontainers -= src
 	open()
 	if(connected)
 		qdel(connected)

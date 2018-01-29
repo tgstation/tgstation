@@ -6,7 +6,7 @@
 
 	keys_held[_key] = world.time
 	var/movement = SSinput.movement_keys[_key]
-	if(!(next_move_dir_sub & movement))
+	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
 		next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time

@@ -2,9 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "ac" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall/mineral/titanium,
@@ -14,9 +11,6 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"af" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
@@ -38,10 +32,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"ak" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/shower{
@@ -115,12 +105,6 @@
 "ax" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
-"ay" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"az" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -137,10 +121,6 @@
 	name = "anchored supermatter crystal"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"aC" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/reinforced,
@@ -166,23 +146,9 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"aG" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aH" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aI" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"aJ" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aK" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/external{
@@ -385,8 +351,8 @@ aa
 aa
 "}
 (2,1,1) = {"
-af
-af
+ae
+ae
 ad
 ac
 aq
@@ -577,8 +543,8 @@ bc
 be
 "}
 (10,1,1) = {"
-af
-af
+ae
+ae
 ad
 ac
 aq

@@ -255,7 +255,7 @@
 
 
 //AI
-/obj/item/slimepotion/sentience/mining
+/obj/item/slimepotion/slime/sentience/mining
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots."
 	icon_state = "door_electronics"
