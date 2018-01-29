@@ -864,6 +864,14 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
+	
+/datum/supply_pack/science/bz
+	name = "BZ canister"
+	cost = 4000
+	access = ACCESS_TOX_STORAGE
+	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
+	crate_name = "BZ canister crate"
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -982,7 +990,7 @@
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
 	crate_name = "pizza crate"
-
+	
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
@@ -1398,11 +1406,11 @@
 	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/under/burial,
 					/obj/item/clothing/under/burial)
 	crate_name = "religious supplies crate"
 

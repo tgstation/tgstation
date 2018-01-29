@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Pneumatic cannons no longer misbehave when their contents such as primed grenades get deleted (explode)"
