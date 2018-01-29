@@ -1,0 +1,4 @@
+author: "F-OS"
+delete-after: True
+changes: 
+  - tweak: "Academy is now part of the random station names."
