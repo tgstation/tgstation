@@ -174,6 +174,9 @@
 		for(var/datum/reagent/R in reagents.reagent_list)
 			temp_chem[R.id] = R.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
+		if(dna)
+			blood_data["dna_copy"] = new /datum/dna()
+			dna.copy_dna(blood_data["dna_copy"])
 		if(mind)
 			blood_data["mind"] = mind
 		else if(last_mind)
