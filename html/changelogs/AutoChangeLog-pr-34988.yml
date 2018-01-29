@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Peacekeeper cyborgs have synth-pax instead of normal pax, which has the same effect but wears out faster."
