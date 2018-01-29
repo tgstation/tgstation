@@ -2,77 +2,36 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/mecha/custom_action(step, atom/used_atom, mob/user)
-	if(istype(used_atom, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
+/datum/construction/mecha/custom_action(step, obj/item/I, mob/user)
+	if(I.tool_behaviour == TOOL_WELDER)
+		if(I.use_tool(holder, user, 0))
 			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return FALSE
-	else if(istype(used_atom, /obj/item/wrench))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
 
-	else if(istype(used_atom, /obj/item/screwdriver))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+	else if(I.tool_behaviour)
+		return I.use_tool(holder, user, 0, volume=50)
 
-	else if(istype(used_atom, /obj/item/wirecutters))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
-
-	else if(istype(used_atom, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = used_atom
-		if(C.use(4))
-			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
-		else
-			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
+	else if(istype(I, /obj/item/stack))
+		if(!I.use_tool(holder, user, 0, volume=50, amount=5))
 			return FALSE
-	else if(istype(used_atom, /obj/item/stack/ore/bluespace_crystal))
-		var/obj/item/stack/ore/bluespace_crystal/BSC = used_atom
-		BSC.use(1)
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(S.get_amount() < 5)
-			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
-			return FALSE
-		else
-			S.use(5)
+
 	return TRUE
 
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user)
-	if(istype(used_atom, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = used_atom
-		if (W.remove_fuel(0, user))
+/datum/construction/reversible/mecha/custom_action(index as num, diff as num, obj/item/I, mob/user)
+	if(I.tool_behaviour == TOOL_WELDER)
+		if(I.use_tool(holder, user, 0))
 			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return FALSE
-	else if(istype(used_atom, /obj/item/wrench))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
 
-	else if(istype(used_atom, /obj/item/screwdriver))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+	else if(I.tool_behaviour)
+		return I.use_tool(holder, user, 0, volume=50)
 
-	else if(istype(used_atom, /obj/item/wirecutters))
-		var/obj/item/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
-
-	else if(istype(used_atom, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = used_atom
-		if (C.use(4))
-			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
-		else
-			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
+	else if(istype(I, /obj/item/stack))
+		if(!I.use_tool(holder, user, 0, volume=50, amount=5))
 			return FALSE
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(S.get_amount() < 5)
-			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
-			return FALSE
-		else
-			S.use(5)
+
 	return TRUE
 
 
