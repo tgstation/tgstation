@@ -246,7 +246,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			if(href_list["link"])
 				linked = locate(href_list["link"]) in pin.linked
 
-			if(istype(held_item, /obj/item/device/integrated_electronics) || istype(held_item, /obj/item/device/multitool))
+			if(istype(held_item, /obj/item/device/integrated_electronics) || istype(held_item, /obj/item/device/multimeter/multitool))
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")

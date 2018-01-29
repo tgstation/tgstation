@@ -36,7 +36,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/device/multitool,
+		/obj/item/device/multimeter/multitool,
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
@@ -58,7 +58,7 @@
 	new /obj/item/screwdriver/power(src)
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/device/analyzer(src)
@@ -71,7 +71,7 @@
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
@@ -80,7 +80,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
@@ -99,7 +99,7 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
 
 
@@ -298,7 +298,7 @@
 	new /obj/item/weldingtool/abductor(src)
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
-	new /obj/item/device/multitool/abductor(src)
+	new /obj/item/device/multimeter/multitool/abductor(src)
 	new /obj/item/stack/cable_coil(src,30,"white")
 
 
@@ -328,7 +328,7 @@
 		/obj/item/grenade,
 		/obj/item/screwdriver,
 		/obj/item/lighter,
-		/obj/item/device/multitool,
+		/obj/item/device/multimeter/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
 		)
@@ -360,7 +360,7 @@
 	new /obj/item/grenade/syndieminibomb(src)
 	new /obj/item/grenade/syndieminibomb(src)
 	new /obj/item/screwdriver(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/device/multimeter/multitool(src)
 
 /obj/item/storage/belt/wands
 	name = "wand belt"

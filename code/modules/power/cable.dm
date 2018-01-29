@@ -157,12 +157,14 @@ By design, d1 is the smallest direction and d2 is the highest
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
 
-	else if(istype(W, /obj/item/device/multitool))
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
+	else if(istype(W, /obj/item/device/multimeter))
+		if(powernet && (powernet.avail > 0 || powernet.load > 0))
+			to_chat(user, "<span class='notice'>Network power: [DisplayPower(powernet.avail)]</span>")
+			to_chat(user, "<span class='notice'>Network load: [DisplayPower(powernet.load)]</span>")
+			if(powernet.avail > 1000)
+				shock(user, 5, 0.2)
 		else
-			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
-		shock(user, 5, 0.2)
+			to_chat(user, "<span class='notice'>The cable is not powered.</span>")
 
 	src.add_fingerprint(user)
 

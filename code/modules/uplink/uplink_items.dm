@@ -934,7 +934,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
 			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
-	item = /obj/item/device/multitool/ai_detect
+	item = /obj/item/device/multimeter/multitool/ai_detect
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module

@@ -4976,7 +4976,7 @@
 "mR" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/button/door{
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
@@ -5025,7 +5025,7 @@
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
 	dir = 8

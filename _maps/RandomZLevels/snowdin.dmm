@@ -2565,7 +2565,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/sekret)
 "iv" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
 "iw" = (

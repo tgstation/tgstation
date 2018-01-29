@@ -3211,7 +3211,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/fyellow/old,
 /obj/item/clothing/gloves/color/fyellow/old,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},

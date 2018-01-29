@@ -39,7 +39,7 @@
 	id = "multitool"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 20)
-	build_path = /obj/item/device/multitool
+	build_path = /obj/item/device/multimeter/multitool
 	category = list("initial","Tools")
 
 /datum/design/analyzer

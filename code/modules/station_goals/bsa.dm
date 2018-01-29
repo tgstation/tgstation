@@ -36,8 +36,8 @@
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/device/multimeter/multitool))
+		var/obj/item/device/multimeter/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
 	else if(istype(W, /obj/item/wrench))
@@ -52,8 +52,8 @@
 	icon_state = "emitter_center"
 
 /obj/machinery/bsa/front/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/device/multimeter/multitool))
+		var/obj/item/device/multimeter/multitool/M = W
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
 	else if(istype(W, /obj/item/wrench))
@@ -70,8 +70,8 @@
 	var/obj/machinery/bsa/front/front
 
 /obj/machinery/bsa/middle/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/device/multimeter/multitool))
+		var/obj/item/device/multimeter/multitool/M = W
 		if(M.buffer)
 			if(istype(M.buffer, /obj/machinery/bsa/back))
 				back = M.buffer

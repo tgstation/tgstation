@@ -148,7 +148,7 @@
 			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
 
-		else if(istype(W, /obj/item/device/multitool)) //change focus
+		else if(istype(W, /obj/item/device/multimeter/multitool)) //change focus
 			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 			to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
 			return

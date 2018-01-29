@@ -42,7 +42,7 @@
 /datum/surgery_step/prepare_electronics
 	name = "prepare electronics"
 	implements = list(
-		/obj/item/device/multitool = 100,
+		/obj/item/device/multimeter/multitool = 100,
 		/obj/item/hemostat = 10) // try to reboot internal controllers via short circuit with some conductor
 	time = 24
 

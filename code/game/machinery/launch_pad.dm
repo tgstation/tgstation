@@ -31,8 +31,8 @@
 			return
 
 		if(panel_open)
-			if(istype(I, /obj/item/device/multitool))
-				var/obj/item/device/multitool/M = I
+			if(istype(I, /obj/item/device/multimeter/multitool))
+				var/obj/item/device/multimeter/multitool/M = I
 				M.buffer = src
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 				return 1

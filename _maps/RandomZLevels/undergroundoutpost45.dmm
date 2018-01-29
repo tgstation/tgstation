@@ -4862,7 +4862,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -5314,7 +5314,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
@@ -8462,7 +8462,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1;
 	heat_capacity = 1e+006

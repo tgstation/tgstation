@@ -5893,7 +5893,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "aoj" = (
@@ -8678,7 +8678,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -9937,7 +9937,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "ayS" = (
@@ -11678,8 +11678,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/item/device/multitool,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool,
+/obj/item/device/multimeter/multitool{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
@@ -17453,7 +17453,7 @@
 "aSz" = (
 /obj/structure/table/reinforced,
 /obj/item/device/aicard,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
 	},
@@ -17890,7 +17890,7 @@
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/storage/tools)
@@ -25520,7 +25520,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/glasses/welding,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel,
@@ -27536,7 +27536,7 @@
 	departmentType = 2;
 	pixel_x = -30
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
 	dir = 4;
@@ -33759,7 +33759,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGw" = (
@@ -34359,7 +34359,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -36086,7 +36086,7 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/device/t_scanner,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bLB" = (
@@ -36314,7 +36314,7 @@
 	pixel_y = 5
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/stock_parts/cell/high/plus,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -39019,7 +39019,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSG" = (
@@ -42864,7 +42864,7 @@
 /area/science/misc_lab)
 "cbY" = (
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/machinery/requests_console{
 	department = "Science";
@@ -42952,7 +42952,7 @@
 /area/tcommsat/server)
 "cci" = (
 /obj/structure/table,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
@@ -49682,7 +49682,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -53381,7 +53381,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/glasses/welding,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel,
@@ -54358,7 +54358,7 @@
 /area/maintenance/starboard/aft)
 "Qpx" = (
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/machinery/camera{
 	c_tag = "Circuitry Lab North";

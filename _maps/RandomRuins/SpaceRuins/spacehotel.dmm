@@ -2093,7 +2093,7 @@
 "gx" = (
 /obj/structure/table,
 /obj/item/screwdriver,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/wirecutters,
 /obj/machinery/light{
 	dir = 1

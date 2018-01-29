@@ -298,7 +298,7 @@
 		/obj/item/wrench/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/wirecutters/cyborg,
-		/obj/item/device/multitool/cyborg,
+		/obj/item/device/multimeter/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
 		/obj/item/device/geiger_counter,

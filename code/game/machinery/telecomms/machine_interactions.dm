@@ -23,7 +23,7 @@
 		return
 
 	// Using a multitool lets you access the receiver's interface
-	else if(istype(P, /obj/item/device/multitool))
+	else if(istype(P, /obj/item/device/multimeter/multitool))
 		attack_hand(user)
 
 	else if(default_deconstruction_crowbar(P))
@@ -40,13 +40,13 @@
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null
-		if(!istype(user.get_active_held_item(), /obj/item/device/multitool))
+		if(!istype(user.get_active_held_item(), /obj/item/device/multimeter/multitool))
 			return
 
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	var/obj/item/device/multitool/P = get_multitool(user)
+	var/obj/item/device/multimeter/multitool/P = get_multitool(user)
 
 	user.set_machine(src)
 	var/dat
@@ -109,15 +109,15 @@
 
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 
-	var/obj/item/device/multitool/P = null
+	var/obj/item/device/multimeter/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/device/multitool))
+	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/device/multimeter/multitool))
 		P = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
 	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/device/multitool))
+		if(istype(user.get_active_held_item(), /obj/item/device/multimeter/multitool))
 			P = user.get_active_held_item()
 	return P
 
@@ -177,10 +177,10 @@
 		return
 
 	if(!issilicon(usr))
-		if(!istype(usr.get_active_held_item(), /obj/item/device/multitool))
+		if(!istype(usr.get_active_held_item(), /obj/item/device/multimeter/multitool))
 			return
 
-	var/obj/item/device/multitool/P = get_multitool(usr)
+	var/obj/item/device/multimeter/multitool/P = get_multitool(usr)
 
 	if(href_list["input"])
 		switch(href_list["input"])

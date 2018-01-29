@@ -1588,7 +1588,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	layer = 5
 	},
 /obj/item/extinguisher{
@@ -10447,7 +10447,7 @@
 "aAW" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "aAX" = (
@@ -11088,8 +11088,8 @@
 /obj/structure/table,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -21835,7 +21835,7 @@
 "bbN" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "bbO" = (
@@ -29099,7 +29099,7 @@
 	pixel_y = 5
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -32565,7 +32565,7 @@
 /obj/item/stock_parts/manipulator,
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/scanning_module,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/lab)
@@ -38754,7 +38754,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	layer = 4
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -40636,7 +40636,7 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/requests_console{
 	department = "Tech storage";

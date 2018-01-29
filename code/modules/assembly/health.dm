@@ -31,7 +31,7 @@
 	return secured
 
 /obj/item/device/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/device/multimeter/multitool))
 		if(alarm_health == 0)
 			alarm_health = -90
 			user.show_message("You toggle [src] to \"detect death\" mode.")

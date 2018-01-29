@@ -17817,8 +17817,8 @@
 /obj/structure/table,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
-/obj/item/device/multitool,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool,
+/obj/item/device/multimeter/multitool{
 	pixel_x = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -23768,7 +23768,7 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/device/t_scanner,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYj" = (
@@ -25902,7 +25902,7 @@
 	},
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
@@ -26030,7 +26030,7 @@
 	pixel_y = 16
 	},
 /obj/item/wirecutters,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -26720,7 +26720,7 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light_switch{
 	pixel_y = -28
@@ -29023,7 +29023,7 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow,
 /obj/item/folder/yellow,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/pen/red,
 /turf/open/floor/plasteel/brown{
 	dir = 8
@@ -33099,7 +33099,7 @@
 	pixel_y = -3
 	},
 /obj/item/wrench,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
@@ -33908,7 +33908,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "bsj" = (
@@ -42036,7 +42036,7 @@
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
 /obj/item/device/radio/off,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "bJG" = (
@@ -53371,7 +53371,7 @@
 /obj/item/crowbar,
 /obj/item/wrench,
 /obj/item/clothing/mask/gas,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -56718,7 +56718,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/science,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /turf/open/floor/plasteel/white,
@@ -64181,7 +64181,7 @@
 /obj/structure/table,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -65152,7 +65152,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /obj/item/stack/cable_coil,
@@ -67086,7 +67086,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/glasses/welding,
-/obj/item/device/multitool{
+/obj/item/device/multimeter/multitool{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/delivery,
@@ -75012,7 +75012,7 @@
 	pixel_y = 5
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
@@ -80283,7 +80283,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "Qtw" = (
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /obj/item/screwdriver,
 /obj/structure/table/reinforced,
 /obj/structure/cable/yellow{
@@ -80351,7 +80351,7 @@
 	icon_state = "0-8"
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "QtB" = (

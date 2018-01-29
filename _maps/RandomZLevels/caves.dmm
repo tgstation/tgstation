@@ -1553,7 +1553,7 @@
 	},
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
-/obj/item/device/multitool,
+/obj/item/device/multimeter/multitool,
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "eN" = (

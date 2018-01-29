@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
+	if(iscyborg(user) || istype(I, /obj/item/device/multimeter/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weldingtool/WT = I
