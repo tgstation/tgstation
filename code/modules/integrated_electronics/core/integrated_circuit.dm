@@ -308,7 +308,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/datum/integrated_io/I
 	var/list/integrated_io_list = inputs+outputs+activators // if this breaks things at all, switch to | instead of +
 	for(var/k in 1 to integrated_io_list.len)
-		I = integrated_io_list[i]
+		I = integrated_io_list[k]
 		I.disconnect_all()
 		CHECK_TICK
 
