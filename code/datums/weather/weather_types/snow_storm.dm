@@ -23,6 +23,5 @@
 
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
-	if(prob(max(0,100)))
-		L.bodytemperature -=(rand(5,15))
+	L.bodytemperature -=(rand(5,15))
 

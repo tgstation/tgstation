@@ -13,8 +13,8 @@
 /obj/structure/fence
 	name = "fence"
 	desc = "A chain link fence. Not as effective as a wall, but generally it keeps people out."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "straight"
@@ -58,7 +58,7 @@
 	hole_size = LARGE_HOLE
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(TOOL_WIRECUTTER(W))
+	if(istype(W, /obj/item/wirecutters))
 		if(!cuttable)
 			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
 			return
@@ -87,12 +87,12 @@
 
 				update_cut_status()
 
-	return 1
+	return TRUE
 
 /obj/structure/fence/proc/update_cut_status()
 	if(!cuttable)
 		return
-	density = 1
+	density = TRUE
 	switch(hole_size)
 		if(NO_HOLE)
 			icon_state = initial(icon_state)
@@ -125,7 +125,7 @@
 	if(can_open(user))
 		toggle(user)
 
-	return 1
+	return TRUE
 
 /obj/structure/fence/door/proc/toggle(mob/user)
 	switch(open)
@@ -137,7 +137,7 @@
 			open = FALSE
 
 	update_door_status()
-	playsound(get_turf(src), 'sound/machines/click.ogg', 100, 1)
+	playsound(src, 'sound/machines/click.ogg', 100, 1)
 
 /obj/structure/fence/door/proc/update_door_status()
 	switch(open)

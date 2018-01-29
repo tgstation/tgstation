@@ -96,6 +96,7 @@
 	harm_intent_damage = 10
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+	light_color = LIGHT_COLOR_PURPLE
 	attacktext = "slashes"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	deathmessage = "collapses into a pile of bones, their suit dissovling among the plasma!"
@@ -114,3 +115,7 @@
 	attacktext = "blasts"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)
+
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/Initialize()
+	. = ..()
+	set_light(2)

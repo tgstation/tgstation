@@ -294,7 +294,7 @@
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	var/flammened = FALSE
 	if(!flammened)
-		visible_message("<span class='danger'>\The snow melts away!.</span>")
+		visible_message("<span class='danger'>[src] melts away!.</span>")
 		slowdown = 0
 		flammened = TRUE
 		icon_state = "snow_dug"

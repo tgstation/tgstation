@@ -244,7 +244,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/uranium
@@ -281,7 +281,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	defer_change = 1
+	defer_change = TRUE
 
 
 /turf/closed/mineral/gold
@@ -346,7 +346,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	defer_change = 1
+	defer_change = TRUE
 
 
 
@@ -409,7 +409,7 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	environment_type = "snow"
 	turf_type = /turf/open/floor/plating/asteroid/snow
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/snowmountain/cavern
 	name = "ice cavern rock"
