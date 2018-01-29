@@ -41,16 +41,16 @@
 	check_pulling()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
-	// First we generate power.
-	for(var/obj/item/integrated_circuit/passive/power/P in assembly_components)
-		P.make_energy()
-
-	// Now spend it.
-	for(var/I in assembly_components)
-		var/obj/item/integrated_circuit/IC = I
-		if(IC.power_draw_idle)
-			if(!draw_power(IC.power_draw_idle))
-				IC.power_fail()
+	if(assembly_components && assembly_components.len)
+		for(var/i in 1 to assembly_components.len)
+			var/obj/item/integrated_circuit/IC = assembly_components[i]
+			if(istype(IC, /obj/item/integrated_circuit/passive/power))
+				var/obj/item/integrated_circuit/passive/power/P = IC
+				P.make_energy()
+			if(IC.power_draw_idle)
+				if(!draw_power(IC.power_draw_idle))
+					IC.power_fail()
+			CHECK_TICK
 
 
 /obj/item/device/electronic_assembly/interact(mob/user)
@@ -78,13 +78,15 @@
 
 	var/builtin_components = ""
 
-	for(var/c in assembly_components)
-		var/obj/item/integrated_circuit/circuit = c
-		if(!circuit.removable)
-			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
-			builtin_components += "<br>"
+	if(assembly_components && assembly_components.len)
+		for(var/i in 1 to assembly_components.len)
+			var/obj/item/integrated_circuit/circuit = assembly_components[i]
+			if(!circuit.removable)
+				builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
+				builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
+				builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
+				builtin_components += "<br>"
+			CHECK_TICK
 
 	// Put removable circuits (if any) in separate categories from non-removable
 	if(builtin_components)
@@ -95,19 +97,20 @@
 		HTML += "Removable:"
 
 	HTML += "<br>"
-
-	for(var/c in assembly_components)
-		var/obj/item/integrated_circuit/circuit = c
-		if(circuit.removable)
-			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a>"
-			HTML += "<br>"
+	if(assembly_components && assembly_components.len)
+		for(var/i in 1 to assembly_components.len)
+			var/obj/item/integrated_circuit/circuit = assembly_components[i]
+			if(circuit.removable)
+				HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
+				HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
+				HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+				HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
+				HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
+				HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
+				HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
+				HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a>"
+				HTML += "<br>"
+			CHECK_TICK
 
 	HTML += "</body></html>"
 	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
@@ -193,25 +196,31 @@
 
 /obj/item/device/electronic_assembly/examine(mob/user)
 	..()
-	for(var/I in assembly_components)
-		var/obj/item/integrated_circuit/IC = I
-		IC.external_examine(user)
+	if(assembly_components && assembly_components.len)
+		for(var/i in 1 to assembly_components.len)
+			var/obj/item/integrated_circuit/IC = assembly_components[i]
+			IC.external_examine(user)
+			CHECK_TICK
 	if(opened)
 		interact(user)
 
 /obj/item/device/electronic_assembly/proc/return_total_complexity()
 	. = 0
-	var/obj/item/integrated_circuit/part
-	for(var/p in assembly_components)
-		part = p
-		. += part.complexity
+	if(assembly_components && assembly_components.len)
+		var/obj/item/integrated_circuit/part
+		for(var/i in 1 to assembly_components.len)
+			part = = assembly_components[i]
+			. += part.complexity
+			CHECK_TICK
 
 /obj/item/device/electronic_assembly/proc/return_total_size()
 	. = 0
-	var/obj/item/integrated_circuit/part
-	for(var/p in assembly_components)
-		part = p
-		. += part.size
+	if(assembly_components && assembly_components.len)
+		var/obj/item/integrated_circuit/part
+		for(var/i in 1 to assembly_components.len)
+			part = = assembly_components[i]
+			. += part.size
+			CHECK_TICK
 
 // Returns true if the circuit made it inside.
 /obj/item/device/electronic_assembly/proc/try_add_component(obj/item/integrated_circuit/IC, mob/user)
@@ -274,9 +283,15 @@
 
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/S in assembly_components)
-		if(S.sense(target,user,proximity))
-			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+	if(assembly_components && assembly_components.len)
+		var/obj/item/integrated_circuit/part
+		for(var/i in 1 to assembly_components.len)
+			part = assembly_components[i]
+			if(istype(part, /obj/item/integrated_circuit/input))
+				var/obj/item/integrated_circuit/input/S = part
+				if(S.sense(target,user,proximity))
+					visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
+			CHECK_TICK
 
 
 /obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
@@ -314,8 +329,14 @@
 		interact(user)
 		return TRUE
 	else
-		for(var/obj/item/integrated_circuit/input/S in assembly_components)
-			S.attackby_react(I,user,user.a_intent)
+		if(assembly_components && assembly_components.len)
+			var/obj/item/integrated_circuit/part
+			for(var/i in 1 to assembly_components.len)
+				part = assembly_components[i]
+				if(istype(part, /obj/item/integrated_circuit/input))
+					var/obj/item/integrated_circuit/input/S = part
+					S.attackby_react(I,user,user.a_intent)
+				CHECK_TICK
 		return ..()
 
 
