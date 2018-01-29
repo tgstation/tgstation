@@ -15,8 +15,6 @@
 	var/protection = NONE
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
 
-	var/dupes_allowed = FALSE
-
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")	
@@ -37,7 +35,7 @@
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("name", "default", "resident_file", "protection", "abstract_type", "modified", "dupes_allowed")
+	var/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified))
 	if(var_name == "value")
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
@@ -156,7 +154,6 @@
 /datum/config_entry/keyed_flag_list
 	abstract_type = /datum/config_entry/keyed_flag_list
 	config_entry_value = list()
-	dupes_allowed = TRUE
 
 /datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
@@ -166,7 +163,6 @@
 /datum/config_entry/keyed_number_list
 	abstract_type = /datum/config_entry/keyed_number_list
 	config_entry_value = list()
-	dupes_allowed = TRUE
 	var/splitter = " "
 
 /datum/config_entry/keyed_number_list/vv_edit_var(var_name, var_value)
@@ -180,7 +176,6 @@
 /datum/config_entry/keyed_string_list
 	abstract_type = /datum/config_entry/keyed_string_list
 	config_entry_value = list()
-	dupes_allowed = TRUE
 	var/splitter = " "
 
 /datum/config_entry/keyed_string_list/vv_edit_var(var_name, var_value)
