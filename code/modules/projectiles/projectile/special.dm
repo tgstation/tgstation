@@ -184,6 +184,9 @@
 	var/pressure_decrease_active = FALSE
 	var/pressure_decrease = 0.25
 	var/mine_range = 3 //mines this many additional tiles of rock
+	tracer_type = /obj/effect/projectile/tracer/plasma_cutter
+	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
+	impact_type = /obj/effect/projectile/impact/plasma_cutter
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
