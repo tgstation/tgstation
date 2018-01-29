@@ -22,8 +22,6 @@
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)
-		if(defib.paddles)
-			QDEL_NULL(defib.paddles)
 		QDEL_NULL(defib)
 	. = ..()
 
@@ -87,8 +85,9 @@
 		defib = I
 		update_icon()
 		return
-	else if(istype(I, /obj/item/card/id) || istype(I, /obj/item/device/pda) || istype(I, /obj/item/device/modular_computer/tablet))
-		if(check_access(I) || GLOB.security_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
+	var/obj/item/card/id = I.GetID()
+	if(id)
+		if(check_access(id) || GLOB.security_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
 				to_chat(user, "<span class='warning'>You can't engage the clamps on a defibrillator that isn't there.</span>")
 				return
@@ -120,7 +119,7 @@
 	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/user)
-	if(!user.Adjacent(src))
+	if(!user.Adjacent(src) || !istype(user))
 		return
 	if(!defib)
 		to_chat(user, "<span class='warning'>It'd be hard to remove a defib unit from a mount that has none.</span>")

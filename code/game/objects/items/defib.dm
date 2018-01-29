@@ -202,6 +202,7 @@
 	if(on)
 		var/M = get(paddles, /mob)
 		remove_paddles(M)
+	QDEL_NULL(paddles)
 	. = ..()
 	update_icon()
 
