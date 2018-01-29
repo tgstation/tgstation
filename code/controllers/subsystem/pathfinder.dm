@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/static/space_type_cache
 	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
+
 /datum/controller/subsystem/pathfinder/Initialize()
 	space_type_cache = typecacheof(/turf/open/space)
 	run = 0
