@@ -576,10 +576,17 @@
 	glass_name = "soy latte"
 	glass_desc = "A nice and refreshing beverage while you're reading."
 
+/datum/reagent/consumable/soy_latte/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_SLEEPIMMUNE)
+	..()
+
+/datum/reagent/consumable/soy_latte/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_SLEEPIMMUNE)
+	..()
+
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.SetSleeping(0, FALSE)
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
@@ -598,10 +605,17 @@
 	glass_name = "cafe latte"
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 
+/datum/reagent/consumable/cafe_latte/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_SLEEPIMMUNE)
+	..()
+
+/datum/reagent/consumable/cafe_latte/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_SLEEPIMMUNE)
+	..()
+
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.SetSleeping(0, FALSE)
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
