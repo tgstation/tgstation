@@ -84,3 +84,33 @@
 	weather_immunities = list("snow")
 	color = rgb(114,228,250)
 	loot = list(/obj/effect/decal/remains/human{color = rgb(114,228,250)})
+
+/mob/living/simple_animal/hostile/skeleton/plasmaminer
+	name = "shambling miner"
+	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma."
+	icon_state = "plasma_miner"
+	icon_living = "plasma_miner"
+	icon_dead = "plasma_miner"
+	maxHealth = 150
+	health = 150
+	harm_intent_damage = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	attacktext = "slashes"
+	attack_sound = 'sound/hallucinations/growl1.ogg'
+	deathmessage = "collapses into a pile of bones, their suit dissovling among the plasma!"
+	loot = list(/obj/effect/decal/remains/plasma)
+
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer
+	desc = "A plasma-soaked miner, their exposed limbs turned into a grossly incandescent bone seemingly made of plasma. They seem to still have their mining tool in their hand, gripping tightly."
+	icon_state = "plasma_miner_tool"
+	icon_living = "plasma_miner_tool"
+	icon_dead = "plasma_miner_tool"
+	maxHealth = 185
+	health = 185
+	harm_intent_damage = 15
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	attacktext = "blasts"
+	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)

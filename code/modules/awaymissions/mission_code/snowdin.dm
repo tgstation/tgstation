@@ -240,48 +240,29 @@
 ///////////	papers
 
 
-/obj/item/paper/crumpled/ruins/snowdin/snowdingatewaynotice
+/obj/item/paper/crumpled/ruins/snowdin/foreshadowing
 	name = "scribbled note"
-	info = {"The gateway has been inactive for months, engineers think it's due to the recent drop in tempature fucking with the
-	circuitry or something. Without a constant supply of resources from Central Command, our stock is getting awfully low. Some of the security members have taken to
-	using the sparse rifle ammo left to hunting some of the wildlife to try and keep our food supply from emptying. God forbid if the heating goes out, I don't want to
-	die as a fucking popsicle down here."}
+	info = {"Somnethings gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
+	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker.."}
 
 /obj/item/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
 	info = {"Holy shit, what a rush! Those Nanotrasen bastards didn't even know what hit 'em! All five of us dropped in right on the captain, didn't even have time to yell! We were in and out with that disk in mere minutes!
 	Crew didn't even know what was happening till the delta alert went down and by then we were already gone. We got a case to drink on the way home to celebrate, fuckin' job well done!"}
 
-/obj/item/paper/crumpled/ruins/snowdin/keys
+/obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside
 	name = "scribbled note"
-	info = {"As a notice for anyone looking to borrow an ATV, some asshat lost the key set for all the vehicles. Nobody has yet to actually come forward about the potential where-abouts, either due to embarrassment or fear of
-	reprecussions. I hope they enjoy walking through that shit snow during the next shipment because I sure as hell ain't."}
+	info = {"If you're reading this: GET OUT! The mining go on here has unearthed something that was once-trapped by the layers of ice on this hell-hole. The overseer and Jouslen have gone missing. The officer is
+	 keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
+	 for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here.."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage
 	name = "SAW Usage"
 	info = "YOU SEEN IVAN, WHEN YOU HOLD SAAW LIKE PEESTOL, YOU STRONGER THAN RECOIL FOR FEAR OF HITTING FACE!"
 
-/obj/item/paper/fluff/awaymissions/snowdin/log
-	name = "Activity Log"
-	info = {"<b><center>ACTIVITY LOG</b></center><br><br><b>June 3rd</b><br>We've moved to the main base in the valley finally, apparently establishing a listening system on a planet
-	that never stops fucking snowing is a great idea. There's a few outposts further south we'll be supplying from the main gateway. The summer months are enough already, I can only imagine how bad it'll be during winter.<br><br><b>August 23rd</b><br>
-	The colder months are finally hitting, some of the machinery seems to be having trouble starting up sometimes. Central sent some portable heaters to help keep the airlocks from
-	freezing shut along with a couple storage crates with supplies. Nothing on the radio so far, what the hell do they even expect to hear down here, anyway?<br><br><b>September 15th</b>
-	<br>Another supply shipment through the gateway, they've sent some heavier sets of clothes for the coming winter months. Central said they might encounter issues with shipments
-	during December to Feburary, so we should try to be frugal with the next shipment.<br><br><b>November 20th</b><br>Final shipment from Central for the next few months. Going outside
-	for more than 10-15 minutes without losing feeling in your fingers is difficult. We've finally gotten a signal on the radio, it's mostly some weird static though. One of the researchers is trying to decypher it.
-	<br><br><b>December 10th</b><br>Signal has gotten much stronger, it almost seems like it's coming from under us according to what the researcher managed to decypher. We're waiting from the go from Central before investigating.<br><br>
-	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
-
-/obj/item/paper/fluff/awaymissions/snowdin/log2
-	name = "Activity Log"
-	info = {"<b><center>ACTIVITY LOG</b></center><br><br><b>June 14th</b><br>Movement to the second post is finally done. We're located on the southernmost area of the valley with a similar objective as the northern post.
-	There are two mid-way stops on the eastern and western sides of the valley so movement in between bases isn't horrible. Not too big of a fan of relying on the northern base for
-	equal supply distribution, though.<br><br><b>August 27h</b><br>First shipment arrived finally, about 4 days after the gateway shipped. Insulation on these buildings is awful, thank god for the spare heaters at least.<br><br>
-	<b>September 20th</b><br>Another shipment arrival, standard shit. Our radios have been picking up a weird signal during the nights recently, we've sent the transcripts over to the northern
-	base to be decyphered. Probably some drunk russians or something equally stupid.<br><br><b>November 24th</b><br>We've lost communications with the northern base after recieving the last
-	shipment of supplies. The snow has really kicked up recently, shits almost like a constant blizzard right now. Maybe it'll drop down soon so we can get a word in.<br><br>
-	<i>The rest of the paper seems to be a mixture of scribbles and smudged ink.</i>"}
+/obj/item/paper/fluff/awaymissions/snowdin/research_feed
+	name = "Research Feed"
+	info = {"<i>A page full of graphs and other detailed infomation on the seismic activity of the surrounding area.</i>"}
 
 //profile of each of the old crewmembers for the outpost
 
@@ -320,17 +301,14 @@
 
 /obj/item/paper/fluff/awaymissions/snowdin/secnotice
 	name = "Security Notice"
-	info = {"You have been assigned a position on a listening outpost. Here you'll be watching over several crewmembers assigned to watching signals of the general area.
-	As not much is expected in terms of issues, we've only assigned one guard per outpost. Crewmembers are expected to keep to their regulated work schedules and may be
-	disciplined properly if found slacking. Food hoarding is heavily discouraged as all outposts will be sharing from the same shipment every 2-3 months. Hoarding of supplies
-	should be punished severely as to prevent future incidients. Mutiny and/or rioting should be reported to Central and dealt with swiftly. You're here to secure and protect
-	Nanotrasen assets, not be a police officer. Do what you must, but make sure it's not messy."}
+	info = {"YOu have been assigned to this Arctic Post with intention of protecting Nanotrasen assets and ensuring vital infomation is kept secure while the stationed crew obeys protocal. The picked
+		staff for this post have been pre-screened with no prior incidients on record, but incase of an issue you have been given a single holding cell and instructions to contact Central to terminate the
+		offending crewmember."}
 
-/obj/item/paper/fluff/awaymissions/snowdin/syndienotice
+/obj/item/paper/fluff/awaymissions/snowdin/mining
 	name = "Assignment Notice"
-	info = {"You've been assigned as an agent to listen in on Nanotrasen activities from passing ships and nearby stations. The outpost you've been assigned to is under lays of solid
-	ice and we've supplied you with a scrambler to help avoid Nanotrasen discovery, as they've recently built a listening post of their own aboveground. Get aquainted with your new
-	crewmates, because you're gonna be here for awhile. Enjoy the free syndicakes."}
+	info = {"This cold-ass planet is the new-age equivilant of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
+	 Nanotrasen pays by the pound, so get minin' boys!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/syndielava
 	name = "scribbled note"
@@ -380,6 +358,21 @@
 	DELAY 10
 	SAY Paid in experience! That's the Nanotrasen Motto!
 	DELAY 30;"}
+
+/obj/item/disk/holodisk/snowdin/welcometodie
+	name = "Conversation #AOP#1"
+	preset_image_type = /mob/living/simple_animal/pet/dog/corgi
+	preset_record_text = {"
+	NAME Friendly AI Unit
+	DELAY 10
+	SAY Hello! Welcome to the Arctic Post *338-3**$$!
+	DELAY 30
+	SAY You have been selected out of $)@! potential candidates for this post!
+	DELAY 30
+	SAY Nanotrasen is pleased to have you working in one of the many top-of-the-line research posts within the $%@!! sector!
+	DELAY 30
+	SAY Further job assignment infomation can be found at your local security post! Have a secure day!
+	DELAY 20;"}
 
 /obj/item/disk/holodisk/snowdin/overrun
 	name = "Conversation #AOP#55"
