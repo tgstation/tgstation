@@ -1,5 +1,6 @@
 
-#define MOVES_HITSCAN -1		//Not actually hitscan but close as we get.
+#define MOVES_HITSCAN -1		//Not actually hitscan but close as we get without actual hitscan.
+#define MUZZLE_EFFECT_PIXEL_INCREMENT 17	//How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
 
 /obj/item/projectile
 	name = "projectile"
@@ -37,6 +38,7 @@
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
 	var/pixel_speed = 33	//pixels per move - DO NOT FUCK WITH THIS UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING OR UNEXPECTED THINGS /WILL/ HAPPEN!
 	var/Angle = 0
+	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
@@ -46,6 +48,15 @@
 
 	var/colliding = FALSE	//pause processing..
 
+	//Hitscan
+	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
+	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
+	var/datum/point/beam_index
+	var/turf/hitscan_last	//last turf touched during hitscanning.
+	var/tracer_type
+	var/muzzle_type
+	var/impact_type
+
 	var/ignore_source_check = FALSE
 
 	var/damage = 10
@@ -53,7 +64,7 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
-	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
+	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
@@ -111,7 +122,7 @@
 
 	if(!nodamage && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
 		var/turf/closed/wall/W = target_loca
-		if(impact_effect_type)
+		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
@@ -119,7 +130,7 @@
 		return 0
 
 	if(!isliving(target))
-		if(impact_effect_type)
+		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 		return 0
 
@@ -136,7 +147,7 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
-		else if(impact_effect_type)
+		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
 		var/organ_hit_text = ""
@@ -173,14 +184,22 @@
 /obj/item/projectile/proc/on_ricochet(atom/A)
 	return
 
+/obj/item/projectile/proc/store_hitscan_collision(datum/point/pcache)
+	beam_segments[beam_index] = pcache
+	beam_index = pcache
+	beam_segments[beam_index] = null
+
 /obj/item/projectile/Collide(atom/A)
 	colliding = TRUE
+	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
 			ignore_source_check = TRUE
 			range = initial(range)
+			if(hitscan)
+				store_hitscan_collision(pcache)
 			return TRUE
 	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
@@ -275,7 +294,9 @@
 	return getline(current, ending)
 
 /obj/item/projectile/proc/before_z_change(turf/oldloc, turf/newloc)
-	return
+	var/datum/point/pcache = trajectory.copy_to()
+	if(hitscan)
+		store_hitscan_collision(pcache)
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
@@ -324,13 +345,17 @@
 			return
 		var/turf/target = locate(CLAMP(starting + xo, 1, world.maxx), CLAMP(starting + yo, 1, world.maxy), starting.z)
 		setAngle(Get_Angle(src, target))
+	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	forceMove(starting)
 	trajectory = new(starting.x, starting.y, starting.z, 0, 0, Angle, pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
+	if(hitscan)
+		process_hitscan()
 	if(!isprocessing)
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1)	//move it now!
@@ -350,11 +375,29 @@
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
 
-/obj/item/projectile/proc/pixel_move(moves, trajectory_multiplier = 1)
+/obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
+	beam_segments = list()	//initialize segment list with the list for the first segment
+	beam_index = pcache
+	beam_segments[beam_index] = null	//record start.
+
+/obj/item/projectile/proc/process_hitscan()
+	var/safety = range * 3
+	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, Angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
+	while(loc && !QDELETED(src))
+		if(paused)
+			stoplag(1)
+			continue
+		if(safety-- <= 0)
+			qdel(src)
+			stack_trace("WARNING: [type] projectile encountered infinite recursion during hitscanning in [__FILE__]/[__LINE__]!")
+			return	//Kill!
+		pixel_move(1, 1, TRUE)
+
+/obj/item/projectile/proc/pixel_move(moves, trajectory_multiplier = 1, hitscanning = FALSE)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
-	if(!nondirectional_sprite)
+	if(!nondirectional_sprite && !hitscanning)
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
@@ -365,14 +408,18 @@
 		trajectory_ignore_forcemove = TRUE
 		forceMove(T)
 		trajectory_ignore_forcemove = FALSE
-		pixel_x = trajectory.return_px()
-		pixel_y = trajectory.return_py()
+		if(!hitscanning)
+			pixel_x = trajectory.return_px()
+			pixel_y = trajectory.return_py()
 	else
 		step_towards(src, T)
-		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier
-		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier
-	animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
-
+		if(!hitscanning)
+			pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier
+			pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier
+	if(!hitscanning)
+		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
+	if(isturf(loc))
+		hitscan_last = loc
 	if(can_hit_target(original, permutated))
 		Collide(original)
 	Range()
@@ -446,8 +493,40 @@
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
+	if(hitscan)
+		if(loc)
+			var/datum/point/pcache = trajectory.copy_to()
+			beam_segments[beam_index] = pcache
+		generate_hitscan_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	return ..()
+
+/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3)
+	if(!length(beam_segments))
+		return
+	if(tracer_type)
+		for(var/datum/point/p in beam_segments)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration)
+	if(muzzle_type && duration > 0)
+		var/datum/point/p = beam_segments[1]
+		var/atom/movable/thing = new muzzle_type
+		p.move_atom_to_src(thing)
+		var/matrix/M = new
+		M.Turn(original_angle)
+		thing.transform = M
+		QDEL_IN(thing, duration)
+	if(impact_type && duration > 0)
+		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
+		var/atom/movable/thing = new impact_type
+		p.move_atom_to_src(thing)
+		var/matrix/M = new
+		M.Turn(Angle)
+		thing.transform = M
+		QDEL_IN(thing, duration)
+	if(cleanup)
+		QDEL_LIST(beam_segments)
+		beam_segments = null
+		QDEL_NULL(beam_index)
 
 /obj/item/projectile/experience_pressure_difference()
 	return
