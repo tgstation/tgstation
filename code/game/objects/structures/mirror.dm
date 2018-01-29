@@ -95,8 +95,8 @@
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence || !S.blacklisted)
-				choosable_races += speciestype
+			if(!S.dangerous_existence && !S.blacklisted)
+				choosable_races += S.id
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
