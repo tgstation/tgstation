@@ -1,0 +1,4 @@
+author: "ACCount"
+delete-after: True
+changes: 
+  - rscadd: "Having station blueprints in your hands now reveals function of wires in station objects."
