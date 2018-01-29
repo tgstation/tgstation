@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscdel: "Removed the ability to create new shuttle areas or expand existing ones with blueprints."
+  - bugfix: "Special areas like rooms which require no power can no longer be expanded. You can still expand into them however."
