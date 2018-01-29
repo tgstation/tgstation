@@ -1,3 +1,5 @@
+#define PREFERENCES_SELECTED_SLOT_JSON "data/preference_slots.json"
+
 
 //Preference toggles
 #define SOUND_ADMINHELP	1
