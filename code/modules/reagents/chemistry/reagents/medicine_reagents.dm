@@ -1361,12 +1361,11 @@
 				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
-			M.remove_trait(TRAIT_SLEEPIMMUNE) //Supposed to remove all sleep immune traits.
-			M.Sleeping(100, 0)
+			M.Sleeping(100, 0, 1)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
-		if(82 to INFINITY)
-			M.Sleeping(100, 0)
+		if(82 to INFINITY)i
+			M.Sleeping(100, 0, 1)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
