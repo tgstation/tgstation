@@ -332,7 +332,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 				dat += "</td>"
-			
+
 			dat = add_hippie_choices(dat)
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -390,7 +390,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
 			if(user.client)
-				if(check_rights_for(user.client, R_ADMIN))
+				if(user.client.holder)
 					dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 

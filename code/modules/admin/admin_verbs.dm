@@ -214,6 +214,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
 	/datum/admins/proc/startnow,
+	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/everyone_random,
@@ -247,10 +248,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank.rights
+		verbs += GLOB.admin_verbs_default
 		if(rights & R_BUILDMODE)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
-			verbs += GLOB.admin_verbs_default
 			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
 			verbs += GLOB.admin_verbs_ban

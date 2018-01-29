@@ -48,6 +48,7 @@
 		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
 		return
 
+
 	log_talk(mob,"[key_name(src)] : [raw_msg]",LOGOOC)
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
@@ -65,7 +66,7 @@
 				else
 					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>")
 			else if(is_mentor()) // hippie start
-				to_chat(C, "<font color='[GLOB.HIPPIE_MENTOR_OOC_COLOUR]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span>") // hippie end
+				to_chat(C, "<font color='[HIPPIE_MENTOR_OOC_COLOUR]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span>") // hippie end
 			else if(!(key in C.prefs.ignoring))
 				to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
 
@@ -231,6 +232,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<div class=\"motd\">[motd]</div>")
+
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -260,6 +262,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
 
+
 /client/proc/ignore_key(client)
 	var/client/C = client
 	if(C.key in prefs.ignoring)
@@ -273,6 +276,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set name = "Ignore"
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
+
 
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
