@@ -13849,8 +13849,11 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aIB" = (
-/obj/structure/bodycontainer/crematorium,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/bodycontainer/crematorium{
+	icon_state = "crema1";
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aIC" = (
@@ -23075,6 +23078,10 @@
 /area/medical/morgue)
 "bho" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "bhp" = (
@@ -93546,9 +93553,9 @@ bdp
 bdc
 bfL
 beY
-biz
-biz
-biz
+bhm
+bhm
+bhm
 bkR
 bfL
 boo
@@ -97172,7 +97179,7 @@ bIP
 bPA
 bJN
 bRU
-bSZ
+bEm
 bEm
 bJN
 bRU
@@ -97180,7 +97187,7 @@ bXe
 bEm
 bJN
 bRU
-bSZ
+bEm
 bEm
 bDb
 cgi
@@ -99742,7 +99749,7 @@ bOx
 bPJ
 bJN
 bEm
-bSZ
+bEm
 bRU
 bJN
 bEm
@@ -99750,7 +99757,7 @@ bXe
 bRU
 bJN
 bEm
-bSZ
+bEm
 bRU
 bDb
 aaf

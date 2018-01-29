@@ -65518,6 +65518,10 @@
 /area/medical/medbay/aft)
 "cFU" = (
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFV" = (
@@ -68608,8 +68612,11 @@
 	},
 /area/medical/virology)
 "cLT" = (
-/obj/structure/bodycontainer/crematorium,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/bodycontainer/crematorium{
+	icon_state = "crema1";
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cLU" = (
@@ -75231,6 +75238,10 @@
 	dir = 2;
 	network = list("SS13","Medbay")
 	},
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "dbs" = (
@@ -80644,6 +80655,20 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"QuX" = (
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuY" = (
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -90552,7 +90577,7 @@ aZZ
 bOd
 EDi
 aaa
-cWp
+aaa
 aaa
 aaa
 aaa
@@ -92083,7 +92108,7 @@ bxw
 aVs
 aaa
 aaa
-cVv
+aaa
 aaa
 aaa
 aVs
@@ -93099,7 +93124,7 @@ djC
 aaa
 aaa
 aaa
-beC
+aaa
 aaa
 aaa
 aaa
@@ -94373,7 +94398,7 @@ auG
 dnd
 dhK
 dnk
-aRG
+dnH
 aSP
 dne
 dhM
@@ -95645,7 +95670,7 @@ aaa
 aaa
 aaa
 aaa
-azh
+aaa
 aaa
 aaa
 aaa
@@ -96170,7 +96195,7 @@ aaa
 aaa
 aaa
 aaa
-cUV
+aaa
 aaa
 aaa
 aaa
@@ -103869,7 +103894,7 @@ aaa
 aaa
 aaa
 aaa
-ayt
+aaa
 aaa
 aaa
 azC
@@ -105743,11 +105768,11 @@ cyf
 cyZ
 cAc
 ctA
-cCf
-cCf
+cCj
+cCj
 cDY
-cCf
-cCf
+cCj
+cCj
 cCe
 cHJ
 bTs
@@ -106001,9 +106026,9 @@ cyZ
 cAd
 ctA
 dbr
-cCj
+QuX
 dDC
-cCj
+QuY
 cFU
 cCe
 ctK
@@ -107824,7 +107849,7 @@ cQK
 cQY
 cYJ
 aaa
-cYO
+aaa
 aaa
 aaa
 aaa
@@ -113224,15 +113249,15 @@ cRi
 cRe
 cRi
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cRi
 cTA
@@ -113466,8 +113491,8 @@ cIg
 dDF
 dvY
 cNj
-dwN
-dwN
+ciL
+ciL
 cPg
 dvY
 aaa
@@ -113723,8 +113748,8 @@ cIg
 dxQ
 dvY
 cNk
-dwN
-dwN
+ciL
+ciL
 cPh
 dvY
 aaa
@@ -114526,7 +114551,7 @@ cTt
 daA
 cSn
 cSn
-cSo
+cSn
 daL
 cRi
 daQ
@@ -115794,15 +115819,15 @@ dcC
 dcM
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cRi
 ddh
@@ -118320,7 +118345,7 @@ alq
 alq
 dvY
 ckx
-dwN
+ciL
 dwQ
 cot
 cnb
@@ -118577,10 +118602,10 @@ apc
 chE
 dvY
 cky
-dwN
+ciL
 dwX
-dwN
-dwN
+ciL
+ciL
 cou
 csb
 dvY
@@ -118834,10 +118859,10 @@ avr
 chF
 dvY
 ckz
-dwN
+ciL
 dwY
-dwN
-dwN
+ciL
+ciL
 cgs
 csc
 dvY
@@ -119095,7 +119120,7 @@ dwQ
 cnb
 cou
 cpK
-dwN
+ciL
 csc
 dvY
 Qtj
@@ -120324,7 +120349,7 @@ aFs
 aGT
 axY
 aJm
-aKy
+aJu
 aMb
 EDE
 axY
