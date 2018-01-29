@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "511 Clients can see atmos gases"
+  - rscdel: "This reverts the fix that prevents atmos gas overlays from stealing clicks."
