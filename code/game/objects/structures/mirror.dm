@@ -95,7 +95,7 @@
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence && !S.blacklisted)
+			if(!S.dangerous_existence || !S.blacklisted)
 				choosable_races += speciestype
 	..()
 
