@@ -25,7 +25,6 @@
 	. = ..()
 	soundloop = new(list(src))
 	soundloop2 = new(list(src))
-	START_PROCESSING(SSprocessing, src)
 
 /obj/item/device/reverse_bear_trap/Destroy()
 	QDEL_NULL(soundloop)
@@ -119,6 +118,7 @@
 	flags_1 &= ~NODROP_1
 	soundloop.stop()
 	soundloop2.stop()
+	STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/device/reverse_bear_trap/proc/arm() //hulen
 	ticking = TRUE
@@ -128,3 +128,4 @@
 	soundloop.start()
 	soundloop2.mid_length = initial(soundloop2.mid_length)
 	soundloop2.start()
+	START_PROCESSING(SSprocessing, src)
