@@ -832,16 +832,6 @@
 	wet = 5
 	},
 /area/ruin/powered/clownplanet)
-"dR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
 "eX" = (
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -1153,7 +1143,7 @@ bx
 bA
 bB
 bH
-dR
+bH
 bB
 bH
 bB
@@ -1970,40 +1960,6 @@ gX
 XO
 XO
 XO
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(32,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa

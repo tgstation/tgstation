@@ -194,7 +194,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimestabilizer/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/stabilizer(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/stabilizer(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimefoam
@@ -326,14 +326,14 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepsteroid/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/steroid(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/steroid(get_turf(holder.my_atom))
 	..()
 
-/datum/chemical_reaction/slime/slimejam
-	name = "Slime Jam"
-	id = "m_jam"
-	results = list("slimejelly" = 10)
-	required_reagents = list("sugar" = 1)
+/datum/chemical_reaction/slime/slimeregen
+	name = "Slime Regen"
+	id = "m_regen"
+	results = list("regen_jelly" = 5)
+	required_reagents = list("blood" = 1)
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
 
@@ -358,7 +358,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimemutator/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/mutator(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/mutator(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimebloodlust
@@ -394,7 +394,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/docility/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/docility(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/docility(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/gender
@@ -465,7 +465,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder)
-	new /obj/item/slimepotion/sentience(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/sentience(get_turf(holder.my_atom))
 	..()
 
 //Adamantine

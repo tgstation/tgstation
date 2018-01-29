@@ -195,7 +195,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dC" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dD" = (
@@ -1679,7 +1678,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -1982,7 +1980,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gS" = (
@@ -2600,6 +2597,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2609,6 +2607,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2714,6 +2713,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2721,6 +2721,7 @@
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3034,7 +3035,6 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -3101,6 +3101,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3165,6 +3166,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4335,6 +4337,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4342,6 +4345,7 @@
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4508,7 +4512,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lO" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lP" = (
@@ -4963,16 +4966,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
-"mO" = (
-/obj/structure/filingcabinet/security,
-/obj/machinery/button/door{
-	id = "lavalandsyndi_telecomms";
-	name = "Telecomms Blast Door Control";
-	pixel_y = 26;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mP" = (
 /obj/structure/filingcabinet/security,
 /turf/open/floor/plasteel/dark,
@@ -5171,7 +5164,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5464,13 +5456,6 @@
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nJ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	freerange = 1;
-	listening = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5798,11 +5783,8 @@
 "oj" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
 	freerange = 1;
-	listening = 0;
-	name = "Pirate Radio Broadcast Channel"
+	name = "Syndicate Radio Intercom"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -6031,45 +6013,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oJ" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/engine,
-/area/ruin/unpowered/syndicate_lava_base/testlab)
-"oK" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4;
-	piping_layer = 3;
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/main)
-"oL" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"oM" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/ruin/unpowered/syndicate_lava_base/medbay)
-"oN" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/red/side,
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
-"oO" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/unpowered/syndicate_lava_base/bar)
 "oP" = (
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -6373,7 +6316,7 @@ eh
 eh
 eh
 eh
-gj
+eh
 eh
 ab
 ab
@@ -6391,7 +6334,7 @@ ab
 ab
 ab
 mn
-mo
+mn
 mN
 nj
 mn
@@ -6627,8 +6570,8 @@ dG
 dG
 lS
 mn
-mo
 mn
+mo
 nL
 mn
 mn
@@ -6764,7 +6707,7 @@ je
 jk
 jx
 jx
-jP
+jy
 jy
 jy
 ms
@@ -6772,7 +6715,7 @@ mT
 no
 nN
 ol
-ow
+mT
 ab
 ab
 ab
@@ -6793,7 +6736,7 @@ ac
 ac
 ae
 ae
-aL
+ae
 ae
 fC
 gw
@@ -6835,7 +6778,7 @@ ab
 ae
 ae
 ae
-aL
+ae
 ae
 ae
 ae
@@ -6845,7 +6788,7 @@ ae
 fD
 ad
 eh
-gj
+eh
 eh
 hW
 dG
@@ -6976,7 +6919,7 @@ ae
 aq
 aq
 aq
-oJ
+aq
 aq
 aq
 ae
@@ -6991,13 +6934,13 @@ hK
 ha
 ha
 ha
-iN
 ha
 ha
-jy
+ha
+jP
 jM
 jN
-oL
+jZ
 kJ
 lh
 lz
@@ -7007,7 +6950,7 @@ jy
 jy
 nS
 on
-ow
+mT
 ab
 ab
 ab
@@ -7034,7 +6977,7 @@ ae
 gB
 hb
 ha
-ha
+iN
 ha
 ii
 iw
@@ -7098,7 +7041,7 @@ lB
 lY
 lA
 mW
-jy
+jP
 nT
 op
 ox
@@ -7147,7 +7090,7 @@ mx
 jy
 jy
 nU
-oN
+oo
 ox
 ab
 ab
@@ -7164,9 +7107,9 @@ ab
 ae
 ae
 ae
+ae
+ae
 aL
-ae
-ae
 ae
 ae
 ae
@@ -7183,7 +7126,7 @@ iR
 hz
 jn
 jA
-jP
+jy
 jy
 jy
 jy
@@ -7289,7 +7232,7 @@ jy
 nu
 nX
 om
-ow
+mT
 ab
 ab
 ab
@@ -7313,10 +7256,10 @@ et
 eT
 fo
 fO
-oK
+gG
 hg
 hz
-hO
+hz
 hz
 hz
 iB
@@ -7330,7 +7273,7 @@ jy
 jy
 jy
 jy
-jP
+jy
 jy
 mX
 nv
@@ -7446,13 +7389,13 @@ ab
 ab
 ab
 as
-cO
+as
 as
 dI
 dZ
 ew
 as
-cO
+as
 as
 gJ
 hh
@@ -7465,7 +7408,7 @@ iX
 hz
 jq
 jA
-hO
+hz
 kg
 kt
 kQ
@@ -7494,7 +7437,7 @@ ab
 ab
 ab
 ac
-cO
+as
 as
 as
 as
@@ -7510,7 +7453,7 @@ hz
 iF
 iY
 hz
-hz
+hO
 hz
 hz
 kh
@@ -7524,7 +7467,7 @@ na
 nz
 ob
 os
-oy
+kQ
 ac
 ab
 ab
@@ -7554,7 +7497,7 @@ hz
 hz
 hz
 hz
-hO
+hz
 hz
 hz
 jr
@@ -7565,7 +7508,7 @@ ku
 kR
 ln
 lI
-oM
+lI
 mC
 lI
 nA
@@ -7641,7 +7584,7 @@ ec
 ez
 eY
 ft
-dy
+dP
 gN
 hj
 hj
@@ -7703,13 +7646,13 @@ jF
 jT
 ju
 ju
+ju
+ju
+ju
 kU
 ju
 ju
 ju
-ju
-ju
-kU
 ju
 ju
 ju
@@ -7731,7 +7674,7 @@ ab
 ab
 ac
 dy
-dP
+dy
 eA
 fa
 dy
@@ -7888,7 +7831,7 @@ ha
 ha
 ju
 jJ
-jX
+kl
 kl
 kA
 kY
@@ -7969,7 +7912,7 @@ ab
 dy
 eF
 eF
-dP
+dy
 gf
 dy
 eF
@@ -8033,7 +7976,7 @@ ab
 ju
 kD
 lb
-kU
+ju
 kD
 lb
 ju

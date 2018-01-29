@@ -62,9 +62,13 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
+#define LOW_LANDMARK_LAYER 9
+#define MID_LANDMARK_LAYER 9.1
+#define HIGH_LANDMARK_LAYER 9.2
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12

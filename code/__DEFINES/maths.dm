@@ -86,7 +86,7 @@
 // Performs a linear interpolation between a and b.
 // Note that amount=0 returns a, amount=1 returns b, and
 // amount=0.5 returns the mean of a and b.
-#define LERP(a, b, amount) (amount ? ((a) + ((b) - (a)) * (amount)) : ((a) + ((b) - (a)) * 0.5)
+#define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
 
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))

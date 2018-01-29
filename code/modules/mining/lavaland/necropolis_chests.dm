@@ -588,7 +588,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -910,7 +910,18 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
+	
+	var/list/da_list = list()
+	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
+		var/mob/living/L = I
+		da_list[L.real_name] = L
+		
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+	
+	choice = da_list[choice]
+	
+	if(!choice)
+		return
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")

@@ -132,11 +132,11 @@
 		user.start_pulling(src, supress_message)
 		return
 
-	if(!(status_flags & CANPUSH))
+	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-	if(user.has_disability(DISABILITY_PACIFISM))
+	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 
@@ -193,7 +193,7 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(has_disability(DISABILITY_PACIFISM))
+	if(has_trait(TRAIT_PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
 
@@ -210,7 +210,7 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-		if(M.has_disability(DISABILITY_PACIFISM))
+		if(M.has_trait(TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -229,7 +229,7 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-		if(M.has_disability(DISABILITY_PACIFISM))
+		if(M.has_trait(TRAIT_PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -255,7 +255,7 @@
 			return FALSE
 
 		else
-			if(L.has_disability(DISABILITY_PACIFISM))
+			if(L.has_trait(TRAIT_PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 
@@ -280,7 +280,7 @@
 			grabbedby(M)
 			return FALSE
 		if("harm")
-			if(M.has_disability(DISABILITY_PACIFISM))
+			if(M.has_trait(TRAIT_PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
@@ -302,6 +302,8 @@
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+		return FALSE
+	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -370,7 +372,7 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(has_disability(DISABILITY_BLIND))))
+	if(get_eye_protection() < intensity && (override_blindness_check || !(has_trait(TRAIT_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return TRUE
