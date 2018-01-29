@@ -91,38 +91,37 @@ field_generator power level display
 		else
 			state = FG_UNSECURED
 
-/obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/field/generator/attackby(obj/item/I, mob/user, params)
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return
-	else if(istype(W, /obj/item/wrench))
-		default_unfasten_wrench(user, W, 0)
+	else if(istype(I, /obj/item/wrench))
+		default_unfasten_wrench(user, I, 0)
 
-	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
+	else if(istype(I, /obj/item/weldingtool))
 		switch(state)
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='warning'>[src] needs to be wrenched to the floor!</span>")
 
 			if(FG_SECURED)
-				if (WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user] starts to weld [src] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
-						state = FG_WELDED
-						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
+				if(!I.tool_start_check(user, amount=0))
+					return
+				user.visible_message("[user] starts to weld [src] to the floor.", \
+					"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+				if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
+					state = FG_WELDED
+					to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 
 			if(FG_WELDED)
-				if (WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user] starts to cut [src] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
-						state = FG_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+				if(!I.tool_start_check(user, amount=0))
+					return
+				user.visible_message("[user] starts to cut [src] free from the floor.", \
+					"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+				if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
+					state = FG_SECURED
+					to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 
 	else
 		return ..()

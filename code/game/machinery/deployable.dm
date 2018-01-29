@@ -27,13 +27,13 @@
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
-		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(I.use_tool(src, user, 40, volume=40))
+				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 

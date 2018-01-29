@@ -109,12 +109,9 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
+	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/gun/energy/plasmacutter))
-		dismantle(user, TRUE)
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
 		var/obj/item/pickaxe/drill/jackhammer/D = W
 		D.playDigSound()

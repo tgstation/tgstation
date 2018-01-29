@@ -61,19 +61,17 @@
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = I
-		if(broken)
-			user.changeNext_move(CLICK_CD_MELEE)
-			if(WT.remove_fuel(0, user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, 'sound/items/welder.ogg', 100, 1)
-				if(do_after(user, 10*I.toolspeed, target = src))
-					if(!user || !WT || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					broken = 0
-					icon_state = initial(icon_state)
-					desc = initial(desc)
+		if(!broken)
+			return
+
+		if(!I.tool_start_check(user, amount=0))
+			return
+		to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+		if(I.use_tool(src, user, 20, volume=50))
+			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			broken = 0
+			icon_state = initial(icon_state)
+			desc = initial(desc)
 	else
 		return ..()
 

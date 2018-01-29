@@ -23,18 +23,13 @@
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = I
-		if(!WT.remove_fuel(0, user))
+		if(!I.tool_start_check(user, amount=0))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-		playsound(src.loc, WT.usesound, 40, 1)
-		if(do_after(user, 40*WT.toolspeed, 1, target = src))
-			if(!WT.isOn())
-				return
-			playsound(src.loc, WT.usesound, 50, 1)
+		if(I.use_tool(src, user, 50, volume=50))
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-							"<span class='italics'>You hear welding.</span>")
+				"<span class='notice'>You cut \the [src] apart with \the [I].</span>",
+				"<span class='italics'>You hear welding.</span>")
 			new /obj/item/stack/sheet/metal(src.loc, 4)
 			qdel(src)
 		return

@@ -54,8 +54,7 @@
 	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, W.usesound, 100, 1)
-			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
+			if(W.use_tool(src, user, 30, volume=50) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
@@ -74,8 +73,7 @@
 	else if (istype(W, /obj/item/wrench))
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
 				deconstruct(TRUE)
 		else

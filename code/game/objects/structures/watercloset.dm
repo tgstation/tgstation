@@ -75,7 +75,7 @@
 	if(istype(I, /obj/item/crowbar))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
@@ -162,7 +162,7 @@
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 20*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 20))
 			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = !exposed
 	else if(exposed)
@@ -244,7 +244,7 @@
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
-		if(do_after(user, 50*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 40))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -610,7 +610,7 @@
 		if(anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 50*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40))
 				if(!anchored)
 					return
 				anchored = FALSE
@@ -618,7 +618,7 @@
 		else
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 50*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40))
 				if(anchored)
 					return
 				anchored = TRUE
@@ -627,7 +627,7 @@
 		if(!anchored)
 			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
-			if(do_after(user, 50*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40))
 				if(anchored)
 					return
 				to_chat(user, "<span class='notice'>You cut apart [src].</span>")

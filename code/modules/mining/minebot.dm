@@ -64,18 +64,21 @@
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.welding && !stat)
-			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
-				return
-			if(maxHealth == health)
-				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
-			else
-				if(W.remove_fuel(0, user))
-					adjustBruteLoss(-10)
-					to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+		if(stat)
 			return
+		if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
+			to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+			return
+
+		if(maxHealth == health)
+			to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
+			return
+
+		if(I.use_tool(src, user, 0, volume=40))
+			adjustBruteLoss(-10)
+			to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+		return
+
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()

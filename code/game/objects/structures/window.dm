@@ -178,17 +178,19 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
+
 	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
-		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = max_integrity
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-					update_nearby_icons()
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			playsound(src, I.usesound, 40, 1)
+			if(I.use_tool(src, user, 40))
+				obj_integrity = max_integrity
+				playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				update_nearby_icons()
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
@@ -199,18 +201,18 @@
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
-					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
 						to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
 				else if(state == WINDOW_OUT_OF_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
-					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 						anchored = !anchored
 						update_nearby_icons()
 						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
 			else //if we're not reinforced, we don't need to check or update state
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
-				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
 					air_update_turf(TRUE)
 					update_nearby_icons()
@@ -221,7 +223,7 @@
 		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			playsound(src, I.usesound, 75, 1)
-			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
@@ -229,7 +231,7 @@
 		else if(istype(I, /obj/item/wrench) && !anchored)
 			playsound(src, I.usesound, 75, 1)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
-			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
 				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)

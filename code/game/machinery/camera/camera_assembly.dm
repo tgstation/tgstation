@@ -128,15 +128,14 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/WT, mob/living/user)
-	if(!WT.remove_fuel(0, user))
+/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
+	if(!W.tool_start_check(user, amount=0))
 		return 0
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
-	if(do_after(user, 20*WT.toolspeed, target = src))
-		if(WT.isOn())
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-			return 1
+	playsound(src.loc, W.usesound, 50, 1)
+	if(W.use_tool(src, user, 20))
+		playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+		return 1
 	return 0
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)

@@ -221,16 +221,15 @@
 		else
 			state = EM_UNSECURED
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+/obj/machinery/power/emitter/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench))
 		if(active)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
-		default_unfasten_wrench(user, W, 0)
+		default_unfasten_wrench(user, I, 0)
 		return
 
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
+	if(istype(I, /obj/item/weldingtool))
 		if(active)
 			to_chat(user, "Turn \the [src] off first.")
 			return
@@ -238,28 +237,28 @@
 			if(EM_UNSECURED)
 				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_WELDED
-						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-						connect_to_network()
+				if(!I.tool_start_check(user, amount=0))
+					return
+				user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+					"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+				if(I.use_tool(src, user, 20, volume=50))
+					state = EM_WELDED
+					to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+					connect_to_network()
 			if(EM_WELDED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-						disconnect_from_network()
+				if(!I.tool_start_check(user, amount=0))
+					return
+				user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+				if(I.use_tool(src, user, 20, volume=50))
+					state = EM_SECURED
+					to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+					disconnect_from_network()
 		return
 
-	if(W.GetID())
+	if(I.GetID())
 		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
@@ -273,20 +272,20 @@
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
-	if(is_wire_tool(W) && panel_open)
+	if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
+	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", I))
 		return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
-	if(default_pry_open(W))
+	if(default_pry_open(I))
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(I))
 		return
 
 	return ..()
