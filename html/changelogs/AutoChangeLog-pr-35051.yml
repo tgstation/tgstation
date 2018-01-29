@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Turning to face a direction with control no longer moves you in the faced direction after releasing control."
