@@ -51,18 +51,15 @@
 /obj/structure/kitchenspike/attack_paw(mob/user)
 	return src.attack_hand(usr)
 
+/obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
+	if(has_buckled_mobs())
+		to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
+		return TRUE
 
-/obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar))
-		if(!has_buckled_mobs())
-			playsound(loc, I.usesound, 100, 1)
-			if(do_after(user, 20*I.toolspeed, target = src))
-				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
-				deconstruct(TRUE)
-		else
-			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
-	else
-		return ..()
+	if(I.use_tool(src, user, 20, volume=100))
+		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
+		deconstruct(TRUE)
+	return TRUE
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())

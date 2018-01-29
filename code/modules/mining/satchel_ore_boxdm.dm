@@ -9,22 +9,24 @@
 	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/stack/ore))
-		user.transferItemToLoc(W, src)
-	else if (istype(W, /obj/item/storage))
-		var/obj/item/storage/S = W
+/obj/structure/ore_box/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ore))
+		user.transferItemToLoc(I, src)
+	else if(istype(I, /obj/item/storage))
+		var/obj/item/storage/S = I
 		for(var/obj/item/stack/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the ore in [S] into \the [src].</span>")
-	else if(istype(W, /obj/item/crowbar))
-		playsound(src, W.usesound, 50, 1)
-		var/obj/item/crowbar/C = W
-		if(do_after(user, 50*C.toolspeed, target = src))
-			user.visible_message("[user] pries \the [src] apart.", "<span class='notice'>You pry apart \the [src].</span>", "<span class='italics'>You hear splitting wood.</span>")
-			deconstruct(TRUE, user)
 	else
 		return ..()
+
+/obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 50, volume=50))
+		user.visible_message("[user] pries \the [src] apart.",
+			"<span class='notice'>You pry apart \the [src].</span>",
+			"<span class='italics'>You hear splitting wood.</span>")
+		deconstruct(TRUE, user)
+	return TRUE
 
 /obj/structure/ore_box/examine(mob/living/user)
 	if(Adjacent(user) && istype(user))

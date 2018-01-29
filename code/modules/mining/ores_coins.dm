@@ -39,15 +39,16 @@
 	. = ..()
 	add_overlay(stack_overlays)
 
-/obj/item/stack/ore/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.remove_fuel(15) && refined_type)
-			new refined_type(get_turf(src.loc))
-			qdel(src)
-		else if(W.isOn())
-			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
-	..()
+/obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
+	if(!refined_type)
+		return TRUE
+
+	if(I.use_tool(src, user, 0, volume=50, amount=15))
+		use(1)
+		new refined_type(drop_location())
+		qdel(src)
+
+	return TRUE
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
@@ -423,20 +424,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		else
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
-
-	else if(istype(W, /obj/item/wirecutters))
-		if(!string_attached)
-			..()
-			return
-
-		var/obj/item/stack/cable_coil/CC = new/obj/item/stack/cable_coil(user.loc)
-		CC.amount = 1
-		CC.update_icon()
-		overlays = list()
-		string_attached = null
-		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else
 		..()
+
+/obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
+	if(!string_attached)
+		return TRUE
+
+	new /obj/item/stack/cable_coil(drop_location(), 1)
+	overlays = list()
+	string_attached = null
+	to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
+	return TRUE
 
 /obj/item/coin/attack_self(mob/user)
 	if(cooldown < world.time)

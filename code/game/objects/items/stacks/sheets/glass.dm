@@ -244,20 +244,21 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/lightreplacer))
 		I.attackby(src, user)
-	else if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = I
-		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for(var/obj/item/stack/sheet/glass/G in user.loc)
-				if(G == NG)
-					continue
-				if(G.amount >= G.max_amount)
-					continue
-				G.attackby(NG, user)
-			to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
-			qdel(src)
 	else
 		return ..()
+
+/obj/item/shard/welder_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 0, volume=50))
+		var/obj/item/stack/sheet/glass/NG = new (user.loc)
+		for(var/obj/item/stack/sheet/glass/G in user.loc)
+			if(G == NG)
+				continue
+			if(G.amount >= G.max_amount)
+				continue
+			G.attackby(NG, user)
+		to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
+		qdel(src)
+	return TRUE
 
 /obj/item/shard/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))

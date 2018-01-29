@@ -196,19 +196,14 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
-/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+/turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
 	if(baseturfs == type)
-		return
-	if(istype(I, /obj/item/crowbar))
-		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
-		playsound(src, I.usesound, 20, 1)
-		if(!do_after(user, 70*I.toolspeed, target = src))
-			return 0
+		return TRUE
+	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+	if(I.use_tool(src, user, 70, volume=80))
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
-		playsound(src, I.usesound, 80, 1)
 		make_plating()
-		return 1
-	return ..()
+	return TRUE
 
 /turf/open/floor/clockwork/make_plating()
 	new /obj/item/stack/tile/brass(src)
