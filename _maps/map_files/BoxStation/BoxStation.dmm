@@ -36,10 +36,10 @@
     <meta content="https://avatars3.githubusercontent.com/u/1363778?s=400&amp;v=4" property="og:image" /><meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="tgstation/tgstation" property="og:title" /><meta content="https://github.com/tgstation/tgstation" property="og:url" /><meta content="tgstation - the /tg/station branch of SS13" property="og:description" />
 
   <link rel="assets" href="https://assets-cdn.github.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjQxMjIzMzQ4OjFlYjExZTMwYTE5M2U2MzhiMTRjYjY0ZTUzNGI5MThmNGQ4Y2FjN2NkZmRlM2U3ZjQyYzA3OGMwNjA5YmJkOWM=--ca34ec2cda21e0fa4efd533ce9e4f7ad45771197">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjQxMjIzMzQ4OmNhMjcwYjcxOGY4NmY5ODMxMDVhODgwNzgxM2I0MTY0ODgyZTYyM2Q0NWQ3NmRkMTEyYzYxMjAyMzQwNmZhZjg=--61e544e80f5b643a507f7734fc169ed1f6d8ddc2">
   <meta name="pjax-timeout" content="1000">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
-  <meta name="request-id" content="D1B6:11C1:603FBBF:A6DB412:5A6F745D" data-pjax-transient>
+  <meta name="request-id" content="D1E5:11C2:5871E07:BDB60CA:5A6F74DE" data-pjax-transient>
   
 
   <meta name="selected-link" value="repo_source" data-pjax-transient>
@@ -49,7 +49,7 @@
   <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
     <meta name="google-analytics" content="UA-3769691-2">
 
-<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="D1B6:11C1:603FBBF:A6DB412:5A6F745D" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" /><meta content="6071161" name="octolytics-actor-id" /><meta content="ChuckTheSheep" name="octolytics-actor-login" /><meta content="db049b43ea38fc18b4b9a7861c4db1719338955bc01075584f59f6757f0ddbbe" name="octolytics-actor-hash" />
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="D1E5:11C2:5871E07:BDB60CA:5A6F74DE" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" /><meta content="6071161" name="octolytics-actor-id" /><meta content="ChuckTheSheep" name="octolytics-actor-login" /><meta content="db049b43ea38fc18b4b9a7861c4db1719338955bc01075584f59f6757f0ddbbe" name="octolytics-actor-hash" />
 <meta content="https://github.com/hydro_browser_events" name="hydro-events-url" />
 <meta content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" name="analytics-location" />
 
@@ -65,7 +65,7 @@
   <meta name="user-login" content="ChuckTheSheep">
 
       <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="OGRmZDA0NmI3NDg0NjEzOTAwMmE1NGYzMGZlOTExNGNlYjlhMmIyNmE5ZDU1YzY3ZjE3M2UzYTE4ZGVhZDY3M3x7InJlbW90ZV9hZGRyZXNzIjoiNzIuNzkuMTIxLjE0OCIsInJlcXVlc3RfaWQiOiJEMUI2OjExQzE6NjAzRkJCRjpBNkRCNDEyOjVBNkY3NDVEIiwidGltZXN0YW1wIjoxNTE3MjUzNzI3LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+    <meta name="js-proxy-site-detection-payload" content="YTJiZTk0MTQyMTE0ZWQ1ZTM5MTI0NDJiYjU2NDNjNjdkYWRmMzJhYmQzZWMwNDQ4MTBlOWE1ZDgwMjk5YTgzOHx7InJlbW90ZV9hZGRyZXNzIjoiNzIuNzkuMTIxLjE0OCIsInJlcXVlc3RfaWQiOiJEMUU1OjExQzI6NTg3MUUwNzpCREI2MENBOjVBNkY3NERFIiwidGltZXN0YW1wIjoxNTE3MjUzODU4LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="UNIVERSE_BANNER,MULTIPLE_ATTRIBUTION,FREE_TRIALS,CONTRIBUTOR_FLAGGED_CONTENT">
 
@@ -255,7 +255,7 @@
           Settings
         </a></li>
 
-        <li><!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="SKnn0q6SUOOH9jW3vF1Zy7g18pXsOAnnoOxR/k0NxHVh6BUEla5czelPojaYKdIW+L639rpAhC62RLEz5QHSpw==" /></div>
+        <li><!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="paVyj7pHVBxrwZZq1JUlv/PWic979GQt053t2mc0vP6M5IBZgXtYMgV4Aevw4a5is13MrC2M6eTFNQ0XzziqLA==" /></div>
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -266,7 +266,7 @@
 </ul>
 
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="FBVgMYS4LC5RWq/mNhofgoRebod6x8ImcrxWLv9znM49VJLnv4QgAD/jOGcSbpRfxNUr5Cy/T+9kFLbjV3+KHA==" /></div>
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="VQMJYHCSazDUhRsH/XS6sN95782BLLXelY/pcPieU2h8Qvu2S65nHro8jIbZADFtn/KqrtdUOBeDJwm9UJJFug==" /></div>
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -303,7 +303,7 @@
 
       <ul class="pagehead-actions">
   <li>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ZEbb5Eg6rHfZm8dTBkdoSfucRk6sWuIZLu0wUk0Qx1l3ZINZaPlK4fgjyimt82AZTO1FRuSYJ1AQ4p1D/HZWzw==" /></div>      <input class="form-control" id="repository_id" name="repository_id" type="hidden" value="3234987" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="G/RELzLu/MhlDO+X3HukyIup8UXjENgtFm8Fd1YUsSkI1hySEi0aXkS04u13z6yYPNjyTavSHWQoYKhm53Igvw==" /></div>      <input class="form-control" id="repository_id" name="repository_id" type="hidden" value="3234987" />
 
         <div class="select-menu js-menu-container js-select-menu">
           <a href="/tgstation/tgstation/subscription"
@@ -383,7 +383,7 @@
   <li>
     
   <div class="js-toggler-container js-social-container starring-container on">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/unstar" class="starred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="s1nr2wY/xyQh0bekBu2ziJdvC0wIXtQm7TBOnApV6HcNC9BZu0wzhZKDq+kUeVKBRcoouroJH/xFanLbg7FAsQ==" /></div>
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/unstar" class="starred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="HwRzn1tXeGCURMXTQMmSqORhG6dLYy1jEbT22jR1YbKhVkgd5iSMwScW2Z5SXXOhNsQ4Ufk05rm57sqdvZHJdA==" /></div>
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -398,7 +398,7 @@
           459
         </a>
 </form>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/star" class="unstarred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="/or2HysLWWllrkS28asKDc1lmdJwRQ/+Od8v80j2UT+aUbm7Rpg5ge9h2jRQ9h7D0QVqp8FZjC8+kfb3+YxYLg==" /></div>
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/star" class="unstarred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="AoH/ZzfZ40CGqK5QfawltfRZT23xaqUhOfZLgHbj/AFmWrDDWkqDqAxnMNLc8TF76Dm8GEB2JvA+uJKEx5n1EA==" /></div>
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -417,7 +417,7 @@
   </li>
 
   <li>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/fork" class="btn-with-count" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="jVtDg3Sbo7jaQbc+rrblNxvSFRWnZiVb/VkxSSIy6GqN6ALxzbELXgth3MfeZBXhhIEFg/upkhJ8s5aW2kP+cA==" /></div>
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/fork" class="btn-with-count" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="Pn+CDmvyU5uxU3/1lkc41MBDMjHjPOv2v8TSG4d3/9Y+zMN80tj7fWBzFAzmlcgCXxAip7/zXL8+LnXEfwbpzA==" /></div>
             <button
                 type="submit"
                 class="btn btn-sm btn-with-count"
@@ -641,7 +641,7 @@
             <svg aria-hidden="true" class="octicon octicon-device-desktop" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"/></svg>
         </a>
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/delete/master/_maps/map_files/BoxStation/BoxStation.dmm" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="XqLG7ohHUuVbe/Gf0z+Uwq0aWTFt780UqzTI/GXrj6OHRqMYBe7zPduI54KCYriHkJx32IcPWhnaTXx1GnTjvA==" /></div>
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/tgstation/tgstation/delete/master/_maps/map_files/BoxStation/BoxStation.dmm" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="E3lMlGWwHrjUXToEDGR3tPb+OgLfVHvbH8NdQsnMxqjKnSli6Bm/YFSuLBldOVvxy3gU6zW07NZuuunLtlOqtw==" /></div>
           <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
             aria-label="Delete the file in your fork of this project" data-disable-with>
             <svg aria-hidden="true" class="octicon octicon-trashcan" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z"/></svg>
@@ -685,7 +685,7 @@
 <div class="footer container-lg px-3" role="contentinfo">
   <div class="position-relative d-flex flex-justify-between py-6 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2018 <span title="0.15167s from unicorn-2358817842-fmz61">GitHub</span>, Inc.</li>
+      <li class="mr-3">&copy; 2018 <span title="0.18663s from unicorn-2829301698-7rdg7">GitHub</span>, Inc.</li>
         <li class="mr-3"><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li class="mr-3"><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
         <li class="mr-3"><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
