@@ -43,8 +43,7 @@
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/stargazer)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
@@ -63,10 +62,10 @@
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/stargazer)
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
 
 /obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/stargazer, \
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
@@ -425,7 +424,8 @@
 	data["scripturecolors"] = "<font color=#DAAA18>Scriptures in <b>yellow</b> are related to construction and building.</font><br>\
 	<font color=#6E001A>Scriptures in <b>red</b> are related to attacking and offense.</font><br>\
 	<font color=#1E8CE1>Scriptures in <b>blue</b> are related to healing and defense.</font><br>\
-	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font>"
+	<font color=#AF0AAF>Scriptures in <b>purple</b> are niche but still important!</font><br>\
+	<font color=#DAAA18><i>Scriptures with italicized names are important to success.</i></font>"
 	generate_all_scripture()
 
 	data["scripture"] = list()
@@ -439,6 +439,8 @@
 			"required" = "([DisplayPower(S.power_cost)][S.special_power_text ? "+ [replacetext(S.special_power_text, "POWERCOST", "[DisplayPower(S.special_power_cost)]")]" : ""])",
 			"type" = "[S.type]",
 			"quickbind" = S.quickbind)
+			if(S.important)
+				temp_info["name"] = "<i>[temp_info["name"]]</i>"
 			var/found = quickbound.Find(S.type)
 			if(found)
 				temp_info["bound"] = "<b>[found]</b>"
