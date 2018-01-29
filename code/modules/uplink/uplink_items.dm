@@ -1061,7 +1061,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
-	item = /obj/item/slimepotion/sentience/nuclear
+	item = /obj/item/slimepotion/slime/sentience/nuclear
 	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1209,6 +1209,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
+	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/reverse_bear_trap
+	name = "Reverse Bear Trap"
+	desc = "An ingenious execution device worn on (or forced onto) the head. Arming it starts a 1-minute kitchen timer mounted on the bear trap. When it goes off, the trap's jaws will \
+	violently open, instantly killing anyone wearing it by tearing their jaws in half. To arm, attack someone with it while they're not wearing headgear, and you will force it onto their \
+	head after three seconds uninterrupted."
+	cost = 5
+	item = /obj/item/device/reverse_bear_trap
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/mimery
@@ -1372,7 +1381,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
-	
+
 /datum/uplink_item/badass/surplus/super
 	name = "Super Surplus Crate"
 	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \

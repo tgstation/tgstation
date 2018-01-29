@@ -1,0 +1,5 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - tweak: "made fire colored according to blackbody radiation and rule of cool."
+  - imageadd: "some kind of lightning texture"
