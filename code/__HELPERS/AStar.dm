@@ -136,19 +136,16 @@ Actual Adjacent procs :
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		for(var/i = 0 to 3)
-			var/f= 1<<i
+			var/f= 1<<i //get cardinal directions.1,2,4,8
 			if(cur.bf & f)
 				var/T = get_step(cur.source,f)
 				if(T != exclude)
 					var/datum/PathNode/CN = openc[T]  //current checking turf
-					var/r=((f & 85)<<1)|((f & 170)>>1) //fuck list calls. bit operations faster
+					var/r=((f & 85)<<1)|((f & 170)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 					var/newg = cur.g + call(cur.source,dist)(T)
 					if(CN)
 					//is already in open list, check if it's a better way from the current turf
-						if(CN.bf==0)
-							continue//to be sure
-						CN.bf &= 15^r //we have no closed, so just cut off exceed dir
-
+						CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
 						if(newg < CN.g)
 							if(call(cur.source,adjacent)(caller, T, id, simulated_only))
 								CN.setp(cur,newg,CN.h,cur.nt+1)
