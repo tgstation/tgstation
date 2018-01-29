@@ -125,7 +125,6 @@
 /obj/structure/closet/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
-	icon = 'goon/icons/obj/closet.dmi'
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
