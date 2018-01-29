@@ -68613,9 +68613,9 @@
 /area/medical/virology)
 "cLT" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/bodycontainer/crematorium{
-	icon_state = "crema1";
-	dir = 4
+/obj/structure/bodycontainer/morgue{
+	icon_state = "morgue1";
+	dir = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -68927,9 +68927,6 @@
 "cMC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/machinery/button/crematorium{
-	pixel_x = -25
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -69371,7 +69368,11 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "cNt" = (
-/obj/structure/bodycontainer/morgue,
+/obj/machinery/button/crematorium{
+	id = "cremawheat";
+	pixel_x = -26;
+	req_access_txt = "27"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNu" = (
@@ -69936,6 +69937,11 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -71970,17 +71976,12 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTf" = (
-/obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
-	},
-/obj/item/storage/box/bodybags{
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -80669,6 +80670,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"QuZ" = (
+/obj/structure/bodycontainer/crematorium{
+	icon_state = "crema1";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -100900,7 +100908,7 @@ cLT
 cMC
 cNt
 cTf
-cNt
+QuZ
 cMI
 cPC
 djX
@@ -106028,7 +106036,7 @@ ctA
 dbr
 QuX
 dDC
-QuY
+QuX
 cFU
 cCe
 ctK

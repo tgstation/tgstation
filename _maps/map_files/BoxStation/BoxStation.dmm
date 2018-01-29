@@ -13850,10 +13850,7 @@
 /area/chapel/office)
 "aIB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bodycontainer/crematorium{
-	icon_state = "crema1";
-	dir = 4
-	},
+/obj/structure/bodycontainer/crematorium,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aIC" = (
