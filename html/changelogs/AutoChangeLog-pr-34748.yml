@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Xenobiology consoles can now scan slimes and apply potions remotely. Use potions on the console to load them."
