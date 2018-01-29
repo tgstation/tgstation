@@ -36,18 +36,12 @@ a creative player the means to solve many problems.  Circuits are held inside an
 // This should be used when someone is examining while the case is opened.
 /obj/item/integrated_circuit/proc/internal_examine(mob/user)
 	to_chat(user, "This board has [inputs.len] input pin\s, [outputs.len] output pin\s and [activators.len] activation pin\s.")
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
+	var/list/integrated_io_list = inputs|outputs|activators
+	for(var/k in 1 to integrated_io_list.len)
+		var/datum/integrated_io/I = integrated_io_list[k]
 		if(I.linked.len)
 			to_chat(user, "The '[I]' is connected to [I.get_linked_to_desc()].")
-	for(var/k in 1 to outputs.len)
-		var/datum/integrated_io/O = outputs[k]
-		if(O.linked.len)
-			to_chat(user, "The '[O]' is connected to [O.get_linked_to_desc()].")
-	for(var/k in 1 to activators.len)
-		var/datum/integrated_io/activate/A = activators[k]
-		if(A.linked.len)
-			to_chat(user, "The '[A]' is connected to [A.get_linked_to_desc()].")
+		CHECK_TICK
 	any_examine(user)
 	interact(user)
 
@@ -88,15 +82,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	. = ..()
 
 /obj/item/integrated_circuit/emp_act(severity)
-	for(var/k in 1 to inputs.len)
-		var/datum/integrated_io/I = inputs[k]
+	var/list/integrated_io_list = inputs|outputs|activators
+	for(var/k in 1 to integrated_io_list.len)
+		var/datum/integrated_io/I = integrated_io_list[k]
 		I.scramble()
-	for(var/k in 1 to outputs.len)
-		var/datum/integrated_io/O = outputs[k]
-		O.scramble()
-	for(var/k in 1 to activators.len)
-		var/datum/integrated_io/activate/A = activators[k]
-		A.scramble()
+		CHECK_TICK
 
 
 /obj/item/integrated_circuit/verb/rename_component()
@@ -149,7 +139,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/column_width = 3
 	var/row_height = max(inputs.len, outputs.len, 1)
 
-	for(var/i = 1 to row_height)
+	for(var/i in 1 to row_height)
 		HTML += "<tr>"
 		for(var/j = 1 to column_width)
 			var/datum/integrated_io/io = null
@@ -185,7 +175,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 								var/datum/integrated_io/linked = io.linked[k]
 								words += "<a href='?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]'>[linked]</a> \
 								@ <a href='?src=[REF(linked.holder)]'>[linked.holder.displayed_name]</a><br>"
-
+								CHECK_TICK
 						if(inputs.len > outputs.len)
 							height = 1
 			HTML += "<td align='center' rowspan='[height]'>[jointext(words, null)]</td>"
@@ -202,10 +192,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 				var/datum/integrated_io/linked = io.linked[k]
 				words += "<a href='?src=[REF(src)];act=unwire;pin=[REF(io)];link=[REF(linked)]'><font color='FF0000'>[linked]</font></a> \
 				@ <a href='?src=[REF(linked.holder)]'><font color='FF0000'>[linked.holder.displayed_name]</font></a><br>"
-
+				CHECK_TICK
 		HTML += "<tr>"
 		HTML += "<td colspan='3' align='center'>[jointext(words, null)]</td>"
 		HTML += "</tr>"
+		CHECK_TICK
 
 	HTML += "</table>"
 	HTML += "</div>"
@@ -275,11 +266,13 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	for(var/k in 1 to outputs.len)
 		var/datum/integrated_io/O = outputs[k]
 		O.push_data()
+		CHECK_TICK
 
 /obj/item/integrated_circuit/proc/pull_data()
 	for(var/k in 1 to inputs.len)
 		var/datum/integrated_io/I = inputs[k]
 		I.push_data()
+		CHECK_TICK
 
 /obj/item/integrated_circuit/proc/draw_idle_power()
 	if(assembly)
@@ -313,18 +306,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 /obj/item/integrated_circuit/proc/disconnect_all()
 	var/datum/integrated_io/I
-
-	for(var/i in inputs)
-		I = i
+	var/list/integrated_io_list = inputs+outputs+activators // if this breaks things at all, switch to | instead of +
+	for(var/k in 1 to integrated_io_list.len)
+		I = integrated_io_list[i]
 		I.disconnect_all()
-
-	for(var/i in outputs)
-		I = i
-		I.disconnect_all()
-
-	for(var/i in activators)
-		I = i
-		I.disconnect_all()
+		CHECK_TICK
 
 /obj/item/integrated_circuit/proc/ext_moved(oldLoc, dir)
 	return
