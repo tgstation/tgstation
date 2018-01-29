@@ -304,12 +304,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			return
 		if(isliving(usr))
 			var/mob/living/L = usr
-			if(L.stuttering)
-				message = stutter(message)
-			if(L.slurring)
-				message = slur(message)
-			if(L.cultslurring)
-				message = cultslur(message)
+			message = L.treat_message(input)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
