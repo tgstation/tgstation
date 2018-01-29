@@ -1310,16 +1310,16 @@
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	overdose_threshold = 10 // low overdose treshold due to very low and random metabolism rate
+	overdose_threshold = 15 // low overdose treshold due to low and random metabolism rate
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
 
 /datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
-	M.add_trait(TRAIT_SLEEPIMMUNE)
+	M.add_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
-	M.remove_trait(TRAIT_SLEEPIMMUNE)
+	M.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
@@ -1361,7 +1361,7 @@
 				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
-			M.remove_trait(TRAIT_SLEEPIMMUNE)
+			M.remove_trait(TRAIT_SLEEPIMMUNE) //Supposed to remove all sleep immune traits.
 			M.Sleeping(100, 0)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
