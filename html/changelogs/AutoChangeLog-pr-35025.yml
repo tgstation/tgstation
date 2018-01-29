@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Warp whistle can no longer pick up its user from inside various animation/in-between states and effects such as transformations, jellypeople split, talisman of immortality effect period or rod form."
