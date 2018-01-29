@@ -27,6 +27,9 @@ Actual Adjacent procs :
 //////////////////////
 //datum/PathNode object
 //////////////////////
+#define MASK_ODD 85
+#define MASK_EVEN 170
+
 
 //A* nodes variables
 /datum/PathNode
@@ -78,8 +81,6 @@ Actual Adjacent procs :
 		stoplag(3)
 		l = SSpathfinder.getfree()
 	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-//	adjacent = /turf/proc/reachableAdjacentTurfs
-//	var/list/pat1 = AStar_old(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent ,id, exclude, simulated_only)
 	SSpathfinder.found(l)
 	if(!path)
 		path = list()
@@ -98,7 +99,6 @@ Actual Adjacent procs :
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/openc = new() //open list for node check
-//	var/list/close = new() //to spare nodes from GC
 	var/list/path = null //the returned path, if any
 	//initialization
 	var/datum/PathNode/cur = new /datum/PathNode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
@@ -116,7 +116,6 @@ Actual Adjacent procs :
 		if(openc.len>1)
 			last.i = cur.i
 			openc.Swap(cur.i,openc.len)
-		//close += cur
 		openc.len -= 1//we need to serch only in open list.So let's keep turf list tidy
 		ne = TRUE
 		//if we only want to get near the target, check if we're close enough
@@ -141,7 +140,7 @@ Actual Adjacent procs :
 				var/T = get_step(cur.source,f)
 				if(T != exclude)
 					var/datum/PathNode/CN = openc[T]  //current checking turf
-					var/r=((f & 85)<<1)|((f & 170)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 					var/newg = cur.g + call(cur.source,dist)(T)
 					if(CN)
 					//is already in open list, check if it's a better way from the current turf
@@ -160,13 +159,12 @@ Actual Adjacent procs :
 							ne = FALSE
 		cur.bf = 0
 		CHECK_TICK
-	//QDEL_LIST(checked)
-	//checked = null
-	//cleaning after us
 	//reverse the path to get it from start to finish
 	if(path)
 		for(var/i = 1 to round(0.5*path.len))
 			path.Swap(i,path.len-i+1)
+	openc = null
+	//cleaning after us
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
@@ -184,18 +182,7 @@ Actual Adjacent procs :
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)
 	return L
-/*
 
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
-	var/list/L = new()
-	var/turf/T
-
-	for(var/k in 1 to GLOB.cardinals.len)
-		T = get_step(src,GLOB.cardinals[k])
-		if(reachableTurftest(caller, T, ID, simulated_only))
-			L.Add(T)
-	return L
-*/
 /turf/proc/reachableTurftest(caller, var/turf/T, ID, simulated_only)
 	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
 		return TRUE
@@ -206,7 +193,7 @@ Actual Adjacent procs :
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)
-	var/rdir = ((adir & 85)<<1)|((adir & 170)>>1)
+	var/rdir = ((adir & MASK_ODD)<<1)|((adir & MASK_EVEN)>>1)
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
 			return 1
