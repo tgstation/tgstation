@@ -628,7 +628,7 @@
 	throwforce = 5
 	reach = 2
 
-/obj/item/extendohand/ACME
+/obj/item/extendohand/acme
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
