@@ -42,7 +42,6 @@
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	update_health_hud()
-	var/spellnum = 1
 	for(var/spell in construct_spells)
 		var/the_spell = new spell(null)
 		AddSpell(the_spell)
