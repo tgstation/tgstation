@@ -73,8 +73,6 @@
 
 /datum/config_entry/flag/no_dead_vote	// dead people can't vote
 
-/datum/config_entry/flag/allow_metadata	// Metadata is supported.
-
 /datum/config_entry/flag/popup_admin_pm	// adminPMs to non-admins show in a pop-up 'reply' window when set
 
 /datum/config_entry/number/fps

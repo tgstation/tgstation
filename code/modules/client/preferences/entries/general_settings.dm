@@ -1,0 +1,1 @@
+/datum/preference_entry/string/ooccolor

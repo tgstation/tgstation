@@ -25,6 +25,11 @@ SUBSYSTEM_DEF(dbcore)
 			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
 			message_admins("Could not get schema version from database")
+	
+	for(var/I in GLOB.preference_datums)
+		var/client/P = GLOB.preference_datums[I]
+		P.Load()
+		CHECK_TICK
 
 	
 /datum/controller/subsystem/dbcore/Recover()
@@ -32,12 +37,24 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
-	if(SSdbcore.Connect())
-		var/sql_station_name = sanitizeSQL(station_name())
-		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[SSticker.mode_result]', end_state = '[SSticker.end_state]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
-		query_round_end.Execute()
-	if(IsConnected())
-		Disconnect()
+	if(!Connect())
+		return
+
+	var/sql_station_name = sanitizeSQL(station_name())
+	var/datum/DBQuery/query_round_end = NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[SSticker.mode_result]', end_state = '[SSticker.end_state]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+	query_round_end.Execute()
+
+	var/preferences_insert = list()
+	for(var/ckey in GLOB.preference_datums)
+		var/datum/preferences/P = GLOB.preference_datums[ckey]
+		preferences_insert += P.Save(TRUE)
+		var/client/C = GLOB.directory[ckey]
+		if(C)
+			C.prefs = null	//prevent /client/Del() Save
+	if(preferences_insert.len)
+		MassInsert(format_table_name("preferences"), preferences_insert, TRUE, TRUE, TRUE)
+
+	Disconnect()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)

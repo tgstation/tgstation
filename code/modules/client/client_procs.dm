@@ -188,7 +188,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
-		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
@@ -366,6 +365,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(credits)
 		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
+	if(prefs)
+		prefs.Save(FALSE)
 	if(holder)
 		adminGreet(1)
 		holder.owner = null

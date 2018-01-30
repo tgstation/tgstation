@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_id
 
 	//game-preferences
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
@@ -94,9 +93,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
-
-		// OOC Metadata:
-	var/metadata = ""
 
 	var/unlock_content = 0
 
@@ -393,8 +389,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
-			if(CONFIG_GET(flag/allow_metadata))
-				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
 			if(user.client)
 				if(user.client.holder)
@@ -882,11 +876,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
-
-				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
-					if(new_metadata)
-						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
