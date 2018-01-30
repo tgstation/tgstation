@@ -296,7 +296,8 @@
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/engi1
 	name = "Personnel Record AOP#04"
-	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Rachel Migro<br><b>Age:</b>35<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Engineer<br><br><center><b>Infomation</b></center><br><center>"}
+	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Rachel Migro<br><b>Age:</b>35<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Engineer<br><br><center><b>Infomation</b></center><br><center>Recently certified to be a full-time Journeyman, Rachel has
+		been assigned various construction projects in the past 5 years. Competent and has no past infractions, should be of little concern."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/research1
 	name = "Personnel Record AOP#05"
@@ -321,15 +322,10 @@
 	info = {"This cold-ass planet is the new-age equivilant of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
 	 Nanotrasen pays by the pound, so get minin' boys!"}
 
-/obj/item/paper/crumpled/ruins/snowdin/syndielava
-	name = "scribbled note"
-	info = {"Some cracks in the ice nearby have exposed some sort of hidden magma stream under all this shit ice. I don't know whats worse at this point honestly; freezing to death or
-	burning alive."}
-
 /obj/item/paper/crumpled/ruins/snowdin/lootstructures
 	name = "scribbled note"
-	info = {"From what we've seen so far, theres a ton of iced-over ruins down here in the caves. We sent a few men out to check things out and they never came back, so we decided to
-	border up majority of the ruins. We've heard some weird shit coming out of these caves and I'm not gonna find out the hard way myself."}
+	info = {"There's some ruins scattered along the cavern, their walls seem to be made of some sort of super-condensned mixture of ice and snow. We've already barricaded up the ones we've found so far,
+	 since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
 
 /obj/item/paper/crumpled/ruins/snowdin/shovel
 	name = "shoveling duties"
@@ -372,7 +368,7 @@
 
 /obj/item/disk/holodisk/snowdin/welcometodie
 	name = "Conversation #AOP#1"
-	preset_image_type = /mob/living/simple_animal/pet/dog/corgi
+	preset_image_type = /datum/preset_holoimage/corgi
 	preset_record_text = {"
 	NAME Friendly AI Unit
 	DELAY 10
@@ -401,13 +397,13 @@
 	PRESET /datum/preset_holoimage/nanotrasenprivatesecurity
 	NAME James Reed
 	DELAY 10
-	SOUND 'sound/weapons/laser.ogg'
+	SOUND sound/weapons/laser.ogg
 	DELAY 10
-	SOUND 'sound/weapons/laser.ogg'
+	SOUND sound/weapons/laser.ogg
 	DELAY 10
-	SOUND 'sound/weapons/laser.ogg'
+	SOUND sound/weapons/laser.ogg
 	DELAY 10
-	SOUND 'sound/weapons/laser.ogg'
+	SOUND sound/weapons/laser.ogg
 	DELAY 15
 	SAY Just go! I'll keep it busy, there's an outpost south of here with an elevator to the surface.
 	NAME Jacob Ullman
@@ -428,9 +424,9 @@
 	DELAY 10
 	SAY You don't need to tell me twice, I just need to swipe access and then..
 	DELAY 15
-	SOUND 'sound/effects/glassbr1.ogg'
+	SOUND sound/effects/glassbr1.ogg
 	DELAY 10
-	SOUND 'sound/effects/glassbr2.ogg'
+	SOUND sound/effects/glassbr2.ogg
 	DELAY 15
 	NAME Jacob Ullman
 	DELAY 10
@@ -442,18 +438,18 @@
 	DELAY 10
 	SAY DON'T FUCKING RUSH ME ALRIGHT IT'S BEING CALLED.
 	DELAY 15
-	SOUND 'sound/effects/huuu.ogg'
+	SOUND sound/effects/huuu.ogg
 	DELAY 5
-	SOUND 'sound/effects/huuu.ogg'
+	SOUND sound/effects/huuu.ogg
 	DELAY 15
-	SOUND 'sound/effects/woodhit.ogg'
+	SOUND sound/effects/woodhit.ogg
 	DELAY 2
-	SOUND 'sound/effects/bodyfall3.ogg'
+	SOUND sound/effects/bodyfall3.ogg
 	DELAY 5
-	SOUND 'sound/effects/meow1.ogg'
+	SOUND sound/effects/meow1.ogg
 	DELAY 15
 	NAME Jacob Ullman
-	DELAY 10
+	DELAY 15
 	SAY OH FUCK IT'S GOT ME JESUS CHRIIIiiii-
 	NAME Elizabeth Queef
 	SAY AAAAAAAAAAAAAAAA FUCK THAT
