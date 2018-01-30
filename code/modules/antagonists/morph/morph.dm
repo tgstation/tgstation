@@ -126,6 +126,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
