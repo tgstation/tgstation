@@ -2053,7 +2053,7 @@
 	height = 9;
 	id = "arrivals_stationary";
 	name = "arrivals bay";
-	roundstart_template = /datum/map_template/shuttle/arrival/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -17089,7 +17089,7 @@
 	height = 4;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -24412,6 +24412,22 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
+"MvL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
+"MXQ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8;
+	frequency = 1441;
+	id = "mix_in"
+	},
+/turf/open/space/basic,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -57475,8 +57491,8 @@ baQ
 aaa
 bdh
 aad
-aaa
-aaa
+aad
+baP
 aaa
 aaa
 aaa
@@ -57733,7 +57749,7 @@ adP
 bdh
 adP
 aad
-baP
+bat
 aaa
 aaa
 aaa
@@ -61836,7 +61852,7 @@ aRv
 baB
 aYp
 aRv
-aYp
+MvL
 aRv
 aRv
 bcH
@@ -62093,7 +62109,7 @@ baf
 adP
 adP
 adP
-adP
+MXQ
 adP
 adP
 adP
