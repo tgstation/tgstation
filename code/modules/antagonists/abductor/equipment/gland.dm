@@ -8,7 +8,7 @@
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
-	var/uses // -1 For inifinite
+	var/uses // -1 For infinite
 	var/human_only = 0
 	var/active = 0
 
@@ -104,9 +104,9 @@
 
 /obj/item/organ/heart/gland/heals/activate()
 	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
-	owner.adjustBruteLoss(-20)
+	owner.adjustToxLoss(-20, FALSE, TRUE)
+	owner.heal_bodypart_damage(20, 20, TRUE)
 	owner.adjustOxyLoss(-20)
-	owner.adjustFireLoss(-20)
 
 /obj/item/organ/heart/gland/slime
 	cooldown_low = 600
@@ -116,18 +116,22 @@
 	mind_control_uses = 1
 	mind_control_duration = 2400
 
+/obj/item/organ/heart/gland/slime/Insert(mob/living/carbon/M, special = 0)
+	..()
+	owner.faction |= "slime"
+	owner.grant_language(/datum/language/slime)
+
 /obj/item/organ/heart/gland/slime/activate()
 	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
 	owner.vomit(20)
 
-	var/mob/living/simple_animal/slime/Slime
-	Slime = new(get_turf(owner), "grey")
+	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
-	cooldown_low = 300
-	cooldown_high = 300
+	cooldown_low = 400
+	cooldown_high = 700
 	uses = -1
 	icon_state = "mindshock"
 	mind_control_uses = 1
@@ -140,21 +144,30 @@
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		to_chat(H, "<span class='alien'>You hear a buzz in your head.</span>")
-		H.confused += 20
+		switch(pick(1,3))
+			if(1)
+				to_chat(H, "<span class='userdanger'>You hear a loud buzz in your head, silencing your thoughts!</span>")
+				H.Stun(50)
+			if(2)
+				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
+				H.confused += 15
+				H.adjustBrainLoss(10, 160)
+			if(3)
+				H.hallucination += 80
 
 /obj/item/organ/heart/gland/pop
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1
-	human_only = 1
+	human_only = TRUE
 	icon_state = "species"
 	mind_control_uses = 5
 	mind_control_duration = 300
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/lizard, /datum/species/jelly/slime, /datum/species/pod, /datum/species/fly, /datum/species/jelly))
+	randomize_human(owner)
+	var/species = pick(list(/datum/species/human, /datum/species/lizard, /datum/species/moth, /datum/species/fly))
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
@@ -169,7 +182,6 @@
 	to_chat(owner, "<span class='notice'>You feel very stretchy.</span>")
 	owner.ventcrawler = VENTCRAWLER_ALWAYS
 
-
 /obj/item/organ/heart/gland/viral
 	cooldown_low = 1800
 	cooldown_high = 2400
@@ -180,30 +192,55 @@
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
-	var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/magnitis)
-	var/datum/disease/D = new virus_type()
-	D.carrier = TRUE
-	owner.viruses += D
-	D.affected_mob = owner
+	var/datum/disease/advance/A = random_virus(pick(2,6),6)
+	A.carrier = TRUE
+	owner.viruses += A
+	A.affected_mob = owner
 	owner.med_hud_set_status()
 
+/obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
+	if(max_symptoms > SYMPTOM_LIMIT)
+		max_symptoms = SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new(FALSE, null)
+	A.symptoms = list()
+	var/list/datum/symptom/possible_symptoms = list()
+	for(var/symptom in subtypesof(/datum/symptom))
+		var/datum/symptom/S = symptom
+		if(initial(S.level) > max_level)
+			continue
+		if(initial(S.level) <= 0) //unobtainable symptoms
+			continue
+		possible_symptoms += S
+	for(var/i in 1 to max_symptoms)
+		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
+		if(chosen_symptom)
+			var/datum/symptom/S = new chosen_symptom
+			A.symptoms += S
+	A.Refresh() //just in case someone already made and named the same disease
+	return A
 
-/obj/item/organ/heart/gland/emp //TODO : Replace with something more interesting
-	cooldown_low = 900
-	cooldown_high = 1600
-	uses = 10
+/obj/item/organ/heart/gland/trauma //TODO : Replace with something more interesting
+	cooldown_low = 800
+	cooldown_high = 1200
+	uses = 5
 	icon_state = "emp"
-	mind_control_uses = 1
+	mind_control_uses = 3
 	mind_control_duration = 1800
 
-/obj/item/organ/heart/gland/emp/activate()
+/obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
-	empulse(get_turf(owner), 2, 5, 1)
+	if(prob(33))
+		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRUE)
+	else
+		if(prob(20))
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRUE)
+		else
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRUE)
 
 /obj/item/organ/heart/gland/spiderman
 	cooldown_low = 450
 	cooldown_high = 900
-	uses = 10
+	uses = -1
 	icon_state = "spider"
 	mind_control_uses = 2
 	mind_control_duration = 2400
@@ -211,7 +248,8 @@
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
 	owner.faction |= "spiders"
-	new /obj/structure/spider/spiderling(owner.loc)
+	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
+	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
 	cooldown_low = 300
@@ -225,71 +263,60 @@
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.loc)
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
 
-/obj/item/organ/heart/gland/bloody
-	cooldown_low = 200
-	cooldown_high = 400
+/obj/item/organ/heart/gland/electric
+	cooldown_low = 800
+	cooldown_high = 1200
 	uses = -1
-	mind_control_uses = 1
-	mind_control_duration = 450
+	mind_control_uses = 2
+	mind_control_duration = 900
 
-/obj/item/organ/heart/gland/bloody/activate()
-	owner.blood_volume -= 20
-	owner.visible_message("<span class='danger'>[owner]'s skin erupts with blood!</span>",\
-	"<span class='userdanger'>Blood pours from your skin!</span>")
+/obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
+	..()
+	owner.add_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
 
-	for(var/turf/T in oview(3,owner)) //Make this respect walls and such
-		owner.add_splatter_floor(T)
-	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
-		H.add_mob_blood(owner)
+/obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	..()
 
+/obj/item/organ/heart/gland/electric/activate()
+	owner.visible_message("<span class='danger'>[owner]'s skin starts emitting electric arcs!</span>",\
+	"<span class='warning'>You feel electric energy building up inside you!</span>")
+	playsound(get_turf(owner), "sparks", 100, 1, -1)
+	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
 
-/obj/item/organ/heart/gland/bodysnatch
-	cooldown_low = 600
-	cooldown_high = 600
-	human_only = 1
-	uses = 1
-	mind_control_uses = 1
-	mind_control_duration = 600
+/obj/item/organ/heart/gland/electric/proc/zap()
+	tesla_zap(owner, 4, 8000, FALSE, TRUE)
+	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
-/obj/item/organ/heart/gland/bodysnatch/activate()
-	to_chat(owner, "<span class='warning'>You feel something moving around inside you...</span>")
-	//spawn cocoon with clone greytide snpc inside
-	if(ishuman(owner))
-		var/obj/structure/spider/cocoon/abductor/C = new (get_turf(owner))
-		C.Copy(owner)
-		C.Start()
-	owner.adjustBruteLoss(40)
-	owner.add_splatter_floor()
+/obj/item/organ/heart/gland/chem
+	cooldown_low = 50
+	cooldown_high = 50
+	uses = -1
+	mind_control_uses = 3
+	mind_control_duration = 1200
+	var/list/possible_reagents = list()
 
-/obj/structure/spider/cocoon/abductor
-	name = "slimy cocoon"
-	desc = "Something is moving inside."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "cocoon_large3"
-	color = rgb(10,120,10)
-	density = TRUE
-	var/hatch_time = 0
+/obj/item/organ/heart/gland/chem/Initialize()
+	..()
+	for(var/X in subtypesof(/datum/reagent/drug))
+		var/datum/reagent/R = X
+		possible_reagents += initial(R.id)
+	for(var/X in subtypesof(/datum/reagent/medicine))
+		var/datum/reagent/R = X
+		possible_reagents += initial(R.id)
+	for(var/X in typesof(/datum/reagent/toxin))
+		var/datum/reagent/R = X
+		possible_reagents += initial(R.id)
 
-/obj/structure/spider/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
-	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species, H.dna.features)
-
-/obj/structure/spider/cocoon/abductor/proc/Start()
-	hatch_time = world.time + 600
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/spider/cocoon/abductor/process()
-	if(world.time > hatch_time)
-		STOP_PROCESSING(SSobj, src)
-		for(var/mob/M in contents)
-			src.visible_message("<span class='warning'>[src] hatches!</span>")
-			M.forceMove(drop_location())
-		qdel(src)
-
+/obj/item/organ/heart/gland/chem/activate()
+	var/chem_to_add = pick(possible_reagents)
+	owner.reagents.add_reagent(chem_to_add, 2)
+	owner.adjustToxLoss(-2, TRUE, TRUE)
+	..()
 
 /obj/item/organ/heart/gland/plasma
 	cooldown_low = 1200

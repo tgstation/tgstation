@@ -379,9 +379,6 @@
 	dir = 4
 	},
 /area/shuttle/arrival)
-"T" = (
-/turf/template_noop,
-/area/template_noop)
 "U" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -411,8 +408,8 @@ n
 g
 g
 a
-T
-T
+a
+a
 "}
 (2,1,1) = {"
 b
@@ -430,8 +427,8 @@ o
 G
 g
 a
-T
-T
+a
+a
 "}
 (3,1,1) = {"
 b
@@ -544,8 +541,8 @@ q
 M
 g
 a
-T
-T
+a
+a
 "}
 (9,1,1) = {"
 a
@@ -563,6 +560,6 @@ n
 g
 g
 a
-T
-T
+a
+a
 "}
