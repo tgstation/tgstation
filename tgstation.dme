@@ -1800,7 +1800,6 @@
 #include "code\modules\mob\living\carbon\human\species_types\humans.dm"
 #include "code\modules\mob\living\carbon\human\species_types\jellypeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\lizardpeople.dm"
-#include "code\modules\mob\living\carbon\human\species_types\mothmen.dm"
 #include "code\modules\mob\living\carbon\human\species_types\plasmamen.dm"
 #include "code\modules\mob\living\carbon\human\species_types\podpeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\shadowpeople.dm"
