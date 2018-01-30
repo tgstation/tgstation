@@ -12796,6 +12796,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/requests_console{
+	announcementConsole = 1;
+	department = "Head of Personnel's Desk";
+	departmentType = 5;
+	name = "Head of Personnel RC";
+	pixel_x = 0;
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
 	},
