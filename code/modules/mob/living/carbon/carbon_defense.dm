@@ -103,6 +103,9 @@
 			if(affecting.dismember(I.damtype))
 				I.add_mob_blood(src)
 				playsound(get_turf(src), I.get_dismember_sound(), 80, 1)
+		if(I.is_sharp() && prob(probability*1.05) && getorganslot(ORGAN_SLOT_TAIL))
+			var/obj/item/organ/tail = getorganslot(ORGAN_SLOT_TAIL)
+			tail.Remove(src)
 		return TRUE //successful attack
 
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
