@@ -7,6 +7,7 @@
 	var/upgraded = TRUE			// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
 	var/current_category = null
+	var/recycling = FALSE		// If an assembly is being emptied into this printer
 	var/list/program			// Currently loaded save, in form of list
 
 /obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
@@ -44,8 +45,13 @@
 	if(istype(O, /obj/item/device/electronic_assembly))
 		var/obj/item/device/electronic_assembly/EA = O //microtransactions not included
 		if(EA.assembly_components.len)
+			if(recycling)
+				return
 			if(!EA.opened)
 				to_chat(user, "<span class='warning'>You can't reach [EA]'s components to remove them!</span>")
+				return
+			if(EA.battery)
+				to_chat(user, "<span class='warning'>Remove [EA]'s power cell first!</span>")
 				return
 			var/only_nodrop_components = TRUE
 			for(var/V in EA.assembly_components)
@@ -56,20 +62,25 @@
 				to_chat(user, "<span class='warning'>[EA] has irremovable components attached to the assembly, making it impossible to recycle!</span>")
 				return
 			to_chat(user, "<span class='notice'>You begin recycling [EA]'s components...</span>")
-			playsound(user, 'sound/items/electronic_assembly_emptying.ogg', 50, TRUE)
+			playsound(src, 'sound/items/electronic_assembly_emptying.ogg', 50, TRUE)
+			if(!do_after(user, 20, target = src)) //short channel so you don't accidentally start emptying out a complex assembly
+				return
+			recycling = TRUE
 			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 			for(var/V in EA.assembly_components)
 				var/obj/item/integrated_circuit/IC = V
 				if(!mats.has_space(mats.get_item_material_amount(IC)))
 					to_chat(user, "<span class='notice'>[src] can't hold any more materials!</span>")
 					break
-				if(!do_after(user, 5, target = user))
+				if(!do_after(user, 2, target = user))
+					recycling = FALSE
 					return
-				playsound(user, 'sound/items/crowbar.ogg', 50, TRUE)
+				playsound(src, 'sound/items/crowbar.ogg', 50, TRUE)
 				if(EA.try_remove_component(IC, user, TRUE))
 					mats.user_insert(IC, user)
-			to_chat(user, "<span class='notice'>You recyle all the components[EA.assembly_components.len ? " you could " : " "]from [EA]!</span>")
-			playsound(user, 'sound/items/electronic_assembly_empty.ogg', 50, TRUE)
+			to_chat(user, "<span class='notice'>You recycle all the components[EA.assembly_components.len ? " you could " : " "]from [EA]!</span>")
+			playsound(src, 'sound/items/electronic_assembly_empty.ogg', 50, TRUE)
+			recycling = FALSE
 			return TRUE
 
 	return ..()
@@ -165,7 +176,7 @@
 			E.update_icon()
 
 		to_chat(usr, "<span class='notice'>[capitalize(built.name)] printed.</span>")
-		playsound(usr, 'sound/items/jaws_pry.ogg', 50, TRUE)
+		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE)
 
 	if(href_list["print"])
 		if(!CONFIG_GET(flag/ic_printing))
@@ -209,7 +220,7 @@
 					if(materials.use_amount_type(program["metal_cost"], MAT_METAL))
 						var/obj/item/assembly = SScircuit.load_electronic_assembly(get_turf(src), program)
 						to_chat(usr,  "<span class='notice'>[assembly] has been printed from the provided template!</span>")
-						playsound(usr, 'sound/items/poster_being_created.ogg', 50, TRUE)
+						playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 					else
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
 
