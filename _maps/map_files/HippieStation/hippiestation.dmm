@@ -48204,8 +48204,11 @@
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "cfF" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/structure/disposalpipe/junction/flip,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "cfG" = (
@@ -48215,6 +48218,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
@@ -48621,6 +48632,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "cgF" = (
@@ -48630,6 +48642,11 @@
 "cgG" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "cgH" = (
@@ -49101,6 +49118,11 @@
 /obj/machinery/door/airlock/science{
 	name = "High-risk Machinery";
 	req_access_txt = "47"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -49703,6 +49725,11 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -62029,7 +62056,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cJn" = (
-/obj/structure/sign/chemistry,
+/obj/item/cartridge/chemistry,
 /turf/closed/wall,
 /area/medical/chemistry)
 "cJo" = (
@@ -89439,7 +89466,7 @@ biW
 aST
 blR
 bnE
-dnd
+dnc
 aST
 aaa
 aaa
@@ -89696,7 +89723,7 @@ biX
 aST
 blR
 bnF
-dne
+dnc
 bei
 brZ
 brZ
@@ -89953,7 +89980,7 @@ biW
 aST
 aVQ
 bnG
-dnf
+dnc
 bei
 bsa
 btM
@@ -90989,7 +91016,7 @@ bvg
 bwT
 bvg
 bqD
-dnh
+dng
 bCD
 brZ
 aaa
@@ -92265,7 +92292,7 @@ cWz
 bja
 bkz
 blZ
-dna
+dmU
 bpk
 bqD
 bqD
@@ -93036,7 +93063,7 @@ bhV
 bjd
 beh
 bmb
-dnb
+dmU
 bei
 bqG
 bsh
@@ -93287,12 +93314,12 @@ aTe
 baE
 bcp
 dmU
-dmV
-dmW
+dmU
+dmU
 bhW
-dmX
-dmY
-dmZ
+dmU
+dmU
+dmU
 bei
 bpn
 bqH
@@ -119285,7 +119312,7 @@ bYg
 ceu
 cfE
 cgF
-chF
+bWQ
 ciO
 cjQ
 ckV
@@ -120047,18 +120074,18 @@ bTy
 bUz
 bTy
 diD
-dnw
-dnA
-dnF
-dnL
-dnQ
+dnr
+dnr
+dnr
+dnr
+dnr
 dnU
 doa
 cfH
 dof
-doj
-dom
-doq
+dnU
+dnr
+dnr
 diD
 bYe
 bYe
@@ -120310,10 +120337,10 @@ dnG
 dnM
 dnR
 dnV
-cey
+dnD
 cfI
 cgI
-chI
+dnG
 ciR
 cjT
 diD
@@ -120560,17 +120587,17 @@ bML
 bTB
 bUB
 bVM
-dns
+dnr
 dnx
 bZq
-dnH
-dnN
+dnD
+dnD
 dnS
 dnW
-cez
+dnW
 cfJ
 cgI
-cey
+dnD
 don
 dor
 diD
@@ -120817,7 +120844,7 @@ bML
 bTC
 bUC
 bVN
-dnt
+dnr
 bYh
 dnC
 dnI
@@ -120828,7 +120855,7 @@ ceA
 cfK
 cgJ
 chJ
-ciS
+dnC
 dos
 diD
 bVO
@@ -121077,16 +121104,16 @@ bLu
 diD
 dny
 dnD
-dnJ
-dnP
+dnD
+dnD
 dnT
 dnY
 dob
 doc
-cey
-cey
-cey
-cey
+dnD
+dnD
+dnD
+dnD
 diD
 bVO
 cns
@@ -122882,7 +122909,7 @@ aaa
 aqL
 bSk
 cfM
-doh
+dno
 crx
 ciT
 ciT
@@ -123129,8 +123156,8 @@ bLk
 bSq
 bLk
 dnl
-dnq
-dnv
+dnl
+dnl
 bSk
 aaa
 aaa
@@ -123139,9 +123166,9 @@ aaa
 aqL
 bSk
 bSk
-doi
-dol
-dop
+dnl
+dnl
+dnl
 bSk
 bSk
 bSk
