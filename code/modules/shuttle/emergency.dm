@@ -261,7 +261,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.has_antag_datum(/datum/antagonist/traitor) || player.mind.has_antag_datum(/datum/antagonist/brother) || player.mind.has_antag_datum(/datum/antagonist/nukeop)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people
