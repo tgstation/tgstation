@@ -608,7 +608,7 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-
+    
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")

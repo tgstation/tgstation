@@ -179,7 +179,9 @@ function set_labels($payload, $labels, $remove) {
 
 	$tags = array_merge($labels, $existing);
 	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
+	if($remove) {
+		$tags = array_diff($tags, $remove);
+	}
 
 	$final = array();
 	foreach($tags as $t)
