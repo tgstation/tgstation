@@ -122,10 +122,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
-"C" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 
 (1,1,1) = {"
 a
@@ -248,7 +244,7 @@ r
 v
 m
 h
-C
+c
 c
 a
 c
