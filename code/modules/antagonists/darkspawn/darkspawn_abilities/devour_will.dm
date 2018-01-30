@@ -8,6 +8,7 @@
 	psi_cost = 5
 	blacklisted = TRUE
 	var/list/victims //A list of people we've used the bead on recently; we can't drain them again so soon
+	var/last_victim
 
 /datum/action/innate/darkspawn/devour_will/New()
 	..()

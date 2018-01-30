@@ -1,12 +1,12 @@
-//Allows you to move through light unimpeded while active. Drains 1 Psi per second.
+//Allows you to move through light unimpeded while active. Drains 5 Psi per second.
 /datum/action/innate/darkspawn/creep
 	name = "Creep"
 	id = "creep"
-	desc = "Grants immunity to lightburn while active. Can be toggled on and off. Drains 1 Psi per second."
+	desc = "Grants immunity to lightburn while active. Can be toggled on and off. Drains 5 Psi per second."
 	button_icon_state = "creep"
 	check_flags = AB_CHECK_CONSCIOUS
-	psi_cost = 1
-	psi_addendum = " per second"
+	psi_cost = 5
+	psi_addendum = " to activate and per second"
 	lucidity_price = 2
 
 /datum/action/innate/darkspawn/creep/process()

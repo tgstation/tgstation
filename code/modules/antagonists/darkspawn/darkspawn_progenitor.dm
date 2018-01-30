@@ -39,7 +39,6 @@
 		playsound(target, 'sound/magic/pass_smash_door.ogg', 100, FALSE)
 		obj_damage = 60
 	. = ..()
-	obj_damage = 100
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/Login()
 	..()
@@ -68,6 +67,9 @@
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
 			M.playsound_local(src, 'sound/creatures/progenitor_distant.ogg', 75, FALSE, falloff = 5)
+		else
+			to_chat(M, "<span class='boldannounce'>You stand paralyzed in the shadow of the cold as it descends from on high.</span>")
+			M.Stun(20)
 	time_since_last_roar = world.time + 400
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/narsie_act()

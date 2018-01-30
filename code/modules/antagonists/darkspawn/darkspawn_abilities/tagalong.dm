@@ -2,7 +2,7 @@
 /datum/action/innate/darkspawn/tagalong
 	name = "Tagalong"
 	id = "tagalong"
-	desc = "Melds with a target's shadow, causing you to invisibly follow them. Only works in lit areas, and holding any item other than a dark bead will cancel the effect. Costs 30 Psi."
+	desc = "Melds with a target's shadow, causing you to invisibly follow them. Only works in lit areas, and you will be forced out if you hold any items. Costs 30 Psi."
 	button_icon_state = "tagalong"
 	check_flags = AB_CHECK_CONSCIOUS
 	psi_cost = 30

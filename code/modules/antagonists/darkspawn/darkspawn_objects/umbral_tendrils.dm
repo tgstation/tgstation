@@ -25,7 +25,7 @@
 			U.force = 12
 
 /obj/item/umbral_tendrils/Destroy()
-	if(twin)
+	if(!QDELETED(twin))
 		qdel(twin)
 	. = ..()
 
@@ -35,7 +35,7 @@
 		to_chat(user, "<span class='velvet bold'>Functions:<span>")
 		to_chat(user, "<span class='velvet'><b>Help intent:</b> Click on an open tile within seven tiles to jump to it for 10 Psi.</span>")
 		to_chat(user, "<span class='velvet'><b>Disarm intent:</b> Click on an airlock to force it open for 15 Psi (or 30 if it's bolted.)</span>")
-		to_chat(user, "<span class='velvet'><b>Harm intent:</b> Click on a mob within five tiles to knock them down after half a second.</span>")
+		to_chat(user, "<span class='velvet'><b>Harm intent:</b> Fire a projectile that travels up to five tiles, knocking down[twin ? " and pulling forwards" : ""] the first creature struck.</span>")
 		to_chat(user, "<span class='velvet'>The tendrils will shatter light fixtures instantly, as opposed to in several attacks.</span>")
 		to_chat(user, "<span class='velvet'>Also functions to pry open depowered airlocks on any intent other than harm.</span>")
 

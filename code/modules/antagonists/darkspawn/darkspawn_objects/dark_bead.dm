@@ -40,6 +40,9 @@
 	if(linked_ability.victims[L.real_name])
 		to_chat(user, "<span class='warning'>[L] must be given time to recover from their last draining.</span>")
 		return
+	if(linked_ability.last_victim == L.ckey)
+		to_chat(user, "<span class='warning'>[L]'s mind is still too scrambled. Drain someone else first.</span>")
+		return
 	if(!L.mind || isdarkspawn(L))
 		to_chat(user, "<span class='warning'>You cannot drain allies or the mindless.</span>")
 		return
@@ -71,18 +74,20 @@
 	user.visible_message("<span class='warning'>[user] gently lowers [L] to the ground...</span>", "<span class='velvet'><b>...aranupdejc</b><br>\
 	You devour [L]'s will. Your Psi has been fully restored.\n\
 	Additionally, you have gained one lucidity. Use it to purchase and upgrade abilities.<br>\
-	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>")
+	<span class='warning'>[L] is now severely weakened and will take some time to recover.</span>, \
+	<span class='warning'>Additionally, you can not drain them again without first draining someone else.</span>")
 	playsound(L, 'sound/magic/devour_will_victim.ogg', 50, FALSE)
 	darkspawn.psi = darkspawn.psi_cap
 	darkspawn.lucidity++
 	darkspawn.lucidity_drained++
 	darkspawn.update_psi_hud()
 	linked_ability.victims[L] = TRUE
+	linked_ability.last_victim = L.ckey
 	to_chat(L, "<span class='userdanger'>You suddenly feel... empty. Thoughts try to form, but flit away. You slip into a deep, deep slumber...</span>")
 	L.playsound_local(L, 'sound/magic/devour_will_end.ogg', 75, FALSE)
-	L.Unconscious(300)
-	L.stuttering += 40
-	L.reagents.add_reagent("zombiepowder", 2) //Brief window of fake death
-	addtimer(CALLBACK(linked_ability, /datum/action/innate/darkspawn/devour_will/.proc/make_eligible, L), 300)
+	L.Unconscious(15)
+	L.apply_effect(STUTTER, 20)
+	L.apply_status_effect(STATUS_EFFECT_BROKEN_WILL)
+	addtimer(CALLBACK(linked_ability, /datum/action/innate/darkspawn/devour_will/.proc/make_eligible, L), 600)
 	qdel(src, force = TRUE)
 	return TRUE

@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
-	
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		edit_memory(usr)
 		owner.traitor_panel()
 		return
-	
+
 	//Some commands might delete/modify this datum clearing or changing owner
 	var/datum/mind/persistent_owner = owner
 

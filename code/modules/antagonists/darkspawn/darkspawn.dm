@@ -38,6 +38,7 @@
 	owner.current.hud_used.psi_counter.invisibility = 0
 	update_psi_hud()
 	add_ability("divulge")
+	addtimer(CALLBACK(src, .proc/force_divulge), 4800) //this won't trigger if they've divulged when the proc runs
 	START_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -77,21 +78,31 @@
 	.["Give Ability"] = CALLBACK(src,.proc/admin_give_ability)
 	.["Take Ability"] = CALLBACK(src,.proc/admin_take_ability)
 	if(darkspawn_state == MUNDANE)
-		.["Admin Divulge (IRREVERSIBLE)"] = CALLBACK(src, .proc/divulge)
+		.["Divulge"] = CALLBACK(src, .proc/divulge)
+		.["Force-Divulge (Obvious)"] = CALLBACK(src, .proc/force_divulge)
 	else if(darkspawn_state == DIVULGED)
+		.["Give Upgrade"] = CALLBACK(src, .proc/admin_give_upgrade)
 		.["[psi]/[psi_cap] Psi"] = CALLBACK(src, .proc/admin_edit_psi)
 		.["[lucidity] Lucidity"] = CALLBACK(src, .proc/admin_edit_lucidity)
-		.["[lucidity_drained] Lucidity Drained"] = CALLBACK(src, .proc/admin_edit_lucidity_drained)
-		.["Admin Sacrament (ENDS THE ROUND)"] = CALLBACK(src, .proc/sacrament)
+		.["[lucidity_drained] / 20 Lucidity Drained"] = CALLBACK(src, .proc/admin_edit_lucidity_drained)
+		.["Sacrament (ENDS THE ROUND)"] = CALLBACK(src, .proc/sacrament)
 
 /datum/antagonist/darkspawn/proc/admin_give_ability(mob/admin)
-	var/id = stripped_input(admin, "Enter an ability ID.", "Give Ability")
+	var/id = stripped_input(admin, "Enter an ability ID, for \"all\" to give all of them.", "Give Ability")
 	if(!id)
 		return
 	if(has_ability(id))
 		to_chat(admin, "<span class='warning'>[owner.current] already has this ability!</span>")
 		return
-	add_ability(id)
+	if(id != "all")
+		add_ability(id)
+		to_chat(admin, "<span class='notice'>Gave [owner.current] the ability \"[id]\".</span>")
+	else
+		for(var/V in subtypesof(/datum/action/innate/darkspawn))
+			var/datum/action/innate/darkspawn/D = V
+			if(!has_ability(initial(D.id)) && !initial(D.blacklisted))
+				add_ability(initial(D.id))
+		to_chat(admin, "<span class='notice'>Gave [owner.current] all abilities.</span>")
 
 /datum/antagonist/darkspawn/proc/admin_take_ability(mob/admin)
 	var/id = stripped_input(admin, "Enter an ability ID.", "Take Ability")
@@ -101,6 +112,24 @@
 		to_chat(admin, "<span class='warning'>[owner.current] does not have this ability!</span>")
 		return
 	remove_ability(id)
+	to_chat(admin, "<span class='danger'>Took from [owner.current] the ability \"[id]\".</span>")
+
+/datum/antagonist/darkspawn/proc/admin_give_upgrade(mob/admin)
+	var/id = stripped_input(admin, "Enter an upgrade ID, for \"all\" to give all of them.", "Give Upgrade")
+	if(!id)
+		return
+	if(has_upgrade(id))
+		to_chat(admin, "<span class='warning'>[owner.current] already has this upgrade!</span>")
+		return
+	if(id != "all")
+		add_upgrade(id)
+		to_chat(admin, "<span class='notice'>Gave [owner.current] the upgrade \"[id]\".</span>")
+	else
+		for(var/V in subtypesof(/datum/darkspawn_upgrade))
+			var/datum/darkspawn_upgrade/D = V
+			if(!has_upgrade(initial(D.id)))
+				add_upgrade(initial(D.id))
+		to_chat(admin, "<span class='notice'>Gave [owner.current] all upgrades.</span>")
 
 /datum/antagonist/darkspawn/proc/admin_edit_psi(mob/admin)
 	var/new_psi = input(admin, "Enter a new psi amount. (Current: [psi]/[psi_cap])", "Change Psi", psi) as null|num
@@ -256,7 +285,35 @@
 				lucidity = max(0, lucidity - initial(U.lucidity_price))
 			U.unlock()
 
+/datum/antagonist/darkspawn/proc/begin_force_divulge()
+	if(darkspawn_state != MUNDANE)
+		return
+	to_chat(owner.current, "<span class='userdanger'>You feel the skin you're wearing crackling like paper - you will forcefully divulge soon! Get somewhere hidden and dark!</span>")
+	owner.current.playsound_local(owner.current, 'sound/magic/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
+	addtimer(CALLBACK(src, .proc/force_divulge), 1200)
+
+/datum/antagonist/darkspawn/proc/force_divulge()
+	if(darkspawn_state != MUNDANE)
+		return
+	var/mob/living/carbon/human/H = owner.current
+	H.visible_message("<span class='boldwarning'>[H]'s skin begins to slough off in sheets!</span>", \
+	"<span class='userdanger'>You can't maintain your disguise any more! It begins sloughing off!</span>")
+	playsound(H, 'sound/creatures/darkspawn_force_divulge.ogg', 50, FALSE)
+	H.do_jitter_animation(1000)
+	var/processed_message = "<span class='velvet'><b>\[Mindlink\] [user.real_name] has not divulged in time and is now forcefully divulging.</b></span>"
+	for(var/mob/M in GLOB.player_list)
+		if(M.stat == DEAD)
+			var/link = FOLLOW_LINK(M, user)
+			to_chat(M, "[link] [processed_message]")
+		else if(isdarkspawn(M))
+			to_chat(M, processed_message)
+	addtimer(CALLBACK(src, .proc/divulge), 25)
+	addtimer(CALLBACK(/atom/.proc/visible_message, H, "<span class='boldwarning'>[H]'s skin sloughs off, revealing black flesh covered in symbols!</span>", \
+	"<span class='userdanger'>You have forcefully divulged!</span>"), 25)
+
 /datum/antagonist/darkspawn/proc/divulge()
+	if(darkspawn_state >= DIVULGED)
+		return
 	var/mob/living/carbon/human/user = owner.current
 	to_chat(user, "<span class='velvet bold'>Your mind has expanded. The Psi Web is now available. Avoid the light. Keep to the shadows. Your time will come.</span>")
 	user.fully_heal()
@@ -273,7 +330,8 @@
 	var/mob/living/simple_animal/hostile/darkspawn_progenitor/progenitor = new(get_turf(user))
 	user.status_flags |= GODMODE
 	user.mind.transfer_to(progenitor)
-	addtimer(CALLBACK(src, .proc/sacrament_shuttle_call), 50)
+	if(!sacrament_complete)
+		addtimer(CALLBACK(src, .proc/sacrament_shuttle_call), 50)
 	for(var/V in abilities)
 		remove_ability(abilities[V], TRUE)
 	for(var/mob/M in GLOB.player_list)
@@ -301,7 +359,7 @@
 /datum/antagonist/darkspawn/ui_data(mob/user)
 	var/list/data = list()
 
-	data["lucidity"] = "[lucidity] ([lucidity_drained] drained)"
+	data["lucidity"] = "[lucidity]  |  [lucidity_drained] / 20 drained total"
 
 	var/list/abilities = list()
 	var/list/upgrades = list()

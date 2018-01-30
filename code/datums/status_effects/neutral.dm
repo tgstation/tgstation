@@ -84,8 +84,14 @@
 		owner.Knockdown(30)
 		qdel(src)
 	var/obj/item/I = owner.get_active_held_item()
-	if(I && !istype(I, /obj/item/dark_bead))
+	if(I)
 		to_chat(owner, "<span class='userdanger'>Equipping an item forces you out!</span>")
+		if(istype(I, /obj/item/dark_bead))
+			if(owner.ckey == "zaross")
+				to_chat(owner, "<span class='userdanger'>Nice try, but no!</span>")
+			else
+				to_chat(owner, "<span class='userdanger'>[I] crackles with feedback, briefly disorienting you!</span>")
+			owner.Stun(5) //short delay so they can't click as soon as they're out
 		qdel(src)
 
 /obj/screen/alert/status_effect/tagalong
