@@ -67,9 +67,10 @@
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
 			M.playsound_local(src, 'sound/creatures/progenitor_distant.ogg', 75, FALSE, falloff = 5)
-		else
+		else if(isliving(M))
+			var/mob/living/L = M
 			to_chat(M, "<span class='boldannounce'>You stand paralyzed in the shadow of the cold as it descends from on high.</span>")
-			M.Stun(20)
+			L.Stun(20)
 	time_since_last_roar = world.time + 400
 
 /mob/living/simple_animal/hostile/darkspawn_progenitor/narsie_act()

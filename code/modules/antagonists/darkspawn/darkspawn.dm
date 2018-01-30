@@ -300,7 +300,7 @@
 	"<span class='userdanger'>You can't maintain your disguise any more! It begins sloughing off!</span>")
 	playsound(H, 'sound/creatures/darkspawn_force_divulge.ogg', 50, FALSE)
 	H.do_jitter_animation(1000)
-	var/processed_message = "<span class='velvet'><b>\[Mindlink\] [user.real_name] has not divulged in time and is now forcefully divulging.</b></span>"
+	var/processed_message = "<span class='velvet'><b>\[Mindlink\] [H.real_name] has not divulged in time and is now forcefully divulging.</b></span>"
 	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD)
 			var/link = FOLLOW_LINK(M, user)
