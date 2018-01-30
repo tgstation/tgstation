@@ -52,9 +52,9 @@
 		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
 		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/card/mining_point_card,								500),
 		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
-		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
-		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_ugprade/health,								400),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade", /obj/item/device/mine_bot_ugprade/cooldown,								600),
+		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_upgrade,										400),
+		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_upgrade/health,								400),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade", /obj/item/device/mine_bot_upgrade/cooldown,								600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/slime/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
 		)
