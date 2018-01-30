@@ -114,6 +114,10 @@
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
 			I.embedding = I.embedding.setRating(embed_chance = 0)
+		else if(iscarbon(AM))
+			var/mob/living/carbon/C = AM
+			if(user.zone_selected == "groin" && C.getorganslot(ORGAN_SLOT_TAIL))
+				target = C.getorganslot(ORGAN_SLOT_TAIL)
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
