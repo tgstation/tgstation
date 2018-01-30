@@ -1857,14 +1857,14 @@
 /turf/closed/wall,
 /area/security/prison)
 "aem" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 3";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aen" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -1875,7 +1875,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aeo" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},
@@ -66682,7 +66682,7 @@
 /area/science/research)
 "cHZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Research Division Server Room";
 	req_access = null;
 	req_access_txt = "30"
@@ -67148,7 +67148,7 @@
 /area/science/server)
 "cIX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Access";
 	req_access_txt = "30"
 	},

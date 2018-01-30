@@ -2127,7 +2127,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "ahm" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -2147,7 +2147,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "ahp" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},

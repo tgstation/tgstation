@@ -23708,7 +23708,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "aXN" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 3";
 	req_access_txt = "2"
 	},
@@ -23720,7 +23720,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "aXP" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -23730,7 +23730,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aXQ" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},
@@ -91580,7 +91580,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Research Division Server Room";
 	req_access = null;
 	req_access_txt = "30"
@@ -92258,7 +92258,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 6
 	},
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Access";
 	req_access_txt = "30"
 	},

@@ -24789,7 +24789,7 @@
 	name = "Xenobiology Containment Door"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Access";
 	req_access_txt = "30"
 	},
@@ -25085,7 +25085,7 @@
 	},
 /area/science/research)
 "aXF" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Research Division Server Room";
 	req_access = null;
 	req_access_txt = "30"
