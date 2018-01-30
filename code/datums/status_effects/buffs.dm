@@ -436,3 +436,55 @@
 	name = "Fleshmend"
 	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
 	icon_state = "fleshmend"
+
+
+/datum/status_effect/creep //allows darkspawn to move through lights without lightburn damage
+	id = "creep"
+	duration = -1
+	alert_type = /obj/screen/alert/status_effect/creep
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is surrounded by velvety, gently-waving black shadows!</span>"
+	var/datum/antagonist/darkspawn/darkspawn
+
+/datum/status_effect/creep/on_creation(mob/living/owner, datum/antagonist/darkspawn)
+	. = ..()
+	if(!.)
+		return
+	src.darkspawn = darkspawn
+
+/datum/status_effect/creep/process()
+	if(!darkspawn)
+		qdel(src)
+		return
+	if(!darkspawn.has_psi(1)) //ticks 5 times per second, 5 Psi lost per second
+		to_chat(owner, "<span class='warning'>Without the Psi to maintain it, your protective aura vanishes!</span>")
+		qdel(src)
+		return
+	darkspawn.use_psi(1)
+
+/obj/screen/alert/status_effect/creep
+	name = "Creep"
+	desc = "You are immune to lightburn. Drains 1 Psi per second."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "creep"
+
+
+/datum/status_effect/time_dilation //used by darkspawn; greatly increases action times etc
+	id = "time_dilation"
+	duration = 600
+	alert_type = /obj/screen/alert/status_effect/time_dilation
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is moving jerkily and unpredictably!</span>"
+
+/datum/status_effect/time_dilation/on_apply()
+	owner.next_move_modifier -= 0.5
+	owner.action_speed_modifier -= 0.5
+	return TRUE
+
+/datum/status_effect/time_dilation/on_remove()
+	owner.next_move_modifier += 0.5
+	owner.action_speed_modifier += 0.5
+
+/obj/screen/alert/status_effect/time_dilation
+	name = "Time Dilation"
+	desc = "Your actions are twice as fast, and the delay between them is halved."
+	icon = 'icons/mob/actions/actions_darkspawn.dmi'
+	icon_state = "time_dilation"

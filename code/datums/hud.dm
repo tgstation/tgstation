@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_DARKSPAWN = new/datum/atom_hud/antag(),
 	))
 
 /datum/atom_hud

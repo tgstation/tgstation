@@ -141,3 +141,26 @@
 			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
 				to_chat(M, msg)
 		return FALSE
+
+/datum/saymode/darkspawn
+	key = "a"
+	mode = MODE_DARKSPAWN
+
+/datum/saymode/darkspawn/handle_message(mob/living/user, message, datum/language/language)
+	var/datum/mind = user.mind
+	if(!mind)
+		return TRUE
+	if(isdarkspawn(user))
+		log_talk(user, "(DARKSPAWN) [user]/[user.key]: [message]", LOGSAY)
+		var/msg = "<span class='velvet'><b>\[Mindlink\] [user.real_name]:</b> \"[message]\"</span>"
+		for(var/mob/M in GLOB.player_list)
+			if(M in GLOB.dead_mob_list)
+				var/link = FOLLOW_LINK(M, user)
+				to_chat(M, "[link] [msg]")
+			else if(isdarkspawn(M))
+				if(M.z != user.z)
+					if(prob(25))
+						to_chat(M, "<span class='warning'>Your mindlink trembles with words, but they are too far to make out...</span>")
+					continue
+				to_chat(M, msg)
+	return FALSE

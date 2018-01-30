@@ -649,6 +649,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return stolen_count >= 5
 
 
+//Darkspawn objective
+/datum/objective/darkspawn
+	explanation_text = "Become lucid and perform the Sacrament."
+
+/datum/objective/darkspawn/check_completion()
+	return istype(owner.current, /mob/living/simple_animal/hostile/darkspawn_progenitor)
+
 ////////////////////////////////
 // Changeling team objectives //
 ////////////////////////////////

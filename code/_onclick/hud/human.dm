@@ -80,6 +80,12 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+/obj/screen/darkspawn_psi
+	name = "psi"
+	icon_state = "psi_counter"
+	screen_loc = ui_lingchemdisplay
+	invisibility = INVISIBILITY_ABSTRACT
+
 /mob/living/carbon/human/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
@@ -298,6 +304,9 @@
 	devilsouldisplay = new /obj/screen/devil/soul_counter
 	infodisplay += devilsouldisplay
 
+	psi_counter = new/obj/screen/darkspawn_psi
+	infodisplay += psi_counter
+
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.update_icon(mymob)
@@ -308,7 +317,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
-	
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()

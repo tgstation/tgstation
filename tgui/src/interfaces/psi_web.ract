@@ -1,0 +1,40 @@
+<ui-display title="Psi Web" button>
+  <ui-section label='Lucidity' right>
+    {{data.lucidity}}
+  </ui-section>
+</ui-display>
+<ui-display title="Abilities" button>
+{{#each data.abilities}}
+  <ui-section label='{{name}}' candystripe left>
+    <span>{{desc}}</span>
+    <span><br>Psi use cost: {{psi_cost}}</span>
+    <span><br>Cost to unlock: {{lucidity_cost}}<br></span>
+    <ui-button
+      state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
+      action='unlock'
+      params='{"id": "{{id}}"}'>
+      {{owned ? "Unlocked" : "Unlock"}}
+    </ui-button>
+  </ui-section>
+{{/each}}
+{{^data.abilities}}
+  <span class='warning'>No abilities available.</span>
+{{/data.abilities}}
+</ui-display>
+<ui-display title="Upgrades" button>
+{{#each data.upgrades}}
+ <ui-section label='{{name}}' candystripe left>
+    <span>{{desc}}</span>
+    <span><br>Cost to unlock: {{lucidity_cost}}<br></span>
+    <ui-button
+      state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
+      action='upgrade'
+      params='{"id": "{{id}}"}'>
+      {{owned ? "Unlocked" : "Unlock"}}
+    </ui-button>
+  </ui-section>
+{{/each}}
+{{^data.upgrades}}
+  <span class='warning'>No upgrades available.</span>
+{{/data.upgrades}}
+</ui-display>
