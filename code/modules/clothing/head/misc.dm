@@ -208,6 +208,23 @@
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
+/obj/item/clothing/head/sombrero/equipped(mob/user, slot)
+	..()
+	if(!iscarbon(user))
+		return
+	if(slot == slot_head)
+		user.grant_language(/datum/language/spanish)
+		user.remove_language(/datum/language/common)//i want to temporarily remove all other languages. if theres a clean way to do this please say so
+
+/obj/item/clothing/head/sombrero/dropped(mob/user)
+	..()
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/C = user
+	if(C.get_item_by_slot(slot_gloves) == src)
+		C.grant_language(/datum/language/common)
+		C.remove_language(/datum/language/spanish)
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
