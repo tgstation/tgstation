@@ -1,5 +1,5 @@
 # What's this?
-This is a [Rust](https://www.rust-lang.org)-based library that is invoked throughout the /vg/station13 code.
+This is a [Rust](https://www.rust-lang.org)-based library that is invoked throughout the /tg/station13 code. It is initially from /vg/station13.
 
 # Uses:
 * UTF-8 handling.

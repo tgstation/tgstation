@@ -6,7 +6,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	if(message)
-		say(to_utf8(message, src))
+		say(CONFIG_GET(flag/use_libvg) ? to_utf8(message, src) : message)
 
 
 /mob/verb/whisper_verb(message as text)
@@ -28,8 +28,10 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = utf8_sanitize(message, usr, MAX_MESSAGE_LEN)
-
+	if(CONFIG_GET(flag/use_libvg))
+		message = utf8_sanitize(message, usr, MAX_MESSAGE_LEN)
+	else
+		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	usr.emote("me",1,message)
 
 /mob/proc/say_dead(var/message)

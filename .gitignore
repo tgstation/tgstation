@@ -196,3 +196,9 @@ tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompile
 
 #GitHub Atom
 .atom-build.json
+
+#Rust things
+target
+Cargo.lock
+# rustftm backups.
+*.rs.bk

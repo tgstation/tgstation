@@ -389,3 +389,5 @@
 
 /datum/config_entry/string/goonchat_encoding
 	value = "1252"
+
+/datum/config_entry/flag/use_libvg
