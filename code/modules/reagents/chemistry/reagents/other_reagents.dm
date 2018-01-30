@@ -200,6 +200,11 @@
 		data = 1
 	data++
 	M.jitteriness = min(M.jitteriness+4,10)
+	if(iscultist(M))
+		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
+			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				qdel(BS)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -216,7 +221,7 @@
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
-	if(data >= 75)	// 30 units, 135 seconds
+	if(data >= 60)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
@@ -245,7 +250,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("unholywater", (reac_volume/4))
+		M.reagents.add_reagent(id,reac_volume/4)
 		return
 	return ..()
 
@@ -255,17 +260,20 @@
 		M.AdjustUnconscious(-20, 0)
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
+		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
-	else
+		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume += 3
+	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustBrainLoss(3, 150)
-		M.adjustToxLoss(1, 0)
+		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god

@@ -2,9 +2,31 @@
 	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
+	light_power = 2
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
+
+/obj/structure/destructible/cult/proc/conceal() //for spells that hide cult presence
+	density = FALSE
+	visible_message("<span class='danger'>[src] fades away.</span>")
+	invisibility = INVISIBILITY_OBSERVER
+	alpha = 100 //To help ghosts distinguish hidden runes
+	light_range = 0
+	light_power = 0
+	update_light()
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/destructible/cult/proc/reveal() //for spells that reveal cult presence
+	density = initial(density)
+	invisibility = 0
+	visible_message("<span class='danger'>[src] suddenly appears!</span>")
+	alpha = initial(alpha)
+	light_range = initial(light_range)
+	light_power = initial(light_power)
+	update_light()
+	START_PROCESSING(SSfastprocess, src)
+
 
 /obj/structure/destructible/cult/examine(mob/user)
 	..()
@@ -33,7 +55,7 @@
 		..()
 
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/tome) && iscultist(user))
+	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
@@ -62,31 +84,32 @@
 		to_chat(user, "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>")
 		return
 	if(!anchored)
-		to_chat(user, "<span class='cult italic'>You need to anchor [src] to the floor with a tome first.</span>")
+		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
-	var/pickedtype
+	var/choice = alert(user,"You study the schematics etched into the altar...",,"Eldritch Whetstone","Construct Shells","Flask of Unholy Water")
+	var/list/pickedtype = list()
 	switch(choice)
 		if("Eldritch Whetstone")
-			pickedtype = /obj/item/sharpener/cult
-		if("Zealot's Blindfold")
-			pickedtype = /obj/item/clothing/glasses/night/cultblind
+			pickedtype += /obj/item/sharpener/cult
+		if("Construct Shells")
+			pickedtype += /obj/structure/constructshell
+			pickedtype += /obj/structure/constructshell
 		if("Flask of Unholy Water")
-			pickedtype = /obj/item/reagent_containers/food/drinks/bottle/unholywater
+			pickedtype += /obj/item/reagent_containers/glass/beaker/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		to_chat(user, "<span class='cult italic'>You kneel before the altar and your faith is rewarded with an [N]!</span>")
-
+		for(var/N in pickedtype)
+			new N(get_turf(src))
+			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
 
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
-	light_range = 3
+	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
@@ -95,30 +118,35 @@
 		to_chat(user, "<span class='warning'>The heat radiating from [src] pushes you back.</span>")
 		return
 	if(!anchored)
-		to_chat(user, "<span class='cult italic'>You need to anchor [src] to the floor with a tome first.</span>")
+		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
-	var/pickedtype
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
+	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
+		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
+	var/list/pickedtype = list()
 	switch(choice)
 		if("Shielded Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Bastard Sword")
 			if((world.time - SSticker.round_start_time) >= 12000)
-				pickedtype = /obj/item/twohanded/required/cult_bastard
+				pickedtype += /obj/item/twohanded/required/cult_bastard
 			else
 				cooldowntime = 12000 - (world.time - SSticker.round_start_time)
 				to_chat(user, "<span class='cult italic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
+		if("Mirror Shield")
+			pickedtype += /obj/item/shield/mirror
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		to_chat(user, "<span class='cult italic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>")
+		for(var/N in pickedtype)
+			new N(get_turf(src))
+			to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
 
 
 
@@ -126,7 +154,7 @@
 	name = "pylon"
 	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
-	light_range = 5
+	light_range = 1.5
 	light_color = LIGHT_COLOR_RED
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
@@ -159,7 +187,7 @@
 					if(isshade(L) || isconstruct(L))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
-							M.adjustHealth(-1)
+							M.adjustHealth(-3)
 				if(ishuman(L) && L.blood_volume < BLOOD_VOLUME_NORMAL)
 					L.blood_volume += 1.0
 			CHECK_TICK
@@ -199,7 +227,7 @@
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
-	light_range = 1.4
+	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
@@ -208,16 +236,16 @@
 		to_chat(user, "<span class='warning'>All of these books seem to be gibberish.</span>")
 		return
 	if(!anchored)
-		to_chat(user, "<span class='cult italic'>You need to anchor [src] to the floor with a tome first.</span>")
+		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
 		return
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
 	var/list/pickedtype = list()
 	switch(choice)
-		if("Supply Talisman")
-			pickedtype += /obj/item/paper/talisman/supply/weak
+		if("Zealot's Blindfold")
+			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
 		if("Shuttle Curse")
 			pickedtype += /obj/item/device/shuttle_curse
 		if("Veil Walker Set")
@@ -226,8 +254,8 @@
 	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
-			var/obj/item/D = new N(get_turf(src))
-			to_chat(user, "<span class='cult italic'>You summon [D] from the archives!</span>")
+			new N(get_turf(src))
+			to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
 
 /obj/effect/gateway
 	name = "gateway"

@@ -6,6 +6,7 @@
 	antagpanel_category = "Cult"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
+	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
@@ -58,7 +59,7 @@
 	var/mob/living/current = owner.current
 	add_objectives()
 	if(give_equipment)
-		equip_cultist()
+		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -67,18 +68,16 @@
 		current.client.images += cult_team.blood_target_image
 
 
-/datum/antagonist/cult/proc/equip_cultist(tome=FALSE)
+/datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
 	if (owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-
-	if(tome)
-		. += cult_give_item(/obj/item/tome, H)
-	else
-		. += cult_give_item(/obj/item/paper/talisman/supply, H)
+	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
+	if(metal)
+		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 
@@ -110,10 +109,11 @@
 		current = mob_override
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
-	current.verbs += /mob/living/proc/cult_help
-	if(!cult_team.cult_mastered)
+	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
+	if(ishuman(current))
+		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
@@ -123,9 +123,9 @@
 		current = mob_override
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
-	current.verbs -= /mob/living/proc/cult_help
 	vote.Remove(current)
 	communion.Remove(current)
+	magic.Remove(current)
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
@@ -153,16 +153,16 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Tome"] = CALLBACK(src,.proc/admin_give_tome)
-	.["Amulet"] = CALLBACK(src,.proc/admin_give_amulet)
+	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
+	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
 
-/datum/antagonist/cult/proc/admin_give_tome(mob/admin)
-	if(equip_cultist(owner.current,1))
-		to_chat(admin, "<span class='danger'>Spawning tome failed!</span>")
+/datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
+	if(!equip_cultist(FALSE))
+		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
-/datum/antagonist/cult/proc/admin_give_amulet(mob/admin)
-	if (equip_cultist(owner.current))
-		to_chat(admin, "<span class='danger'>Spawning amulet failed!</span>")
+/datum/antagonist/cult/proc/admin_give_metal(mob/admin)
+	if (!equip_cultist(TRUE))
+		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
@@ -218,7 +218,7 @@
 	var/blood_target_reset_timer
 
 	var/cult_vote_called = FALSE
-	var/cult_mastered = FALSE
+	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
 
 
