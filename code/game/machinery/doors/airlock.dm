@@ -51,7 +51,7 @@
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	interact_open = TRUE
 
-	var/security_level = 0 //How much are wires secured
+	var/security_level = AIRLOCK_SECURITY_NONE //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = FALSE // if true, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -100,7 +100,6 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	wires = new /datum/wires/airlock(src)
 	if (cyclelinkeddir)
 		cyclelinkairlock()
 	if(frequency)
@@ -111,9 +110,11 @@
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_METAL)
+		wires = new /datum/wires/airlock/secure(src)
 		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 	else
+		wires = new /datum/wires/airlock(src)
 		obj_integrity = normal_integrity
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
@@ -803,7 +804,7 @@
 					var/obj/item/crowbar/W = C
 					to_chat(user, "<span class='notice'>You start removing the inner layer of shielding...</span>")
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40*W.toolspeed, 1, target = src))
+					if(do_after(user, 20*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -837,7 +838,7 @@
 					var/obj/item/crowbar/W = C
 					to_chat(user, "<span class='notice'>You start removing outer layer of shielding...</span>")
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40*W.toolspeed, 1, target = src))
+					if(do_after(user, 20*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_O_S)
@@ -1613,14 +1614,6 @@
 #undef AIRLOCK_OPENING
 #undef AIRLOCK_DENY
 #undef AIRLOCK_EMAG
-
-#undef AIRLOCK_SECURITY_NONE
-#undef AIRLOCK_SECURITY_METAL
-#undef AIRLOCK_SECURITY_PLASTEEL_I_S
-#undef AIRLOCK_SECURITY_PLASTEEL_I
-#undef AIRLOCK_SECURITY_PLASTEEL_O_S
-#undef AIRLOCK_SECURITY_PLASTEEL_O
-#undef AIRLOCK_SECURITY_PLASTEEL
 
 #undef AIRLOCK_INTEGRITY_N
 #undef AIRLOCK_INTEGRITY_MULTIPLIER

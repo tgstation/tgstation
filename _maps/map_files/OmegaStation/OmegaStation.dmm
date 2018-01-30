@@ -5757,7 +5757,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/security/high_sec{
 	name = "Armoury";
 	req_access_txt = "3"
 	},
@@ -18886,7 +18886,7 @@
 /area/engine/gravity_generator)
 "aKs" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Gravity Generator Chamber";
 	req_access_txt = "19; 61"
 	},
@@ -19622,7 +19622,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/engine/supermatter)
 "aLR" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/high_sec{
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
 	},
@@ -19993,7 +19993,7 @@
 /area/tcommsat/server)
 "aML" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Telecomms Control Room";
 	req_access = null;
 	req_access_txt = "19; 61"
@@ -22028,7 +22028,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -22879,7 +22879,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aSM" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -24789,7 +24789,7 @@
 	name = "Xenobiology Containment Door"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Access";
 	req_access_txt = "30"
 	},
@@ -25085,7 +25085,7 @@
 	},
 /area/science/research)
 "aXF" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Research Division Server Room";
 	req_access = null;
 	req_access_txt = "30"
@@ -35064,7 +35064,7 @@
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNk" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 1;
 	name = "MiniSat External Access";
 	req_access = null;
@@ -35163,7 +35163,7 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNs" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Antechamber";
 	req_one_access_txt = "32;19"
 	},
@@ -35218,7 +35218,7 @@
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNy" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 1;
 	name = "MiniSat External Access";
 	req_access = null;

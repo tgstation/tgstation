@@ -5149,7 +5149,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nj" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "Telecommunications Control";
 	req_access_txt = "150"
 	},
@@ -5478,7 +5478,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nL" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "Telecommunications";
 	req_access_txt = "150"
 	},

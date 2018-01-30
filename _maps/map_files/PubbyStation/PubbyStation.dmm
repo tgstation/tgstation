@@ -649,7 +649,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
 "adv" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -703,7 +703,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "adB" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -749,7 +749,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/AIsatextAP)
 "adH" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -782,7 +782,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "adM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Chamber Observation";
 	req_one_access_txt = "65"
 	},
@@ -814,7 +814,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "adQ" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -1146,7 +1146,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "aeO" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Chamber Hallway";
 	req_one_access_txt = "65"
 	},
@@ -1173,7 +1173,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "aeS" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -1251,7 +1251,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
 "afc" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -1318,7 +1318,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afi" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
 	},
@@ -1756,7 +1756,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "agt" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 2;
 	name = "MiniSat External Access";
 	req_access = null;
@@ -1977,7 +1977,7 @@
 /turf/open/floor/plating,
 /area/security/main)
 "agR" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 1;
 	name = "MiniSat External Access";
 	req_access = null;
@@ -2127,7 +2127,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "ahm" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -2147,7 +2147,7 @@
 /turf/closed/wall,
 /area/security/prison)
 "ahp" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},
@@ -2666,14 +2666,13 @@
 /area/security/execution/transfer)
 "aiw" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	layer = 2.4
+	dir = 4
 	},
 /obj/machinery/door/window/southleft{
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Armory";
+	name = "Transfer Centre Atmos Control";
 	req_access_txt = "2"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -4258,10 +4257,7 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "ami" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Armory";
 	req_access_txt = "3"
 	},
@@ -4282,10 +4278,7 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "amk" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Armory";
 	req_access_txt = "3"
 	},
@@ -26662,7 +26655,7 @@
 /area/science/server)
 "bnU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Room";
 	req_access_txt = "30"
 	},
@@ -29043,7 +29036,7 @@
 /area/science/server)
 "btf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Server Room";
 	req_access = null;
 	req_access_txt = "30"
@@ -39853,7 +39846,7 @@
 /area/engine/gravity_generator)
 "bRH" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/high_sec{
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
@@ -39878,7 +39871,7 @@
 /area/engine/gravity_generator)
 "bRK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/high_sec{
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
@@ -44900,7 +44893,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cer" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/high_sec{
 	name = "Telecommunications Transit Tube";
 	req_access_txt = "10; 61"
 	},
@@ -47017,7 +47010,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "clz" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 2;
 	name = "Telecommunications External Access";
 	req_access = null;
@@ -47042,7 +47035,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "clD" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/high_sec{
 	cyclelinkeddir = 1;
 	name = "Telecommunications External Access";
 	req_access = null;
@@ -47130,7 +47123,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "clT" = (
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "Telecommunications Maintenance";
 	req_access_txt = "61"
 	},
@@ -47202,7 +47195,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cmd" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/high_sec{
 	name = "Telecommunications Chamber";
 	req_access_txt = "61"
 	},
@@ -47268,7 +47261,7 @@
 	},
 /area/tcommsat/computer)
 "cmj" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Control Room";
 	req_access_txt = "19; 61"
 	},
@@ -47397,7 +47390,7 @@
 	},
 /area/tcommsat/computer)
 "cmw" = (
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering/glass/high_sec{
 	cyclelinkeddir = 2;
 	name = "Server Room";
 	req_access_txt = "61"
@@ -47472,7 +47465,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "cmF" = (
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering/glass/high_sec{
 	cyclelinkeddir = 1;
 	name = "Server Room";
 	req_access_txt = "61"

@@ -9,15 +9,27 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
+	security_level = AIRLOCK_SECURITY_METAL
+
+/obj/machinery/door/airlock/command/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
+	security_level = AIRLOCK_SECURITY_METAL
+
+/obj/machinery/door/airlock/security/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
+	security_level = AIRLOCK_SECURITY_METAL
+
+/obj/machinery/door/airlock/engineering/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
@@ -49,6 +61,10 @@
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
+	security_level = AIRLOCK_SECURITY_METAL
+
+/obj/machinery/door/airlock/atmos/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
@@ -67,6 +83,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
 
 /obj/machinery/door/airlock/virology
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
 
@@ -84,14 +101,23 @@
 	glass = TRUE
 	normal_integrity = 400
 
+/obj/machinery/door/airlock/command/glass/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
+
 /obj/machinery/door/airlock/engineering/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/engineering/glass/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security/glass
 	opacity = 0
 	glass = TRUE
 	normal_integrity = 400
+
+/obj/machinery/door/airlock/security/glass/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security/glass/abandoned
 	abandoned = TRUE
@@ -111,6 +137,9 @@
 /obj/machinery/door/airlock/atmos/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/atmos/glass/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
@@ -293,6 +322,9 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 
+/obj/machinery/door/airlock/external/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL
+
 /obj/machinery/door/airlock/external/glass
 	opacity = 0
 	glass = TRUE
@@ -307,7 +339,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
-	security_level = 6
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 	explosion_block = 2
 
 /obj/machinery/door/airlock/centcom/abandoned
@@ -325,7 +357,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
-	security_level = 6
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 
 //////////////////////////////////
 /*
@@ -339,12 +371,18 @@
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
 
+/obj/machinery/door/airlock/hatch/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
+
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
+
+/obj/machinery/door/airlock/maintenance_hatch/high_sec
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/maintenance_hatch/abandoned
 	abandoned = TRUE
@@ -361,7 +399,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
 	normal_integrity = 500
-	security_level = 1
+	security_level = AIRLOCK_SECURITY_PLASTEEL_O
 	damage_deflection = 30
 
 //////////////////////////////////
@@ -374,6 +412,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
+	security_level = AIRLOCK_SECURITY_METAL
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = 0
@@ -391,7 +430,7 @@
 	hackProof = TRUE
 	aiControlDisabled = 1
 	normal_integrity = 700
-	security_level = 1
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 
 //////////////////////////////////
 /*
@@ -402,6 +441,7 @@
 	name = "cult airlock"
 	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
 	aiControlDisabled = TRUE
@@ -478,6 +518,7 @@
 	desc = "A massive cogwheel set into two heavy slabs of brass."
 	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
+	security_level = AIRLOCK_SECURITY_PLASTEEL
 	hackProof = TRUE
 	aiControlDisabled = TRUE
 	req_access = list(ACCESS_CLOCKCULT)

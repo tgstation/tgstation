@@ -1857,14 +1857,14 @@
 /turf/closed/wall,
 /area/security/prison)
 "aem" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 3";
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aen" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 2";
 	req_access_txt = "2"
 	},
@@ -1875,7 +1875,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aeo" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/security/glass/high_sec{
 	name = "Long-Term Cell 1";
 	req_access_txt = "2"
 	},
@@ -3657,9 +3657,8 @@
 /area/crew_quarters/heads/hos)
 "ahP" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/security/high_sec{
 	name = "Armory";
-	req_access = null;
 	req_access_txt = "3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -7149,7 +7148,7 @@
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "apj" = (
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Gravity Generator Area";
 	req_access_txt = "19; 61"
 	},
@@ -27681,7 +27680,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
 "bgc" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -32491,7 +32490,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Foyer";
 	req_one_access_txt = "32;19"
 	},
@@ -32529,7 +32528,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Antechamber";
 	req_one_access_txt = "32;19"
 	},
@@ -32591,7 +32590,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "32"
 	},
@@ -32633,7 +32632,7 @@
 /area/ai_monitored/storage/satellite)
 "bpX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "32"
 	},
@@ -33594,7 +33593,7 @@
 /area/engine/break_room)
 "brK" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Access";
 	req_one_access_txt = "32;19"
 	},
@@ -34685,7 +34684,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
 "btN" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "Telecomms Control Room";
 	req_one_access_txt = "19; 61"
 	},
@@ -35414,7 +35413,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "bvs" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -35788,7 +35787,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwl" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -38804,7 +38803,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/server)
 "bCF" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "Telecomms Server Room"
 	},
 /obj/structure/cable/yellow{
@@ -42422,7 +42421,7 @@
 "bKt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/high_sec{
 	name = "Telecomms Storage";
 	req_access_txt = "61"
 	},
@@ -66683,7 +66682,7 @@
 /area/science/research)
 "cHZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Research Division Server Room";
 	req_access = null;
 	req_access_txt = "30"
@@ -67149,7 +67148,7 @@
 /area/science/server)
 "cIX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Server Access";
 	req_access_txt = "30"
 	},
