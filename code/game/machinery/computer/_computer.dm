@@ -72,7 +72,7 @@
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(circuit && !(flags_1&NODECONSTRUCT_1))
 		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
-		if(I.use_tool(src, user, 40, volume=50))
+		if(I.use_tool(src, user, 20, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
 

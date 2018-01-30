@@ -132,7 +132,7 @@
 				to_chat(user, "<span class='notice'>You begin welding the metal cover back to the frame...</span>")
 				if(W.use_tool(src, user, 60, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
-						return 1
+						return TRUE
 					d_state = COVER
 					update_icon()
 					to_chat(user, "<span class='notice'>The metal cover has been welded securely to the frame.</span>")
@@ -199,7 +199,7 @@
 				to_chat(user, "<span class='notice'>You begin welding the support rods back together...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
-						return 1
+						return TRUE
 					d_state = SUPPORT_RODS
 					update_icon()
 					to_chat(user, "<span class='notice'>You weld the support rods back together.</span>")
