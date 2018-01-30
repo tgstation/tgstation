@@ -27,7 +27,7 @@
 		return
 
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT id, json FROM [format_table_name("preferences")] WHERE owner = '[ckey_owner]'")
+		var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT id, json FROM [format_table_name("preferences")] WHERE owner = [sanitizeSQL(ckey_owner)]")
 		if(Q.Execute() && Q.NextRow())
 			do
 				var/datum/preference_slot/P = new
