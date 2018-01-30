@@ -46,19 +46,9 @@
 	for(var/spell in construct_spells)
 		var/the_spell = new spell(null)
 		AddSpell(the_spell)
-		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
-		var/pos = 2+spellnum*31
-		if(construct_spells.len >= 4)
-			pos -= 31*(construct_spells.len - 4)
-		S.action.button.screen_loc = "6:[pos],4:-2"
-		S.action.button.moved = "6:[pos],4:-2"
-		spellnum++
 	if(runetype)
 		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
 		CR.Grant(src)
-		var/pos = 2+spellnum*31
-		CR.button.screen_loc = "6:[pos],4:-2"
-		CR.button.moved = "6:[pos],4:-2"
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
