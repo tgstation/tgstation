@@ -53515,7 +53515,7 @@
 	},
 /area/tcommsat/server)
 "cex" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
