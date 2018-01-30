@@ -32,7 +32,7 @@
 	report += printplayerlist(members)
 
 	if(objectives.len)
-		repot += "<span class='header'>Team had following objectives:</span>
+		report += "<span class='header'>Team had following objectives:</span>"
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective in objectives)
