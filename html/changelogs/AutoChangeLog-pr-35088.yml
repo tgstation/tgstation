@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - imageadd: "MMI dead sprite will now show a red light and no eyes instead of X-crossed eyes"

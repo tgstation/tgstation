@@ -2,7 +2,7 @@
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
 	icon = 'icons/obj/bloodpack.dmi'
-	icon_state = "empty"
+	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
 	var/labelled = 0
@@ -31,14 +31,14 @@
 			name = "blood pack"
 
 /obj/item/reagent_containers/blood/update_icon()
-	var/percent = round((reagents.total_volume / volume) * 100)
-	switch(percent)
-		if(0 to 9)
-			icon_state = "empty"
-		if(10 to 50)
-			icon_state = "half"
-		if(51 to INFINITY)
-			icon_state = "full"
+	cut_overlays()
+
+	var/v = min(round(reagents.total_volume / volume * 10), 10)
+	if(v > 0)
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack1")
+		filling.icon_state = "bloodpack[v]"
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"

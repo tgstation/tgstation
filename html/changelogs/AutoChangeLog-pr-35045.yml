@@ -1,0 +1,4 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - bugfix: "Turrets now check for borgs. Syndicate turrets are nice to emagged borgs too!"

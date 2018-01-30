@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Defibrillator mounts can now be found in the CMO's locker or produced from a medical protolathe after Biotech is unlocked. They can be attached to walls, and hold defibrillators for public use. You can swipe an ID to clamp the defibrillator in place, and it will automatically draw from the powernet to recharge it. Being one tile away from the mount will force you to drop the paddles."

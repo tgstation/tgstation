@@ -44,6 +44,12 @@
 		decryptkey = GenerateKey()
 	pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
 
+/obj/machinery/telecomms/message_server/Destroy()
+	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
+		if(monitor.linkedServer && monitor.linkedServer == src)
+			monitor.linkedServer = null
+	. = ..()
+
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
 	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
@@ -77,11 +83,6 @@
 		icon_state = "server-off"
 	else
 		icon_state = "server-on"
-
-
-// Repath for maps
-/obj/machinery/message_server
-	parent_type = /obj/machinery/telecomms/message_server
 
 
 // PDA signal datum
