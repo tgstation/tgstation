@@ -836,6 +836,6 @@
 	name = "Holodisk"
 	id = "holodisk"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1000)
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")

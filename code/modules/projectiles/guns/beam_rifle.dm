@@ -42,7 +42,7 @@
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
-	var/list/obj/effect/projectile_beam/current_tracers
+	var/list/obj/effect/projectile/tracer/current_tracers
 
 	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
 	var/structure_bleed_coeff = 0.7
@@ -546,93 +546,28 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
-	var/tracer_type = /obj/effect/projectile_beam/tracer
-	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end.
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
 	var/constant_tracer = FALSE
-	var/beam_index
 
-/obj/item/projectile/beam/beam_rifle/hitscan/Destroy()
-	if(loc)
-		var/datum/point/pcache = trajectory.copy_to()
-		beam_segments[beam_index] = pcache
-	generate_tracers(constant_tracer)
-	return ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/Collide(atom/target)
-	var/datum/point/pcache = trajectory.copy_to()
-	. = ..()
-	if(. && !QDELETED(src))	//successful touch and not destroyed.
-		beam_segments[beam_index] = pcache
-		beam_index = pcache
-		beam_segments[beam_index] = null
-
-/obj/item/projectile/beam/beam_rifle/hitscan/before_z_change(turf/oldloc, turf/newloc)
-	var/datum/point/pcache = trajectory.copy_to()
-	beam_segments[beam_index] = pcache
-	beam_index = RETURN_PRECISE_POINT(newloc)
-	beam_segments[beam_index] = null
-	return ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/proc/generate_tracers(highlander = FALSE, cleanup = TRUE)
+/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, highlander)
 	set waitfor = FALSE
+	if(isnull(highlander))
+		highlander = constant_tracer
 	if(highlander && istype(gun))
 		QDEL_LIST(gun.current_tracers)
 		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_projectile_beam_between_points(p, beam_segments[p], tracer_type, color, 0)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0)
 	else
 		for(var/datum/point/p in beam_segments)
-			generate_projectile_beam_between_points(p, beam_segments[p], tracer_type, color, 5)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration)
 	if(cleanup)
 		QDEL_LIST(beam_segments)
 		beam_segments = null
 		QDEL_NULL(beam_index)
 
-/obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
-	set waitfor = FALSE
-	var/turf/starting = get_turf(src)
-	trajectory = new(starting.x, starting.y, starting.z, 0, 0, setAngle? setAngle : Angle, 33)
-	if(!log_override && firer && original)
-		add_logs(firer, original, "fired at", src, " [get_area(src)]")
-	fired = TRUE
-	if(setAngle)
-		Angle = setAngle
-	var/safety = 0	//The code works fine, but... just in case...
-	var/turf/c2
-	beam_segments = list()	//initialize segment list with the list for the first segment
-	beam_index = RETURN_PRECISE_POINT(src)
-	beam_segments[beam_index] = null	//record start.
-	if(spread)
-		Angle += (rand() - 0.5) * spread
-	while(loc)
-		if(paused || QDELETED(src))
-			return
-		if(++safety > (range * 3))	//If it's looping for way, way too long...
-			qdel(src)
-			stack_trace("WARNING: [type] projectile encountered infinite recursion in [__FILE__]/[__LINE__]!")
-			return	//Kill!
-		var/matrix/M = new
-		M.Turn(Angle)
-		transform = M
-		trajectory.increment()
-		var/turf/T = trajectory.return_turf()
-		if(T.z != loc.z)
-			before_z_change(loc, T)
-			trajectory_ignore_forcemove = TRUE
-			forceMove(T)
-			trajectory_ignore_forcemove = FALSE
-		else
-			step_towards(src, T)
-		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
-
-		if(can_hit_target(original, permutated))
-			Collide(original)
-		Range()
-		c2 = get_turf(src)
-	if(istype(c2))
-		cached = c2
-
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
-	tracer_type = /obj/effect/projectile_beam/tracer/aiming
+	tracer_type = /obj/effect/projectile/tracer/tracer/aiming
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null

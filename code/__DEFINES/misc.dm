@@ -58,8 +58,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
@@ -88,8 +89,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
+#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
 #define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
+#define UNDER_SHOES_LAYER			SHOES_LAYER+1
 #define UNDER_EARS_LAYER			EARS_LAYER+1
 #define UNDER_SUIT_LAYER			SUIT_LAYER+1
 #define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
@@ -114,8 +116,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
+#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
 #define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
+#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
 #define ABOVE_EARS_LAYER			EARS_LAYER-1
 #define ABOVE_SUIT_LAYER			SUIT_LAYER-1
 #define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1

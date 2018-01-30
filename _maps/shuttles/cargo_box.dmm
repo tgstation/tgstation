@@ -1,14 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
 "b" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"c" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"d" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "e" = (
@@ -74,25 +65,8 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"k" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
 "l" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/supply)
-"m" = (
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f6"
-	},
-/area/shuttle/supply)
-"n" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"o" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"p" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "q" = (
 /obj/structure/window/reinforced{
@@ -100,9 +74,6 @@
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"r" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "s" = (
 /turf/template_noop,

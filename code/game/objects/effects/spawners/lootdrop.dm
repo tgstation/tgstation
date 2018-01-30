@@ -1,7 +1,7 @@
 /obj/effect/spawner/lootdrop
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "x2"
-	color = "#00FF00"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"
+	layer = OBJ_LAYER
 	var/lootcount = 1		//how many items will be spawned
 	var/lootdoubles = TRUE	//if the same item can be spawned twice
 	var/list/loot			//a list of possible items to spawn e.g. list(/obj/item, /obj/structure, /obj/effect)
@@ -113,10 +113,10 @@
 /obj/effect/spawner/lootdrop/organ_spawner
 	name = "organ spawner"
 	loot = list(
-		/obj/item/organ/heart/gland/bloody = 7,
-		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/electric = 3,
+		/obj/item/organ/heart/gland/trauma = 4,
 		/obj/item/organ/heart/gland/egg = 7,
-		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
 		/obj/item/organ/heart/gland/pop = 5,

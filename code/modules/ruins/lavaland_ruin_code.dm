@@ -103,6 +103,9 @@
 	outfit = /datum/outfit/lavaland_syndicate
 	assignedrole = "Lavaland Syndicate"
 
+/obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
+	new_spawn.grant_language(/datum/language/codespeak)
+
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"
 	r_hand = /obj/item/gun/ballistic/automatic/sniper_rifle

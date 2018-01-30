@@ -80,13 +80,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	// return TRUE if found, FALSE if not found
 	return signal && (!freq_listening.len || (signal.frequency in freq_listening))
 
-
-/obj/machinery/telecomms/New()
-	GLOB.telecomms_list += src
-	..()
-
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
+	GLOB.telecomms_list += src
 	if(mapload && autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)

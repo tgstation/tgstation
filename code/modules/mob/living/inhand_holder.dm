@@ -54,7 +54,7 @@
 		var/mob/living/L = loc
 		to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
 		L.dropItemToGround(src)
-	held_mob.forceMove(get_turf(src))
+	held_mob.forceMove(get_turf(held_mob))
 	held_mob.reset_perspective()
 	held_mob.setDir(SOUTH)
 	held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")

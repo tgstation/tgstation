@@ -11,6 +11,12 @@
 
 	var/minetype = "lavaland"
 
+	var/shuttles = list(
+		"cargo" = "cargo_box",
+		"ferry" = "ferry_fancy",
+		"whiteship" = "whiteship_box",
+		"emergency" = "emergency_box")
+
 	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
@@ -69,6 +75,12 @@
 	map_path = json["map_path"]
 	map_file = json["map_file"]
 
+	if(islist(json["shuttles"]))
+		var/list/L = json["shuttles"]
+		for(var/key in L)
+			var/value = L[key]
+			shuttles[key] = value
+
 	minetype = json["minetype"] || minetype
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
@@ -81,11 +93,15 @@
 
 	defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
 	CHECK_EXISTS("map_name")
 	CHECK_EXISTS("map_path")
 	CHECK_EXISTS("map_file")
+
+	var/shuttles = json["shuttles"]
+	if(shuttles && !islist(shuttles))
+		log_world("json\[shuttles\] is not a list!")
 
 	var/path = GetFullMapPath(json["map_path"], json["map_file"])
 	if(!fexists(path))

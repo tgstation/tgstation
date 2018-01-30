@@ -4,7 +4,6 @@
 	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
-	hooded = 1
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()

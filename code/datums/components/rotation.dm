@@ -63,10 +63,10 @@
 	if(rotation_flags & ROTATION_ALTCLICK)
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/datum/component/simple_rotation/proc/HandRot(mob/user, rotation)
-	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
+/datum/component/simple_rotation/proc/HandRot(mob/user, rotation = default_rotation_direction)
+	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
 		return
-	BaseRot(user,default_rotation_direction)
+	BaseRot(user, rotation)
 
 /datum/component/simple_rotation/proc/WrenchRot(obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))

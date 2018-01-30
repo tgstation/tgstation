@@ -134,7 +134,7 @@
 				/obj/item/grenade/plastic/c4 = 7,
 				/obj/item/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
-				/obj/item/clothing/shoes/chameleon = 10,
+				/obj/item/clothing/shoes/chameleon/noslip = 10,
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 

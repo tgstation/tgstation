@@ -710,21 +710,20 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/storage/box/syndie_kit/chameleon
-	cost = 4
+	cost = 2 
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
 			They do not work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 4
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1062,8 +1061,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
-	item = /obj/item/slimepotion/sentience/nuclear
-	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication."
+	item = /obj/item/slimepotion/slime/sentience/nuclear
+	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1212,6 +1211,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/reverse_bear_trap
+	name = "Reverse Bear Trap"
+	desc = "An ingenious execution device worn on (or forced onto) the head. Arming it starts a 1-minute kitchen timer mounted on the bear trap. When it goes off, the trap's jaws will \
+	violently open, instantly killing anyone wearing it by tearing their jaws in half. To arm, attack someone with it while they're not wearing headgear, and you will force it onto their \
+	head after three seconds uninterrupted."
+	cost = 5
+	item = /obj/item/device/reverse_bear_trap
+	restricted_roles = list("Clown")
+
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
@@ -1284,6 +1292,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+
+/datum/uplink_item/device_tools/clown_bomb
+	name = "Clown Bomb"
+	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
+			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
+			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+			be defused, and some crew may attempt to do so."
+	item = /obj/item/device/sbeacondrop/clownbomb
+	cost = 15
+	restricted_roles = list("Clown")
 
 // Pointless
 /datum/uplink_item/badass
@@ -1362,7 +1381,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
-	
+
 /datum/uplink_item/badass/surplus/super
 	name = "Super Surplus Crate"
 	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \

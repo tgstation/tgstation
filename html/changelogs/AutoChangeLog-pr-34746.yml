@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - imageadd: "Autolathe now repeats it's animation while printing."
