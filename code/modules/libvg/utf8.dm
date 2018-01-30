@@ -1,4 +1,4 @@
-#define LIBVG_LIB "./libvg.[world.system_type == UNIX ? "so" : "dll"]"
+#define LIBVG_LIB "libvg.[world.system_type == UNIX ? "so" : "dll"]"
 GLOBAL_VAR_INIT(libvg_loaded, FALSE)
 /proc/LIBVG(function, list/arguments)
 	if(fexists(LIBVG_LIB))
