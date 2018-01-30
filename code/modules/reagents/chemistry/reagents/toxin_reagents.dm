@@ -244,8 +244,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
-	M.damageoverlaytemp = 60
-	M.update_damage_hud()
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.damageoverlaytemp = 60
+		C.update_damage_hud()
 	M.blur_eyes(3)
 	return ..()
 
