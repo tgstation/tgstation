@@ -801,7 +801,7 @@
 					var/obj/item/crowbar/W = C
 					to_chat(user, "<span class='notice'>You start removing the inner layer of shielding...</span>")
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40*W.toolspeed, 1, target = src))
+					if(do_after(user, 20*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -835,7 +835,7 @@
 					var/obj/item/crowbar/W = C
 					to_chat(user, "<span class='notice'>You start removing outer layer of shielding...</span>")
 					playsound(src, W.usesound, 100, 1)
-					if(do_after(user, 40*W.toolspeed, 1, target = src))
+					if(do_after(user, 20*W.toolspeed, 1, target = src))
 						if(!panel_open)
 							return
 						if(security_level != AIRLOCK_SECURITY_PLASTEEL_O_S)

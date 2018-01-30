@@ -9,19 +9,19 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
-	security_level = AIRLOCK_SECURITY_PLASTEEL_I
+	security_level = AIRLOCK_SECURITY_METAL
 
 /obj/machinery/door/airlock/command/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	security_level = AIRLOCK_SECURITY_PLASTEEL_O
+	security_level = AIRLOCK_SECURITY_METAL
 
 /obj/machinery/door/airlock/security/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -29,7 +29,7 @@
 	security_level = AIRLOCK_SECURITY_METAL
 
 /obj/machinery/door/airlock/engineering/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/engineering/abandoned
 	abandoned = TRUE
@@ -64,7 +64,7 @@
 	security_level = AIRLOCK_SECURITY_METAL
 
 /obj/machinery/door/airlock/atmos/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
@@ -102,14 +102,14 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/command/glass/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/engineering/glass
 	opacity = 0
 	glass = TRUE
 
 /obj/machinery/door/airlock/engineering/glass/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security/glass
 	opacity = 0
@@ -117,7 +117,7 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/security/glass/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/security/glass/abandoned
 	abandoned = TRUE
@@ -139,7 +139,7 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/atmos/glass/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
@@ -372,7 +372,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
 
 /obj/machinery/door/airlock/hatch/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
@@ -382,7 +382,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 
 /obj/machinery/door/airlock/maintenance_hatch/high_sec
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_I
 
 /obj/machinery/door/airlock/maintenance_hatch/abandoned
 	abandoned = TRUE
@@ -399,7 +399,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
 	normal_integrity = 500
-	security_level = AIRLOCK_SECURITY_PLASTEEL
+	security_level = AIRLOCK_SECURITY_PLASTEEL_O
 	damage_deflection = 30
 
 //////////////////////////////////
