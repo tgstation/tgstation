@@ -17,6 +17,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
+	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -206,6 +207,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/auto_custom
 	show_in_antagpanel = FALSE
 	antagpanel_category = "Other"
+	show_name_in_check_antagonists = TRUE
 
 /datum/antagonist/auto_custom/on_gain()
 	..()
@@ -219,12 +221,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 			already_registered_objectives |= A.objectives
 	objectives = owner.objectives - already_registered_objectives
 
-/datum/antagonist/auto_custom/antag_listing_name()
-	return ..() + "([name])"
-
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
+	show_name_in_check_antagonists = TRUE //They're all different
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
 	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
@@ -233,6 +233,3 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
-
-/datum/antagonist/custom/antag_listing_name()
-	return ..() + "([name])"
