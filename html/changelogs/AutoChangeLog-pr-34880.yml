@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Stargazers have been removed."
-  - balance: "The clockwork cult now has a power cap of 50 kW."
-  - balance: "Script scripture is now unlocked at 25 kW, and Application at 40 kW, instead of 50 kW and 100 kW."
-  - tweak: "Important scriptures are now displayed with italicized names."

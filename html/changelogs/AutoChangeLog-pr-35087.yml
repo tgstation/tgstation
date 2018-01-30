@@ -1,4 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - bugfix: "Bloodpacks will have their colors defined by the reagents"

@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Slimepeople can now host multiple minds in their body pool; occupied bodies will be marked as such in the bodyswap panel."
-  - tweak: "Slimepeople now retain 45% of their slime volume upon splitting instead of a fixed amount."

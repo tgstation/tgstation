@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Subjects without hearts now display as unsuitable for abductor experiments when probed with the advanced baton."
