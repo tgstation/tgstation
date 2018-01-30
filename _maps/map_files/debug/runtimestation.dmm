@@ -304,7 +304,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aU" = (
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering/glass/high_sec{
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
@@ -333,7 +333,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aX" = (
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering/glass/high_sec{
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"

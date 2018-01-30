@@ -7845,7 +7845,7 @@
 /area/engine/atmospherics_engine)
 "arm" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/glass/high_sec{
 	name = "Reflector Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
@@ -7871,7 +7871,7 @@
 /area/engine/atmospherics_engine)
 "aro" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/glass/high_sec{
 	name = "Reflector Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
@@ -12455,7 +12455,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aAW" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/high_sec{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "0";
@@ -16269,8 +16269,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/door/airlock/atmos{
-	name = "Atmospherics Access";
+/obj/machinery/door/airlock/atmos/high_sec{
+	name = "Atmospherics Engine Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
 	},
@@ -16293,7 +16293,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/high_sec{
 	name = "Atmospherics Engine Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
@@ -18194,8 +18194,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/door/airlock/atmos{
-	name = "Atmospherics Access";
+/obj/machinery/door/airlock/atmos/high_sec{
+	name = "Atmospherics Engine Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
 	},
@@ -18217,7 +18217,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/high_sec{
 	name = "Atmospherics Engine Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
@@ -35803,8 +35803,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/machinery/door/airlock/atmos{
-	name = "Atmospherics Access";
+/obj/machinery/door/airlock/atmos/high_sec{
+	name = "Atmospherics Engine Access";
 	req_access_txt = "0";
 	req_one_access_txt = "24;10"
 	},
@@ -40166,7 +40166,7 @@
 /area/engine/gravity_generator)
 "bEp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command/glass/high_sec{
 	name = "Gravity Generator Chamber";
 	req_access_txt = "19; 61"
 	},
@@ -42992,7 +42992,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Transit Tube Access";
 	req_one_access_txt = "32;19"
 	},
@@ -43423,7 +43423,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	name = "Telecomms Control Room";
 	req_access = null;
 	req_access_txt = "19; 61"
@@ -44920,7 +44920,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Exterior Access";
 	req_one_access_txt = "32;19"
 	},
@@ -44965,7 +44965,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	cyclelinkeddir = 4;
 	name = "MiniSat Exterior Access";
 	req_one_access_txt = "32;19"
@@ -44992,7 +44992,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	cyclelinkeddir = 8;
 	name = "MiniSat Exterior Access";
 	req_one_access_txt = "32;19"
@@ -46892,7 +46892,7 @@
 /turf/open/floor/plating,
 /area/engine/transit_tube)
 "bRW" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Transit Tube Access";
 	req_one_access_txt = "32;19"
 	},
@@ -48468,7 +48468,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -48899,7 +48899,7 @@
 /area/aisat)
 "bVu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Maintenance";
 	req_access_txt = "16"
 	},
@@ -48972,7 +48972,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance_hatch{
+/obj/machinery/door/airlock/maintenance_hatch/high_sec{
 	name = "MiniSat Antechamber";
 	req_access_txt = "16"
 	},
@@ -49054,7 +49054,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Antechamber";
 	req_one_access_txt = "32;19"
 	},
@@ -49098,7 +49098,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/hatch/high_sec{
 	name = "MiniSat Access";
 	req_one_access_txt = "32;19"
 	},
@@ -50133,7 +50133,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/security/high_sec{
 	name = "Armoury";
 	req_access_txt = "3"
 	},
@@ -50883,7 +50883,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 1;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -51295,7 +51295,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/security{
+/obj/machinery/door/airlock/security/high_sec{
 	name = "Armoury";
 	req_access_txt = "3"
 	},
@@ -56093,7 +56093,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -57426,7 +57426,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 1;
 	name = "Telecomms Server Room";
 	req_access = null;
@@ -59529,7 +59529,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/high_sec{
 	cyclelinkeddir = 0;
 	name = "Telecomms Foyer";
 	req_access = null;
