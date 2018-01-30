@@ -1,16 +1,15 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	var/level = 2
 
-	var/flags_1 = 0
-	var/flags_2 = 0
+	var/flags_1 = NONE
+	var/flags_2 = NONE
 	var/container_type = NONE
-	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
-	var/datum/reagents/reagents = null
+	var/admin_spawned = NONE	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = null
+	var/list/image/hud_list
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
