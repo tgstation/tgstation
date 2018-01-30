@@ -395,7 +395,7 @@
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ERTOperative.key = chosen_candidate.key
-			ERTOperative.mind.assigned_role = deathsquad ? "ERT" : "Death Commando"
+			
 			if(CONFIG_GET(flag/enforce_human_authority))
 				ERTOperative.set_species(/datum/species/human)
 
@@ -407,6 +407,8 @@
 			else
 				ert_antag.role = deathsquad ? DEATHSQUAD : role_order[WRAP(numagents,1,role_order.len + 1)]
 			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
+			
+			ERTOperative.mind.assigned_role = ert_antag.name
 			
 			//Logging and cleanup
 			log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
