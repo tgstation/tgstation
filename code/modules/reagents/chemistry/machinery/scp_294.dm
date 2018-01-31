@@ -1,3 +1,12 @@
+//////////////////////////////////////////
+//				SCP 294					//
+//										//
+//	This is a child of a chemistry		//
+//	dispenser. Info of how it works at	//
+//	http://www.scp-wiki.net/scp-294		//
+//										//
+//////////////////////////////////////////
+
 /obj/machinery/chem_dispenser/scp_294
 	name = "\improper strange coffee machine"
 	desc = "It appears to be a standard coffee vending machine, the only noticeable difference being an entry touchpad with buttons corresponding to a Galactic Common QWERTY keyboard."
