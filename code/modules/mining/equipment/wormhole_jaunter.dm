@@ -28,16 +28,6 @@
 /obj/item/device/wormhole_jaunter/proc/get_destinations(mob/user)
 	var/list/destinations = list()
 
-	if(isgolem(user))
-		for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
-			var/turf/T = get_turf(B)
-			if(istype(T.loc, /area/ruin/powered/golem_ship))
-				destinations += B
-
-	// In the event golem beacon is destroyed, send to station instead
-	if(destinations.len)
-		return destinations
-
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
 		if(is_station_level(T.z))

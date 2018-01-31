@@ -126,7 +126,7 @@
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
 	if(isobj(O) && proximity)
-		if(O.unique_rename)
+		if(O.obj_flags & UNIQUE_RENAME)
 			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
 			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
 
@@ -196,7 +196,7 @@
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
-		embed_chance = initial(embed_chance)
+		embedding = embedding.setRating(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
@@ -206,7 +206,7 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embed_chance = 100 //rule of cool
+		embedding = embedding.setRating(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")

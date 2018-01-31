@@ -163,6 +163,22 @@
 	build_path = /obj/item/electronics/firealarm
 	category = list("initial", "Electronics")
 
+/datum/design/camera
+	name = "Camera"
+	id = "camera"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 100)
+	build_path = /obj/item/device/camera
+	category = list("initial", "Misc")
+
+/datum/design/camera_film
+	name = "Camera Film Cartridge"
+	id = "camera_film"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
+	build_path = /obj/item/device/camera_film
+	category = list("initial", "Misc")
+
 /datum/design/earmuffs
 	name = "Earmuffs"
 	id = "earmuffs"
@@ -436,7 +452,7 @@
 	id = "tape"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 20, MAT_GLASS = 5)
-	build_path = /obj/item/device/tape
+	build_path = /obj/item/device/tape/random
 	category = list("initial", "Misc")
 
 /datum/design/igniter
@@ -820,6 +836,6 @@
 	name = "Holodisk"
 	id = "holodisk"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1000)
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")

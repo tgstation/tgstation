@@ -93,7 +93,7 @@
 /obj/item/paper/contract/infernal/New(atom/loc, mob/living/nTarget, datum/mind/nOwner)
 	..()
 	owner = nOwner
-	devil_datum = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	devil_datum = owner.has_antag_datum(/datum/antagonist/devil)
 	target = nTarget
 	update_text()
 
@@ -202,7 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-	if(user.has_disability(DISABILITY_DUMB))
+	if(user.has_trait(TRAIT_DUMB))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0
@@ -251,12 +251,12 @@
 /obj/item/paper/contract/infernal/proc/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = TRUE
 	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
-		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
+		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
 		ownerDevilInfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
-	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(/datum/antagonist/devil)
 	devilInfo.add_soul(user.mind)
 	update_text(user.real_name, blood)
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")

@@ -632,7 +632,7 @@
 	if(!has_corpse)
 		var/turf/T = get_turf(H)
 		H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
-		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE)
+		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE)
 		for(var/i in 1 to rand(3, 5))
 			new/obj/item/clockwork/alloy_shards/small(T)
 		new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
@@ -727,7 +727,7 @@
 /obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
-	if(cloth_golem.suiciding || cloth_golem.has_disability(DISABILITY_NOCLONE))
+	if(cloth_golem.suiciding || cloth_golem.has_trait(TRAIT_NOCLONE))
 		QDEL_NULL(cloth_golem)
 		return
 

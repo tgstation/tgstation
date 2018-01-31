@@ -299,7 +299,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 
-	if(H.has_disability(DISABILITY_HUSK))
+	if(H.has_trait(TRAIT_HUSK))
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(HD && !(H.has_disability(DISABILITY_HUSK)))
+	if(HD && !(H.has_trait(TRAIT_HUSK)))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -451,18 +451,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		var/mutable_appearance/eye_overlay
-		if(!has_eyes)
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-		else
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
-		if((EYECOLOR in species_traits) && has_eyes)
-			eye_overlay.color = "#" + H.eye_color
-		if(OFFSET_FACE in H.dna.species.offset_features)
-			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-		standing += eye_overlay
+		if(!(NOEYES in species_traits))
+			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/eye_overlay
+			if(!has_eyes)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+			else
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			if((EYECOLOR in species_traits) && has_eyes)
+				eye_overlay.color = "#" + H.eye_color
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -624,6 +625,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				if("moth_wings")
+					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -644,7 +647,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			if(!(H.has_disability(DISABILITY_HUSK)))
+			if(!(H.has_trait(TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
@@ -939,17 +942,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
-	//The fucking DISABILITY_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.has_disability(DISABILITY_FAT))//I share your pain, past coder.
+	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	if(H.has_trait(TRAIT_FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.remove_disability(DISABILITY_FAT, OBESITY)
+			H.remove_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
-			H.add_disability(DISABILITY_FAT, OBESITY)
+			H.add_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1057,13 +1060,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		flight = 1
 
 	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
-		if(H.status_flags & GOTTAGOFAST)
+		if(H.has_trait(TRAIT_GOTTAGOFAST))
 			. -= 1
-		if(H.status_flags & GOTTAGOREALLYFAST)
+		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
 		. += speedmod
 
-	if(H.status_flags & IGNORESLOWDOWN)
+	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
 
 	if(H.has_gravity())
@@ -1106,7 +1109,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 25)
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
-		if(H.has_disability(DISABILITY_FAT))
+		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
@@ -1121,7 +1124,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
+	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)
 		if(target != user)
 			add_logs(user, target, "shaked")
@@ -1152,7 +1155,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.has_disability(DISABILITY_PACIFISM))
+	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(target.check_block())
@@ -1450,24 +1453,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/loc_temp = H.get_temperature(environment)
 
-	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
-	if(H.stat != DEAD)
-		H.natural_bodytemperature_stabilization()
-
-	//Then, it reacts to the surrounding atmosphere based on your thermal protection
+	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
+	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		if(loc_temp < H.bodytemperature)
-			//Place is colder than we are
-			var/thermal_protection = H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
-		else
-			//Place is hotter than we are
-			var/thermal_protection = H.get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
+		if((abs(BODYTEMP_NORMAL - H.bodytemperature) <= 5) && (abs(BODYTEMP_NORMAL - loc_temp) <= 25))
+			return //Performance saver
+		var/natural = 0
+		if(H.stat != DEAD)
+			natural = H.natural_bodytemperature_stabilization()
+		var/thermal_protection = 1
+		if(loc_temp < H.bodytemperature) //Place is colder than we are
+			thermal_protection -= H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
+				H.bodytemperature += (thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
+				H.bodytemperature += natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX) //Extra calculation for hardsuits to bleed off heat
+		else //Place is hotter than we are
+			thermal_protection -= H.get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
+				H.bodytemperature += (thermal_protection+1)*natural + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+			else //we're sweating, insulation hinders out ability to reduce heat - but will reduce the amount of heat we get from the environment
+				H.bodytemperature += natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
 		var/burn_damage

@@ -1,0 +1,4 @@
+author: "Jittai"
+delete-after: True
+changes: 
+  - bugfix: "Cloning doesn't runtime (and indefinitely get stuck) on cloning non-humans."

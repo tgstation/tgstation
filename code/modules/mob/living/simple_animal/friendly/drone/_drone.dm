@@ -27,7 +27,7 @@
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
 	wander = 0
-	speed = 0
+	speed = -1
 	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = FALSE
@@ -35,7 +35,6 @@
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
-	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone

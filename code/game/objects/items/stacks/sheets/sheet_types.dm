@@ -123,6 +123,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	recipes = GLOB.metal_recipes
 	return ..()
 
+/obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+	
 /*
  * Plasteel
  */
@@ -339,6 +343,9 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
+
+/obj/item/stack/sheet/runed_metal/ten
+	amount = 10
 
 /obj/item/stack/sheet/runed_metal/five
 	amount = 5

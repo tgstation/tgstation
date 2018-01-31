@@ -39,7 +39,8 @@
 		return
 	var/turf/T = get_turf(hit_atom)
 	new/obj/effect/decal/cleanable/pie_smudge(T)
-	reagents.reaction(hit_atom, TOUCH)
+	if(reagents && reagents.total_volume)
+		reagents.reaction(hit_atom, TOUCH)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')

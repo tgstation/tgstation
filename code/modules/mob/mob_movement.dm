@@ -89,17 +89,17 @@
 		move_delay = world.time
 	var/oldloc = mob.loc
 
-	if(mob.confused)
+	if(L.confused)
 		var/newdir = 0
-		if(mob.confused > 40)
+		if(L.confused > 40)
 			newdir = pick(GLOB.alldirs)
-		else if(prob(mob.confused * 1.5))
+		else if(prob(L.confused * 1.5))
 			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(mob.confused * 3))
+		else if(prob(L.confused * 3))
 			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
 		if(newdir)
 			direct = newdir
-			n = get_step(mob, direct)
+			n = get_step(L, direct)
 
 	. = ..()
 
@@ -212,9 +212,13 @@
 						R.stun(20)
 					return
 				if(stepTurf.flags_1 & NOJAUNT_1)
-					to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
-				else
-					L.loc = get_step(L, direct)
+					to_chat(L, "<span class='warning'>Some strange aura is blocking the way.</span>")
+					return
+				if (locate(/obj/effect/blessing, stepTurf))
+					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
+					return
+
+				L.loc = get_step(L, direct)
 			L.setDir(direct)
 	return TRUE
 

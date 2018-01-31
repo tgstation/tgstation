@@ -434,7 +434,7 @@
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
-	if(iscarbon(mob_occupant))
+	if(ishuman(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 	if(isbrain(mob_occupant))
@@ -449,7 +449,7 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if((mob_occupant.has_disability(DISABILITY_NOCLONE)) && (src.scanner.scan_level < 2))
+	if((mob_occupant.has_trait(TRAIT_NOCLONE)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return

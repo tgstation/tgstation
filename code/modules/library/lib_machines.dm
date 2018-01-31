@@ -214,7 +214,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=[REF(src)];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=7'>7. Print Corporate Materials</A><BR>"
-			if(src.emagged)
+			if(obj_flags & EMAGGED)
 				dat += "<A href='?src=[REF(src)];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				print_forbidden_lore(user)
@@ -304,7 +304,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(8)
 			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
-			dat += "Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
+			dat += "Are you absolutely sure you want to proceed? EldritchRelics Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
 			dat += "<A href='?src=[REF(src)];arccheckout=1'>Yes.</A><BR>"
 			dat += "<A href='?src=[REF(src)];switchscreen=0'>No.</A><BR>"
 
@@ -322,11 +322,11 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	var/spook = pick("blood", "brass")
 	var/turf/T = get_turf(src)
 	if(spook == "blood")
-		new /obj/item/tome(T)
+		new /obj/item/melee/cultblade/dagger(T)
 	else
 		new /obj/item/clockwork/slab(T)
 
-	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "dusty old tome" : "strange metal tablet"] sitting on the desk. You don't really remember printing it.[spook == "brass" ? " And how did it print something made of metal?" : ""]</span>")
+	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a [spook == "blood" ? "sinister dagger" : "strange metal tablet"] sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.", 2)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
@@ -339,8 +339,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		return ..()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(density && !emagged)
-		emagged = TRUE
+	if(density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(..())
@@ -370,7 +370,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			if("8")
 				screenstate = 8
 	if(href_list["arccheckout"])
-		if(src.emagged)
+		if(obj_flags & EMAGGED)
 			src.arcanecheckout = 1
 		src.screenstate = 0
 	if(href_list["increasetime"])

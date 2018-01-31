@@ -25,7 +25,7 @@
 	name = "brain"
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
+		if(brainmob && !(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH))))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		forceMove(C)
 		C.update_hair()
@@ -79,8 +79,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.has_disability(DISABILITY_NOCLONE))
-			brainmob.disabilities[DISABILITY_NOCLONE] = L.disabilities[DISABILITY_NOCLONE]
+		if(L.has_trait(TRAIT_NOCLONE))
+			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -126,7 +126,7 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !C.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
