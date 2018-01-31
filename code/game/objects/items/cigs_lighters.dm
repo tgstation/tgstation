@@ -693,7 +693,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cut_overlays()
 
 	if(istype(O, /obj/item/device/multitool))
-		if(screw && !(obj_flags & EMAGGED))//also kinky
+		if(screw && !emagged)//also kinky
 			if(!super)
 				cut_overlays()
 				super = 1
@@ -705,15 +705,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='notice'>You decrease the voltage of [src].</span>")
 				add_overlay("vapeopen_low")
 
-		if(screw && (obj_flags & EMAGGED))
+		if(screw && emagged)
 			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
-		if(!(obj_flags & EMAGGED))
+		if(!emagged)
 			cut_overlays()
-			obj_flags |= EMAGGED
+			emagged = TRUE
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
 			add_overlay("vapeopen_high")
