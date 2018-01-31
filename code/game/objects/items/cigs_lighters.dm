@@ -790,7 +790,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		s.start()
 		vapetime = 0
 
-	if((obj_flags & EMAGGED) && vapetime > 3)
+	if(emagged && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 		s.set_up(reagents, 4, 24, loc)
 		s.start()
