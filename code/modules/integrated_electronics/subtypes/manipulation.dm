@@ -292,9 +292,9 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
+	desc = "A circuit which is used to grab and store tiny to small objects within it's self-contained inventory."
 	icon_state = "grabber"
-	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
+	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 
@@ -363,14 +363,13 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_grab = 2 //change it to 1 if you tired of drone kung-fu.Return it to 2 if you miss it.
+	var/max_grab = GRAB_PASSIVE
 
 /obj/item/integrated_circuit/manipulation/claw/do_work()
 	var/obj/acting_object = get_object()
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/mode = get_pin_data(IC_INPUT, 2)
-	if(mode>max_grab)
-		return
+	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
 	if(AM)
 		if(check_target(AM, exclude_contents = TRUE))
 			acting_object.start_pulling(AM,mode)

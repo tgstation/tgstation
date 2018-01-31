@@ -59,10 +59,13 @@
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker()
+/obj/machinery/chem_master/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		adjust_item_drop_location(beaker)
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(beaker)
 		beaker = null
 		update_icon()
 
@@ -88,7 +91,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
@@ -169,7 +172,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker()
+			eject_beaker(usr)
 			. = TRUE
 
 		if("ejectp")

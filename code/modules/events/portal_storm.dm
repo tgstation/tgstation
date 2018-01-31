@@ -33,14 +33,11 @@
 	var/list/hostiles_spawn = list()
 	var/list/hostile_types = list()
 	var/number_of_hostiles
-	var/list/station_areas = list()
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/setup()
 	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 	storm.color = "#00FF00"
-
-	station_areas = get_areas_in_z(ZLEVEL_STATION_PRIMARY)
 
 	number_of_bosses = 0
 	for(var/boss in boss_types)
@@ -50,19 +47,11 @@
 	for(var/hostile in hostile_types)
 		number_of_hostiles += hostile_types[hostile]
 
-	var/list/b_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_bosses > boss_spawn.len)
-		var/turf/F = get_turf(pick_n_take(b_spawns))
-		if(!F)
-			F = safepick(get_area_turfs(pick(station_areas)))
-		boss_spawn += F
+		boss_spawn += get_random_station_turf()
 
-	var/list/h_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_hostiles > hostiles_spawn.len)
-		var/turf/T = get_turf(pick_n_take(h_spawns))
-		if(!T)
-			T = safepick(get_area_turfs(pick(station_areas)))
-		hostiles_spawn += T
+		hostiles_spawn += get_random_station_turf()
 
 	next_boss_spawn = startWhen + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
 
@@ -75,7 +64,7 @@
 	sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()
-	spawn_effects()
+	spawn_effects(get_random_station_turf())
 
 	if(spawn_hostile())
 		var/type = safepick(hostile_types)
@@ -103,16 +92,12 @@
 	spawn_effects(T)
 
 /datum/round_event/portal_storm/proc/spawn_effects(turf/T)
-	if(T)
-		T = get_step(T, SOUTHWEST) //align center of image with turf
-		flick_overlay_static(storm, T, 15)
-		playsound(T, 'sound/magic/lightningbolt.ogg', 100, 1)
-	else
-		for(var/V in station_areas)
-			var/area/A = V
-			var/turf/F = get_turf(pick(A.contents))
-			flick_overlay_static(storm, F, 15)
-			playsound(F, 'sound/magic/lightningbolt.ogg', 80, 1)
+	if(!T)
+		log_game("Portal Storm failed to spawn effect due to an invalid location.")
+		return
+	T = get_step(T, SOUTHWEST) //align center of image with turf
+	flick_overlay_static(storm, T, 15)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()
 	if(!hostile_types || !hostile_types.len)

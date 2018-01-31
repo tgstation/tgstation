@@ -41,7 +41,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
-	on_blueprints = TRUE
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	var/datum/powernet/powernet
@@ -127,10 +127,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	update_icon()
 
 /obj/structure/cable/update_icon()
-	if(invisibility)
-		icon_state = "[d1]-[d2]-f"
-	else
-		icon_state = "[d1]-[d2]"
+	icon_state = "[d1]-[d2]"
 	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
 
@@ -743,13 +740,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 // Misc.
 /////////////////////////////
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
-	amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	update_icon()
-
 /obj/item/stack/cable_coil/red
 	item_color = "red"
 	color = "#ff0000"
@@ -785,5 +775,53 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_color = null
 	color = "#ffffff"
 
+
 /obj/item/stack/cable_coil/random/five
 	amount = 5
+
+/obj/item/stack/cable_coil/cut
+	amount = null
+	icon_state = "coil2"
+
+/obj/item/stack/cable_coil/cut/Initialize(mapload)
+	. = ..()
+	if(!amount)
+		amount = rand(1,2)
+	pixel_x = rand(-2,2)
+	pixel_y = rand(-2,2)
+	update_icon()
+
+/obj/item/stack/cable_coil/cut/red
+	item_color = "red"
+	color = "#ff0000"
+
+/obj/item/stack/cable_coil/cut/yellow
+	item_color = "yellow"
+	color = "#ffff00"
+
+/obj/item/stack/cable_coil/cut/blue
+	item_color = "blue"
+	color = "#1919c8"
+
+/obj/item/stack/cable_coil/cut/green
+	item_color = "green"
+	color = "#00aa00"
+
+/obj/item/stack/cable_coil/cut/pink
+	item_color = "pink"
+	color = "#ff3ccd"
+
+/obj/item/stack/cable_coil/cut/orange
+	item_color = "orange"
+	color = "#ff8000"
+
+/obj/item/stack/cable_coil/cut/cyan
+	item_color = "cyan"
+	color = "#00ffff"
+
+/obj/item/stack/cable_coil/cut/white
+	item_color = "white"
+
+/obj/item/stack/cable_coil/cut/random
+	item_color = null
+	color = "#ffffff"

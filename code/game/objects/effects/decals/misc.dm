@@ -8,7 +8,7 @@
 /obj/effect/temp_visual/point/Initialize(mapload, set_invis = 0)
 	. = ..()
 	var/atom/old_loc = loc
-	forceMove(get_turf(src))
+	loc = get_turf(src) // We don't want to actualy trigger anything when it moves
 	pixel_x = old_loc.pixel_x
 	pixel_y = old_loc.pixel_y
 	invisibility = set_invis

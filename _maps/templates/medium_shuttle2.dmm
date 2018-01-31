@@ -20,12 +20,6 @@
 "d" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_2)
-"e" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/ruin/powered/shuttle/medium_2)
 "f" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
@@ -33,23 +27,10 @@
 /turf/open/space,
 /area/ruin/powered/shuttle/medium_2)
 "g" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_2)
-"h" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_2)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/powered/shuttle/medium_2)
-"j" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "k" = (
 /turf/open/floor/plasteel/dark,
@@ -70,11 +51,6 @@
 /area/ruin/powered/shuttle/medium_2)
 "p" = (
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_2)
-"q" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "r" = (
 /obj/structure/table,
@@ -113,19 +89,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_2)
-"z" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered/shuttle/medium_2)
-"A" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/powered/shuttle/medium_2)
 "B" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -179,15 +142,15 @@ a
 (4,1,1) = {"
 b
 f
-j
 d
 d
-q
+d
+d
 a
-j
 d
 d
-q
+d
+d
 b
 f
 "}
@@ -197,10 +160,10 @@ c
 d
 d
 g
-h
+g
 l
-h
-z
+g
+g
 d
 d
 c
@@ -210,21 +173,21 @@ c
 d
 d
 g
-h
-h
+g
+g
 r
 m
 r
-h
-h
-z
+g
+g
+g
 d
 d
 "}
 (7,1,1) = {"
 d
 d
-h
+g
 m
 m
 m
@@ -232,74 +195,74 @@ m
 m
 m
 m
-h
+g
 d
 d
 "}
 (8,1,1) = {"
 d
 g
-h
+g
 n
-h
+g
 B
 w
 B
-h
+g
 n
-h
-z
+g
+g
 d
 "}
 (9,1,1) = {"
 d
-h
+g
 k
 k
-h
-h
+g
+g
 B
-h
-h
+g
+g
 k
 k
-h
+g
 d
 "}
 (10,1,1) = {"
-e
-h
+d
+g
 k
 k
-h
-h
-h
-h
-h
+g
+g
+g
+g
+g
 k
 k
-h
-A
+g
+d
 "}
 (11,1,1) = {"
 a
 i
-h
+g
 n
-h
-h
-h
-h
-h
+g
+g
+g
+g
+g
 n
-h
+g
 i
 a
 "}
 (12,1,1) = {"
 a
 a
-h
+g
 k
 k
 n
@@ -307,37 +270,37 @@ k
 n
 k
 k
-h
+g
 a
 a
 "}
 (13,1,1) = {"
 a
 a
-h
+g
 k
 k
-h
-h
-h
+g
+g
+g
 k
 k
-h
+g
 a
 a
 "}
 (14,1,1) = {"
 a
 a
-h
-h
+g
+g
 n
-h
-h
-h
+g
+g
+g
 n
-h
-h
+g
+g
 a
 a
 "}
@@ -347,9 +310,9 @@ a
 l
 k
 k
-h
-h
-h
+g
+g
+g
 k
 k
 l
@@ -360,13 +323,13 @@ a
 a
 a
 i
-h
+g
 n
-h
-h
-h
+g
+g
+g
 n
-h
+g
 i
 a
 a
@@ -375,13 +338,13 @@ a
 a
 a
 a
-h
+g
 k
 k
 k
 k
 k
-h
+g
 a
 a
 a
@@ -390,13 +353,13 @@ a
 a
 a
 a
-h
+g
 n
-h
-h
-h
+g
+g
+g
 n
-h
+g
 a
 a
 a
@@ -405,13 +368,13 @@ a
 a
 a
 a
-h
+g
 o
 s
 x
 k
 k
-h
+g
 a
 a
 a
@@ -420,13 +383,13 @@ a
 a
 a
 a
-h
+g
 o
 t
 x
 k
 k
-h
+g
 a
 a
 a
@@ -435,13 +398,13 @@ a
 a
 a
 a
-h
+g
 n
-h
-h
-h
+g
+g
+g
 n
-h
+g
 a
 a
 a
@@ -450,13 +413,13 @@ a
 a
 a
 a
-h
+g
 k
 k
 x
 k
 k
-h
+g
 a
 a
 a
@@ -465,13 +428,13 @@ a
 a
 a
 a
-h
+g
 k
 k
 x
 k
 k
-h
+g
 a
 a
 a
@@ -480,13 +443,13 @@ a
 a
 a
 a
-h
+g
 n
-h
-h
-h
+g
+g
+g
 n
-h
+g
 a
 a
 a
@@ -495,13 +458,13 @@ a
 a
 a
 a
-h
+g
 p
 p
 y
 p
 p
-h
+g
 a
 a
 a
@@ -510,13 +473,13 @@ a
 a
 a
 a
-h
+g
 p
 u
 u
 u
 p
-h
+g
 a
 a
 a
@@ -526,11 +489,11 @@ a
 a
 a
 i
-h
+g
 v
 v
 v
-h
+g
 i
 a
 a

@@ -20,10 +20,6 @@
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"ag" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -131,10 +127,7 @@
 /area/engine/gravity_generator)
 "au" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
-	icon_state = "radiation";
-	name = "RADIOACTIVE AREA";
+/obj/structure/sign/warning/radiation/rad_area{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -1298,15 +1291,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "dU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/hallway/primary/central)
-"dV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -2510,7 +2494,7 @@ bI
 cf
 cq
 bu
-dV
+dU
 bE
 bE
 cN

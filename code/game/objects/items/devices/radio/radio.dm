@@ -42,6 +42,10 @@
 	var/const/FREQ_LISTENING = 1
 	//FREQ_BROADCASTING = 2
 
+/obj/item/device/radio/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off their head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
@@ -228,7 +232,8 @@
 	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
 	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
-		if(get_dist(position,get_turf(jammer)) < jammer.range)
+		var/turf/jammer_turf = get_turf(jammer)
+		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
 			message = Gibberish(message,100)
 			break
 

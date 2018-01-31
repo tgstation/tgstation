@@ -109,14 +109,17 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
+	desc = "The air hangs heavy over this sinister flooring."
 	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
+	CanAtmosPass = ATMOS_PASS_NO
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
+
 
 /turf/open/floor/engine/cult/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
-	realappearence.linked = src
+	realappearance = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
+	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
@@ -128,8 +131,8 @@
 	return ..()
 
 /turf/open/floor/engine/cult/proc/be_removed()
-	qdel(realappearence)
-	realappearence = null
+	qdel(realappearance)
+	realappearance = null
 
 /turf/open/floor/engine/cult/ratvar_act()
 	. = ..()

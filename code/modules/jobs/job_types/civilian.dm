@@ -152,7 +152,7 @@ Curator
 		return
 
 	H.grant_all_languages(omnitongue=TRUE)
-
+	H.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "snakes") //why does it have to be snakes...
 /*
 Lawyer
 */

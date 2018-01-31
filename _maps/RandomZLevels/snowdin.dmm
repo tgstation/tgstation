@@ -944,11 +944,6 @@
 	temperature = 140
 	},
 /area/awaymission/snowdin/post)
-"dg" = (
-/turf/open/floor/plating{
-	temperature = 140
-	},
-/area/awaymission/snowdin/post)
 "dh" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
@@ -1130,14 +1125,6 @@
 	},
 /turf/open/floor/plating{
 	icon = 'icons/turf/snow.dmi';
-	temperature = 140
-	},
-/area/awaymission/snowdin/post)
-"dI" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating{
 	temperature = 140
 	},
 /area/awaymission/snowdin/post)
@@ -1429,9 +1416,6 @@
 /obj/effect/spawner/lootdrop/snowdin/dungeonmisc,
 /turf/open/floor/plating/snowed/colder,
 /area/awaymission/snowdin/dungeon1)
-"eC" = (
-/turf/open/floor/plating/snowed,
-/area/awaymission/snowdin/post)
 "eD" = (
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/dungeon1)
@@ -1464,7 +1448,6 @@
 /turf/open/floor/plating/ice/colder,
 /area/awaymission/snowdin/dungeon1)
 "eK" = (
-/turf/open/space,
 /obj/structure/girder,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/post)
@@ -1966,9 +1949,6 @@
 	temperature = 140
 	},
 /area/awaymission/snowdin/cave)
-"gr" = (
-/turf/open/floor/plating/snowed,
-/area/awaymission/snowdin/post)
 "gs" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
@@ -2101,9 +2081,6 @@
 /area/awaymission/snowdin/post)
 "gM" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post)
-"gN" = (
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "gO" = (
@@ -2749,7 +2726,7 @@
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/snowdin/sekret)
 "iW" = (
-/obj/structure/sign/bluecross{
+/obj/structure/sign/departments/medbay{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel{
@@ -2893,9 +2870,6 @@
 	wet = 0
 	},
 /area/awaymission/snowdin/sekret)
-"jw" = (
-/turf/open/floor/plating,
-/area/awaymission/snowdin)
 "jx" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/gibspawner/human,
@@ -3819,7 +3793,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "ms" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'WEAPONS HOT'.";
 	name = "WEAPONS HOT";
 	pixel_y = 32
@@ -4195,7 +4169,7 @@
 	},
 /area/awaymission/snowdin/sekret)
 "nu" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'WEAPONS HOT'.";
 	name = "WEAPONS HOT";
 	pixel_y = -32
@@ -11277,8 +11251,8 @@ ac
 ac
 ac
 iK
-jw
-jw
+cQ
+cQ
 iK
 ac
 ac
@@ -11534,8 +11508,8 @@ ac
 ac
 ac
 iK
-jw
-jw
+cQ
+cQ
 iK
 ac
 ac
@@ -14605,8 +14579,8 @@ dz
 dz
 dz
 jk
-jw
-jw
+cQ
+cQ
 jk
 dp
 ac
@@ -14862,8 +14836,8 @@ dz
 dz
 dz
 jk
-jw
-jw
+cQ
+cQ
 jk
 dp
 dp
@@ -36950,9 +36924,9 @@ ao
 ao
 cZ
 df
-gN
-gN
-gN
+ao
+ao
+ao
 df
 cZ
 ig
@@ -37206,11 +37180,11 @@ cZ
 hM
 fu
 cZ
-gN
-gN
+ao
+ao
 fD
-gN
-gN
+ao
+ao
 cZ
 ig
 ig
@@ -37464,10 +37438,10 @@ cZ
 cZ
 cZ
 df
-gN
+ao
 fD
 fD
-gN
+ao
 cZ
 cZ
 cZ
@@ -42972,7 +42946,7 @@ cN
 cZ
 dd
 dj
-dg
+de
 df
 de
 dr
@@ -43228,7 +43202,7 @@ cN
 cN
 cZ
 df
-dg
+de
 df
 de
 de
@@ -43488,7 +43462,7 @@ de
 de
 de
 de
-dg
+de
 df
 ad
 df
@@ -43496,7 +43470,7 @@ de
 dE
 dG
 de
-dI
+dd
 de
 de
 de
@@ -43752,11 +43726,11 @@ df
 dB
 de
 de
-dg
 de
 de
 de
-dg
+de
+de
 de
 de
 de
@@ -43998,7 +43972,7 @@ cN
 cN
 cN
 cZ
-dg
+de
 df
 ad
 ad
@@ -44274,7 +44248,7 @@ cZ
 cZ
 cZ
 dY
-dg
+de
 de
 de
 de
@@ -44518,7 +44492,7 @@ de
 de
 df
 ds
-dg
+de
 df
 dC
 dC
@@ -44772,11 +44746,11 @@ cY
 ad
 cY
 de
-dg
+de
 df
 ad
 ad
-dg
+de
 ad
 ad
 ad
@@ -45031,7 +45005,7 @@ cY
 ad
 df
 df
-dg
+de
 dv
 dv
 ad
@@ -45287,7 +45261,7 @@ cN
 ad
 df
 df
-dg
+de
 du
 dw
 dw

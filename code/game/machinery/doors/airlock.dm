@@ -80,7 +80,7 @@
 	var/boltUp = 'sound/machines/boltsup.ogg'
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
-	var/previous_airlock //what airlock assembly mineral plating was applied to
+	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
@@ -208,19 +208,22 @@
 
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
-	var/runed = prob(20)
 	var/obj/machinery/door/airlock/cult/A
-	if(glass)
-		if(runed)
-			A = new/obj/machinery/door/airlock/cult/glass(T)
+	if(GLOB.cult_narsie)
+		var/runed = prob(20)
+		if(glass)
+			if(runed)
+				A = new/obj/machinery/door/airlock/cult/glass(T)
+			else
+				A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
 		else
-			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			if(runed)
+				A = new/obj/machinery/door/airlock/cult(T)
+			else
+				A = new/obj/machinery/door/airlock/cult/unruned(T)
+		A.name = name
 	else
-		if(runed)
-			A = new/obj/machinery/door/airlock/cult(T)
-		else
-			A = new/obj/machinery/door/airlock/cult/unruned(T)
-	A.name = name
+		A = new /obj/machinery/door/airlock/cult/weak(T)
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
@@ -569,7 +572,7 @@
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>Its access panel is smoking slightly.</span>")
 	if(charge && !panel_open && in_range(user, src))
 		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
@@ -611,7 +614,7 @@
 			return
 		else
 			to_chat(user, "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>")
 		return
 	if(detonated)
@@ -683,7 +686,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if((H.has_disability(DISABILITY_DUMB)) && Adjacent(user))
+		if((H.has_trait(TRAIT_DUMB)) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -899,7 +902,7 @@
 		if(!panel_open || security_level)
 			to_chat(user, "<span class='warning'>The maintenance panel must be open to apply [C]!</span>")
 			return
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return
 		if(charge && !detonated)
 			to_chat(user, "<span class='warning'>There's already a charge hooked up to this door!</span>")
@@ -979,7 +982,7 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
+	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
 		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
@@ -1050,7 +1053,7 @@
 			H.apply_damage(40, BRUTE, "chest")
 		return
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
 		playsound(src.loc, doorOpen, 30, 1)
@@ -1087,6 +1090,8 @@
 /obj/machinery/door/airlock/close(forced=0)
 	if(operating || welded || locked)
 		return
+	if(density)
+		return TRUE
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
 			return
@@ -1097,7 +1102,7 @@
 				return
 
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src.loc, doorClose, 30, 1)
@@ -1108,8 +1113,6 @@
 	if(killthis)
 		killthis.ex_act(EXPLODE_HEAVY)//Smashin windows
 
-	if(density)
-		return TRUE
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
@@ -1135,7 +1138,7 @@
 	return TRUE
 
 /obj/machinery/door/airlock/proc/prison_open()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
 	src.open()
@@ -1224,7 +1227,7 @@
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/emag_act(mob/user)
-	if(!operating && density && hasPower() && !emagged)
+	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
 		operating = TRUE
 		update_icon(AIRLOCK_EMAG, 1)
 		sleep(6)
@@ -1233,7 +1236,7 @@
 		operating = FALSE
 		if(!open())
 			update_icon(AIRLOCK_CLOSED, 1)
-		emagged = TRUE
+		obj_flags |= EMAGGED
 		lights = FALSE
 		locked = TRUE
 		loseMainPower()
@@ -1323,7 +1326,7 @@
 		if(!disassembled)
 			if(A)
 				A.obj_integrity = A.max_integrity * 0.5
-		else if(emagged)
+		else if(obj_flags & EMAGGED)
 			if(user)
 				to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 		else
