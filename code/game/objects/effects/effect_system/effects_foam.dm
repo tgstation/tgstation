@@ -23,6 +23,51 @@
 	/turf/open/chasm,
 	/turf/open/lava))
 
+/obj/effect/particle_effect/foam/firefighting
+	name = "firefighting foam"
+	lifetime = 20 //doesn't last as long as normal foam
+	amount = 0 //no spread
+	var/absorbed_plasma = 0
+
+/obj/effect/particle_effect/foam/firefighting/MakeSlippery()
+	return
+
+/obj/effect/particle_effect/foam/firefighting/process()
+	..()
+
+	var/turf/open/T = get_turf(src)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && istype(T) && T.air)
+		qdel(hotspot)
+		var/datum/gas_mixture/G = T.air
+		var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
+		G.gases[/datum/gas/plasma][MOLES] -= plas_amt
+		absorbed_plasma += plas_amt
+		if(G.temperature > T20C)
+			G.temperature = max(G.temperature/2,T20C)
+		G.garbage_collect()
+		T.air_update_turf()
+
+/obj/effect/particle_effect/foam/firefighting/kill_foam()
+	STOP_PROCESSING(SSfastprocess, src)
+
+	if(absorbed_plasma)
+		var/obj/effect/decal/cleanable/plasma/P = (locate(/obj/effect/decal/cleanable/plasma) in get_turf(src))
+		if(!P)
+			P = new(loc)
+		P.reagents.add_reagent("stable_plasma", absorbed_plasma)
+
+	flick("[icon_state]-disolve", src)
+	QDEL_IN(src, 5)
+
+/obj/effect/particle_effect/foam/firefighting/foam_mob(mob/living/L)
+	if(!istype(L))
+		return
+	L.adjust_fire_stacks(-2)
+	L.ExtinguishMob()
+
+/obj/effect/particle_effect/foam/firefighting/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
@@ -196,16 +241,12 @@
 	metal = metaltype
 
 /datum/effect_system/foam_spread/start()
-	var/obj/effect/particle_effect/foam/foundfoam = locate() in location
-	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
-		foundfoam.amount += amount
-	else
-		var/obj/effect/particle_effect/foam/F = new effect_type(location)
-		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
-		F.amount = amount
-		F.metal = metal
+	var/obj/effect/particle_effect/foam/F = new effect_type(location)
+	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
+	F.amount = amount
+	F.metal = metal
 
 
 //////////////////////////////////////////////////////////

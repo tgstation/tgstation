@@ -420,7 +420,7 @@
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/disk/plantgene/Initialize()
 	. = ..()

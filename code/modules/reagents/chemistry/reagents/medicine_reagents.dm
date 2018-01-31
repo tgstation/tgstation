@@ -41,7 +41,7 @@
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0)
+	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.remove_all_disabilities()
@@ -134,7 +134,7 @@
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
 		M.adjustFireLoss(-power, 0)
-		M.adjustToxLoss(-power, 0)
+		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
 		M.status_flags &= ~DISFIGURED
 		. = 1
@@ -155,6 +155,35 @@
 		M.status_flags &= ~DISFIGURED
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
+	..()
+
+/datum/reagent/medicine/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
+	color = "#f7832a"
+	taste_description = "spicy jelly"
+
+/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
+	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		var/power = 0
+		switch(M.bodytemperature)
+			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+				power = 2
+			if(400 to 460)
+				power = 3
+			else
+				power = 5
+		if(M.on_fire)
+			power *= 2
+
+		M.adjustOxyLoss(-2 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-1.5 * power, 0)
+		M.adjustToxLoss(-power, 0, TRUE)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -979,6 +1008,22 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy."
+	reagent_state = LIQUID
+	color = "#91D865"
+	taste_description = "jelly"
+
+/datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
+
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
 	id = "syndicate_nanites"
@@ -1105,3 +1150,105 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/ketrazine
+	name = "Ketrazine"
+	id = "ketrazine"
+	description = "A powerful and addictive combat stimulant, capable of healing grievous wounds and enabling the user to shrug off stuns and heavy weights by stimulating tendons and muscle groups; however the strain on the body causes severe lasting damage. Use only in life-or-death situations. Overdose is almost invariably fatal."
+	reagent_state = LIQUID
+	color = "#5F42F4"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	addiction_threshold = 5
+
+/datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustBruteLoss(-5*REM, 0)
+	M.adjustFireLoss(-5*REM, 0)
+	M.adjustOxyLoss(-5*REM, 0)
+	M.AdjustStun(-80*REM, 0)
+	M.AdjustKnockdown(-70*REM, 0)
+	M.adjustStaminaLoss(-80*REM, 0)
+	M.AdjustUnconscious(-50*REM, 0)
+	M.adjustBrainLoss(0.5*REM,0)
+	switch(current_cycle)
+		if(2 to 12)
+			if(prob(15))
+				to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
+		if(12)
+			to_chat(M, "<span class='warning'>Your muscles begin to ache terribly... </span>" )
+		if(14)
+			to_chat(M, "<span class='warning'>You feel like your body is being ripped to shreds! </span>")
+		if(15 to 25)
+			M.drowsyness += 3
+			M.adjustBruteLoss(10*REM, 0)
+			M.adjustToxLoss(7*REM, 0)
+		if(25 to 30)
+			if(prob(33))
+				to_chat(M, "<span class='warning'>The pain is unbearable! You can barely stand! </span>")
+			M.Sleeping(40, 0)
+			M.AdjustKnockdown(40*REM,0)
+			M.drop_all_held_items()
+			M.Dizzy(3)
+			M.drowsyness +=4
+			M.adjustBruteLoss(15*REM,0)
+			M.adjustToxLoss(10*REM,0)
+			M.adjustStaminaLoss(30*REM,0)
+		if(30 to INFINITY)
+			if(prob(20))
+				to_chat(M, "<span class='warning'>Your body	can't handle the stress! </span>")
+			M.Sleeping(60, 0)
+			M.AdjustKnockdown(80*REM,0)
+			M.drop_all_held_items()
+			M.Dizzy(5)
+			M.drowsyness +=6
+			M.adjustBruteLoss(20*REM,0)
+			M.adjustToxLoss(15*REM,0)
+			M.adjustStaminaLoss(40*REM,0)
+			M.losebreath +=2
+
+
+	..()
+
+/datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
+	if(prob(66))
+		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
+		M.drop_all_held_items()
+		M.Dizzy(6)
+		M.Jitter(7)
+		M.adjustOxyLoss(40*REM,0)
+		M.adjustBruteLoss(40*REM,0)
+		M.losebreath +=10
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
+	if(prob(33))
+		to_chat(M, "<span class='warning'>You feel like you need more power... </span>")
+		M.drop_all_held_items()
+		M.Jitter(2)
+		M.Dizzy(2)
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
+	if(prob(50))
+		to_chat(M, "<span class='warning'>You feel weak and sore, you need something to amp you up! </span>")
+		M.drop_all_held_items()
+		M.adjustToxLoss(2*REM, 0)
+		M.adjustBruteLoss(4*REM,0)
+		M.adjustStaminaLoss(6*REM,0)
+		M.Dizzy(3)
+		M.Jitter(3)
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
+	if(prob(66))
+		to_chat(M, "<span class='warning'> You need ketrazine! You need it badly! You need it now! </span>")
+		M.drop_all_held_items()
+		M.adjustToxLoss(4*REM, 0)
+		M.adjustBruteLoss(5*REM,0)
+		M.adjustStaminaLoss(7*REM,0)
+		M.Dizzy(7)
+		M.Jitter(7)
+	..()

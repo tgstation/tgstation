@@ -44,7 +44,8 @@
 		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2)
+		/obj/item/toy/windupToolbox								= 2,
+		/obj/item/extendohand/acme								= 1)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -212,9 +213,9 @@
 		gameover = FALSE
 		turtle = 0
 
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			Reset()
-			emagged = FALSE
+			obj_flags &= ~EMAGGED
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -227,19 +228,19 @@
 			temp = "[enemy_name] has fallen! Rejoice!"
 			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
-				emagged = FALSE
+				obj_flags &= ~EMAGGED
 			else
 				prizevend()
-			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (emagged ? "emagged":"normal")))
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
-	else if (emagged && (turtle >= 4))
+	else if ((obj_flags & EMAGGED) && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
 		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
@@ -257,9 +258,9 @@
 			sleep(10)
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				usr.gib()
-			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (emagged ? "emagged":"normal")))
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
@@ -277,16 +278,16 @@
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			usr.gib()
-		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal"))) 
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	blocked = FALSE
 	return
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	temp = "If you die in the game, you die for real!"
 	player_hp = 30
@@ -296,7 +297,7 @@
 	gameover = FALSE
 	blocked = FALSE
 
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
@@ -415,21 +416,21 @@
 		else
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					user.nutrition = 0 //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					var/mob/living/M = user
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
 					to_chat(user, "<span class='userdanger'>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
 
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='userdanger'>You're never going to make it to Orion...</span>")
 			user.death()
-			emagged = FALSE //removes the emagged status after you lose
+			obj_flags &= ~EMAGGED //removes the emagged status after you lose
 			gameStatus = ORION_STATUS_START
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -491,7 +492,7 @@
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
@@ -605,7 +606,7 @@
 			if(prob(75))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
@@ -632,12 +633,12 @@
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
-				if(emagged)
+				if(obj_flags & EMAGGED)
 					usr.death(0)
-					emagged = FALSE
+					obj_flags &= EMAGGED
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
-			else if(emagged)
+			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
 					usr.death(0)
@@ -696,7 +697,7 @@
 					if(prob(success*5))
 						var/lost_crew = remove_crewmember()
 						last_spaceport_action = "You failed to raid the spaceport! You lost [FU*-1] Fuel and [FO*-1] Food, AND [lost_crew] in your scramble to escape! ([FU]FI,[FO]FO,-Crew)"
-						if(emagged)
+						if(obj_flags & EMAGGED)
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
@@ -1024,24 +1025,24 @@
 /obj/machinery/computer/arcade/orion_trail/proc/win()
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
 		prizevend()
-	emagged = FALSE
+	obj_flags &= ~EMAGGED
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='notice'>You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode.</span>")
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /mob/living/simple_animal/hostile/syndicate/ranged/orion
 	name = "spaceport security"

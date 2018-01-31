@@ -2860,7 +2860,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iI" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iJ" = (
@@ -2992,12 +2992,7 @@
 /area/centcom/control)
 "jb" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/centcom/supply)
 "jc" = (
@@ -4389,6 +4384,10 @@
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"mB" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership)
 "mC" = (
 /obj/item/disk/data,
 /obj/effect/light_emitter{
@@ -4609,6 +4608,10 @@
 	icon_state = "alien5"
 	},
 /area/abductor_ship)
+"ng" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
+/area/syndicate_mothership/control)
 "nh" = (
 /obj/item/toy/figure/syndie,
 /obj/effect/light_emitter{
@@ -4743,7 +4746,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/syndicate_mothership/control)
 "nA" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "nB" = (
@@ -5921,7 +5924,7 @@
 /area/centcom/ferry)
 "ql" = (
 /obj/structure/dresser,
-/obj/structure/sign/goldenplaque/captain{
+/obj/structure/sign/plaques/golden/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -6403,7 +6406,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "rz" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "rA" = (
@@ -7414,7 +7417,7 @@
 	},
 /area/centcom/control)
 "tP" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tQ" = (
@@ -8005,12 +8008,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vs" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "vt" = (
@@ -9014,7 +9012,7 @@
 /area/syndicate_mothership/control)
 "yn" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "yo" = (
@@ -9035,7 +9033,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -28
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9995,7 +9993,7 @@
 	},
 /area/centcom/ferry)
 "AT" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "AU" = (
@@ -10747,7 +10745,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/emps,
 /obj/item/gun/energy/ionrifle,
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12170,7 +12168,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gw" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "Gx" = (
@@ -12345,7 +12343,7 @@
 /area/tdome/tdomeobserve)
 "GL" = (
 /obj/structure/table/wood,
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/lawyers_badge{
@@ -12366,7 +12364,7 @@
 /area/tdome/tdomeobserve)
 "GO" = (
 /obj/structure/table/wood,
-/obj/structure/sign/goldenplaque{
+/obj/structure/sign/plaques/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/medal/silver{
@@ -12571,7 +12569,7 @@
 /area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque/thunderdome{
+/obj/structure/sign/plaques/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -12589,7 +12587,7 @@
 /area/tdome/tdomeobserve)
 "Ht" = (
 /obj/structure/table/wood,
-/obj/structure/sign/atmosplaque/thunderdome{
+/obj/structure/sign/plaques/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{
@@ -14388,7 +14386,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'FOURTH WALL'.";
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
@@ -24259,7 +24257,7 @@ aa
 aa
 aa
 aa
-hh
+mB
 hh
 hh
 hh
@@ -31780,7 +31778,7 @@ hl
 hl
 oW
 ku
-ku
+ng
 qJ
 re
 se

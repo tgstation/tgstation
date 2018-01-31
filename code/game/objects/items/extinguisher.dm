@@ -46,6 +46,18 @@
 	reagents.add_reagent("water", max_water-10) // Hippie: max_water-10 so we have room for cyrogenic_fluid
 	reagents.add_reagent("cryogenic_fluid", 10) // Hippie: improved turf extinguishing
 
+/obj/item/extinguisher/suicide_act(mob/living/carbon/user)
+	if (!safety && (reagents.total_volume >= 1))
+		user.visible_message("<span class='suicide'>[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!</span>")
+		afterattack(user,user)
+		return OXYLOSS
+	else if (safety && (reagents.total_volume >= 1))
+		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!</span>")
+		return SHAME
+	else
+		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!</span>")
+		return SHAME
+
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
@@ -189,6 +201,6 @@
 		var/turf/T = get_turf(loc)
 		if(isopenturf(T))
 			var/turf/open/theturf = T
-			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
