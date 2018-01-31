@@ -68,7 +68,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		apply_innate_effects()
 		log_antag("[owner.current]/[key_name(owner.current)] is now a [name]")
 		if(is_banned(owner.current) && replace_banned)
-			log_antag("[owner.current]/[key_name(owner.current)] is antag banned from [name], and is now being replaced!")
 			replace_banned_player()
 
 /datum/antagonist/proc/is_banned(mob/M)
