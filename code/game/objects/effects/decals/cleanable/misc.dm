@@ -10,6 +10,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
+	turf_loc_check=FALSE
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
