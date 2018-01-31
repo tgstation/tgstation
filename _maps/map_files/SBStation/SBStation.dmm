@@ -2053,7 +2053,7 @@
 	height = 9;
 	id = "arrivals_stationary";
 	name = "arrivals bay";
-	roundstart_template = /datum/map_template/shuttle/arrival/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -17097,7 +17097,7 @@
 	height = 4;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -23359,15 +23359,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"bcT" = (
-/obj/machinery/camera/motion{
-	c_tag = "Satellite - AI Access";
-	dir = 4;
-	name = "motion-sensitive security camera";
-	network = list("SS13","Satellite")
-	},
-/turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/ai)
 "bcU" = (
 /obj/machinery/porta_turret/ai{
 	installation = /obj/item/gun/energy/e_gun
@@ -50298,7 +50289,7 @@ bbP
 bcb
 bcr
 bcr
-bcT
+bcr
 bcr
 bcr
 bcr
