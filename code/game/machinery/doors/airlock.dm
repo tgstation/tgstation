@@ -208,19 +208,22 @@
 
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
-	var/runed = prob(20)
 	var/obj/machinery/door/airlock/cult/A
-	if(glass)
-		if(runed)
-			A = new/obj/machinery/door/airlock/cult/glass(T)
+	if(GLOB.cult_narsie)
+		var/runed = prob(20)
+		if(glass)
+			if(runed)
+				A = new/obj/machinery/door/airlock/cult/glass(T)
+			else
+				A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
 		else
-			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			if(runed)
+				A = new/obj/machinery/door/airlock/cult(T)
+			else
+				A = new/obj/machinery/door/airlock/cult/unruned(T)
+		A.name = name
 	else
-		if(runed)
-			A = new/obj/machinery/door/airlock/cult(T)
-		else
-			A = new/obj/machinery/door/airlock/cult/unruned(T)
-	A.name = name
+		A = new /obj/machinery/door/airlock/cult/weak(T)
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
