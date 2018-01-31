@@ -546,7 +546,11 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
+INITIALIZE_IMMEDIATE(/obj/screen/splash)
+
+/obj/screen/splash/Initialize(client/C, visible, use_previous_title)
+	. = ..()
+
 	holder = C
 
 	if(!visible)
@@ -562,8 +566,6 @@
 		icon = SStitle.previous_icon
 
 	holder.screen += src
-
-	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
 	if(QDELETED(src))
