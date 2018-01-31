@@ -342,3 +342,5 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 ## A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
+
+Therefore EOF settings of main repo are forbidden territory one must avoid wandering into
