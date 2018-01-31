@@ -5695,6 +5695,14 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
+"pR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/ferry)
 "pX" = (
 /obj/item/storage/crayons,
 /obj/structure/table,
@@ -8313,6 +8321,7 @@
 	dwidth = 2;
 	height = 13;
 	id = "ferry_away";
+	json_key = "ferry";
 	name = "CentCom Ferry Dock";
 	width = 5
 	},
@@ -50112,7 +50121,7 @@ qb
 mD
 rs
 sw
-tw
+pR
 sw
 uQ
 mD

@@ -358,8 +358,8 @@
 	var/fuel_per_cycle_active = 200
 	var/power_per_cycle = 20
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+	. = ..()
 	generator_init()
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()

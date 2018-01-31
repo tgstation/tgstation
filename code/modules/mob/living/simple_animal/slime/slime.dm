@@ -27,8 +27,6 @@
 	healable = 0
 	gender = NEUTER
 
-	nutrition = 700
-
 	see_in_dark = 8
 
 	verb_say = "blorbles"
@@ -93,6 +91,7 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
+	nutrition = 700
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)

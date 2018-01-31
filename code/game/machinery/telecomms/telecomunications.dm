@@ -80,7 +80,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	// return TRUE if found, FALSE if not found
 	return signal && (!freq_listening.len || (signal.frequency in freq_listening))
 
-
 /obj/machinery/telecomms/New()
 	GLOB.telecomms_list += src
 	..()

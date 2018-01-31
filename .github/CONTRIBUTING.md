@@ -381,6 +381,12 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
 
+## Porting features/sprites/sounds/tools from other codebases
+
+If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
+
+Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) license unless otherwise indicated. However if you are porting assets from GoonStation or usually any assets under the [Creative Commons 3.0 BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/) license are to go into the 'goon' folder of the /tg/station codebase.
+
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references

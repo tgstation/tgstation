@@ -1205,6 +1205,22 @@
 	overdose_threshold = 20
 	addiction_threshold = 5
 
+/datum/reagent/medicine/ketrazine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_SLEEPIMMUNE, id)
+		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/ketrazine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-3*REM, 0)
 	M.adjustBruteLoss(-5*REM, 0)
