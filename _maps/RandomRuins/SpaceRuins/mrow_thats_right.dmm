@@ -32,9 +32,7 @@
 /obj/structure/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aj" = (
@@ -48,7 +46,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "al" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
 	},
@@ -59,7 +56,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "am" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -67,7 +63,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "an" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -76,7 +71,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ao" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
 	dir = 1
 	},
@@ -85,7 +79,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ap" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
@@ -124,7 +117,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -134,7 +126,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -147,7 +138,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
 	dir = 1
 	},
@@ -175,7 +165,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
 	dir = 1
 	},
@@ -228,7 +217,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aM" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
 	dir = 5
 	},
@@ -243,7 +231,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aO" = (
 /obj/machinery/door/firedoor/border_only{
-	tag = "icon-door_open (NORTH)";
 	icon_state = "door_open";
 	dir = 1
 	},
@@ -286,7 +273,6 @@
 "aU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -295,14 +281,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "aW" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTHEAST)";
 	icon_state = "neutral";
 	dir = 5
 	},
@@ -316,7 +300,6 @@
 	name = "cat meat"
 	},
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
 	dir = 1
 	},
@@ -374,7 +357,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bg" = (
 /turf/open/floor/plasteel/white/corner{
-	tag = "icon-whitecorner (WEST)";
 	icon_state = "whitecorner";
 	dir = 8
 	},
@@ -382,7 +364,6 @@
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (EAST)";
 	icon_state = "neutral";
 	dir = 4
 	},
@@ -420,7 +401,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -428,7 +408,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -436,7 +415,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bn" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	tag = "icon-manifold (EAST)";
 	icon_state = "manifold";
 	dir = 4
 	},
@@ -449,7 +427,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bp" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (WEST)";
 	icon_state = "wooden_chair_wings";
 	dir = 8
 	},
@@ -472,7 +449,6 @@
 "bs" = (
 /mob/living/simple_animal/hostile/cat_butcherer,
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (EAST)";
 	icon_state = "whitehall";
 	dir = 4
 	},
@@ -489,7 +465,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (WEST)";
 	icon_state = "whitehall";
 	dir = 8
 	},
@@ -500,7 +475,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (EAST)";
 	icon_state = "neutral";
 	dir = 4
 	},
@@ -531,21 +505,18 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bA" = (
 /turf/open/floor/plasteel/white/corner{
-	tag = "icon-whitecorner (EAST)";
 	icon_state = "whitecorner";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bB" = (
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bC" = (
 /turf/open/floor/plasteel/white/corner{
-	tag = "icon-whitecorner (NORTH)";
 	icon_state = "whitecorner";
 	dir = 1
 	},
@@ -570,7 +541,6 @@
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (SOUTHEAST)";
 	icon_state = "neutral";
 	dir = 6
 	},
@@ -590,7 +560,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
@@ -599,7 +568,6 @@
 "bJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -607,7 +575,6 @@
 "bK" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -615,7 +582,6 @@
 "bL" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -623,7 +589,6 @@
 "bM" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -658,7 +623,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
 	},
@@ -667,7 +631,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bS" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (NORTHWEST)";
 	icon_state = "intact";
 	dir = 9
 	},
@@ -681,7 +644,6 @@
 "bU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
 	},
@@ -714,7 +676,6 @@
 	name = "cat meat"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (SOUTHEAST)";
 	icon_state = "intact";
 	dir = 6
 	},
@@ -728,7 +689,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bZ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
 	dir = 5
 	},
@@ -736,7 +696,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ca" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	tag = "icon-manifold (NORTH)";
 	icon_state = "manifold";
 	dir = 1
 	},
@@ -749,7 +708,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cc" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (NORTHWEST)";
 	icon_state = "intact";
 	dir = 9
 	},
@@ -767,7 +725,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ce" = (
 /obj/machinery/atmospherics/pipe/simple/dark/hidden{
-	tag = "icon-intact (SOUTHWEST)";
 	icon_state = "intact";
 	dir = 10
 	},
@@ -788,7 +745,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ch" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	tag = "icon-freezer (EAST)";
 	icon_state = "freezer";
 	dir = 4
 	},
@@ -797,7 +753,6 @@
 "ci" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/dark/hidden{
-	tag = "icon-manifold (EAST)";
 	icon_state = "manifold";
 	dir = 4
 	},
@@ -805,7 +760,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cj" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
 	dir = 5
 	},
@@ -817,7 +771,6 @@
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
 	},
