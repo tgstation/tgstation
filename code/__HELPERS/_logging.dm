@@ -93,6 +93,10 @@
 	if (CONFIG_GET(flag/log_pda))
 		WRITE_FILE(GLOB.world_pda_log, "\[[time_stamp()]]PDA: [text]")
 
+/proc/log_antag(text)
+	if (CONFIG_GET(flag/log_antag))
+		WRITE_FILE(GLOB.world_antag_log, "\[[time_stamp()]]ANTAG: [text]")
+
 /proc/log_comment(text)
 	if (CONFIG_GET(flag/log_pda))
 		//reusing the PDA option because I really don't think news comments are worth a config option
