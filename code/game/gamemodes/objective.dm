@@ -1,12 +1,13 @@
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
-	var/datum/team/team       //An alternative to 'owner': a team. Use this when writing new code.
+	var/datum/team/team       			//An alternative to 'owner': a team. Use this when writing new code.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/required_players = 0			//How many players are needed for the objective to be given out (minimum).
 
 /datum/objective/New(var/text)
 	if(text)
@@ -16,6 +17,11 @@
 	. = (team && team.members) ? team.members.Copy() : list()
 	if(owner)
 		. += owner
+
+/datum/objective/proc/checkplayercount()
+	if (GLOB.player_list.len <= required_players)
+		return FALSE
+	return
 
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
@@ -237,6 +243,7 @@
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
 	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
+
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
