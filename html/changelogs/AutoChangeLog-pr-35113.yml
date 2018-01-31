@@ -1,0 +1,4 @@
+author: "Jittai"
+delete-after: True
+changes: 
+  - tweak: "Some of the Morgue Trays and Crematoriums on Box, Delta, and Meta have been re-positioned to make use of their new directional states."

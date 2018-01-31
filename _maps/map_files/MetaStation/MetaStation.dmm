@@ -65518,6 +65518,9 @@
 /area/medical/medbay/aft)
 "cFU" = (
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFV" = (
@@ -68608,8 +68611,10 @@
 	},
 /area/medical/virology)
 "cLT" = (
-/obj/structure/bodycontainer/crematorium,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cLU" = (
@@ -68920,9 +68925,6 @@
 "cMC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/machinery/button/crematorium{
-	pixel_x = -25
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -69364,7 +69366,11 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "cNt" = (
-/obj/structure/bodycontainer/morgue,
+/obj/machinery/button/crematorium{
+	id = "cremawheat";
+	pixel_x = -26;
+	req_access_txt = "27"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNu" = (
@@ -69929,6 +69935,11 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -71963,17 +71974,12 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTf" = (
-/obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
-	},
-/obj/item/storage/box/bodybags{
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -75230,6 +75236,9 @@
 	c_tag = "Morgue";
 	dir = 2;
 	network = list("SS13","Medbay")
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -80644,6 +80653,24 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"QuX" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuY" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuZ" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -90552,7 +90579,7 @@ aZZ
 bOd
 EDi
 aaa
-cWp
+aaa
 aaa
 aaa
 aaa
@@ -92083,7 +92110,7 @@ bxw
 aVs
 aaa
 aaa
-cVv
+aaa
 aaa
 aaa
 aVs
@@ -93099,7 +93126,7 @@ djC
 aaa
 aaa
 aaa
-beC
+aaa
 aaa
 aaa
 aaa
@@ -94373,7 +94400,7 @@ auG
 dnd
 dhK
 dnk
-aRG
+dnH
 aSP
 dne
 dhM
@@ -95645,7 +95672,7 @@ aaa
 aaa
 aaa
 aaa
-azh
+aaa
 aaa
 aaa
 aaa
@@ -96170,7 +96197,7 @@ aaa
 aaa
 aaa
 aaa
-cUV
+aaa
 aaa
 aaa
 aaa
@@ -100875,7 +100902,7 @@ cLT
 cMC
 cNt
 cTf
-cNt
+QuZ
 cMI
 cPC
 djX
@@ -103869,7 +103896,7 @@ aaa
 aaa
 aaa
 aaa
-ayt
+aaa
 aaa
 aaa
 azC
@@ -105743,11 +105770,11 @@ cyf
 cyZ
 cAc
 ctA
-cCf
-cCf
+cCj
+cCj
 cDY
-cCf
-cCf
+cCj
+cCj
 cCe
 cHJ
 bTs
@@ -106001,9 +106028,9 @@ cyZ
 cAd
 ctA
 dbr
-cCj
+QuX
 dDC
-cCj
+QuX
 cFU
 cCe
 ctK
@@ -107824,7 +107851,7 @@ cQK
 cQY
 cYJ
 aaa
-cYO
+aaa
 aaa
 aaa
 aaa
@@ -113224,15 +113251,15 @@ cRi
 cRe
 cRi
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cRi
 cTA
@@ -113466,8 +113493,8 @@ cIg
 dDF
 dvY
 cNj
-dwN
-dwN
+ciL
+ciL
 cPg
 dvY
 aaa
@@ -113723,8 +113750,8 @@ cIg
 dxQ
 dvY
 cNk
-dwN
-dwN
+ciL
+ciL
 cPh
 dvY
 aaa
@@ -114526,7 +114553,7 @@ cTt
 daA
 cSn
 cSn
-cSo
+cSn
 daL
 cRi
 daQ
@@ -115794,15 +115821,15 @@ dcC
 dcM
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cRi
 ddh
@@ -118320,7 +118347,7 @@ alq
 alq
 dvY
 ckx
-dwN
+ciL
 dwQ
 cot
 cnb
@@ -118577,10 +118604,10 @@ apc
 chE
 dvY
 cky
-dwN
+ciL
 dwX
-dwN
-dwN
+ciL
+ciL
 cou
 csb
 dvY
@@ -118834,10 +118861,10 @@ avr
 chF
 dvY
 ckz
-dwN
+ciL
 dwY
-dwN
-dwN
+ciL
+ciL
 cgs
 csc
 dvY
@@ -119095,7 +119122,7 @@ dwQ
 cnb
 cou
 cpK
-dwN
+ciL
 csc
 dvY
 Qtj
@@ -120324,7 +120351,7 @@ aFs
 aGT
 axY
 aJm
-aKy
+aJu
 aMb
 EDE
 axY
@@ -146180,3 +146207,4 @@ aaa
 aaa
 aaa
 "}
+
