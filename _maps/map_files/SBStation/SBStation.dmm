@@ -24414,9 +24414,7 @@
 "mUi" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "mix_in"
+	dir = 8
 	},
 /turf/open/space/basic,
 /area/engine/engineering)
