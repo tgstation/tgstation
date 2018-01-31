@@ -245,7 +245,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			qdel(O)
 
 		var/obj/effect/decal/cleanable/ash/a=new/obj/effect/decal/cleanable/ash(src)
-		a.layer = connected.layer//Makes the ash the same layer as the tray. Resets when moved.
 
 		sleep(30)
 
