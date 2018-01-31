@@ -1050,6 +1050,22 @@
 		throw_at(target, throw_range, throw_speed)
 
 /*
+ * Clockwork Watch
+ */
+
+/obj/item/toy/clockwork_watch
+	name = "steampunk watch"
+	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "dread_ipad"
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/toy/clockwork_watch/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
+
+/*
  * Xenomorph action figure
  */
 
