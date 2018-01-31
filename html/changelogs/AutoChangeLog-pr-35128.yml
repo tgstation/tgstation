@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - tweak: "The Whiteship spawn point is now a space ruin rather than being fixed every round."
