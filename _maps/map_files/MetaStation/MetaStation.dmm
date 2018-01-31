@@ -65519,7 +65519,6 @@
 "cFU" = (
 /obj/machinery/light/small,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -68614,7 +68613,6 @@
 "cLT" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plasteel/dark,
@@ -75240,7 +75238,6 @@
 	network = list("SS13","Medbay")
 	},
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -80658,7 +80655,6 @@
 /area/science/circuit)
 "QuX" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -80672,7 +80668,6 @@
 /area/medical/morgue)
 "QuZ" = (
 /obj/structure/bodycontainer/crematorium{
-	icon_state = "crema1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,

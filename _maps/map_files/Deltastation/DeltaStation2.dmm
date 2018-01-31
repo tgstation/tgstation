@@ -90598,14 +90598,12 @@
 /area/medical/morgue)
 "dDM" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dDN" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
@@ -90615,7 +90613,6 @@
 "dDO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
@@ -90628,7 +90625,6 @@
 	dir = 1
 	},
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plating,
@@ -93106,7 +93102,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -93124,7 +93119,6 @@
 	pixel_y = -32
 	},
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -93146,7 +93140,6 @@
 "dIZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -93155,7 +93148,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct/small,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -100985,8 +100977,8 @@
 "dZO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
-	icon_state = "crema1";
-	dir = 4
+	dir = 4;
+	id = "cremawheat"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -105057,7 +105049,6 @@
 "QOn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
@@ -105080,7 +105071,6 @@
 /area/medical/morgue)
 "QOq" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -105090,7 +105080,6 @@
 "QOr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -146655,7 +146644,7 @@ dyo
 dzU
 dAX
 dCB
-QOo
+QOn
 dEW
 dGn
 dHI
