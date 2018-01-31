@@ -2053,7 +2053,7 @@
 	height = 9;
 	id = "arrivals_stationary";
 	name = "arrivals bay";
-	roundstart_template = !INVALID_VALUE!;
+	roundstart_template = /datum/map_template/shuttle/arrival/sb;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -17097,7 +17097,7 @@
 	height = 4;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = !INVALID_VALUE!;
+	roundstart_template = /datum/map_template/shuttle/mining/sb;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -24404,6 +24404,22 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"cmS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
+"mUi" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 8;
+	frequency = 1441;
+	id = "mix_in"
+	},
+/turf/open/space/basic,
+/area/engine/engineering)
 "qvH" = (
 /obj/structure/sign/plaques/sciencestation{
 	dir = 4;
@@ -24420,22 +24436,6 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
-"MvL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engine/engineering)
-"MXQ" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "mix_in"
-	},
-/turf/open/space/basic,
-/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -61860,7 +61860,7 @@ aRv
 baB
 aYp
 aRv
-MvL
+cmS
 aRv
 aRv
 bcH
@@ -62117,7 +62117,7 @@ baf
 adP
 adP
 adP
-MXQ
+mUi
 adP
 adP
 adP
