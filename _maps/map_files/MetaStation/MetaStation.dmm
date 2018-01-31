@@ -80661,7 +80661,6 @@
 /area/medical/morgue)
 "QuY" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -146208,3 +146207,4 @@ aaa
 aaa
 aaa
 "}
+

@@ -105058,7 +105058,6 @@
 "QOo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
@@ -170622,3 +170621,4 @@ aaa
 aaa
 aaa
 "}
+
