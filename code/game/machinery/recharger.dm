@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/recharger
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
+
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
@@ -78,7 +79,7 @@
 	add_fingerprint(user)
 	if(charging)
 		charging.update_icon()
-		charging.loc = loc
+		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
 		charging = null
 		use_power = IDLE_POWER_USE
@@ -90,7 +91,7 @@
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
-		charging.loc = loc
+		charging.forceMove(drop_location())
 		charging = null
 		use_power = IDLE_POWER_USE
 		update_icon()
@@ -108,10 +109,7 @@
 				use_power(250 * recharge_coeff)
 				using_power = 1
 			update_icon(using_power)
-		if(istype(charging, /obj/item/gun/energy))
-			var/obj/item/gun/energy/E = charging
-			E.recharge_newshot()
-			return
+
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)

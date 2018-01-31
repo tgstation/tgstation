@@ -106,8 +106,6 @@
 
 
 /obj/item/clothing/Destroy()
-	if(isliving(loc))
-		dropped(loc)
 	if(pockets)
 		qdel(pockets)
 		pockets = null

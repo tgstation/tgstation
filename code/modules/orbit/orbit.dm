@@ -33,7 +33,9 @@
 		orbiting = null
 	return ..()
 
-/datum/orbit/proc/Check(turf/targetloc)
+/datum/orbit/proc/Check(turf/targetloc, list/checked_already = list())
+	//Avoid infinite loops for people who end up orbiting themself through another orbiter
+	checked_already[src] = TRUE
 	if (!orbiter)
 		qdel(src)
 		return
@@ -43,6 +45,10 @@
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
+	var/atom/movable/AM = orbiting
+	if(istype(AM) && AM.orbiting && AM.orbiting.orbiting == orbiter)
+		orbiter.stop_orbit()
+		return
 	lastprocess = world.time
 	if (!targetloc)
 		targetloc = get_turf(orbiting)
@@ -51,12 +57,14 @@
 		return
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
+	orbiter.update_light()
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
-		if(OO == src)
+		//Skip if checked already
+		if(checked_already[OO])
 			continue
-		OO.Check(targetloc)
+		OO.Check(targetloc, checked_already)
 
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null
@@ -112,3 +120,11 @@
 	. = ..()
 	if (orbiting)
 		stop_orbit()
+
+/atom/movable/proc/transfer_observers_to(atom/movable/target)
+	if(orbiters)
+		for(var/thing in orbiters)
+			var/datum/orbit/O = thing
+			if(O.orbiter && isobserver(O.orbiter))
+				var/mob/dead/observer/D = O.orbiter
+				D.ManualFollow(target)

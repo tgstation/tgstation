@@ -6,6 +6,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
+	
+/obj/item/folder/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins filing an imaginary death warrent! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/folder/blue
 	desc = "A blue folder."
@@ -62,7 +66,7 @@
 		if(href_list["remove"])
 			var/obj/item/I = locate(href_list["remove"])
 			if(istype(I) && I.loc == src)
-				I.loc = usr.loc
+				I.forceMove(usr.loc)
 				usr.put_in_hands(I)
 
 		if(href_list["read"])

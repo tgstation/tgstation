@@ -41,7 +41,7 @@
 	var/list/dat = list()
 	dat += {"
 	<HR>
-	<B><FONT size=3>[name]</FONT></B>
+	<span class='big bold'>[name]</span>
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
@@ -106,12 +106,12 @@
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		new_xeno.stomach_contents.Add(A)
-		A.loc = new_xeno
+		A.forceMove(new_xeno)
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
 /proc/get_alien_type(var/alienpath)
-	for(var/mob/living/carbon/alien/humanoid/A in GLOB.living_mob_list)
+	for(var/mob/living/carbon/alien/humanoid/A in GLOB.alive_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.

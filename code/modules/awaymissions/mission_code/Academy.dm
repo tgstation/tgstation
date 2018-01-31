@@ -47,7 +47,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus
 	name = "Summoning Midterm Exam"
 	info = "Grade: A+ Educator's Notes: Excellent form."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/bminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement."
@@ -55,7 +55,7 @@
 /obj/item/paper/fluff/awaymissions/academy/grade/dminus
 	name = "Summoning Midterm Exam"
 	info = "Grade: D- Educator's Notes: SEE ME AFTER CLASS."
-	
+
 /obj/item/paper/fluff/awaymissions/academy/grade/failure
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
@@ -127,7 +127,7 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
 	var/mob/dead/observer/chosen = null
 
 	if(candidates.len)
@@ -139,7 +139,7 @@
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
 	var/mob/living/carbon/human/wizbody = new(T)
-	wizbody.fully_replace_character_name("Academy Teacher")
+	wizbody.fully_replace_character_name(wizbody.real_name, "Academy Teacher")
 	wizbody.mind_initialize()
 	var/datum/mind/wizmind = wizbody.mind
 	wizmind.special_role = "Academy Defender"
@@ -207,7 +207,7 @@
 			//Swarm of creatures
 			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
+				new /mob/living/simple_animal/hostile/netherworld(get_step(T,direction))
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)
@@ -230,7 +230,7 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			explosion(src.loc,-1,0,2, flame_range = 2)
+			explosion(loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold
@@ -240,7 +240,7 @@
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")
 		if(11)
 			//Cookie
-			var/obj/item/reagent_containers/food/snacks/cookie/C = new(get_turf(src))
+			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
@@ -258,22 +258,21 @@
 						new /obj/item/coin/gold(M)
 		if(14)
 			//Free Gun
-			new /obj/item/gun/ballistic/revolver/mateba(get_turf(src))
+			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/spellbook/oneuse/random(get_turf(src))
+			new /obj/item/spellbook/oneuse/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			var/mob/living/carbon/human/H = new(get_turf(src))
+			var/mob/living/carbon/human/H = new(drop_location())
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
 			var/datum/objective/O = new("Serve [user.real_name].")
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			var/mob/dead/observer/chosen = null
-
 			if(candidates.len)
 				chosen = pick(candidates)
 				message_admins("[key_name_admin(chosen)] was spawned as Dice Servant")
@@ -285,10 +284,10 @@
 
 		if(17)
 			//Tator Kit
-			new /obj/item/storage/box/syndicate/(get_turf(src))
+			new /obj/item/storage/box/syndicate(drop_location())
 		if(18)
 			//Captain ID
-			new /obj/item/card/id/captains_spare(get_turf(src))
+			new /obj/item/card/id/captains_spare(drop_location())
 		if(19)
 			//Instrinct Resistance
 			to_chat(user, "<span class='notice'>You feel robust.</span>")
@@ -335,7 +334,7 @@
 			target_mob.Move(T)
 
 /obj/structure/ladder/unbreakable/rune
-	name = "Teleportation Rune"
+	name = "\improper Teleportation Rune"
 	desc = "Could lead anywhere."
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
@@ -347,7 +346,6 @@
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
 	user.visible_message("[user] activates \the [src].","<span class='notice'>You activate \the [src].</span>")
 
-/obj/structure/ladder/can_use(mob/user)
-	if(user.mind in SSticker.mode.wizards)
-		return 0
-	return 1
+/obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
+	if(is_ghost || !(user.mind in SSticker.mode.wizards))
+		..()

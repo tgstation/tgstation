@@ -2,8 +2,8 @@
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/teleport
 	var/atom/movable/teleatom //atom to teleport
@@ -119,6 +119,9 @@
 			playSpecials(destturf,effectout,soundout)
 			if(ismegafauna(teleatom))
 				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+	if(ismob(teleatom))
+		var/mob/M = teleatom
+		M.cancel_camera()
 	return 1
 
 /datum/teleport/proc/teleport()
@@ -152,19 +155,23 @@
 	if(istype(teleatom, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 
-	var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
+	var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+	var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
-	return 1
+	return TRUE
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
-		zlevels = list(zlevel)
+		if (zlevel)
+			zlevels = list(zlevel)
+		else
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/cycles = 1000
 	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO

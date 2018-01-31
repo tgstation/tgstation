@@ -1,7 +1,7 @@
 /turf/open/space/transit
 	icon_state = "black"
 	dir = SOUTH
-	baseturf = /turf/open/space/transit
+	baseturfs = /turf/open/space/transit
 	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
 

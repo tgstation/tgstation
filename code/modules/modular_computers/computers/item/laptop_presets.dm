@@ -1,4 +1,4 @@
-/obj/item/device/modular_computer/laptop/preset/New()
+/obj/item/device/modular_computer/laptop/preset/Initialize()
 	. = ..()
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))

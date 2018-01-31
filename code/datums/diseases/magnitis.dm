@@ -10,6 +10,8 @@
 	permeability_mod = 0.75
 	desc = "This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field."
 	severity = VIRUS_SEVERITY_MEDIUM
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_ROBOTIC)
+	process_dead = TRUE
 
 /datum/disease/magnitis/stage_act()
 	..()

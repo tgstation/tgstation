@@ -104,7 +104,7 @@
 	var/list/name_counts = list()
 	var/list/names = list()
 
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		if(!trackable(H))
 			continue
 
@@ -149,4 +149,3 @@
 		return PROCESS_KILL
 	scan_for_target()
 	update_icon()
-

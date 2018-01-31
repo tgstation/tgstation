@@ -1,3 +1,5 @@
+#define MAX_DENT_DECALS 15
+
 /turf/closed/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
@@ -7,6 +9,8 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
+
+	baseturfs = /turf/open/floor/plating
 
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -25,7 +29,18 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
-	var/list/damage_decals
+	var/list/dent_decals
+
+	var/static/list/dent_decal_list = list(
+	WALL_DENT_HIT = list(
+	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
+	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
+	),
+	WALL_DENT_SHOT = list(
+	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
+	)
+	)
 
 /turf/closed/wall/examine(mob/user)
 	..()
@@ -41,14 +56,14 @@
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = get_angle_of_incidence(face_angle, P.Angle)
+	var/incidence_s = WRAP(GET_ANGLE_OF_INCIDENCE(face_angle, P.Angle), -90, 90)
 	var/new_angle = face_angle + incidence_s
 	var/new_angle_s = new_angle
 	while(new_angle_s > 180)	// Translate to regular projectile degrees
 		new_angle_s -= 360
 	while(new_angle_s < -180)
 		new_angle_s += 360
-	P.Angle = new_angle_s
+	P.setAngle(new_angle_s)
 	return TRUE
 
 /turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
@@ -65,7 +80,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
-	ChangeTurf(/turf/open/floor/plating)
+	ScrapeAway()
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
@@ -83,7 +98,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ChangeTurf(baseturf)
+			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
 			return
 		if(2)
@@ -101,6 +116,8 @@
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))
 		dismantle_wall()
+	else
+		add_dent(WALL_DENT_HIT)
 
 /turf/closed/wall/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
@@ -111,6 +128,8 @@
 			if(prob(hardness + M.force) && M.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			else
+				add_dent(WALL_DENT_HIT)
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, 1)
 		if(TOX)
@@ -138,6 +157,7 @@
 		dismantle_wall(1)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		add_dent(WALL_DENT_HIT)
 		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
 	return TRUE
 
@@ -167,18 +187,20 @@
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T) || try_destroy(W, user, T))
 		return
 
+	return ..()
+
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(damage_decals) || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !istype(W, /obj/item/weldingtool))
 		return FALSE
 	var/obj/item/weldingtool/WT = W
 	if(WT.remove_fuel(0, user))
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
 		playsound(src, W.usesound, 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed * 0.5, target = src))
-			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && damage_decals.len)
+		if(do_after(user, slicing_duration * W.toolspeed * 0.1, target = src))
+			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
-				cut_overlay(damage_decals)
-				LAZYCLEARLIST(damage_decals)
+				cut_overlay(dent_decals)
+				LAZYCLEARLIST(dent_decals)
 			return TRUE
 	return FALSE
 
@@ -253,7 +275,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/clockwork)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source,mob/user)
+/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
@@ -274,11 +296,20 @@
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			ScrapeAway()
 			return TRUE
 	return FALSE
 
-/turf/closed/wall/proc/add_damage_decal(var/mutable_appearance/decal)
-	cut_overlay(damage_decals)
-	LAZYADD(damage_decals, decal)
-	add_overlay(damage_decals)
+/turf/closed/wall/proc/add_dent(denttype, x=rand(-8, 8), y=rand(-8, 8))
+	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
+		return
+
+	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	decal.pixel_x = x
+	decal.pixel_y = y
+
+	cut_overlay(dent_decals)
+	LAZYADD(dent_decals, decal)
+	add_overlay(dent_decals)
+	
+#undef MAX_DENT_DECALS

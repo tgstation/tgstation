@@ -78,7 +78,7 @@
 	var/mob/living/carbon/tk_user = null
 
 /obj/item/tk_grab/Initialize()
-	..()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/tk_grab/Destroy()

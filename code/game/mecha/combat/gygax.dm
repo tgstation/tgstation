@@ -27,8 +27,8 @@
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
 
-/obj/mecha/combat/gygax/dark/loaded/New()
-	..()
+/obj/mecha/combat/gygax/dark/loaded/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
@@ -37,16 +37,13 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
 	ME.attach(src)
-	return
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
 		return
-	cell = new(src)
-	cell.charge = 30000
-	cell.maxcharge = 30000
+	cell = new /obj/item/stock_parts/cell/hyper(src)
 
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)

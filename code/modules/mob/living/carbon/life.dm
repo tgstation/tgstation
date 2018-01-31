@@ -1,6 +1,5 @@
 /mob/living/carbon/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if(notransform)
 		return
@@ -14,6 +13,9 @@
 
 	if(..()) //not dead
 		handle_blood()
+
+	if(stat != DEAD)
+		handle_brain_damage()
 
 	if(stat != DEAD)
 		handle_liver()
@@ -175,7 +177,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
-		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjustToxLoss(CLAMP(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
@@ -202,10 +204,10 @@
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
-	//Brown Gas
-	if (breath_gases[/datum/gas/brown_gas])
-		var/browns_partialpressure = (breath_gases[/datum/gas/brown_gas][MOLES]/breath.total_moles())*breath_pressure
-		adjustFireLoss(browns_partialpressure/4)
+	//NITRYL
+	if (breath_gases[/datum/gas/nitryl])
+		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
+		adjustFireLoss(nitryl_partialpressure/4)
 
 
 
@@ -248,15 +250,17 @@
 		if(prob(D.infectivity))
 			D.spread()
 
-		if(stat != DEAD)
+		if(stat != DEAD && !D.process_dead)
 			D.stage_act()
 
+//todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
-		if(mind.changeling)
-			mind.changeling.regenerate(src)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -385,17 +389,16 @@
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = 310.15 - bodytemperature
+	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
-		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(260.15 to 310.15)
-			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(310.15 to 360.15)
-			bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
-			//We totally need a sweat system cause it totally makes sense...~
-			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
+			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
+			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
+			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
+			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 /////////
 //LIVER//
 /////////
@@ -435,3 +438,47 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
+
+////////////////
+//BRAIN DAMAGE//
+////////////////
+
+/mob/living/carbon/proc/handle_brain_damage()
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
+		BT.on_life()
+
+	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
+		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
+		death()
+		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+		if(B)
+			B.damaged_brain = TRUE
+
+/////////////////////////////////////
+//MONKEYS WITH TOO MUCH CHOLOESTROL//
+/////////////////////////////////////
+
+/mob/living/carbon/proc/can_heartattack()
+	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(istype(heart) && heart.beating)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/proc/set_heartattack(status)
+	if(!can_heartattack())
+		return FALSE
+
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!istype(heart))
+		return
+
+	heart.beating = !status

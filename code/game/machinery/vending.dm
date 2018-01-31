@@ -79,6 +79,7 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
@@ -138,7 +139,7 @@
 		if(isnull(amount))
 			amount = 0
 
-		var/atom/temp = new typepath(null)
+		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_name = initial(temp.name)
 		R.product_path = typepath
@@ -174,7 +175,7 @@
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(refill.charges[charge_type] == 0)
 				break
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
 			if(restock > refill.charges[charge_type])
 				restock = refill.charges[charge_type]
 			machine_content.amount += restock
@@ -223,7 +224,7 @@
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
-	if(!allowed(user) && !emagged && scan_id)
+	if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
@@ -341,9 +342,9 @@
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
@@ -454,7 +455,7 @@
 			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
-		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
+		if((!allowed(usr)) && !(obj_flags & EMAGGED) && scan_id)	//For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
 			flick(icon_deny,src)
 			return
@@ -510,7 +511,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
+		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
 		return
 
@@ -622,16 +623,6 @@
 IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
-/*
-/obj/machinery/vending/atmospherics //Commenting this out until someone ponies up some actual working, broken, and unpowered sprites - Quarxink
-	name = "Tank Vendor"
-	desc = "A vendor with a wide variety of masks and gas tanks."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "dispenser"
-	product_paths = "/obj/item/tank/internals/oxygen;/obj/item/tank/internals/plasma;/obj/item/tank/internals/emergency_oxygen;/obj/item/tank/internals/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
-	product_amounts = "10;10;10;5;25"
-*/
-
 /obj/machinery/vending/boozeomat
 	name = "\improper Booze-O-Mat"
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
@@ -648,7 +639,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4, /obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 30, /obj/item/reagent_containers/food/drinks/ice = 10,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3)
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3,
+					/obj/item/reagent_containers/food/drinks/beer = 6)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -688,13 +680,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/snack/random
 	name = "\improper Random Snackies"
+	icon_state = "random_snack"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
-    ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
@@ -740,13 +733,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/random
 	name = "\improper Random Drinkies"
+	icon_state = "random_cola"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    . = ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
@@ -980,8 +974,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/gas/cyborg = 1, /obj/item/clothing/suit/holidaypriest = 1, /obj/item/clothing/head/wizard/marisa/fake = 1,
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1, /obj/item/clothing/under/sundress = 1, /obj/item/clothing/head/witchwig = 1, /obj/item/staff/broom = 1,
 					/obj/item/clothing/suit/wizrobe/fake = 1, /obj/item/clothing/head/wizard/fake = 1, /obj/item/staff = 3, /obj/item/clothing/mask/gas/sexyclown = 1,
-					/obj/item/clothing/under/rank/clown/sexy = 1, /obj/item/clothing/mask/gas/sexymime = 1, /obj/item/clothing/under/sexymime = 1, /obj/item/clothing/mask/rat/bat = 1, /obj/item/clothing/mask/rat/bee = 1, /obj/item/clothing/mask/rat/bear = 1, /obj/item/clothing/mask/rat/raven = 1, /obj/item/clothing/mask/rat/jackal = 1, /obj/item/clothing/mask/rat/fox = 1, /obj/item/clothing/mask/rat/tribal = 1, /obj/item/clothing/mask/rat = 1, /obj/item/clothing/suit/apron/overalls = 1,
-					/obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
+					/obj/item/clothing/under/rank/clown/sexy = 1, /obj/item/clothing/mask/gas/sexymime = 1, /obj/item/clothing/under/sexymime = 1, /obj/item/clothing/mask/rat/bat = 1, /obj/item/clothing/mask/rat/bee = 1, /obj/item/clothing/mask/rat/bear = 1, /obj/item/clothing/mask/rat/raven = 1, /obj/item/clothing/mask/rat/jackal = 1, /obj/item/clothing/mask/rat/fox = 1, /obj/item/clothing/mask/frog = 1, /obj/item/clothing/mask/rat/tribal = 1, /obj/item/clothing/mask/rat = 1,
+					/obj/item/clothing/suit/apron/overalls = 1, /obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
 					/obj/item/clothing/suit/poncho/green = 1, /obj/item/clothing/suit/poncho/red = 1,
 					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1, /obj/item/clothing/glasses/cold=1, /obj/item/clothing/glasses/heat=1,
 					/obj/item/clothing/suit/whitedress = 1,
@@ -998,8 +992,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
 					/obj/item/clothing/under/sailor = 1,
-					/obj/item/clothing/ears/headphones = 2,
-					/obj/item/clothing/head/wig/random = 3)
+        			/obj/item/clothing/ears/headphones = 2,
+        			/obj/item/clothing/head/wig/random = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1, /obj/item/clothing/head/powdered_wig = 1, /obj/item/gun/magic/wand = 2, /obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/shield/riot/roman = 1, /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
@@ -1074,7 +1068,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/device/multitool = 12, /obj/item/wrench = 12, /obj/item/device/t_scanner = 12,
 					/obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8,
 					/obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5,
-					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5, /obj/item/stock_parts/console_screen = 5)
+					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 
@@ -1124,7 +1118,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
 	/obj/item/clothing/suit/jacket/letterman_red=1,
-	/obj/item/clothing/ears/headphones = 10)
+	/obj/item/clothing/ears/headphones = 10, /obj/item/clothing/suit/apron/purple_bartender=2, /obj/item/clothing/under/rank/bartender/purple=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1, /obj/item/clothing/mask/balaclava=1, /obj/item/clothing/head/ushanka=1, /obj/item/clothing/under/soviet=1, /obj/item/storage/belt/fannypack/black=2, /obj/item/clothing/suit/jacket/letterman_syndie=1, /obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1, /obj/item/clothing/head/mailman=1, /obj/item/clothing/under/rank/mailman=1, /obj/item/clothing/suit/jacket/leather=1, /obj/item/clothing/suit/jacket/leather/overcoat=1, /obj/item/clothing/under/pants/mustangjeans=1, /obj/item/clothing/neck/necklace/dope=3, /obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/vending_refill/clothing
@@ -1181,6 +1175,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
+
+/obj/machinery/vending/games
+	name = "\improper Good Clean Fun"
+	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
+	product_ads = "Escape to a fantasy world!;Fuel your gambling addiction!;Ruin your friendships!;Roll for initative!;Elves and dwarves!;Paranoid computers!;Totally not satanic!;Fun times forever!"
+	icon_state = "games"
+	products = list(
+		/obj/item/toy/cards/deck = 5,
+		/obj/item/storage/pill_bottle/dice = 10,
+		/obj/item/toy/cards/deck/cas = 3,
+		/obj/item/toy/cards/deck/cas/black = 3)
+	contraband = list(/obj/item/dice/fudge = 9)
+	refill_canister = /obj/item/vending_refill/games
+
+
+/obj/machinery/vending/onTransitZ()
+	return
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

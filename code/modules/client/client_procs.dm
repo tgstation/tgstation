@@ -31,7 +31,6 @@
 
 	// asset_cache
 	if(href_list["asset_cache_confirm_arrival"])
-		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
@@ -76,7 +75,7 @@
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -132,13 +131,6 @@
 	if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
 		return 0
-/*	//Don't need this at the moment. But it's here if it's needed later.
-	//Helps prevent multiple files being uploaded at once. Or right after eachother.
-	var/time_to_wait = fileaccess_timer - world.time
-	if(time_to_wait > 0)
-		to_chat(src, "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 0
-	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
 
 
@@ -146,7 +138,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-GLOBAL_LIST(external_rsc_urls)
+GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
 
@@ -158,18 +150,11 @@ GLOBAL_LIST(external_rsc_urls)
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
-#if (PRELOAD_RSC == 0)
-	var/static/next_external_rsc = 0
-	if(external_rsc_urls && external_rsc_urls.len)
-		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
-#endif
-
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
 	GLOB.ahelp_tickets.ClientLogin(src)
-
+	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
@@ -193,6 +178,11 @@ GLOBAL_LIST(external_rsc_urls)
 	if(holder)
 		GLOB.admins |= src
 		holder.owner = src
+		connecting_admin = TRUE
+
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+		connecting_admin = TRUE
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
@@ -201,9 +191,7 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
-		vars["fps"] = prefs.clientfps
-	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
+	fps = prefs.clientfps
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
@@ -229,13 +217,23 @@ GLOBAL_LIST(external_rsc_urls)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
+
 	. = ..()	//calls mob.Login()
+
+	if(SSinput.initialized)
+		set_macros()
 
 	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
-		set waitfor = FALSE
-		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+		spawn()
+			alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -249,19 +247,27 @@ GLOBAL_LIST(external_rsc_urls)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [cev] or later")
 		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
-		if (holder)
+		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
 			return 0
 	else if (byond_version < cwv)	//We have words for this client.
-		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
-		to_chat(src, CONFIG_GET(string/client_warn_message))
-		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version to remove this message: [cwv] or later")
-		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+		if(CONFIG_GET(flag/client_warn_popup))
+			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
+			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
+			msg += "Your version: [byond_version]<br>"
+			msg += "Required version to remove this message: [cwv] or later<br>"
+			msg += "Visit http://www.byond.com/download/ to get the latest version of byond.<br>"
+			src << browse(msg, "window=warning_popup")
+		else
+			to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
+			to_chat(src, CONFIG_GET(string/client_warn_message))
+			to_chat(src, "Your version: [byond_version]")
+			to_chat(src, "Required version to remove this message: [cwv] or later")
+			to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
-	if (connection == "web" && !holder)
+	if (connection == "web" && !connecting_admin)
 		if (!CONFIG_GET(flag/allow_webclient))
 			to_chat(src, "Web client is disabled")
 			qdel(src)
@@ -415,7 +421,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
 	else
-		if (check_randomizer(connectiontopic))
+		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return
 	var/sql_ip = sanitizeSQL(address)
 	var/sql_computerid = sanitizeSQL(computer_id)
@@ -425,12 +431,12 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!query_client_in_db.Execute())
 		return
 	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !(ckey in GLOB.deadmins))
+		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
 			var/list/connectiontopic_a = params2list(connectiontopic)
-			var/list/panic_addr = CONFIG_GET(string/panic_address)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
 				var/panic_name = CONFIG_GET(string/panic_server_name)
 				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
@@ -599,6 +605,8 @@ GLOBAL_LIST(external_rsc_urls)
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
 		verbs += /client/proc/self_notes
+	if(CONFIG_GET(flag/use_exp_tracking))
+		verbs += /client/proc/self_playtime
 
 
 #undef TOPIC_SPAM_DELAY
@@ -625,6 +633,12 @@ GLOBAL_LIST(external_rsc_urls)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+#if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
+	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
+		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
+#endif
 	//get the common files
 	getFiles(
 		'html/search.js',
@@ -651,8 +665,18 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+		if("view")
+			change_view(var_value)
+			return TRUE
 	. = ..()
 
+/client/proc/rescale_view(change, min, max)
+	var/viewscale = getviewsize(view)
+	var/x = viewscale[1]
+	var/y = viewscale[2]
+	x = CLAMP(x+change, min, max)
+	y = CLAMP(y+change, min,max)
+	change_view("[x]x[y]")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -660,6 +684,9 @@ GLOBAL_LIST(external_rsc_urls)
 
 	view = new_size
 	apply_clickcatcher()
+	if (isliving(mob))
+		var/mob/living/M = mob
+		M.update_damage_hud()
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -668,7 +695,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/proc/apply_clickcatcher()
 	generate_clickcatcher()
-	void.UpdateGreed(view,view)
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)

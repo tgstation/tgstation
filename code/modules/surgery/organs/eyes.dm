@@ -103,7 +103,6 @@
 	name = "thermal eyes"
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
-	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
@@ -141,7 +140,6 @@
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
 	flash_protect = 2
 
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
@@ -152,7 +150,6 @@
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
-	origin_tech = "materials=3;biotech=3;engineering=3;magnets=4"
 	eye_color = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"
@@ -197,12 +194,12 @@
 		activate()
 
 /obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
-	var/C = input(owner, "Select Color", "Select color", "#ffffff") as null|color
+	var/C = input(owner, "Select Color", "Select color", "#ffffff") as color|null
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 
-	set_distance(Clamp(range, 0, max_light_beam_distance))
+	set_distance(CLAMP(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
@@ -319,3 +316,8 @@
 	parent = loc
 	if(!istype(parent))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/organ/eyes/moth
+	name = "moth eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	flash_protect = -1

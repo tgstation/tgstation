@@ -29,7 +29,9 @@
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
 
-	suffix = ""
+	var/id
+
+	path_image_color = "#7F5200"
 
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
@@ -52,14 +54,12 @@
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
 	prev_access = access_card.access
-	cell = new(src)
-	cell.charge = 2000
-	cell.maxcharge = 2000
+	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
 	var/static/mulebot_count = 0
 	mulebot_count += 1
-	if(!suffix)
-		set_suffix("#[mulebot_count]")
+	set_id(suffix || id || "#[mulebot_count]")
+	suffix = null
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
 	unload(0)
@@ -67,12 +67,12 @@
 	wires = null
 	return ..()
 
-/mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
-	src.suffix = suffix
+/mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
+	id = new_id
 	if(paicard)
-		bot_name = "\improper MULEbot ([suffix])"
+		bot_name = "\improper MULEbot ([new_id])"
 	else
-		name = "\improper MULEbot ([suffix])"
+		name = "\improper MULEbot ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -91,7 +91,7 @@
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(istype(I, /obj/item/crowbar) && open && cell)
 		cell.add_fingerprint(usr)
-		cell.loc = loc
+		cell.forceMove(loc)
 		cell = null
 		visible_message("[user] crowbars out the power cell from [src].",
 						"<span class='notice'>You pry the powercell out of [src].</span>")
@@ -231,9 +231,9 @@
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id = stripped_input(user, "Enter ID:", name, suffix, MAX_NAME_LEN)
+			var/new_id = stripped_input(user, "Enter ID:", name, id, MAX_NAME_LEN)
 			if(new_id)
-				set_suffix(new_id)
+				set_id(new_id)
 		if("sethome")
 			var/new_home = input(user, "Enter Home:", name, home_destination) as null|anything in GLOB.deliverybeacontags
 			if(new_home)
@@ -258,7 +258,7 @@
 	var/ai = issilicon(user)
 	var/dat
 	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
-	dat += "<b>ID:</b> [suffix]<BR>"
+	dat += "<b>ID:</b> [id]<BR>"
 	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
 	dat += "<h3>Status</h3>"
 	dat += "<div class='statusDisplay'>"
@@ -361,7 +361,7 @@
 		if(!load_mob(AM))
 			return
 	else
-		AM.loc = src
+		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
@@ -377,12 +377,11 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs) //post buckling
-		M.pixel_y = initial(M.pixel_y) + 9
-		if(M.layer < layer)
-			M.layer = layer + 0.01
+	M.pixel_y = initial(M.pixel_y) + 9
+	if(M.layer < layer)
+		M.layer = layer + 0.01
 
-	else //post unbuckling
+/mob/living/simple_animal/bot/mulebot/post_unbuckle_mob(mob/living/M)
 		load = null
 		M.layer = initial(M.layer)
 		M.pixel_y = initial(M.pixel_y)
@@ -401,7 +400,7 @@
 	unbuckle_all_mobs()
 
 	if(load)
-		load.loc = loc
+		load.forceMove(loc)
 		load.pixel_y = initial(load.pixel_y)
 		load.layer = initial(load.layer)
 		load.plane = initial(load.plane)
@@ -416,11 +415,9 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	var/area/dest_area
 	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
-		dest_area = get_area(target)
-		destination = format_text(dest_area.name)
+		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
@@ -473,8 +470,7 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						if(blood_DNA && blood_DNA.len)
-							B.blood_DNA |= blood_DNA.Copy()
+						B.add_blood_DNA(return_blood_DNA())
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -610,7 +606,7 @@
 				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
-						speak("Now loading [load] at <b>[get_area(src)]</b>.", radio_channel)
+						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
 		// whatever happened, check to see if we return home
 
 		if(auto_return && home_destination && destination != home_destination)
@@ -656,8 +652,7 @@
 	T.add_mob_blood(H)
 
 	var/list/blood_dna = H.get_blood_dna_list()
-	if(blood_dna)
-		transfer_blood_dna(blood_dna)
+	add_blood_DNA(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move
@@ -697,14 +692,14 @@
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
-		cell.loc = Tsec
+		cell.forceMove(Tsec)
 		cell.update_icon()
 		cell = null
 

@@ -1,6 +1,6 @@
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 
@@ -75,28 +75,15 @@
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
-/obj/machinery/power/emitter/verb/rotate()
-	set name = "Rotate"
-	set category = "Object"
-	set src in oview(1)
+/obj/machinery/power/emitter/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
-		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
-		return 0
-	src.setDir(turn(src.dir, 270))
-	return 1
-
-/obj/machinery/power/emitter/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
+/obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
+	if (anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -152,11 +139,6 @@
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
-//	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
-		if(src.active)
-			src.active = 0
-			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 
@@ -278,7 +260,7 @@
 		return
 
 	if(W.GetID())
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
@@ -310,10 +292,10 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 
@@ -340,7 +322,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	auto.Remove(buckled_mob)
 	. = ..()
 

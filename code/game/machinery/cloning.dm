@@ -13,7 +13,7 @@
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
@@ -53,7 +53,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -88,8 +88,8 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
-/obj/item/disk/data/New()
-	..()
+/obj/item/disk/data/Initialize()
+	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")
 
@@ -161,11 +161,6 @@
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
-
-	if(clonemind.changeling)
-		var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE
-		B.decoy_override = TRUE
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 

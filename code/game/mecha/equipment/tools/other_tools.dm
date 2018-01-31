@@ -8,13 +8,12 @@
 	name = "mounted teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
-	origin_tech = "bluespace=7"
 	equip_cooldown = 150
 	energy_drain = 1000
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
 	if(T)
@@ -29,14 +28,13 @@
 	name = "mounted wormhole generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes."
 	icon_state = "mecha_wholegen"
-	origin_tech = "bluespace=4;magnets=4;plasmatech=2"
 	equip_cooldown = 50
 	energy_drain = 300
 	range = RANGED
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
@@ -73,7 +71,6 @@
 	name = "mounted gravitational catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
-	origin_tech = "bluespace=3;magnets=3;engineering=4"
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MELEE|RANGED
@@ -145,7 +142,6 @@
 	name = "armor booster module (Close Combat Weaponry)"
 	desc = "Boosts exosuit armor against armed melee attacks. Requires energy to operate."
 	icon_state = "mecha_abooster_ccw"
-	origin_tech = "materials=4;combat=4"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -164,7 +160,6 @@
 	name = "armor booster module (Ranged Weaponry)"
 	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots. Requires energy to operate."
 	icon_state = "mecha_abooster_proj"
-	origin_tech = "materials=4;combat=3;engineering=3"
 	equip_cooldown = 10
 	energy_drain = 50
 	range = 0
@@ -185,7 +180,6 @@
 	name = "exosuit repair droid"
 	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
-	origin_tech = "magnets=3;programming=3;engineering=4"
 	energy_drain = 50
 	range = 0
 	var/health_boost = 1
@@ -271,7 +265,6 @@
 	name = "exosuit energy relay"
 	desc = "An exosuit module that wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
-	origin_tech = "magnets=4;powerstorage=4;engineering=4"
 	energy_drain = 0
 	range = 0
 	var/coeff = 100
@@ -357,7 +350,6 @@
 	name = "exosuit plasma converter"
 	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	origin_tech = "plasmatech=2;powerstorage=2;engineering=2"
 	range = MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
@@ -366,8 +358,8 @@
 	var/fuel_per_cycle_active = 200
 	var/power_per_cycle = 20
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+	. = ..()
 	generator_init()
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
@@ -430,7 +422,7 @@
 	if(!istype(T))
 		return
 	var/datum/gas_mixture/GM = new
-	ADD_GAS(/datum/gas/plasma, GM.gases)
+	GM.add_gas(/datum/gas/plasma)
 	if(prob(10))
 		GM.gases[/datum/gas/plasma][MOLES] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
@@ -473,7 +465,6 @@
 	name = "exonuclear reactor"
 	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	origin_tech = "powerstorage=4;engineering=4"
 	max_fuel = 50000
 	fuel_per_cycle_idle = 10
 	fuel_per_cycle_active = 30

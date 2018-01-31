@@ -17,10 +17,10 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
-	on_blueprints = TRUE
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -60,8 +60,8 @@ Pipelines + Other Objects -> Pipe network
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
-	for(DEVICE_TYPE_LOOP)
-		nullifyNode(I)
+	for(var/i in 1 to device_type)
+		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
 
@@ -79,22 +79,22 @@ Pipelines + Other Objects -> Pipe network
 	// Called to build a network from this node
 	return
 
-/obj/machinery/atmospherics/proc/nullifyNode(I)
-	if(NODE_I)
-		var/obj/machinery/atmospherics/N = NODE_I
+/obj/machinery/atmospherics/proc/nullifyNode(i)
+	if(nodes[i])
+		var/obj/machinery/atmospherics/N = nodes[i]
 		N.disconnect(src)
-		NODE_I = null
+		nodes[i] = null
 
 /obj/machinery/atmospherics/proc/getNodeConnects()
 	var/list/node_connects = list()
 	node_connects.len = device_type
 
-	for(DEVICE_TYPE_LOOP)
+	for(var/i in 1 to device_type)
 		for(var/D in GLOB.cardinals)
 			if(D & GetInitDirections())
 				if(D in node_connects)
 					continue
-				node_connects[I] = D
+				node_connects[i] = D
 				break
 	return node_connects
 
@@ -109,10 +109,10 @@ Pipelines + Other Objects -> Pipe network
 	if(!node_connects) //for pipes where order of nodes doesn't matter
 		node_connects = getNodeConnects()
 
-	for(DEVICE_TYPE_LOOP)
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
-			if(can_be_node(target, I))
-				NODE_I = target
+	for(var/i in 1 to device_type)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
+			if(can_be_node(target, i))
+				nodes[i] = target
 				break
 	update_icon()
 
@@ -171,8 +171,7 @@ Pipelines + Other Objects -> Pipe network
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
-	var/I = nodes.Find(reference)
-	NODE_I = null
+	nodes[nodes.Find(reference)] = null
 	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
@@ -302,7 +301,8 @@ Pipelines + Other Objects -> Pipe network
 #define VENT_SOUND_DELAY 30
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!(direction & initialize_directions)) //cant go this way.
+	direction &= initialize_directions
+	if(!direction || !(direction in GLOB.cardinals)) //cant go this way.
 		return
 
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
@@ -323,13 +323,12 @@ Pipelines + Other Objects -> Pipe network
 				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
-	else
-		if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			user.forceMove(loc)
-			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
-	user.canmove = 0
-	spawn(1)
-		user.canmove = 1
+	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		user.forceMove(loc)
+		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
+	
+	user.canmove = FALSE
+	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
 
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)

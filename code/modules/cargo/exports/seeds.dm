@@ -26,12 +26,12 @@
 	export_types = list(/obj/item/seeds)
 	needs_discovery = TRUE // Only for already discovered species
 
-/datum/export/seed/potency.get_cost(obj/O)
+/datum/export/seed/potency/get_cost(obj/O)
 	var/obj/item/seeds/S = O
 	var/cost = ..()
 	if(!cost)
 		return 0
 
 	var/potDiff = (S.potency - discoveredPlants[S.type])
-		
+
 	return round(..() * potDiff)

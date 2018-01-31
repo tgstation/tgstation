@@ -49,10 +49,25 @@
 				death(FALSE)
 				return
 
-		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
+		var/suicide_message
+
+		if(a_intent == INTENT_DISARM)
+			suicide_message = pick("[src] is attempting to push [p_their()] own head off [p_their()] shoulders! It looks like [p_theyre()] trying to commit suicide.", \
+								"[src] is pushing [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
+								"[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide.")//heheh get it?
+		if(a_intent == INTENT_GRAB)	
+			suicide_message = pick("[src] is attempting to pull [p_their()] own head off! It looks like [p_theyre()] trying to commit suicide.", \
+									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
+									"[src] is pulling [p_their()] eyes out of their sockets! It looks like [p_theyre()] trying to commit suicide.")
+		if(a_intent == INTENT_HELP)	
+			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
+									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
+									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
+		else
+			suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
+								"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
+								"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
+								"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
@@ -117,11 +132,9 @@
 		death(0)
 
 /mob/living/silicon/pai/verb/suicide()
-	set category = "pAI Commands"
-	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
-	set name = "pAI Suicide"
-	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
-	if(answer == "Yes")
+	set hidden = 1
+	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
 		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
 		 "<span class='notice'>[src] bleeps electronically.</span>")

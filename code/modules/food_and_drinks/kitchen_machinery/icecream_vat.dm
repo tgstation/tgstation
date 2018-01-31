@@ -14,7 +14,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
@@ -112,7 +112,7 @@
 		else
 			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
-	else if(O.is_open_container())
+	else if(O.is_drainable())
 		return
 	else
 		return ..()

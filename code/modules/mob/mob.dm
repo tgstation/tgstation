@@ -1,10 +1,7 @@
-/mob
-	use_tag = TRUE
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
-	GLOB.living_mob_list -= src
+	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
 	for (var/alert in alerts)
@@ -23,27 +20,36 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
+	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)
-		var/image/I = image('icons/mob/hud.dmi', src, "")
-		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-		hud_list[hud] = I
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -168,8 +174,7 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -248,24 +253,43 @@
 
 	return 0
 
+// reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
+// reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(ismovableatom(A))
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+		if(A)
+			if(ismovableatom(A))
+				//Set the the thing unless it's us
+				if(A != src)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else if(isturf(A))
+				//Set to the turf unless it's our current turf
+				if(A != loc)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else
+				//Do nothing
 		else
+			//Reset to common defaults: mob if on turf, otherwise current loc
 			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1
+		return 1 
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		if(client.eye != src)
+		if(client.eye && client.eye != src)
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
@@ -309,7 +333,7 @@
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
+/mob/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
 		return FALSE
 	if(!(AM.can_be_pulled(src)))
@@ -384,20 +408,14 @@
 		setDir(D)
 		spintime -= speed
 
-/mob/verb/stop_pulling()
+/mob/stop_pulling()
+	..()
+	update_pull_hud_icon()
+
+/mob/verb/stop_pulling1()
 	set name = "Stop Pulling"
 	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
-		pulling = null
-		grab_state = 0
-		update_pull_hud_icon()
-		
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+	stop_pulling()
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -419,18 +437,6 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
-
-
-/*
-/mob/verb/dump_source()
-
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]\n", t)
-		//Foreach goto(26)
-	src << browse(master)
-	return
-*/
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -644,8 +650,9 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -667,8 +674,6 @@
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(client.moving)
 		return 0
 	if(world.time < client.move_delay)
 		return 0
@@ -775,14 +780,14 @@
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)//post buckling
-		var/height = M.get_mob_buckling_height(src)
-		M.pixel_y = initial(M.pixel_y) + height
-		if(M.layer < layer)
-			M.layer = layer + 0.1
-	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+	var/height = M.get_mob_buckling_height(src)
+	M.pixel_y = initial(M.pixel_y) + height
+	if(M.layer < layer)
+		M.layer = layer + 0.1
+
+/mob/post_unbuckle_mob(mob/living/M)
+	M.layer = initial(M.layer)
+	M.pixel_y = initial(M.pixel_y)
 
 //returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)
@@ -821,7 +826,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
@@ -920,9 +925,9 @@
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
-				GLOB.living_mob_list += src
+				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.living_mob_list -= src
+				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
@@ -977,7 +982,6 @@
 	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
 	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
 	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
 	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
 	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"

@@ -125,6 +125,7 @@
 /obj/structure/closet/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
+	icon = 'goon/icons/obj/closet.dmi'
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
@@ -215,17 +216,17 @@
 	new /obj/item/storage/backpack/medic(src)
 	new /obj/item/storage/backpack/satchel/med(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
-	new /obj/item/clothing/under/rank/nursesuit (src)
-	new /obj/item/clothing/head/nursehat (src)
+	new /obj/item/clothing/under/rank/nursesuit(src)
+	new /obj/item/clothing/head/nursehat(src)
 	new /obj/item/clothing/under/rank/medical/blue(src)
 	new /obj/item/clothing/under/rank/medical/green(src)
 	new /obj/item/clothing/under/rank/medical/purple(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/medical(src)
-	new /obj/item/clothing/suit/toggle/labcoat(src)
-	new /obj/item/clothing/suit/toggle/labcoat(src)
-	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
-	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/toggle/labcoat(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/toggle/labcoat/emt(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/white(src)
 	for(var/i in 1 to 3)

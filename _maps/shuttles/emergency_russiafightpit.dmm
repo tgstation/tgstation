@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall,
 /area/shuttle/escape)
@@ -37,7 +37,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -63,7 +65,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ao" = (
@@ -113,7 +117,7 @@
 /turf/closed/wall/rust,
 /area/shuttle/escape)
 "at" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Glorious Leaders";
 	req_access_txt = "19"
 	},
@@ -193,7 +197,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aI" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -227,7 +231,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aO" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -276,7 +280,7 @@
 	name = "Box emergency shuttle";
 	timid = 1
 	},
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -414,7 +418,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -434,7 +438,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bu" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Cargo"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -444,7 +448,7 @@
 /turf/closed/wall,
 /area/shuttle/escape)
 "bw" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/plastitanium,

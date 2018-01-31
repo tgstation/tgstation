@@ -11,6 +11,12 @@
 
 	var/minetype = "lavaland"
 
+	var/shuttles = list(
+		"cargo" = "cargo_box",
+		"ferry" = "ferry_fancy",
+		"whiteship" = "whiteship_box",
+		"emergency" = "emergency_box")
+
 	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
@@ -31,16 +37,17 @@
 	var/voteweight = 1
 	var/allow_custom_shuttles = TRUE
 
-/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after)
+/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	if(default_to_box)
 		return
-	LoadConfig(filename)
+	LoadConfig(filename, error_if_missing)
 	if(delete_after)
 		fdel(filename)
 
-/datum/map_config/proc/LoadConfig(filename)
+/datum/map_config/proc/LoadConfig(filename, error_if_missing)
 	if(!fexists(filename))
-		log_world("map_config not found: [filename]")
+		if(error_if_missing)
+			log_world("map_config not found: [filename]")
 		return
 
 	var/json = file(filename)
@@ -68,6 +75,12 @@
 	map_path = json["map_path"]
 	map_file = json["map_file"]
 
+	if(islist(json["shuttles"]))
+		var/list/L = json["shuttles"]
+		for(var/key in L)
+			var/value = L[key]
+			shuttles[key] = value
+
 	minetype = json["minetype"] || minetype
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
@@ -80,11 +93,15 @@
 
 	defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + "missing from json!"); return; }
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
 	CHECK_EXISTS("map_name")
 	CHECK_EXISTS("map_path")
 	CHECK_EXISTS("map_file")
+
+	var/shuttles = json["shuttles"]
+	if(shuttles && !islist(shuttles))
+		log_world("json\[shuttles\] is not a list!")
 
 	var/path = GetFullMapPath(json["map_path"], json["map_file"])
 	if(!fexists(path))

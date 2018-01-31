@@ -9,6 +9,10 @@
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
+/obj/item/storage/belt/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins belting themselves with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/storage/belt/update_icon()
 	cut_overlays()
 	if(content_overlays)
@@ -37,6 +41,7 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves

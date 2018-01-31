@@ -17,9 +17,12 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info
+	if(id in meta_gas)
+		return id
 	for(var/path in meta_gas)
 		if(meta_gas[path][META_GAS_ID] == id)
 			return path
+	return ""
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
@@ -84,11 +87,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	moles_visible = 1
 	dangerous = TRUE
 
-/datum/gas/brown_gas //This is nitric oxide, but given generic name to avoid confusion with nitrous oxide(N20 vs. NO2)
-	id = "browns"
+/datum/gas/nitryl
+	id = "no2"
 	specific_heat = 20
-	name = "Brown Gas"
-	gas_overlay = "browns"
+	name = "Nitryl"
+	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 

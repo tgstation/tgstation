@@ -4,7 +4,6 @@
 	zone = "head"
 	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
-	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30
 	var/converts_living = FALSE
@@ -51,6 +50,8 @@
 	if(owner.suiciding)
 		return
 	if(owner.stat != DEAD && !converts_living)
+		return
+	if(!owner.getorgan(/obj/item/organ/brain))
 		return
 	if(!iszombie(owner))
 		to_chat(owner, "<span class='cultlarge'>You can feel your heart stopping, but something isn't right... \

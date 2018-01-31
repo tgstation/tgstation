@@ -41,9 +41,14 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
+		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
+		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
+		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
+		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
@@ -79,7 +84,7 @@
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
-	name = "BZ canister"
+	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = /datum/gas/bz
@@ -98,26 +103,31 @@
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "tritium canister"
 	desc = "Tritium. Inhalation might cause irradiation."
+	icon_state = "green"
 	gas_type = /datum/gas/tritium
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "hyper-noblium canister"
 	desc = "Hyper-Noblium. More noble than all other gases."
+	icon_state = "freon"
 	gas_type = /datum/gas/hypernoblium
 
-/obj/machinery/portable_atmospherics/canister/browns
-	name = "brown gas canister"
-	desc = "Browns gas. Feels great 'til the acid eats your lungs."
-	gas_type = /datum/gas/brown_gas
+/obj/machinery/portable_atmospherics/canister/nitryl
+	name = "nitryl canister"
+	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+	icon_state = "brown"
+	gas_type = /datum/gas/nitryl
 
 /obj/machinery/portable_atmospherics/canister/stimulum
 	name = "stimulum canister"
 	desc = "Stimulum. High energy gas, high energy people."
+	icon_state = "darkpurple"
 	gas_type = /datum/gas/stimulum
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "pluoxium canister"
 	desc = "Pluoxium. Like oxygen, but more bang for your buck."
+	icon_state = "darkblue"
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
@@ -126,7 +136,6 @@
 	icon_state = "water_vapor"
 	gas_type = /datum/gas/water_vapor
 	filled = 1
-
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -187,7 +196,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
-		ADD_GAS(gas_type, air_contents.gases)
+		air_contents.add_gas(gas_type)
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
@@ -208,7 +217,7 @@
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		icon_state = "[initial(icon_state)]-1"
+		icon_state = "[icon_state]-1"
 		return
 
 	var/last_update = update
@@ -315,13 +324,13 @@
 		valve_open = !valve_open
 		timing = FALSE
 	if(!valve_open)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
-	pump.AIR1 = air_contents
-	pump.AIR2 = holding ? holding.air_contents : T.return_air()
+	pump.airs[1] = air_contents
+	pump.airs[2] = holding ? holding.air_contents : T.return_air()
 	pump.target_pressure = release_pressure
 
 	pump.process_atmos() // Pump gas.
@@ -374,7 +383,7 @@
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
 					name = initial(replacement.name)
-					desc = initial(replacement.name)
+					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 		if("restricted")
 			restricted = !restricted
@@ -402,7 +411,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
+				release_pressure = CLAMP(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
@@ -446,7 +455,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

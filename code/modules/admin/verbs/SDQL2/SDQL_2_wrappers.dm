@@ -3,9 +3,11 @@
 /proc/_abs(A)
 	return abs(A)
 
-/*/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	animate(A, set_vars, time, loop, easing, flags)
-	Borked. If anyone wants to fix this be my guest.*/
+/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	var/mutable_appearance/MA = new()
+	for(var/v in set_vars)
+		MA.vars[v] = set_vars[v]
+	animate(A, appearance = MA, time, loop, easing, flags)
 
 /proc/_acrccos(A)
 	return arccos(A)

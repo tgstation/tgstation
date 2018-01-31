@@ -12,7 +12,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == allowed_area || istype(new_area, /area/science/xenobiology ))
+	if(new_area && new_area.name == allowed_area || new_area && new_area.xenobiology_compatible)
 		return ..()
 	else
 		return
@@ -26,8 +26,11 @@
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
 	var/datum/action/innate/feed_slime/feed_slime_action = new
 	var/datum/action/innate/monkey_recycle/monkey_recycle_action = new
+	var/datum/action/innate/slime_scan/scan_action = new
+	var/datum/action/innate/feed_potion/potion_action = new
 
 	var/list/stored_slimes = list()
+	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
 	var/monkeys = 0
 
@@ -66,6 +69,16 @@
 		monkey_recycle_action.Grant(user)
 		actions += monkey_recycle_action
 
+	if(scan_action)
+		scan_action.target = src
+		scan_action.Grant(user)
+		actions += scan_action
+
+	if(potion_action)
+		potion_action.target = src
+		potion_action.Grant(user)
+		actions += potion_action
+
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		monkeys++
@@ -83,6 +96,16 @@
 		if (loaded)
 			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
 		return
+	else if(istype(O, /obj/item/slimepotion/slime))
+		var/replaced = FALSE
+		if(user && !user.transferItemToLoc(O, src))
+			return
+		if(!QDELETED(current_potion))
+			current_potion.forceMove(drop_location())
+			replaced = TRUE
+		current_potion = O
+		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
+		return
 	..()
 
 /datum/action/innate/slime_place
@@ -99,7 +122,7 @@
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
-			S.loc = remote_eye.loc
+			S.forceMove(remote_eye.loc)
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 	else
@@ -125,7 +148,7 @@
 				if(S.buckled)
 					S.Feedstop(silent=1)
 				S.visible_message("[S] vanishes in a flash of light!")
-				S.loc = X
+				S.forceMove(X)
 				X.stored_slimes += S
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
@@ -171,5 +194,46 @@
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
+	else
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
+
+/datum/action/innate/slime_scan
+	name = "Scan Slime"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "slime_scan"
+
+/datum/action/innate/slime_scan/Activate()
+	if(!target || !isliving(owner))
+		return
+	var/mob/living/C = owner
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
+
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
+			slime_scan(S, C)
+	else
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
+
+/datum/action/innate/feed_potion
+	name = "Apply Potion"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "slime_potion"
+
+/datum/action/innate/feed_potion/Activate()
+	if(!target || !isliving(owner))
+		return
+
+	var/mob/living/C = owner
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+
+	if(QDELETED(X.current_potion))
+		to_chat(owner, "<span class='notice'>No potion loaded.</span>")
+		return
+
+	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
+			X.current_potion.attack(S, C)
+			break
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")

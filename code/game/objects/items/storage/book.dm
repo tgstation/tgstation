@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SSreligion.bible_icon_state = B.icon_state
 		SSreligion.bible_item_state = B.item_state
 
-		SSblackbox.set_details("religion_book","[biblename]")
+		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
 
 /obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (user.disabilities & CLUMSY && prob(50))
+	if (user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(10)
+				C.adjustBrainLoss(5, 60)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
-	if(istype(A, /obj/item/twohanded/required/cult_bastard))
+	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
 		var/obj/item/twohanded/required/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
@@ -213,5 +213,5 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	else
 		return ..(M,user,heal_mode = FALSE)
 
-/obj/item/storage/book/bible/syndicate/add_blood(list/blood_dna)
+/obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE

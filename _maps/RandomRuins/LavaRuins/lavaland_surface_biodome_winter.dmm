@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -170,7 +170,7 @@
 	},
 /area/ruin/powered/snow_biodome)
 "aJ" = (
-/obj/vehicle/atv,
+/obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
@@ -271,12 +271,6 @@
 "bN" = (
 /obj/machinery/light,
 /turf/open/floor/plating/ice{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
-	},
-/area/ruin/powered/snow_biodome)
-"bS" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plating/asteroid/snow{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/ruin/powered/snow_biodome)
@@ -412,7 +406,9 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "UM" = (
-/obj/machinery/computer/monitor,
+/obj/machinery/computer/monitor{
+	dir = 1
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Wg" = (
@@ -763,7 +759,7 @@ bl
 ak
 aI
 ak
-bS
+ak
 ak
 Wg
 Wg

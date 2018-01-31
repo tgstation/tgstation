@@ -9,6 +9,8 @@ ARCD
 */
 
 /obj/item/construction
+	name = "not for ingame use"
+	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -19,7 +21,6 @@ ARCD
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=100000)
-	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -32,11 +33,13 @@ ARCD
 
 /obj/item/construction/Initialize()
 	. = ..()
-	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+/obj/item/construction/examine(mob/user)
+	..()
+	to_chat(user, "\A [src]. It currently holds [matter]/[max_matter] matter-units." )
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -61,7 +64,6 @@ ARCD
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
 
@@ -91,7 +93,6 @@ ARCD
 			to_chat(user, no_ammo_message)
 		return 0
 	matter -= amount
-	desc = "\A [src]. It currently holds [matter]/[max_matter] matter-units."
 	update_icon()
 	return 1
 
@@ -117,7 +118,6 @@ ARCD
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
-	desc = "A device used to rapidly build and deconstruct walls and floors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -125,7 +125,6 @@ ARCD
 	max_matter = 160
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/mode = 1
-	var/canRturf = 0
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
@@ -134,6 +133,7 @@ ARCD
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
+	var/canRturf = FALSE //Variable for R walls to deconstruct them
 
 
 /obj/item/construction/rcd/suicide_act(mob/user)
@@ -163,10 +163,6 @@ ARCD
 
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
-
-	var/mob/living/carbon/human/H = usr
-	if(H.getBrainLoss() >= 60)
-		return
 
 	var/t1 = text("")
 
@@ -245,10 +241,12 @@ ARCD
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance", "Airtight Hatch", "Maintenance Hatch")
 				switch(airlockpaint)
-					if("Default")
+					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/public
 					if("Engineering")
 						airlock_type = /obj/machinery/door/airlock/engineering
 					if("Atmospherics")
@@ -261,14 +259,24 @@ ARCD
 						airlock_type = /obj/machinery/door/airlock/medical
 					if("Research")
 						airlock_type = /obj/machinery/door/airlock/research
+					if("Freezer")
+						airlock_type = /obj/machinery/door/airlock/freezer
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/science
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/virology
 					if("Mining")
 						airlock_type = /obj/machinery/door/airlock/mining
 					if("Maintenance")
 						airlock_type = /obj/machinery/door/airlock/maintenance
 					if("External")
 						airlock_type = /obj/machinery/door/airlock/external
-					if("High Security")
-						airlock_type = /obj/machinery/door/airlock/highsecurity
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/external
+					if("Airtight Hatch")
+						airlock_type = /obj/machinery/door/airlock/hatch
+					if("Maintenance Hatch")
+						airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 				airlock_glass = FALSE
 			else
 				airlock_type = /obj/machinery/door/airlock
@@ -276,24 +284,36 @@ ARCD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var/airlockpaint = input(usr, "Select the type of the airlock.") in list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 				switch(airlockpaint)
-					if("Default")
+					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
+					if("Public")
+						airlock_type = /obj/machinery/door/airlock/public/glass
 					if("Engineering")
-						airlock_type = /obj/machinery/door/airlock/glass_engineering
+						airlock_type = /obj/machinery/door/airlock/engineering/glass
 					if("Atmospherics")
-						airlock_type = /obj/machinery/door/airlock/glass_atmos
+						airlock_type = /obj/machinery/door/airlock/atmos/glass
 					if("Security")
-						airlock_type = /obj/machinery/door/airlock/glass_security
+						airlock_type = /obj/machinery/door/airlock/security/glass
 					if("Command")
-						airlock_type = /obj/machinery/door/airlock/glass_command
+						airlock_type = /obj/machinery/door/airlock/command/glass
 					if("Medical")
-						airlock_type = /obj/machinery/door/airlock/glass_medical
+						airlock_type = /obj/machinery/door/airlock/medical/glass
 					if("Research")
-						airlock_type = /obj/machinery/door/airlock/glass_research
+						airlock_type = /obj/machinery/door/airlock/research/glass
+					if("Science")
+						airlock_type = /obj/machinery/door/airlock/science/glass
+					if("Virology")
+						airlock_type = /obj/machinery/door/airlock/virology/glass
 					if("Mining")
-						airlock_type = /obj/machinery/door/airlock/glass_mining
+						airlock_type = /obj/machinery/door/airlock/mining/glass
+					if("Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/glass
+					if("External")
+						airlock_type = /obj/machinery/door/airlock/external/glass
+					if("External Maintenance")
+						airlock_type = /obj/machinery/door/airlock/maintenance/external/glass
 				airlock_glass = TRUE
 			else
 				airlock_type = /obj/machinery/door/airlock/glass
@@ -362,11 +382,11 @@ ARCD
 	qdel(src)
 
 
-/obj/item/construction/rcd/borg/New()
-	..()
+/obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
+	canRturf = TRUE
+
 
 /obj/item/construction/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))
@@ -401,6 +421,7 @@ ARCD
 	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
+	canRturf = TRUE
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
@@ -410,17 +431,15 @@ ARCD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "materials=3"
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	origin_tech = "materials=4"
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 
 
-/obj/item/construction/rcd/admin
+/obj/item/construction/rcd/combat/admin
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
@@ -431,7 +450,7 @@ ARCD
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity."
+	desc = "A prototype RCD with ranged capability and extended capacity. Reload with metal, plasteel, glass or compressed matter cartridges."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6
@@ -454,7 +473,7 @@ ARCD
 
 /obj/item/construction/rld
 	name = "rapid-light-device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -478,7 +497,7 @@ ARCD
 
 /obj/item/construction/rld/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
-		color_choice = input(user,"Choose Color") as color
+		color_choice = input(user,"","Choose Color",color_choice) as color
 	else
 		..()
 

@@ -10,7 +10,7 @@
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
@@ -88,9 +88,13 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
-	container_type = DRAWABLE_1
+	container_type = DRAWABLE
 	flags_1 = null
 	list_reagents = list("epinephrine" = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
 /obj/item/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	if(!reagents.total_volume)

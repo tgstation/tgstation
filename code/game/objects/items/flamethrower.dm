@@ -13,7 +13,6 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
@@ -140,6 +139,7 @@
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
 	..()
@@ -233,7 +233,7 @@
 /obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)

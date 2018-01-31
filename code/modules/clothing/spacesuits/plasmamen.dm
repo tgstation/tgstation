@@ -3,7 +3,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman
 	name = "EVA plasma envirosuit"
-	desc = "A special plasma containment suit designed to be space-worthy, as well as worn over other clothing. Like it's smaller counterpart, it can automatically extinguish the wearer in a crisis, and holds twice as many charges."
+	desc = "A special plasma containment suit designed to be space-worthy, as well as worn over other clothing. Like its smaller counterpart, it can automatically extinguish the wearer in a crisis, and holds twice as many charges."
 	allowed = list(/obj/item/gun, /obj/item/ammo_casing, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword, /obj/item/restraints/handcuffs, /obj/item/tank)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 100, acid = 75)
 	resistance_flags = FIRE_PROOF

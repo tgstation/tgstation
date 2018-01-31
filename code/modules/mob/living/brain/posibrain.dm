@@ -6,7 +6,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/next_ask
 	var/askDelay = 600 //one minute
 	var/searching = FALSE
@@ -126,7 +125,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.mind.assigned_role = new_role
 	brainmob.stat = CONSCIOUS
 	GLOB.dead_mob_list -= brainmob
-	GLOB.living_mob_list += brainmob
+	GLOB.alive_mob_list += brainmob
 
 	visible_message(new_mob_message)
 	check_success()
@@ -158,7 +157,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		new_name = pick(possible_names)
 	brainmob.name = "[new_name]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
-	brainmob.loc = src
+	brainmob.forceMove(src)
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)

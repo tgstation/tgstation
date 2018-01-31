@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 
 ////////////////////////////// STUN ////////////////////////////////////
@@ -15,7 +15,7 @@
 	return 0
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
-	if((status_flags & CANSTUN) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -26,7 +26,7 @@
 		return S
 
 /mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
-	if((status_flags & CANSTUN) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(amount <= 0)
 			if(S)
@@ -41,7 +41,7 @@
 		return S
 
 /mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
-	if((status_flags & CANSTUN) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -63,7 +63,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Can't go below remaining duration
-	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(amount, ignore_canknockdown))
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
@@ -74,7 +74,7 @@
 		return K
 
 /mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Sets remaining duration
-	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(amount <= 0)
 			if(K)
@@ -89,7 +89,7 @@
 		return K
 
 /mob/living/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Adds to remaining duration
-	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(amount, ignore_canknockdown))
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
@@ -137,3 +137,96 @@
 				to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 		priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
+
+/////////////////////////////////// DISABILITIES ////////////////////////////////////
+
+/mob/living/proc/add_trait(trait, source)
+	if(!status_traits[trait])
+		status_traits[trait] = list(source)
+	else
+		status_traits[trait] |= list(source)
+
+/mob/living/proc/remove_trait(trait, list/sources)
+	if(!status_traits[trait])
+		return
+
+	if(!sources) // No defined source cures the trait entirely.
+		status_traits -= trait
+		return
+
+	if(!islist(sources))
+		sources = list(sources)
+
+	if(LAZYLEN(sources))
+		for(var/S in sources)
+			if(S in status_traits[trait])
+				status_traits[trait] -= S
+	else
+		status_traits[trait] = list()
+
+	if(!LAZYLEN(status_traits[trait]))
+		status_traits -= trait
+
+/mob/living/proc/has_trait(trait, list/sources)
+	if(!status_traits[trait])
+		return FALSE
+
+	. = FALSE
+
+	if(LAZYLEN(sources))
+		for(var/S in sources)
+			if(S in status_traits[trait])
+				return TRUE
+	else
+		if(LAZYLEN(status_traits[trait]))
+			return TRUE
+
+/mob/living/proc/remove_all_traits()
+	status_traits = list()
+
+/////////////////////////////////// TRAIT PROCS ////////////////////////////////////
+
+/mob/living/proc/cure_blind(list/sources)
+	remove_trait(TRAIT_BLIND, sources)
+	if(!has_trait(TRAIT_BLIND))
+		adjust_blindness(-1)
+
+/mob/living/proc/become_blind(source)
+	if(!has_trait(TRAIT_BLIND))
+		blind_eyes(1)
+	add_trait(TRAIT_BLIND, source)
+
+/mob/living/proc/cure_nearsighted(list/sources)
+	remove_trait(TRAIT_NEARSIGHT, sources)
+	if(!has_trait(TRAIT_NEARSIGHT))
+		clear_fullscreen("nearsighted")
+
+/mob/living/proc/become_nearsighted(source)
+	if(!has_trait(TRAIT_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	add_trait(TRAIT_NEARSIGHT, source)
+
+/mob/living/proc/cure_husk(list/sources)
+	remove_trait(TRAIT_HUSK, sources)
+	if(!has_trait(TRAIT_HUSK))
+		remove_trait(TRAIT_DISFIGURED, "husk")
+		update_body()
+
+/mob/living/proc/become_husk(source)
+	if(!has_trait(TRAIT_HUSK))
+		add_trait(TRAIT_DISFIGURED, "husk")
+		update_body()
+	add_trait(TRAIT_HUSK, source)
+
+/mob/living/proc/cure_fakedeath(list/sources)
+	remove_trait(TRAIT_FAKEDEATH, sources)
+	if(stat != DEAD)
+		tod = null
+	update_stat()
+
+/mob/living/proc/fakedeath(source)
+	if(stat == DEAD)
+		return
+	add_trait(TRAIT_FAKEDEATH, source)
+	tod = worldtime2text()
+	update_stat()

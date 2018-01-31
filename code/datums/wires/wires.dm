@@ -74,7 +74,7 @@
 	"white",
 	"yellow"
 	)
-	
+
 	var/list/my_possible_colors = possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
@@ -108,6 +108,12 @@
 /datum/wires/proc/is_all_cut()
 	if(cut_wires.len == wires.len)
 		return TRUE
+
+/datum/wires/proc/is_dud(wire)
+	return dd_hasprefix(wire, WIRE_DUD_PREFIX)
+
+/datum/wires/proc/is_dud_color(color)
+	return is_dud(get_wire(color))
 
 /datum/wires/proc/cut(wire)
 	if(is_cut(wire))
@@ -163,9 +169,9 @@
 	for(var/wire in possible_wires)
 		if(prob(33))
 			pulse(wire)
-		remaining_pulses--
-		if(remaining_pulses >= 0)
-			break
+			remaining_pulses--
+			if(!remaining_pulses)
+				break
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
@@ -208,10 +214,24 @@
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
+	var/reveal_wires = FALSE
+
+	// Admin ghost can see a purpose of each wire.
+	if(IsAdminGhost(user))
+		reveal_wires = TRUE
+
+	// Same for anyone with an abductor multitool.
+	else if(user.is_holding_item_of_type(/obj/item/device/multitool/abductor))
+		reveal_wires = TRUE
+
+	// Station blueprints do that too, but only if the wires are not randomized.
+	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+		reveal_wires = TRUE
+
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
-			"wire" = (IsAdminGhost(user) || (user.is_holding_item_of_type(/obj/item/device/multitool/abductor)) ? get_wire(color) : null),
+			"wire" = ((reveal_wires && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))

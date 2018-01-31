@@ -1,18 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
-"ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
+/turf/template_noop,
+/area/template_noop)
 "ac" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"ae" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "af" = (
@@ -22,7 +16,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/sign/nosmoking_2,
+/obj/structure/sign/warning/nosmoking,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ah" = (
@@ -38,19 +32,6 @@
 	width = 25
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"ai" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aj" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"ak" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table,
@@ -230,15 +211,14 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aD" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair{
@@ -247,7 +227,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
@@ -257,7 +239,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aH" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
@@ -275,15 +257,11 @@
 /obj/structure/extinguisher_cabinet,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"aK" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape)
 "aL" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aM" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aN" = (
 /obj/machinery/status_display{
@@ -354,12 +332,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aU" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aV" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Recovery Airlock";
@@ -368,18 +340,15 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"aX" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aY" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Brig";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aZ" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
@@ -387,7 +356,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bb" = (
@@ -396,9 +365,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bc" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/chair{
@@ -414,9 +380,6 @@
 	name = "Emergency Recovery Airlock"
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/shuttle/escape)
-"bg" = (
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bh" = (
 /obj/structure/chair{
@@ -476,9 +439,6 @@
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"br" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
 /obj/structure/chair{
@@ -546,9 +506,6 @@
 /obj/item/cigbutt,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
-"bx" = (
-/turf/open/floor/plasteel/floorgrime,
-/area/shuttle/escape)
 "by" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/floorgrime,
@@ -566,12 +523,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
-"bB" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -669,9 +620,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bM" = (
-/obj/structure/rack{
-	dir = 1
-	},
+/obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
@@ -872,12 +821,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bZ" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "ca" = (
 /obj/structure/chair{
 	dir = 1
@@ -1042,7 +985,7 @@ bX
 aq
 aq
 aq
-bZ
+bX
 ap
 ad
 bh

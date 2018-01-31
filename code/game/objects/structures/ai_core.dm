@@ -185,7 +185,7 @@
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
-						SSblackbox.inc("cyborg_ais_created",1)
+						SSblackbox.record_feedback("amount", "ais_created", 1)
 						qdel(src)
 					else
 						state = AI_READY_CORE
@@ -279,4 +279,3 @@ That prevents a few funky behaviors.
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	origin_tech = "programming=3"

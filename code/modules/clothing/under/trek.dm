@@ -2,7 +2,7 @@
 
 
 /obj/item/clothing/under/trek
-	can_adjust = 0
+	can_adjust = FALSE
 
 
 //TOS

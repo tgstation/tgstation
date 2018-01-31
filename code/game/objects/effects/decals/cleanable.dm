@@ -21,7 +21,8 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
-	. = ..()
+
+	return//. = ..()//cleanable stuff sometimes needs to be in objs
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
 	if(mergeable_decal)
@@ -47,10 +48,8 @@
 			return
 		else
 			var/hotness = W.is_hot()
-			var/added_heat = (hotness / 100)
-			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
-			src.reagents.handle_reactions()
-			to_chat(user, "<span class='notice'>You heat [src] with [W]!</span>")
+			reagents.expose_temperature(hotness)
+			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
 	else
 		return ..()
 
@@ -62,8 +61,7 @@
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
-		reagents.chem_temp += 30
-		reagents.handle_reactions()
+		reagents.expose_temperature(exposed_temperature)
 	..()
 
 
@@ -82,13 +80,10 @@
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
-			if(blood_DNA && blood_DNA.len)
-				S.add_blood(blood_DNA)
+			S.add_blood_DNA(return_blood_DNA())
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
-
-
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

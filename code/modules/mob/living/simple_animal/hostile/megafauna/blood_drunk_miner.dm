@@ -114,7 +114,7 @@ Difficulty: Medium
 		if(L.stat == DEAD)
 			visible_message("<span class='danger'>[src] butchers [L]!</span>",
 			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
-			if(!(z in GLOB.station_z_levels) || client) //NPC monsters won't heal while on station
+			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 				if(guidance)
 					adjustHealth(-L.maxHealth)
 				else
@@ -163,7 +163,7 @@ Difficulty: Medium
 //  do not take my touching of it to be endorsement of it. ~mso
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
 	while(!QDELETED(target) && next_move <= world.time) //this is done this way because next_move can change to be sooner while we sleep.
-		stoplag(1) 
+		stoplag(1)
 	sleep((next_move - world.time) * 1.5) //but don't ask me what the fuck this is about
 	if(QDELETED(target))
 		return

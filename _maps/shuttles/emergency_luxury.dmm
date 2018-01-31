@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/shuttle/escape/luxury)
@@ -124,7 +124,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "aw" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "ax" = (
@@ -203,7 +205,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aM" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "aN" = (
@@ -282,7 +286,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "bc" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bd" = (
@@ -292,7 +298,9 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "be" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 8
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bf" = (
@@ -337,34 +345,7 @@
 	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
-"bm" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
-"bn" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
-"bo" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
 "bp" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
-"bq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
@@ -432,7 +413,7 @@ aj
 aj
 aj
 aj
-bn
+bj
 aj
 aj
 ak
@@ -691,7 +672,7 @@ bd
 aj
 aj
 bg
-bq
+bp
 ab
 "}
 (21,1,1) = {"
@@ -747,12 +728,12 @@ ab
 al
 aj
 aq
-bm
+bk
 aw
 aM
 bc
 be
-bo
+bk
 aj
 aj
 ak

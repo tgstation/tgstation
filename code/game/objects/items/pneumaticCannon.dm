@@ -26,7 +26,30 @@
 	var/fire_mode = PCANNON_FIREALL
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
+	var/list/allowed_typecache		//Leave as null to allow all.
+	var/charge_amount = 1
+	var/charge_ticks = 1
+	var/charge_tick = 0
+	var/charge_type
+	var/selfcharge = FALSE
 	trigger_guard = TRIGGER_GUARD_NORMAL
+
+
+/obj/item/pneumatic_cannon/Initialize()
+	. = ..()
+	if(selfcharge)
+		init_charge()
+
+/obj/item/pneumatic_cannon/proc/init_charge()	//wrapper so it can be vv'd easier
+	START_PROCESSING(SSobj, src)
+
+/obj/item/pneumatic_cannon/process()
+	if(++charge_tick >= charge_ticks && charge_type)
+		fill_with_type(charge_type, charge_amount)
+
+/obj/item/pneumatic_cannon/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/pneumatic_cannon/CanItemAutoclick()
 	return automatic
@@ -75,6 +98,10 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
+	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
+		if(user)
+			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
+		return
 	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
@@ -98,14 +125,14 @@
 	loadedWeightClass += I.w_class
 	return TRUE
 
-/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
+/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag && user.a_intent == INTENT_HARM) //melee attack
 		return
 	if(!istype(user))
 		return
 	Fire(user, target)
 
-/obj/item/pneumatic_cannon/proc/Fire(mob/living/carbon/human/user, var/atom/target)
+/obj/item/pneumatic_cannon/proc/Fire(mob/living/user, var/atom/target)
 	if(!istype(user) && !target)
 		return
 	var/discharge = 0
@@ -120,9 +147,10 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
-		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
-		user.dropItemToGround(src, TRUE)
+	if(user.has_trait(TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='warning'>[C] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		C.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
 		else
@@ -136,9 +164,10 @@
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	fire_items(T, user)
-	if(pressureSetting >= 3 && user)
-		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		user.Knockdown(60)
+	if(pressureSetting >= 3 && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		C.Knockdown(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -171,10 +200,19 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = Clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = Clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
+
+/obj/item/pneumatic_cannon/handle_atom_del(atom/A)
+	. = ..()
+	if (loadedItems.Remove(A))
+		var/obj/item/I = A
+		loadedWeightClass -= I.w_class
+	else if (A == tank)
+		tank = null
+		update_icons()
 
 /obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
@@ -189,7 +227,7 @@
 		if(!src.tank)
 			return
 		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
-		src.tank.loc = get_turf(user)
+		src.tank.forceMove(user.drop_location())
 		user.put_in_hands(tank)
 		src.tank = null
 	if(!removing)
@@ -233,28 +271,21 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
+	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
 
-/obj/item/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/pie))
-		return ..()
-	to_chat(user, "<span class='warning'>[src] only accepts pies!</span>")
-	return FALSE
+/obj/item/pneumatic_cannon/pie/Initialize()
+	. = ..()
+	allowed_typecache = pie_typecache
 
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
-	var/charge_amount = 1
-	var/charge_ticks = 1
-	var/charge_tick = 0
+	selfcharge = TRUE
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
 	maxWeightClass = 60	//20 pies.
 
-/obj/item/pneumatic_cannon/pie/selfcharge/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/pneumatic_cannon/pie/selfcharge/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/pneumatic_cannon/pie/selfcharge/process()
-	if(++charge_tick >= charge_ticks)
-		fill_with_type(/obj/item/reagent_containers/food/snacks/pie/cream, charge_amount)
+/obj/item/pneumatic_cannon/pie/selfcharge/cyborg
+	name = "low velocity pie cannon"
+	automatic = FALSE
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	maxWeightClass = 6		//2 pies
+	charge_ticks = 2		//4 second/pie

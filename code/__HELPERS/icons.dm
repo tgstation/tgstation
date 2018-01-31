@@ -714,7 +714,7 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 	if(!A)
@@ -722,6 +722,16 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha <= 0)
 		return flat
 	var/noIcon = FALSE
+
+	if(start)
+		if(!defdir)
+			defdir = A.dir
+		if(!deficon)
+			deficon = A.icon
+		if(!defstate)
+			defstate = A.icon_state
+		if(!defblend)
+			defblend = A.blend_mode
 
 	var/curicon
 	if(A.icon)
@@ -745,10 +755,31 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(A.dir != 2)
-		curdir = A.dir
-	else
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
+	
+	//These should use the parent's direction (most likely)
+	if(!A.dir || A.dir == SOUTH)
 		curdir = defdir
+	else
+		curdir = A.dir
+
+	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
+	if(curdir != SOUTH)
+		var/icon/test_icon 
+		var/directionals_exist = FALSE
+		var/list/dirs_to_check = GLOB.cardinals - SOUTH
+		outer:
+			for(var/possible_dir in dirs_to_check)
+				test_icon = icon(curicon,curstate,possible_dir,frame=1)
+				for(var/x in 1 to world.icon_size)
+					for(var/y in 1 to world.icon_size)
+						if(!isnull(test_icon.GetPixel(x,y)))
+							directionals_exist = TRUE
+							break outer
+		if(!directionals_exist)
+			base_icon_dir = SOUTH
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -761,7 +792,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -782,6 +813,9 @@ The _flatIcons list is a cache for generated icon files.
 				curIndex++ //Try the next layer
 				continue
 			var/image/I = current
+			if(I.plane != FLOAT_PLANE && I.plane != A.plane)
+				curIndex++
+				continue
 			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
 				if(currentLayer <= -1000)
@@ -813,10 +847,16 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/icon/add // Icon of overlay being added
 
-		// Current dimensions of flattened icon
-	var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
-		// Dimensions of overlay being added
-	var/{addX1;addX2;addY1;addY2}
+	// Current dimensions of flattened icon
+	var/flatX1=1
+	var/flatX2=flat.Width()
+	var/flatY1=1
+	var/flatY2=flat.Height()
+	// Dimensions of overlay being added
+	var/addX1
+	var/addX2
+	var/addY1
+	var/addY2
 
 	for(var/V in layers)
 		var/image/I = V
@@ -825,9 +865,9 @@ The _flatIcons list is a cache for generated icon files.
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I.icon, I.icon_state, I.dir)
+			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
@@ -849,7 +889,10 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
-	return icon(flat, "", SOUTH)
+	if(no_anim)
+		return icon(flat, "", SOUTH, frame=1)
+	else
+		return icon(flat, "", SOUTH)
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
@@ -865,8 +908,7 @@ The _flatIcons list is a cache for generated icon files.
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
 	//Now we need to culculate overlays+underlays and add them together to form an image for a mask.
-	//var/icon/alpha_mask = getFlatIcon(src)//Accurate but SLOW. Not designed for running each tick. Could have other uses I guess.
-	var/icon/alpha_mask = getIconMask(src)//Which is why I created that proc. Also a little slow since it's blending a bunch of icons together but good enough.
+	var/icon/alpha_mask = getIconMask(src)//getFlatIcon(src) is accurate but SLOW. Not designed for running each tick. This is also a little slow since it's blending a bunch of icons together but good enough.
 	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
@@ -950,7 +992,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!GLOB.friendly_animal_types.len)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable) == 2)
+			if(initial(SA.gold_core_spawnable) == FRIENDLY_SPAWN)
 				GLOB.friendly_animal_types += SA
 
 
@@ -1006,23 +1048,26 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(J)
 			J.equip(body, TRUE, FALSE)
 
-		SSoverlays.Flush()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
+		COMPILE_OVERLAYS(body)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
 		body.setDir(SOUTH)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
 		body.setDir(WEST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
 		body.setDir(EAST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 

@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
@@ -42,7 +42,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(GLOB.security_level < SEC_LEVEL_RED)
@@ -56,13 +56,8 @@ GLOBAL_VAR_INIT(security_level, 0)
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
 
-				/*	- At the time of commit, setting status displays didn't work properly
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
-				if(CC)
-					CC.post_status("alert", "redalert")*/
-
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
@@ -75,10 +70,16 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(0.5)
 				GLOB.security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
+		if(level >= SEC_LEVEL_RED)
+			for(var/obj/machinery/door/D in GLOB.machines)
+				if(D.red_alert_access)
+					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
+					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
 	else
 		return
 
@@ -114,15 +115,3 @@ GLOBAL_VAR_INIT(security_level, 0)
 			return SEC_LEVEL_RED
 		if("delta")
 			return SEC_LEVEL_DELTA
-
-
-/*DEBUG
-/mob/verb/set_thing0()
-	set_security_level(0)
-/mob/verb/set_thing1()
-	set_security_level(1)
-/mob/verb/set_thing2()
-	set_security_level(2)
-/mob/verb/set_thing3()
-	set_security_level(3)
-*/

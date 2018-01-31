@@ -16,22 +16,19 @@
 	var/list/materials
 	var/show_on_examine
 	var/list/allowed_typecache
-	var/last_inserted_type
 	var/last_inserted_id
-	var/last_amount_inserted
-	var/last_insert_success
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
-	//MAX_STACK_SIZE = 50
-	//MINERAL_MATERIAL_AMOUNT = 2000
+	var/datum/callback/after_insert
 
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
 	if(allowed_types)
 		allowed_typecache = typecacheof(allowed_types)
 	precondition = _precondition
+	after_insert = _after_insert
 
 	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/OnExamine)
@@ -54,15 +51,14 @@
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
-	if(user.a_intent == INTENT_HARM)
-		return FALSE
+	if(user.a_intent != INTENT_HELP)
+		return
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
-		return FALSE
-	. = TRUE
-	last_insert_success = FALSE
+		return
+	. = COMPONENT_NO_AFTERATTACK
 	var/datum/callback/pc = precondition
-	if(pc && !pc.Invoke())
+	if(pc && !pc.Invoke(user))
 		return
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount)
@@ -71,11 +67,13 @@
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove metal or glass from [parent] in order to insert more.</span>")
 		return
-	INVOKE_ASYNC(src, .proc/user_insert, I, user)
+	user_insert(I, user)
 
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+	set waitfor = FALSE
 	var/requested_amount
-	if(istype(I, /obj/item/stack) && precise_insertion)
+	var/Itype = I.type
+	if(ispath(Itype, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
 		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
@@ -87,7 +85,6 @@
 		return
 	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
-		last_insert_success = TRUE
 		if(istype(I, /obj/item/stack))
 			to_chat(user, "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] into [parent].</span>")
 			if(!QDELETED(I))
@@ -95,6 +92,8 @@
 		else
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			qdel(I)
+		if(after_insert)
+			after_insert.Invoke(Itype, last_inserted_id, inserted)
 	else
 		user.put_in_active_hand(I)
 
@@ -134,9 +133,7 @@
 		return FALSE
 
 	last_inserted_id = insert_materials(S,amt)
-	last_inserted_type = S.type
 	S.use(amt)
-	last_amount_inserted = amt
 	return amt
 
 /datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
@@ -150,8 +147,6 @@
 		return FALSE
 
 	last_inserted_id = insert_materials(I, multiplier)
-	last_inserted_type = I.type
-	last_amount_inserted = material_amount
 	return material_amount
 
 /datum/component/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
@@ -344,7 +339,7 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/coin/clown
+	coin_type = /obj/item/coin/bananium
 
 /datum/material/titanium
 	name = "Titanium"

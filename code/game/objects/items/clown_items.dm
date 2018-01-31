@@ -21,6 +21,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list("lye" = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -85,7 +86,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.clean_blood()
+			target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			target.wash_cream()
 	return
 
@@ -123,7 +124,6 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	origin_tech = "materials=4;engineering=4"
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()

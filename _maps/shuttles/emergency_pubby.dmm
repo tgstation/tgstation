@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -60,7 +60,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "an" = (
@@ -79,7 +81,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aq" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ar" = (
@@ -99,11 +103,15 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "av" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aw" = (
@@ -141,7 +149,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
@@ -161,7 +169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aE" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cargo Hold";
 	req_access_txt = "0"
 	},
@@ -174,7 +182,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -254,7 +262,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -299,7 +307,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /obj/machinery/light{
@@ -322,21 +330,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bd" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"be" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"bf" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"bg" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"bi" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 
@@ -427,13 +420,13 @@ ab
 ab
 ab
 ab
-bf
+bd
 aI
 aL
 aL
 aL
 aT
-bh
+bd
 ab
 ab
 ab
@@ -523,7 +516,7 @@ bc
 (10,1,1) = {"
 ab
 ab
-be
+bd
 aq
 av
 aA
@@ -547,13 +540,13 @@ ab
 ab
 ab
 ab
-bg
+bd
 aI
 aK
 aK
 aK
 aT
-bi
+bd
 ab
 ab
 ab

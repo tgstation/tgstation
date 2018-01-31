@@ -8,6 +8,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
+	spacewalk = TRUE
 
 	radio_key = /obj/item/device/encryptionkey/headset_eng
 	radio_channel = "Engineering"
@@ -16,6 +17,7 @@
 	bot_core = /obj/machinery/bot_core/floorbot
 	window_id = "autofloor"
 	window_name = "Automatic Station Floor Repairer v1.1"
+	path_image_color = "#FFA500"
 
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	var/targetdirection
@@ -29,6 +31,7 @@
 	var/max_targets = 50
 	var/turf/target
 	var/oldloc = null
+	var/toolbox = /obj/item/storage/toolbox/mechanical
 
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
@@ -44,9 +47,6 @@
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-
-/mob/living/simple_animal/bot/floorbot/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
@@ -164,7 +164,7 @@
 	update_controls()
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
 	while(specialtiles > initial(tiletype.max_amount))
 		new tiletype(Tsec,initial(tiletype.max_amount))
@@ -322,9 +322,9 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.ChangeTurf(/turf/open/floor/plasteel)
+				target_turf.PlaceOnTop(/turf/open/floor/plasteel)
 			else //Build a hull plating without a floor tile.
-				target_turf.ChangeTurf(/turf/open/floor/plating)
+				target_turf.PlaceOnTop(/turf/open/floor/plating)
 
 	else
 		var/turf/open/floor/F = target_turf
@@ -365,10 +365,9 @@
 /mob/living/simple_animal/bot/floorbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	var/obj/item/storage/toolbox/mechanical/N = new /obj/item/storage/toolbox/mechanical(Tsec)
-	N.contents = list()
+	drop_part(toolbox, Tsec)
 
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -376,7 +375,7 @@
 		empty_tiles()
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)
 	T.amount = 1

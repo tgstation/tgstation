@@ -19,7 +19,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(istype(H.dna.species, /datum/species/skeleton))
-			return ..() //undeads are unaffected by the spook-pocalypse.
+			return //undeads are unaffected by the spook-pocalypse.
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
 			H.Knockdown(15) //zombies can't resist the doot
@@ -57,4 +57,4 @@
 	var/t = stripped_input(H, "Enter your new skeleton name", H.real_name, null, MAX_NAME_LEN)
 	if(!t)
 		t = "spooky skeleton"
-	H.fully_replace_character_name(H.real_name, t)
+	H.fully_replace_character_name(null, t)

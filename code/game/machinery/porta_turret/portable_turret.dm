@@ -16,7 +16,7 @@
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(ACCESS_SECURITY)
+	req_access = list(ACCESS_SEC_DOORS)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -72,6 +72,8 @@
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 	var/obj/machinery/turretid/cp = null
+
+	var/wall_turret_direction //The turret will try to shoot from a turf in that direction when in a wall
 
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
@@ -278,11 +280,11 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
 	visible_message("[src] hums oddly...")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	controllock = 1
 	on = FALSE //turns off the turret temporarily
 	update_icon()
@@ -311,7 +313,7 @@
 	if(.) //damage received
 		if(prob(30))
 			spark_system.start()
-		if(on && !attacked && !emagged)
+		if(on && !attacked && !(obj_flags & EMAGGED))
 			attacked = TRUE
 			addtimer(CALLBACK(src, .proc/reset_attacked), 60)
 
@@ -333,8 +335,6 @@
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	set background = BACKGROUND_ENABLED
-
 	if(cover == null && anchored)	//if it has no cover and is anchored
 		if(stat & BROKEN)	//if the turret is borked
 			qdel(cover)	//delete its cover, assuming it has one. Workaround for a pesky little bug
@@ -370,6 +370,17 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
+			if(issilicon(A))
+				var/mob/living/silicon/sillycone = A
+				if(sillycone.stat || in_faction(sillycone))
+					continue
+
+				if(iscyborg(sillycone))
+					var/mob/living/silicon/robot/sillyconerobot = A
+					if(faction == "syndicate" && sillyconerobot.emagged == 1)
+						continue
+
+				targets += sillycone
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -447,7 +458,7 @@
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp)
 	var/threatcount = 0	//the integer returned
 
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return 10	//if emagged, always return 10.
 
 	if((stun_all || attacked) && !allowed(perp))
@@ -493,7 +504,7 @@
 	if(!raised) //the turret has to be raised in order to fire - makes sense, right?
 		return
 
-	if(!emagged)	//if it hasn't been emagged, cooldown before shooting again
+	if(!(obj_flags & EMAGGED))	//if it hasn't been emagged, cooldown before shooting again
 		if(last_fired + shot_delay > world.time)
 			return
 		last_fired = world.time
@@ -502,6 +513,20 @@
 	var/turf/U = get_turf(target)
 	if(!istype(T) || !istype(U))
 		return
+
+	//Wall turrets will try to find adjacent empty turf to shoot from to cover full arc
+	if(T.density)
+		if(wall_turret_direction)
+			var/turf/closer = get_step(T,wall_turret_direction)
+			if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+				T = closer
+		else
+			var/target_dir = get_dir(T,target)
+			for(var/d in list(0,-45,45))
+				var/turf/closer = get_step(T,turn(target_dir,d))
+				if(istype(closer) && !is_blocked_turf(closer) && T.Adjacent(closer))
+					T = closer
+					break
 
 	update_icon()
 	var/obj/item/projectile/A
@@ -517,10 +542,13 @@
 
 
 	//Shooting Code:
-	A.preparePixelProjectile(target, src)
+	A.preparePixelProjectile(target, T)
 	A.fire()
 	return A
 
+/obj/machinery/porta_turret/shuttleRotate(rotation)
+	if(wall_turret_direction)
+		wall_turret_direction = turn(wall_turret_direction,rotation)
 
 /obj/machinery/porta_turret/proc/setState(on, mode)
 	if(controllock)
@@ -528,11 +556,6 @@
 	src.on = on
 	src.mode = mode
 	power_change()
-
-/obj/machinery/porta_turret/stationary //is this even used anywhere
-	mode = TURRET_LETHAL
-	emagged = TRUE
-	installation = /obj/item/gun/energy/laser
 
 /obj/machinery/porta_turret/syndicate
 	installation = null
@@ -552,6 +575,15 @@
 	desc = "A ballistic machine gun auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser
+	lethal_projectile_sound = 'sound/weapons/laser.ogg'
+	desc = "An energy blaster auto-turret."
+
+/obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
@@ -699,7 +731,7 @@
 
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (allowed(usr))
-			if(emagged)
+			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
@@ -716,10 +748,10 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	locked = FALSE
 	if(user && user.machine == src)
 		attack_hand(user)
@@ -739,7 +771,6 @@
 			return
 
 	user.set_machine(src)
-	var/area/area = get_area(src)
 	var/t = ""
 
 	if(locked && !(issilicon(user) || IsAdminGhost(user)))
@@ -750,7 +781,7 @@
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=[REF(src)];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
 		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=[REF(src)];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
 
-	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
+	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([get_area_name(src, TRUE)])")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

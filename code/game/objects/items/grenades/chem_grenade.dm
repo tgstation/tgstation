@@ -110,12 +110,12 @@
 	else if(stage == WIRED && istype(I, /obj/item/wrench))
 		if(beakers.len)
 			for(var/obj/O in beakers)
-				O.loc = get_turf(src)
+				O.forceMove(drop_location())
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
 		if(nadeassembly)
-			nadeassembly.loc = get_turf(src)
+			nadeassembly.forceMove(drop_location())
 			nadeassembly.master = null
 			nadeassembly = null
 		else // If "nadeassembly = null && stage == WIRED", then it most have been cable_coil that was used.
@@ -167,7 +167,7 @@
 		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 		if(beakers.len)
 			for(var/obj/O in beakers)
-				O.loc = get_turf(src)
+				O.forceMove(drop_location())
 			beakers = list()
 		stage_change(EMPTY)
 		return
@@ -195,7 +195,6 @@
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment,
 								/obj/item/reagent_containers/food/drinks)
-	origin_tech = "combat=3;engineering=3"
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
@@ -245,7 +244,6 @@
 	name = "pyro grenade"
 	desc = "A custom made pyrotechnical grenade. It heats up and ignites its contents upon detonation."
 	icon_state = "pyrog"
-	origin_tech = "combat=4;engineering=4"
 	affected_area = 3
 	ignition_temp = 500 // This is enough to expose a hotspot.
 
@@ -253,7 +251,6 @@
 	name = "advanced release grenade"
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	icon_state = "timeg"
-	origin_tech = "combat=3;engineering=4"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)

@@ -4,7 +4,7 @@
 /obj/var/list/req_one_access = null
 /obj/var/req_one_access_txt = "0" as text
 
-//returns 1 if this mob has sufficient access to use this object
+//returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))

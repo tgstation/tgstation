@@ -1,6 +1,11 @@
+//Update this whenever the db schema changes
+//make sure you add an update to the schema_version stable in the db changelog
+#define DB_MAJOR_VERSION 4
+#define DB_MINOR_VERSION 0
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
+//if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer, and returns the id of the existing timer
 #define TIMER_UNIQUE		0x1
 //For unique timers: Replace the old timer rather then not start this one
 #define TIMER_OVERRIDE		0x2
@@ -23,8 +28,8 @@
 #define FLIGHTSUIT_PROCESSING_FULL 1
 
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
-#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
-#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+#define INITIALIZATION_INNEW_MAPLOAD 2	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 1	//New should call Initialize(FALSE)
 
 #define INITIALIZE_HINT_NORMAL 0    //Nothing happens
 #define INITIALIZE_HINT_LATELOAD 1  //Call LateInitialize
@@ -46,13 +51,17 @@
 #define INIT_ORDER_DBCORE 18
 #define INIT_ORDER_BLACKBOX 17
 #define INIT_ORDER_SERVER_MAINT 16
-#define INIT_ORDER_EVENTS 15
-#define INIT_ORDER_JOBS 14
-#define INIT_ORDER_TICKER 13
-#define INIT_ORDER_MAPPING 12
-#define INIT_ORDER_ATOMS 11
-#define INIT_ORDER_LANGUAGE 10
-#define INIT_ORDER_MACHINES 9
+#define INIT_ORDER_INPUT 15
+#define INIT_ORDER_RESEARCH 14
+#define INIT_ORDER_EVENTS 13
+#define INIT_ORDER_JOBS 12
+#define INIT_ORDER_TICKER 11
+#define INIT_ORDER_MAPPING 10
+#define INIT_ORDER_ATOMS 9
+#define INIT_ORDER_NETWORKS 8
+#define INIT_ORDER_LANGUAGE 7
+#define INIT_ORDER_MACHINES 6
+#define INIT_ORDER_CIRCUIT 5
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -67,6 +76,35 @@
 #define INIT_ORDER_SQUEAK -40
 #define INIT_ORDER_PERSISTENCE -100
 
+// Subsystem fire priority, from lowest to highest priority
+// If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
+
+#define FIRE_PRIORITY_IDLE_NPC		10
+#define FIRE_PRIORITY_SERVER_MAINT	10
+#define FIRE_PRIORITY_GARBAGE		15
+#define FIRE_PRIORITY_RESEARCH		15
+#define FIRE_PRIORITY_AIR			20
+#define FIRE_PRIORITY_NPC			20
+#define FIRE_PRIORITY_PROCESS		25
+#define FIRE_PRIORITY_THROWING		25
+#define FIRE_PRIORITY_FLIGHTPACKS	30
+#define FIRE_PRIORITY_SPACEDRIFT	30
+#define FIRE_PRIOTITY_SMOOTHING		35
+#define FIRE_PRIORITY_ORBIT			35
+#define FIRE_PRIORITY_OBJ			40
+#define FIRE_PRIORUTY_FIELDS		40
+#define FIRE_PRIORITY_ACID			40
+#define FIRE_PRIOTITY_BURNING		40
+#define FIRE_PRIORITY_INBOUNDS		40
+#define FIRE_PRIORITY_DEFAULT		50
+#define FIRE_PRIORITY_PARALLAX		65
+#define FIRE_PRIORITY_NETWORKS		80
+#define FIRE_PRIORITY_MOBS			100
+#define FIRE_PRIORITY_TGUI			110
+#define FIRE_PRIORITY_TICKER		200
+#define FIRE_PRIORITY_OVERLAYS		500
+#define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
+
 // SS runlevels
 
 #define RUNLEVEL_INIT 0
@@ -76,3 +114,27 @@
 #define RUNLEVEL_POSTGAME 8
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
+
+
+
+
+#define COMPILE_OVERLAYS(A)\
+	if (TRUE) {\
+		var/list/oo = A.our_overlays;\
+		var/list/po = A.priority_overlays;\
+		if(LAZYLEN(po)){\
+			if(LAZYLEN(oo)){\
+				A.overlays = oo + po;\
+			}\
+			else{\
+				A.overlays = po;\
+			}\
+		}\
+		else if(LAZYLEN(oo)){\
+			A.overlays = oo;\
+		}\
+		else{\
+			A.overlays.Cut();\
+		}\
+		A.flags_1 &= ~OVERLAY_QUEUED_1;\
+	}

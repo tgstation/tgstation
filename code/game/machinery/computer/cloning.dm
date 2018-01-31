@@ -83,10 +83,10 @@
 	var/obj/machinery/dna_scannernew/scannerf = null
 
 	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
 		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 
 		// If found and operational, return the scanner
 		if (!isnull(scannerf) && scannerf.is_operational())
@@ -98,10 +98,9 @@
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
+		podf = locate(/obj/machinery/clonepod, get_step(src, direction))
 		if (!isnull(podf) && podf.is_operational())
 			AttachCloner(podf)
 
@@ -450,7 +449,7 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if((mob_occupant.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
+	if((mob_occupant.has_trait(TRAIT_NOCLONE)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return

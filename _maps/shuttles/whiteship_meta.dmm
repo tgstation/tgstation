@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -39,15 +39,11 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 28
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"af" = (
-/turf/open/space/basic,
-/area/space)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -117,9 +113,7 @@
 /area/shuttle/abandoned)
 "al" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000;
@@ -153,7 +147,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -299,7 +293,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium/blue,
@@ -368,7 +362,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -435,7 +429,7 @@
 	},
 /obj/item/soap/nanotrasen,
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/titanium,
@@ -478,14 +472,11 @@
 /area/shuttle/abandoned)
 "aM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
+/obj/item/stack/sheet/glass/fifty{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -494,11 +485,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9;
-	pixel_y = 2
-	},
+/obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6
@@ -568,7 +555,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "aT" = (
-/obj/structure/sign/restroom,
+/obj/structure/sign/departments/restroom,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aU" = (
@@ -617,7 +604,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
-/obj/structure/sign/cargo,
+/obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "aZ" = (
@@ -739,7 +726,7 @@
 /area/shuttle/abandoned)
 "bl" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -938,7 +925,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1008,7 +995,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -1057,7 +1046,7 @@
 	name = "\improper damaged CentCom hat"
 	},
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains, and have clearly been gnawed at.";
+	desc = "They look like human remains, and have clearly been gnawed at."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1092,7 +1081,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bR" = (
-/obj/structure/sign/science{
+/obj/structure/sign/departments/science{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1124,7 +1113,8 @@
 	name = "dust"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	station_lock_override = 1;
+	dir = 1;
+	lock_override = 1;
 	view_range = 15;
 	x_offset = -3;
 	y_offset = -7
@@ -1140,7 +1130,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/mass_spectrometer,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bW" = (
@@ -1155,7 +1144,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bX" = (
-/obj/structure/sign/botany,
+/obj/structure/sign/departments/botany,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bY" = (
@@ -1189,7 +1178,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cb" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cc" = (
@@ -1460,7 +1449,7 @@
 	name = "dust"
 	},
 /obj/effect/decal/remains/xeno{
-	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones.";
+	desc = "A pile of remains that look vaguely humanoid. The skull is abnormally elongated, and there are burns through some of the other bones."
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1641,20 +1630,20 @@
 
 (1,1,1) = {"
 aa
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ab
 ab
 ad
 ab
 ab
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1671,7 +1660,7 @@ au
 au
 au
 cA
-af
+aa
 "}
 (3,1,1) = {"
 ab
@@ -2032,9 +2021,9 @@ ab
 "}
 (24,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ac
 bj
 aB
@@ -2042,16 +2031,16 @@ bH
 bN
 bV
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ac
 bk
 bs
@@ -2059,16 +2048,16 @@ bI
 bO
 bW
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ba
 ac
 ac
@@ -2076,10 +2065,10 @@ ac
 ac
 ac
 ba
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
 aa
@@ -2099,19 +2088,19 @@ aa
 aa
 "}
 (28,1,1) = {"
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

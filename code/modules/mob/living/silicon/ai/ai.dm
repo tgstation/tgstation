@@ -25,6 +25,7 @@
 	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
+	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
@@ -32,7 +33,6 @@
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
@@ -89,8 +89,7 @@
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
-		qdel(src)//Delete AI.
-		return
+		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
@@ -118,7 +117,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.loc = src.loc
+	eyeobj.forceMove(src.loc)
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
@@ -172,7 +171,6 @@
 	if(incapacitated())
 		return
 
-		//if(icon_state == initial(icon_state))
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
@@ -238,9 +236,6 @@
 		icon_state = "ai-gentoo"
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
-	//else
-			//to_chat(usr, "You can only change your display once!")
-			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -248,9 +243,7 @@
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
-			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
-				borg_area = get_area(R)
 				var/robot_status = "Nominal"
 				if(R.shell)
 					robot_status = "AI SHELL"
@@ -260,7 +253,7 @@
 					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
+				Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]"))
 			stat(null, text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 		else
 			stat(null, text("Systems nonfunctional"))
@@ -404,14 +397,14 @@
 		if(call_bot_cooldown > world.time)
 			to_chat(src, "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>")
 			return
-		Bot = locate(href_list["callbot"]) in GLOB.living_mob_list
+		Bot = locate(href_list["callbot"]) in GLOB.alive_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
 		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
-		Bot = locate(href_list["interface"]) in GLOB.living_mob_list
+		Bot = locate(href_list["interface"]) in GLOB.alive_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return
 		Bot.attack_ai(src)
@@ -435,20 +428,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
+	if(QDELETED(C))
+		return FALSE
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
-		return FALSE
-
-	if(!src.eyeobj)
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
@@ -464,18 +454,16 @@
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
 	var/d
-	var/area/bot_area
 	d += "<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
-	for (Bot in GLOB.living_mob_list)
+	for (Bot in GLOB.alive_mob_list)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
-			bot_area = get_area(Bot)
 			var/bot_mode = Bot.get_mode()
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
 			d += "<td width='30%'>[bot_mode]</td>"
-			d += "<td width='30%'>[bot_area.name]</td>"
+			d += "<td width='30%'>[get_area_name(Bot, TRUE)]</td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>"
 			d += "</tr>"
@@ -808,7 +796,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(control_disabled || incapacitated())
 		return FALSE
 	if(be_close && !in_range(M, src))
@@ -822,7 +810,8 @@
 		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have x-ray vision so just use get_dist
-	return get_dist(src, A) <= client.view
+	var/list/viewscale = getviewsize(client.view)
+	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)

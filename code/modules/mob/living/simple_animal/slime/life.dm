@@ -9,8 +9,6 @@
 
 /mob/living/simple_animal/slime/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
 	if(..())
@@ -112,7 +110,6 @@
 	if(!environment)
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
 	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
@@ -338,6 +335,16 @@
 						continue
 
 					if(L in Friends) // No eating friends!
+						continue
+
+					var/ally = FALSE
+					for(var/F in faction)
+						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+							continue
+						if(F in L.faction)
+							ally = TRUE
+							break
+					if(ally)
 						continue
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence

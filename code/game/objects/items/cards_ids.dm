@@ -19,6 +19,10 @@
 
 	var/list/files = list()
 
+/obj/item/card/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/card/data
 	name = "data disk"
 	desc = "A disk of data."
@@ -55,15 +59,14 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	origin_tech = "magnets=2;syndicate=2"
 	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
-	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
 
 /obj/item/card/emag/attack()
@@ -156,7 +159,6 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/card/id/syndicate/Initialize()
@@ -199,6 +201,10 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
+
+/obj/item/card/id/syndicate/nuke_leader
+	name = "lead agent card"
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"

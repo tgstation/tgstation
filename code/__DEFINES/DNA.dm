@@ -24,7 +24,7 @@
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
 #define STONER		"Stoner"
-#define UNINTELLIGABLE		"Unintelligable"
+#define UNINTELLIGIBLE		"Unintelligible"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
@@ -70,7 +70,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	19
+#define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -119,6 +119,11 @@
 #define NOSTOMACH		28
 #define NO_DNA_COPY     29
 #define DRINKSBLOOD		30
+#define SPECIES_ORGANIC 31
+#define SPECIES_INORGANIC 32
+#define SPECIES_UNDEAD  33
+#define SPECIES_ROBOTIC 34
+#define NOEYES			35
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

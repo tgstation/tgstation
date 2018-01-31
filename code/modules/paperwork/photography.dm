@@ -21,6 +21,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
 
 /*
  * Photo
@@ -33,11 +34,19 @@
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	grind_results = list("iodine" = 4)
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
+/obj/item/photo/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
+	if (user.gender == MALE) 
+		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
+	else if (user.gender == FEMALE) 
+		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -115,7 +124,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = TRUE
@@ -189,7 +198,7 @@
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
-	var/atoms[] = list()
+	var/list/atoms = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
@@ -202,27 +211,19 @@
 					continue
 			atoms.Add(A)
 
-	var/list/sorted = list()
-	var/j
-	for(var/i = 1 to atoms.len)
-		var/atom/c = atoms[i]
-		for(j = sorted.len, j > 0, --j)
-			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
-				break
-		sorted.Insert(j+1, c)
+	var/list/sorted = sortTim(atoms,/proc/cmp_atom_layer_asc)
 
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
+		var/icon/img = getFlatIcon(A, no_anim = TRUE)
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.lying)
 				img.Turn(L.lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = world.icon_size * (A.x - center.x) + A.pixel_x + 33
+		var/offY = world.icon_size * (A.y - center.y) + A.pixel_y + 33
 		if(ismovableatom(A))
 			var/atom/movable/AM = A
 			offX += AM.step_x
@@ -234,7 +235,9 @@
 			blueprints = 1
 
 	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		var/area/A = T.loc
+		if(A.icon_state)//There's actually something to blend in.
+			res.Blend(getFlatIcon(A,no_anim = TRUE), blendMode2iconMode(A.blend_mode), world.icon_size * (T.x - center.x) + 33, world.icon_size * (T.y - center.y) + 33)
 
 	return res
 

@@ -37,8 +37,8 @@
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = list(54, 4, 0)//of 159 standard, 12 contraband
-	init_charges = list(54, 4, 0)
+	charges = list(58, 4, 0)//of 174 standard, 12 contraband
+	init_charges = list(58, 4, 0)
 
 /obj/item/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
@@ -86,3 +86,9 @@
 	icon_state = "refill_donksoft"
 	charges = list(32,28,0)// of 90 standard, 75 contraband, 0 premium
 	init_charges = list(32,28,0)
+
+/obj/item/vending_refill/games
+	machine_name = "\improper Good Clean Fun"
+	icon_state = "refill_games"
+	charges = list(7, 3, 0) //of 21 standard, 9 contraband
+	init_charges = list(7, 3, 0)

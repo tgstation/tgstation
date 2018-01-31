@@ -28,6 +28,10 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+/obj/item/energy_katana/attack_self(mob/user)
+	dash_toggled = !dash_toggled
+	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
+
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		jaunt.Teleport(user, target)
@@ -99,5 +103,3 @@
 	max_charges = 3
 	charge_rate = 30
 	recharge_sound = null
-
-

@@ -7,16 +7,20 @@
 	slot_flags = SLOT_EYES
 	strip_delay = 20
 	equip_delay_other = 25
-	resistance_flags = 0
+	resistance_flags = NONE
 	materials = list(MAT_GLASS = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING
+	var/invis_view = SEE_INVISIBLE_LIVING	//admin only for now
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	var/glass_colour_type //colors your vision when worn
+	
+/obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is stabbing \the [src] into their eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
 	..()
@@ -41,7 +45,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.disabilities & BLIND))
+		if(!(H.has_trait(TRAIT_BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -54,18 +58,20 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
-	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+
+/obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is putting \the [src] to their eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/clothing/glasses/meson/night
 	name = "night vision meson scanner"
 	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
-	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -87,7 +93,6 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	origin_tech = "magnets=2;engineering=1"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
@@ -103,11 +108,14 @@
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
-	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
 	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around their neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -126,7 +134,6 @@
 	desc = "Very confusing glasses."
 	icon_state = "material"
 	item_state = "glasses"
-	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
@@ -135,7 +142,6 @@
 	desc = "Used by miners to detect ores deep within the rock."
 	icon_state = "material"
 	item_state = "glasses"
-	origin_tech = "magnets=3;engineering=3"
 	darkness_view = 0
 
 /obj/item/clothing/glasses/material/mining/gar
@@ -174,7 +180,7 @@
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
-	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks flashes."
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = 1
@@ -186,7 +192,6 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	origin_tech = "magnets=2;engineering=2"
 	scan_reagents = 1
 
 /obj/item/clothing/glasses/sunglasses/garb
@@ -258,7 +263,7 @@
 	tint = 3			// to make them blind
 
 /obj/item/clothing/glasses/sunglasses/big
-	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
@@ -267,9 +272,8 @@
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	item_state = "glasses"
-	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
-	invis_view = 2
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = 0
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
@@ -280,7 +284,6 @@
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
-	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
 
 	var/datum/action/item_action/chameleon/change/chameleon_action

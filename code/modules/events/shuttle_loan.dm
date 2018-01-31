@@ -20,10 +20,10 @@
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
-/datum/round_event/shuttle_loan/start()
+/datum/round_event/shuttle_loan/setup()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
-/datum/round_event/shuttle_loan/announce()
+/datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)

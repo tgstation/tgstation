@@ -1,7 +1,6 @@
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
-	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
@@ -27,6 +26,8 @@
 	handcrafting = new()
 
 	. = ..()
+
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -56,9 +57,10 @@
 				stat("Distribution Pressure", internal.distribute_pressure)
 
 		if(mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+			if(changeling)
+				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
+				stat("Absorbed DNA", changeling.absorbedcount)
 
 
 	//NINJACODE
@@ -202,13 +204,13 @@
 			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
-			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
+			var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
 				L.embedded_objects -= I
-				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
 				usr.emote("scream")
@@ -354,7 +356,7 @@
 						// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 						var/allowed_access = null
 						var/obj/item/clothing/glasses/G = H.glasses
-						if (!G.emagged)
+						if (!(G.obj_flags |= EMAGGED))
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
 								if(ACCESS_SEC_DOORS in access)
@@ -614,7 +616,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
+	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
 		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
 		return
 	if(is_mouth_covered())
@@ -677,18 +679,17 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/clean_blood()
-	var/mob/living/carbon/human/H = src
-	if(H.gloves)
-		if(H.gloves.clean_blood())
-			H.update_inv_gloves()
+/mob/living/carbon/human/proc/clean_blood(strength)
+	if(strength < CLEAN_STRENGTH_BLOOD)
+		return
+	if(gloves)
+		if(gloves.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+			update_inv_gloves()
 	else
-		..() // Clear the Blood_DNA list
-		if(H.bloody_hands)
-			H.bloody_hands = 0
-			H.update_inv_gloves()
+		if(bloody_hands)
+			bloody_hands = 0
+			update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
-
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
@@ -716,7 +717,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated() || lying )
 		return
 	if(!Adjacent(M) && (M.loc != src))
@@ -841,7 +842,8 @@
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	override = dna.species.override_float
+	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+		override = dna.species.override_float
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
@@ -884,8 +886,11 @@
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	if(!riding_datum)
-		riding_datum = new /datum/riding/human(src)
+	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
+	riding_datum.ride_check_rider_incapacitated = TRUE
+	riding_datum.ride_check_ridden_incapacitated = TRUE
+	riding_datum.ride_check_rider_restrained = TRUE
+	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
 	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
@@ -901,13 +906,6 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-
-/mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
-	if(iscarbon(M))
-		if(riding_datum)
-			riding_datum.unequip_buckle_inhands(M)
-			riding_datum.restore_position(M)
-	. = ..(M, force)
 
 /mob/living/carbon/human/species
 	var/race = null

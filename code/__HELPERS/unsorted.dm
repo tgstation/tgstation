@@ -64,7 +64,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	errorx = abs(errorx)//Error should never be negative.
 	errory = abs(errory)
-	//var/errorxy = round((errorx+errory)/2)//Used for diagonal boxes.
 
 	switch(target.dir)//This can be done through equations but switch is the simpler method. And works fast to boot.
 	//Directs on what values need modifying.
@@ -148,10 +147,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/line[] = list(locate(px,py,M.z))
 	var/dx=N.x-px	//x distance
 	var/dy=N.y-py
-	var/dxabs=abs(dx)//Absolute value of x distance
-	var/dyabs=abs(dy)
-	var/sdx=sign(dx)	//Sign of x distance (+ or -)
-	var/sdy=sign(dy)
+	var/dxabs = abs(dx)//Absolute value of x distance
+	var/dyabs = abs(dy)
+	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdy = SIGN(dy)
 	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
 	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
 	var/j			//Generic integer for counting
@@ -234,7 +233,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
 	. = list()
-	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
 		if(R.connected_ai || R.shell)
 			continue
 		if(R.stat == DEAD)
@@ -246,7 +245,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Returns a list of AI's
 /proc/active_ais(check_mind=0)
 	. = list()
-	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
+	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -342,10 +341,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
-//		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
-//		mob_list.Add(M)
 	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
@@ -360,9 +355,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
-//Takes the value of energy used/produced/ect.
-//Returns a text value of that number in W, kW, MW, or GW.
-/proc/DisplayPower(var/powerused)
+// Format a power value in W, kW, MW, or GW.
+/proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW
 		return "[powerused] W"
 	else if(powerused < 1000000) //Less than a MW
@@ -370,6 +364,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	else if(powerused < 1000000000) //Less than a GW
 		return "[round((powerused * 0.000001),0.001)] MW"
 	return "[round((powerused * 0.000000001),0.0001)] GW"
+
+// Format an energy value in J, kJ, MJ, or GJ. 1W = 1J/s.
+/proc/DisplayEnergy(units)
+	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
+	// excess power into GLOB.CELLRATE energy units when charging cells.
+	// With the current configuration of wait=20 and CELLRATE=0.002, this
+	// means that one unit is 1 kJ.
+	units *= SSmachines.wait * 0.1 / GLOB.CELLRATE
+	if (units < 1000) // Less than a kJ
+		return "[round(units, 0.1)] J"
+	else if (units < 1000000) // Less than a MJ
+		return "[round(units * 0.001, 0.01)] kJ"
+	else if (units < 1000000000) // Less than a GJ
+		return "[round(units * 0.000001, 0.001)] MJ"
+	return "[round(units * 0.000000001, 0.0001)] GJ"
 
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
@@ -508,6 +517,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 /*
 	Gets all contents of contents and returns them all in a list.
 */
+
 /atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
@@ -518,6 +528,19 @@ Turf and target are separate in case you want to teleport some distance from a t
 		//This is also why we don't need to check against assembled as we go along
 		processing_list += A.contents
 		assembled += A
+	return assembled
+
+/atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
+	if(!ignore_typecache)
+		return GetAllContents()
+	var/list/processing = list(src)
+	var/list/assembled = list()
+	while(processing.len)
+		var/atom/A = processing[1]
+		processing.Cut(1,2)
+		if(!ignore_typecache[A.type])
+			processing += A.contents
+			assembled += A
 	return assembled
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
@@ -908,7 +931,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /proc/living_player_count()
 	var/living_player_count = 0
 	for(var/mob in GLOB.player_list)
-		if(mob in GLOB.living_mob_list)
+		if(mob in GLOB.alive_mob_list)
 			living_player_count += 1
 	return living_player_count
 
@@ -932,8 +955,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -945,8 +968,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
-	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
+	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
+	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -1176,18 +1199,8 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
-/proc/get_areas_in_z(zlevel)
-	. = list()
-	var/validarea = FALSE
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		validarea = TRUE
-		for(var/turf/T in A)
-			if(T.z != zlevel)
-				validarea = FALSE
-				break
-		if(validarea)
-			. += A
+/proc/get_random_station_turf()
+	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1235,6 +1248,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
 
+GLOBAL_REAL_VAR(list/stack_trace_storage)
+/proc/gib_stack_trace()
+	stack_trace_storage = list()
+	stack_trace()
+	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
+	. = stack_trace_storage
+	stack_trace_storage = null
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
 //Increases delay as the server gets more overloaded,
@@ -1251,7 +1272,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	. = 0
 	var/i = DS2TICKS(initial_delay)
 	do
-		. += Ceiling(i*DELTA_CALC)
+		. += CEILING(i*DELTA_CALC, 1)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
 	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
@@ -1345,6 +1366,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	anchored = TRUE
 	var/ready_to_die = FALSE
 
+/mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+	return
+
 /mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)
 		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
@@ -1410,9 +1434,43 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
+//same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
+/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
+	if(!user || !target)
+		return TRUE
+	var/user_loc = user.loc
+
+	var/drifting = FALSE
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = TRUE
+
+	var/target_drifting = FALSE
+	if(!target.Process_Spacemove(0) && target.inertia_dir)
+		target_drifting = TRUE
+
+	var/target_loc = target.loc
+
+	var/endtime = world.time+time
+	. = TRUE
+	while (world.time < endtime)
+		stoplag(1)
+		if(QDELETED(user) || QDELETED(target))
+			. = 0
+			break
+		if(uninterruptible)
+			continue
+
+		if(drifting && !user.inertia_dir)
+			drifting = FALSE
+			user_loc = user.loc
+
+		if(target_drifting && !target.inertia_dir)
+			target_drifting = FALSE
+			target_loc = target.loc
+
+		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
+			. = FALSE
+			break
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
@@ -1434,14 +1492,72 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
 // If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
 /proc/REF(input)
 	if(istype(input, /datum))
 		var/datum/thing = input
-		if(thing.use_tag)
+		if(thing.datum_flags & DF_USE_TAG)
 			if(!thing.tag)
-				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
-				thing.use_tag = FALSE
+				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
+				thing.datum_flags &= ~DF_USE_TAG
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
+
+// Makes a call in the context of a different usr
+// Use sparingly
+/world/proc/PushUsr(mob/M, datum/callback/CB)
+	var/temp = usr
+	usr = M
+	. = CB.Invoke()
+	usr = temp
+
+//Returns a list of all servants of Ratvar and observers.
+/proc/servants_and_ghosts()
+	. = list()
+	for(var/V in GLOB.player_list)
+		if(is_servant_of_ratvar(V) || isobserver(V))
+			. += V
+
+//datum may be null, but it does need to be a typed var
+#define NAMEOF(datum, X) (#X || ##datum.##X)
+
+#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
+//dupe code because dm can't handle 3 level deep macros
+#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
+
+/proc/___callbackvarset(list_or_datum, var_name, var_value)
+	if(length(list_or_datum))
+		list_or_datum[var_name] = var_value
+		return
+	var/datum/D = list_or_datum
+	if(IsAdminAdvancedProcCall())
+		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+	else
+		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -10,7 +10,6 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "ae" = (
@@ -38,7 +37,9 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aj" = (
@@ -58,11 +59,15 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ao" = (
@@ -88,11 +93,13 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ar" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Premium Lounge";
 	req_access_txt = "0"
 	},
@@ -103,7 +110,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "au" = (
-/turf/open/chasm/straight_down/lava_land_surface/normal_air,
+/turf/open/chasm,
 /area/shuttle/escape)
 "av" = (
 /obj/machinery/light{
@@ -136,7 +143,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Greentext";
 	req_access_txt = "0"
 	},
@@ -268,7 +275,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/bluespace,

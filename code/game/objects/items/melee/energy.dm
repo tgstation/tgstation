@@ -20,8 +20,8 @@
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/melee/transforming/energy/add_blood(list/blood_dna)
-	return 0
+/obj/item/melee/transforming/energy/add_blood_DNA(list/blood_dna)
+	return FALSE
 
 /obj/item/melee/transforming/energy/is_sharp()
 	return active * sharpness
@@ -74,7 +74,6 @@
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	armour_penetration = 100
-	origin_tech = "combat=4;magnets=3"
 	attack_verb_off = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
 	light_color = "#40ceff"
@@ -96,10 +95,8 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embed_chance = 75
-	embedded_impact_pain_multiplier = 10
+	embedding = list("embed_chance" = 75, "embedded_impact_pain_multiplier" = 10)
 	armour_penetration = 35
-	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 
 /obj/item/melee/transforming/energy/sword/transform_weapon(mob/living/user, supress_message_text)

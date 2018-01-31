@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -58,6 +58,8 @@
 		toggle_exempt_status(C)
 
 	else if(href_list["makeAntag"])
+		if(!check_rights(R_ADMIN))
+			return
 		if (!SSticker.mode)
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
 			return
@@ -181,12 +183,14 @@
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 		return
 
-	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
+	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/ip = href_list["dbsearchip"]
+		var/cid = href_list["dbsearchcid"]
 		var/page = href_list["dbsearchpage"]
 
-		DB_ban_panel(playerckey, adminckey, page)
+		DB_ban_panel(playerckey, adminckey, ip, cid, page)
 		return
 
 	else if(href_list["dbbanedit"])
@@ -199,7 +203,8 @@
 		return
 
 	else if(href_list["dbbanaddtype"])
-
+		if(!check_rights(R_BAN))
+			return
 		var/bantype = text2num(href_list["dbbanaddtype"])
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
@@ -391,6 +396,8 @@
 		log_admin("[key_name(usr)] [msg]")
 		message_admins("[key_name_admin(usr)] [msg]")
 		href_list["secrets"] = "check_antagonist"
+		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
+			SSticker.standard_reboot()
 
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))
@@ -423,9 +430,6 @@
 			if("Yes")
 				delmob = 1
 
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
-
 		switch(href_list["simplemake"])
 			if("observer")
 				M.change_mob_type( /mob/dead/observer , null, null, delmob )
@@ -442,7 +446,10 @@
 			if("larva")
 				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")
-				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				var/posttransformoutfit = usr.client.robust_dress_shop()
+				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				if(posttransformoutfit && istype(newmob))
+					newmob.equipOutfit(posttransformoutfit)
 			if("slime")
 				M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
 			if("monkey")
@@ -475,6 +482,8 @@
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 
 
 	/////////////////////////////////////new ban stuff
@@ -542,7 +551,6 @@
 		WRITE_FILE(GLOB.Banlist["minutes"], minutes)
 		WRITE_FILE(GLOB.Banlist["bannedby"], usr.ckey)
 		GLOB.Banlist.cd = "/base"
-		SSblackbox.inc("ban_edit",1)
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
@@ -564,7 +572,6 @@
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
-					SSblackbox.inc("ban_appearance_unban", 1)
 					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
 					if(M.client)
 						jobban_buildcache(M.client)
@@ -583,7 +590,6 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				SSblackbox.inc("ban_appearance",1)
 				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
@@ -598,6 +604,8 @@
 				return
 
 	else if(href_list["jobban2"])
+		if(!check_rights(R_BAN))
+			return
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.")
@@ -810,7 +818,9 @@
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a> | "
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=teamantags;jobban4=[REF(M)]'>Team Antagonists</a></th>"
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=convertantags;jobban4=[REF(M)]'>Conversion Antagonists</a></th></tr><tr align='center'>"
 
 		//Traitor
 		if(jobban_isbanned(M, "traitor") || isbanned_dept)
@@ -841,6 +851,8 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cultist;jobban4=[REF(M)]'><font color=red>Cultist</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cultist;jobban4=[REF(M)]'>Cultist</a></td>"
+
+		dat += "</tr><tr align='center'>" //So things dont get squished.
 
 		//Servant of Ratvar
 		if(jobban_isbanned(M, "servant of Ratvar") || isbanned_dept)
@@ -926,6 +938,10 @@
 					joblist += jobPos
 			if("ghostroles")
 				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland")
+			if("teamantags")
+				joblist += list("operative", "revolutionary", "cultist", "servant of Ratvar", "abductor", "alien candidate")
+			if("convertantags")
+				joblist += list("revolutionary", "cultist", "servant of Ratvar", "alien candidate")
 			else
 				joblist += href_list["jobban3"]
 
@@ -956,8 +972,6 @@
 							jobban_buildcache(M.client)
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
-						SSblackbox.inc("ban_job_tmp",1)
-						SSblackbox.add_details("ban_job_tmp","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -981,8 +995,6 @@
 								jobban_buildcache(M.client)
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
-							SSblackbox.inc("ban_job",1)
-							SSblackbox.add_details("ban_job","- [job]")
 							if(!msg)
 								msg = job
 							else
@@ -1012,8 +1024,6 @@
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						if(M.client)
 							jobban_buildcache(M.client)
-						SSblackbox.inc("ban_job_unban",1)
-						SSblackbox.add_details("ban_job_unban","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -1028,6 +1038,8 @@
 		return 0 //we didn't do anything!
 
 	else if(href_list["boot2"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
@@ -1040,72 +1052,110 @@
 			qdel(M.client)
 
 	else if(href_list["addmessage"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target_ckey = href_list["addmessage"]
 		create_message("message", target_ckey, secret = 0)
 
 	else if(href_list["addnote"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target_ckey = href_list["addnote"]
 		create_message("note", target_ckey)
 
 	else if(href_list["addwatch"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target_ckey = href_list["addwatch"]
 		create_message("watchlist entry", target_ckey, secret = 1)
 
 	else if(href_list["addmemo"])
+		if(!check_rights(R_ADMIN))
+			return
 		create_message("memo", secret = 0, browse = 1)
 
 	else if(href_list["addmessageempty"])
+		if(!check_rights(R_ADMIN))
+			return
 		create_message("message", secret = 0)
 
 	else if(href_list["addnoteempty"])
+		if(!check_rights(R_ADMIN))
+			return
 		create_message("note")
 
 	else if(href_list["addwatchempty"])
+		if(!check_rights(R_ADMIN))
+			return
 		create_message("watchlist entry", secret = 1)
 
 	else if(href_list["deletemessage"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = href_list["deletemessage"]
 		delete_message(message_id)
 
 	else if(href_list["deletemessageempty"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = href_list["deletemessageempty"]
 		delete_message(message_id, browse = 1)
 
 	else if(href_list["editmessage"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = href_list["editmessage"]
 		edit_message(message_id)
 
 	else if(href_list["editmessageempty"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = href_list["editmessageempty"]
 		edit_message(message_id, browse = 1)
 
 	else if(href_list["secretmessage"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = href_list["secretmessage"]
 		toggle_message_secrecy(message_id)
 
 	else if(href_list["searchmessages"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target = href_list["searchmessages"]
 		browse_messages(index = target)
 
 	else if(href_list["nonalpha"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target = href_list["nonalpha"]
 		target = text2num(target)
 		browse_messages(index = target)
 
 	else if(href_list["showmessages"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target = href_list["showmessages"]
 		browse_messages(index = target)
 
 	else if(href_list["showmemo"])
+		if(!check_rights(R_ADMIN))
+			return
 		browse_messages("memo")
 
 	else if(href_list["showwatch"])
+		if(!check_rights(R_ADMIN))
+			return
 		browse_messages("watchlist entry")
 
 	else if(href_list["showwatchfilter"])
+		if(!check_rights(R_ADMIN))
+			return
 		browse_messages("watchlist entry", filter = 1)
 
 	else if(href_list["showmessageckey"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/target = href_list["showmessageckey"]
 		var/agegate = TRUE
 		if (href_list["showall"])
@@ -1117,6 +1167,8 @@
 		browse_messages(target_ckey = target, linkless = 1)
 
 	else if(href_list["messageedits"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
 		var/datum/DBQuery/query_get_message_edits = SSdbcore.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
 		if(!query_get_message_edits.warn_execute())
@@ -1152,8 +1204,6 @@
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
-				SSblackbox.inc("ban_tmp",1)
-				SSblackbox.inc("ban_tmp_mins",mins)
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
@@ -1188,13 +1238,12 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
+				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [reason]\nThis is a permanent ban.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
 					AH.Resolve()
-				SSblackbox.inc("ban_perma",1)
 				qdel(M.client)
 			if("Cancel")
 				return
@@ -1309,7 +1358,7 @@
 		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
 			return
 
-		M.loc = pick(GLOB.prisonwarp)
+		M.forceMove(pick(GLOB.prisonwarp))
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
@@ -1546,6 +1595,15 @@
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(AM)
 
+	else if(href_list["admingetmovable"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/atom/movable/AM = locate(href_list["admingetmovable"])
+		if(QDELETED(AM))
+			return
+		AM.forceMove(get_turf(usr))
+
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
@@ -1561,9 +1619,13 @@
 		C.jumptocoord(x,y,z)
 
 	else if(href_list["adminchecklaws"])
+		if(!check_rights(R_ADMIN))
+			return
 		output_ai_laws()
 
 	else if(href_list["admincheckdevilinfo"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/mob/M = locate(href_list["admincheckdevilinfo"])
 		output_devil_info(M)
 
@@ -1697,7 +1759,7 @@
 
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
-		SSblackbox.inc("admin_cookies_spawned",1)
+		SSblackbox.record_feedback("amount", "admin_cookies_spawned", 1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
@@ -1826,10 +1888,24 @@
 
 		var/mob/M = locate(href_list["traitor"])
 		if(!ismob(M))
-			to_chat(usr, "This can only be used on instances of type /mob.")
+			var/datum/mind/D = M
+			if(!istype(D))
+				to_chat(usr, "This can only be used on instances of type /mob and /mind")
+				return
+			else
+				D.traitor_panel()
+		else
+			show_traitor_panel(M)
+	
+	else if(href_list["initmind"])
+		if(!check_rights(R_ADMIN))
 			return
-		show_traitor_panel(M)
-
+		var/mob/M = locate(href_list["initmind"])
+		if(!ismob(M) || M.mind)
+			to_chat(usr, "This can only be used on instances on mindless mobs")
+			return
+		M.mind_initialize()
+		
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1885,7 +1961,7 @@
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = Clamp(text2num(href_list["object_count"]), 1, 100)
+		var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -1972,20 +2048,28 @@
 		Secrets_topic(href_list["secrets"],href_list)
 
 	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
 		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
 			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_channel"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/check = 0
 		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == src.admincaster_feed_channel.channel_name)
@@ -1997,12 +2081,14 @@
 			var/choice = alert("Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
-				SSblackbox.inc("newscaster_channels",1)
+				SSblackbox.record_feedback("tally", "newscaster_channels", 1, src.admincaster_feed_channel.channel_name)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_receiving"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
@@ -2010,17 +2096,21 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
 			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,lentext(src.admincaster_feed_message.returnBody(-1))+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
+		if(!check_rights(R_ADMIN))
+			return
 		if(src.admincaster_feed_message.returnBody(-1) =="" || src.admincaster_feed_message.returnBody(-1) =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
 			src.admincaster_screen = 6
 		else
 			GLOB.news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
-			SSblackbox.inc("newscaster_stories",1)
+			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
@@ -2030,22 +2120,32 @@
 		src.access_news_network()
 
 	else if(href_list["ac_create_channel"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen=2
 		src.access_news_network()
 
 	else if(href_list["ac_create_feed_story"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen=3
 		src.access_news_network()
 
 	else if(href_list["ac_menu_censor_story"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen=10
 		src.access_news_network()
 
 	else if(href_list["ac_menu_censor_channel"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen=11
 		src.access_news_network()
 
 	else if(href_list["ac_menu_wanted"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/already_wanted = 0
 		if(GLOB.news_network.wanted_issue.active)
 			already_wanted = 1
@@ -2057,18 +2157,24 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
 			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,lentext(admincaster_wanted_message.criminal)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		while (findtext(src.admincaster_wanted_message.body," ") == 1)
 			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,lentext(src.admincaster_wanted_message.body)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/input_param = text2num(href_list["ac_submit_wanted"])
 		if(src.admincaster_wanted_message.criminal == "" || src.admincaster_wanted_message.body == "")
 			src.admincaster_screen = 16
@@ -2085,6 +2191,8 @@
 		src.access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/choice = alert("Please confirm Wanted Issue removal.","Network Security Handler","Confirm","Cancel")
 		if(choice=="Confirm")
 			GLOB.news_network.deleteWanted()
@@ -2092,36 +2200,50 @@
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_author"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
 		FC.toggleCensorAuthor()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_author"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
 		MSG.toggleCensorAuthor()
 		src.access_news_network()
 
 	else if(href_list["ac_censor_channel_story_body"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
 		MSG.toggleCensorBody()
 		src.access_news_network()
 
 	else if(href_list["ac_pick_d_notice"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen=13
 		src.access_news_network()
 
 	else if(href_list["ac_toggle_d_notice"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
 		FC.toggleCensorDclass()
 		src.access_news_network()
 
 	else if(href_list["ac_view"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen=1
 		src.access_news_network()
 
 	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
+		if(!check_rights(R_ADMIN))
+			return
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
 		if (src.admincaster_screen == 0)
 			if(src.admincaster_feed_channel)
@@ -2133,25 +2255,35 @@
 		src.access_news_network()
 
 	else if(href_list["ac_show_channel"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_show_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 9
 		src.access_news_network()
 
 	else if(href_list["ac_pick_censor_channel"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 12
 		src.access_news_network()
 
 	else if(href_list["ac_refresh"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
+		if(!check_rights(R_ADMIN))
+			return
 		src.admin_signature = adminscrub(input(usr, "Provide your desired signature.", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_comment/FC = locate(href_list["ac_del_comment"])
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_del_comment_msg"])
 		FM.comments -= FC
@@ -2159,6 +2291,8 @@
 		src.access_news_network()
 
 	else if(href_list["ac_lock_comment"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
@@ -2255,6 +2389,8 @@
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
 
 	else if(href_list["showrelatedacc"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/client/C = locate(href_list["client"]) in GLOB.clients
 		var/thing_to_check
 		if(href_list["showrelatedacc"] == "cid")

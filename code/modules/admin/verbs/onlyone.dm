@@ -26,8 +26,8 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	addtimer(CALLBACK(src, .proc/only_one), 420)
 
 /mob/living/carbon/human/proc/make_scottish()
-	SSticker.mode.traitors += mind
 	mind.special_role = "highlander"
+	
 	dna.species.species_traits |= NOGUNS //nice try jackass
 
 	var/datum/objective/steal/steal_objective = new
@@ -39,6 +39,8 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
 	hijack_objective.owner = mind
 	mind.objectives += hijack_objective
+
+	mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 	mind.announce_objectives()
 

@@ -2,7 +2,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron golem"
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
@@ -76,7 +76,7 @@
 	fixed_mut_color = "a3d"
 	meat = /obj/item/ore/plasma
 	//Can burn and takes damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
 	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
@@ -242,13 +242,13 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(SPECIES_ORGANIC,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 	prefix = "Wooden"
-	special_names = list("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	special_names = list("Bark", "Willow", "Catalpa", "Woody", "Oak", "Sap", "Twig", "Branch", "Maple", "Birch", "Elm", "Basswood", "Cottonwood", "Larch", "Aspen", "Ash", "Beech", "Buckeye", "Cedar", "Chestnut", "Cypress", "Fir", "Hawthorn", "Hazel", "Hickory", "Ironwood", "Juniper", "Leaf", "Mangrove", "Palm", "Pawpaw", "Pine", "Poplar", "Redwood", "Redbud", "Sassafras", "Spruce", "Sumac", "Trunk", "Walnut", "Yew")
 	human_surname_chance = 0
 	special_name_chance = 100
 
@@ -369,7 +369,7 @@
 				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
-				P.preparePixelProjectile(locate(Clamp(target.x + new_x, 1, world.maxx), Clamp(target.y + new_y, 1, world.maxy), H.z), H)
+				P.preparePixelProjectile(locate(CLAMP(target.x + new_x, 1, world.maxx), CLAMP(target.y + new_y, 1, world.maxy), H.z), H)
 			return -1
 	return 0
 
@@ -549,7 +549,7 @@
 	limbs_id = "cultgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
+	species_traits = list(SPECIES_INORGANIC,NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
 	prefix = "Runic"
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
@@ -603,7 +603,7 @@
 	limbs_id = "clockgolem"
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
 	other types of golem (being a machine), and are immune to electric shocks.</span>"
-	species_traits = list(NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, VIRUSIMMUNE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
+	species_traits = list(SPECIES_INORGANIC,NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
 	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
@@ -632,7 +632,7 @@
 	if(!has_corpse)
 		var/turf/T = get_turf(H)
 		H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
-		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, TRUE)
+		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE)
 		for(var/i in 1 to rand(3, 5))
 			new/obj/item/clockwork/alloy_shards/small(T)
 		new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
@@ -655,7 +655,7 @@
 	limbs_id = "clothgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
+	species_traits = list(SPECIES_UNDEAD,NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
@@ -712,7 +712,7 @@
 		to_chat(cloth_golem, "<span class='notice'>You start gathering your life energy, preparing to rise again...</span>")
 		addtimer(CALLBACK(src, .proc/revive), revive_time)
 	else
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/cloth_pile/Destroy()
 	if(cloth_golem)
@@ -727,7 +727,7 @@
 /obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
-	if(cloth_golem.suiciding || cloth_golem.disabilities & NOCLONE)
+	if(cloth_golem.suiciding || cloth_golem.has_trait(TRAIT_NOCLONE))
 		QDEL_NULL(cloth_golem)
 		return
 

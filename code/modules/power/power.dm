@@ -10,7 +10,7 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
-	on_blueprints = TRUE
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/datum/powernet/powernet = null
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -188,7 +188,6 @@
 // if unmarked==1, only return those with no powernet
 /proc/power_list(turf/T, source, d, unmarked=0, cable_only = 0)
 	. = list()
-	//var/fdir = (!d)? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 
 	for(var/AM in T)
 		if(AM == source)

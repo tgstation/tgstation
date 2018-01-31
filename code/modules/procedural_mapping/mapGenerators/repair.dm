@@ -20,7 +20,7 @@
 	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
 	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
-	if(!(mother1.z in GLOB.station_z_levels))
+	if(!is_station_level(mother1.z))
 		return			//This is only for reloading station blocks!
 	GLOB.reloading_map = TRUE
 	var/static/dmm_suite/reloader = new
@@ -87,7 +87,7 @@
 
 /datum/mapGenerator/repair/reload_station_map/defineRegion(turf/start, turf/end)
 	. = ..()
-	if(!(start.z in GLOB.station_z_levels) || !(end.z in GLOB.station_z_levels))
+	if(!is_station_level(start.z) || !is_station_level(end.z))
 		return
 	x_low = min(start.x, end.x)
 	y_low = min(start.y, end.y)

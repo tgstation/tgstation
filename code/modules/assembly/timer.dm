@@ -3,7 +3,6 @@
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	origin_tech = "magnets=1;engineering=1"
 	attachable = 1
 
 	var/timing = 0
@@ -11,6 +10,16 @@
 	var/saved_time = 5
 	var/loop = 0
 
+/obj/item/device/assembly/timer/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!</span>")
+	activate()//doesnt rely on timer_end to prevent weird metas where one person can control the timer and therefore someone's life. (maybe that should be how it works...)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), time*10)//kill yourself once the time runs out
+	return MANUAL_SUICIDE
+
+/obj/item/device/assembly/timer/proc/manual_suicide(mob/living/user)
+	user.visible_message("<span class='suicide'>[user]'s time is up!</span>")
+	user.adjustOxyLoss(200)
+	user.death(0)
 
 /obj/item/device/assembly/timer/New()
 	..()

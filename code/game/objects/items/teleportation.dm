@@ -17,7 +17,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
-	var/frequency = 1451
+	var/frequency = FREQ_LOCATOR_IMPLANT
 	var/broadcasting = null
 	var/listening = 1
 	flags_1 = CONDUCT_1
@@ -28,7 +28,6 @@
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=400)
-	origin_tech = "magnets=3;bluespace=2"
 
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
@@ -54,7 +53,7 @@ Frequency:
 	if (usr.stat || usr.restrained())
 		return
 	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location || current_location.z == ZLEVEL_CENTCOM)//If turf was not found or they're on CentCom
+	if(!current_location || is_centcom_level(current_location.z))//If turf was not found or they're on CentCom
 		to_chat(usr, "[src] is malfunctioning.")
 		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
@@ -85,10 +84,10 @@ Frequency:
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
 				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
-					if (!W.imp_in || !ismob(W.loc))
+					if (!W.imp_in || !isliving(W.loc))
 						continue
 					else
-						var/mob/M = W.loc
+						var/mob/living/M = W.loc
 						if (M.stat == DEAD)
 							if (M.timeofdeath + 6000 < world.time)
 								continue
@@ -141,7 +140,6 @@ Frequency:
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
-	origin_tech = "magnets=3;bluespace=4"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -151,17 +149,26 @@ Frequency:
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user, proximity, params)
-	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, "<span class='notice'>You dispel [target] remotely with \the [src]!</span>")
+/obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
+	if(try_dispel_portal(target, user))
+		return FALSE
 	return ..()
 
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
+	if(is_parent_of_portal(target))
+		qdel(target)
+		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		return TRUE
+	return FALSE
+
+/obj/item/hand_tele/afterattack(atom/target, mob/user)
+	try_dispel_portal(target, user)
+	. = ..()
 
 /obj/item/hand_tele/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
 	var/area/current_area = current_location.loc
-	if(!current_location || current_area.noteleport || current_location.z > ZLEVEL_SPACEMAX || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
+	if(!current_location || current_area.noteleport || is_away_level(current_location.z) || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
@@ -195,6 +202,11 @@ Frequency:
 	var/atom/T = L[t1]
 	var/area/A = get_area(T)
 	if(A.noteleport)
+		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
+		return
+	current_location = get_turf(user)	//Recheck.
+	current_area = current_location.loc
+	if(!current_location || current_area.noteleport || is_away_level(current_location.z) || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", 2)

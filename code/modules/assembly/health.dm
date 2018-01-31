@@ -3,7 +3,6 @@
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	origin_tech = "magnets=1;biotech=1"
 	attachable = 1
 	secured = 0
 

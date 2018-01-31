@@ -51,6 +51,17 @@
 #define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
+//Brain Damage defines
+#define BRAIN_DAMAGE_MILD 20
+#define BRAIN_DAMAGE_SEVERE 100
+#define BRAIN_DAMAGE_DEATH 200
+
+#define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
+#define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
+#define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+
+#define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
@@ -64,6 +75,9 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+
+#define NUTRITION_LEVEL_START_MIN 250
+#define NUTRITION_LEVEL_START_MAX 400
 
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
@@ -97,6 +111,7 @@
 #define AI_ON		1
 #define AI_IDLE		2
 #define AI_OFF		3
+#define AI_Z_OFF	4
 
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
@@ -174,3 +189,20 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+
+//MINOR TWEAKS/MISC
+#define AGE_MIN				17	//youngest a character can be
+#define AGE_MAX				85	//oldest a character can be
+#define WIZARD_AGE_MIN		30	//youngest a wizard can be
+#define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
+#define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
+#define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
+
+#define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
+#define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
+#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// AI Toggles
+#define AI_CAMERA_LUMINOSITY	5
+#define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.

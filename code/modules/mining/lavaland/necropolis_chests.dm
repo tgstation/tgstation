@@ -105,9 +105,9 @@
 	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
-	category = list("Mining Designs", "Cyborg Upgrade Modules")
-	req_tech = list("materials" = 12) //can't be normally obtained
+	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -160,7 +160,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		SSblackbox.add_details("wisp_lantern","Freed")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -173,9 +173,9 @@
 				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
 
 		wisp.stop_orbit()
-		wisp.loc = src
+		wisp.forceMove(src)
 		icon_state = "lantern-blue"
-		SSblackbox.add_details("wisp_lantern","Returned")
+		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	. = ..()
@@ -217,7 +217,7 @@
 	linked.teleporting = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/warp_cube(T, user, teleport_color, TRUE)
-	SSblackbox.add_details("warp_cube","[src.type]")
+	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
@@ -334,7 +334,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		SSblackbox.add_details("immortality_talisman","Activated") // usage
+		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -366,7 +366,7 @@
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
-	return 0
+	return
 
 /obj/effect/immortality_talisman/Destroy(force)
 	if(!can_destroy && !force)
@@ -413,7 +413,7 @@
 
 /obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
 	if(bag)
-		bag.loc = user
+		bag.forceMove(user)
 		bag.attackby(W, user, params)
 
 
@@ -422,7 +422,7 @@
 		return
 	if(loc == user && user.back && user.back == src)
 		if(bag)
-			bag.loc = user
+			bag.forceMove(user)
 			bag.attack_hand(user)
 	else
 		..()
@@ -466,69 +466,6 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
-
-//Boat
-
-/obj/vehicle/lavaboat
-	name = "lava boat"
-	desc = "A boat used for traversing lava."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-
-/obj/vehicle/lavaboat/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	. = ..()
-	riding_datum = new/datum/riding/boat
-
-/obj/item/oar
-	name = "oar"
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "oar"
-	item_state = "oar"
-	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
-	desc = "Not to be confused with the kind Research hassles you for."
-	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-
-/datum/crafting_recipe/oar
-	name = "goliath bone oar"
-	result = /obj/item/oar
-	reqs = list(/obj/item/stack/sheet/bone = 2)
-	time = 15
-	category = CAT_PRIMAL
-
-/datum/crafting_recipe/boat
-	name = "goliath hide boat"
-	result = /obj/vehicle/lavaboat
-	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
-	time = 50
-	category = CAT_PRIMAL
-
-//Dragon Boat
-
-
-/obj/item/ship_in_a_bottle
-	name = "ship in a bottle"
-	desc = "A tiny ship inside a bottle."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "ship_bottle"
-
-/obj/item/ship_in_a_bottle/attack_self(mob/user)
-	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	new /obj/vehicle/lavaboat/dragon(get_turf(src))
-	qdel(src)
-
-/obj/vehicle/lavaboat/dragon
-	name = "mysterious boat"
-	desc = "This boat moves where you will it, without the need for an oar."
-	icon_state = "dragon_boat"
-
-/obj/vehicle/lavaboat/dragon/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	..()
-	riding_datum = new/datum/riding/boat/dragon
 
 //Potion of Flight
 /obj/item/reagent_containers/glass/bottle/potion
@@ -579,17 +516,18 @@
 	var/ladder_x = T.x
 	var/ladder_y = T.y
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
+	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT)
+		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
-		new /obj/structure/ladder/unbreakable/jacob(T2)
+		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
 	qdel(src)
 
+// Inherit from unbreakable but don't set ID, to suppress the default Z linkage
 /obj/structure/ladder/unbreakable/jacob
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
-	auto_connect = TRUE
 
 ///Bosses
 
@@ -650,7 +588,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -793,13 +731,13 @@
 	force = 0
 	var/ghost_counter = ghost_check()
 
-	force = Clamp((ghost_counter * 4), 0, 75)
+	force = CLAMP((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 
 /obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/ghost_counter = ghost_check()
-	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
+	final_block_chance += CLAMP((ghost_counter * 5), 0, 75)
 	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
 	return ..()
 
@@ -972,7 +910,18 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
+	
+	var/list/da_list = list()
+	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
+		var/mob/living/L = I
+		da_list[L.real_name] = L
+		
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+	
+	choice = da_list[choice]
+	
+	if(!choice)
+		return
 
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
@@ -1287,5 +1236,3 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
-
-

@@ -49,7 +49,7 @@
 	anchored = TRUE
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/book))
-			I.loc = src
+			I.forceMove(src)
 	update_icon()
 
 
@@ -123,7 +123,7 @@
 				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
-				choice.loc = get_turf(src)
+				choice.forceMove(drop_location())
 			update_icon()
 
 
@@ -144,8 +144,8 @@
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/Initialize()
+	. = ..()
 	new /obj/item/book/manual/medical_cloning(src)
 	update_icon()
 
@@ -153,8 +153,8 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/Initialize()
+	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
@@ -167,8 +167,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/Initialize()
+	. = ..()
 	new /obj/item/book/manual/research_and_development(src)
 	update_icon()
 
@@ -289,7 +289,7 @@
 				user.put_in_hands(B)
 				return
 			else
-				B.loc = src.loc
+				B.forceMove(drop_location())
 				qdel(src)
 				return
 		return

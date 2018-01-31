@@ -63,7 +63,7 @@
 	//simple_animal access
 	var/obj/item/card/id/access_card = null	//innate access uses an internal ID card
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
-	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
+	var/gold_core_spawnable = NO_SPAWN //If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood
 
 	var/mob/living/simple_animal/hostile/spawner/nest
 
@@ -82,12 +82,14 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 	var/datum/personal_crafting/handcrafting
 
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
 
 	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
 
 	//domestication
 	var/tame = 0
+
+	var/my_z // I don't want to confuse this with client registered_z 
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -106,7 +108,7 @@
 
 /mob/living/simple_animal/updatehealth()
 	..()
-	health = Clamp(health, 0, maxHealth)
+	health = CLAMP(health, 0, maxHealth)
 
 /mob/living/simple_animal/update_stat()
 	if(status_flags & GODMODE)
@@ -226,7 +228,7 @@
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if( abs(areatemp - bodytemperature) > 40 )
+		if( abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			bodytemperature += diff
@@ -242,9 +244,10 @@
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)
+		var/atom/Tsec = drop_location()
 		for(var/path in butcher_results)
-			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+			for(var/i in 1 to butcher_results[path])
+				new path(Tsec)
 	..()
 
 /mob/living/simple_animal/gib_animation()
@@ -309,16 +312,20 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
+	if(ismob(the_target))
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
 	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/handle_fire()
 	return
@@ -365,7 +372,7 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
 		return 0
 	if(no_dextery || dextrous)
@@ -496,8 +503,8 @@
 		if(H)
 			H.update_icon()
 
-/mob/living/simple_animal/put_in_hands(obj/item/I)
-	..()
+/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
+	..(I, del_on_fail, merge_stacks)
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
@@ -516,41 +523,36 @@
 			client.screen |= l_hand
 
 //ANIMAL RIDING
-/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
-	if(riding_datum)
-		riding_datum.restore_position(buckled_mob)
-	. = ..()
-
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	GET_COMPONENT(riding_datum, /datum/component/riding)
 	if(riding_datum)
 		if(user.incapacitated())
 			return
 		for(var/atom/movable/A in get_turf(src))
 			if(A != src && A != M && A.density)
 				return
-		M.loc = get_turf(src)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.ridden = src
+		M.forceMove(get_turf(src))
+		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
+	GET_COMPONENT(riding_datum, /datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
-/mob/living/simple_animal/Moved()
-	. = ..()
-	if(riding_datum)
-		riding_datum.on_vehicle_move()
-
-
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
-	riding_datum = new/datum/riding/animal
-
+	LoadComponent(/datum/component/riding)
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if (AIStatus != togglestatus)
-		if (togglestatus > 0 && togglestatus < 4)
+		if (togglestatus > 0 && togglestatus < 5)
+			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)
+				var/turf/T = get_turf(src)
+				if (AIStatus == AI_Z_OFF)
+					SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+				else
+					SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 			AIStatus = togglestatus
@@ -566,3 +568,10 @@
 	if(!ckey && !stat)//Not unconscious
 		if(AIStatus == AI_IDLE)
 			toggle_ai(AI_ON)
+
+
+/mob/living/simple_animal/onTransitZ(old_z, new_z)
+	..()
+	if (AIStatus == AI_Z_OFF)
+		SSidlenpcpool[old_z] -= src
+		toggle_ai(initial(AIStatus))

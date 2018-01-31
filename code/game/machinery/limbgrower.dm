@@ -10,7 +10,7 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -22,7 +22,7 @@
 	var/busy = FALSE
 	var/prod_coeff = 1
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/selected_category
 	var/screen = 1
 	var/list/categories = list(
@@ -35,7 +35,7 @@
 /obj/machinery/limbgrower/Initialize()
 	. = ..()
 	create_reagents(0)
-	files = new /datum/research/limbgrower(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 
 /obj/machinery/limbgrower/interact(mob/user)
 	if(!is_operational())
@@ -95,7 +95,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
@@ -165,7 +165,7 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !emagged)	//Only want to show special when console is emagged
+		if(C=="special" && !(obj_flags & EMAGGED))	//Only want to show special when console is emagged
 			continue
 
 		dat += "<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
@@ -180,8 +180,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))
@@ -220,10 +220,10 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	for(var/datum/design/D in files.possible_designs)
+	for(var/datum/design/D in SSresearch.techweb_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
-			files.AddDesign2Known(D)
+			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED

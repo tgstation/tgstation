@@ -88,6 +88,8 @@
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
 	if(istype(A, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/P = A
+		if(P.parent)
+			merge(P.parent)
 		P.parent = src
 		var/list/adjacent = P.pipeline_expansion()
 		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
@@ -216,8 +218,8 @@
 		GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
-				PL |= V.PARENT1
-				PL |= V.PARENT2
+				PL |= V.parents[1]
+				PL |= V.parents[2]
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()

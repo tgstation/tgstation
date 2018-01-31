@@ -13,7 +13,7 @@
 		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
-	SSblackbox.add_details("admin_verb","Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -95,7 +95,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
-	SSblackbox.add_details("admin_verb","Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Advanced ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 GLOBAL_VAR(AdminProcCaller)
 GLOBAL_PROTECT(AdminProcCaller)
@@ -107,14 +107,23 @@ GLOBAL_VAR(LastAdminCalledTarget)
 GLOBAL_PROTECT(LastAdminCalledTarget)
 GLOBAL_VAR(LastAdminCalledProc)
 GLOBAL_PROTECT(LastAdminCalledProc)
+GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
+GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 /proc/WrapAdminProcCall(target, procname, list/arguments)
 	var/current_caller = GLOB.AdminProcCaller
-	var/ckey = usr.client.ckey
+	var/ckey = usr ? usr.client.ckey : GLOB.AdminProcCaller
+	if(!ckey)
+		CRASH("WrapAdminProcCall with no ckey: [target] [procname] [english_list(arguments)]")
 	if(current_caller && current_caller != ckey)
-		to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>")
-		UNTIL(!GLOB.AdminProcCaller)
-		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
+		if(!GLOB.AdminProcCallSpamPrevention[ckey])
+			to_chat(usr, "<span class='adminnotice'>Another set of admin called procs are still running, your proc will be run after theirs finish.</span>")
+			GLOB.AdminProcCallSpamPrevention[ckey] = TRUE
+			UNTIL(!GLOB.AdminProcCaller)
+			to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
+			GLOB.AdminProcCallSpamPrevention -= ckey
+		else
+			UNTIL(!GLOB.AdminProcCaller)
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
 		GLOB.LastAdminCalledTargetRef = "[REF(target)]"
@@ -165,7 +174,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/msg = "[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"]."
 	message_admins(msg)
 	admin_ticket_log(A, msg)
-	SSblackbox.add_details("admin_verb","Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	var/returnval = WrapAdminProcCall(A, procname, lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
@@ -222,21 +231,11 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	set name = "Air Status in Location"
 	if(!mob)
 		return
-	var/turf/T = mob.loc
-
+	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-
-	var/datum/gas_mixture/env = T.return_air()
-	var/list/env_gases = env.gases
-
-	var/t = ""
-	for(var/id in env_gases)
-		if(id in GLOB.hardcoded_gases || env_gases[id][MOLES])
-			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
-
-	to_chat(usr, t)
-	SSblackbox.add_details("admin_verb","Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	show_air_status_to(T, usr)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
 	set category = "Fun"
@@ -315,7 +314,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	for(var/datum/paiCandidate/candidate in SSpai.candidates)
 		if(candidate.key == choice.key)
 			SSpai.candidates.Remove(candidate)
-	SSblackbox.add_details("admin_verb","Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(mob/M in GLOB.mob_list)
 	set category = "Fun"
@@ -326,7 +325,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
-		SSblackbox.add_details("admin_verb","Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Alien") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
@@ -341,7 +340,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
-		SSblackbox.add_details("admin_verb","Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Slime") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
@@ -429,7 +428,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 			CHECK_TICK
 		log_admin("[key_name(src)] has deleted all ([counter]) instances of [hsbitem].")
 		message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [hsbitem].", 0)
-		SSblackbox.add_details("admin_verb","Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_debug_make_powernets()
@@ -438,7 +437,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	SSmachines.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
-	SSblackbox.add_details("admin_verb","Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -478,7 +477,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 
 	else
 		alert("Invalid mob")
-	SSblackbox.add_details("admin_verb","Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
@@ -499,65 +498,112 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	M.ckey = src.ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
-	SSblackbox.add_details("admin_verb","Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
 	set name = "Test Areas"
 
+	var/list/dat = list()
 	var/list/areas_all = list()
 	var/list/areas_with_APC = list()
+	var/list/areas_with_multiple_APCs = list()
 	var/list/areas_with_air_alarm = list()
 	var/list/areas_with_RC = list()
 	var/list/areas_with_light = list()
 	var/list/areas_with_LS = list()
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
-	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin))
+	var/list/station_areas_blacklist = typecacheof(list(/area/holodeck/rec_center, /area/shuttle, /area/engine/supermatter, /area/science/test_area, /area/space, /area/solar, /area/mine, /area/ruin, /area/asteroid))
+
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, "Game still loading, please hold!")
+		return
+
+	var/log_message
+	if(on_station)
+		dat += "<b>Only checking areas on station z-levels.</b><br><br>"
+		log_message = "station z-levels"
+	else
+		log_message = "all z-levels"
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used the Test Areas debug command checking [log_message].</span>")
+	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
 
 	for(var/area/A in world)
 		if(on_station)
 			var/turf/picked = safepick(get_area_turfs(A.type))
-			if(picked && (picked.z in GLOB.station_z_levels))
+			if(picked && is_station_level(picked.z))
 				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
 			areas_all.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		var/area/A = APC.area
+		if(!A)
+			dat += "Skipped over [APC] in invalid location, [APC.loc]."
+			continue
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
+		else if(A.type in areas_all)
+			areas_with_multiple_APCs.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		var/area/A = get_area(AA)
+		if(!A) //Make sure the target isn't inside an object, which results in runtimes.
+			dat += "Skipped over [AA] in invalid location, [AA.loc].<br>"
+			continue
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/requests_console/RC in GLOB.machines)
 		var/area/A = get_area(RC)
+		if(!A)
+			dat += "Skipped over [RC] in invalid location, [RC.loc].<br>"
+			continue
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/light/L in GLOB.machines)
 		var/area/A = get_area(L)
+		if(!A)
+			dat += "Skipped over [L] in invalid location, [L.loc].<br>"
+			continue
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/light_switch/LS in GLOB.machines)
 		var/area/A = get_area(LS)
+		if(!A)
+			dat += "Skipped over [LS] in invalid location, [LS.loc].<br>"
+			continue
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/item/device/radio/intercom/I in GLOB.machines)
 		var/area/A = get_area(I)
+		if(!A)
+			dat += "Skipped over [I] in invalid location, [I.loc].<br>"
+			continue
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
+		CHECK_TICK
 
 	for(var/obj/machinery/camera/C in GLOB.machines)
 		var/area/A = get_area(C)
+		if(!A)
+			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
+			continue
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
+		CHECK_TICK
 
 	var/list/areas_without_APC = areas_all - areas_with_APC
 	var/list/areas_without_air_alarm = areas_all - areas_with_air_alarm
@@ -567,33 +613,61 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
-	for(var/areatype in areas_without_APC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_APC.len)
+		dat += "<h1>AREAS WITHOUT AN APC:</h1>"
+		for(var/areatype in areas_without_APC)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
-	for(var/areatype in areas_without_air_alarm)
-		to_chat(world, "* [areatype]")
+	if(areas_with_multiple_APCs.len)
+		dat += "<h1>AREAS WITH MULTIPLE APCS:</h1>"
+		for(var/areatype in areas_with_multiple_APCs)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
-	for(var/areatype in areas_without_RC)
-		to_chat(world, "* [areatype]")
+	if(areas_without_air_alarm.len)
+		dat += "<h1>AREAS WITHOUT AN AIR ALARM:</h1>"
+		for(var/areatype in areas_without_air_alarm)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
-	for(var/areatype in areas_without_light)
-		to_chat(world, "* [areatype]")
+	if(areas_without_RC.len)
+		dat += "<h1>AREAS WITHOUT A REQUEST CONSOLE:</h1>"
+		for(var/areatype in areas_without_RC)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
-	for(var/areatype in areas_without_LS)
-		to_chat(world, "* [areatype]")
+	if(areas_without_light.len)
+		dat += "<h1>AREAS WITHOUT ANY LIGHTS:</h1>"
+		for(var/areatype in areas_without_light)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
-	for(var/areatype in areas_without_intercom)
-		to_chat(world, "* [areatype]")
+	if(areas_without_LS.len)
+		dat += "<h1>AREAS WITHOUT A LIGHT SWITCH:</h1>"
+		for(var/areatype in areas_without_LS)
+			dat += "[areatype]<br>"
+			CHECK_TICK
 
-	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
-	for(var/areatype in areas_without_camera)
-		to_chat(world, "* [areatype]")
+	if(areas_without_intercom.len)
+		dat += "<h1>AREAS WITHOUT ANY INTERCOMS:</h1>"
+		for(var/areatype in areas_without_intercom)
+			dat += "[areatype]<br>"
+			CHECK_TICK
+
+	if(areas_without_camera.len)
+		dat += "<h1>AREAS WITHOUT ANY CAMERAS:</h1>"
+		for(var/areatype in areas_without_camera)
+			dat += "[areatype]<br>"
+			CHECK_TICK
+
+	if(!(areas_with_APC.len || areas_with_multiple_APCs.len || areas_with_air_alarm.len || areas_with_RC.len || areas_with_light.len || areas_with_LS.len || areas_with_intercom.len || areas_with_camera.len))
+		dat += "<b>No problem areas!</b>"
+
+	var/datum/browser/popup = new(usr, "testareas", "Test Areas", 500, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+
 
 /client/proc/cmd_admin_areatest_station()
 	set category = "Mapping"
@@ -612,21 +686,39 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		alert("Invalid mob")
 		return
 
+	var/dresscode = robust_dress_shop()
 
-	var/list/outfits = list("Naked","Custom","As Job...")
+	if(!dresscode)
+		return
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	for (var/obj/item/I in M.get_equipped_items())
+		qdel(I)
+	if(dresscode != "Naked")
+		M.equipOutfit(dresscode)
+
+	M.regenerate_icons()
+
+	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].</span>")
+
+/client/proc/robust_dress_shop()
+	var/list/outfits = list("Cancel","Naked","Custom","As Job...")
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
 			outfits[initial(O.name)] = path
 
-
-	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in outfits
+	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in outfits
 	if (isnull(dresscode))
 		return
 
 	if (outfits[dresscode])
 		dresscode = outfits[dresscode]
+
+	if(dresscode == "Cancel")
+		return
 
 	if (dresscode == "As Job...")
 		var/list/job_paths = subtypesof(/datum/outfit/job)
@@ -641,34 +733,16 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(isnull(dresscode))
 			return
 
-
-	var/datum/outfit/custom = null
 	if (dresscode == "Custom")
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
 		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in custom_names
-		custom = custom_names[selected_name]
-		if(isnull(custom))
+		dresscode = custom_names[selected_name]
+		if(isnull(dresscode))
 			return
 
-	SSblackbox.add_details("admin_verb","Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in M.get_equipped_items())
-		qdel(I)
-	switch(dresscode)
-		if ("Naked")
-			//do nothing
-		if ("Custom")
-			//use custom one
-			M.equipOutfit(custom)
-		else
-			M.equipOutfit(dresscode)
-
-
-	M.regenerate_icons()
-
-	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].</span>")
+	return dresscode
 
 /client/proc/startSinglo()
 
@@ -715,11 +789,11 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				ASSERT_GAS(/datum/gas/plasma, Plasma.air_contents)
+				Plasma.air_contents.assert_gas(/datum/gas/plasma)
 				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
-				Plasma.loc = Rad
+				Plasma.forceMove(Rad)
 
 			if(!Rad.active)
 				Rad.toggle_power()
@@ -741,7 +815,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if("Mobs")
 			to_chat(usr, jointext(GLOB.mob_list,","))
 		if("Living Mobs")
-			to_chat(usr, jointext(GLOB.living_mob_list,","))
+			to_chat(usr, jointext(GLOB.alive_mob_list,","))
 		if("Dead Mobs")
 			to_chat(usr, jointext(GLOB.dead_mob_list,","))
 		if("Clients")
@@ -777,6 +851,13 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	dellog += "</ol>"
 
 	usr << browse(dellog.Join(), "window=dellog")
+
+/client/proc/cmd_display_overlay_log()
+	set category = "Debug"
+	set name = "Display overlay Log"
+	set desc = "Display SSoverlays log of everything that's passed through it."
+
+	render_stats(SSoverlays.stats, src)
 
 /client/proc/cmd_display_init_log()
 	set category = "Debug"
@@ -834,7 +915,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	SSshuttle.clear_transit = TRUE
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
-	SSblackbox.add_details("admin_verb","Clear Dynamic Transit") // If...
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")
 
 
@@ -848,7 +929,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	GLOB.medals_enabled = !GLOB.medals_enabled
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
-	SSblackbox.add_details("admin_verb","Toggle Medal Disable") // If...
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
 	log_admin("[key_name(src)] [GLOB.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
@@ -871,7 +952,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	SSevents.scheduled = world.time
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] pumped a random event.</span>")
-	SSblackbox.add_details("admin_verb","Pump Random Event")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
 	log_admin("[key_name(src)] pumped a random event.")
 
 /client/proc/start_line_profiling()
@@ -882,7 +963,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	PROFILE_START
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] started line by line profiling.</span>")
-	SSblackbox.add_details("admin_verb","Start Line Profiling")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
 	log_admin("[key_name(src)] started line by line profiling.")
 
 /client/proc/stop_line_profiling()
@@ -893,7 +974,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	PROFILE_STOP
 
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] stopped line by line profiling.</span>")
-	SSblackbox.add_details("admin_verb","stop Line Profiling")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
 	log_admin("[key_name(src)] stopped line by line profiling.")
 
 /client/proc/show_line_profiling()
@@ -911,4 +992,3 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		return
 	sort = sortlist[sort]
 	profile_show(src, sort)
-

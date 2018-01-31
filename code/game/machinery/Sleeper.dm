@@ -1,6 +1,6 @@
 /obj/machinery/sleep_console
 	name = "sleeper console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
 	anchored = TRUE
@@ -8,7 +8,7 @@
 /obj/machinery/sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
 	anchored = TRUE

@@ -8,9 +8,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-"c" = (
-/turf/closed/wall/mineral/titanium/survival,
-/area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8
@@ -203,7 +200,7 @@
 /area/survivalpod)
 "D" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
 /area/survivalpod)
 "E" = (
@@ -214,9 +211,9 @@
 (1,1,1) = {"
 a
 d
-c
+a
 d
-c
+a
 d
 a
 "}
@@ -230,13 +227,13 @@ y
 C
 "}
 (3,1,1) = {"
-c
+a
 f
 l
 l
 u
 z
-c
+a
 "}
 (4,1,1) = {"
 b
@@ -248,13 +245,13 @@ A
 D
 "}
 (5,1,1) = {"
-c
+a
 h
 n
 r
 w
 A
-c
+a
 "}
 (6,1,1) = {"
 b
@@ -268,9 +265,9 @@ E
 (7,1,1) = {"
 a
 j
-c
+a
 j
-c
+a
 j
 a
 "}

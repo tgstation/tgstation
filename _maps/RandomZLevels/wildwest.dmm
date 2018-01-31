@@ -31,14 +31,6 @@
 	icon_state = "cult"
 	},
 /area/awaymission/wildwest/vault)
-"ai" = (
-/turf/open/space,
-/turf/closed/indestructible{
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
-/area/awaymission/wildwest/vault)
 "aj" = (
 /turf/open/floor/plating{
 	icon_state = "cultdamage3"
@@ -153,7 +145,7 @@
 /area/awaymission/wildwest/vaultdoors)
 "aG" = (
 /turf/closed/mineral,
-/area/space)
+/area/space/nearstation)
 "aH" = (
 /turf/closed/mineral/diamond,
 /area/awaymission/wildwest/mines)
@@ -259,7 +251,7 @@
 /area/awaymission/wildwest/mines)
 "bg" = (
 /turf/closed/wall/mineral/sandstone,
-/area/space)
+/area/space/nearstation)
 "bh" = (
 /obj/structure/closet/crate/large,
 /turf/open/floor/plating,
@@ -307,7 +299,7 @@
 "br" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bs" = (
 /obj/effect/mine/sound/bwoink,
 /obj/item/ammo_box/c10mm,
@@ -326,14 +318,14 @@
 	icon_state = "fwindow"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bx" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/cafeteria{
@@ -435,7 +427,7 @@
 	dir = 4
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bP" = (
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/gov)
@@ -490,7 +482,7 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bU" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -513,7 +505,7 @@
 	dir = 4
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bX" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow";
@@ -561,9 +553,6 @@
 "cb" = (
 /obj/machinery/door/window,
 /turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
-"cc" = (
-/turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "cd" = (
 /obj/effect/mob_spawn/human/cook{
@@ -670,12 +659,12 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "cu" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "cv" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/carpet,
@@ -727,7 +716,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cG" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wildwest/gov)
 "cH" = (
@@ -762,7 +751,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cN" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cO" = (
@@ -772,7 +761,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cP" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
 "cQ" = (
@@ -934,9 +923,6 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
-"dl" = (
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
 "dm" = (
 /obj/structure/mineral_door/wood{
 	icon_state = "wood"
@@ -959,7 +945,7 @@
 	dir = 4
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "dp" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
@@ -1025,7 +1011,7 @@
 /area/awaymission/wildwest/gov)
 "dB" = (
 /obj/structure/toilet,
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/plasteel/white,
 /area/awaymission/wildwest/gov)
 "dC" = (
@@ -1216,7 +1202,7 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ee" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
@@ -1224,7 +1210,7 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ef" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow";
@@ -1234,7 +1220,7 @@
 	dir = 4
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "eg" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow";
@@ -1262,7 +1248,7 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "ej" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/ironsand{
@@ -1406,7 +1392,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "eJ" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/awaymission/wildwest/refine)
 "eK" = (
@@ -1682,7 +1668,7 @@
 	icon_state = "fwindow"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "fz" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow";
@@ -1692,7 +1678,7 @@
 	icon_state = "fwindow"
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "fA" = (
 /obj/structure/window/reinforced{
 	icon_state = "fwindow";
@@ -1797,7 +1783,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "fO" = (
 /mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/plasteel,
@@ -1896,10 +1882,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
-/area/space)
+/area/space/nearstation)
 "gd" = (
 /turf/open/floor/plasteel/airless,
-/area/space)
+/area/space/nearstation)
 "ge" = (
 /obj/effect/mob_spawn/human/miner/rig,
 /turf/open/floor/plasteel,
@@ -1942,7 +1928,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gn" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "go" = (
@@ -2097,21 +2083,9 @@
 "gJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
-"gK" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
-/area/awaymission/wildwest/refine)
-"gM" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gN" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gO" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gP" = (
 /obj/structure/chair,
@@ -2120,17 +2094,8 @@
 "gQ" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wildwest/refine)
-"gR" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/wildwest/refine)
-"gT" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gU" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gV" = (
 /obj/effect/landmark/awaystart,
@@ -22575,7 +22540,7 @@ ab
 ah
 ac
 ah
-ai
+ah
 ac
 ac
 ac

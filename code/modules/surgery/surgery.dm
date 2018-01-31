@@ -61,7 +61,7 @@
 		return null
 
 /datum/surgery/proc/complete()
-	SSblackbox.add_details("surgeries_completed", "[type]")
+	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
 

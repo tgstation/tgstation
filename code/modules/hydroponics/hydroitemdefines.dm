@@ -9,7 +9,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	origin_tech = "magnets=2;biotech=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
@@ -25,12 +24,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	container_type = OPENCONTAINER_1
-	slot_flags = SLOT_BELT
-	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
-	throw_speed = 3
-	throw_range = 10
 
 /obj/item/reagent_containers/spray/weedspray/Initialize()
 	. = ..()
@@ -49,12 +42,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-	container_type = OPENCONTAINER_1
-	slot_flags = SLOT_BELT
-	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
-	throw_speed = 3
-	throw_range = 10
 
 /obj/item/reagent_containers/spray/pestspray/Initialize()
 	. = ..()
@@ -72,7 +59,6 @@
 	item_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	origin_tech = "engineering=2;biotech=2"
 	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 7
@@ -80,6 +66,10 @@
 	materials = list(MAT_METAL=50)
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/cultivator/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -96,14 +86,13 @@
 	throw_speed = 3
 	throw_range = 4
 	materials = list(MAT_METAL = 15000)
-	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe
@@ -120,7 +109,6 @@
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
 	slot_flags = SLOT_BACK
-	origin_tech = "materials=3;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
@@ -132,7 +120,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart("head")
 		if(BP)
 			BP.drop_limb()
-			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attackby(atom/A, mob/living/user, params)

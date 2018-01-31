@@ -1,5 +1,4 @@
 
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
@@ -60,6 +59,19 @@
 	cached_reagents = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
+
+
+// Used in attack logs for reagents in pills and such
+/datum/reagents/proc/log_list()
+	if(!length(reagent_list))
+		return "no reagents"
+
+	var/list/data = list()
+	for(var/r in reagent_list) //no reagents will be left behind
+		var/datum/reagent/R = r
+		data += "[R.id] ([round(R.volume, 0.1)]u)"
+		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	return english_list(data)
 
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
@@ -146,7 +158,7 @@
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -169,14 +181,14 @@
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
-	if(!target)
+	if(!target || !total_volume)
 		return
 
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 
@@ -230,8 +242,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
-		chem_temp = C.bodytemperature
-		handle_reactions()
+		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -379,8 +390,8 @@
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
+						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 					var/list/seen = viewers(4, get_turf(my_atom))
@@ -430,32 +441,8 @@
 			reagent_list -= R
 			update_total()
 			if(my_atom)
-				my_atom.on_reagent_change()
-				check_ignoreslow(my_atom)
-				check_gofast(my_atom)
-				check_goreallyfast(my_atom)
+				my_atom.on_reagent_change(DEL_REAGENT)
 	return 1
-
-/datum/reagents/proc/check_ignoreslow(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("morphine"))
-			return 1
-		else
-			M.status_flags &= ~IGNORESLOWDOWN
-
-/datum/reagents/proc/check_gofast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOFAST
-
-/datum/reagents/proc/check_goreallyfast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("methamphetamine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -528,7 +515,7 @@
 			R.volume += amount
 			update_total()
 			if(my_atom)
-				my_atom.on_reagent_change()
+				my_atom.on_reagent_change(ADD_REAGENT)
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
@@ -547,7 +534,7 @@
 
 		update_total()
 		if(my_atom)
-			my_atom.on_reagent_change()
+			my_atom.on_reagent_change(ADD_REAGENT)
 		if(!no_react)
 			handle_reactions()
 		if(isliving(my_atom))
@@ -583,13 +570,13 @@
 		if (R.id == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = Clamp(amount, 0, R.volume)
+			amount = CLAMP(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			if(my_atom)
-				my_atom.on_reagent_change()
+				my_atom.on_reagent_change(REM_REAGENT)
 			return TRUE
 
 	return FALSE
@@ -734,6 +721,15 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
+
+/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	var/temp_delta = (temperature - chem_temp) * coeff
+	if(temp_delta > 0)
+		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
+	else
+		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
+	chem_temp = round(chem_temp)
+	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////
 

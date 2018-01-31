@@ -84,3 +84,6 @@
 #define SUPERMATTER_DANGER 4		// Integrity < 50%
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
+
+//R&D Snowflakes
+#define RD_CONSOLE_LOCKED_SCREEN 0.2

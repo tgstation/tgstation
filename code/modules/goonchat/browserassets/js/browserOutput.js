@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -65,6 +65,10 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
+	
+	'defaultMusicVolume': 25,
+
+	'messageCombining': true,
 
 };
 
@@ -292,26 +296,59 @@ function output(message, flag) {
 		opts.messageCount--; //I guess the count should only ever equal the limit
 	}
 
-	//Actually append the message
-	var entry = document.createElement('div');
-	entry.className = 'entry';
-
-	if (filteredOut) {
-		entry.className += ' hidden';
-		entry.setAttribute('data-filter', filteredOut);
+	var handled = false;
+	var trimmed_message = message.trim()
+	var lastmessages = $messages.children('div.entry:last-child');
+	if (opts.messageCombining && lastmessages.length && $last_message)
+	{
+		if($last_message == trimmed_message)
+		{
+			if(lastmessages.children('span.r').length)
+			{
+				var current_value = parseInt(lastmessages.children('span.r').text())
+				lastmessages.children('span.r').text(current_value+1)
+			}
+			else
+			{
+				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
+			}
+			var insertedBadge = $(lastmessages).find('.r');
+			insertedBadge.animate({
+				"font-size": "0.9em"
+			}, 100, function() {
+				insertedBadge.animate({
+					"font-size": "0.7em"
+				}, 100);
+			});
+			opts.messageCount--;
+			handled = true;
+		}
 	}
 
-	entry.innerHTML = message.trim();
-	$messages[0].appendChild(entry);
-	$(entry).find("img.icon").error(iconError);
-	//Actually do the snap
+	if(!handled)
+	{
+		//Actually append the message
+		var entry = document.createElement('div');
+		entry.className = 'entry';
+
+		if (filteredOut) {
+			entry.className += ' hidden';
+			entry.setAttribute('data-filter', filteredOut);
+		}
+
+		$last_message = trimmed_message;
+		entry.innerHTML = trimmed_message;
+		$messages[0].appendChild(entry);
+		$(entry).find("img.icon").error(iconError);
+		//Actually do the snap
+		//Stuff we can do after the message shows can go here, in the interests of responsiveness
+		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
+			highlightTerms(entry);
+		}
+	}
+
 	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
-	}
-
-	//Stuff we can do after the message shows can go here, in the interests of responsiveness
-	if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-		highlightTerms(entry);
 	}
 }
 
@@ -562,15 +599,21 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
+		'slineHeight': getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
+		'smessagecombining': getCookie('messagecombining'),
 	};
 
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	}
+	if (savedConfig.slineHeight) {
+		$("body").css('line-height', savedConfig.slineHeight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -605,6 +648,18 @@ $(function() {
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
 	}
+	else{
+		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
+	}
+	
+	if (savedConfig.smessagecombining) {
+		if (savedConfig.smessagecombining == 'false') {
+			opts.messageCombining = false;
+		} else {
+			opts.messageCombining = true;
+		}
+	}
+
 
 	(function() {
 		var dataCookie = getCookie('connData');
@@ -801,6 +856,28 @@ $(function() {
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
 
+	$('#decreaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar -= 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+	});
+
+	$('#increaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar += 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+	});
+
 	$('#togglePing').click(function(e) {
 		if (opts.pingDisabled) {
 			$('#ping').slideDown('fast');
@@ -916,6 +993,11 @@ $(function() {
 			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
 			opts.volumeUpdating = true;
 		}
+	});
+
+	$('#toggleCombine').click(function(e) {
+		opts.messageCombining = !opts.messageCombining;
+		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
 	});
 
 	$('img.icon').error(iconError);

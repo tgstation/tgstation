@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -24,7 +24,6 @@
 	port_direction = 8;
 	preferred_direction = 1;
 	timid = 1;
-	roundstart_move = "whiteship_away";
 	width = 16
 	},
 /turf/open/floor/plating,
@@ -130,7 +129,9 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -138,7 +139,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ap" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aq" = (
@@ -580,9 +583,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"aY" = (
-/turf/open/space,
-/area/space)
 "aZ" = (
 /obj/structure/table,
 /obj/item/phone{
@@ -596,7 +596,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ba" = (
-/obj/machinery/computer/shuttle/white_ship,
+/obj/machinery/computer/shuttle/white_ship{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -631,8 +633,8 @@ aa
 aa
 aa
 aa
-aY
-aY
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -650,7 +652,7 @@ ab
 ab
 aa
 aa
-aY
+aa
 "}
 (3,1,1) = {"
 ab

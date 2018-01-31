@@ -274,7 +274,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/findname(msg)
 	if(!istext(msg))
 		msg = "[msg]"
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(M.real_name == msg)
 			return M
 	return 0
@@ -284,11 +285,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	firstname.Find(real_name)
 	return firstname.match
 
-/mob/proc/abiotic(full_body = 0)
-	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & NODROP_1))
-			return 1
-	return 0
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
@@ -327,8 +323,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
-		return	B.eye_blind
-	return 0
+		return B.eye_blind
+	return FALSE
 
 /mob/proc/hallucinating()
 	return FALSE
@@ -362,10 +358,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.cult)
 					return 2
 			if("nuclear")
-				if(M.mind in SSticker.mode.syndicates)
+				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 					return 2
 			if("changeling")
-				if(M.mind in SSticker.mode.changelings)
+				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))
 					return 2
 			if("wizard")
 				if(iswizard(M))
@@ -376,9 +372,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("monkey")
 				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
 					return 2
-			if("abductor")
-				if(M.mind in SSticker.mode.abductors)
-					return 2
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
 		return TRUE
@@ -387,8 +380,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE) //Easy notification of ghosts.
-	if(SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE) //Easy notification of ghosts.
+	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.client)
@@ -452,6 +445,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	else if(M.mind)
+		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+		if(A)
+			poll_message = "[poll_message] Status:[A.name]."
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 

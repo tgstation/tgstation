@@ -12,7 +12,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(!job_is_xp_locked(src.title))
 		return 0
-	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights(R_ADMIN, FALSE, C.mob))
+	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(C,R_ADMIN))
 		return 0
 	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
@@ -73,10 +73,18 @@ GLOBAL_PROTECT(exp_to_update)
 		else
 			exp_data[category] = 0
 	for(var/category in GLOB.exp_specialmap)
-		if(play_records[category])
-			exp_data[category] = text2num(play_records[category])
+		if(category == EXP_TYPE_SPECIAL || category == EXP_TYPE_ANTAG)
+			if(GLOB.exp_specialmap[category])
+				for(var/innercat in GLOB.exp_specialmap[category])
+					if(play_records[innercat])
+						exp_data[innercat] = text2num(play_records[innercat])
+					else
+						exp_data[innercat] = 0
 		else
-			exp_data[category] = 0
+			if(play_records[category])
+				exp_data[category] = text2num(play_records[category])
+			else
+				exp_data[category] = 0
 	if(prefs.db_flags & DB_FLAG_EXEMPT)
 		return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
 
@@ -87,7 +95,7 @@ GLOBAL_PROTECT(exp_to_update)
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
 			else
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] </LI>"
-	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights(R_ADMIN, 0, mob))
+	if(CONFIG_GET(flag/use_exp_restrictions_admin_bypass) && check_rights_for(src,R_ADMIN))
 		return_text += "<LI>Admin (all jobs auto-unlocked)</LI>"
 	return_text += "</UL>"
 	var/list/jobs_locked = list()
@@ -132,7 +140,7 @@ GLOBAL_PROTECT(exp_to_update)
 	for(var/client/L in GLOB.clients)
 		if(L.is_afk())
 			continue
-		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
+		L.update_exp_list(mins,ann)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
@@ -220,7 +228,7 @@ GLOBAL_PROTECT(exp_to_update)
 							play_records[role] += minutes
 							if(announce_changes)
 								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
-				if(mob.mind.special_role && !mob.mind.var_edited)
+				if(mob.mind.special_role && !(mob.mind.datum_flags & DF_VAR_EDITED))
 					var/trackedrole = mob.mind.special_role
 					play_records[trackedrole] += minutes
 					if(announce_changes)

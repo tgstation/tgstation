@@ -108,19 +108,18 @@
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	owner.say(uppertext(message), spans = spans, sanitize = FALSE)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
-	var/cooldown = voice_of_god(message, owner, spans, base_multiplier)
+	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
 
 //////////////////////////////////////
 ///////////VOICE OF GOD///////////////
 //////////////////////////////////////
 
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
 	var/cooldown = 0
 
 	if(!user || !user.can_speak() || user.stat)
@@ -135,10 +134,14 @@
 		else
 			span_list = list()
 
+	user.say(message, spans = span_list, sanitize = FALSE)
+
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(L.can_hear() && !L.null_rod_check() && L != user && L.stat != DEAD)
+		if(L.can_hear() && !L.null_rod_check() && L.stat != DEAD)
+			if(L == user && !include_speaker)
+				continue
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -208,12 +211,12 @@
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/vomit_words = regex("vomit|throw up")
-	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
+	var/static/regex/vomit_words = regex("vomit|throw up|sick")
+	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
 	var/static/regex/wakeup_words = regex("wake up|awaken")
-	var/static/regex/heal_words = regex("live|heal|survive|mend|heroes never die")
-	var/static/regex/hurt_words = regex("die|suffer|hurt|pain")
+	var/static/regex/heal_words = regex("live|heal|survive|mend|life|heroes never die")
+	var/static/regex/hurt_words = regex("die|suffer|hurt|pain|death")
 	var/static/regex/bleed_words = regex("bleed|there will be blood")
 	var/static/regex/burn_words = regex("burn|ignite")
 	var/static/regex/hot_words = regex("heat|hot|hell")
@@ -565,9 +568,10 @@
 	else
 		cooldown = COOLDOWN_NONE
 
-	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	if(message_admins)
+		message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	SSblackbox.add_details("voice_of_god", log_message)
+	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 	return cooldown
 

@@ -68,7 +68,6 @@
 /obj/item/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
-	origin_tech = "materials=5"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
@@ -76,7 +75,6 @@
 /obj/item/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
-	origin_tech = "materials=1"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
@@ -84,7 +82,6 @@
 /obj/item/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
-	origin_tech = "materials=1"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
@@ -135,7 +132,6 @@
 /obj/item/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
-	origin_tech = "plasmatech=2;materials=2"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
@@ -152,7 +148,6 @@
 /obj/item/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
-	origin_tech = "materials=3"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
@@ -160,7 +155,6 @@
 /obj/item/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
-	origin_tech = "materials=4"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
@@ -168,15 +162,13 @@
 /obj/item/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
-	origin_tech = "materials=6"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/ore/bananium
 	name = "bananium ore"
-	icon_state = "Clown ore"
-	origin_tech = "materials=4"
+	icon_state = "Bananium ore"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
@@ -184,7 +176,6 @@
 /obj/item/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
-	origin_tech = "materials=4"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
@@ -320,6 +311,25 @@
 	var/cmineral = null
 	var/cooldown = 0
 	var/value = 1
+	var/coinflip
+
+/obj/item/coin/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
+	if (!attack_self(user))
+		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
+		return SHAME
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
+	return MANUAL_SUICIDE
+
+/obj/item/coin/proc/manual_suicide(mob/living/user)
+	var/index = sideslist.Find(coinflip)
+	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
+	if (index==2)//tails
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promply falls over, dead!</span>")
+		user.adjustOxyLoss(200)
+		user.death(0)
+	else
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
 /obj/item/coin/Initialize()
 	. = ..()
@@ -373,7 +383,7 @@
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/coin/clown
+/obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
@@ -441,8 +451,8 @@
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
-			return //do not flip the coin
-		var/coinflip = pick(sideslist)
+			return FALSE//do not flip the coin
+		coinflip = pick(sideslist)
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
@@ -453,3 +463,4 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+	return TRUE//did the coin flip? useful for suicide_act
