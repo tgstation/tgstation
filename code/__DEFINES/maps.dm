@@ -36,7 +36,6 @@ Last space-z level = empty
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_STATION_PRIMARY 2
 #define ZLEVEL_EMPTY_SPACE 12
 
 #define SPACERUIN_MAP_EDGE_PAD 15

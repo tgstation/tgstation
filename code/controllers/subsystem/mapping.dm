@@ -23,6 +23,7 @@ SUBSYSTEM_DEF(mapping)
 	var/loading_ruins = FALSE
 
 	// Z-manager stuff
+	var/station_start = 2  // should only be used for maploading-related tasks
 	var/list/z_list
 	var/datum/space_level/transit
 
@@ -125,7 +126,7 @@ SUBSYSTEM_DEF(mapping)
 	var/start_time = REALTIMEOFDAY
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
+	TryLoadZ(config.GetFullMapPath(), FailedZs, station_start)
 	InitializeDefaultZLevels()
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 	if(SSdbcore.Connect())

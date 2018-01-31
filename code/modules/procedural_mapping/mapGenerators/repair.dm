@@ -24,7 +24,7 @@
 		return			//This is only for reloading station blocks!
 	GLOB.reloading_map = TRUE
 	var/static/dmm_suite/reloader = new
-	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION_PRIMARY, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
+	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = SSmapping.station_start, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
 
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
@@ -93,7 +93,7 @@
 	y_low = min(start.y, end.y)
 	x_high = max(start.x, end.x)
 	y_high = max(start.y, end.y)
-	z = ZLEVEL_STATION_PRIMARY
+	z = SSmapping.station_start
 
 GLOBAL_VAR_INIT(reloading_map, FALSE)
 
