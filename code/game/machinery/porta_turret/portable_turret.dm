@@ -592,6 +592,7 @@
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
+
 /obj/machinery/porta_turret/syndicate/setup()
 	return
 

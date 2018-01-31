@@ -1,0 +1,45 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
+"c" = (/obj/structure/lattice,/turf/open/space/basic,/area/space)
+"d" = (/obj/structure/lattice,/turf/open/space/basic,/area/ruin/space/has_grav/powered/scp_294)
+"e" = (/obj/machinery/porta_turret/syndicate/energy/heavy{mode = 1},/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
+"f" = (/turf/closed/wall,/area/ruin/space/has_grav/powered/scp_294)
+"g" = (/turf/closed/wall/rust,/area/ruin/space/has_grav/powered/scp_294)
+"h" = (/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"i" = (/obj/item/wirerod,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"j" = (/turf/open/floor/plating/airless/astplate,/area/ruin/space/has_grav/powered/scp_294)
+"k" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"l" = (/obj/machinery/light{dir = 4; flickering = 1; idle_power_usage = 0; use_power = 0},/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"m" = (/obj/machinery/chem_dispenser/scp_294,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"n" = (/obj/structure/trap/damage,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"o" = (/obj/structure/girder,/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
+"p" = (/obj/effect/decal/remains/robot,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"q" = (/obj/structure/trap/fire,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"r" = (/obj/structure/trap/stun,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"s" = (/obj/structure/trap/stun,/obj/machinery/light{flickering = 1; idle_power_usage = 0; use_power = 0},/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"t" = (/obj/item/wrench,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
+"u" = (/obj/structure/girder/reinforced,/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
+"v" = (/obj/machinery/porta_turret/syndicate/energy/heavy{mode = 1},/turf/closed/wall/rust,/area/ruin/space/has_grav/powered/scp_294)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaabbaaaaadbbeaaaaa
+aaabbbbbbbbbbbbaaaaa
+aabbbfffffgfffbbaaaa
+aaebbghhhhhhhfbbbbaa
+abbbbgijhhkhlfbbbbaa
+abbbbfhhhmhjnobbbbaa
+abbbbfphjhhhqobbbcaa
+aaabbfjhhhhhhfbbcaaa
+aaabbfrsthhhkfbbaaaa
+aaabbuufffgffvbcaaaa
+aabbbbbbbbbbbbbccaaa
+aaabbdabbaddaabbaaaa
+aaaaaaaeaaadaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}
