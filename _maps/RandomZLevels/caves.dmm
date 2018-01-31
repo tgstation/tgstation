@@ -373,9 +373,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
-"bd" = (
-/turf/closed/wall/mineral/cult,
-/area/awaymission/caves/BMP_asteroid/level_four)
 "be" = (
 /mob/living/simple_animal/hostile/spawner/mining/goliath,
 /turf/open/floor/plating/asteroid/basalt{
@@ -925,16 +922,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
-"cI" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_two)
-"cJ" = (
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_two)
 "cK" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HOLY SHIT NIGGA WHAT ARE YOU DOING'.";
@@ -1330,12 +1317,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
-"dV" = (
-/obj/machinery/door/airlock{
-	name = "Dorm"
-	},
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
 "dW" = (
 /turf/closed/wall,
 /area/awaymission/caves/BMP_asteroid)
@@ -1956,12 +1937,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
-"fV" = (
-/turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid)
 "fW" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
@@ -1991,11 +1966,6 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel,
-/area/awaymission/caves/BMP_asteroid)
-"fZ" = (
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14"
-	},
 /area/awaymission/caves/BMP_asteroid)
 "ga" = (
 /obj/structure/ladder/unbreakable{
@@ -7642,7 +7612,7 @@ dE
 dI
 dM
 dT
-dV
+dI
 eb
 em
 du
@@ -14601,7 +14571,7 @@ bV
 fJ
 fQ
 fQ
-fV
+fQ
 fQ
 fJ
 bV
@@ -16144,7 +16114,7 @@ bM
 bM
 bM
 fW
-fZ
+fy
 ev
 gf
 gm
@@ -16401,10 +16371,10 @@ bM
 bM
 bM
 bM
-fZ
+fy
 gc
 gg
-fZ
+fy
 ev
 gm
 dW
@@ -16659,7 +16629,7 @@ bM
 bM
 bM
 bM
-fZ
+fy
 gh
 bM
 go
@@ -17172,11 +17142,11 @@ bM
 bM
 bM
 bM
-fZ
-fZ
+fy
+fy
 gi
-fZ
-fZ
+fy
+fy
 gq
 gy
 fH
@@ -17430,9 +17400,9 @@ bM
 bM
 bM
 bM
-fZ
+fy
 dW
-fZ
+fy
 gq
 gu
 gq
@@ -17687,7 +17657,7 @@ bM
 bM
 bM
 bM
-fZ
+fy
 gj
 ev
 gr
@@ -17944,7 +17914,7 @@ bM
 bM
 bM
 bM
-fZ
+fy
 fW
 ev
 gq
@@ -18467,7 +18437,7 @@ bL
 bL
 bV
 bV
-fZ
+fy
 gF
 gH
 ej
@@ -18725,9 +18695,9 @@ bV
 bV
 bV
 bV
-fZ
+fy
 gI
-fZ
+fy
 gD
 eu
 eu
@@ -18982,9 +18952,9 @@ bV
 bV
 bV
 gD
-fZ
-fZ
-fZ
+fy
+fy
+fy
 bV
 bV
 bV
@@ -19238,11 +19208,11 @@ bL
 bV
 fW
 gB
-fZ
+fy
 gB
 gJ
-fZ
-fZ
+fy
+fy
 bM
 eu
 bV
@@ -19499,7 +19469,7 @@ gE
 gG
 gJ
 gB
-fZ
+fy
 bM
 bV
 eu
@@ -54288,7 +54258,7 @@ ao
 ao
 ao
 ai
-bd
+ax
 ad
 ad
 ad
@@ -54811,7 +54781,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ai
 ao
@@ -55056,7 +55026,7 @@ ax
 ai
 ai
 ai
-bd
+ax
 ad
 ad
 ad
@@ -55324,7 +55294,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ai
 ai
@@ -56094,7 +56064,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ai
 ai
@@ -56200,12 +56170,12 @@ bJ
 bJ
 bJ
 bJ
-cI
-cI
-cI
-cI
-cI
-cI
+bT
+bT
+bT
+bT
+bT
+bT
 bJ
 bJ
 bJ
@@ -56351,7 +56321,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ao
 ai
@@ -56609,7 +56579,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 am
 ai
@@ -56991,7 +56961,7 @@ bJ
 cq
 bO
 bO
-cI
+bT
 bO
 bO
 bO
@@ -57125,10 +57095,10 @@ aR
 ad
 ad
 ad
-bd
-bd
+ax
+ax
 ao
-bd
+ax
 ad
 ad
 ai
@@ -57248,7 +57218,7 @@ bJ
 bJ
 bO
 bO
-cI
+bT
 bO
 bO
 bO
@@ -57374,7 +57344,7 @@ ad
 ad
 ai
 ai
-bd
+ax
 ao
 ao
 ao
@@ -57505,7 +57475,7 @@ bJ
 bJ
 bO
 bO
-cI
+bT
 bO
 bJ
 bJ
@@ -57649,7 +57619,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ad
 ad
@@ -57762,7 +57732,7 @@ bJ
 bJ
 bO
 bO
-cI
+bT
 bO
 bJ
 cm
@@ -57884,8 +57854,8 @@ ax
 ax
 ad
 ad
-bd
-bd
+ax
+ax
 aR
 ao
 ao
@@ -57896,7 +57866,7 @@ ao
 ao
 ao
 ao
-bd
+ax
 ai
 ad
 ad
@@ -58019,7 +57989,7 @@ bO
 bO
 bO
 bO
-cI
+bT
 bO
 bJ
 cm
@@ -58162,7 +58132,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ai
 ai
@@ -58418,7 +58388,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ao
 am
@@ -58675,7 +58645,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ao
 ai
@@ -58912,8 +58882,8 @@ ax
 ad
 ad
 ai
-bd
-bd
+ax
+ax
 aR
 aR
 ao
@@ -58924,14 +58894,14 @@ ao
 ao
 ao
 ao
-bd
+ax
 ai
 ai
 ad
 ad
 ad
 ad
-bd
+ax
 aw
 aB
 ai
@@ -59188,7 +59158,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 am
 ai
@@ -59688,11 +59658,11 @@ ad
 ad
 ad
 ai
-bd
+ax
 ao
 ao
 ao
-bd
+ax
 ai
 ai
 ai
@@ -59702,7 +59672,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 ao
 ai
 ai
@@ -60214,8 +60184,8 @@ ad
 ad
 ad
 ad
-bd
-bd
+ax
+ax
 ao
 ao
 am
@@ -60469,7 +60439,7 @@ ad
 ad
 ad
 ad
-bd
+ax
 al
 ai
 ao
@@ -60718,7 +60688,7 @@ ad
 ai
 ao
 ai
-bd
+ax
 ad
 ad
 ad
@@ -61234,11 +61204,11 @@ ai
 aq
 ad
 al
-bd
-bd
+ax
+ax
 ai
 ad
-bd
+ax
 ai
 ao
 ai

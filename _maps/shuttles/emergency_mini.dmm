@@ -205,9 +205,6 @@
 /obj/item/extinguisher,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"G" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "H" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
