@@ -5,6 +5,7 @@
     "shuttles": {
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_sb",
-        "emergency": "emergency_sb"
+        "emergency": "emergency_sb",
+        "whiteship": "whiteship_meta"
     }
 }
