@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Added a missing distress signal to the space ambush ruin."
