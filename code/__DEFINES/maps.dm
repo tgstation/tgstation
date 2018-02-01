@@ -51,8 +51,13 @@ Last space-z level = empty
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+
+// numbers - offset values
+#define ZTRAIT_UP "Up"
+#define ZTRAIT_DOWN "Down"
 
 // trait definitions
 #define DL_NAME "name"
