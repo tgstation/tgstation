@@ -166,12 +166,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "O" = (
-/mob/living/simple_animal/hostile/statue{
-	faction = list("syndicate")
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"P" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
@@ -256,7 +250,7 @@ b
 b
 b
 b
-P
+O
 b
 a
 a
@@ -451,7 +445,7 @@ h
 l
 n
 n
-O
+h
 k
 f
 b

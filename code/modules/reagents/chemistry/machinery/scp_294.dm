@@ -18,10 +18,6 @@
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
 	)
-	var/static/list/prohibited_reagents = list("adminordrazine", "nanites", "xenomicrobes", "fungalspores", "replicating_foam",
-	"networked_fibers", "shifting_fragments", "blazing_oil", "regenerative_materia",
-	"zombifying_pods", "energized_jelly", "explosive_lattice", "cryogenic_poison",
-	"electromagnetic_web",  "synchronous_mesh", "reactive_spines", "pressurized_slime")
 
 /obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -46,7 +42,9 @@
 			var/input_reagent = replacetext(lowertext(input("Enter the name of any liquid", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
 			if(shortcuts[input_reagent])
 				input_reagent = shortcuts[input_reagent]
-			if((input_reagent in prohibited_reagents) || !GLOB.chemical_reagents_list[input_reagent])
+			else
+				input_reagent = find_reagent(input_reagent)
+			if(!input_reagent || !GLOB.chemical_reagents_list[input_reagent])
 				say("OUT OF RANGE")
 				return
 			else
@@ -58,3 +56,15 @@
 				return
 			beaker = new /obj/item/reagent_containers/food/drinks/sillycup(src)
 			visible_message("<span class='notice'>[src] dispenses a small, paper cup.</span>")
+
+/obj/machinery/chem_dispenser/scp_294/proc/find_reagent(input)
+	. = FALSE
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
+		if(!R.can_synth)
+			return input
+	else
+		for(var/X in GLOB.chemical_reagents_list)
+			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+			if(input == replacetext(lowertext(R.name), " ", ""))
+				return X
