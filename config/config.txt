@@ -412,3 +412,10 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 15x15
+
+## Comment this out to disable libvg.
+#USE_LIBVG
+
+##Which windows codepage should Goonchat/libvg use?
+## Default: Windows-1252
+GOONCHAT_ENCODING 1252

@@ -17,6 +17,7 @@
       "data"
     ],
     "dlls": [
-      "libmariadb.dll"
+      "libmariadb.dll",
+      "libvg.dll"
     ]
   }

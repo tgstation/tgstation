@@ -23,7 +23,10 @@
 			to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 			return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(CONFIG_GET(flag/use_libvg))
+		msg = utf8_sanitize(msg, src, MAX_MESSAGE_LEN)
+	else
+		msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
 	if(!msg)
@@ -275,7 +278,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	
+
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
 	for(var/client/C in GLOB.clients)

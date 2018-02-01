@@ -385,4 +385,9 @@
 	min_val = 0
 
 /datum/config_entry/string/default_view
-	config_entry_value = "15x15"
+  config_entry_value = "15x15"
+
+/datum/config_entry/string/goonchat_encoding
+	value = "1252"
+
+/datum/config_entry/flag/use_libvg
