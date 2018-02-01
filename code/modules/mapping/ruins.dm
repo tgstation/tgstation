@@ -1,4 +1,6 @@
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere.
+
+#define PLACE_DEFAULT "random"
 #define PLACE_SAME_Z "same"
 #define PLACE_SPACE_RUIN "space"
 #define PLACE_LAVA_RUIN "lavaland"
@@ -92,7 +94,7 @@
 
 		//That's done remove from priority even if it failed
 		if(forced)
-			//Forced ruins with multiple variants
+			//TODO : handle forced ruins with multiple variants
 			forced_ruins -= current_pick
 			forced = FALSE
 		
@@ -111,7 +113,6 @@
 					if(istype(R,current_pick.never_spawn_with))
 						ruins_availible -= R
 			if(current_pick.always_spawn_with)
-				//Problem here is cross lava/space ruins
 				for(var/v in current_pick.always_spawn_with)
 					for(var/datum/map_template/ruin/linked in SSmapping.ruins_templates) //Because we might want to add space templates as linked of lava templates.
 						if(istype(linked,v))
@@ -122,6 +123,8 @@
 									forced_ruins[linked] = pick(SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS))
 								if(PLACE_SPACE_RUIN)
 									forced_ruins[linked] = pick(SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS))
+								if(PLACE_DEFAULT)
+									forced_ruins[linked] = -1
 		forced_z = 0
 
 		//Update the availible list
