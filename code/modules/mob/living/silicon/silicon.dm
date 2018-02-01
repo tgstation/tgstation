@@ -329,6 +329,14 @@
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
+/mob/living/silicon/proc/add_sec_hud()
+	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
+	secsensor.add_hud_to(src)
+
+/mob/living/silicon/proc/add_med_hud()
+	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
+	medsensor.add_hud_to(src)
+
 /mob/living/silicon/proc/remove_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
