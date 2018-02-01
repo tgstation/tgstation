@@ -31,6 +31,10 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "tiny"
 
+/obj/effect/decal/cleanable/glass/Initialize()
+	. = ..()
+	dir = pick(GLOB.cardinals)
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
