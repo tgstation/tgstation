@@ -79,9 +79,10 @@
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/pineapplepizza
-	name = "Pineapple pizza"
+	name = "Hawaiian pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/pineappleslice = 3,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
