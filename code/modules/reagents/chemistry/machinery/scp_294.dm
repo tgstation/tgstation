@@ -18,7 +18,7 @@
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
 	)
-	var/static/list/prohibited_reagents = list("adminordrazine", "nanites")
+	var/static/list/prohibited_reagents = list("adminordrazine", "nanites", "xenomicrobes", "fungalspores")
 
 /obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
