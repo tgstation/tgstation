@@ -48,7 +48,9 @@
 				say("OUT OF RANGE")
 				return
 			else
-				if(!beaker.reagents && !QDELETED(beaker))
+				if(!beaker)
+					return
+				else if(!beaker.reagents && !QDELETED(beaker))
 					beaker.create_reagents(beaker.volume)
 				beaker.reagents.add_reagent(input_reagent, 10)
 		if("makecup")
