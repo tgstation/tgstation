@@ -61,10 +61,10 @@
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
 		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
-		if(!R.can_synth)
+		if(R.can_synth)
 			return input
 	else
 		for(var/X in GLOB.chemical_reagents_list)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-			if(input == replacetext(lowertext(R.name), " ", ""))
+			if(R.can_synth && input == replacetext(lowertext(R.name), " ", ""))
 				return X
