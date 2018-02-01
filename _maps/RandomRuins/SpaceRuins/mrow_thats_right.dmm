@@ -46,7 +46,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "al" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -56,14 +55,12 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "am" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "an" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -71,7 +68,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ao" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -79,7 +75,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ap" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -117,7 +112,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -126,7 +120,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -138,7 +131,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -165,7 +157,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -217,7 +208,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aM" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -231,7 +221,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "aO" = (
 /obj/machinery/door/firedoor/border_only{
-	icon_state = "door_open";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -273,7 +262,6 @@
 "aU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -281,13 +269,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "aW" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 5
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -300,7 +286,6 @@
 	name = "cat meat"
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -357,14 +342,12 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bg" = (
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 8
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -374,10 +357,7 @@
 	id = "meow";
 	name = "kitty protection door"
 	},
-/obj/machinery/door/window{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
+/obj/machinery/door/window/westleft{
 	name = "kitty door";
 	req_access_txt = "200"
 	},
@@ -401,21 +381,18 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/cat_man)
 "bn" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -427,7 +404,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bp" = (
 /obj/structure/chair/wood/wings{
-	icon_state = "wooden_chair_wings";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -440,7 +416,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "br" = (
 /obj/structure/table/reinforced,
-/obj/item/circular_saw,
 /obj/item/scalpel{
 	pixel_y = 12
 	},
@@ -449,7 +424,6 @@
 "bs" = (
 /mob/living/simple_animal/hostile/cat_butcherer,
 /turf/open/floor/plasteel/white/side{
-	icon_state = "whitehall";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -465,7 +439,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white/side{
-	icon_state = "whitehall";
 	dir = 8
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -475,7 +448,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -505,19 +477,16 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bA" = (
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bB" = (
 /turf/open/floor/plasteel/white/side{
-	icon_state = "whitehall";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bC" = (
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -541,7 +510,6 @@
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 6
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -560,7 +528,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -568,28 +535,24 @@
 "bJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bK" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bL" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bM" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/cat_man)
@@ -603,8 +566,7 @@
 	id = "meow";
 	name = "kitty protection door"
 	},
-/obj/machinery/door/window{
-	dir = 1;
+/obj/machinery/door/window/northleft{
 	name = "kitty door";
 	req_access_txt = "200"
 	},
@@ -623,7 +585,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -631,7 +592,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bS" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -644,7 +604,6 @@
 "bU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -676,7 +635,6 @@
 	name = "cat meat"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -689,14 +647,12 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bZ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ca" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -708,7 +664,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cc" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -725,7 +680,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ce" = (
 /obj/machinery/atmospherics/pipe/simple/dark/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -753,14 +707,12 @@
 "ci" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/dark/hidden{
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cj" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/table,
@@ -771,7 +723,6 @@
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -815,7 +766,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
 	frequency = 1441;
-	id_tag = "o2_out";
+	id_tag = "o2_out_cat";
 	name = "freezer vent"
 	},
 /obj/structure/closet/crate/freezer{
