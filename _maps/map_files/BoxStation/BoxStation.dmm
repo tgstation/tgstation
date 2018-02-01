@@ -11329,6 +11329,11 @@
 	},
 /obj/item/reagent_containers/food/snacks/baguette,
 /obj/item/toy/dummy,
+/obj/item/card/id{
+	desc = "Something feels like this doesn't belong here...";
+	icon_state = "classicgold";
+	name = "commanding officer's spare ID"
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -39160,9 +39165,6 @@
 /obj/machinery/vending/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"bSZ" = (
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "bTa" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -54046,7 +54048,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"gWd" = (
+"hcg" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -54056,7 +54058,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"nxv" = (
+"mkw" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/construction)
+"tmL" = (
 /obj/machinery/power/apc{
 	name = "Construction Area APC";
 	areastring = "/area/construction";
@@ -54067,24 +54075,12 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"rKP" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/construction)
-"xhV" = (
+"vgZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/construction)
-"Pvz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -54591,6 +54587,20 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"SIf" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
+"WDB" = (
+/obj/item/card/id{
+	desc = "Something feels like this doesn't belong here...";
+	icon_state = "classicgold";
+	name = "commanding officer's spare ID"
+	},
+/turf/open/floor/plating,
+/area/ai_monitored/turret_protected/aisat/hallway)
 
 (1,1,1) = {"
 aaa
@@ -81221,8 +81231,8 @@ bCs
 cCe
 bNJ
 apV
-xhV
-gWd
+vgZ
+hcg
 bNI
 bUz
 bVJ
@@ -81479,7 +81489,7 @@ bNJ
 bNJ
 bKx
 cjL
-Pvz
+mkw
 bNI
 bUz
 bVJ
@@ -81736,7 +81746,7 @@ bNL
 bNJ
 apV
 cjL
-nxv
+tmL
 bNI
 bUz
 bVJ
@@ -81992,7 +82002,7 @@ bCs
 cCd
 bQc
 bKA
-rKP
+SIf
 bSv
 bNI
 bUB
@@ -91820,8 +91830,8 @@ cvX
 cvX
 cvX
 cvX
-cwq
-cwq
+cvk
+WDB
 cva
 cva
 cva
@@ -94390,7 +94400,7 @@ cvX
 cvX
 cvX
 cvX
-cwq
+cvk
 cwq
 cva
 cva
