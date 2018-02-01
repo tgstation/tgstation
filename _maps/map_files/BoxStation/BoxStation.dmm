@@ -11319,25 +11319,6 @@
 	dir = 4
 	},
 /area/hallway/secondary/entry)
-"aCq" = (
-/obj/structure/table/wood,
-/obj/machinery/requests_console{
-	department = "Theatre";
-	departmentType = 0;
-	name = "theatre RC";
-	pixel_x = -32
-	},
-/obj/item/reagent_containers/food/snacks/baguette,
-/obj/item/toy/dummy,
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
 "aCr" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
@@ -54084,6 +54065,20 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"xUw" = (
+/obj/structure/table/wood,
+/obj/machinery/requests_console{
+	department = "Theatre";
+	departmentType = 0;
+	name = "theatre RC";
+	pixel_x = -32
+	},
+/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/toy/dummy,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/crew_quarters/theatre)
 "Qod" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -88890,7 +88885,7 @@ axT
 azl
 aAl
 arj
-aCq
+xUw
 aDR
 aFl
 aGD
