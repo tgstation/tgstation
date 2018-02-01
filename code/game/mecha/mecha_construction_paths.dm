@@ -13,8 +13,7 @@
 		return I.use_tool(holder, user, 0, volume=50)
 
 	else if(istype(I, /obj/item/stack))
-		if(!I.use_tool(holder, user, 0, volume=50, amount=5))
-			return FALSE
+		return I.use_tool(holder, user, 0, volume=50, amount=5)
 
 	return TRUE
 
@@ -29,8 +28,7 @@
 		return I.use_tool(holder, user, 0, volume=50)
 
 	else if(istype(I, /obj/item/stack))
-		if(!I.use_tool(holder, user, 0, volume=50, amount=5))
-			return FALSE
+		return I.use_tool(holder, user, 0, volume=50, amount=5)
 
 	return TRUE
 
