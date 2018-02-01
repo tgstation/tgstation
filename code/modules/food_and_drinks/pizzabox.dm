@@ -292,13 +292,14 @@
 /obj/item/pizzabox/infinite
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
-	var/list/pizza_types = list(/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
-	/obj/item/reagent_containers/food/snacks/pizza/mushroom = 1,
-	/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
-	/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
-	/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
-	/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
-	/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1)
+	var/list/pizza_types = list(
+		/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/mushroom = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
+		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
+		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
+		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
+		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
 
 /obj/item/pizzabox/infinite/Initialize()
