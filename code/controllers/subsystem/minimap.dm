@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(minimap)
 
 /datum/controller/subsystem/minimap/Initialize(timeofday)
 	z_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	var/hash = md5(SSmapping.config.GetFullMapPath())
+	var/hash = md5(file2text(SSmapping.config.GetFullMapPath()))
 	if(CONFIG_GET(flag/generate_minimaps))
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
