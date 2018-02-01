@@ -31673,14 +31673,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/security/checkpoint)
-"gAq" = (
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/closed/mineral/random/labormineral,
-/area/asteroid/nearstation)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -61991,7 +61983,7 @@ aad
 aad
 aad
 aad
-gAq
+aad
 aad
 aad
 aad
