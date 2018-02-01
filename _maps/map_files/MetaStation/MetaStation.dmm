@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -20518,9 +20518,6 @@
 	dir = 5
 	},
 /area/construction/mining/aux_base)
-"aRG" = (
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "aRH" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -42371,6 +42368,22 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"bLc" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/item/card/id{
+	desc = "Something feels like this doesn't belong here...";
+	icon_state = "classicgold";
+	name = "commanding officer's spare ID"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "bLd" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/jackboots,
@@ -53760,9 +53773,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/research)
-"ciL" = (
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ciM" = (
 /obj/effect/landmark/blobstart,
 /obj/structure/cable/yellow{
@@ -75966,6 +75976,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"dnH" = (
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "dnM" = (
 /obj/structure/chair{
 	dir = 8
@@ -76256,6 +76269,9 @@
 /area/maintenance/starboard/aft)
 "dwL" = (
 /turf/closed/wall/r_wall,
+/area/maintenance/starboard/aft)
+"dwN" = (
+/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dwQ" = (
 /obj/structure/chair/stool,
@@ -77129,6 +77145,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"kMY" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"ukv" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "EDa" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -77733,34 +77761,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"QuX" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
-"QuZ" = (
-/obj/structure/bodycontainer/crematorium{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/office)
-"RPO" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 
 (1,1,1) = {"
 aaa
@@ -91474,7 +91474,7 @@ arX
 dne
 dne
 dne
-aRG
+dnH
 aoc
 drQ
 dne
@@ -91483,14 +91483,14 @@ dne
 dst
 aDc
 dhE
-aRG
-aRG
+dnH
+dnH
 cWA
 auG
 dnd
 dhK
 dnk
-aRG
+dnH
 aSP
 dne
 dhM
@@ -94601,7 +94601,7 @@ bEt
 bGm
 bHO
 bvW
-RPO
+bLc
 aod
 aGN
 aqK
@@ -95327,7 +95327,7 @@ apt
 dnk
 doJ
 atu
-aRG
+dnH
 dnZ
 awQ
 ayk
@@ -96864,7 +96864,7 @@ aji
 dnd
 alE
 dnr
-aRG
+dnH
 alE
 dou
 dne
@@ -97635,7 +97635,7 @@ dho
 akq
 alH
 amW
-aRG
+dnH
 apw
 dod
 dne
@@ -97892,7 +97892,7 @@ ajl
 akr
 alI
 amX
-aRG
+dnH
 dnZ
 aqP
 dne
@@ -97992,7 +97992,7 @@ cLT
 cMC
 cNt
 cTf
-QuZ
+ukv
 cMI
 cPC
 djX
@@ -98149,8 +98149,8 @@ aio
 aks
 alJ
 amY
-aRG
-aRG
+dnH
+dnH
 aqQ
 dne
 atB
@@ -103118,9 +103118,9 @@ cyZ
 cAd
 ctA
 dbr
-QuX
+kMY
 dDC
-QuX
+kMY
 cFU
 cCe
 ctK
@@ -109267,7 +109267,7 @@ bZo
 bZo
 bZo
 bZo
-ciL
+dwN
 ckj
 dwL
 cgo
@@ -110583,8 +110583,8 @@ cIg
 dDF
 dvY
 cNj
-ciL
-ciL
+dwN
+dwN
 cPg
 dvY
 aaa
@@ -110840,8 +110840,8 @@ cIg
 dxQ
 dvY
 cNk
-ciL
-ciL
+dwN
+dwN
 cPh
 dvY
 aaa
@@ -115437,7 +115437,7 @@ alq
 alq
 dvY
 ckx
-ciL
+dwN
 dwQ
 cot
 cnb
@@ -115694,10 +115694,10 @@ apc
 chE
 dvY
 cky
-ciL
+dwN
 dwX
-ciL
-ciL
+dwN
+dwN
 cou
 csb
 dvY
@@ -115951,10 +115951,10 @@ avr
 chF
 dvY
 ckz
-ciL
+dwN
 dwY
-ciL
-ciL
+dwN
+dwN
 cgs
 csc
 dvY
@@ -116212,7 +116212,7 @@ dwQ
 cnb
 cou
 cpK
-ciL
+dwN
 csc
 dvY
 Qtj

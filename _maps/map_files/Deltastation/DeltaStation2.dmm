@@ -100627,8 +100627,7 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"nGH" = (
-/obj/effect/decal/cleanable/dirt,
+"vUu" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
 	},
@@ -100636,28 +100635,11 @@
 	dir = 8
 	},
 /area/medical/morgue)
-"peT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/medical/morgue)
-"zcg" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/medical/morgue)
-"CuM" = (
+"IOx" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
-"GID" = (
+"PcG" = (
 /obj/item/card/id{
 	desc = "Something feels like this doesn't belong here...";
 	icon_state = "classicgold";
@@ -100665,6 +100647,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"QkZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/medical/morgue)
 "QNf" = (
 /obj/machinery/autolathe,
 /obj/machinery/door/window/southleft{
@@ -101015,6 +101006,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"XvY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -131421,7 +131421,7 @@ alf
 avr
 awp
 axK
-GID
+PcG
 aAb
 aBk
 aCv
@@ -141803,10 +141803,10 @@ dzR
 dAU
 dCA
 dDM
-CuM
+IOx
 dGl
 dHH
-zcg
+vUu
 dCy
 dKZ
 dMy
@@ -142059,7 +142059,7 @@ dym
 dzS
 dAV
 dCB
-peT
+XvY
 dEV
 dGm
 dHH
@@ -142320,7 +142320,7 @@ dDN
 dEW
 dGl
 dHH
-nGH
+QkZ
 dCy
 dKX
 dMA
@@ -142573,7 +142573,7 @@ dyo
 dzU
 dAX
 dCB
-peT
+XvY
 dEW
 dGn
 dHI

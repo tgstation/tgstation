@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -36533,7 +36533,7 @@
 	},
 /turf/open/floor/engine,
 /area/maintenance/department/engine)
-"bLv" = (
+"bLw" = (
 /turf/open/floor/engine,
 /area/maintenance/department/engine)
 "bLx" = (
@@ -45782,6 +45782,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
+"ckO" = (
+/obj/structure/closet/emcloset,
+/obj/item/card/id{
+	desc = "Something feels like this doesn't belong here...";
+	icon_state = "classicgold";
+	name = "commanding officer's spare ID"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
 "ckP" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
@@ -49802,15 +49811,6 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
-"hMS" = (
-/obj/structure/closet/emcloset,
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/chapel/monastery)
 
 (1,1,1) = {"
 aaa
@@ -65423,7 +65423,7 @@ cvZ
 cwm
 ckj
 cwH
-hMS
+ckO
 cjm
 cfN
 aaa
@@ -71548,7 +71548,7 @@ bGK
 bHQ
 bJd
 bKi
-bLv
+bLw
 bMA
 bNH
 bOz
@@ -71805,7 +71805,7 @@ bGL
 bHQ
 bJe
 bKj
-bLv
+bLw
 bMB
 bNI
 bOz

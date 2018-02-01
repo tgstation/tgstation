@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -25895,9 +25895,6 @@
 	dir = 4
 	},
 /area/maintenance/port)
-"bbm" = (
-/turf/open/floor/plasteel/bar,
-/area/maintenance/port)
 "bbn" = (
 /obj/machinery/vending/autodrobe{
 	req_access_txt = "0"
@@ -26580,6 +26577,9 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port)
+"bcP" = (
 /turf/open/floor/plasteel/bar,
 /area/maintenance/port)
 "bcR" = (
@@ -34114,7 +34114,7 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"TPK" = (
+"Kvv" = (
 /obj/item/ore/silver,
 /obj/item/ore/iron,
 /obj/item/card/id{
@@ -66593,7 +66593,7 @@ aad
 aad
 aad
 abi
-TPK
+Kvv
 aad
 aad
 aad
@@ -69728,9 +69728,9 @@ aZz
 baq
 bbl
 bbY
-bbm
+bcP
 bdM
-bbm
+bcP
 sKE
 bfv
 bfS
@@ -69983,11 +69983,11 @@ sJI
 aYC
 aZA
 bar
-bbm
+bcP
 bbZ
-bbm
-bbm
-bbm
+bcP
+bcP
+bcP
 baj
 bfu
 bfu
