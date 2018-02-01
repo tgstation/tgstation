@@ -351,9 +351,9 @@
 	sensors_on = !sensors_on
 	if (!sensors_on)
 		to_chat(src, "Sensors deactivated.")
-		remove_huds()
+		remove_sensors()
 		return
-	add_huds()
+	add_sensors()
 	to_chat(src, "Sensors activated.")
 
 /mob/living/silicon/proc/GetPhoto()
