@@ -101,8 +101,8 @@
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)
-	calculate_scaling()
-	if(scaled_recital_time)
+	if(recent_marauders)
+		scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
 		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [scaled_recital_time / 10] seconds slower!</span>")
 		channel_time += scaled_recital_time
 	return TRUE
@@ -111,15 +111,8 @@
 	. = ..()
 	time_since_last_marauder = world.time
 	recent_marauders++
-	calculate_scaling()
+	addtimer(CALLBACK(src, .proc/recent_reset), MARAUDER_SCRIPTURE_SCALING_TIME)
 
-/datum/clockwork_scripture/create_object/construct/clockwork_marauder/proc/calculate_scaling()
-	var/WT = world.time
-	var/MT = time_since_last_marauder //Cast it for quicker reference
-	var/marauders_to_exclude = 0
-	if(world.time >= time_since_last_marauder + MARAUDER_SCRIPTURE_SCALING_THRESHOLD)
-		marauders_to_exclude = round(WT - MT) / MARAUDER_SCRIPTURE_SCALING_THRESHOLD //If at least 20 seconds have passed, lose one marauder for each 20 seconds
-		//i.e. world.time = 10000, last marauder = 9000, so we lose 5 marauders from the recent count since 10k - 9k = 1k, 1k / 200 = 5
-		time_since_last_marauder = world.time //So that it can't be spammed to make the marauder exclusion plummet; this emulates "ticking"
-	recent_marauders = max(0, recent_marauders - marauders_to_exclude)
-	scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
+/datum/clockwork_scripture/create_object/construct/clockwork_marauder/proc/recent_reset()
+	recent_marauders--
+		
