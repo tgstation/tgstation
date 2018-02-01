@@ -76,9 +76,9 @@
 			return
 	// "map_file": ["Lower.dmm", "Upper.dmm"]
 	else if (islist(map_file))
-		for (var/item in map_file)
-			if (!fexists("_maps/[map_path]/[item]"))
-				log_world("Map file ([map_path]/[item]) does not exist!")
+		for (var/file in map_file)
+			if (!fexists("_maps/[map_path]/[file]"))
+				log_world("Map file ([map_path]/[file]) does not exist!")
 				return
 	else
 		log_world("map_file missing from json!")
@@ -115,8 +115,12 @@
 	return TRUE
 #undef CHECK_EXISTS
 
-/datum/map_config/proc/GetFullMapPath(mp = map_path, mf = map_file)
-	return "_maps/[mp]/[mf]"
+/datum/map_config/proc/GetFullMapPaths()
+	if (istext(map_file))
+		return list("_maps/[map_path]/[map_file]")
+	. = list()
+	for (var/file in map_file)
+		. += "_maps/[map_path]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
