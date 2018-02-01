@@ -140,22 +140,13 @@
 	foodtype = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/pizza/pineapple
-	name = "pineapple pizza"
+	name = "pizza with pineapples"
 	desc = "The pizza equivalent of Einstein's riddle."
 	icon_state = "pineapplepizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapples" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY
-
-/obj/item/reagent_containers/food/snacks/pizza/pineapple/Initialize()
-	. = ..()
-	if(prob(50))
-		foodtype |= GROSS //either you love pineapple pizza, or you hate pineapple pizza.
-
-/obj/item/reagent_containers/food/snacks/pizza/pineapple/initialize_slice(obj/item/reagent_containers/food/snacks/pizzaslice/slice, reagents_per_slice)
-	..()
-	slice.foodtype = foodtype //in case we rolled the 50%
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	name = "pineapple pizza slice"
