@@ -16,6 +16,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
 	var/open = FALSE
+	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
 	var/boxtag = ""
 	var/list/boxes = list()
 
@@ -31,7 +32,7 @@
 /obj/item/pizzabox/Initialize()
 	. = ..()
 	update_icon()
-	
+
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -239,7 +240,7 @@
 		var/obj/item/pizzabox/P = V
 		var/fall_dir = pick(GLOB.alldirs)
 		step(P, fall_dir)
-		if(P.pizza && prob(50)) //rip pizza
+		if(P.pizza && P.can_open_on_fall && prob(50)) //rip pizza
 			P.open = TRUE
 			P.pizza.forceMove(get_turf(P))
 			fall_dir = pick(GLOB.alldirs)
@@ -286,3 +287,31 @@
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
+
+//An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
+/obj/item/pizzabox/anomalous
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
+	can_open_on_fall = FALSE
+	var/list/pizza_types = list(/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/mushroom = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
+	/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
+	/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
+	/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1)
+	var/static/list/pizza_preferences
+
+/obj/item/pizzabox/anomalous/Initialize()
+	. = ..()
+	if(!pizza_preferences)
+		pizza_preferences = list()
+
+/obj/item/pizzabox/anomalous/attack_self(mob/living/user)
+	QDEL_NULL(pizza)
+	if(!pizza_preferences[user.ckey])
+		pizza_preferences[user.ckey] = pickweight(pizza_types)
+		if(user.mind && user.mind.assigned_role == "Botanist")
+			pizza_preferences[user.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
+	var/obj/item/pizza_type = pizza_preferences[user.ckey]
+	pizza = new pizza_type (src)
+	. = ..()

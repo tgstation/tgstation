@@ -864,7 +864,7 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
-	
+
 /datum/supply_pack/science/bz
 	name = "BZ canister"
 	cost = 4000
@@ -990,7 +990,28 @@
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
 	crate_name = "pizza crate"
-	
+	var/static/anomalous_box_provided = FALSE
+
+/datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
+	. = ..()
+	if(!anomalous_box_provided)
+		for(var/obj/item/pizzabox/P in C)
+			if(prob(1)) //1% chance for each box, so 4% total chance per order
+				var/obj/item/pizzabox/anomalous/fourfiveeight = new(C)
+				fourfiveeight.boxtag = P.boxtag
+				qdel(P)
+				anomalous_box_provided = TRUE
+				message_admins("An anomalous pizza box was provided in a pizza crate!")
+				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				if(prob(50))
+					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+				break
+
+/datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
+	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
+	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
+	considered <b>\[REDACTED\]</b> and returned at your leisure.")
+
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
