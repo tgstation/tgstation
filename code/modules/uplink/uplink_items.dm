@@ -1363,10 +1363,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
-	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
+	desc = "Syndicate Bundles are specialized groups of items that arrive in a Syndicate dufflebag. \
 			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
 			you will receive."
-	item = /obj/item/storage/box/syndicate
+	item = /obj/item/storage/backpack/duffelbag/syndie
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
