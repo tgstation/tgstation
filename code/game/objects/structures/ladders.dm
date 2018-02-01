@@ -35,19 +35,20 @@
 /obj/structure/ladder/LateInitialize()
 	// By default, discover ladders above and below us vertically
 	var/turf/T = get_turf(src)
+	var/obj/structure/ladder/L
 
 	if (!down)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z - 1))
+		L = locate() in SSmapping.get_turf_below(T)
+		if (L)
 			down = L
 			L.up = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 	if (!up)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z + 1))
+		L = locate() in SSmapping.get_turf_above(T)
+		if (L)
 			up = L
 			L.down = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 
 	update_icon()
 
