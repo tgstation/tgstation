@@ -749,7 +749,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
-	if(!delay && tool_start_check(user, amount))
+	if(!delay && !tool_start_check(user, amount))
 		return
 
 	delay *= toolspeed
