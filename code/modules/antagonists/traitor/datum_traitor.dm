@@ -86,7 +86,7 @@
 
 /datum/antagonist/traitor/human/forge_traitor_objectives()
 	var/is_hijacker = FALSE
-	if (GLOB.joined_player_list.len > 30) // Less murderboning on lowpop thanks
+	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
 		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
