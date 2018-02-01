@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
 			qdel(O)
 
-		var/obj/effect/decal/cleanable/ash/a=new/obj/effect/decal/cleanable/ash(src)
+		new/obj/effect/decal/cleanable/ash(src)
 
 		sleep(30)
 
