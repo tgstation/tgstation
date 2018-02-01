@@ -15,10 +15,6 @@
 
 	var/list/datum/brain_trauma/traumas = list()
 
-/obj/item/organ/brain/changeling_brain
-	vital = FALSE
-	decoy_override = TRUE
-
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
 
