@@ -695,7 +695,7 @@
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M,icon_state="sendbeam",time=10)
-		if(istype(target, /obj/effect/decal/cleanable/blood)
+		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
 		..()
 
