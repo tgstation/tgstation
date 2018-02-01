@@ -5,12 +5,13 @@
 	name = "\improper All-In-One Grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "juicer1"
+	icon_state = "juicer0"
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
 	var/operating = FALSE
@@ -21,11 +22,13 @@
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
-	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
-	beaker.desc += " May contain blended dust. Don't breathe this in!"
+	//beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
+	//beaker.desc += " May contain blended dust. Don't breathe this in!"
+	//Since grinder can be built now, beaker shouldn't spawn to prevent free beaker exploit
 
 /obj/machinery/reagentgrinder/Destroy()
-	QDEL_NULL(beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
 	drop_all_items()
 	return ..()
 
@@ -48,10 +51,6 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (drop_location(), 3)
-	qdel(src)
-
 /obj/machinery/reagentgrinder/update_icon()
 	if(beaker)
 		icon_state = "juicer1"
@@ -59,8 +58,18 @@
 		icon_state = "juicer0"
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
+	//You can only screw open empty grinder
+	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
+
 	if(default_unfasten_wrench(user, I))
 		return
+
+	if(panel_open) //Can't insert objects when its screwed open
+		return TRUE
 
 	if (istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		if (!beaker)
@@ -122,6 +131,8 @@
 	interact(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+	if(panel_open)
+		return
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""

@@ -588,6 +588,12 @@
 	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster
 
+/obj/item/circuitboard/machine/reagentgrinder
+	name = "Machine Design (All-In-One Grinder)"
+	build_path = /obj/machinery/reagentgrinder
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1)
+
 /obj/item/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
 	build_path = /obj/machinery/rnd/circuit_imprinter
