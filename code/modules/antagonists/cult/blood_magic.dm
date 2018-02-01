@@ -695,13 +695,13 @@
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M,icon_state="sendbeam",time=10)
-		if(isturf(target))
+		if(istype(target, /obj/effect/decal/cleanable/blood)
 			blood_draw(target, user)
 		..()
 
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
 	var/temp = 0
-	var/turf/T = target
+	var/turf/T = get_turf(target)
 	if(T)
 		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
 			if(B.blood_state == "blood")
