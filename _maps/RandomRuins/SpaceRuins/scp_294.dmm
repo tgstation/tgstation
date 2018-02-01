@@ -116,42 +116,62 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "A" = (
-/obj/effect/gibspawner/humanbodypartless,
-/turf/open/floor/plating/airless,
+/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/powered/scp_294)
 "B" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"C" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"D" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"C" = (
+"E" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"D" = (
+"F" = (
 /mob/living/simple_animal/hostile/asteroid/goliath{
 	faction = list("mining","syndicate")
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"E" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"F" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav/powered/scp_294)
 "G" = (
-/obj/effect/gibspawner/humanbodypartless,
+/obj/effect/spawner/trap,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "H" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/powered/scp_294)
+"I" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"J" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"K" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/has_grav/powered/scp_294)
+"L" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"M" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"N" = (
+/obj/effect/gibspawner/humanbodypartless,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"O" = (
 /mob/living/simple_animal/hostile/statue{
 	faction = list("syndicate")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"I" = (
+"P" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
@@ -209,7 +229,7 @@ a
 b
 e
 b
-D
+F
 b
 a
 a
@@ -236,7 +256,7 @@ b
 b
 b
 b
-I
+P
 b
 a
 a
@@ -319,7 +339,7 @@ b
 f
 h
 j
-E
+G
 h
 h
 s
@@ -340,10 +360,10 @@ a
 b
 f
 y
-h
-h
-j
-G
+A
+H
+J
+N
 t
 f
 b
@@ -362,9 +382,9 @@ a
 b
 f
 h
-A
+B
 m
-h
+K
 h
 h
 f
@@ -384,9 +404,9 @@ a
 b
 g
 h
-k
-h
-h
+C
+I
+L
 n
 h
 g
@@ -406,7 +426,7 @@ d
 b
 f
 h
-B
+D
 j
 h
 h
@@ -431,7 +451,7 @@ h
 l
 n
 n
-H
+O
 k
 f
 b
@@ -494,7 +514,7 @@ a
 a
 b
 z
-C
+E
 b
 b
 b
@@ -518,7 +538,7 @@ a
 b
 b
 b
-F
+M
 c
 a
 a
