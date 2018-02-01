@@ -290,8 +290,15 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/ore/ex_act()
-	return
+/obj/item/ore/ex_act(severity, target)
+	if (severity > 1)
+		return
+	qdel(src)
+
+/obj/item/ore/glass/ex_act(severity, target)
+	if (severity >= 1)
+		return
+	qdel(src)
 
 /*****************************Coin********************************/
 
