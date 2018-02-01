@@ -289,7 +289,7 @@
 	boxtag = "Meatlover's Supreme"
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
-/obj/item/pizzabox/anomalous
+/obj/item/pizzabox/infinite
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
 	var/list/pizza_types = list(/obj/item/reagent_containers/food/snacks/pizza/meat = 1,
@@ -301,17 +301,28 @@
 	/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1)
 	var/static/list/pizza_preferences
 
-/obj/item/pizzabox/anomalous/Initialize()
+/obj/item/pizzabox/infinite/Initialize()
 	. = ..()
 	if(!pizza_preferences)
 		pizza_preferences = list()
 
-/obj/item/pizzabox/anomalous/attack_self(mob/living/user)
+/obj/item/pizzabox/infinite/examine(mob/user)
+	..()
+	if(isobserver(user))
+		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+
+/obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	QDEL_NULL(pizza)
-	if(!pizza_preferences[user.ckey])
-		pizza_preferences[user.ckey] = pickweight(pizza_types)
-		if(user.mind && user.mind.assigned_role == "Botanist")
-			pizza_preferences[user.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
-	var/obj/item/pizza_type = pizza_preferences[user.ckey]
-	pizza = new pizza_type (src)
+	if(ishuman(user))
+		attune_pizza(user)
 	. = ..()
+
+/obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
+	if(!pizza_preferences[noms.ckey])
+		pizza_preferences[noms.ckey] = pickweight(pizza_types)
+		if(noms.mind && noms.mind.assigned_role == "Botanist")
+			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
+
+	var/obj/item/pizza_type = pizza_preferences[noms.ckey]
+	pizza = new pizza_type (src)
+	pizza.foodtype = noms.dna.species.liked_food //it's our favorite!
