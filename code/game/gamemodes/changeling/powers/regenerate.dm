@@ -28,7 +28,13 @@
 			C.regenerate_limbs(1)
 		C.regenerate_organs()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
-			var/obj/item/organ/brain/changeling_brain/B = new()
+			var/obj/item/organ/brain/B
+			if(C.has_dna() && C.dna.species.mutant_brain)
+				B = new C.dna.species.mutant_brain()
+			else
+				B = new()
+			B.vital = FALSE
+			B.decoy_override = TRUE
 			B.Insert(C)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
