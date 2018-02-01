@@ -9369,7 +9369,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
-	layer = 2.9;
 	name = "engineering security door"
 	},
 /turf/open/floor/plating{
@@ -9792,7 +9791,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
-	layer = 2.9;
 	name = "engineering security door"
 	},
 /turf/open/floor/plating{

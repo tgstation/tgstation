@@ -1,4 +1,0 @@
-author: "cebutris"
-delete-after: True
-changes: 
-  - spellcheck: "The text you get when you examine a stunbaton to see the battery level now uses the item's name instead of \"baton\""
