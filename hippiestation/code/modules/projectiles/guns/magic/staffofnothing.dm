@@ -5,10 +5,10 @@
 	. = ..()
 	AddComponent(/datum/component/spell_catalyst)
 
-/obj/item/twohanded/mjollnir
+/obj/item/twohanded/mjollnir/Initialize()
 	. = ..()
 	AddComponent(/datum/component/spell_catalyst)
 	
-/obj/item/twohanded/singularityhammer
+/obj/item/twohanded/singularityhammer/Initialize()
 	. = ..()
 	AddComponent(/datum/component/spell_catalyst)
