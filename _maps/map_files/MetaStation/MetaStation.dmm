@@ -704,7 +704,6 @@
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/mask/muzzle,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/revenantspawn,
 /obj/item/device/electropack,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
@@ -935,7 +934,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /obj/machinery/door/firedoor,
@@ -947,7 +945,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /obj/machinery/door/firedoor,
@@ -982,7 +979,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /turf/open/floor/plasteel/darkred{
@@ -1337,7 +1333,6 @@
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/mask/muzzle,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adh" = (
@@ -1354,7 +1349,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adj" = (
@@ -4211,7 +4205,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Disposal Exit";
-	layer = 3.1;
 	name = "disposal exit vent"
 	},
 /turf/open/floor/plating,
@@ -6149,7 +6142,6 @@
 	dir = 1
 	},
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "ane" = (
@@ -15578,7 +15570,6 @@
 /area/security/brig)
 "aGu" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "aGv" = (
@@ -17507,7 +17498,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aKy" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aKz" = (
@@ -20697,7 +20687,6 @@
 	},
 /area/construction/mining/aux_base)
 "aRG" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aRH" = (
@@ -24379,7 +24368,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -27371,7 +27359,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /obj/structure/cable/yellow{
@@ -27389,7 +27376,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /obj/structure/cable/yellow{
@@ -27407,7 +27393,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
@@ -27419,7 +27404,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
@@ -27434,7 +27418,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
@@ -27446,7 +27429,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /obj/structure/cable/yellow{
@@ -28255,7 +28237,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /obj/structure/cable/yellow,
@@ -28363,7 +28344,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /obj/structure/cable/yellow,
@@ -29145,7 +29125,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
-	layer = 2.9;
 	name = "bridge blast door"
 	},
 /turf/open/floor/plating,
@@ -30099,7 +30078,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/captain/private)
 "bkL" = (
@@ -34613,7 +34591,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "btE" = (
-/obj/effect/landmark/revenantspawn,
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -35337,7 +35314,7 @@
 "bvj" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -35345,7 +35322,7 @@
 "bvk" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -35359,7 +35336,7 @@
 "bvl" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36734,7 +36711,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "hop";
-	layer = 3.1;
 	name = "privacy shutters"
 	},
 /turf/open/floor/plasteel,
@@ -37885,7 +37861,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -38381,7 +38357,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "council blast";
-	layer = 2.9;
 	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
@@ -38393,7 +38368,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "council blast";
-	layer = 2.9;
 	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
@@ -38408,7 +38382,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "council blast";
-	layer = 2.9;
 	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
@@ -38426,7 +38399,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "council blast";
-	layer = 2.9;
 	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
@@ -38441,7 +38413,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "council blast";
-	layer = 2.9;
 	name = "Council Blast Doors"
 	},
 /obj/structure/cable/yellow{
@@ -38609,12 +38580,6 @@
 /area/hallway/primary/starboard)
 "bCg" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "atmos";
-	name = "Atmos Blast Door"
-	},
 /obj/machinery/door/window/northleft{
 	dir = 4;
 	icon_state = "left";
@@ -38627,7 +38592,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/yellow{
@@ -40345,7 +40310,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -41218,7 +41183,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/obj/effect/landmark/revenantspawn,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/plasteel/floorgrime,
@@ -41841,7 +41805,7 @@
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "bJg" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bJh" = (
@@ -54118,7 +54082,6 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "ciL" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ciM" = (
@@ -54387,7 +54350,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "cjx" = (
@@ -63594,7 +63556,6 @@
 /area/medical/morgue)
 "cCf" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cCg" = (
@@ -63626,7 +63587,6 @@
 /obj/item/paper/guides/jobs/medical/morgue{
 	pixel_x = -4
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cCl" = (
@@ -63999,7 +63959,6 @@
 	dir = 8
 	},
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cCV" = (
@@ -65055,7 +65014,6 @@
 	pixel_x = -23
 	},
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cEV" = (
@@ -65535,6 +65493,9 @@
 /area/medical/medbay/aft)
 "cFU" = (
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFV" = (
@@ -66735,7 +66696,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "cIc" = (
@@ -68626,8 +68586,10 @@
 	},
 /area/medical/virology)
 "cLT" = (
-/obj/structure/bodycontainer/crematorium,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cLU" = (
@@ -68705,7 +68667,6 @@
 	},
 /obj/item/organ/heart,
 /obj/item/device/soulstone/anybody/chaplain,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/cult{
 	dir = 2
 	},
@@ -68939,9 +68900,6 @@
 "cMC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/machinery/button/crematorium{
-	pixel_x = -25
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -69383,7 +69341,11 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "cNt" = (
-/obj/structure/bodycontainer/morgue,
+/obj/machinery/button/crematorium{
+	id = "cremawheat";
+	pixel_x = -26;
+	req_access_txt = "27"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNu" = (
@@ -69948,6 +69910,11 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -71520,7 +71487,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSo" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSp" = (
@@ -71983,17 +71949,12 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTf" = (
-/obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
-	},
-/obj/item/storage/box/bodybags{
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -75250,6 +75211,9 @@
 	c_tag = "Morgue";
 	dir = 2;
 	network = list("SS13","Medbay")
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -79392,7 +79356,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmos Blast Door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
@@ -80664,6 +80628,24 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"QuX" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuY" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuZ" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -90572,7 +90554,7 @@ aZZ
 bOd
 EDi
 aaa
-cWp
+aaa
 aaa
 aaa
 aaa
@@ -92103,7 +92085,7 @@ bxw
 aVs
 aaa
 aaa
-cVv
+aaa
 aaa
 aaa
 aVs
@@ -93119,7 +93101,7 @@ djC
 aaa
 aaa
 aaa
-beC
+aaa
 aaa
 aaa
 aaa
@@ -94393,7 +94375,7 @@ auG
 dnd
 dhK
 dnk
-aRG
+dnH
 aSP
 dne
 dhM
@@ -95665,7 +95647,7 @@ aaa
 aaa
 aaa
 aaa
-azh
+aaa
 aaa
 aaa
 aaa
@@ -96190,7 +96172,7 @@ aaa
 aaa
 aaa
 aaa
-cUV
+aaa
 aaa
 aaa
 aaa
@@ -100895,7 +100877,7 @@ cLT
 cMC
 cNt
 cTf
-cNt
+QuZ
 cMI
 cPC
 djX
@@ -103889,7 +103871,7 @@ aaa
 aaa
 aaa
 aaa
-ayt
+aaa
 aaa
 aaa
 azC
@@ -105763,11 +105745,11 @@ cyf
 cyZ
 cAc
 ctA
-cCf
-cCf
+cCj
+cCj
 cDY
-cCf
-cCf
+cCj
+cCj
 cCe
 cHJ
 bTs
@@ -106021,9 +106003,9 @@ cyZ
 cAd
 ctA
 dbr
-cCj
+QuX
 dDC
-cCj
+QuX
 cFU
 cCe
 ctK
@@ -107844,7 +107826,7 @@ cQK
 cQY
 cYJ
 aaa
-cYO
+aaa
 aaa
 aaa
 aaa
@@ -113244,15 +113226,15 @@ cRi
 cRe
 cRi
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cRi
 cTA
@@ -113486,8 +113468,8 @@ cIg
 dDF
 dvY
 cNj
-dwN
-dwN
+ciL
+ciL
 cPg
 dvY
 aaa
@@ -113743,8 +113725,8 @@ cIg
 dxQ
 dvY
 cNk
-dwN
-dwN
+ciL
+ciL
 cPh
 dvY
 aaa
@@ -114546,7 +114528,7 @@ cTt
 daA
 cSn
 cSn
-cSo
+cSn
 daL
 cRi
 daQ
@@ -115814,15 +115796,15 @@ dcC
 dcM
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cRi
 ddh
@@ -118340,7 +118322,7 @@ alq
 alq
 dvY
 ckx
-dwN
+ciL
 dwQ
 cot
 cnb
@@ -118597,10 +118579,10 @@ apc
 chE
 dvY
 cky
-dwN
+ciL
 dwX
-dwN
-dwN
+ciL
+ciL
 cou
 csb
 dvY
@@ -118854,10 +118836,10 @@ avr
 chF
 dvY
 ckz
-dwN
+ciL
 dwY
-dwN
-dwN
+ciL
+ciL
 cgs
 csc
 dvY
@@ -119115,7 +119097,7 @@ dwQ
 cnb
 cou
 cpK
-dwN
+ciL
 csc
 dvY
 Qtj
@@ -120344,7 +120326,7 @@ aFs
 aGT
 axY
 aJm
-aKy
+aJu
 aMb
 EDE
 axY
@@ -146200,3 +146182,4 @@ aaa
 aaa
 aaa
 "}
+

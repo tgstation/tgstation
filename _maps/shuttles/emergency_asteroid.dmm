@@ -2,9 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -19,12 +16,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"af" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"ag" = (
-/turf/template_noop,
-/area/template_noop)
 "ah" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -49,9 +40,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"ak" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "al" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
@@ -71,9 +59,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"ao" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "ap" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/yellow,
@@ -85,14 +70,8 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"as" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "at" = (
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"au" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair{
@@ -109,25 +88,11 @@
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
-"ay" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "az" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"aA" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aB" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/escape)
-"aC" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aD" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair{
@@ -192,9 +157,6 @@
 "aN" = (
 /obj/structure/bed/roller,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"aO" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aP" = (
 /obj/machinery/door/airlock/security/glass{
@@ -303,10 +265,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bh" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
 "bi" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
@@ -343,10 +301,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bo" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
 /obj/machinery/computer/crew{
@@ -427,12 +381,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bA" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"bB" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "bC" = (
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -490,13 +438,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"bL" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "bM" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/brig,
@@ -507,17 +448,7 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bO" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bP" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"bQ" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -643,7 +574,7 @@ ac
 ac
 "}
 (9,1,1) = {"
-ag
+aa
 ac
 ac
 aH
@@ -658,8 +589,8 @@ ac
 aa
 "}
 (10,1,1) = {"
-ag
-ag
+aa
+aa
 ac
 aI
 at
@@ -718,8 +649,8 @@ aa
 aa
 "}
 (14,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -733,8 +664,8 @@ aa
 aa
 "}
 (15,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -748,8 +679,8 @@ aa
 aa
 "}
 (16,1,1) = {"
-ag
-ag
+aa
+aa
 ad
 aK
 at
@@ -808,8 +739,8 @@ aa
 aa
 "}
 (20,1,1) = {"
-ag
-ag
+aa
+aa
 ac
 aM
 at
@@ -823,7 +754,7 @@ aa
 aa
 "}
 (21,1,1) = {"
-ag
+aa
 ac
 ac
 aN
@@ -928,9 +859,9 @@ aa
 aa
 "}
 (28,1,1) = {"
-ag
-ag
-ag
+aa
+aa
+aa
 ac
 ac
 ad

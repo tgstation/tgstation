@@ -82,7 +82,7 @@
 	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
-	charge_max = 3000
+	charge_max = 2400
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
@@ -95,28 +95,24 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
-	charge_max = 4000
+	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/device/soulstone/anybody)
 
-
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
+/obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
-
 	school = "transmutation"
-	charge_max = 300
-	clothes_req = 0
+	charge_max = 400
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
-	summon_type = list(/obj/effect/forcefield/cult)
-	summon_lifespan = 200
+	wall_type = /obj/effect/forcefield/cult
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultforcewall"
 	action_background_icon_state = "bg_demon"
+
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
@@ -280,3 +276,37 @@
 	charge_max = 800
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
+
+
+/obj/effect/proc_holder/spell/dumbfire/juggernaut
+	name = "Gauntlet Echo"
+	desc = "Channels energy into your gauntlet - firing its essence forward in a slow-moving but devastating blow."
+	proj_icon_state = "cursehand0"
+	proj_name = "Shadowfist"
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
+	proj_lifespan = 15
+	proj_step_delay = 7
+	charge_max = 350
+	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "cultfist"
+	action_background_icon_state = "bg_demon"
+	sound = 'sound/weapons/resonator_blast.ogg'
+	proj_trigger_range = 0
+	ignore_factions = list("cult")
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
+	name = "Gauntlet Echo"
+	amt_dam_brute = 30
+	amt_knockdown = 50
+	sound = 'sound/weapons/punch3.ogg'
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(T)
+	for(var/obj/O in range(src,1))
+		if(O.density && !istype(O, /obj/structure/destructible/cult))
+			O.take_damage(90, BRUTE, "gauntlet echo", 0)
+			new /obj/effect/temp_visual/cult/turf/floor
+	..()
