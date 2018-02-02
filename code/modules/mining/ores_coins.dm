@@ -133,7 +133,7 @@
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
-	icon_state = "ore_plasma"
+	icon_state = "Plasma ore"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
@@ -149,21 +149,21 @@
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
-	icon_state = "ore_silver"
+	icon_state = "Silver ore"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
-	icon_state = "ore_gold"
+	icon_state = "Gold ore"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
-	icon_state = "ore_diamond"
+	icon_state = "Diamond ore"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
@@ -177,7 +177,7 @@
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
-	icon_state = "ore_titanium"
+	icon_state = "Titanium ore"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium

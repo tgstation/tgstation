@@ -133,7 +133,6 @@
 		return FALSE
 
 	last_inserted_id = insert_materials(S,amt * multiplier)
-	last_inserted_type = S.type
 	S.use(amt)
 	return amt
 
