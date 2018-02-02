@@ -1,41 +1,370 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"c" = (/obj/structure/lattice,/turf/open/space/basic,/area/ruin/space/has_grav/powered/scp_294)
-"d" = (/obj/machinery/porta_turret/syndicate/energy/heavy{mode = 1},/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"e" = (/obj/effect/spawner/trap,/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"f" = (/turf/closed/wall,/area/ruin/space/has_grav/powered/scp_294)
-"g" = (/turf/closed/wall/rust,/area/ruin/space/has_grav/powered/scp_294)
-"h" = (/obj/effect/spawner/trap,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"i" = (/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"j" = (/mob/living/simple_animal/hostile/mimic/crate{faction = list("mimic","syndicate")},/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"k" = (/mob/living/simple_animal/hostile/asteroid/goliath{faction = list("mining","syndicate")},/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"l" = (/obj/item/wirerod,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"m" = (/turf/open/floor/plating/airless/astplate,/area/ruin/space/has_grav/powered/scp_294)
-"n" = (/turf/open/floor/plating,/area/ruin/space/has_grav/powered/scp_294)
-"o" = (/obj/machinery/light{dir = 4; flickering = 1; idle_power_usage = 0; use_power = 0},/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"p" = (/obj/machinery/porta_turret/syndicate/energy/heavy{mode = 1},/turf/open/floor/plating,/area/ruin/space/has_grav/powered/scp_294)
-"r" = (/obj/structure/girder,/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"s" = (/obj/effect/decal/remains/robot,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"u" = (/obj/effect/gibspawner/humanbodypartless,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"v" = (/obj/machinery/light{flickering = 1; idle_power_usage = 0; use_power = 0},/obj/effect/spawner/trap,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"w" = (/obj/item/wrench,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"x" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/airless,/area/ruin/space/has_grav/powered/scp_294)
-"y" = (/obj/structure/girder/reinforced,/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/scp_294)
-"z" = (/obj/machinery/porta_turret/syndicate/energy/heavy{mode = 1},/turf/closed/wall/rust,/area/ruin/space/has_grav/powered/scp_294)
-"A" = (/obj/machinery/chem_dispenser/scp_294,/turf/open/floor/plating,/area/ruin/space/has_grav/powered/scp_294)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"c" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/powered/scp_294)
+"d" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	mode = 1
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"e" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"f" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/scp_294)
+"g" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/scp_294)
+"h" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"i" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"j" = (
+/mob/living/simple_animal/hostile/mimic/crate{
+	faction = list("mimic","syndicate")
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"k" = (
+/mob/living/simple_animal/hostile/asteroid/goliath{
+	faction = list("mining","syndicate")
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"l" = (
+/obj/item/wirerod,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"m" = (
+/turf/open/floor/plating/airless/astplate,
+/area/ruin/space/has_grav/powered/scp_294)
+"n" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/scp_294)
+"o" = (
+/obj/machinery/light{
+	dir = 4;
+	flickering = 1;
+	idle_power_usage = 0;
+	use_power = 0
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"p" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	mode = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/scp_294)
+"r" = (
+/obj/structure/girder,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"s" = (
+/obj/effect/decal/remains/robot,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"u" = (
+/obj/effect/gibspawner/humanbodypartless,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"v" = (
+/obj/machinery/light{
+	flickering = 1;
+	idle_power_usage = 0;
+	use_power = 0
+	},
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"w" = (
+/obj/item/wrench,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"x" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"y" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"z" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	mode = 1
+	},
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/scp_294)
+"A" = (
+/obj/machinery/chem_dispenser/scp_294,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/scp_294)
 
 (1,1,1) = {"
-aaabbaaaaacbbdaaa
-aabebbbbbbbbbbaaa
-abbbfffffgfffbbaa
-adbbghijiiiifbkbb
-bbbbglmnnnhofbebb
-bkbbfihnAnmhrbbbb
-bbbbfspnnnihrbbec
-aabbfmiuihiifbbca
-aabbfhvwjiixfbbaa
-aabbyyfffgffzbcaa
-abebbbbbbbbbbbcca
-aabbcabbaccaabbaa
-aaaaaadaaacaaaaaa
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+b
+d
+b
+k
+b
+a
+a
+a
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+e
+b
+a
+"}
+(4,1,1) = {"
+b
+e
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(5,1,1) = {"
+b
+b
+f
+g
+g
+f
+f
+f
+f
+y
+b
+c
+a
+"}
+(6,1,1) = {"
+a
+b
+f
+h
+l
+i
+s
+m
+h
+y
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+f
+i
+m
+h
+p
+i
+v
+f
+b
+b
+d
+"}
+(8,1,1) = {"
+a
+b
+f
+j
+n
+n
+n
+u
+w
+f
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+f
+i
+n
+A
+n
+i
+j
+f
+b
+a
+a
+"}
+(10,1,1) = {"
+a
+b
+g
+i
+n
+n
+n
+h
+i
+g
+b
+c
+a
+"}
+(11,1,1) = {"
+c
+b
+f
+i
+h
+m
+i
+i
+i
+f
+b
+c
+c
+"}
+(12,1,1) = {"
+b
+b
+f
+i
+o
+h
+h
+i
+x
+f
+b
+a
+a
+"}
+(13,1,1) = {"
+b
+b
+f
+f
+f
+r
+r
+f
+f
+z
+b
+a
+a
+"}
+(14,1,1) = {"
+d
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(15,1,1) = {"
+a
+a
+b
+k
+e
+b
+b
+b
+b
+c
+c
+b
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+b
+b
+b
+e
+c
+a
+a
+c
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+b
+b
+b
+c
+a
+a
+a
+a
+a
+a
 "}
