@@ -42368,22 +42368,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bLc" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bLd" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/jackboots,
@@ -77242,10 +77226,25 @@
 /obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"KQo" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "Ljw" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
+"NCj" = (
+/obj/item/card/id/bay,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "QsX" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
@@ -94601,7 +94600,7 @@ bEt
 bGm
 bHO
 bvW
-bLc
+KQo
 aod
 aGN
 aqK
@@ -97204,8 +97203,8 @@ cMo
 dux
 cxT
 dux
-aaa
-aaa
+dux
+dux
 aaa
 aaf
 aaa
@@ -97461,8 +97460,8 @@ dyw
 dux
 cxS
 dux
-aaa
-aaa
+NCj
+dux
 aaa
 aaf
 aaa

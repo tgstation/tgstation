@@ -54079,6 +54079,10 @@
 	dir = 4
 	},
 /area/crew_quarters/theatre)
+"IJA" = (
+/obj/item/card/id/bay,
+/turf/open/floor/plating,
+/area/ai_monitored/turret_protected/aisat/hallway)
 "Qod" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -54588,14 +54592,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"WDB" = (
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat/hallway)
 
 (1,1,1) = {"
 aaa
@@ -91826,7 +91822,7 @@ cvX
 cvX
 cvX
 cvk
-WDB
+IJA
 cva
 cva
 cva

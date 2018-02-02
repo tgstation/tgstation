@@ -31673,6 +31673,10 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/security/checkpoint)
+"jqk" = (
+/obj/item/card/id/bay,
+/turf/open/floor/plating/astplate,
+/area/asteroid/nearstation)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -34114,16 +34118,6 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"Kvv" = (
-/obj/item/ore/silver,
-/obj/item/ore/iron,
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating/astplate,
-/area/asteroid/nearstation)
 
 (1,1,1) = {"
 aaa
@@ -66593,7 +66587,7 @@ aad
 aad
 aad
 abi
-Kvv
+jqk
 aad
 aad
 aad

@@ -100627,6 +100627,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"gzp" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/maintenance/port/fore)
 "vUu" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -100639,13 +100645,8 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
-"PcG" = (
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
+"KdP" = (
+/turf/closed/wall/r_wall,
 /area/maintenance/port/fore)
 "QkZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -101006,6 +101007,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"VXP" = (
+/turf/closed/wall/r_wall,
+/area/crew_quarters/electronic_marketing_den)
 "XvY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -101015,6 +101019,10 @@
 	dir = 5
 	},
 /area/medical/morgue)
+"YTv" = (
+/obj/item/card/id/bay,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 
 (1,1,1) = {"
 aaa
@@ -129617,7 +129625,7 @@ alV
 alV
 alU
 alU
-alf
+KdP
 alf
 aqV
 aqV
@@ -129873,10 +129881,10 @@ anN
 aoM
 apP
 aqN
-alU
-alg
-alg
-avm
+VXP
+YTv
+KdP
+gzp
 alg
 arB
 ayS
@@ -130131,7 +130139,7 @@ aoN
 anO
 aqO
 alU
-alg
+KdP
 aub
 avn
 alg
@@ -130389,7 +130397,7 @@ apQ
 aqP
 alU
 asD
-ary
+ayS
 avo
 awm
 alg
@@ -131421,7 +131429,7 @@ alf
 avr
 awp
 axK
-PcG
+alg
 aAb
 aBk
 aCv

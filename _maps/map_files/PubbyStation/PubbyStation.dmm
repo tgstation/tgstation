@@ -45782,15 +45782,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"ckO" = (
-/obj/structure/closet/emcloset,
-/obj/item/card/id{
-	desc = "Something feels like this doesn't belong here...";
-	icon_state = "classicgold";
-	name = "commanding officer's spare ID"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/chapel/monastery)
 "ckP" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
@@ -49811,6 +49802,14 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"fWK" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
+"MUP" = (
+/obj/item/card/id/bay,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
 
 (1,1,1) = {"
 aaa
@@ -65423,7 +65422,7 @@ cvZ
 cwm
 ckj
 cwH
-ckO
+fWK
 cjm
 cfN
 aaa
@@ -66710,7 +66709,7 @@ ckk
 ckC
 ckR
 cjm
-cfN
+MUP
 caS
 caS
 aht
