@@ -14,7 +14,7 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace
+	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/head/caphat(src)
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
