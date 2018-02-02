@@ -51836,8 +51836,6 @@
 /area/crew_quarters/heads/captain/private)
 "cbf" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/suit/armor/vest/capcarapace,
-/obj/item/clothing/head/caphat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -52708,7 +52706,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/card/id/captains_spare,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -170621,4 +170618,3 @@ aaa
 aaa
 aaa
 "}
-

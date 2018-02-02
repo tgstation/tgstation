@@ -29215,7 +29215,6 @@
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
-/obj/item/card/id/captains_spare,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bji" = (
@@ -146182,4 +146181,3 @@ aaa
 aaa
 aaa
 "}
-

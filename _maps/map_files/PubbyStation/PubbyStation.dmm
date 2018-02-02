@@ -9235,7 +9235,6 @@
 /area/crew_quarters/heads/captain)
 "axU" = (
 /obj/machinery/computer/card,
-/obj/item/card/id/captains_spare,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -69189,7 +69188,7 @@ aiu
 aiu
 ayD
 azU
-aAZ
+aoK
 ajD
 ait
 aaa
@@ -73101,7 +73100,7 @@ bGL
 bHQ
 bJe
 bKj
-bLw
+bLv
 bMB
 bNI
 bOz
@@ -74139,8 +74138,8 @@ bQT
 bDi
 bSq
 bDi
-bTY
-bTY
+bSw
+bSw
 bva
 bva
 bDi
@@ -96726,7 +96725,7 @@ bjE
 bkK
 bkF
 bnh
-boi
+blX
 blX
 bqH
 bsb
@@ -96736,7 +96735,7 @@ bwe
 bxS
 bzr
 blX
-boi
+blX
 bDe
 bEg
 bFA
@@ -96975,7 +96974,7 @@ bcL
 bdS
 baG
 bfP
-bgO
+bdz
 aFi
 aKq
 biD
@@ -97493,7 +97492,7 @@ abI
 abI
 aEj
 biG
-bjG
+aKo
 bjD
 bkF
 blX
@@ -97754,7 +97753,7 @@ bjH
 bjD
 bkF
 bnh
-boi
+blX
 blX
 bqK
 bsd
@@ -97764,7 +97763,7 @@ bwe
 bxU
 bzu
 blX
-boi
+blX
 bDe
 bkF
 bjD
@@ -99808,7 +99807,7 @@ aaa
 aaa
 aEj
 bkO
-bgO
+bdz
 bnn
 bom
 aEj
