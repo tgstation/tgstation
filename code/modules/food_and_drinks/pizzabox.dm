@@ -277,7 +277,6 @@
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
 
-
 /obj/item/pizzabox/mushroom/Initialize()
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
@@ -287,6 +286,11 @@
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
+
+/obj/item/pizzabox/pineapple/Initialize()
+	. = ..()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
+	boxtag = "Honolulu Chew"
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
 /obj/item/pizzabox/infinite
@@ -298,6 +302,7 @@
 		/obj/item/reagent_containers/food/snacks/pizza/margherita = 1,
 		/obj/item/reagent_containers/food/snacks/pizza/sassysage = 0.8,
 		/obj/item/reagent_containers/food/snacks/pizza/vegetable = 0.8,
+    /obj/item/reagent_containers/food/snacks/pizza/pineapple = 0.5.
 		/obj/item/reagent_containers/food/snacks/pizza/donkpocket = 0.3,
 		/obj/item/reagent_containers/food/snacks/pizza/dank = 0.1) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences

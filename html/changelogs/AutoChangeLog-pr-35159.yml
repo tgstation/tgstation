@@ -1,0 +1,4 @@
+author: "Epoc"
+delete-after: True
+changes: 
+  - bugfix: "Soap now has inhand sprites"

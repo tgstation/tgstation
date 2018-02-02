@@ -139,6 +139,23 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
 
+/obj/item/reagent_containers/food/snacks/pizza/pineapple
+	name = "\improper Hawaiian pizza"
+	desc = "The pizza equivalent of Einstein's riddle."
+	icon_state = "pineapplepizza"
+	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapples" = 2, "ham" = 2)
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
+	name = "\improper Hawaiian pizza slice"
+	desc = "A slice of delicious controversy."
+	icon_state = "pineapplepizzaslice"
+	filling_color = "#FF4500"
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapples" = 2, "ham" = 2)
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT
+
 /obj/item/reagent_containers/food/snacks/pizzaslice/custom
 	name = "pizza slice"
 	icon_state = "pizzamargheritaslice"

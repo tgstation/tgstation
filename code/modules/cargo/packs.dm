@@ -988,7 +988,8 @@
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable)
+					/obj/item/pizzabox/vegetable,
+					/obj/item/pizzabox/pineapple)
 	crate_name = "pizza crate"
 	var/static/anomalous_box_provided = FALSE
 
