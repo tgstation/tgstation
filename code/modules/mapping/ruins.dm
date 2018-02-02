@@ -1,11 +1,3 @@
-#define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere.
-
-#define PLACE_DEFAULT "random"
-#define PLACE_SAME_Z "same"
-#define PLACE_SPACE_RUIN "space"
-#define PLACE_LAVA_RUIN "lavaland"
-
-
 /datum/map_template/ruin/proc/try_to_place(z,allowed_areas)
 	var/sanity = PLACEMENT_TRIES
 	while(sanity > 0)
@@ -52,7 +44,6 @@
 			WARNING("Z level [zl] does not exist - Not generating ruins")
 			return
 
-	var/overall_sanity = PLACEMENT_TRIES
 	var/list/ruins = potentialRuins.Copy()
 
 	var/list/forced_ruins = list()		//These go first on the z level associated (same random one by default)
@@ -66,6 +57,8 @@
 			continue
 		if(R.always_place)
 			forced_ruins[R] = -1
+		if(R.unpickable)
+			continue
 		ruins_availible[R] = R.placement_weight
 
 	while(budget > 0 && (ruins_availible.len || forced_ruins.len))
@@ -132,5 +125,4 @@
 			if(R.cost > budget)
 				ruins_availible -= R
 	
-	if(!overall_sanity)
-		log_world("Ruin loader gave up with [budget] left to spend.")
+	log_world("Ruin loader finished with [budget] left to spend.")
