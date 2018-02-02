@@ -7174,7 +7174,6 @@
 /area/medical/morgue)
 "arR" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -7192,7 +7191,6 @@
 /area/medical/morgue)
 "arT" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "arU" = (
@@ -7471,7 +7469,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -11459,10 +11456,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
-"aBx" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "aBA" = (
@@ -21366,7 +21359,7 @@
 /turf/open/floor/plasteel/dark/telecomms/mainframe,
 /area/tcommsat/server)
 "aXU" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/plasteel/dark/telecomms/mainframe,
 /area/tcommsat/server)
 "aXV" = (
@@ -71575,7 +71568,7 @@ awL
 axB
 ayJ
 aAi
-aBx
+awK
 axB
 ayJ
 aEX

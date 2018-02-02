@@ -7424,7 +7424,7 @@
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "rx" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "ry" = (
@@ -8799,7 +8799,6 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	roundstart_move = "mining_away";
 	width = 7
 	},
 /obj/effect/turf_decal/stripes/line{

@@ -304,7 +304,6 @@
 /area/crew_quarters/heads/hop)
 "aP" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "aQ" = (
@@ -2426,7 +2425,7 @@
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "gd" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "ge" = (
@@ -3741,7 +3740,6 @@
 /area/medical/sleeper)
 "ja" = (
 /obj/machinery/clonepod,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics/cloning)
 "jb" = (
@@ -5027,10 +5025,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
-"lH" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "lI" = (
@@ -6899,7 +6893,6 @@
 	dir = 1;
 	network = list("SS13","RD")
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -9286,7 +9279,6 @@
 /area/security/brig)
 "uY" = (
 /obj/machinery/gulag_teleporter,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "uZ" = (
@@ -9473,7 +9465,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -29
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "vD" = (
@@ -54677,7 +54668,7 @@ lm
 lr
 lz
 lE
-lH
+ll
 lr
 lz
 lY
