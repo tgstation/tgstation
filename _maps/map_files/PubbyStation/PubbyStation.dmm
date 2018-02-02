@@ -8041,7 +8041,8 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/boxwidth = 9
+	roundstart_template = /datum/map_template/shuttle/labour/box;
+	width = 9
 	},
 /turf/open/space/basic,
 /area/space)
@@ -22813,7 +22814,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/deltawidth = 7
+	roundstart_template = /datum/map_template/shuttle/mining/delta;
+	width = 7
 	},
 /turf/open/space/basic,
 /area/space)
@@ -23190,7 +23192,8 @@
 	height = 13;
 	id = "arrivals_stationary";
 	name = "pubby arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/pubbywidth = 6
+	roundstart_template = /datum/map_template/shuttle/arrival/pubby;
+	width = 6
 	},
 /turf/open/space/basic,
 /area/space)
