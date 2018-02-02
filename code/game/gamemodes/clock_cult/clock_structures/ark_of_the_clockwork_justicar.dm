@@ -123,7 +123,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(M.current.stat != DEAD)
+		if(isliving(M.current) && M.current.stat != DEAD)
 			M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 		M.current.clear_fullscreen("flash", 5)
@@ -294,19 +294,19 @@
 				for(var/V in GLOB.generic_event_spawns)
 					addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
 				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
-				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
+				sound_to_playing_players(volume = 20, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!third_sound_played)
-				sound_to_playing_players(volume = 35, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
+				sound_to_playing_players(volume = 25, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_active.ogg', TRUE))
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!fourth_sound_played)
-				sound_to_playing_players(volume = 40, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
+				sound_to_playing_players(volume = 30, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_closing.ogg', TRUE))
 				fourth_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"

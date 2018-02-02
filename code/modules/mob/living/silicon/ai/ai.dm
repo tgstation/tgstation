@@ -243,9 +243,7 @@
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
-			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
-				borg_area = get_area(R)
 				var/robot_status = "Nominal"
 				if(R.shell)
 					robot_status = "AI SHELL"
@@ -255,7 +253,7 @@
 					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
+				Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]"))
 			stat(null, text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 		else
 			stat(null, text("Systems nonfunctional"))
@@ -456,18 +454,16 @@
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
 	var/d
-	var/area/bot_area
 	d += "<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
 	for (Bot in GLOB.alive_mob_list)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
-			bot_area = get_area(Bot)
 			var/bot_mode = Bot.get_mode()
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
 			d += "<td width='30%'>[bot_mode]</td>"
-			d += "<td width='30%'>[bot_area.name]</td>"
+			d += "<td width='30%'>[get_area_name(Bot, TRUE)]</td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>"
 			d += "</tr>"

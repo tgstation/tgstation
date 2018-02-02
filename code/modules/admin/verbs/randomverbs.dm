@@ -1261,6 +1261,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN))
 		return
 
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
+		return
+
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
@@ -1273,6 +1277,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 	if(!C)
 		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
 		return
 
 	var/list/body = list()

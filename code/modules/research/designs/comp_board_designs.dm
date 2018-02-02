@@ -5,7 +5,6 @@
 	desc = "I promise this doesn't give you syndicate goodies!"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
-	reagents_list = list("sacid" = 20)
 
 /datum/design/board/arcade_battle
 	name = "Computer Design (Battle Arcade Machine)"

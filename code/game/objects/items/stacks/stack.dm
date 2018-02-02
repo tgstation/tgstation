@@ -321,7 +321,7 @@
 	var/obj/item/stack/F = new type(user, amount, FALSE)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
+	user.put_in_hands(F, merge_stacks=FALSE)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)

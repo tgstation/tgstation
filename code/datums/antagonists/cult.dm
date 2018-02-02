@@ -3,6 +3,7 @@
 /datum/antagonist/cult
 	name = "Cultist"
 	roundend_category = "cultists"
+	antagpanel_category = "Cult"
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	job_rank = ROLE_CULTIST
@@ -18,6 +19,8 @@
 	if(!new_team)
 		//todo remove this and allow admin buttons to create more than one cult
 		for(var/datum/antagonist/cult/H in GLOB.antagonists)
+			if(!H.owner)
+				continue
 			if(H.cult_team)
 				cult_team = H.cult_team
 				return
@@ -127,7 +130,6 @@
 
 /datum/antagonist/cult/on_removal()
 	remove_objectives()
-	owner.wipe_memory()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
@@ -138,11 +140,36 @@
 		owner.current.client.images -= cult_team.blood_target_image
 	. = ..()
 
+/datum/antagonist/cult/admin_add(datum/mind/new_owner,mob/admin)
+	give_equipment = FALSE
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has cult'ed [new_owner.current].")
+	log_admin("[key_name(admin)] has cult'ed [new_owner.current].")
+
+/datum/antagonist/cult/admin_remove(mob/user)
+	message_admins("[key_name_admin(user)] has decult'ed [owner.current].")
+	log_admin("[key_name(user)] has decult'ed [owner.current].")
+	SSticker.mode.remove_cultist(owner,silent=TRUE) //disgusting
+
+/datum/antagonist/cult/get_admin_commands()
+	. = ..()
+	.["Tome"] = CALLBACK(src,.proc/admin_give_tome)
+	.["Amulet"] = CALLBACK(src,.proc/admin_give_amulet)
+
+/datum/antagonist/cult/proc/admin_give_tome(mob/admin)
+	if(equip_cultist(owner.current,1))
+		to_chat(admin, "<span class='danger'>Spawning tome failed!</span>")
+
+/datum/antagonist/cult/proc/admin_give_amulet(mob/admin)
+	if (equip_cultist(owner.current))
+		to_chat(admin, "<span class='danger'>Spawning amulet failed!</span>")
+
 /datum/antagonist/cult/master
+	ignore_implant = TRUE
+	show_in_antagpanel = FALSE //Feel free to add this later
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
 	var/datum/action/innate/cult/master/pulse/throwing = new
-	ignore_implant = TRUE
 
 /datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(reckoning)
@@ -297,3 +324,6 @@
 		parts += printplayerlist(members)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/team/cult/is_gamemode_hero()
+	return SSticker.mode.name == "cult"

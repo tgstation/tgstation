@@ -73,30 +73,6 @@
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
-/*
-
-*/
-
-/obj/structure/displaycase/proc/is_directional(atom/A)
-	try
-		getFlatIcon(A,defdir=4)
-	catch
-		return 0
-	return 1
-
-/obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
-	//Get flatIcon even if dir is mismatched for directionless icons
-	//SLOW
-	var/icon/I
-	if(is_directional(A))
-		I = getFlatIcon(A)
-	else
-		var/old_dir = A.dir
-		A.setDir(2)
-		I = getFlatIcon(A)
-		A.setDir(old_dir)
-	return I
-
 /obj/structure/displaycase/update_icon()
 	var/icon/I
 	if(open)
@@ -106,7 +82,7 @@
 	if(broken)
 		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
-		var/icon/S = get_flat_icon_directional(showpiece)
+		var/icon/S = getFlatIcon(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
 	src.icon = I

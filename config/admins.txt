@@ -35,8 +35,9 @@ Ss4gogeta0	=	Administrator
 Windarkata	=	Administrator
 Bricksqwad	=	Administrator
 Ishiro	=	Administrator
+Wicker0	=	Administrator
+hiimchros	=	Administrator
+InkPacket	=	Administrator
 
 #TRIAL ADMINS
-Wicker0	=	Trial Admin
-hiimchros	=	Admin Observer
-InkPacket	=	Administrator
+BLANK	=	Trial Admin

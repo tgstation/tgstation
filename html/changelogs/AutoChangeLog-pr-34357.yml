@@ -1,5 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The RPD will no longer fail to paint and layer pipes in some situations."
-  - bugfix: "Unwrenching canisters from connector ports on non-default layers now resets their pixel offset."

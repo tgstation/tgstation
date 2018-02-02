@@ -17,6 +17,8 @@
 	var/directional = FALSE
 	var/aim_dir = NORTH
 	var/boom_sizes = list(0, 0, 3)
+	var/can_attach_mob = FALSE
+	var/full_damage_on_mobs = FALSE
 
 /obj/item/grenade/plastic/New()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
@@ -55,7 +57,8 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
-			target.ex_act(2, target)
+			if(!ismob(target) || full_damage_on_mobs)
+				target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -95,7 +98,7 @@
 	aim_dir = get_dir(user,AM)
 	if(!flag)
 		return
-	if(ismob(AM))
+	if(ismob(AM) && !can_attach_mob)
 		return
 
 	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
@@ -159,6 +162,7 @@
 	gender = PLURAL
 	var/timer = 10
 	var/open_panel = 0
+	can_attach_mob = TRUE
 
 /obj/item/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
@@ -211,7 +215,7 @@
 /obj/item/grenade/plastic/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM))
+	if(ismob(AM) && !can_attach_mob)
 		return
 	if(loc == AM)
 		return
@@ -247,7 +251,8 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
-			target.ex_act(2, target)
+			if(!ismob(target) || full_damage_on_mobs)
+				target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)

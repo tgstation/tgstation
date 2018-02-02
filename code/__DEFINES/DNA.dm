@@ -123,7 +123,8 @@
 #define SPECIES_INORGANIC 32
 #define SPECIES_UNDEAD  33
 #define SPECIES_ROBOTIC 34
-#define COLDBLOODED 	35 // FULPSTATION: Vamps need to have their temperatures match their environment. Maybe later we can apply this to other Species, when it has more effect in game.
+#define NOEYES			35
+#define COLDBLOODED 	45 // FULPSTATION: Vamps need to have their temperatures match their environment. Maybe later we can apply this to other Species, when it has more effect in game.
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

@@ -387,6 +387,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 * Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
+* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. 
 
 Just becuase something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 

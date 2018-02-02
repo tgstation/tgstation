@@ -14,8 +14,10 @@
 	var/turf/T = get_turf(A)
 	return T ? T.loc : null
 
-/proc/get_area_name(atom/X)
+/proc/get_area_name(atom/X, format_text = FALSE)
 	var/area/Y = get_area(X)
+	if(format_text)
+		return format_text(Y.name)
 	return Y.name
 
 /proc/get_area_by_name(N) //get area by its name

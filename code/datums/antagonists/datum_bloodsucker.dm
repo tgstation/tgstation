@@ -10,6 +10,8 @@
 
 /datum/antagonist/bloodsucker
 	name = "Bloodsucker"
+	roundend_category = "bloodsuckers"
+	antagpanel_category = "Bloodsucker"
 	//datum/mind/owner						//Mind that owns this datum
 	//silent = FALSE							//Silent will prevent the gain/lose texts to show
 	//can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
@@ -69,7 +71,9 @@
 	SelectReputation(owner.current.gender, creator ? 1 : 0)
 
 	//spawn(20) // Wait two seconds so all starting Bloodsuckers are assigned before creating their objectives. Don't want them targetting each other for Embrace objectives.
-	owner.store_memory("Although you were born a mortal, in un-death you earned the name [ReturnFullName(owner.current, 1)].")
+	//store_memory("Although you were born a mortal, in un-death you earned the name [ReturnFullName(owner.current, 1)].")
+	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[ReturnFullName(owner.current, 1)]</b>.<br>"
+
 
 	// Give Powers & Stats
 	AssignStarterPowersAndStats()
@@ -671,6 +675,10 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 
 /datum/antagonist/vassal
 	var/datum/antagonist/bloodsucker/master // Whom do I obey?
+	name = "Vassal"
+	roundend_category = "vassals"
+	antagpanel_category = "Vassal"
+	show_in_roundend = FALSE					//Set to false to hide the antagonists from roundend report
 
 /datum/antagonist/bloodsucker/proc/attempt_turn_vassal(mob/living/carbon/C)
 	SSticker.mode.make_vassal(C,owner)
@@ -712,7 +720,9 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 			You are not required to obey any other Bloodsucker, as only [master.owner.current] is your master. The laws of Nanotransen do not apply to you now; only your vampiric master's word must be obeyed.<span>")
 	// Effects...
 	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
-	owner.store_memory("You became the mortal servant of [master.owner.current], a bloodsucking vampire!")
+	//owner.store_memory("You became the mortal servant of [master.owner.current], a bloodsucking vampire!")
+	antag_memory += "You became the mortal servant of  <b>[master.owner.current]</b>, a bloodsucking vampire!<br>"
+
 	// And to your new Master...
 	to_chat(master.owner, "<span class='userdanger'>[owner.current] has become addicted to your immortal blood. [owner.current.p_they(TRUE)] is now your undying servant!</span>")
 	master.owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -722,7 +732,7 @@ datum/antagonist/bloodsucker/proc/LevelUp()
 			like [owner.current.p_they()] [owner.current.p_have()] regained some lost part of [owner.current.p_them()]self.",\
 			"<span class='userdanger'><FONT size = 3>With a snap, you are no longer enslaved to [master.owner]! You breathe in heavily, having regained your free will.</FONT></span>")
 	// Effects...
-	owner.store_memory("Your Bloodsucker master has lost their control over you!")
+	//owner.store_memory("Your Bloodsucker master has lost their control over you!")
 	owner.current.playsound_local(null, 'sound/magic/mutate.ogg', 100, FALSE, pressure_affected = FALSE)
 	// And to your former Master...
 	//if (master && master.owner)

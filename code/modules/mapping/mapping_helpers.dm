@@ -13,10 +13,12 @@
 	. = ..()
 	var/area/thearea = get_area(src)
 	for(var/turf/T in get_area_turfs(thearea, z))
-		if(T.baseturfs != T.type) //Don't break indestructible walls and the like
-			T.baseturfs = baseturf
+		replace_baseturf(T)
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
+	if(thing.baseturfs != thing.type)
+		thing.baseturfs = baseturf
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -54,6 +56,35 @@
 	name = "lavaland baseturf editor"
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 
+// Does the same thing as baseturf_helper but only the specified kinds of turf (the kind it's placed on or varedited)
+/obj/effect/baseturf_helper/picky
+	var/list/whitelist
+	// Can be mapedited as: a single type, a list of types, or a typecache-like list
+	// The first 2 make a typecache of the given values
+	// The last uses it as is
+
+/obj/effect/baseturf_helper/picky/Initialize()
+	if(!whitelist)
+		whitelist = list(loc.type)
+	else if(!islist(whitelist))
+		whitelist = list(whitelist)
+	else if(whitelist[whitelist[1]]) // Checking if it's a typecache-like list
+		return ..()
+	whitelist = typecacheof(whitelist)
+	return ..()
+	
+/obj/effect/baseturf_helper/picky/replace_baseturf(turf/thing)
+	if(!whitelist[thing.type])
+		return
+	return ..()
+
+/obj/effect/baseturf_helper/picky/lava_land/plating
+	name = "picky lavaland plating baseturf helper"
+	baseturf = /turf/open/floor/plating/lavaland_baseturf
+
+/obj/effect/baseturf_helper/picky/lava_land/basalt
+	name = "picky lavaland basalt baseturf helper"
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
 //Contains the list of planetary z-levels defined by the planet_z helper.
 GLOBAL_LIST_EMPTY(z_is_planet)
