@@ -274,11 +274,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-	icon_state = "revenant_spawn"
-
 // triple ais.
 /obj/effect/landmark/tripai
 	name = "tripai"
