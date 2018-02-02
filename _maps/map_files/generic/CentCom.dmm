@@ -13433,7 +13433,7 @@
 	height = 17;
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
-	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
+	roundstart_template = "/datum/map_template/shuttle/infiltrator/basic";
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
 	},

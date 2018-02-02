@@ -167,7 +167,7 @@
 
 	var/last_dock_time
 
-	var/datum/map_template/shuttle/roundstart_template
+	var/roundstart_template
 	var/json_key
 
 /obj/docking_port/stationary/Initialize(mapload)
@@ -188,20 +188,21 @@
 	#endif
 
 /obj/docking_port/stationary/proc/load_roundstart()
-	if(json_key)
+	var/datum/map_template/shuttle/roundstart_template_parsed
+	if(json_key)		
 		var/sid = SSmapping.config.shuttles[json_key]
-		roundstart_template = SSmapping.shuttle_templates[sid]
-		if(!roundstart_template)
+		roundstart_template_parsed = SSmapping.shuttle_templates[sid]
+		if(!roundstart_template_parsed)
 			CRASH("json_key:[json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
 	else if(roundstart_template) // passed a PATH
-		var/sid = "[initial(roundstart_template.port_id)]_[initial(roundstart_template.suffix)]"
+		roundstart_template_parsed = text2path(roundstart_template)
+		var/sid = "[initial(roundstart_template_parsed.port_id)]_[initial(roundstart_template_parsed.suffix)]"
+		roundstart_template_parsed = SSmapping.shuttle_templates[sid]
+		if(!roundstart_template_parsed)
+			CRASH("Invalid path ([roundstart_template_parsed]) passed to docking port.")
 
-		roundstart_template = SSmapping.shuttle_templates[sid]
-		if(!roundstart_template)
-			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
-
-	if(roundstart_template)
-		SSshuttle.manipulator.action_load(roundstart_template, src)
+	if(roundstart_template_parsed)
+		SSshuttle.manipulator.action_load(roundstart_template_parsed, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
