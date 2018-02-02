@@ -4,6 +4,7 @@
 	school = "evocation"
 	charge_max = 600
 	clothes_req = 1
+	staff_req = 1
 	invocation = "DIE, INSECT!"
 	invocation_type = "shout"
 	cooldown_min = 200
