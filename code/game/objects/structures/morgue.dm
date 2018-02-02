@@ -244,7 +244,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
 			qdel(O)
 
-		new/obj/effect/decal/cleanable/ash(src, disable_turf_loc_check=TRUE)//disable decal's turf check upon initialize
+		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
+			new/obj/effect/decal/cleanable/ash(src, disable_turf_loc_check=TRUE)//disable decal's turf check upon initialize
 
 		sleep(30)
 
