@@ -350,11 +350,11 @@
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, "Sensors deactivated.")
+		to_chat(src, "Sensor overlay deactivated.")
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, "Sensors activated.")
+	to_chat(src, "Sensor overlay activated.")
 
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
