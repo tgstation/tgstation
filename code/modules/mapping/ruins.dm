@@ -28,6 +28,9 @@
 		load(central_turf,centered = TRUE)
 		loaded++
 
+		for(var/turf/T in get_affected_turfs(central_turf, 1))
+			T.flags_1 |= NO_RUINS_1
+
 		new /obj/effect/landmark/ruin(central_turf, src)
 		return TRUE
 	return FALSE
@@ -70,6 +73,7 @@
 				if(forced_ruins[ruin] > 0) //Load into designated z
 					forced_z = forced_ruins[ruin]
 				forced = TRUE
+				break
 		else //Otherwise just pick random one
 			current_pick = pickweight(ruins_availible)
 
@@ -95,6 +99,7 @@
 			for(var/datum/map_template/ruin/R in ruins_availible)
 				if(R.id == current_pick.id)
 					ruins_availible -= R
+			log_world("Failed to place [current_pick.name] ruin.")
 		else
 			budget -= current_pick.cost
 			if(!current_pick.allow_duplicates)
@@ -102,12 +107,14 @@
 					if(R.id == current_pick.id)
 						ruins_availible -= R
 			if(current_pick.never_spawn_with)
-				for(var/R in ruins_availible)
-					if(istype(R,current_pick.never_spawn_with))
-						ruins_availible -= R
+				for(var/blacklisted_type in current_pick.never_spawn_with)
+					for(var/possible_exclusion in ruins_availible)
+						if(istype(possible_exclusion,blacklisted_type))
+							ruins_availible -= possible_exclusion
 			if(current_pick.always_spawn_with)
 				for(var/v in current_pick.always_spawn_with)
-					for(var/datum/map_template/ruin/linked in SSmapping.ruins_templates) //Because we might want to add space templates as linked of lava templates.
+					for(var/ruin_name in SSmapping.ruins_templates) //Because we might want to add space templates as linked of lava templates.
+						var/datum/map_template/ruin/linked = SSmapping.ruins_templates[ruin_name] //why are these assoc, very annoying.
 						if(istype(linked,v))
 							switch(current_pick.always_spawn_with[v])
 								if(PLACE_SAME_Z)
