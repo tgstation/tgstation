@@ -10,9 +10,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
-	turf_loc_check=FALSE
 
-/obj/effect/decal/cleanable/ash/Initialize()
+/obj/effect/decal/cleanable/ash/Initialize(disable_turf_loc_check=FALSE)
+	if(disable_turf_loc_check)
+		turf_loc_check=FALSE
 	. = ..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
