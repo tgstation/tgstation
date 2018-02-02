@@ -14354,7 +14354,7 @@
 /area/hydroponics)
 "aJO" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aJP" = (
@@ -14728,7 +14728,7 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aKQ" = (
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -19310,7 +19310,7 @@
 /area/crew_quarters/kitchen)
 "aXn" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/machinery/requests_console{
 	department = "Kitchen";
 	departmentType = 2;
@@ -22811,7 +22811,7 @@
 /area/quartermaster/sorting)
 "bgF" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -36367,7 +36367,7 @@
 	pixel_y = 23
 	},
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
@@ -38648,7 +38648,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -23
 	},
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bRN" = (

@@ -17,14 +17,12 @@
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed = 1
 	var/list/holdingitems
 
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
-	//beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
-	//beaker.desc += " May contain blended dust. Don't breathe this in!"
-	//Since grinder can be built now, beaker shouldn't spawn to prevent free beaker exploit
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -35,6 +33,11 @@
 /obj/machinery/reagentgrinder/contents_explosion(severity, target)
 	if(beaker)
 		beaker.ex_act(severity, target)
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	speed = 1
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		speed = M.rating
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -242,7 +245,7 @@
 	pixel_x = old_px
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
-	shake_for(time)
+	shake_for(time / speed)
 	updateUsrDialog()
 	operating = TRUE
 	if(!silent)
@@ -250,7 +253,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, 1)
-	addtimer(CALLBACK(src, .proc/stop_operating), time)
+	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
@@ -316,3 +319,11 @@
 			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
 			beaker.reagents.remove_reagent("eggyolk", amount)
 			beaker.reagents.add_reagent("mayonnaise", amount)
+
+/obj/machinery/reagentgrinder/hasbeaker/Initialize()
+	. = ..()
+	holdingitems = list()
+	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
+	beaker.desc += " May contain blended dust. Don't breathe this in!"
+	icon_state = "juicer0"
+	update_icon()

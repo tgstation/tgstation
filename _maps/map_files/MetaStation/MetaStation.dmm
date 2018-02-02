@@ -32088,7 +32088,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "boQ" = (
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -45879,7 +45879,7 @@
 	pixel_y = -30
 	},
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -47014,7 +47014,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUj" = (
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -55741,7 +55741,7 @@
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cmz" = (
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/machinery/requests_console{
 	department = "Chemistry";
 	departmentType = 2;

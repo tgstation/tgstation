@@ -656,7 +656,7 @@
 /area/holodeck/rec_center/anthophila)
 "cf" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

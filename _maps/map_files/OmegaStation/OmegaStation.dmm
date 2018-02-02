@@ -12235,7 +12235,7 @@
 /area/crew_quarters/bar/atrium)
 "axb" = (
 /obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
@@ -15163,7 +15163,7 @@
 /area/crew_quarters/kitchen)
 "aDa" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
@@ -19255,7 +19255,7 @@
 /area/hydroponics)
 "aKY" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
@@ -23578,7 +23578,7 @@
 /area/medical/chemistry)
 "aUs" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/bot,
@@ -31187,7 +31187,7 @@
 /area/science/xenobiology)
 "bjT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder{
+/obj/machinery/reagentgrinder/hasbeaker{
 	pixel_y = 5
 	},
 /obj/machinery/power/apc{
