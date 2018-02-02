@@ -1261,7 +1261,7 @@
 	id = "arrivals_stationary";
 	name = "delta arrivals";
 	width = 9;
-	roundstart_template = /datum/map_template/shuttle/arrival/delta
+	roundstart_template = "/datum/map_template/shuttle/arrival/delta";
 	},
 /turf/open/space/basic,
 /area/space)
@@ -28029,7 +28029,7 @@
 	id = "mining_home";
 	name = "mining shuttle bay";
 	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/delta
+	roundstart_template = "/datum/map_template/shuttle/mining/delta";
 	},
 /turf/open/space/basic,
 /area/space)
@@ -37733,7 +37733,7 @@
 	id = "laborcamp_home";
 	name = "fore bay 1";
 	width = 9;
-	roundstart_template = /datum/map_template/shuttle/labour/delta
+	roundstart_template = "/datum/map_template/shuttle/labour/delta";
 	},
 /turf/open/space/basic,
 /area/space)

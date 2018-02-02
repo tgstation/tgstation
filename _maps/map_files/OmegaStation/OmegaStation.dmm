@@ -8118,7 +8118,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/delta;
+	roundstart_template = "/datum/map_template/shuttle/mining/delta";
 	width = 7
 	},
 /turf/open/space/basic,
@@ -32462,7 +32462,7 @@
 	height = 17;
 	id = "arrivals_stationary";
 	name = "omega arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/delta;
+	roundstart_template = "/datum/map_template/shuttle/arrival/delta";
 	width = 9
 	},
 /turf/open/space/basic,
