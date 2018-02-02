@@ -615,3 +615,26 @@
 	if(!user.can_use_guns(src))
 		return FALSE
 	return TRUE
+
+/obj/item/extendohand
+	name = "extendo-hand"
+	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "extendohand"
+	item_state = "extendohand"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 0
+	throwforce = 5
+	reach = 2
+
+/obj/item/extendohand/acme
+	name = "\improper ACME Extendo-Hand"
+	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
+
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
+	var/dist = get_dist(M, user)
+	if(dist < reach)
+		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
+		return
+	M.attack_hand(user)

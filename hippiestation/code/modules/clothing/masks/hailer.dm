@@ -54,7 +54,7 @@
 			if(5)
 				to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be modified!</span>")
 	else if(istype(W, /obj/item/wirecutters))
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be broken!</span>")
 		else if(aggressiveness != 4)
 			to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
@@ -71,10 +71,10 @@
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
-	if(!emagged && aggressiveness != 4)
+	if(!(obj_flags & EMAGGED) && aggressiveness != 4)
 		var/mob/living/carbon/H = user
 		if(H.wear_mask == src)
-			emagged = TRUE
+			set_obj_flags = "EMAGGED"
 			flags_1 |= NODROP_1 // If I pull that off will you die?
 			to_chat(user, "<span class='warning'>You overload \the [src]'s Big Guy synthesizer.")
 			aggressiveness = 5

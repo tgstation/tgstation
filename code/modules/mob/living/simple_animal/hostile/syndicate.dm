@@ -45,7 +45,6 @@
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = 1
-	var/obj/effect/light_emitter/red_energy_sword/sord
 
 ///////////////Sword and shield////////////
 
@@ -86,11 +85,16 @@
 	name = "Syndicate Commando"
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
+	var/obj/effect/light_emitter/red_energy_sword/sord
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
 	. = ..()
 	sord = new(src)
 	set_light(4)
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/Destroy()
+	QDEL_NULL(sord)
+	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicatemeleestormtrooper"
@@ -99,11 +103,6 @@
 	maxHealth = 340
 	health = 340
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper/Initialize()
-	. = ..()
-	sord = new(src)
-	set_light(4)
 
 ///////////////Guns////////////
 
@@ -141,10 +140,6 @@
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper/Initialize()
-	. = ..()
-	set_light(4)
 
 ///////////////Misc////////////
 

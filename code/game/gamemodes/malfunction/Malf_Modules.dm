@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/obj/machinery/firealarm/F in GLOB.machines)
 		if(!is_station_level(F.z))
 			continue
-		F.emagged = TRUE
+		F.obj_flags |= EMAGGED
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		if(!is_station_level(AA.z))
 			continue
-		AA.emagged = TRUE
+		AA.obj_flags |= EMAGGED
 	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 

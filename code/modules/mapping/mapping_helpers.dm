@@ -4,8 +4,8 @@
 
 /obj/effect/baseturf_helper //Set the baseturfs of every turf in the /area/ it is placed.
 	name = "baseturf editor"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = ""
 	var/baseturf = null
 	layer = POINT_LAYER
 
@@ -72,7 +72,7 @@
 		return ..()
 	whitelist = typecacheof(whitelist)
 	return ..()
-	
+
 /obj/effect/baseturf_helper/picky/replace_baseturf(turf/thing)
 	if(!whitelist[thing.type])
 		return
@@ -86,18 +86,35 @@
 	name = "picky lavaland basalt baseturf helper"
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
+
+/obj/effect/mapping_helpers
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = ""
+
+/obj/effect/mapping_helpers/Initialize()
+	..()
+	return INITIALIZE_HINT_QDEL
+
+//needs to do its thing before spawn_rivers() is called
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
+
+/obj/effect/mapping_helpers/no_lava
+	icon_state = "no_lava"
+
+/obj/effect/mapping_helpers/no_lava/Initialize()
+	. = ..()
+	var/turf/T = get_turf(src)
+	T.flags_1 |= NO_LAVA_GEN_1
+
 //Contains the list of planetary z-levels defined by the planet_z helper.
 GLOBAL_LIST_EMPTY(z_is_planet)
 
 /obj/effect/mapping_helpers/planet_z //adds the map it is on to the z_is_planet list
 	name = "planet z helper"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
 	layer = POINT_LAYER
 
 /obj/effect/mapping_helpers/planet_z/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
 	GLOB.z_is_planet["[T.z]"] = TRUE
-	return INITIALIZE_HINT_QDEL
 

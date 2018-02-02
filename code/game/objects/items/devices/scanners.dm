@@ -18,6 +18,10 @@ GAS ANALYZER
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
+/obj/item/device/t_scanner/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
@@ -70,6 +74,10 @@ GAS ANALYZER
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
+
+/obj/item/device/healthanalyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
@@ -332,6 +340,10 @@ GAS ANALYZER
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
 
+/obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
+
 /obj/item/device/analyzer/attack_self(mob/user)
 
 	add_fingerprint(user)
@@ -413,6 +425,9 @@ GAS ANALYZER
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
 		return
 	var/mob/living/simple_animal/slime/T = M
+	slime_scan(T, user)
+
+/proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
 	to_chat(user, "Slime scan results:")
 	to_chat(user, "[T.colour] [T.is_adult ? "adult" : "baby"] slime")
 	to_chat(user, "Nutrition: [T.nutrition]/[T.get_max_nutrition()]")

@@ -1,14 +1,26 @@
-#define FAILED_DB_CONNECTION_CUTOFF 5
-#define DM_DEFAULT_CURSOR 0
-
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_DBCORE
+	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
+	var/const/Default_Cursor = 0
+	var/const/Client_Cursor = 1
+	var/const/Server_Cursor = 2
+	//conversions
+	var/const/TEXT_CONV = 1
+	var/const/RSC_FILE_CONV = 2
+	var/const/NUMBER_CONV = 3
+	//column flag values:
+	var/const/IS_NUMERIC = 1
+	var/const/IS_BINARY = 2
+	var/const/IS_NOT_NULL = 4
+	var/const/IS_PRIMARY_KEY = 8
+	var/const/IS_UNSIGNED = 16
 	var/schema_mismatch = 0
 	var/db_minor = 0
 	var/db_major = 0
+// TODO: Investigate more recent type additions and see if I can handle them. - Nadrew
 
 	var/_db_con// This variable contains a reference to the actual database connection.
 	var/failed_connections = 0
@@ -34,7 +46,7 @@ SUBSYSTEM_DEF(dbcore)
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
 		var/sql_station_name = sanitizeSQL(station_name())
-		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[SSticker.mode_result]', end_state = '[SSticker.end_state]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', end_state = '[sanitizeSQL(SSticker.end_state)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
 		query_round_end.Execute()
 	if(IsConnected())
 		Disconnect()
@@ -64,7 +76,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/address = CONFIG_GET(string/address)
 	var/port = CONFIG_GET(number/port)
 
-	_dm_db_connect(_db_con, "dbi:mysql:[db]:[address]:[port]", user, pass, DM_DEFAULT_CURSOR, null)
+	_dm_db_connect(_db_con, "dbi:mysql:[db]:[address]:[port]", user, pass, Default_Cursor, null)
 	. = IsConnected()
 	if (!.)
 		log_sql("Connect() failed | [ErrorMsg()]")
@@ -117,7 +129,7 @@ SUBSYSTEM_DEF(dbcore)
 		return "Database disabled by configuration"
 	return _dm_db_error_msg(_db_con)
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, cursor_handler = DM_DEFAULT_CURSOR)
+/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, cursor_handler = Default_Cursor)
 	if(IsAdminAdvancedProcCall())
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")

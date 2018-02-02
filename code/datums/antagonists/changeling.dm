@@ -78,6 +78,13 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
+	//We'll be using this from now on
+	var/mob/living/carbon/C = owner.current
+	if(istype(C))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(B && (B.decoy_override != initial(B.decoy_override)))
+			B.vital = TRUE
+			B.decoy_override = FALSE
 	remove_changeling_powers()
 	owner.objectives -= objectives
 	. = ..()
