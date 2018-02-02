@@ -14,7 +14,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -209,7 +209,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -514,7 +514,7 @@
 "aU" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -637,7 +637,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -810,7 +810,7 @@
 	dir = 4;
 	name = "Syndicate Listening Post APC";
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,

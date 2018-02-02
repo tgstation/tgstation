@@ -44,7 +44,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -169,7 +169,7 @@
 	dir = 8;
 	name = "Chemistry APC";
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -266,7 +266,7 @@
 "dL" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/closet/crate,
 /obj/item/extinguisher{
@@ -416,7 +416,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -508,7 +508,7 @@
 	dir = 1;
 	name = "Cargo Bay APC";
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -1171,7 +1171,7 @@
 	dir = 1;
 	name = "Virology APC";
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -1204,7 +1204,7 @@
 	dir = 2;
 	name = "Experimentation Lab APC";
 	pixel_y = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -1358,7 +1358,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/table,
 /obj/item/clothing/suit/hazardvest,
@@ -1464,7 +1464,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -2014,7 +2014,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -2286,7 +2286,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2423,7 +2423,7 @@
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2457,7 +2457,7 @@
 /obj/item/ammo_box/magazine/m10mm,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2779,7 +2779,7 @@
 "iB" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -2868,7 +2868,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -3005,7 +3005,7 @@
 	dir = 2;
 	name = "Dormitories APC";
 	pixel_y = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -3156,7 +3156,7 @@
 	dir = 8;
 	name = "Primary Hallway APC";
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -3190,7 +3190,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3225,7 +3225,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3420,7 +3420,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -3802,7 +3802,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/vending/coffee{
 	extended_inventory = 1
@@ -3905,7 +3905,7 @@
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -4470,7 +4470,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -4557,7 +4557,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/vault{
@@ -4698,7 +4698,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
@@ -4817,7 +4817,7 @@
 	dir = 2;
 	name = "Bar APC";
 	pixel_y = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
@@ -5266,7 +5266,7 @@
 	dir = 1;
 	name = "Arrival Hallway APC";
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -5439,7 +5439,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -5645,7 +5645,7 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -5715,7 +5715,7 @@
 	dir = 4;
 	name = "Medbay APC";
 	pixel_x = 24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -5799,7 +5799,7 @@
 	dir = 2;
 	name = "Telecommunications APC";
 	pixel_y = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
