@@ -31013,7 +31013,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -34204,7 +34205,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
@@ -34215,7 +34217,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
@@ -34291,7 +34294,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
@@ -34302,7 +34306,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
@@ -35012,7 +35017,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Command Desk";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -36010,7 +36016,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Emergency Escape";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36737,7 +36744,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Council Chamber";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -36780,7 +36788,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Council Chamber";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -36806,7 +36815,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
@@ -38324,7 +38334,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -38337,7 +38348,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -38427,7 +38439,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"

@@ -18997,7 +18997,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 4;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -19015,7 +19016,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 8;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -19212,7 +19214,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 4;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -19245,7 +19248,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 8;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20264,7 +20268,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Conference Room";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -20304,7 +20309,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -24622,7 +24628,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -24634,7 +24641,8 @@
 "bld" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Captain's Office Maintenance";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -27025,7 +27033,8 @@
 "bqK" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Teleporter Maintenance";
-	req_access_txt = "17"
+	req_access_txt = "17";
+	security_level = 1
 	},
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32

@@ -625,7 +625,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/directions/engineering{
@@ -650,7 +651,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -694,7 +696,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -710,7 +713,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -1466,7 +1470,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Council Chambers";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1568,7 +1573,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Council Chambers";
 	req_access = null;
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2170,7 +2176,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -2712,7 +2719,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel's Office";
 	req_access = null;
-	req_access_txt = "57"
+	req_access_txt = "57";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2966,7 +2974,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Emergency Escape";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -3460,7 +3469,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -4342,7 +4352,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -4398,7 +4409,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 0;
 	name = "Bridge Access";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
