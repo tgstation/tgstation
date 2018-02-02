@@ -37500,6 +37500,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bPb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Circuitry Lab";
 	req_access_txt = "47"
@@ -37513,7 +37514,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bPc" = (
