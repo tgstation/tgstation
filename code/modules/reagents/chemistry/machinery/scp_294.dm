@@ -19,6 +19,14 @@
 		"tricord" = "tricordrazine"
 	)
 
+/obj/machinery/chem_dispenser/scp_294/Initialize()
+	. = ..()
+	GLOB.poi_list += src
+
+/obj/machinery/chem_dispenser/scp_294/Destroy()
+	. = ..()
+	GLOB.poi_list -= src
+
 /obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
