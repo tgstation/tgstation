@@ -223,7 +223,7 @@
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
-/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,Radio=FALSE)
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,Radio=FALSE, width, height, slidecolor)
 	if (!User)
 		return
 
@@ -232,7 +232,7 @@
 		output += {"<li>
         				<label class="switch">
         					<input type="[Radio ? "radio" : "checkbox"]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
-      							<div class="slider"></div>
+      							<div class="slider [slidecolor ? "slider[slidecolor]" : ""]"></div>
       								<span>[i["name"]]</span>
     						</label>
     					</li>"}
@@ -246,7 +246,7 @@
 		output += {"<button type="submit" name="button" value="3" style="font-size:large;float:right">[Button3]</button>"}
 
 	output += {"</form></div>"}
-	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 350, src, StealFocus, Timeout)
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, width, height, src, StealFocus, Timeout)
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
@@ -266,20 +266,20 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values,Radio=FALSE)
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values,Radio=FALSE, width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values,Radio)
+	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values,Radio, width, height, slidecolor)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value)
+/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor)
 	if (!User || !(bitfield in GLOB.bitfields))
 		return
 	var/list/pickerlist = list()
@@ -288,7 +288,7 @@
 			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i))
 		else
 			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i))
-	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist)
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button

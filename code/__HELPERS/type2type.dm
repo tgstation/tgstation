@@ -178,38 +178,39 @@
 			return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
-/proc/rights2text(rights, seperator="", list/adds, list/subs)
+/proc/rights2text(rights, seperator="", exclude)
+	if(exclude)
+		seperator += "-"
+	else
+		seperator += "+"
 	if(rights & R_BUILDMODE)
-		. += "[seperator]+BUILDMODE"
+		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
-		. += "[seperator]+ADMIN"
+		. += "[seperator]ADMIN"
 	if(rights & R_BAN)
-		. += "[seperator]+BAN"
+		. += "[seperator]BAN"
 	if(rights & R_FUN)
-		. += "[seperator]+FUN"
+		. += "[seperator]FUN"
 	if(rights & R_SERVER)
-		. += "[seperator]+SERVER"
+		. += "[seperator]SERVER"
 	if(rights & R_DEBUG)
-		. += "[seperator]+DEBUG"
+		. += "[seperator]DEBUG"
 	if(rights & R_POSSESS)
-		. += "[seperator]+POSSESS"
+		. += "[seperator]POSSESS"
 	if(rights & R_PERMISSIONS)
-		. += "[seperator]+PERMISSIONS"
+		. += "[seperator]PERMISSIONS"
 	if(rights & R_STEALTH)
-		. += "[seperator]+STEALTH"
+		. += "[seperator]STEALTH"
 	if(rights & R_POLL)
-		. += "[seperator]+POLL"
+		. += "[seperator]POLL"
 	if(rights & R_VAREDIT)
-		. += "[seperator]+VAREDIT"
+		. += "[seperator]VAREDIT"
 	if(rights & R_SOUNDS)
-		. += "[seperator]+SOUND"
+		. += "[seperator]SOUND"
 	if(rights & R_SPAWN)
-		. += "[seperator]+SPAWN"
-
-	for(var/verbpath in adds)
-		. += "[seperator]+[verbpath]"
-	for(var/verbpath in subs)
-		. += "[seperator]-[verbpath]"
+		. += "[seperator]SPAWN"
+	if(rights & R_AUTOLOGIN)
+		. += "[seperator]AUTOLOGIN"
 	return .
 
 /proc/ui_style2icon(ui_style)

@@ -337,12 +337,24 @@ div.notice
   transition: .4s;
 }
 
+.sliderred:before {
+  background-color: #d6858b;
+}
+
 input:checked + .slider {
   background-color: #40628a;
 }
 
+input:checked + .sliderred {
+  background-color: #a92621;
+}
+
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
+}
+
+input:focus + .sliderred {
+  box-shadow: 0 0 1px #f3212d;
 }
 
 input:checked + .slider:before {

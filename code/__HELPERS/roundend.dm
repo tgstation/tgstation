@@ -83,7 +83,7 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		
+
 		var/list/antag_info = list()
 		antag_info["key"] = A.owner.key
 		antag_info["name"] = A.owner.name
@@ -486,3 +486,26 @@
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 		count++
 	return objective_parts.Join("<br>")
+
+/datum/controller/subsystem/ticker/proc/save_admin_data()
+	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
+		return
+	else
+		load_admins()
+	if(CONFIG_GET(flag/admin_legacy_system)) //database failure when loading admins, reverted to legacy system
+		return
+	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	query_admin_rank_update.Execute()
+	//legacy-format backup file generation
+	//for extra safety in an edge case with multiple servers we don't directly overwrite existing file
+	//instead we'll make these temp files and cut once all data is written
+	for(var/datum/admins/D in GLOB.admin_datums)
+		WRITE_FILE("config/admins_tmp.txt", "[D.target] = [D.rank.name]")
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+		WRITE_FILE("config/admins_ranks_tmp.txt", "[R.name] =[rights2text(R.rights," ")][rights2text(R.exclude_rights," ", 1)]")
+	fdel("config/admins.txt")
+	fdel("config/admins_ranks.txt")
+	fcopy("config/admins_tmp.txt", "config/admins.txt")
+	fcopy("config/admins_ranks_tmp.txt", "config/admins_ranks.txt")
+	fdel("config/admins_tmp.txt")
+	fdel("config/admins_ranks_tmp.txt")

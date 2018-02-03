@@ -598,6 +598,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+	save_admin_data()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
