@@ -109,7 +109,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
@@ -158,7 +158,7 @@
 	areastring = "/area/ai_monitored/turret_protected/ai";
 	pixel_y = 24
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
