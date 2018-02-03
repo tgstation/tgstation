@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(persistence)
 			F.hide(1)
 		if(ispath(path))
 			var/spawned_item = new path(F)
-			spawned_objects += spawned_item
+			spawned_objects[spawned_item] = TRUE
 		placed_satchel++
 	var/free_satchels = 0
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
