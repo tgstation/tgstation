@@ -4,7 +4,15 @@
 //  -Cyberboss
 
 /datum/map_config
+	// Metadata
 	var/config_filename = "_maps/boxstation.json"
+	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
+	// Config from maps.txt
+	var/config_max_users = 0
+	var/config_min_users = 0
+	var/voteweight = 1
+
+	// Config actually from the JSON - should default to Box
 	var/map_name = "Box Station"
 	var/map_path = "map_files/BoxStation"
 	var/map_file = "BoxStation.dmm"
@@ -30,19 +38,18 @@
 									EMPTY_AREA_6 = CROSSLINKED,
 									EMPTY_AREA_7 = CROSSLINKED,
 									EMPTY_AREA_8 = CROSSLINKED)
-	var/defaulted = TRUE    //if New failed
 
-	var/config_max_users = 0
-	var/config_min_users = 0
-	var/voteweight = 1
 	var/allow_custom_shuttles = TRUE
 
-/datum/map_config/New(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
-	if(default_to_box)
-		return
-	LoadConfig(filename, error_if_missing)
-	if(delete_after)
+/proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
+	var/datum/map_config/config = new
+	if (default_to_box)
+		return config
+	if (!config.LoadConfig(filename, error_if_missing))
+		return new /datum/map_config  // Fall back to Box
+	if (delete_after)
 		fdel(filename)
+	return config
 
 /datum/map_config/proc/LoadConfig(filename, error_if_missing)
 	if(!fexists(filename))
@@ -92,6 +99,7 @@
 			transition_config[TransitionStringToEnum(I)] = TransitionStringToEnum(jtcl[I])
 
 	defaulted = FALSE
+	return TRUE
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)

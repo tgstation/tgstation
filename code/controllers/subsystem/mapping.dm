@@ -30,9 +30,9 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
-		config = new(FORCE_MAP)
+		config = load_map_config(FORCE_MAP)
 #else
-		config = new(error_if_missing = FALSE)
+		config = load_map_config(error_if_missing = FALSE)
 #endif
 	return ..()
 
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
-		next_map_config = new(default_to_box = TRUE)
+		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
 		return
 
