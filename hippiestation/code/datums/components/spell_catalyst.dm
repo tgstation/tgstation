@@ -5,4 +5,4 @@
 	RegisterSignal(COMSIG_PARENT_EXAMINE,.proc/OnExamine)
 
 /datum/component/spell_catalyst/proc/OnExamine(mob/user)
-	to_chat(user, "<span class='notice'The [parent] gives off a gentle, magical blue glow.</span>")
+	to_chat(user, "<span class='notice'>[parent] gives off a gentle, magical blue glow.</span>")
