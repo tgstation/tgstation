@@ -52,7 +52,7 @@
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antagonists(/datum/antagonist/nukeop))
+	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE

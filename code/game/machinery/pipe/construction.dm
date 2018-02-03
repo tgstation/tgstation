@@ -125,11 +125,10 @@ Buildable meters
 	setDir(turn(dir,-90))
 	fixdir()
 
-/obj/item/pipe/attackby(obj/item/W, mob/user, params)
-	if (!istype(W, /obj/item/wrench))
-		return ..()
-	if (!isturf(loc))
+/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+	if(!isturf(loc))
 		return TRUE
+
 	add_fingerprint(user)
 
 	fixdir()
@@ -150,6 +149,7 @@ Buildable meters
 	var/obj/machinery/atmospherics/A = new pipe_type(loc)
 	build_pipe(A)
 	A.on_construction(color, piping_layer)
+	transfer_fingerprints_to(A)
 
 	playsound(src, W.usesound, 50, 1)
 	user.visible_message( \

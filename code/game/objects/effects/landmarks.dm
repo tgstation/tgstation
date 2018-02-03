@@ -17,10 +17,10 @@
 /obj/effect/landmark/singularity_pull()
 	return
 
+INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/New()
-	..()
-	tag = text("landmark*[]", name)
+/obj/effect/landmark/Initialize()
+	. = ..()
 	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()

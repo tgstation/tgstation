@@ -19,7 +19,7 @@
 /datum/controller/subsystem/mapping/proc/add_new_zlevel(name, linkage = SELFLOOPING, traits = list(), z_type = /datum/space_level)
 	var/new_z = z_list.len + 1
 	if (world.maxz < new_z)
-		++world.maxz
+		world.incrementMaxZ()
 		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, linkage, traits)
