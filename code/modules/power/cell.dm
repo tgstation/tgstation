@@ -103,11 +103,6 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/reagent_containers/syringe))
-		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
-
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
 	rigged = reagents.has_reagent("plasma", 5)
 	..()
