@@ -23,8 +23,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 14;
-	tag = ""
+	pixel_x = 14
 	},
 /obj/structure/mirror{
 	pixel_x = 24
@@ -66,8 +65,7 @@
 "ak" = (
 /obj/effect/turf_decal/tile/beige/corner{
 	dir = 9;
-	icon_state = "corner_white";
-	tag = ""
+	icon_state = "corner_white"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -79,8 +77,7 @@
 /obj/machinery/microwave,
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -91,16 +88,14 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "an" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/machinery/chem_dispenser/scp_294,
 /turf/open/floor/plasteel/airless,
@@ -108,8 +103,7 @@
 "ao" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel/airless,
@@ -118,8 +112,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -128,7 +121,6 @@
 /area/ruin/space/has_grav/powered/scp_294)
 "aq" = (
 /obj/effect/turf_decal/tile/beige/corner{
-	tag = "icon-corner_white (NORTHEAST)";
 	icon_state = "corner_white";
 	dir = 5
 	},
@@ -140,8 +132,7 @@
 "ar" = (
 /obj/effect/turf_decal/tile/beige/corner{
 	dir = 9;
-	icon_state = "corner_white";
-	tag = ""
+	icon_state = "corner_white"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -152,8 +143,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/beige/corner{
 	dir = 8;
-	icon_state = "corner_white";
-	tag = ""
+	icon_state = "corner_white"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -172,8 +162,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/beige/corner{
 	dir = 4;
-	icon_state = "corner_white";
-	tag = ""
+	icon_state = "corner_white"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -182,7 +171,6 @@
 /area/ruin/space/has_grav/powered/scp_294)
 "av" = (
 /obj/effect/turf_decal/tile/beige/corner{
-	tag = "icon-corner_white (NORTHEAST)";
 	icon_state = "corner_white";
 	dir = 5
 	},
@@ -199,8 +187,7 @@
 "ax" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 8;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
@@ -220,22 +207,19 @@
 "aA" = (
 /obj/effect/turf_decal/tile/beige/corner{
 	dir = 9;
-	icon_state = "corner_white";
-	tag = ""
+	icon_state = "corner_white"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aB" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 1;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aC" = (
 /obj/effect/turf_decal/tile/beige/corner{
-	tag = "icon-corner_white (NORTHEAST)";
 	icon_state = "corner_white";
 	dir = 5
 	},
@@ -248,8 +232,7 @@
 "aE" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 4;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
@@ -266,7 +249,6 @@
 /area/ruin/space/has_grav/powered/scp_294)
 "aI" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-corner (WEST)";
 	icon_state = "corner";
 	dir = 8
 	},
@@ -281,21 +263,18 @@
 /obj/item/chair,
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 8;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aL" = (
 /obj/structure/chair/office{
 	dir = 4;
-	icon_state = "chair";
-	tag = ""
+	icon_state = "chair"
 	},
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 4;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
@@ -306,13 +285,11 @@
 "aN" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 4;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/structure/chair/office{
 	dir = 8;
-	icon_state = "chair";
-	tag = ""
+	icon_state = "chair"
 	},
 /obj/item/shard,
 /turf/open/floor/plasteel/airless,
@@ -369,8 +346,7 @@
 "aX" = (
 /obj/effect/turf_decal/tile/beige/side{
 	dir = 4;
-	icon_state = "corner_white_side";
-	tag = ""
+	icon_state = "corner_white_side"
 	},
 /obj/item/chair,
 /turf/open/floor/plasteel/airless,
