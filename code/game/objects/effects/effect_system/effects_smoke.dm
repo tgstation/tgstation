@@ -16,6 +16,7 @@
 	var/amount = 4
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
+	var/spread_delay = 1 //delay between each smoke tile spreading
 
 
 /obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
@@ -88,32 +89,35 @@
 		S.amount = amount-1
 		S.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		S.lifetime = lifetime
+		S.spread_delay = spread_delay
 		if(S.amount>0)
 			if(opaque)
 				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
 	if(newsmokes.len)
-		spawn(1) //the smoke spreads rapidly but not instantly
-			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
-				SM.spread_smoke()
+		for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+			addtimer(CALLBACK(SM, /obj/effect/particle_effect/smoke.proc/spread_smoke), spread_delay)
 
 
 /datum/effect_system/smoke_spread
 	var/amount = 10
+	var/spread_delay = 1
 	effect_type = /obj/effect/particle_effect/smoke
 
-/datum/effect_system/smoke_spread/set_up(radius = 5, loca)
+/datum/effect_system/smoke_spread/set_up(radius = 5, loca, _spread_delay = 1)
 	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
 	amount = radius
+	spread_delay = _spread_delay
 
 /datum/effect_system/smoke_spread/start()
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/S = new effect_type(location)
+	S.spread_delay = spread_delay
 	S.amount = amount
 	if(S.amount)
 		S.spread_smoke()
@@ -265,11 +269,12 @@
 	chemholder = null
 	return ..()
 
-/datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
+/datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0, _spread_delay = 1)
 	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
+	spread_delay = _spread_delay
 	amount = radius
 	carry.copy_to(chemholder, carry.total_volume, 4) //The smoke holds 4 times the total reagents volume for balance purposes.
 
@@ -301,6 +306,7 @@
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/particle_effect/smoke/chem/S = new effect_type(location)
+	S.spread_delay = spread_delay
 
 	if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 		chemholder.reagents.copy_to(S, chemholder.reagents.total_volume)
