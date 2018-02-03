@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "The firelock below the Circuitry Lab airlock on Boxstation will no longer cover it up when the airlock is open."

@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - tweak: "Moved the lathe from box's cargo room to box's cargo office which miners now can access."
-  - tweak: "Harmonized medbay storage access requirements so all maps allow all medbay personnel into medbay storage like on Meta and Delta."
-  - tweak: "Moved service lathes into a dedicated service hall/storage area if they weren't accessible by janitor or bartender."
