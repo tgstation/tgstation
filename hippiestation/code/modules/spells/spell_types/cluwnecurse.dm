@@ -6,6 +6,7 @@
 	charge_max	= 600
 	charge_counter = 0
 	clothes_req = 1
+	staff_req = 1 // no more "oh I got stunned time to cluwne curse" bollocks
 	stat_allowed = 0
 	invocation = "CLU WO'NIS CA'TE'BEST'IS MAXIMUS!"
 	invocation_type = "shout"
