@@ -54,6 +54,7 @@
 "aj" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
 	desc = "An energy blaster auto-turret designed to contain and terminate in case of a breach in security.";
+	faction = "scp";
 	mode = 1;
 	name = "emergency containment breach turret"
 	},
@@ -70,6 +71,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/spawner/trap,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "al" = (
@@ -127,6 +129,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/spawner/trap,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "ar" = (
@@ -209,6 +212,9 @@
 	dir = 9;
 	icon_state = "corner_white"
 	},
+/mob/living/simple_animal/hostile/mimic{
+	faction = list("mimic","scp")
+	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aB" = (
@@ -216,6 +222,7 @@
 	dir = 1;
 	icon_state = "corner_white_side"
 	},
+/obj/effect/spawner/trap,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aC" = (
@@ -317,6 +324,9 @@
 /area/ruin/space/has_grav/powered/scp_294)
 "aS" = (
 /obj/item/stack/tile/plasteel,
+/mob/living/simple_animal/hostile/mimic{
+	faction = list("mimic","scp")
+	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "aT" = (
@@ -397,6 +407,47 @@
 /obj/item/trash/chips,
 /turf/template_noop,
 /area/template_noop)
+"bg" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"bh" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"bi" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"bj" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"bk" = (
+/obj/structure/table_frame,
+/obj/effect/spawner/trap,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"bl" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"bm" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"bn" = (
+/obj/effect/spawner/trap,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
 
 (1,1,1) = {"
 aa
@@ -454,7 +505,7 @@ ab
 aj
 ar
 ax
-aH
+bj
 aP
 ac
 aa
@@ -488,7 +539,7 @@ at
 az
 aJ
 aQ
-aH
+bm
 ad
 aa
 aa
@@ -539,19 +590,19 @@ aE
 aX
 aE
 ad
-ad
+bn
 aa
 "}
 (10,1,1) = {"
 ac
-ad
+bh
 ag
 ab
 ap
-at
+bi
 az
 aM
-aQ
+bk
 aY
 bc
 aR
@@ -559,7 +610,7 @@ bd
 ac
 "}
 (11,1,1) = {"
-ad
+bg
 af
 ah
 ai
@@ -631,7 +682,7 @@ aa
 aw
 ac
 ac
-ad
+bl
 ac
 aa
 ac
