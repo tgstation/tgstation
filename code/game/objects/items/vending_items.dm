@@ -60,8 +60,8 @@
 /obj/item/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
-	charges = list(12, 3, 2)// of 36 standard, 9 contraband, 6 premium
-	init_charges = list(12, 3, 2)
+	charges = list(12, 1, 2)// of 36 standard, 3 contraband, 6 premium
+	init_charges = list(12, 1, 2)
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"

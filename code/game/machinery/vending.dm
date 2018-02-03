@@ -831,7 +831,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/storage/box/matches = 10,
 					/obj/item/lighter/greyscale = 4,
 					/obj/item/storage/fancy/rollingpapers = 5)
-	contraband = list(/obj/item/lighter = 3, /obj/item/clothing/mask/vape = 5)
+	contraband = list(/obj/item/lighter = 3) // vapes were removed on 31/01/18, never again you'll be allowed to vape touch-based chems 
 	premium = list(/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3, \
 	/obj/item/storage/fancy/cigarettes/cigars = 1, /obj/item/storage/fancy/cigarettes/cigars/havana = 1, /obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/vending_refill/cigarette
