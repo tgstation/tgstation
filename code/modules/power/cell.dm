@@ -109,7 +109,7 @@
 		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = has_reagent("plasma", 5)
+	rigged = regents.has_reagent("plasma", 5)
 	..()
 
 
