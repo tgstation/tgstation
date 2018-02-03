@@ -11,13 +11,15 @@
 	icon_state = "ash"
 	mergeable_decal = TRUE
 
-/obj/effect/decal/cleanable/ash/Initialize(disable_turf_loc_check=FALSE)
-	if(disable_turf_loc_check)
-		turf_loc_check=FALSE
+/obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
 	reagents.add_reagent("ash", 30)
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+/obj/effect/decal/cleanable/ash/crematorium
+//crematoriums need their own ash cause default ash deletes itself if created in an obj
+	turf_loc_check = FALSE
 
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
