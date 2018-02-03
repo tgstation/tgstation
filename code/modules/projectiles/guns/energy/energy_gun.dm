@@ -25,6 +25,10 @@
 	gun_light = new /obj/item/device/flashlight/seclite(src)
 	return ..()
 
+/obj/item/gun/energy/e_gun/mini/disabler
+	name = "disabler pistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+
 /obj/item/gun/energy/e_gun/mini/update_icon()
 	..()
 	if(gun_light && gun_light.on)
