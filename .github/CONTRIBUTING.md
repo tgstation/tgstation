@@ -269,6 +269,12 @@ Like all languages, Dream Maker has its quirks, some of them are beneficial to u
 * In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
 HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for loop!
 
+### for(var/A in list) VS for(var/i in 1 to list.len)
+The former is faster than the latter, as shown by the following profile results:
+https://file.house/zy7H.png
+Code used for the test in a readable format:
+https://pastebin.com/w50uERkG
+
 
 * Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
 ```
