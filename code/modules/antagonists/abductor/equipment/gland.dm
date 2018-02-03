@@ -262,10 +262,9 @@
 	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/egg/activate()
-	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
-	egg.reagents.add_reagent("sacid",20)
-	egg.desc += " It smells bad."
+	owner.visible_message("<span class='alertalien'>[owner] [pick(EGG_LAYING_MESSAGES)]</span>")
+	var/turf/T = owner.drop_location()
+	new /obj/item/reagent_containers/food/snacks/egg/acidic(T)
 
 /obj/item/organ/heart/gland/electric
 	cooldown_low = 800
