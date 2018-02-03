@@ -329,8 +329,8 @@
 /obj/item/storage/backpack/satchel/flat/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
 	if(SSpersistence.spawned_objects[W])
 		to_chat(user, "<span class='warning'>[W] is unstable after its journey through space and time, it wouldn't survive another trip.</span>")
-		return 0
-	..()
+		return FALSE
+	return ..()
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
