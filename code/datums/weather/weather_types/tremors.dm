@@ -24,6 +24,8 @@
 		G.tremors()
 
 /datum/weather/tremors/weather_act(mob/living/L)
+	if(L.is_flying())
+		return
 	shake_camera(L, 30, 1)
 	L.confused++
 
@@ -40,6 +42,8 @@
 	weather_sound = 'sound/weather/earthquake.ogg'
 
 /datum/weather/tremors/earthquake/weather_act(mob/living/L)
+	if(L.is_flying())
+		return
 	shake_camera(L, 30, 2)
 	L.confused += 2
 	if(isturf(L.loc))
