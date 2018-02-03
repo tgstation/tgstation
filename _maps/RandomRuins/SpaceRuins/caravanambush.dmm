@@ -1825,6 +1825,9 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
+/obj/item/device/gps{
+	gpstag = "Distress Signal"
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 6;
 	initial_gas_mix = "TEMP=2.7"

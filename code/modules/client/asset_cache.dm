@@ -17,6 +17,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //When sending mutiple assets, how many before we give the client a quaint little sending resources message
 #define ASSET_CACHE_TELL_CLIENT_AMOUNT 8
 
+//When passively preloading assets, how many to send at once? Too high creates noticable lag where as too low can flood the client's cache with "verify" files
+#define ASSET_CACHE_PRELOAD_CONCURRENT 3
+
 /client
 	var/list/cache = list() // List of all assets sent to this client by the asset cache.
 	var/list/completed_asset_jobs = list() // List of all completed jobs, awaiting acknowledgement.
@@ -42,12 +45,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		return 0
 
 	client << browse_rsc(SSassets.cache[asset_name], asset_name)
-	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
-		if (client)
-			client.cache += asset_name
+	if(!verify)
+		client.cache += asset_name
 		return 1
-	if (!client)
-		return 0
 
 	client.sending |= asset_name
 	var/job = ++client.last_asset_job
@@ -94,12 +94,10 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		if (asset in SSassets.cache)
 			client << browse_rsc(SSassets.cache[asset], asset)
 
-	if(!verify || !winexists(client, "asset_cache_browser")) // Can't access the asset cache browser, rip.
-		if (client)
-			client.cache += unreceived
+	if(!verify) // Can't access the asset cache browser, rip.
+		client.cache += unreceived
 		return 1
-	if (!client)
-		return 0
+		
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
 
@@ -125,12 +123,19 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 //This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
 //The proc calls procs that sleep for long times.
 /proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
+	var/concurrent_tracker = 1
 	for(var/file in files)
 		if (!client)
 			break
 		if (register_asset)
-			register_asset(file,files[file])
-		send_asset(client,file)
+			register_asset(file, files[file])
+		if (concurrent_tracker >= ASSET_CACHE_PRELOAD_CONCURRENT)
+			concurrent_tracker = 1
+			send_asset(client, file)
+		else
+			concurrent_tracker++
+			send_asset(client, file, verify=FALSE)
+			
 		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.

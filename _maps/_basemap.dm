@@ -6,7 +6,7 @@
 #ifndef LOWMEMORYMODE
 
 	#include "map_files\generic\Space.dmm"
-	#include "map_files\generic\SpaceDock.dmm"
+	#include "map_files\generic\Space2.dmm"
 	#include "map_files\Mining\Lavaland.dmm"
 	#include "map_files\generic\City_of_Cogs.dmm"
 

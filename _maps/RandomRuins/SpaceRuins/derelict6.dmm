@@ -4,14 +4,16 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
-"ac" = (
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg3";
-	icon_state = "platingdmg3"
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular";
+	dir = 1
 	},
-/area/ruin/unpowered)
+/turf/template_noop,
+/area/space/nearstation)
+"ac" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "ad" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
@@ -23,14 +25,14 @@
 /obj/item/stack/sheet/metal,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
-/obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile";
+	dir = 8
 	},
-/area/ruin/unpowered)
+/turf/template_noop,
+/area/template_noop)
 "ag" = (
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
@@ -58,11 +60,13 @@
 	},
 /area/ruin/unpowered)
 "al" = (
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular";
+	dir = 4
 	},
-/area/ruin/unpowered)
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "am" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -167,6 +171,10 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
+/turf/open/floor/plasteel/bar{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
@@ -276,22 +284,15 @@
 /turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aY" = (
-/turf/open/floor/plasteel/bar{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/obj/structure/lattice,
 /obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
-	},
-/area/ruin/unpowered)
-"aZ" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
-	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
+"aZ" = (
+/obj/structure/lattice,
+/obj/item/shard,
+/turf/template_noop,
+/area/space/nearstation)
 "ba" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/plasteel/airless/cafeteria,
@@ -315,11 +316,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
-"bf" = (
-/obj/structure/lattice,
-/obj/item/stack/sheet/metal,
-/turf/template_noop,
-/area/template_noop)
 "bg" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
@@ -370,11 +366,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
-"bn" = (
-/obj/structure/lattice,
-/obj/item/shard,
-/turf/template_noop,
-/area/template_noop)
 "bo" = (
 /obj/item/stack/rods,
 /turf/template_noop,
@@ -402,14 +393,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
-"bs" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 1
-	},
-/turf/template_noop,
-/area/template_noop)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
 	icon_state = "side";
@@ -466,14 +449,6 @@
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
 	},
-/turf/template_noop,
-/area/template_noop)
-"bB" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular";
-	dir = 4
-	},
-/obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "bC" = (
@@ -540,11 +515,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
-aa
-aa
+ac
 aa
 aa
 aa
@@ -565,12 +536,10 @@ aa
 aa
 aa
 aa
-aa
-aa
 bA
 aa
-ab
-ab
+ac
+ac
 aa
 aa
 aa
@@ -583,34 +552,28 @@ aa
 aa
 aa
 aa
-aZ
-aa
 "}
 (3,1,1) = {"
 aa
 aa
 aa
 aa
+ac
 aa
-aa
-ab
-aa
-ab
+ac
 bC
 bE
 aa
 aa
 aa
-ab
-ab
+ac
+ac
 aa
-ab
-ab
-aa
-aa
+ac
+ac
 aa
 aa
-aa
+af
 aa
 "}
 (4,1,1) = {"
@@ -618,31 +581,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
 ac
+ap
 aw
 ag
 ag
-aD
+be
 bH
 aa
-ab
-ab
+ac
+ac
 aa
-ab
-ab
-ab
-aa
-aa
+ac
+ac
+ac
 aa
 aa
 aa
 "}
 (5,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -653,17 +610,15 @@ ag
 ag
 ag
 ah
-al
-al
-al
-al
-al
-al
-al
-al
+be
+be
+be
+be
+be
+be
+be
+be
 bH
-aa
-aa
 aa
 aa
 "}
@@ -671,11 +626,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
 ac
-ac
+ap
+ap
 at
 bD
 ag
@@ -688,20 +641,16 @@ bg
 bl
 ah
 ay
-al
-ab
-aa
-aa
+be
+ac
 aa
 "}
 (7,1,1) = {"
 aa
-aa
-aa
-ab
-ab
-ab
-al
+ac
+ac
+ac
+be
 ai
 aw
 ag
@@ -714,20 +663,16 @@ ap
 ap
 ah
 ah
-al
-al
-aa
-aa
+be
+be
 aa
 aa
 "}
 (8,1,1) = {"
 aa
-aa
-aa
-ab
-ab
 ac
+ac
+ap
 am
 ai
 ag
@@ -743,18 +688,14 @@ aq
 bp
 ah
 as
-ab
-aa
-aa
+ac
 aa
 "}
 (9,1,1) = {"
 aa
-aa
-aa
-ab
-ab
 ac
+ac
+ap
 ah
 ai
 av
@@ -769,19 +710,15 @@ bh
 ap
 ap
 br
-ab
-ab
-aa
-aa
+ac
+ac
 aa
 "}
 (10,1,1) = {"
 aa
 aa
 aa
-aa
-aa
-ac
+ap
 ah
 aq
 ag
@@ -796,19 +733,15 @@ bi
 ap
 bq
 bl
-ab
-ab
-aa
-aa
+ac
+ac
 aa
 "}
 (11,1,1) = {"
 aa
 aa
-aa
-aa
 bw
-af
+as
 ai
 ai
 ag
@@ -823,17 +756,13 @@ bj
 au
 ap
 aq
+ac
+ac
 ab
-ab
-bs
-aa
-aa
 "}
 (12,1,1) = {"
-aa
-aa
-bs
 ab
+ac
 ag
 ag
 an
@@ -850,16 +779,12 @@ aR
 aR
 aR
 ai
-ab
-ab
-ab
-aa
-aa
+ac
+ac
+ac
 "}
 (13,1,1) = {"
-aa
-aa
-ab
+ac
 bt
 ag
 by
@@ -877,15 +802,11 @@ aR
 aS
 ai
 ai
-ab
-ab
-ab
-aa
-aa
+ac
+ac
+ac
 "}
 (14,1,1) = {"
-aa
-aa
 aa
 bu
 ag
@@ -904,15 +825,11 @@ aM
 aX
 aM
 ai
-ab
-ab
-ab
-aa
-aa
+ac
+ac
+ac
 "}
 (15,1,1) = {"
-aa
-aa
 aa
 aa
 ad
@@ -931,18 +848,14 @@ aT
 au
 be
 ai
-ab
-aa
-aa
+ac
 aa
 aa
 "}
 (16,1,1) = {"
 aa
-aa
-aa
-ab
 ac
+ap
 ap
 ao
 ai
@@ -952,23 +865,19 @@ ag
 aG
 aO
 bI
-ab
+ac
 be
 ap
-ab
+ac
 au
 aq
-aa
-aa
 aa
 aa
 aa
 "}
 (17,1,1) = {"
 aa
-aa
-aa
-ab
+ac
 bx
 ak
 ap
@@ -984,20 +893,16 @@ ap
 bk
 bm
 az
-ab
+ac
 bo
-aa
-aa
 aa
 aa
 "}
 (18,1,1) = {"
 aa
 aa
-aa
-aa
 ae
-ac
+ap
 ap
 aq
 ag
@@ -1008,11 +913,9 @@ aM
 ap
 ap
 ap
-ab
 ac
-ab
-aa
-aa
+ap
+ac
 aa
 aa
 aa
@@ -1022,10 +925,8 @@ aa
 aa
 aa
 aa
-aa
-aa
 bz
-ac
+ap
 ai
 ag
 ag
@@ -1033,12 +934,10 @@ ag
 ai
 aP
 ap
-ab
-be
 ac
-bn
-aa
-aa
+be
+ap
+aZ
 aa
 aa
 aa
@@ -1049,10 +948,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
 ac
+ap
 ai
 ag
 ag
@@ -1060,16 +957,14 @@ ag
 ai
 ap
 aV
-aY
+aD
+ap
 ac
-ab
-ab
+ac
 aa
 aa
 aa
 aA
-aa
-aa
 aa
 "}
 (21,1,1) = {"
@@ -1077,9 +972,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-af
+as
 ar
 ag
 ag
@@ -1087,12 +980,10 @@ ag
 ai
 au
 ap
+ap
+aY
 ac
-bf
-ab
-ab
-aa
-aa
+ac
 aa
 aa
 aa
@@ -1104,10 +995,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
 ac
+ap
 aw
 at
 ag
@@ -1115,11 +1004,9 @@ ai
 ai
 ai
 aq
-ab
+ac
 aa
 bo
-aa
-aa
 aa
 aa
 aa
@@ -1128,21 +1015,17 @@ aa
 "}
 (23,1,1) = {"
 aa
-aa
-aa
 bv
 aa
 aa
 aa
 aa
-bB
-ab
+al
+ac
 bF
 ai
-ab
-ab
-aa
-aa
+ac
+ac
 aa
 aa
 aa
@@ -1161,12 +1044,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-ab
-ab
-aa
-aa
+ac
+ac
 aa
 aa
 aa
@@ -1189,11 +1068,7 @@ aa
 aa
 aa
 aa
-aa
-aa
 bG
-aa
-aa
 aa
 aa
 aa
