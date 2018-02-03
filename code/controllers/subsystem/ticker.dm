@@ -136,7 +136,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]![prob(5)? " Don't forget: [prob(50)? "You are here forever." : "There is no escape." ]" : ""]</span>")
 			if(CONFIG_GET(flag/irc_announce_new_game))
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
