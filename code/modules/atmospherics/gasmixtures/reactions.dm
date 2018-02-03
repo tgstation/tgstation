@@ -252,6 +252,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100)
+	heat_efficency = min(heat_efficency,cached_gases[/datum/gas/oxygen][MOLES],cached_gases[/datum/gas/nitrogen][MOLES])
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
 	ASSERT_GAS(/datum/gas/nitryl,air)
 
@@ -284,6 +285,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = 1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],1)))
+	reaction_efficency = min(reaction_efficency,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 
 	ASSERT_GAS(/datum/gas/bz,air)
@@ -316,7 +318,8 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_scale = air.temperature/STIMULUM_HEAT_SCALE
 	var/stim_energy_change
-	stim_energy_change =heat_scale + (STIMULUM_FIRST_RISE(heat_scale**2)) - (STIMULUM_FIRST_DROP(heat_scale**3)) + (STIMULUM_SECOND_RISE(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP(heat_scale**5))
+	heat_scale = min(heat_scale,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
+	stim_energy_change =heat_scale + (STIMULUM_FIRST_RISE*(heat_scale**2)) - (STIMULUM_FIRST_DROP*(heat_scale**3)) + (STIMULUM_SECOND_RISE*(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP*(heat_scale**5))
 
 	ASSERT_GAS(/datum/gas/stimulum,air)
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
@@ -345,7 +348,8 @@
 	var/list/cached_gases = air.gases
 	air.assert_gases(/datum/gas/hypernoblium,/datum/gas/bz)
 	var/old_heat_capacity = air.heat_capacity()
-	var/nob_formed = (cached_gases[/datum/gas/nitrogen][MOLES]*cached_gases[/datum/gas/tritium][MOLES])/100
+	var/nob_formed = (cached_gases[/datum/gas/nitrogen][MOLES]+cached_gases[/datum/gas/tritium][MOLES])/100
+	nob_formed = min(nob_formed,cached_gases[/datum/gas/tritium][MOLES]/10,cached_gases[/datum/gas/nitrogen][MOLES]/20)
 	var/energy_taken = nob_formed*(NOBLIUM_FORMATION_ENERGY/(max(cached_gases[/datum/gas/bz][MOLES],1)))
 	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- 10*nob_formed,0)
 	cached_gases[/datum/gas/nitrogen][MOLES] = max(cached_gases[/datum/gas/nitrogen][MOLES]- 20*nob_formed,0)
