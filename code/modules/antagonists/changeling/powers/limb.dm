@@ -17,3 +17,4 @@
 	else
 		C.visible_message("<span class='danger bold'>[C]'s [what_to_detach] falls off!</span>")
 		what_to_detach.dismember(silent = TRUE)
+		what_to_detach.animate_atom_living(C)
