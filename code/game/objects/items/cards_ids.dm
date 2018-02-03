@@ -360,3 +360,11 @@ update_label("John Doe", "Clowny")
 	desc = "Special ID card to allow access to APCs."
 	icon_state = "centcom"
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/bay
+		name = "commanding officer's spare id"
+		desc = "This feels as if it doesn't belong here...?"
+		icon_state = "classicgold"
+		item_state = "classicgold_id"
+		lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+		righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'

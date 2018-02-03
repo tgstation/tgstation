@@ -11319,20 +11319,6 @@
 	dir = 4
 	},
 /area/hallway/secondary/entry)
-"aCq" = (
-/obj/structure/table/wood,
-/obj/machinery/requests_console{
-	department = "Theatre";
-	departmentType = 0;
-	name = "theatre RC";
-	pixel_x = -32
-	},
-/obj/item/reagent_containers/food/snacks/baguette,
-/obj/item/toy/dummy,
-/turf/open/floor/plasteel/white/side{
-	dir = 4
-	},
-/area/crew_quarters/theatre)
 "aCr" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
@@ -39160,9 +39146,6 @@
 /obj/machinery/vending/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"bSZ" = (
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "bTa" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -54046,7 +54029,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"gWd" = (
+"hcg" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -54056,7 +54039,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"nxv" = (
+"mkw" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/construction)
+"tmL" = (
 /obj/machinery/power/apc{
 	name = "Construction Area APC";
 	areastring = "/area/construction";
@@ -54067,13 +54056,7 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"rKP" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/construction)
-"xhV" = (
+"vgZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -54082,12 +54065,24 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
-"Pvz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
+"xUw" = (
+/obj/structure/table/wood,
+/obj/machinery/requests_console{
+	department = "Theatre";
+	departmentType = 0;
+	name = "theatre RC";
+	pixel_x = -32
 	},
+/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/toy/dummy,
+/turf/open/floor/plasteel/white/side{
+	dir = 4
+	},
+/area/crew_quarters/theatre)
+"IJA" = (
+/obj/item/card/id/bay,
 /turf/open/floor/plating,
-/area/construction)
+/area/ai_monitored/turret_protected/aisat/hallway)
 "Qod" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -54591,6 +54586,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"SIf" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
 
 (1,1,1) = {"
 aaa
@@ -81221,8 +81222,8 @@ bCs
 cCe
 bNJ
 apV
-xhV
-gWd
+vgZ
+hcg
 bNI
 bUz
 bVJ
@@ -81479,7 +81480,7 @@ bNJ
 bNJ
 bKx
 cjL
-Pvz
+mkw
 bNI
 bUz
 bVJ
@@ -81736,7 +81737,7 @@ bNL
 bNJ
 apV
 cjL
-nxv
+tmL
 bNI
 bUz
 bVJ
@@ -81992,7 +81993,7 @@ bCs
 cCd
 bQc
 bKA
-rKP
+SIf
 bSv
 bNI
 bUB
@@ -88880,7 +88881,7 @@ axT
 azl
 aAl
 arj
-aCq
+xUw
 aDR
 aFl
 aGD
@@ -91820,8 +91821,8 @@ cvX
 cvX
 cvX
 cvX
-cwq
-cwq
+cvk
+IJA
 cva
 cva
 cva
@@ -94390,7 +94391,7 @@ cvX
 cvX
 cvX
 cvX
-cwq
+cvk
 cwq
 cva
 cva
