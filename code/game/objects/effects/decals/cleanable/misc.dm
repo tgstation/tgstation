@@ -9,7 +9,7 @@
 	desc = "Ashes to ashes, dust to dust, and into space."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
-	mergeable_decal = TRUE
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
