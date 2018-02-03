@@ -1,370 +1,696 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/open/floor/plating/asteroid/airless,
+"ab" = (
+/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/powered/scp_294)
-"c" = (
+"ac" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/powered/scp_294)
-"d" = (
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	mode = 1
+/turf/template_noop,
+/area/space/nearstation)
+"ad" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
 	},
-/turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"e" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"f" = (
-/turf/closed/wall,
-/area/ruin/space/has_grav/powered/scp_294)
-"g" = (
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/powered/scp_294)
-"h" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"i" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"j" = (
-/mob/living/simple_animal/hostile/mimic/crate{
-	faction = list("mimic","syndicate")
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"k" = (
-/mob/living/simple_animal/hostile/asteroid/goliath{
-	faction = list("mining","syndicate")
-	},
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"l" = (
-/obj/item/wirerod,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"m" = (
-/turf/open/floor/plating/airless/astplate,
-/area/ruin/space/has_grav/powered/scp_294)
-"n" = (
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/scp_294)
-"o" = (
-/obj/machinery/light{
+"ae" = (
+/obj/structure/lattice,
+/obj/item/soap,
+/turf/template_noop,
+/area/space/nearstation)
+"af" = (
+/obj/structure/sink{
 	dir = 4;
-	flickering = 1;
-	idle_power_usage = 0;
-	use_power = 0
+	icon_state = "sink";
+	pixel_x = 14;
+	tag = ""
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/mirror{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/freezer{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/space/has_grav/powered/scp_294)
-"p" = (
+"ag" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/freezer{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"ah" = (
+/turf/open/floor/plasteel/freezer{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"ai" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/freezer{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"aj" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
-	mode = 1
+	desc = "An energy blaster auto-turret designed to contain and terminate in case of a breach in security.";
+	mode = 1;
+	name = "emergency containment breach turret"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/box,
+/turf/open/floor/plasteel/dark{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/space/has_grav/powered/scp_294)
-"r" = (
-/obj/structure/girder,
-/turf/open/floor/plating/asteroid/airless,
+"ak" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	dir = 9;
+	icon_state = "corner_white";
+	tag = ""
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"s" = (
-/obj/effect/decal/remains/robot,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"u" = (
-/obj/effect/gibspawner/humanbodypartless,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"v" = (
+"al" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
 /obj/machinery/light{
-	flickering = 1;
-	idle_power_usage = 0;
-	use_power = 0
+	dir = 1
 	},
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"w" = (
-/obj/item/wrench,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"x" = (
-/obj/effect/decal/remains/human,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"y" = (
-/obj/structure/girder/reinforced,
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"z" = (
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	mode = 1
+"am" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
 	},
-/turf/closed/wall/rust,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
-"A" = (
+"an" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
 /obj/machinery/chem_dispenser/scp_294,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
+"ao" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"ap" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aq" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	tag = "icon-corner_white (NORTHEAST)";
+	icon_state = "corner_white";
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"ar" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	dir = 9;
+	icon_state = "corner_white";
+	tag = ""
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"as" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/beige/corner{
+	dir = 8;
+	icon_state = "corner_white";
+	tag = ""
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"at" = (
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"au" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier{
+	id_job = "Level Three Clearance Guard";
+	name = "Clearance Level Three Officer";
+	oxy_damage = 136
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/tile/beige/corner{
+	dir = 4;
+	icon_state = "corner_white";
+	tag = ""
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"av" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	tag = "icon-corner_white (NORTHEAST)";
+	icon_state = "corner_white";
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aw" = (
+/obj/structure/lattice,
+/obj/item/shard,
+/turf/template_noop,
+/area/space/nearstation)
+"ax" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 8;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"ay" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier{
+	id_job = "Level Three Clearance Guard";
+	name = "Clearance Level Three Officer";
+	oxy_damage = 136
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"az" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aA" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	dir = 9;
+	icon_state = "corner_white";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aB" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 1;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aC" = (
+/obj/effect/turf_decal/tile/beige/corner{
+	tag = "icon-corner_white (NORTHEAST)";
+	icon_state = "corner_white";
+	dir = 5
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aD" = (
+/obj/item/trash/plate,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aE" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 4;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aF" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aG" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aH" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aI" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aJ" = (
+/obj/structure/table,
+/obj/item/trash/sosjerky,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aK" = (
+/obj/item/chair,
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 8;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aL" = (
+/obj/structure/chair/office{
+	dir = 4;
+	icon_state = "chair";
+	tag = ""
+	},
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 4;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aM" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aN" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 4;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/obj/structure/chair/office{
+	dir = 8;
+	icon_state = "chair";
+	tag = ""
+	},
+/obj/item/shard,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aO" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aP" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	name = "broken plating"
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"aQ" = (
+/obj/structure/table_frame,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aR" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"aS" = (
+/obj/item/stack/tile/plasteel,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aT" = (
+/obj/structure/grille/broken,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"aU" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"aV" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"aW" = (
+/obj/item/trash/cheesie,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aX" = (
+/obj/effect/turf_decal/tile/beige/side{
+	dir = 4;
+	icon_state = "corner_white_side";
+	tag = ""
+	},
+/obj/item/chair,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aY" = (
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"aZ" = (
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/structure/table_frame,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"ba" = (
+/obj/structure/grille/broken,
+/obj/item/shard,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"bb" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/powered/scp_294)
+"bc" = (
+/obj/item/stack/tile/plasteel,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/scp_294)
+"bd" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular";
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"be" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile";
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"bf" = (
+/obj/item/trash/chips,
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
-a
-a
-a
-a
-b
-b
-b
-a
-a
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
-a
-a
-b
-d
-b
-k
-b
-a
-a
-a
-b
-a
-a
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (3,1,1) = {"
-a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-e
-b
-a
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aG
+ac
+aV
+aa
+aa
+aa
+aa
 "}
 (4,1,1) = {"
-b
-e
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
+aa
+aa
+aa
+ab
+aj
+ar
+ax
+aH
+aP
+ac
+aa
+aa
+aa
+be
 "}
 (5,1,1) = {"
-b
-b
-f
-g
-g
-f
-f
-f
-f
-y
-b
-c
-a
+aa
+aa
+ac
+ab
+ak
+as
+ay
+aI
+aH
+ac
+ac
+ac
+aa
+aa
 "}
 (6,1,1) = {"
-a
-b
-f
-h
-l
-i
-s
-m
-h
-y
-b
-a
-a
+aa
+ac
+ac
+ab
+al
+at
+az
+aJ
+aQ
+aH
+ad
+aa
+aa
+bf
 "}
 (7,1,1) = {"
-a
-b
-f
-i
-m
-h
-p
-i
-v
-f
-b
-b
-d
+ab
+ab
+ab
+ab
+am
+at
+aA
+aK
+aR
+aR
+ac
+ac
+aa
+aa
 "}
 (8,1,1) = {"
-a
-b
-f
-j
-n
-n
-n
-u
-w
-f
-b
-b
-a
+ac
+ac
+ad
+ab
+an
+at
+aB
+at
+aS
+aW
+aH
+aP
+aa
+aa
 "}
 (9,1,1) = {"
-a
-b
-f
-i
-n
-A
-n
-i
-j
-f
-b
-a
-a
+aa
+ae
+ac
+ab
+ao
+at
+aC
+aL
+aE
+aX
+aE
+ad
+ad
+aa
 "}
 (10,1,1) = {"
-a
-b
-g
-i
-n
-n
-n
-h
-i
-g
-b
-c
-a
+ac
+ad
+ag
+ab
+ap
+at
+az
+aM
+aQ
+aY
+bc
+aR
+bd
+ac
 "}
 (11,1,1) = {"
-c
-b
-f
-i
-h
-m
-i
-i
-i
-f
-b
-c
-c
+ad
+af
+ah
+ai
+aq
+au
+aD
+aM
+aM
+aZ
+aR
+ad
+aa
+aa
 "}
 (12,1,1) = {"
-b
-b
-f
-i
-o
-h
-h
-i
-x
-f
-b
-a
-a
+ab
+ab
+ab
+ab
+aj
+av
+aE
+aN
+aH
+ad
+aH
+ac
+aa
+aa
 "}
 (13,1,1) = {"
-b
-b
-f
-f
-f
-r
-r
-f
-f
-z
-b
-a
-a
+aa
+aa
+aa
+ab
+ab
+ab
+aF
+aO
+aT
+ba
+ab
+ab
+aa
+aa
 "}
 (14,1,1) = {"
-d
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ad
+aU
+bb
+ac
+ac
+aa
+aa
 "}
 (15,1,1) = {"
-a
-a
-b
-k
-e
-b
-b
-b
-b
-c
-c
-b
-a
+aa
+aa
+aa
+aa
+aa
+aw
+ac
+ac
+ad
+ac
+aa
+ac
+aa
+aa
 "}
 (16,1,1) = {"
-a
-a
-a
-b
-b
-b
-e
-c
-a
-a
-c
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aw
+aa
+aa
+aa
+aa
 "}
 (17,1,1) = {"
-a
-a
-a
-b
-b
-b
-c
-a
-a
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
 "}
