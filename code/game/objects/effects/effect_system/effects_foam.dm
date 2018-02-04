@@ -88,6 +88,8 @@
 	name = "resin foam"
 	metal = RESIN_FOAM
 
+/obj/effect/particle_effect/foam/long_life
+	lifetime = 150
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
@@ -214,6 +216,9 @@
 /datum/effect_system/foam_spread/metal/smart
 	effect_type = /obj/effect/particle_effect/foam/smart
 
+
+/datum/effect_system/foam_spread/long
+	effect_type = /obj/effect/particle_effect/foam/long_life
 
 /datum/effect_system/foam_spread/New()
 	..()
