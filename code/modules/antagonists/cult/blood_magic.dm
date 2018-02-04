@@ -616,7 +616,6 @@
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
-	to_chat(world, "afterattack is called")
 	if(proximity)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
