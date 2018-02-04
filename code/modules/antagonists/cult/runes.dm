@@ -131,10 +131,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 				shuffle_inplace(invokers)
 				for(var/i in 1 to req_cultists)
 					var/C = pick_n_take(invokers)
-					if(C)
-						chanters += C
-					else
+					if(!C)
 						break
+					chanters += C
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
