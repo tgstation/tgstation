@@ -912,7 +912,7 @@
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
-	if(!is_operational() || (stat & MAINT) || failure_timer)
+	if(!is_operational() || failure_timer)
 		return
 	operating = !operating
 	update()
