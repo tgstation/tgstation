@@ -120,8 +120,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 				if(L.stat)
 					continue
 				invokers += L
-		if(invokers.len >= req_cultists)
-			invokers -= user
 			if(allow_excess_invokers)
 				chanters += invokers
 			else
@@ -130,6 +128,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 					var/L = pick_n_take(invokers)
 					if(L)
 						chanters += L
+					else
+						break
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
