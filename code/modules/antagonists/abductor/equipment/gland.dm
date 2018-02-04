@@ -264,8 +264,8 @@
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
 	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
-	egg.reagents.add_reagent("sacid",20)
-	egg.desc += " It smells bad."
+	egg.reagents.add_reagent(get_random_reagent_id(), 15)
+	egg.desc += " It looks weird..."
 
 /obj/item/organ/heart/gland/electric
 	cooldown_low = 800
