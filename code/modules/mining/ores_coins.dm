@@ -288,13 +288,11 @@
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
 		return
-	warning("qdeleted [name] due to explosion of severity [severity]")
 	qdel(src)
 
 /obj/item/ore/stack/glass/ex_act(severity, target)
 	if (severity == EXPLODE_NONE)
 		return
-	warning("qdeleted [name] due to explosion of severity [severity]")
 	qdel(src)
 
 /*****************************Coin********************************/
