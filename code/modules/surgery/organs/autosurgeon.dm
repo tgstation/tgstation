@@ -1,3 +1,5 @@
+//DO NOT make these obtainable through science or elsewhere. They ruin any potential player interactions with surgery and are only intended for nuke ops/specific one-use implants for the crew.
+
 #define INFINITE -1
 
 /obj/item/device/autosurgeon
