@@ -800,7 +800,7 @@
 
 /mob/living/silicon/robot/modules/syndicate
 	icon_state = "syndie_bloodhound"
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	bubble_icon = "syndibot"
 	req_access = list(ACCESS_SYNDICATE)
 	lawupdate = FALSE

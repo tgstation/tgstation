@@ -1212,7 +1212,8 @@
 					/obj/item/vending_refill/boozeomat,
 					/obj/item/vending_refill/coffee,
 					/obj/item/vending_refill/coffee,
-					/obj/item/vending_refill/coffee)
+					/obj/item/vending_refill/coffee,
+					/obj/item/book/action_granting/drink_fling)
 	crate_name = "bartending supply crate"
 
 /datum/supply_pack/organic/vending/snack

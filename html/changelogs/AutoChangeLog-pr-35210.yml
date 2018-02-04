@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Securing pipe fittings now transfers fingerprints to the new pipe."

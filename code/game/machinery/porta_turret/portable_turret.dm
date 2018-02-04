@@ -570,7 +570,7 @@
 	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = "syndicate"
+	faction = ROLE_SYNDICATE
 	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
 
