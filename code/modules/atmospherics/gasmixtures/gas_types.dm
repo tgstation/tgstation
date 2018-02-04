@@ -119,6 +119,11 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	specific_heat = 80
 	name = "Pluoxium"
 
+/datum/gas/hydrogen
+	id = "h2"
+	specific_heat = 100
+	dangerous = TRUE
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
