@@ -12,24 +12,6 @@ Everything else = randomized space
 Last space-z level = empty
 */
 
-#define CROSSLINKED 2
-#define SELFLOOPING 1
-#define UNAFFECTED 0
-
-#define MAIN_STATION "Main Station"
-#define CENTCOM "CentCom"
-#define CITY_OF_COGS "City of Cogs"
-#define EMPTY_AREA_1 "Empty Area 1"
-#define EMPTY_AREA_2 "Empty Area 2"
-#define MINING_ASTEROID "Mining Asteroid"
-#define EMPTY_AREA_3 "Empty Area 3"
-#define EMPTY_AREA_4 "Empty Area 4"
-#define EMPTY_AREA_5 "Empty Area 5"
-#define EMPTY_AREA_6 "Empty Area 6"
-#define EMPTY_AREA_7 "Empty Area 7"
-#define EMPTY_AREA_8 "Empty Area 8"
-#define AWAY_MISSION "Away Mission"
-
 //for modifying jobs
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
 #define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
@@ -59,20 +41,34 @@ Last space-z level = empty
 #define ZTRAIT_UP "Up"
 #define ZTRAIT_DOWN "Down"
 
-// trait definitions
+// enum - how space transitions should affect this level
+#define ZTRAIT_LINKAGE "Linkage"
+    // UNAFFECTED if absent - no space transitions
+    #define UNAFFECTED null
+    // SELFLOOPING - space transitions always self-loop
+    #define SELFLOOPING "Self"
+    // CROSSLINKED - mixed in with the cross-linked space pool
+    #define CROSSLINKED "Cross"
+
+// trait definitions, used by SSmapping
 #define DL_NAME "name"
-#define DL_LINKAGE "linkage"
 #define DL_TRAITS "traits"
 
-#define DECLARE_LEVEL(NAME, LINKAGE, TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKAGE, DL_TRAITS = TRAITS)
+#define ZTRAITS_CENTCOM list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_CENTCOM = TRUE)
+#define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
+#define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+#define ZTRAITS_LAVALAND list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)
+#define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
+
+#define DECLARE_LEVEL(NAME, TRAITS) list(DL_NAME = NAME, DL_TRAITS = TRAITS)
 // corresponds to basemap.dm
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL("CentCom", SELFLOOPING, list(ZTRAIT_CENTCOM = TRUE)),\
-    DECLARE_LEVEL("Main Station", CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
-    DECLARE_LEVEL("Empty Area 1", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Empty Area 2", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)),\
-    DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)),\
+    DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
+    DECLARE_LEVEL("Main Station", ZTRAITS_STATION),\
+    DECLARE_LEVEL("Empty Area 1", ZTRAITS_SPACE),\
+    DECLARE_LEVEL("Empty Area 2", ZTRAITS_SPACE),\
+    DECLARE_LEVEL("Lavaland", ZTRAITS_LAVALAND),\
+    DECLARE_LEVEL("Reebe", ZTRAITS_REEBE),\
 )
 
 //Camera lock flags
