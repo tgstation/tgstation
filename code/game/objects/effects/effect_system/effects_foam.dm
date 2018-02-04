@@ -16,8 +16,7 @@
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
-	var/lifetime = 40
-	var/reagent_divisor = 7
+	var/lifetime = 100
 	var/static/list/blacklisted_turfs = typecacheof(list(
 	/turf/open/space/transit,
 	/turf/open/chasm,
@@ -25,7 +24,7 @@
 
 /obj/effect/particle_effect/foam/firefighting
 	name = "firefighting foam"
-	lifetime = 20 //doesn't last as long as normal foam
+	lifetime = 50 //doesn't last as long as normal foam
 	amount = 0 //no spread
 	var/absorbed_plasma = 0
 
@@ -66,9 +65,6 @@
 	L.adjust_fire_stacks(-2)
 	L.ExtinguishMob()
 
-/obj/effect/particle_effect/foam/firefighting/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
-
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
 	metal = ALUMINUM_FOAM
@@ -95,6 +91,7 @@
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+	addtimer(CALLBACK(src, .proc/kill_foam), lifetime)
 
 /obj/effect/particle_effect/foam/proc/MakeSlippery()
 	AddComponent(/datum/component/slippery, 100)
@@ -122,8 +119,8 @@
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
 			T.PlaceOnTop(/turf/open/floor/plating/foam)
-		for(var/direction in GLOB.cardinals)
-			var/turf/cardinal_turf = get_step(T, direction)
+		for(var/i in 1 to GLOB.cardinals.len)
+			var/turf/cardinal_turf = get_step(T, GLOB.cardinals[i])
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
 				new/obj/structure/foamedmetal(T)
 				break
@@ -131,71 +128,58 @@
 	QDEL_IN(src, 5)
 
 /obj/effect/particle_effect/foam/process()
-	lifetime--
-	if(lifetime < 1)
-		kill_foam()
-		return
-
-	var/fraction = 1/initial(reagent_divisor)
-	for(var/obj/O in range(0,src))
-		if(O.type == src.type)
-			continue
-		if(isturf(O.loc))
-			var/turf/T = O.loc
-			if(T.intact && O.level == 1) //hidden under the floor
-				continue
-		if(lifetime % reagent_divisor)
-			reagents.reaction(O, VAPOR, fraction)
-	var/hit = 0
-	for(var/mob/living/L in range(0,src))
-		hit += foam_mob(L)
-	if(hit)
-		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
-	var/T = get_turf(src)
-	if(lifetime % reagent_divisor)
-		reagents.reaction(T, VAPOR, fraction)
-
-	if(--amount < 0)
-		return
-	spread_foam()
+	var/turf/my_turf = get_turf(src)
+	if(my_turf)
+		var/hit = 0
+		for(var/i in 1 to my_turf.contents.len)
+			var/atom_to_hit = my_turf.contents[i]
+			if(istype(atom_to_hit, /obj))
+				var/obj/O = atom_to_hit
+				if(O.type == src.type)
+					continue
+				if(my_turf.intact && O.level == 1)
+					continue
+				reagents.reaction(O, TOUCH)
+			if(istype(atom_to_hit, /mob/living))
+				var/mob/living/L = atom_to_hit
+				hit += foam_mob(L)
+		reagents.reaction(T, TOUCH)
+		amount--
+		if(amount)
+			spread_foam()
+		
 
 /obj/effect/particle_effect/foam/proc/foam_mob(mob/living/L)
-	if(lifetime<1)
-		return 0
 	if(!istype(L))
 		return 0
-	var/fraction = 1/initial(reagent_divisor)
-	if(lifetime % reagent_divisor)
-		reagents.reaction(L, VAPOR, fraction)
-	lifetime--
+	reagents.reaction(L, TOUCH)
 	return 1
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
-	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
-		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
-		if(foundfoam)
-			continue
+	var/list/adjacent_turfs = t_loc.GetAtmosAdjacentTurfs()
+	if(adjacent_turfs)
+		for(var/i in 1 to adjacent_turfs.len)
+			var/need_to_continue = FALSE
+			var/turf/T = adjacent_turfs[i]
+			
+			for(var/i2 in 1 to T.contents.len)
+				var/atom_to_check = T.contents[i2]
+				if(istype(atom_to_check, /obj/effect/particle_effect/foam))
+					need_to_continue = TRUE
+					continue
+				if(istype(atom_to_check, /mob/living))
+					foam_mob(L)
+			if(need_to_continue)
+				continue
 
-		if(is_type_in_typecache(T, blacklisted_turfs))
-			continue
-
-		for(var/mob/living/L in T)
-			foam_mob(L)
-		var/obj/effect/particle_effect/foam/F = new src.type(T)
-		F.amount = amount
-		reagents.copy_to(F, (reagents.total_volume))
-		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-		F.metal = metal
-
-
-/obj/effect/particle_effect/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(prob(max(0, exposed_temperature - 475))) //foam dissolves when heated
-		kill_foam()
-
-
-/obj/effect/particle_effect/foam/metal/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
+			if(is_type_in_typecache(T, blacklisted_turfs))
+				continue
+			var/obj/effect/particle_effect/foam/F = new src.type(T)
+			F.amount = amount
+			reagents.copy_to(F, (reagents.total_volume))
+			F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+			F.metal = metal
 
 
 ///////////////////////////////////////////////
@@ -233,20 +217,27 @@
 	else
 		location = get_turf(loca)
 
-	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume)
 
 /datum/effect_system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()
 	metal = metaltype
 
 /datum/effect_system/foam_spread/start()
-	var/obj/effect/particle_effect/foam/F = new effect_type(location)
-	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
-	F.amount = amount
-	F.metal = metal
+	var/turf/T = get_turf(src)
+	if(T)
+		for(var/i in 1 to T.contents.len)
+			var/atom_to_check = T.contents[i]
+			if(istype(atom_to_check, /obj/effect/particle_effect/foam))
+				var/obj/effect/particle_effect/foam/F = atom_to_check
+				F.amount += amount
+				return
+		var/obj/effect/particle_effect/foam/F = new effect_type(T)
+		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
+		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
+		F.amount = amount
+		F.metal = metal
 
 
 //////////////////////////////////////////////////////////
