@@ -18,13 +18,16 @@
 	area_type = /area
 	target_trait = ZTRAIT_MINING
 
+	var/trigger_geysers = TRUE
+
 /datum/weather/tremors/start()
 	. = ..()
-	for(var/obj/structure/terrain/geyser/G in GLOB.acid_geysers)
-		G.tremors()
+	if(trigger_geysers)
+		for(var/obj/structure/terrain/geyser/G in GLOB.acid_geysers)
+			G.tremors()
 
 /datum/weather/tremors/weather_act(mob/living/L)
-	if(L.is_flying())
+	if(L.is_flying() || !L.has_gravity())
 		return
 	shake_camera(L, 30, 1)
 	L.confused++
@@ -42,10 +45,22 @@
 	weather_sound = 'sound/weather/earthquake.ogg'
 
 /datum/weather/tremors/earthquake/weather_act(mob/living/L)
-	if(L.is_flying())
+	if(L.is_flying() || !L.has_gravity())
 		return
 	shake_camera(L, 30, 2)
 	L.confused += 2
 	if(isturf(L.loc))
 		if(prob(15))
 			L.Knockdown(50)
+
+/datum/weather/tremors/space_quake
+	name = "space quake"
+	desc = "How does this even happen?"
+
+	weather_message = "<span class='boldwarning'><i>The floor shakes!</i></span>"
+
+	area_type = /area
+	protected_areas = list(/area/space)
+	target_trait = ZTRAIT_STATION
+
+	trigger_geysers = FALSE
