@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Vape Pens (e-cigs) will now consume reagents proportional to the vape size and static smoke production."

@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Added logout button to the record screen in the security records console."
-  - rscadd: "Allows you to print photos that are in the security records."

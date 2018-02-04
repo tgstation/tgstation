@@ -1,4 +1,0 @@
-author: "Buggy123"
-delete-after: True
-changes: 
-  - rscadd: "Morgue trays now detect if a body inside them possesses a consciousness, and alerts people nearby"
