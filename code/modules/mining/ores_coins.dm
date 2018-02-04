@@ -12,7 +12,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
-	singular_name = "chunk"
+	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
@@ -52,6 +52,7 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
+	singular_name = "uranium ore chunk"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
@@ -59,6 +60,7 @@
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
+	singular_name = "iron ore chunk"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
@@ -66,6 +68,7 @@
 /obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
+	singular_name = "sand pile"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
@@ -112,10 +115,12 @@
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
+	singular_name = "volcanic ash pile"
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
+	singular_name = "plasma ore chunk"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
@@ -132,6 +137,7 @@
 /obj/item/stack/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
+	singular_name = "silver ore chunk"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
@@ -139,6 +145,7 @@
 /obj/item/stack/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
+	singular_name = "gold ore chunk"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
@@ -146,6 +153,7 @@
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
+	singular_name = "diamond ore chunk"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
@@ -153,6 +161,7 @@
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "Bananium ore"
+	singular_name = "bananium ore chunk"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
@@ -160,6 +169,7 @@
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
+	singular_name = "titanium ore chunk"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
@@ -168,6 +178,7 @@
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
+	singular_name = "slag chunk"
 
 /obj/item/twohanded/required/gibtonite
 	name = "gibtonite ore"
