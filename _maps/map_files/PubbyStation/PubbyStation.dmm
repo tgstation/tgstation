@@ -9098,7 +9098,6 @@
 /area/crew_quarters/heads/captain)
 "axU" = (
 /obj/machinery/computer/card,
-/obj/item/card/id/captains_spare,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
