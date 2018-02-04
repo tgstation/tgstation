@@ -7392,7 +7392,8 @@
 "atM" = (
 /obj/machinery/door/airlock/command{
 	name = "MiniSat Access";
-	req_access_txt = "65"
+	req_access_txt = "65";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -8243,7 +8244,8 @@
 "avQ" = (
 /obj/machinery/door/airlock/command{
 	name = "MiniSat Access";
-	req_access_txt = "65"
+	req_access_txt = "65";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
@@ -9173,7 +9175,8 @@
 /obj/machinery/door/airlock/command{
 	name = "External Access";
 	req_access_txt = "0";
-	req_one_access_txt = "19; 65"
+	req_one_access_txt = "19; 65";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9493,7 +9496,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10434,7 +10438,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 2;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -10448,7 +10453,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 2;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -10511,7 +10517,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 2;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -11167,7 +11174,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
 	req_access = null;
-	req_access_txt = "57"
+	req_access_txt = "57";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11489,7 +11497,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
 	req_access = null;
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -11588,7 +11597,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
 	req_access = null;
-	req_access_txt = "57"
+	req_access_txt = "57";
+	security_level = 1
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12909,7 +12919,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 1;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -12923,7 +12934,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 1;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -12945,7 +12957,8 @@
 /obj/machinery/door/airlock/command/glass{
 	cyclelinkeddir = 1;
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access_txt = "19";
+	security_level = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
