@@ -311,7 +311,7 @@ Possible to do for anyone motivated enough:
 							continue
 						else
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, AI.eyeobj)
-							if(get_dist(pad_close, AI.eyeobj) <= holo_range)
+							if(get_dist(pad_close, AI.eyeobj) < holo_range)
 								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
 								unset_holo(master)
 								pad_close.set_holo(master, h)
@@ -420,7 +420,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/user)
 	qdel(masters[user]) // Get rid of user's hologram
-	qdel(holorays[user])
 	unset_holo(user)
 	return TRUE
 
@@ -429,6 +428,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(istype(AI) && AI.current == src)
 		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
+	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)
 	SetLightsAndPower()
 	return TRUE
