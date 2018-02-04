@@ -225,9 +225,15 @@
 
 /obj/item/organ/heart/gland/egg/activate()
 	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
+<<<<<<< HEAD:code/game/gamemodes/miniantags/abduction/gland.dm
 	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.loc)
 	egg.reagents.add_reagent("sacid",20)
 	egg.desc += " It smells bad."
+=======
+	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
+	egg.reagents.add_reagent(get_random_reagent_id(), 15)
+	egg.desc += " It looks weird..."
+>>>>>>> 380f901ba6... Eggs from the abductor egg gland now have a random reagent instead of acid:code/modules/antagonists/abductor/equipment/gland.dm
 
 /obj/item/organ/heart/gland/bloody
 	cooldown_low = 200
