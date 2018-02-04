@@ -361,17 +361,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			env.merge(removed)
 			air_update_turf()
 
-		for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-			if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-				var/D = sqrt(1 / max(1, get_dist(l, src)))
-				l.hallucination += power * config_hallucination_power * D
-				l.hallucination = CLAMP(0, 200, l.hallucination)
+	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
+		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
+			var/D = sqrt(1 / max(1, get_dist(l, src)))
+			l.hallucination += power * config_hallucination_power * D
+			l.hallucination = CLAMP(0, 200, l.hallucination)
 
-		for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
-			var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
-			l.rad_act(rads)
+	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
+		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
+		l.rad_act(rads)
 
-		power -= ((power/500)**3) * powerloss_inhibitor
+	power -= ((power/500)**3) * powerloss_inhibitor
 
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
@@ -440,9 +440,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
-	if(!istype(L) || isspaceturf(L))		// We don't run process() when we are in space
-		return FALSE	// This stops people from being able to really power up the supermatter
-				// Then bring it inside to explode instantly upon landing on a valid turf.
+	if(!istype(L))
+		return FALSE
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [Proj] fired by [Proj.firer]", INVESTIGATE_SUPERMATTER)
 	if(Proj.flag != "bullet")
