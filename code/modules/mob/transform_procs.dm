@@ -329,30 +329,30 @@
 	return ..()
 
 /mob/proc/AIize(transfer_after = TRUE)
-	if(client)
-		stop_sound_channel(CHANNEL_LOBBYMUSIC)
-
-	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
-		if(sloc.name != "AI")
-			continue
+	var/list/turf/landmark_loc = list()
+	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
-		loc_landmark = sloc.loc
-	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai/L in GLOB.landmarks_list)
-			if(locate(/mob/living/silicon/ai) in L.loc)
-				continue
-			loc_landmark = L.loc
-	if(!loc_landmark)
+		if(sloc.primary_ai)
+			landmark_loc += sloc.loc
+			break
+		landmark_loc += sloc.loc
+	if(!landmark_loc.len)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-			loc_landmark = sloc.loc
+			landmark_loc += sloc.loc
+
+	if(!landmark_loc.len)
+		message_admins("[src] cannot be made an AI as there are no valid spawn points. Yell at a mapper!")
+		return
+
+	if(client)
+		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	if(!transfer_after)
 		mind.active = FALSE
 
-	. = new /mob/living/silicon/ai(loc_landmark, null, src)
+	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 
 	qdel(src)
 

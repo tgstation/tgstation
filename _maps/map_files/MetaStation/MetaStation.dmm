@@ -24400,7 +24400,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aZQ" = (
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	freerange = 1;
@@ -24502,7 +24502,7 @@
 	},
 /area/ai_monitored/turret_protected/ai)
 "aZY" = (
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	freerange = 1;
