@@ -144,8 +144,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
+			/turf/closed,
 			/turf/open/lava,
-			/turf/closed/indestructible,
 			/turf/open/indestructible,
 			))
 
@@ -231,7 +231,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(BAD_TURF)
-			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base.</span>")
+			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
 
 /obj/item/device/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
