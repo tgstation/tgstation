@@ -254,7 +254,7 @@
 	intercepttext += "<b>Central Command intelligence assets have intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 
-	intercepttext += "<em>[This information has been redacted in the interest of preserving our intelligence assets]<br>We apologize for any inconvenience.</em>"
+	intercepttext += "<em>\[This information has been redacted in the interest of preserving our intelligence assets]<br>We apologize for any inconvenience.</em>"
 
 	if(station_goals.len)
 		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
