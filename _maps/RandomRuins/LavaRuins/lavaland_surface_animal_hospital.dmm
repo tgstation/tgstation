@@ -3,6 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
@@ -558,14 +559,17 @@
 "bT" = (
 /obj/item/pickaxe,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "bU" = (
 /obj/effect/decal/remains/human,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "bV" = (
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "bW" = (
@@ -686,6 +690,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cq" = (
@@ -765,6 +770,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cG" = (
