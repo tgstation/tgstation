@@ -25,18 +25,21 @@
 		..()
 	return //unplateable
 
-/turf/open/floor/engine/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
+/turf/open/floor/engine/wrench_act(mob/living/user, obj/item/wrench/W)
+	if(!W || !user)
 		return
-	if(istype(C, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
-		playsound(src, C.usesound, 80, 1)
-		if(do_after(user, 30*C.toolspeed, target = src))
-			if(!istype(src, /turf/open/floor/engine))
-				return
-			new /obj/item/stack/rods(src, 2)
-			ChangeTurf(/turf/open/floor/plating)
+	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
+	playsound(src, W.usesound, 80, 1)
+	if(do_after(user, 30*W.toolspeed, target = src))
+		if(!istype(src, /turf/open/floor/engine))
 			return
+		new /obj/item/stack/rods(src, 2)
+		ChangeTurf(/turf/open/floor/plating)
+		return
+
+/turf/open/floor/engine/attackby(obj/item/C, mob/user, params)
+	return
+
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
