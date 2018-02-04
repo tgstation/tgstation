@@ -2,10 +2,11 @@
 	name = "decal"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/turf_loc_check = TRUE
 
 /obj/effect/decal/Initialize()
 	. = ..()
-	if(!isturf(loc) || NeverShouldHaveComeHere(loc))
+	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)
