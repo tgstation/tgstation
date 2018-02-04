@@ -912,7 +912,7 @@
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
-	if((stat & (BROKEN|MAINT)) || failure_timer || shorted)
+	if((stat & (BROKEN|MAINT)) || failure_timer)
 		return
 	operating = !operating
 	update()
