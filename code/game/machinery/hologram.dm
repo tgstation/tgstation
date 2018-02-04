@@ -311,7 +311,7 @@ Possible to do for anyone motivated enough:
 							continue
 						else
 							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, AI.eyeobj)
-							if(get_dist(pad_close, AI.eyeobj) < holo_range)
+							if(get_dist(pad_close, AI.eyeobj) <= holo_range)
 								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
 								unset_holo(master)
 								pad_close.set_holo(master, h)
