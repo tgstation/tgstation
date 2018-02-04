@@ -47,9 +47,9 @@ SUBSYSTEM_DEF(mapping)
 #ifndef LOWMEMORYMODE
 	// Create space levels
 	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
-		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
-	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", CROSSLINKED, list())  // no ruins
-	transit = add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
+		add_new_zlevel("Empty Area [2 + I]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE))
+	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", list(ZTRAIT_LINKAGE = CROSSLINKED))  // no ruins
+	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
 	createRandomZlevel()
