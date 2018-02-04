@@ -566,9 +566,9 @@
 /datum/techweb_node/gravity_gun
 	id = "gravity_gun"
 	display_name = "One-point Bluespace-gravitational Manipulator"
-	description = "Fancy wording for gravity gun"
+	description = "Fancy wording for gravity gun."
 	prereq_ids = list("adv_weaponry", "adv_bluespace")
-	design_ids = list("gravitygun")
+	design_ids = list("gravitygun", "mech_gravcatapult")
 	research_cost = 2500
 	export_price = 5000
 
