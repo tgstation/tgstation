@@ -10,22 +10,26 @@
 /obj/machinery/chem_dispenser/scp_294
 	name = "\improper strange coffee machine"
 	desc = "It appears to be a standard coffee vending machine, the only noticeable difference being an entry touchpad with buttons corresponding to a Galactic Common QWERTY keyboard."
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "coffee"
+	icon = 'icons/obj/scp.dmi'
+	icon_state = "294_bottom"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/static/list/shortcuts = list(
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
 	)
+	var/mutable_appearance/top_overlay
 
 /obj/machinery/chem_dispenser/scp_294/Initialize()
 	. = ..()
 	GLOB.poi_list += src
+	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_MOB_LAYER)
+	add_overlay(top_overlay)
 
 /obj/machinery/chem_dispenser/scp_294/Destroy()
 	. = ..()
 	GLOB.poi_list -= src
+	QDEL_NULL(top_overlay)
 
 /obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
