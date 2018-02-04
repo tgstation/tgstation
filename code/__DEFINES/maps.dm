@@ -18,7 +18,7 @@ Last space-z level = empty
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
 #define SPACERUIN_MAP_EDGE_PAD 15
-#define ZLEVEL_SPACE_RUIN_COUNT 5
+#define ZLEVEL_SPACE_RUIN_COUNT 7
 
 // traits
 // boolean - marks a level as having that property if present
@@ -61,11 +61,6 @@ Last space-z level = empty
 // corresponds to basemap.dm
 #define DEFAULT_MAP_TRAITS list(\
     DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
-    DECLARE_LEVEL("Main Station", ZTRAITS_STATION),\
-    DECLARE_LEVEL("Empty Area 1", ZTRAITS_SPACE),\
-    DECLARE_LEVEL("Empty Area 2", ZTRAITS_SPACE),\
-    DECLARE_LEVEL("Lavaland", ZTRAITS_LAVALAND),\
-    DECLARE_LEVEL("Reebe", ZTRAITS_REEBE),\
 )
 
 //Camera lock flags
