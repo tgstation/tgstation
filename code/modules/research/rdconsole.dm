@@ -883,7 +883,7 @@ doesn't have toxins access.
 			return				//honestly should call them out for href exploiting :^)
 		if(!SSresearch.science_tech.available_nodes[ls["research_node"]])
 			return			//Nope!
-		research_node(ls["research_node"])
+		research_node(ls["research_node"], usr)
 	if(ls["clear_tech"]) //Erase la on the technology disk.
 		if(t_disk)
 			qdel(t_disk.stored_research)
