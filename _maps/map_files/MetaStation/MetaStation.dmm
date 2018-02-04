@@ -13724,8 +13724,8 @@
 	},
 /obj/machinery/computer/shuttle/mining{
 	dir = 4;
-	req_access = "0";
-	req_one_access = "0"
+	req_access = null;
+	req_one_access = null
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 9
