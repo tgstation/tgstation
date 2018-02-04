@@ -3,6 +3,8 @@
 #define GIBTONITE_QUALITY_MEDIUM 2
 #define GIBTONITE_QUALITY_LOW 1
 
+#define ORESTACK_OVERLAYS_MAX 10
+
 /**********************Mineral ores**************************/
 
 /obj/item/stack/ore
@@ -12,7 +14,29 @@
 	full_w_class = WEIGHT_CLASS_BULKY
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
-	novariants = FALSE
+	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	var/list/stack_overlays
+
+/obj/item/stack/ore/add(amount)
+	var/amount_added = 0
+	while (amount_added <= amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
+		var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
+		newore.pixel_x = rand(-10,10)
+		newore.pixel_y = rand(-10,10)
+		LAZYADD(stack_overlays, newore)
+		amount_added++
+	return ..()
+
+/obj/item/stack/ore/use(amount)
+	var/newamount = src.amount - amount
+	if (newamount <= ORESTACK_OVERLAYS_MAX)
+		if (LAZYLEN(stack_overlays))
+			stack_overlays.len = newamount-1
+	return ..()
+
+/obj/item/stack/ore/update_icon()
+	. = ..()
+	add_overlay(stack_overlays)
 
 /obj/item/stack/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
@@ -24,66 +48,23 @@
 			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
 	..()
 
-/obj/item/stack/ore/Crossed(atom/movable/AM)
-	set waitfor = FALSE
-	var/show_message = TRUE
-	for(var/obj/item/stack/ore/O in loc)
-		if(O != src)
-			show_message = FALSE
-			break
-	var/obj/item/storage/bag/ore/OB
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		OB = locate(/obj/item/storage/bag/ore) in H.get_storage_slots()
-		if(!OB)
-			OB = locate(/obj/item/storage/bag/ore) in H.held_items
-	else if(iscyborg(AM))
-		var/mob/living/silicon/robot/R = AM
-		OB = locate(/obj/item/storage/bag/ore) in R.held_items
-	if(OB)
-		var/obj/structure/ore_box/box
-		if(!OB.can_be_inserted(src, TRUE, AM))
-			if(!OB.spam_protection)
-				to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
-				OB.spam_protection = TRUE
-				sleep(1)
-				OB.spam_protection = FALSE
-		else
-			OB.handle_item_insertion(src, TRUE, AM)
-		// Then, if the user is dragging an ore box, empty the satchel
-		// into the box.
-		var/mob/living/L = AM
-		if(istype(L.pulling, /obj/structure/ore_box))
-			box = L.pulling
-			for(var/obj/item/stack/ore/O in OB)
-				OB.remove_from_storage(src, box)
-		if(show_message)
-			playsound(L, "rustle", 50, TRUE)
-			if(box)
-				L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
-				"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
-			else
-				L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
-				"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
-	return ..()
-
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
-	icon_state = "ore_uranium"
+	icon_state = "Uranium ore"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
-	icon_state = "ore_iron"
+	icon_state = "Iron ore"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
-	icon_state = "ore_glass"
+	icon_state = "Glass ore"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
@@ -293,13 +274,15 @@
 	pixel_y = rand(0,8)-8
 
 /obj/item/stack/ore/ex_act(severity, target)
-	if (severity >= 2)
-		return
+	if (!severity || severity >= 2)
+			return
+	warning("qdeleted [name] due to explosion of severity [severity]")
 	qdel(src)
 
 /obj/item/ore/stack/glass/ex_act(severity, target)
-	if (severity >= 3)
+	if (severity == EXPLODE_NONE)
 		return
+	warning("qdeleted [name] due to explosion of severity [severity]")
 	qdel(src)
 
 /*****************************Coin********************************/
@@ -473,3 +456,6 @@
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
+
+
+#undef ORESTACK_OVERLAYS_MAX

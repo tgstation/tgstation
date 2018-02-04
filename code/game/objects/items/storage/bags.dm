@@ -90,6 +90,41 @@
 	max_w_class = WEIGHT_CLASS_HUGE
 	can_hold = list(/obj/item/stack/ore)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	var/datum/component/mobhook
+
+/obj/item/storage/bag/ore/equipped(mob/user)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/Pickup_ores, user))
+
+/obj/item/storage/bag/ore/dropped()
+	. = ..()
+	if (mobhook)
+		QDEL_NULL(mobhook)
+
+/obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
+	var/show_message = FALSE
+	var/turf/tile = user.loc
+	if (!isturf(tile))
+		return
+	for(var/A in tile)
+		if (!is_type_in_typecache(A, can_hold))
+			continue
+		if(!can_be_inserted(A, TRUE, user))
+			if(!spam_protection)
+				to_chat(user, "<span class='warning'>Your [name] is full and can't hold any more!</span>")
+				spam_protection = TRUE
+				continue
+		else
+			handle_item_insertion(A, TRUE, user)
+			show_message = TRUE
+	if(show_message)
+		playsound(user, "rustle", 50, TRUE)
+		user.visible_message("<span class='notice'>[user] scoops up the ores beneath them.</span>", \
+			"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
+	spam_protection = FALSE
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
