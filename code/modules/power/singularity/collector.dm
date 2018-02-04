@@ -44,7 +44,7 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			eject()
 		else
-			var/gasdrained = powerproduction_drain*drainratio
+			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
 			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
