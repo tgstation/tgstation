@@ -20,6 +20,7 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -27,6 +28,7 @@
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	create_reagents(5)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -101,15 +103,9 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/attackby(obj/item/W, mob/user, params)
+/obj/item/stock_parts/cell/on_reagent_change(changetype)
+	rigged = reagents.has_reagent("plasma", 5)
 	..()
-	if(istype(W, /obj/item/reagent_containers/syringe))
-		var/obj/item/reagent_containers/syringe/S = W
-		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
-		if(S.reagents.has_reagent("plasma", 5))
-			rigged = 1
-			grind_results["plasma"] = 5
-		S.reagents.clear_reagents()
 
 
 /obj/item/stock_parts/cell/proc/explode()
