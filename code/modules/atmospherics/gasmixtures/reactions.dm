@@ -112,13 +112,12 @@
 		if(!cached_gases[/datum/gas/oxygen])
 			burned_fuel = 0
 		else if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES])
-			burned_fuel = min(cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR,cached_gases[/datum/gas/tritium][MOLES])
+			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTO
 			cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 		else
-			var/burned_tritium = min(cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/oxygen][MOLES]) //God save you if you make TRIT_FACTOR less than 0
-			burned_fuel = burned_tritium*TRITIUM_BURN_TRIT_FACTOR
-			cached_gases[/datum/gas/tritium][MOLES] -= burned_tritium/TRITIUM_BURN_TRIT_FACTOR
-			cached_gases[/datum/gas/oxygen][MOLES] -= burned_tritium
+			burned_fuel = cached_gases[/datum/gas/tritium][MOLES]*TRITIUM_BURN_TRIT_FACTOR
+			cached_gases[/datum/gas/tritium][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]/TRITIUM_BURN_TRIT_FACTOR
+			cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]
 
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
