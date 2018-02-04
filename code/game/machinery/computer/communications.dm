@@ -746,9 +746,9 @@
 
 /datum/comm_message/New(new_title,new_content,new_possible_answers)
 	..()
-	if(title)
+	if(new_title)
 		title = new_title
-	if(content)
+	if(new_content)
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
