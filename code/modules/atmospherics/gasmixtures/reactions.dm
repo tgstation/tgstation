@@ -112,7 +112,7 @@
 		if(!cached_gases[/datum/gas/oxygen])
 			burned_fuel = 0
 		else if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES])
-			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTO
+			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR
 			cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 		else
 			burned_fuel = cached_gases[/datum/gas/tritium][MOLES]*TRITIUM_BURN_TRIT_FACTOR
