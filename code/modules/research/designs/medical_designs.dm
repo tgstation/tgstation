@@ -448,3 +448,14 @@
 	build_path = /obj/item/organ/lungs/cybernetic/upgraded
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
+/datum/design/autoimplanter
+	name = "Autosurgeon"
+	desc = "An automatic surgeon."
+	id = "autoimplanter"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 1500)
+	build_path = /obj/item/device/autosurgeon
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
