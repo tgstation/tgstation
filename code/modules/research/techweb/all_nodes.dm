@@ -419,7 +419,7 @@
 
 /datum/techweb_node/autoimplanter
 	id = "autoimplanter"
-	display_name = "Automatic Surgery Robotics"
+	display_name = "Automatic Surgery Tech"
 	description = "Military grade combat implants to improve performance."
 	prereq_ids = list("combat_cyber_implants", "bio_process")
 	design_ids = list("autoimplanter")
