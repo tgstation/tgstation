@@ -69004,7 +69004,6 @@
 /area/medical/virology)
 "cNt" = (
 /obj/machinery/button/crematorium{
-	id = "cremawheat";
 	pixel_x = -26;
 	req_access_txt = "27"
 	},
