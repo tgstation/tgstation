@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(mapping)
 	var/station_start = 2  // should only be used for maploading-related tasks
 	var/list/z_list
 	var/datum/space_level/transit
+	var/datum/space_level/empty_space
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
@@ -48,7 +49,7 @@ SUBSYSTEM_DEF(mapping)
 	// Create space levels
 	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
 		add_new_zlevel("Empty Area [2 + I]", list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE))
-	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", list(ZTRAIT_LINKAGE = CROSSLINKED))  // no ruins
+	empty_space = add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", list(ZTRAIT_LINKAGE = CROSSLINKED))  // no ruins
 	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
