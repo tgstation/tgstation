@@ -161,7 +161,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 				return BAD_COORDS
 			if(!istype(place.loc, /area/lavaland/surface))
 				return BAD_AREA
-			if(disallowed_turf_types[place.type])
+			if(disallowed_turf_types[place.type] && !istype(place, /turf/closed/mineral))
 				return BAD_TURF
 
 
@@ -247,6 +247,21 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	dwidth = 4
 	width = 9
 	height = 9
+
+/obj/docking_port/mobile/auxillary_base/takeoff(
+	list/old_turfs,
+	list/new_turfs,
+	list/moved_atoms,
+	rotation,
+	movement_direction,
+	old_dock,
+	area/underlying_old_area,
+	)
+	for(var/i in new_turfs)
+		var/turf/place = i
+		if(istype(place, /turf/closed/mineral))
+			place.ScrapeAway()
+	return ..()
 
 obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
