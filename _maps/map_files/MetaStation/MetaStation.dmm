@@ -69004,6 +69004,7 @@
 /area/medical/virology)
 "cNt" = (
 /obj/machinery/button/crematorium{
+	id = "crematoriumChapel";
 	pixel_x = -26;
 	req_access_txt = "27"
 	},
@@ -77188,6 +77189,7 @@
 /area/science/circuit)
 "eFN" = (
 /obj/structure/bodycontainer/crematorium{
+	id = "crematoriumChapel";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
