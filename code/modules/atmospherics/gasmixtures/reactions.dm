@@ -112,12 +112,13 @@
 		if(!cached_gases[/datum/gas/oxygen])
 			burned_fuel = 0
 		else if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES])
-			burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR
+			burned_fuel = min(cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR,cached_gases[/datum/gas/tritium][MOLES])
 			cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 		else
-			burned_fuel = cached_gases[/datum/gas/tritium][MOLES]*TRITIUM_BURN_TRIT_FACTOR
-			cached_gases[/datum/gas/tritium][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]/TRITIUM_BURN_TRIT_FACTOR
-			cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]
+			var/burned_tritium = min(cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/oxygen][MOLES]) //God save you if you make TRIT_FACTOR less than 0
+			burned_fuel = burned_tritium*TRITIUM_BURN_TRIT_FACTOR
+			cached_gases[/datum/gas/tritium][MOLES] -= burned_tritium/TRITIUM_BURN_TRIT_FACTOR
+			cached_gases[/datum/gas/oxygen][MOLES] -= burned_tritium
 
 		if(burned_fuel)
 			energy_released += FIRE_CARBON_ENERGY_RELEASED * burned_fuel
@@ -152,6 +153,7 @@
 
 			if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
 				ASSERT_GAS(/datum/gas/carbon_dioxide, air) //don't need to assert o2, since if it isn't present we'll never reach this point anyway
+				plasma_burn_rate = min(plasma_burn_rate,cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate)
 				cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
 				cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 				if (super_saturation)
@@ -211,6 +213,8 @@
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/10
 	var/tritium_catalyzed = (CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/40
+	plasma_fused = min(plasma_fused,cached_gases[/datum/gas/plasma][MOLES])
+	tritium_catalyzed = min(tritium_catalyzed,cached_gases[/datum/gas/tritium][MOLES])
 	var/oxygen_added = tritium_catalyzed
 	var/waste_added = max((plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY),0)
 	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)))*PLASMA_BINDING_ENERGY),0)
