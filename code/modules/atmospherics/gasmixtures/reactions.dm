@@ -208,7 +208,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/catalyst_efficency = max(min(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/tritium][MOLES],MAX_CATALYST_EFFICENCY)-(temperature/FUSION_HEAT_DROPOFF),1)
 	var/reaction_energy = THERMAL_ENERGY(air)
-	var/moles_impurities = air.total_moles()-(cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/tritium][MOLES])
+	var/moles_impurities = max(air.total_moles()-(cached_gases[/datum/gas/plasma][MOLES]+cached_gases[/datum/gas/tritium][MOLES]),1)
 
 	var/plasma_fused = (PLASMA_FUSED_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/10
 	var/tritium_catalyzed = (CATALYST_COEFFICENT*catalyst_efficency)*(temperature/PLASMA_BINDING_ENERGY)/40
@@ -216,7 +216,7 @@
 	tritium_catalyzed = min(tritium_catalyzed,cached_gases[/datum/gas/tritium][MOLES])
 	var/oxygen_added = tritium_catalyzed
 	var/waste_added = max((plasma_fused-oxygen_added)-((air.total_moles()*air.heat_capacity())/PLASMA_BINDING_ENERGY),0)
-	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/((moles_impurities/catalyst_efficency)))*PLASMA_BINDING_ENERGY),0)
+	reaction_energy = max(reaction_energy+((catalyst_efficency*cached_gases[/datum/gas/plasma][MOLES])/((moles_impurities/catalyst_efficency)+2)*10)+((plasma_fused/(moles_impurities/catalyst_efficency))*PLASMA_BINDING_ENERGY),0)
 
 	air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/nitrous_oxide, /datum/gas/nitryl)
 	//Fusion produces an absurd amount of waste products now, requiring active filtration.
