@@ -417,6 +417,15 @@
 	research_cost = 2500
 	export_price = 5000
 
+/datum/techweb_node/autoimplanter
+	id = "autoimplanter"
+	display_name = "Automatic Surgery Robotics"
+	description = "Military grade combat implants to improve performance."
+	prereq_ids = list("combat_cyber_implants", "bio_process")
+	design_ids = list("autoimplanter")
+	research_cost = 12750
+	export_price = 5000
+
 ////////////////////////Tools////////////////////////
 /datum/techweb_node/basic_mining
 	id = "basic_mining"
