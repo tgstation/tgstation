@@ -1,4 +1,4 @@
-/mob/living/carbon/examine(mob/user)
+/mob/living/carbon/examine(mob/user, dont_print = FALSE) // Hippie - Allows us to get a normal examine without printing anything
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
 	var/t_his = p_their()
@@ -94,4 +94,9 @@
 
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	// Hippie Start - To allow for disguises
+	if (!dont_print)
+		to_chat(user, msg)
+
+	return msg
+	// Hippie End
