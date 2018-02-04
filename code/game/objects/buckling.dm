@@ -5,6 +5,10 @@
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
 	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
 	var/list/mob/living/buckled_mobs = null //list()
+	var/friend_buckle = TRUE //if someone else can buckle them
+	var/friend_unbuckle = TRUE //if someone else can unbuckle them
+	var/self_buckle = TRUE //if someone can buckle themselves
+	var/self_unbuckle = TRUE //if someone can unbuckle themselves
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
 
@@ -38,6 +42,14 @@
 		buckled_mobs = list()
 
 	if(!istype(M))
+		return FALSE
+
+	if(!self_buckle && M == usr && !force)
+		to_chat(usr, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
+		return FALSE
+
+	if(!friend_buckle && M != usr && !force)
+		to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
 		return FALSE
 
 	if(check_loc && M.loc != loc)
@@ -81,6 +93,15 @@
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
+
+		if(!self_unbuckle && buckled_mob == usr && !force)
+			to_chat(usr, "<span class='danger'>You are unable to free yourself from [src]!</span>")
+			return FALSE
+
+		if(!friend_unbuckle && buckled_mob != usr && !force)
+			to_chat(usr, "<span class='warning'>You are unable to free [buckled_mob] from [src]!</span>")
+			return FALSE
+
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
