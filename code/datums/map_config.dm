@@ -17,6 +17,10 @@
 	var/map_path = "map_files/BoxStation"
 	var/map_file = "BoxStation.dmm"
 
+	var/traits = null
+
+	var/minetype = "lavaland"
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -24,15 +28,13 @@
 		"whiteship" = "whiteship_box",
 		"emergency" = "emergency_box")
 
-	var/minetype = "lavaland"
-
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (default_to_box)
 		return config
 	if (!config.LoadConfig(filename, error_if_missing))
 		qdel(config)
-		return new /datum/map_config  // Fall back to Box
+		config = new /datum/map_config  // Fall back to Box
 	if (delete_after)
 		fdel(filename)
 	return config
@@ -65,26 +67,47 @@
 	map_name = json["map_name"]
 	CHECK_EXISTS("map_path")
 	map_path = json["map_path"]
-	CHECK_EXISTS("map_file")
-	map_file = json["map_file"]
 
-	var/path = GetFullMapPath(json["map_path"], json["map_file"])
-	if(!fexists(path))
-		log_world("Map file ([path]) does not exist!")
+	map_file = json["map_file"]
+	// "map_file": "BoxStation.dmm"
+	if (istext(map_file))
+		if (!fexists("_maps/[map_path]/[map_file]"))
+			log_world("Map file ([map_path]/[map_file]) does not exist!")
+			return
+	// "map_file": ["Lower.dmm", "Upper.dmm"]
+	else if (islist(map_file))
+		for (var/item in map_file)
+			if (!fexists("_maps/[map_path]/[item]"))
+				log_world("Map file ([map_path]/[item]) does not exist!")
+				return
+	else
+		log_world("map_file missing from json!")
 		return
 
-	if(islist(json["shuttles"]))
+	if (islist(json["shuttles"]))
 		var/list/L = json["shuttles"]
 		for(var/key in L)
 			var/value = L[key]
 			shuttles[key] = value
 	else if ("shuttles" in json)
-		log_world("map_config[shuttles] is not a list!")
+		log_world("map_config shuttles is not a list!")
 		return
 
-	var/json_minetype = json["minetype"]
-	if (json_minetype)
-		minetype = json_minetype
+	traits = json["traits"]
+	// "traits": [{"Linkage": "Cross"}, {"Space Ruins": true}]
+	if (islist(traits))
+		// "Station" is set by default, but it's assumed if you're setting
+		// traits you want to customize which level is cross-linked
+		for (var/level in traits)
+			if (!(ZTRAIT_STATION in level))
+				level[ZTRAIT_STATION] = TRUE
+	// "traits": null or absent -> default
+	else if (!isnull(traits))
+		log_world("map_config traits is not a list!")
+		return
+
+	if ("minetype" in json)
+		minetype = json["minetype"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
