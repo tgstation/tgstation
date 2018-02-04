@@ -271,7 +271,7 @@
 
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
-	return makeEmergencyresponseteam("deathsquad")
+	return makeEmergencyresponseteam(ERT_DEATHSQUAD)
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
@@ -330,15 +330,15 @@
 
 	switch(alert)
 		if("Delta: Deathsquad")
-			alert = "deathsquad"
+			alert = ERT_DEATHSQUAD
 			teamsize = 5
 			deathsquad = TRUE
 		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
-			alert = "Red"
+			alert = ERT_RED
 		if("Amber: Full ERT (Armoury Access)")
-			alert = "Amber"
+			alert = ERT_AMBER
 		if("Blue: Light ERT (No Armoury Access)")
-			alert = "Blue"
+			alert = ERT_BLUE
 		if("Green: CentCom Official")
 			return makeOfficial()
 		else
@@ -401,7 +401,7 @@
 
 			//Give antag datum
 			var/datum/antagonist/ert/ert_antag = new
-			ert_antag.high_alert = alert == "Red"
+			ert_antag.high_alert = alert == ERT_RED
 			if(numagents == 1)
 				ert_antag.role = deathsquad ? DEATHSQUAD_LEADER : ERT_LEADER
 			else
@@ -419,7 +419,7 @@
 			message_admins("[prompt_name] has spawned with the mission: [mission]")
 			
 			//Open the Armory doors
-			if(alert != "Blue")
+			if(alert != ERT_BLUE)
 				for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
 					spawn(0)
 						door.open()

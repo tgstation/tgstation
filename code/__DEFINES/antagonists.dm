@@ -14,6 +14,12 @@
 #define APPRENTICE_HEALING "healing"
 
 
+//ERT Types
+#define ERT_BLUE "Blue"
+#define ERT_RED  "Red"
+#define ERT_AMBER "Amber"
+#define ERT_DEATHSQUAD "Deathsquad"
+
 //ERT subroles
 #define ERT_SEC "sec"
 #define ERT_MED "med"
