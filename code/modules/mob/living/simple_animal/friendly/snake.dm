@@ -66,4 +66,4 @@
 	icon_living = "cobra"
 	icon_dead = "cobra_dead"
 	poison_per_bite = 1
-	poison_type = "calciseptin"
+	poison_type = "calciseptine"
