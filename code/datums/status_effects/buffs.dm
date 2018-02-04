@@ -436,3 +436,8 @@
 	name = "Fleshmend"
 	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
 	icon_state = "fleshmend"
+
+/datum/status_effect/exercised
+	id = "Exercised"
+	duration = 1200
+	alert_type = null
