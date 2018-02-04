@@ -4360,19 +4360,6 @@
 /obj/item/pickaxe,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-<<<<<<< HEAD
-=======
-"lr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/bluespace_crystal,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
-"ls" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/ore/bluespace_crystal/refined,
-/turf/open/floor/plasteel/white,
-/area/ruin/space/has_grav/ancientstation/rnd)
->>>>>>> 3a87ab7f51... Ore Stacking
 "lt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/mirror{
