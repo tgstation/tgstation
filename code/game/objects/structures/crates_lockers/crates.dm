@@ -87,8 +87,8 @@
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
-	new /obj/item/reagent_containers/blood/empty(src)
-	new /obj/item/reagent_containers/blood/empty(src)
+	new /obj/item/reagent_containers/blood(src)
+	new /obj/item/reagent_containers/blood(src)
 	new /obj/item/reagent_containers/blood/AMinus(src)
 	new /obj/item/reagent_containers/blood/BMinus(src)
 	new /obj/item/reagent_containers/blood/BPlus(src)
