@@ -12,6 +12,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
+	singular_name = "chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
@@ -19,10 +20,10 @@
 
 /obj/item/stack/ore/add(amount)
 	var/amount_added = 0
-	while (amount_added <= amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
+	while (amount_added < amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
 		var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-		newore.pixel_x = rand(-10,10)
-		newore.pixel_y = rand(-10,10)
+		newore.pixel_x = rand(-8,8)
+		newore.pixel_y = rand(-8,8)
 		LAZYADD(stack_overlays, newore)
 		amount_added++
 	return ..()
