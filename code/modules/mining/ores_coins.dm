@@ -275,7 +275,7 @@
 
 /obj/item/stack/ore/ex_act(severity, target)
 	if (!severity || severity >= 2)
-			return
+		return
 	warning("qdeleted [name] due to explosion of severity [severity]")
 	qdel(src)
 
