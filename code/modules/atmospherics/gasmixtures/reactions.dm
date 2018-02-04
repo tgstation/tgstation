@@ -319,7 +319,7 @@
 	var/heat_scale = air.temperature/STIMULUM_HEAT_SCALE
 	var/stim_energy_change
 	heat_scale = min(heat_scale,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
-	stim_energy_change =heat_scale + (STIMULUM_FIRST_RISE*(heat_scale**2)) - (STIMULUM_FIRST_DROP*(heat_scale**3)) + (STIMULUM_SECOND_RISE*(heat_scale**4)) - (STIMULUM_ABSOLUTE_DROP*(heat_scale**5))
+	stim_energy_change =heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 
 	ASSERT_GAS(/datum/gas/stimulum,air)
 	cached_gases[/datum/gas/stimulum][MOLES]+= heat_scale/10
