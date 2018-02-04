@@ -4,8 +4,8 @@ SUBSYSTEM_DEF(tremors)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/next_tremor = 0
-	var/min_tremor_time = 1200
-	var/max_tremor_time = 3000
+	var/min_tremor_time = 2400
+	var/max_tremor_time = 4800
 
 /datum/controller/subsystem/tremors/fire()
 	if(world.time < next_tremor)
