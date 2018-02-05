@@ -174,7 +174,7 @@
 	charge = 0
 
 /obj/item/stock_parts/cell/upgraded
-	name = "high-capacity power cell"
+	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
 	materials = list(MAT_GLASS=50)
