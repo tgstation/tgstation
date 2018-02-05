@@ -293,11 +293,6 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/item/projectile/proc/before_z_change(turf/oldloc, turf/newloc)
-	var/datum/point/pcache = trajectory.copy_to()
-	if(hitscan)
-		store_hitscan_collision(pcache)
-
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
@@ -371,19 +366,23 @@
 	return TRUE
 
 /obj/item/projectile/forceMove(atom/target)
-	var/restart_tracers = (target.z != z) && hitscan
-	if(restart_tracers)
+	if(hitscan)
 		finalize_hitscan_and_generate_tracers()
 	. = ..()
-	if(restart_tracers)
-		record_hitscan_start(RETURN_PRECISE_POINT(src))
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
+	if(hitscan)
+		record_hitscan_start(RETURN_PRECISE_POINT(src))
+
+/obj/item/projectile/proc/after_z_change(turf/oldloc, turf/newloc)
+
+/obj/item/projectile/proc/before_z_change(turf/oldloc, turf/newloc)
 
 /obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
-	beam_segments = list()	//initialize segment list with the list for the first segment
-	beam_index = pcache
-	beam_segments[beam_index] = null	//record start.
+	if(pcache)
+		beam_segments = list()
+		beam_index = pcache
+		beam_segments[beam_index] = null	//record start.
 
 /obj/item/projectile/proc/process_hitscan()
 	var/safety = range * 3
@@ -409,10 +408,12 @@
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
 	if(T.z != loc.z)
+		var/old = loc
 		before_z_change(loc, T)
 		trajectory_ignore_forcemove = TRUE
 		forceMove(T)
 		trajectory_ignore_forcemove = FALSE
+		after_z_change(old, loc)
 		if(!hitscanning)
 			pixel_x = trajectory.return_px()
 			pixel_y = trajectory.return_py()
@@ -498,14 +499,22 @@
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
-	if(hitscan && loc)
+	if(hitscan)
 		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
+	qdel(trajectory)
+	cleanup_beam_segments()
 	return ..()
 
+/obj/item/projectile/proc/cleanup_beam_segments()
+	QDEL_LIST_ASSOC(beam_segments)
+	beam_segments = list()
+	qdel(beam_index)
+
 /obj/item/projectile/proc/finalize_hitscan_and_generate_tracers()
-	var/datum/point/pcache = trajectory.copy_to()
-	beam_segments[beam_index] = pcache
+	if(trajectory && beam_index)
+		var/datum/point/pcache = trajectory.copy_to()
+		beam_segments[beam_index] = pcache
 	generate_hitscan_tracers()
 
 /obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3)
@@ -531,9 +540,7 @@
 		thing.transform = M
 		QDEL_IN(thing, duration)
 	if(cleanup)
-		QDEL_LIST(beam_segments)
-		beam_segments = null
-		QDEL_NULL(beam_index)
+		cleanup_beam_segments()
 
 /obj/item/projectile/experience_pressure_difference()
 	return

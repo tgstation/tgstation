@@ -130,6 +130,8 @@
 	return MODULUS(y, world.icon_size) - 16 - 1
 
 /datum/point/proc/mapcheck()
+	return FALSE	//Space's Enter() proc does this for us.
+	/*
 	. = FALSE
 	var/maxx = world.icon_size * world.maxx
 	var/maxy = world.icon_size * world.maxy
@@ -155,7 +157,7 @@
 	if(move_zy != 0)
 		var/datum/space_level/L = S.neigbours["[move_zy < 0? SOUTH : NORTH]"]
 		z = L.z_value
-		. = TRUE
+		. = TRUE*/
 
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
