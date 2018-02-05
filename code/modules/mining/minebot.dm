@@ -208,18 +208,18 @@
 
 //Melee
 
-/obj/item/device/mine_bot_ugprade
+/obj/item/device/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/device/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 
-/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
 		to_chat(user, "[src] already has a combat upgrade installed!")
 		return
@@ -229,10 +229,10 @@
 
 //Health
 
-/obj/item/device/mine_bot_ugprade/health
+/obj/item/device/mine_bot_upgrade/health
 	name = "minebot chassis upgrade"
 
-/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
 		to_chat(user, "[src] already has a reinforced chassis!")
 		return
@@ -242,10 +242,10 @@
 
 //Cooldown
 
-/obj/item/device/mine_bot_ugprade/cooldown
+/obj/item/device/mine_bot_upgrade/cooldown
 	name = "minebot cooldown upgrade"
 
-/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
 	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
 		to_chat(user, "[src] already has a decreased weapon cooldown!")
