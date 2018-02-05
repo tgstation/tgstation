@@ -66,6 +66,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
+		log_antag("[owner.current]/[key_name(owner.current)] is now a [name]")
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
@@ -76,7 +77,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
-
+	var/oldowner = owner.current
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
 		var/client/C = pick(candidates)
@@ -84,6 +85,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
 		owner.current.key = C.key
+    log_antag("[oldowner]/[key_name(oldowner)] was banned from [name], and has been replaced by [owner.current]/[key_name(owner.current)]!")
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
@@ -94,6 +96,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	log_antag("[owner.current]/[key_name(owner.current)] is no longer a [name]!")
 	qdel(src)
 
 /datum/antagonist/proc/greet()

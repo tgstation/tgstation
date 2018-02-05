@@ -11,7 +11,7 @@ GLOBAL_PROTECT(security_mode)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_antag_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
@@ -85,6 +85,7 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_qdel_log = file("[GLOB.log_directory]/qdel.log")
 	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
+	GLOB.world_antag_log = file("[GLOB.log_directory]/antag.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
 	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
 #ifdef UNIT_TESTS

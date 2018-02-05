@@ -108,6 +108,9 @@ LOG_MANIFEST
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
+# log antagging/deantagging
+LOG_ANTAG
+
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
