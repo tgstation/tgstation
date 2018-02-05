@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - balance: "Regular cyborgs now start with a normal high capacity cell instead of a snowflake cell. Resulting in less confusing and 2.5MJ more electric charge."
-  - bugfix: "Fixed name of the upgraded power cell"
-  - refactor: "Removed duplicate cell giving code in transformation proc."

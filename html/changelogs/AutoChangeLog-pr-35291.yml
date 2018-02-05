@@ -1,8 +1,0 @@
-author: "Naksu and kevinz000"
-delete-after: True
-changes: 
-  - tweak: "Ores are no longer completely impervious to explosions, but rather \"proper\" ores are destroyed by the strongest explosions and sand is blown away everything but the weakest ones. This shouldn't affect ore spawns from explosions"
-  - tweak: "Lavaland bomb cap reduced to double the station bombcap."
-  - refactor: "Ores are now stackable. Ore stacks now have the appearance of loose ores and are not called \"sheets\" by machines that consume them."
-  - code_imp: "Material container component now uses the singular names of stack objects."
-  - refactor: "/obj/item/ore/Crossed() is now removed in favor of the ore satchel utilizing a redirect component"
