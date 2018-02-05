@@ -116,13 +116,9 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-<<<<<<< HEAD
-	clumsy_check = 0
-	needs_permit = 0
-=======
+	needs_permit = FALSE
 	item_flags = NONE
 	clumsy_check = FALSE
->>>>>>> 26ad237862... Projectile hitscan refactor and visuals (#34363)
 	pin = /obj/item/device/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
@@ -135,13 +131,9 @@
 	icon_state = "redtag"
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-<<<<<<< HEAD
-	clumsy_check = 0
-	needs_permit = 0
-=======
+	needs_permit = FALSE
 	item_flags = NONE
 	clumsy_check = FALSE
->>>>>>> 26ad237862... Projectile hitscan refactor and visuals (#34363)
 	pin = /obj/item/device/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = TRUE
