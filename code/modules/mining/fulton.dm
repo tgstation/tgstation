@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
-		if(A.anchored)
+		if(A.anchored && !istype(A, /mob/living/simple_animal/hostile/megafauna))
 			return
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
