@@ -284,17 +284,42 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	initial_gas_mix = "TEMP=180"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
+	planetary_atmos = TRUE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
+
+/turf/open/floor/plating/asteroid/snow/burn_tile()
+	var/flammened = FALSE
+	if(!flammened)
+		visible_message("<span class='danger'>[src] melts away!.</span>")
+		slowdown = 0
+		flammened = TRUE
+		icon_state = "snow_dug"
+	else
+		return FALSE
+
+/turf/open/floor/plating/asteroid/snow/ice
+	name = "icey snow"
+	desc = "Looks colder."
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	floor_variance = 0
+	icon_state = "snow-ice"
+	icon_plating = "snow-ice"
+	environment_type = "snow_cavern"
+
+/turf/open/floor/plating/asteroid/snow/ice/burn_tile()
+	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/snow/temperatre
-	initial_gas_mix = "TEMP=255.37"
+	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	planetary_atmos = FALSE
