@@ -25,15 +25,15 @@
 	* If you are diagonally adjacent, ensure you can pass through at least one of the mutually adjacent square.
 		* Passing through in this case ignores anything with the LETPASSTHROW pass flag, such as tables, racks, and morgue trays.
 */
-/turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null, var/recurse = 1)
+/turf/Adjacent(atom/neighbor, atom/target = null, atom/movable/mover = null, var/recursion_depth = 1)
 	if(neighbor == src)
 		return TRUE //don't be retarded!!
 
-	if(recurse && istype(neighbor, /atom/movable)) //fml
+	if(recursion_depth && istype(neighbor, /atom/movable)) //fml
 		var/atom/movable/AM = neighbor
 		if((AM.bound_width != world.icon_size || AM.bound_height != world.icon_size) && (islist(AM.locs) && AM.locs.len > 1))
 			for(var/turf/T in AM.locs)
-				if(Adjacent(T, target, mover, recurse-1))
+				if(Adjacent(T, target, mover, recursion_depth-1))
 					return TRUE
 
 	var/turf/T0 = get_turf(neighbor)
@@ -75,18 +75,18 @@
 	Adjacency (to anything else):
 	* Must be on a turf
 */
-/atom/movable/Adjacent(var/atom/neighbor, var/recurse = 1)
+/atom/movable/Adjacent(var/atom/neighbor, var/recursion_depth = 1)
 	if(neighbor == loc)
 		return TRUE
 	if(!isturf(loc))
 		return FALSE
-	if(!isnum(recurse))
-		recurse = 0
-	if(loc.Adjacent(neighbor,target = neighbor, mover = src, recurse = recurse-1))
+	if(!isnum(recursion_depth))
+		recursion_depth = 0
+	if(loc.Adjacent(neighbor,target = neighbor, mover = src, recursion_depth = recursion_depth-1))
 		return TRUE
-	if(recurse && (islist(locs) && locs.len > 1) && (bound_width != world.icon_size || bound_height != world.icon_size))
+	if(recursion_depth && (islist(locs) && locs.len > 1) && (bound_width != world.icon_size || bound_height != world.icon_size))
 		for(var/turf/T in locs) //this is to handle multi tile objects
-			if(T.Adjacent(neighbor, src, src, recurse-1))
+			if(T.Adjacent(neighbor, src, src, recursion_depth-1))
 				return TRUE
 	return FALSE
 
