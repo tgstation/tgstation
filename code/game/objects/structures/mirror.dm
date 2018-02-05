@@ -89,14 +89,13 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = new speciestype()
-			if(!(S.id in races_blacklist))
+			if(!S.dangerous_existence && !S.blacklisted)
 				choosable_races += S.id
 	..()
 
