@@ -21,7 +21,9 @@ Assistant
 		. |= list(ACCESS_MAINT_TUNNELS)
 	else
 		return ..()
-
+/datum/job/assistant/after_spawn(mob/living/H, mob/M)
+	to_chat(M, "<span class='userdanger'>Note, being a assistant does not give you a license to grief people or antagonize security, Shitty behavior as a assistant (AKA: "Greytide) Is not tolerated and may lead to a jobban. </span>")
+	
 /datum/job/assistant/config_check()
 	var/ac = CONFIG_GET(number/assistant_cap)
 	if(ac != 0)
