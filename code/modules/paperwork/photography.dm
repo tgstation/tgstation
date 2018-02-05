@@ -455,14 +455,14 @@
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	if (disk)
-		if(ishuman(target))
+		if(ismob(target))
 			if (disk.record)
 				QDEL_NULL(disk.record)
 
 			disk.record = new
-			var/mob/living/carbon/human/H = target
-			disk.record.caller_name = H.name
-			disk.record.set_caller_image(H)
+			var/mob/M = target
+			disk.record.caller_name = M.name
+			disk.record.set_caller_image(M)
 		else 
 			return
 	else
