@@ -138,21 +138,10 @@ This file contains the cult dagger and rune list code
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE
-
 	if(locate(/obj/effect/rune) in T)
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-
-
 	if(!is_station_level(T.z) && !is_mining_level(T.z))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
 		return FALSE
-
-	var/area/A = get_area(T)
-	if(A && !A.blob_allowed)
-		to_chat(user, "<span class='warning'>There's a passage in [src] specifically forbidding oyster consumption, triple-frying, and building outside of designated cult zones.</span>")
-		return FALSE
-
-
 	return TRUE
