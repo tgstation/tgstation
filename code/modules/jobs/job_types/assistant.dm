@@ -22,7 +22,7 @@ Assistant
 	else
 		return ..()
 /datum/job/assistant/after_spawn(mob/living/H, mob/M)
-	to_chat(M, "<span class='userdanger'>Note, being a assistant does not give you a license to grief people or antagonize security, Shitty behavior as a assistant (AKA: &quot;Greytide&quot;) Is not tolerated and may lead to a jobban.</span>")
+	to_chat(M, "<span class='userdanger'>Note, being a assistant does not give you a license to grief people or antagonize security, shitty behavior as a assistant (AKA: &quot;Greytide&quot;) Is not tolerated and may lead to a jobban.</span>")
 	
 /datum/job/assistant/config_check()
 	var/ac = CONFIG_GET(number/assistant_cap)
