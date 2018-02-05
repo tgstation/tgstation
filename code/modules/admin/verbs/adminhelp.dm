@@ -484,6 +484,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	set category = "Admin"
 	set name = "Adminhelp"
 
+	if(findtext(msg, "youtube.com))
+		to_chat("<span class='danger'>YouTube links are forbidden from admin helps.</span>
+		return
+
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
