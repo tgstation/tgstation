@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Slime scanning now has a more readable output, especially when scanning multiple slimes at once"

@@ -21,9 +21,15 @@
 	foodtype = MEAT
 	grind_results = list()
 
-/obj/item/reagent_containers/food/snacks/egg/acidic
-	list_reagents = list("eggyolk" = 5, "sacid" = 20)
-	desc = "An egg! It smells bad."
+/obj/item/reagent_containers/food/snacks/egg/gland
+	desc = "An egg! It looks weird..."
+
+/obj/item/reagent_containers/food/snacks/egg/gland/Initialize()
+	. = ..()
+	reagents.add_reagent(get_random_reagent_id(), 15)
+
+	var/color = mix_color_from_reagents(reagents.reagent_list)
+	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?

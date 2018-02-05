@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Servant cyborgs with the Standard module now correctly have Abscond."
