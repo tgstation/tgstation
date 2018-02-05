@@ -9,7 +9,7 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(SPECIES_ORGANIC,NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	species_traits = list(SPECIES_ORGANIC,NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,NOEYES)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
@@ -37,7 +37,7 @@
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER,NO_DNA_COPY,NOTRANSSTING)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER,NO_DNA_COPY,NOTRANSSTING,NOEYES)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
 	mutant_brain = /obj/item/organ/brain/nightmare

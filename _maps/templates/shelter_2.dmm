@@ -8,9 +8,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-"c" = (
-/turf/closed/wall/mineral/titanium/survival,
-/area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8

@@ -153,7 +153,7 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
-	return E.value
+	return E.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	if(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Set" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
@@ -187,7 +187,7 @@
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
-				if(M.probability)
+				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
 				else
 					mode_false_report_weight[M.config_tag] = 1

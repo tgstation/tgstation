@@ -53,8 +53,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/New()
-	..()
+/obj/machinery/door/Initialize()
+	. = ..()
 	if(density)
 		layer = CLOSED_DOOR_LAYER //Above most items if closed
 	else

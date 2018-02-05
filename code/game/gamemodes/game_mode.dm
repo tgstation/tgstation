@@ -46,6 +46,8 @@
 
 	var/allow_persistence_save = TRUE
 
+	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
@@ -94,6 +96,7 @@
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
+	gamemode_ready = TRUE
 	return 1
 
 
@@ -162,8 +165,10 @@
 		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
-
+	log_game("Roundtype converted to [replacementmode.name]")
+	
 	. = 1
+
 	sleep(rand(600,1800))
 	if(!SSticker.IsRoundInProgress())
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
@@ -190,7 +195,7 @@
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
-	if(!SSticker.setup_done)
+	if(!SSticker.setup_done || !gamemode_ready)
 		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
@@ -252,11 +257,15 @@
 	var/list/report_weights = config.mode_false_report_weight.Copy()
 	report_weights[config_tag] = 0 //Prevent the current mode from being falsely selected.
 	var/list/reports = list()
-	for(var/i in 1 to rand(3,5)) //Between three and five wrong entries on the list.
+	var/Count = 0 //To compensate for missing correct report
+	if(prob(65)) // 65% chance the actual mode will appear on the list
+		reports += config.mode_reports[config_tag]
+		Count++
+	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
 		var/false_report_type = pickweightAllowZero(report_weights)
 		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
 		reports += config.mode_reports[false_report_type]
-	reports += config.mode_reports[config_tag]
+
 	reports = shuffle(reports) //Randomize the order, so the real one is at a random position.
 
 	for(var/report in reports)

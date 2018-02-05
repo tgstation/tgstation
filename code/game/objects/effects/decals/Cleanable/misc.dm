@@ -25,6 +25,18 @@
 	. = ..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
+/obj/effect/decal/cleanable/glass
+	name = "tiny shards"
+	desc = "Back to sand."
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "tiny"
+
+/obj/effect/decal/cleanable/glass/Initialize()
+	. = ..()
+	setDir(pick(GLOB.cardinals))
+
+/obj/effect/decal/cleanable/glass/ex_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"

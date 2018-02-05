@@ -9,7 +9,7 @@
 	var/damtype = BRUTE
 	var/force = 0
 
-	var/list/armor
+	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior
@@ -37,8 +37,13 @@
 
 /obj/Initialize()
 	. = ..()
-	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	if (islist(armor))
+		armor = getArmor(arglist(armor))
+	else if (!armor)
+		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
+
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
 	if (set_obj_flags)
@@ -210,6 +215,7 @@
 	. = ..()
 	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
 	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
+	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
 
 /obj/examine(mob/user)
 	..()

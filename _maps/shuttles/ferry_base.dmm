@@ -20,9 +20,6 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
-"f" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
 "g" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
@@ -64,15 +61,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
-"n" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"o" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "p" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -82,9 +70,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"r" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

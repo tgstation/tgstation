@@ -5,7 +5,7 @@
 
 //Sigil of Transmission: Creates a sigil of transmission that can drain and store power for clockwork structures.
 /datum/clockwork_scripture/create_object/sigil_of_transmission
-	descname = "Powers Nearby Structures - Important!"
+	descname = "Powers Nearby Structures"
 	name = "Sigil of Transmission"
 	desc = "Places a sigil that can drain and will store energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
@@ -19,6 +19,7 @@
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 1
+	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
@@ -98,7 +99,7 @@
 		if(ishuman(L) && L.stat != DEAD)
 			human_servants++
 	construct_limit = human_servants / 4 //1 per 4 human servants, and a maximum of 3 marauders
-	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3) 
+	construct_limit = CLAMP(construct_limit - recent_marauders, 1, 3)
 	if(recent_marauders)
 		to_chat(invoker, "<span class='warning'>The Hierophant Network needs [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds to recover from marauder summoning; recent summoning has limited the number of available marauders by [recent_marauders]!</span>")
 
