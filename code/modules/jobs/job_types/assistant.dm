@@ -13,6 +13,9 @@ Assistant
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
+	exp_requirements = 3000
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SECURITY
 
 
 /datum/job/assistant/get_access()
