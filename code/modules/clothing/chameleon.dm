@@ -447,9 +447,7 @@
 	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
 	chameleon_action.initialize_disguises()
-
-/obj/item/gun/energy/laser/chameleon/Initialize()
-	. = ..()
+	
 	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags", "tracer_type", "muzzle_type", "impact_type")
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
 	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
