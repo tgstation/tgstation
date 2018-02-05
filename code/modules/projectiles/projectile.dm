@@ -371,7 +371,12 @@
 	return TRUE
 
 /obj/item/projectile/forceMove(atom/target)
+	var/restart_tracers = (target.z != z) && hitscan
+	if(restart_tracers)
+		finalize_hitscan_and_generate_tracers()
 	. = ..()
+	if(restart_tracers)
+		record_hitscan_start(RETURN_PRECISE_POINT(src))
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
 
@@ -493,13 +498,15 @@
 		Collide(AM)
 
 /obj/item/projectile/Destroy()
-	if(hitscan)
-		if(loc)
-			var/datum/point/pcache = trajectory.copy_to()
-			beam_segments[beam_index] = pcache
-		generate_hitscan_tracers()
+	if(hitscan && loc)
+		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	return ..()
+
+/obj/item/projectile/proc/finalize_hitscan_and_generate_tracers()
+	var/datum/point/pcache = trajectory.copy_to()
+	beam_segments[beam_index] = pcache
+	generate_hitscan_tracers()
 
 /obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3)
 	if(!length(beam_segments))
