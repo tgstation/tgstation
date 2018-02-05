@@ -1,3 +1,8 @@
+/datum/outfit/casual
+	name = "Casual Wear"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
 /datum/outfit/space
 	name = "Standard Space Gear"
 
