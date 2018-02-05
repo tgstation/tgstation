@@ -31,10 +31,11 @@ Class Variables:
    stat (bitflag)
       Machine status bit flags.
       Possible bit flags:
-         BROKEN -- Machine is broken
+         BROKEN -- Machine is broken.
          NOPOWER -- No power is being supplied to machine.
+				 POWEROFF -- Machine is turned off.
          MAINT -- machine is currently under going maintenance.
-         EMPED -- temporary broken by EMP pulse
+         EMPED -- temporary broken by EMP pulse.
 
 Class Procs:
    Initialize()                     'game/machinery/machine.dm'
