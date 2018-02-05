@@ -23,7 +23,7 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(src.loc)
+	var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible/booze(loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
@@ -131,7 +131,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	new /obj/item/device/soulstone(src)
 	new /obj/item/clothing/suit/space/hardsuit/cult(src)
 	//new /obj/item/teleportation_scroll(src)
-	new /obj/item/ore/diamond(src)
+	new /obj/item/stack/ore/diamond(src)
 
 /*
  * Modified Nar-Sie

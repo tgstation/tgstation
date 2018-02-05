@@ -34234,7 +34234,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bHz" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -35474,8 +35474,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bKk" = (
-/obj/item/ore/silver,
-/obj/item/ore/silver,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
