@@ -408,10 +408,18 @@
 		if(cached_gases[/datum/gas/oxygen][MOLES] > HYDROGEN_DETONATION_THRESHOLD)
 			var/ignition_moles = min(cached_gases[/datum/gas/hydrogen][MOLES],cached_gases[/datum/gas/oxygen][MOLES]*2)
 			cached_results[id] += ignition_moles
-
 			if(cached_results[id] >= 0)
+				cached_gases[/datum/gas/hydrogen][MOLES] = max(cached_gases[/datum/gas/hydrogen][MOLES] - ignition_moles,0)
+				cached_gases[/datum/gas/oxygen][MOLES] = max(cached_gases[/datum/gas/oxygen][MOLES] - ignition_moles/2,0)
+				cached_gases[/datum/gas/water_vapor][MOLES] += ignition_moles
 				if(istype(location))
 					explosion(location,0,0,2,adminlog = FALSE,flame_range = 2) //If we log this oranges will yell at me
+				else
+					var/energy_released = ignition_moles*FIRE_HYDROGEN_ENERGY_RELEASED
+					var/new_heat_capacity = air.heat_capacity()
+					if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+						air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
+
 				cached_results[id] = 0
 
 		return REACTING
@@ -436,6 +444,9 @@
 #undef STIMULUM_SECOND_RISE
 #undef STIMULUM_ABSOLUTE_DROP
 #undef REACTION_OPPRESSION_THRESHOLD
+#undef HYDROGEN_LOWER_TEMPERATURE
+#undef HYDROGEN_UPPER_TEMPERATURE
+#undef HYDROGEN_DETONATION_THRESHOLD
 #undef PLASMA_BINDING_ENERGY
 #undef MAX_CATALYST_EFFICENCY
 #undef PLASMA_FUSED_COEFFICENT
