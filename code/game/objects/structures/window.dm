@@ -521,6 +521,30 @@
 	level = 3
 	glass_amount = 2
 
+/obj/structure/window/reinforced/fulltile/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stack/sheet/mineral))
+		if(check_anchored(TRUE))
+			return
+		if(istype(I, /obj/item/stack/sheet/mineral/titanium) || istype(I, /obj/item/stack/sheet/mineral/plastitanium))
+			var/obj/item/stack/sheet/mineral/M = I
+			if(M.get_amount() < 1)
+				return
+			to_chat(user, "You start adding [M] to [src]...")
+			if(do_after(user, 20, target = src))
+				if(!loc || !M || M.get_amount() < 1)
+					return
+				M.use(1)
+				to_chat(user, "<span class='notice'>You add [M] to [src].</span>")
+				if(istype(M, /obj/item/stack/sheet/mineral/titanium))
+					var/obj/structure/window/shuttle/unanchored/W = new(loc)
+					transfer_fingerprints_to(W)
+				else if(istype(M, /obj/item/stack/sheet/mineral/plastitanium))
+					var/obj/structure/window/plastitanium/unanchored/W = new(loc)
+					transfer_fingerprints_to(W)
+				qdel(src)
+	else
+		return ..()
+
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
 
@@ -563,11 +587,18 @@
 	glass_type = /obj/item/stack/sheet/rglass
 	glass_amount = 2
 
+/obj/structure/window/shuttle/Initialize()
+	debris += new /obj/item/stack/sheet/mineral/titanium()
+	return ..()
+
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
+
+/obj/structure/window/shuttle/unanchored
+	anchored = FALSE
 
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
@@ -588,6 +619,13 @@
 	level = 3
 	glass_type = /obj/item/stack/sheet/rglass
 	glass_amount = 2
+
+/obj/structure/window/plastitanium/Initialize()
+	debris += new /obj/item/stack/sheet/mineral/plastitanium()
+	return ..()
+
+/obj/structure/window/plastitanium/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
