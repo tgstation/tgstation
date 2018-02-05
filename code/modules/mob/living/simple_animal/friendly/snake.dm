@@ -69,6 +69,7 @@
 	icon_dead = "cobra_dead"
 	poison_per_bite = 1
 	poison_type = "calciseptine"
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/boa
 	name = "boa constrictor"
@@ -81,16 +82,40 @@
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	friend_buckle = FALSE //as hilarious as buckling someone into a boa would be, no we can't have that
+	friend_buckle = FALSE //as hilarious as buckling someone else into a boa would be, no we can't have that
 	friend_unbuckle = FALSE
 	self_unbuckle = FALSE
+	self_buckle = FALSE
+	gold_core_spawnable = NO_SPAWN
 	var/ambush_cooldown = 0
+	var/constrict_dmg_define = 10 //admins, set this for what you want the snake's constriction damage. don't set the one below or it'll reset when switching intents
+	var/constrict_dmg_current = 10
 	var/constricting = FALSE
+	var/datum/action/innate/jungle/release/release
+	var/datum/action/innate/jungle/constriction_intent/constriction_intent
+
+///mob/living/simple_animal/hostile/retaliate/poison/snake/boa/Login()
+
+/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/Initialize()
+	. = ..()
+	release = new
+	release.Grant(src)
+	constriction_intent = new
+	constriction_intent.Grant(src)
+
+/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/Destroy()
+	QDEL_NULL(release)
+	QDEL_NULL(constriction_intent)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/boa/AttackingTarget()
+	if(istype(target, /mob/living/simple_animal/mouse))
+		. = ..()
 	if(ambush_cooldown < world.time && isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
+			to_chat(src, "<span class='notice'>we begin to constrict [L]!</span>")
+			to_chat(L, "<span class='userdanger'>[src] begins to constrict you!</span>")
 			buckle_mob(L, force = 1)
 			icon_state = "boa_constricting"
 			constricting = TRUE
@@ -104,8 +129,9 @@
 		constricting = FALSE
 		layer = 4.1
 	for(var/mob/living/L in buckled_mobs)
-		to_chat(L, "<span class='danger'>You're getting crushed by the immense pressure of the [src]!</span>")
-		L.adjustBruteLoss(10)
+		if(constrict_dmg_current >= 1)
+			to_chat(L, "<span class='danger'>You're getting crushed by the immense pressure of the [src]!</span>")
+			L.adjustBruteLoss(constrict_dmg_current)
 		if(L.stat == DEAD)
 			unbuckle_mob(L, force = 1)
 			icon_state = "boa"
@@ -115,7 +141,7 @@
 /mob/living/simple_animal/hostile/retaliate/poison/snake/boa/Move(turf/NewLoc)
 	if(constricting)
 		if(client)
-			to_chat(src, "<span class='warning'>You cannot move, you're constricting someone to death!</span>")
+			to_chat(src, "<span class='warning'>You cannot move, you're constricting something!</span>")
 		return 0
 	return ..()
 
@@ -125,7 +151,47 @@
 		ambush_cooldown = world.time + AMBUSH_DELAY
 	if(stat)
 		unbuckle_all_mobs(force = 1)
+		constricting = FALSE
+		layer = 4.1
+		return
 
+/datum/action/innate/jungle
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_jungle"
 
+/datum/action/innate/jungle/release
+	name = "Release Prey"
+	desc = "Give the stupid creature mercy, but also useful if you're getting attacked while constricting I guess."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "release"
+
+/datum/action/innate/jungle/release/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/poison/snake/boa))
+		return
+	var/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/S = owner
+	if(S.buckled_mobs)
+		S.unbuckle_all_mobs(force = 1)
+		S.icon_state = "boa"
+		S.constricting = FALSE
+		S.layer = 4.1
+		S.visible_message("<span class='notice'>[S] releases it's victims.</span>", "<span class='notice'>We let our prey go.</span>")
+
+/datum/action/innate/jungle/constriction_intent
+	name = "Toggle Constriction Strength"
+	desc = "Sometimes you wanna constrict someone without killing them. Watch out though, they might yell..."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "pause"
+
+/datum/action/innate/jungle/constriction_intent/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/poison/snake/boa))
+		return
+	var/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/S = owner
+	if(S.constrict_dmg_current)
+		to_chat(S, "<span class='notice'>We relax our muscles, and will now not do any damage while constricting.</span>")
+		S.constrict_dmg_current = 0
+	else
+		var/flufftext = list("angry greyshirts", "hyperspace shuttles", "fully armed operatives", "deranged eldrich gods", "great big slimes", "normal boa constrictors", "evil corporations", "lava planets", "all-powerful fruit", "ash storms", "cosmic scientists", "tactical chairs", "reaper leviathans", "anomalous singularities", "big guys", "revolutionary forces", "xenomorph hives", "changelings", "fireball wizards", "shadowling ascendants")
+		to_chat(S, "<span class='notice'>We tensen our muscles, and will now crush our victim with the power of [S.constrict_dmg_define] [pick(flufftext)]!</span>")
+		S.constrict_dmg_current = S.constrict_dmg_define
 
 #undef AMBUSH_DELAY
