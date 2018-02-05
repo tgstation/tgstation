@@ -94,7 +94,7 @@ Warden
 	belt = /obj/item/device/pda/warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = null
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
@@ -110,6 +110,30 @@ Warden
 	box = /obj/item/storage/box/security
 
 	implants = list(/obj/item/implant/mindshield)
+
+/datum/outfit/job/warden/post_equip(mob/living/carbon/human/warden, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	addtimer(CALLBACK(src, .proc/cut_legs, warden), 75)
+
+/datum/outfit/job/warden/proc/cut_legs(mob/living/carbon/human/warden)
+	to_chat(warden, "<span class='userdanger'>To disincentivize leaving the brig, your legs have exploded into pieces. A complementary secway has been provided for mobility.</span>")
+	var/obj/vehicle/ridden/secway/S = new(get_turf(warden))
+	S.inserted_key = new S.key_type (S)
+	S.buckle_mob(warden)
+	var/obj/item/bodypart/l_leg = warden.get_bodypart("l_leg")
+	var/obj/item/bodypart/r_leg = warden.get_bodypart("r_leg")
+	if(l_leg || r_leg)
+		if(l_leg)
+			l_leg.dismember()
+			qdel(l_leg)
+		if(r_leg)
+			r_leg.dismember()
+			qdel(r_leg)
+	playsound(warden, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(warden, "desceration", 50, TRUE)
+	warden.adjustBruteLoss(-30) //undo the damage
 
 
 /*
