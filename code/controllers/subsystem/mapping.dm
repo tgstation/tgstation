@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(mapping)
 		var/full_path = "_maps/[path]/[file]"
 		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 		files[file] = total_z  // save the start Z of this file
-		total_z += bounds[MAP_MAXZ]
+		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
 	if (!length(traits))  // null or empty - default
 		for (var/i in 1 to total_z)
