@@ -27,6 +27,7 @@ SUBSYSTEM_DEF(stickyban)
 		ban["existing_user_matches_this_round"] = list()
 		ban["admin_matches_this_round"] = list()
 		cache[ckey] = ban
-	
+	world.SetConfig("ban", optimumtact, null)
+
 	for (var/bannedckey in cache)
 		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))
