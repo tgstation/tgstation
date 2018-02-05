@@ -11318,7 +11318,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Ci" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Cj" = (
@@ -12360,7 +12360,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/snowdin/cave)
 "EU" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/closed/mineral/iron/ice,
 /area/awaymission/snowdin/cave/cavern)
 "EV" = (
