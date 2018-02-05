@@ -1,18 +1,26 @@
 /*
-The /tg/ codebase currently requires you to have 11 z-levels of the same size dimensions.
-z-level order is important, the order you put them in inside the map config.dm will determine what z level number they are assigned ingame.
-Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
+The /tg/ codebase allows mixing of hardcoded and dynamically-loaded z-levels.
+Z-levels can be reordered as desired and their properties are set by "traits".
+See map_config.dm for how a particular station's traits may be chosen.
+The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
+the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
+responsible for loading every non-hardcoded z-level.
 
-current as of september 17, 2017
-z1 = station
-z2 = centcom
-z5 = mining
-z6 = city of cogs
-Everything else = randomized space
-Last space-z level = empty
+As of 2018-02-04, the typical z-levels for a single-level station are:
+1: CentCom
+2: Station
+3-4: Randomized space
+5: Mining
+6: City of Cogs
+7-11: Randomized space
+12: Empty space
+13: Transit space
+
+Multi-Z stations are supported and multi-Z mining and away missions would
+require only minor tweaks.
 */
 
-//for modifying jobs
+// helpers for modifying jobs, used in various job_changes.dm files
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
 #define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
@@ -34,7 +42,7 @@ Last space-z level = empty
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
-// numbers - offset values
+// numeric offsets - e.g. {"Down": -1} means that chasms will fall to z - 1 rather than oblivion
 #define ZTRAIT_UP "Up"
 #define ZTRAIT_DOWN "Down"
 
@@ -47,23 +55,23 @@ Last space-z level = empty
     // CROSSLINKED - mixed in with the cross-linked space pool
     #define CROSSLINKED "Cross"
 
-// trait definitions, used by SSmapping
-#define DL_NAME "name"
-#define DL_TRAITS "traits"
-
+// default trait definitions, used by SSmapping
 #define ZTRAITS_CENTCOM list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_CENTCOM = TRUE)
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 3)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 
+#define DL_NAME "name"
+#define DL_TRAITS "traits"
 #define DECLARE_LEVEL(NAME, TRAITS) list(DL_NAME = NAME, DL_TRAITS = TRAITS)
-// corresponds to basemap.dm
+
+// must correspond to _basemap.dm for things to work correctly
 #define DEFAULT_MAP_TRAITS list(\
     DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
 )
 
-//Camera lock flags
+// Camera lock flags
 #define CAMERA_LOCK_STATION 1
 #define CAMERA_LOCK_MINING 2
 #define CAMERA_LOCK_CENTCOM 4
