@@ -13,6 +13,8 @@ Assistant
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 
 /datum/job/assistant/get_access()

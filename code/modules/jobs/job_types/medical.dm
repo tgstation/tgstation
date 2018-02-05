@@ -14,7 +14,7 @@ Chief Medical Officer
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
-	exp_requirements = 180
+	exp_requirements = INFINITY
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_MEDICAL
 
@@ -59,6 +59,8 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/doctor
 
@@ -94,8 +96,8 @@ Chemist
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	exp_requirements = INFINITY
 	exp_type = EXP_TYPE_CREW
-	exp_requirements = 60
 
 	outfit = /datum/outfit/job/chemist
 
@@ -130,8 +132,8 @@ Geneticist
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	exp_requirements = INFINITY
 	exp_type = EXP_TYPE_CREW
-	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
 
@@ -166,8 +168,8 @@ Virologist
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	exp_requirements = INFINITY
 	exp_type = EXP_TYPE_CREW
-	exp_requirements = 60
 
 	outfit = /datum/outfit/job/virologist
 

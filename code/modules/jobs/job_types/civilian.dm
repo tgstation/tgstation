@@ -11,6 +11,8 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/clown
 
@@ -72,6 +74,8 @@ Mime
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/mime
 
@@ -122,6 +126,8 @@ Curator
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/curator
 
@@ -167,6 +173,8 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/lawyers = 0 //Counts lawyer amount
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/lawyer
 

@@ -11,6 +11,8 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/quartermaster
 
@@ -41,6 +43,8 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -69,6 +73,8 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/miner
 
@@ -147,6 +153,8 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/bartender
 
@@ -180,6 +188,8 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/cook
 
@@ -229,6 +239,8 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/botanist
 
@@ -268,6 +280,8 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/janitor
 
@@ -277,6 +291,8 @@ Janitor
 /datum/outfit/job/janitor
 	name = "Janitor"
 	jobtype = /datum/job/janitor
+	exp_requirements = INFINITY
+	exp_type = EXP_TYPE_CREW
 
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
