@@ -72,19 +72,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M,"Syndicate") || (job_rank && jobban_isbanned(M,job_rank)))
+	. = (jobban_isbanned(M, ROLE_SYNDICATE) || (job_rank && jobban_isbanned(M,job_rank)))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
-	var/mob/dead/observer/theghost = null
-	if(candidates.len)
-		theghost = pick(candidates)
+	if(LAZYLEN(candidates))
+		var/client/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
-		owner.current.key = theghost.key
+		owner.current.key = C.key
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()

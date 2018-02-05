@@ -135,8 +135,8 @@
 			adj = "objectiveless"
 		else
 			return
-	new_owner.assigned_role = "Space Ninja"
-	new_owner.special_role = "Space Ninja"
+	new_owner.assigned_role = ROLE_NINJA
+	new_owner.special_role = ROLE_NINJA
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")

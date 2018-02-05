@@ -46,7 +46,7 @@
 			connected_ai = null
 		if(mind)
 			if(!mind.special_role)
-				mind.special_role = "traitor"
+				mind.special_role = ROLE_TRAITOR
 				mind.add_antag_datum(/datum/antagonist/auto_custom) // ????
 
 
