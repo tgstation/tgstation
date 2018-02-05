@@ -31,7 +31,7 @@
 /obj/item/pizzabox/Initialize()
 	. = ..()
 	update_icon()
-	
+
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -276,7 +276,6 @@
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
 
-
 /obj/item/pizzabox/mushroom/Initialize()
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/mushroom(src)
@@ -286,3 +285,8 @@
 	. = ..()
 	pizza = new /obj/item/reagent_containers/food/snacks/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
+
+/obj/item/pizzabox/pineapple/Initialize()
+	. = ..()
+	pizza = new /obj/item/reagent_containers/food/snacks/pizza/pineapple(src)
+	boxtag = "Honolulu Chew"
