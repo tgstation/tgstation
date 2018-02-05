@@ -2,7 +2,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/used = 0
+	var/used = FALSE
 
 /obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	return
@@ -57,13 +57,13 @@
 				to_chat(H, "You already used this contract!")
 				return
 			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
-			if(candidates.len)
+			if(LAZYLEN(candidates))
 				if(used)
 					to_chat(H, "You already used this contract!")
 					return
-				used = 1
-				var/mob/dead/observer/theghost = pick(candidates)
-				spawn_antag(theghost.client, get_turf(src), href_list["school"],H.mind)
+				used = TRUE
+				var/client/C = pick(candidates)
+				spawn_antag(C, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -120,12 +120,12 @@
 
 	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
 	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
-	if(nuke_candidates.len)
+	if(LAZYLEN(nuke_candidates))
 		if(!(check_usability(user)))
 			return
 		used = TRUE
-		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg", user.mind)
+		var/client/C = pick(nuke_candidates)
+		spawn_antag(C, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -213,13 +213,13 @@
 		return
 	if(used)
 		return
-	var/list/demon_candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50, src)
-	if(demon_candidates.len)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, src)
+	if(LAZYLEN(candidates))
 		if(used)
 			return
-		used = 1
-		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name),user.mind)
+		used = TRUE
+		var/client/C = pick(candidates)
+		spawn_antag(C, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)

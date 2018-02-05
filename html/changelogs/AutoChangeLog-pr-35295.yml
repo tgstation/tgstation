@@ -1,0 +1,4 @@
+author: "More Robust Than You"
+delete-after: True
+changes: 
+  - bugfix: "Holorays are now properly deleted if you switch holopads automatically"

@@ -498,7 +498,7 @@
 	pixel_y = 23
 	},
 /obj/machinery/computer/shuttle/mining{
-	req_access = "0"
+	req_access = null
 	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 1

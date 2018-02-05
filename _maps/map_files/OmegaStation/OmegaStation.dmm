@@ -462,7 +462,7 @@
 /turf/open/floor/plating/asteroid,
 /area/asteroid/nearstation)
 "aaW" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/asteroid,
 /area/asteroid/nearstation)
 "aaX" = (
@@ -927,7 +927,7 @@
 /turf/open/space,
 /area/asteroid/nearstation)
 "abS" = (
-/obj/item/ore/glass,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "abT" = (
@@ -2887,7 +2887,7 @@
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
 "afM" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
@@ -3013,7 +3013,6 @@
 "aga" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
-/obj/item/card/id/captains_spare,
 /obj/item/toy/figure/captain,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -3290,8 +3289,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "agE" = (
-/obj/item/ore/silver,
-/obj/item/ore/iron,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "agF" = (
@@ -5053,7 +5052,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "ajQ" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "ajR" = (
@@ -71264,9 +71263,9 @@ aZz
 baq
 bbl
 bbY
-bcP
+bbm
 bdM
-bcP
+bbm
 sKE
 bfv
 bfS
@@ -71521,9 +71520,9 @@ aZA
 bar
 bbm
 bbZ
-bcP
-bcP
-bcP
+bbm
+bbm
+bbm
 baj
 bfu
 bfu
@@ -81807,7 +81806,7 @@ aZl
 sPI
 bfP
 bgm
-bhh
+bhg
 bgm
 sKZ
 bjd

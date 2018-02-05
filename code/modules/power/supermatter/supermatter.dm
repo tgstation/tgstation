@@ -588,11 +588,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		return
-	else if(isobj(AM) && !istype(AM, /obj/effect))
-		investigate_log("has consumed [AM].", INVESTIGATE_SUPERMATTER)
+	else if(isobj(AM))
+		if(!istype(AM, /obj/effect))
+			investigate_log("has consumed [AM].", INVESTIGATE_SUPERMATTER)
 		qdel(AM)
-
-	matter_power += 200
+	if(!istype(AM, /obj/effect))
+		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
