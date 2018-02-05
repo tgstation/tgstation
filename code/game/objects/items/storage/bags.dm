@@ -106,24 +106,34 @@
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
 	var/show_message = FALSE
+	var/obj/structure/ore_box/box
 	var/turf/tile = user.loc
 	if (!isturf(tile))
 		return
+	if (istype(user.pulling, /obj/structure/ore_box))
+		box = user.pulling
 	for(var/A in tile)
 		if (!is_type_in_typecache(A, can_hold))
 			continue
-		if(!can_be_inserted(A, TRUE, user))
+		if (box)
+			user.transferItemToLoc(A, box)
+			show_message = TRUE
+		else if(can_be_inserted(A, TRUE, user))
+			handle_item_insertion(A, TRUE, user)
+			show_message = TRUE
+		else
 			if(!spam_protection)
 				to_chat(user, "<span class='warning'>Your [name] is full and can't hold any more!</span>")
 				spam_protection = TRUE
 				continue
-		else
-			handle_item_insertion(A, TRUE, user)
-			show_message = TRUE
 	if(show_message)
 		playsound(user, "rustle", 50, TRUE)
-		user.visible_message("<span class='notice'>[user] scoops up the ores beneath them.</span>", \
-			"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
+		if (box)
+			user.visible_message("<span class='notice'>[user] offloads the ores beneath them into [box].</span>", \
+			"<span class='notice'>You offload the ores beneath you into your [box].</span>")
+		else
+			user.visible_message("<span class='notice'>[user] scoops up the ores beneath them.</span>", \
+				"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
 	spam_protection = FALSE
 
 /obj/item/storage/bag/ore/cyborg
