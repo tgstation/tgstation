@@ -136,7 +136,4 @@
 	new /obj/item/device/gps/internal/lavaland_syndicate_base(src)
 
 /obj/item/device/gps/internal/lavaland_syndicate_base
-	icon_state = null
 	gpstag = "Encrypted Signal"
-	desc = "A signal from an unidentifed broadcast."
-	invisibility = 100
