@@ -87,6 +87,7 @@
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = 3000
 
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -101,6 +102,12 @@
 	description = "Dis is a high-quality shuttle, da. Many seats, lots of space, all equipment! Even includes entertainment! Such as lots to drink, and a fighting arena for drunk crew to have fun! If arena not fun enough, simply press button of releasing bears. Do not worry, bears trained not to break out of fighting pit, so totally safe so long as nobody stupid or drunk enough to leave door open. Try not to let asimov babycons ruin fun!"
 	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
 	credit_cost = 5000 // While the shuttle is rusted and poorly maintained, trained bears are costly.
+
+/datum/map_template/shuttle/emergency/saltmine
+	suffix = "saltmine"
+	name = "The Saltmine"
+	description = "Contains everything that upsets you."
+	credit_cost = 3000
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
