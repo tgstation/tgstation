@@ -76,7 +76,7 @@
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.forceMove(get_turf(src))
 #undef PULSE_MEDAL
