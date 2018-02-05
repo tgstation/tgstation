@@ -5,7 +5,7 @@
 #define ENERGY2DAMAGE 10000// energy/thisdefine=damage
 /obj/machinery/power/power_laser
 	name = "power laser"
-	icon = 'goon/icons/pt_laser.dmi' // huge thanks to goon for the sprite!
+	icon = 'goon/icons/obj/pt_laser.dmi' // huge thanks to goon for the sprite!
 	icon_state = "ptl" // Especially Gannets!
 	desc = "A really big device capable of converting energy in photons and compressing them enough to make a laser beam out of them, capable of travelling enormous distances through space.\
 			This one is used to send this energy to Centcom, to be converted into money that goes inside the station's budget."
@@ -90,7 +90,7 @@
 					break
 	if(!target)
 		target = turfEnd
-	beam = Beam(turfStart, target, icon = 'goon/icons/ptlbeam.dmi', icon_state = "ptl_beam",maxdistance=INFINITY,btype = /obj/effect/ebeam/ptl, beam_sleep_time=1)
+	beam = Beam(turfStart, target, icon = 'goon/icons/obj/ptlbeam.dmi', icon_state = "ptl_beam",maxdistance=INFINITY,btype = /obj/effect/ebeam/ptl, beam_sleep_time=1)
 
 /obj/machinery/power/power_laser/proc/get_starting_turf()
 	switch(dir)
@@ -174,7 +174,7 @@
 #define LARGE_ENERGY 30000
 #define ENORMOUS_ENERGY 40000
 /datum/beam/pl_beam
-	icon = 'goon/icons/ptlbeam.dmi'
+	icon = 'goon/icons/obj/ptlbeam.dmi'
 	icon_state = "ptl_beam"
 	var/dir = SOUTH
 
@@ -230,4 +230,4 @@
 /obj/effect/ebeam/ptl/Crossed(atom/movable/AM)
 	if(AM.density)
 		owner.target = AM
-    owner.recalculate()
+  owner.recalculate()
