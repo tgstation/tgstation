@@ -13846,7 +13846,9 @@
 /area/chapel/office)
 "aIB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bodycontainer/crematorium,
+/obj/structure/bodycontainer/crematorium{
+	id = "crematoriumChapel"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aIC" = (
@@ -14271,6 +14273,7 @@
 "aJG" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/button/crematorium{
+	id = "crematoriumChapel";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
