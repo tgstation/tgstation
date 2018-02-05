@@ -15,7 +15,7 @@
 	bound_height = 96
 	speed_process = TRUE
 	use_power = NO_POWER_USE // We deal with it ourself
-	stat = POWEROFF // starts offline
+	stat = 0 // starts offline
 	layer = FLY_LAYER
 	var/amount_emitting = 0
 	var/max_amount_emitted = 50000
@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/machinery/power/power_laser/process()
-	if(!(stat & POWEROFF) && beam)
+	if(!(stat) && beam)
 		if(beam.target == turf_to_sell_power_to)
 			use_power()
 		else
@@ -112,7 +112,7 @@
 
 /obj/machinery/power/power_laser/ui_data()
 	var/list/data = list()
-	data["power"] = stat & POWEROFF ? FALSE : TRUE
+	data["power"] = stat ? FALSE : TRUE
 	data["amount_emitting"] = amount_emitting
 	data["max_amount_emitted"] = max_amount_emitted
 	data["total_energy_sent"] = total_energy_sent
@@ -123,7 +123,7 @@
 		return
 	switch(action)
 		if("power")
-			stat ^= POWEROFF
+			stat ^= 0
 			update_stat()
 		if("input")
 			var/target = params["target"]
@@ -145,11 +145,11 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				amount_emitting = Clamp(target, 0, max_amount_emitted)
+				amount_emitting = CLAMP(target, 0, max_amount_emitted)
 	log_ptl(usr.ckey)
 
 /obj/machinery/power/power_laser/proc/log_ptl(user = "")
-	investigate_log("Power laser input: [amount_emitting]/[max_amount_emitted];Active: [stat & POWEROFF ? "OFF" : "ON"]; by [user]", INVESTIGATE_SINGULO)
+	investigate_log("Power laser input: [amount_emitting]/[max_amount_emitted];Active: [stat ? "OFF" : "ON"]; by [user]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/power_laser/Beam(atom/BeamOrigin, atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,btype=/obj/effect/ebeam,beam_sleep_time = 3, newDir = dir)
@@ -159,7 +159,7 @@
 
 /obj/machinery/power/power_laser/proc/update_stat()
 	if(is_operational())
-		if(stat & POWEROFF)
+		if(stat)
 			STOP_PROCESSING(SSfastprocess, src)
 			QDEL_NULL(beam)
 		else
