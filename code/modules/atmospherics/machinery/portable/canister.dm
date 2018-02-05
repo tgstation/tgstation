@@ -137,6 +137,12 @@
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/hydrogen
+	name = "hydrogen canister"
+	desc = "Hydrogen. Who would win in a fight, a tetravalent main component of all life or one thicc proton??"
+	icon_state = "water_vapor"
+	gas_type = /datum/gas/hydrogen
+
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
 		. = round(max(0, valve_timer - world.time) / 10, 1)
