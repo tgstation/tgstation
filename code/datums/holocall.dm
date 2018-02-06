@@ -234,7 +234,7 @@
 			record.language = holodiskOriginal.record.language
 			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
 			name = holodiskOriginal.name
-		else 
+		else
 			to_chat(user, "[holodiskOriginal] has no record on it!")
 	..()
 
@@ -324,8 +324,20 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
+
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown

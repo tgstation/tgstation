@@ -801,8 +801,7 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(anchored)
 					return
 				anchored = TRUE
@@ -811,8 +810,7 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(!anchored)
 					return
 				anchored = FALSE

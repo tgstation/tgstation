@@ -8,24 +8,18 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/wrench))
-				playsound(src, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
-				if(do_after(user, 20*P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
 				return
 			if(istype(P, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = P
-				if(!WT.remove_fuel(0, user))
-					if(!WT.isOn())
-						to_chat(user, "<span class='warning'>[WT] must be on to complete this task!</span>")
+				if(!P.tool_start_check(user, amount=0))
 					return
-				playsound(src, P.usesound, 50, 1)
+
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
-				if(do_after(user, 20*P.toolspeed, target = src))
-					if(!src || !WT.isOn())
-						return
+				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/stack/sheet/metal/M = new (drop_location(), 5)
 					M.add_fingerprint(user)
@@ -33,9 +27,8 @@
 				return
 		if(1)
 			if(istype(P, /obj/item/wrench))
-				playsound(src, P.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
-				if(do_after(user, 20*P.toolspeed, target = src))
+				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					anchored = FALSE
 					state = 0
@@ -76,18 +69,16 @@
 				icon_state = "1"
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/C = P
-				if(C.get_amount() >= 5)
-					playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-					to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
-					if(do_after(user, 20*P.toolspeed, target = src))
-						if(C.get_amount() >= 5 && state == 2)
-							C.use(5)
-							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
-							state = 3
-							icon_state = "3"
-				else
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the frame!</span>")
+				if(!P.tool_start_check(user, amount=5))
+					return
+				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
+				if(P.use_tool(src, user, 20, amount=5))
+					if(state != 2)
+						return
+					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					state = 3
+					icon_state = "3"
 				return
 		if(3)
 			if(istype(P, /obj/item/wirecutters))
@@ -95,25 +86,21 @@
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
 				icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new (drop_location())
-				A.amount = 5
+				var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
 				A.add_fingerprint(user)
 				return
 
 			if(istype(P, /obj/item/stack/sheet/glass))
-				var/obj/item/stack/sheet/glass/G = P
-				if(G.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need two glass sheets to continue construction!</span>")
+				if(!P.tool_start_check(user, amount=2))
 					return
-				else
-					playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-					to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
-					if(do_after(user, 20, target = src))
-						if(G.get_amount() >= 2 && state == 3)
-							G.use(2)
-							to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
-							state = 4
-							src.icon_state = "4"
+				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
+				if(P.use_tool(src, user, 20, amount=2))
+					if(state != 3)
+						return
+					to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
+					state = 4
+					src.icon_state = "4"
 				return
 		if(4)
 			if(istype(P, /obj/item/crowbar))

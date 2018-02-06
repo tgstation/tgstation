@@ -557,16 +557,14 @@
 	else if(istype(I, /obj/item/wrench))
 		if(construction_state == GEAR_SECURE)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
+			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_SECURE)
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
+			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
@@ -578,8 +576,7 @@
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
+			if(!I.use_tool(src, user, 75, volume=50) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")

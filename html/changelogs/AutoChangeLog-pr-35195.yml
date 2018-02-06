@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Integration cog power generation has been increased to 10 W per second (up from 5 W per second.) Power consumed from the APC remains at 5 W per second."
-  - balance: "Integration cogs will now continue generating power at half-speed when the APC they are in has no energy."

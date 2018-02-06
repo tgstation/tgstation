@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Command reports should now properly weight the appearance of modes based on their existence in our actual game rotation."
-  - balance: "The current mode now has a 35% chance of not appearing in the report."

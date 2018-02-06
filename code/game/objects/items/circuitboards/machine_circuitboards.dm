@@ -58,9 +58,9 @@
 	name = "Bluespace Launchpad (Machine Board)"
 	build_path = /obj/machinery/launchpad
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/manipulator = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
@@ -74,11 +74,11 @@
 	name = "Quantum Pad (Machine Board)"
 	build_path = /obj/machinery/quantumpad
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/recharger
 	name = "Weapon Recharger (Machine Board)"
@@ -175,18 +175,18 @@
 	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 3,
+		/obj/item/stack/ore/bluespace_crystal = 3,
 		/obj/item/stock_parts/matter_bin = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/teleporter_station
 	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 2,
+		/obj/item/stack/ore/bluespace_crystal = 2,
 		/obj/item/stock_parts/capacitor = 2,
 		/obj/item/stack/sheet/glass = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
@@ -674,7 +674,7 @@
 	name = "Bluespace Artillery Fusor (Machine Board)"
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 20,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/bsa/front

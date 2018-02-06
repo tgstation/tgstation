@@ -27,13 +27,13 @@
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
-		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(I.use_tool(src, user, 40, volume=40))
+				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -62,9 +62,29 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	material = WOOD
+	var/drop_amount = 3
+
+/obj/structure/barricade/wooden/snowed
+	name = "crude plank barricade"
+	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
+	icon_state = "woodenbarricade-snow"
+	max_integrity = 125
+
+/obj/structure/barricade/wooden/crude
+	name = "crude plank barricade"
+	desc = "This space is blocked off by a crude assortment of planks."
+	icon_state = "woodenbarricade-old"
+	drop_amount = 1
+	max_integrity = 50
+	proj_pass_rate = 65
+
+/obj/structure/barricade/wooden/crude/snow
+	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
+	icon_state = "woodenbarricade-snow-old"
+	max_integrity = 75
 
 /obj/structure/barricade/wooden/make_debris()
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src), 3)
+	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
 
 
 /obj/structure/barricade/sandbags

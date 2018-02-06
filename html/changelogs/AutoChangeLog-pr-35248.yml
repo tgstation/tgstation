@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - bugfix: "Fixed mecha grav catapults not being included in techwebs."

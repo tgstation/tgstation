@@ -411,7 +411,7 @@
 	id = /obj/item/card/id
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
-	H.faction |= "syndicate"
+	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
