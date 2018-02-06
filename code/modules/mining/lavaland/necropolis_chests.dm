@@ -21,8 +21,9 @@
 1;/obj/item/clothing/glasses/godeye,
 1;/obj/item/reagent_containers/glass/bottle/potion/flight,
 1;/obj/item/pickaxe/diamond,
-1;/obj/item/disk/design_disk/modkit_disc/resonator_blast,
-1;/obj/item/disk/design_disk/modkit_disc/rapid_repeater,
+1;pick(//you can also embed pick() in itself (with or with out numbers) to create forked results
+	/obj/item/disk/design_disk/modkit_disc/resonator_blast,
+	/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
 1;/obj/item/organ/brain/alien,
 1;/obj/item/organ/heart/cursed/wizard,
 1;/obj/item/ship_in_a_bottle,
@@ -31,22 +32,32 @@
 1;/obj/item/nullrod/scythe/talking,
 1;/obj/item/nullrod/armblade,
 1;/obj/item/guardiancreator,
-1;pick(/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,/obj/item/disk/design_disk/modkit_disc/bounty),
-//you can also embed pick() in itself (with or with out numbers) to create forked results
+1;pick(
+	/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
+	/obj/item/disk/design_disk/modkit_disc/bounty),
 1;/obj/item/device/warp_cube/red,
 1;/obj/item/device/wisp_lantern,
 1;/obj/item/device/immortality_talisman,
 1;/obj/item/gun/magic/hook,
 1;/obj/item/voodoo,
 1;/obj/item/grenade/clusterbuster/inferno,
-1;/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
-1;/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor,
+1;list(//use list() for multiple items
+	/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
+	/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
 1;/obj/item/spellbook/oneuse/summonitem,
 1;/obj/item/book_of_babel,
-1;/obj/item/borg/upgrade/modkit/lifesteal,
-1;/obj/item/bedsheet/cult)
+1;list(
+	/obj/item/borg/upgrade/modkit/lifesteal,
+	/obj/item/bedsheet/cult)
+)
 
-	loot = new loot(src)
+	if(ispath(loot))
+		loot = new loot (src)
+
+	if(islist(loot))
+		for(var/i in loot)
+			if(ispath(i))
+				new i (src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
