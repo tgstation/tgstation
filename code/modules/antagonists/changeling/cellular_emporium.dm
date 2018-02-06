@@ -33,7 +33,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)

@@ -28,17 +28,18 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
-	var/purchasedpowers = list()
+	var/purchasedpowers = list()//aka `stings`
 	var/mimicing = ""
-	var/canrespec = 0
+	var/canrespec = 0//set to 1 in absorb.dm
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
-	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	//var/obj/effect/proc_holder/changeling/sting/chosen_sting//This will need reworking...
+	var/datum/action/changeling/sting/chosen_sting//not sure exactly how this will work yet
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
 	// wip stuff
-	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
+	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
 
 /datum/antagonist/changeling/Destroy()
@@ -98,14 +99,14 @@
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/datum/antagonist/changeling/proc/remove_changeling_powers()
+/datum/antagonist/changeling/proc/remove_changeling_powers()//Remove() is ran in this
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
-		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
+		for(var/datum/action/changeling/p in purchasedpowers)
 			if(p.always_keep)
 				continue
 			purchasedpowers -= p
-			p.on_refund(owner.current)
+			p.Remove(owner.current)//Remove() called. TODO: Maybe delete the button here
 
 	//MOVE THIS
 	if(owner.current.hud_used)
@@ -117,24 +118,24 @@
 		remove_changeling_powers()
 	//Repurchase free powers.
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = new path()
+		var/datum/action/changeling/S = new path()
 		if(!S.dna_cost)
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
 
-/datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
-	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
+/datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
+	for(var/datum/action/changeling/P in purchasedpowers)
 		if(initial(power.name) == P.name)
 			return TRUE
 	return FALSE
 
 
-/datum/antagonist/changeling/proc/purchase_power(sting_name)
-	var/obj/effect/proc_holder/changeling/thepower = null
+/datum/antagonist/changeling/proc/purchase_power(sting_name)//TODO: name probably shouldnt be used. test first, but you could make it rely on stats_id, remember to change this where this proc is called in cellular_emporium.dm
+	var/datum/action/changeling/thepower = null
 
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = path
+		var/datum/action/changeling/S = path
 		if(initial(S.name) == sting_name)
 			thepower = new path()
 			break
@@ -164,8 +165,8 @@
 		return
 
 	geneticpoints -= thepower.dna_cost
-	purchasedpowers += thepower
-	thepower.on_purchase(owner.current)
+	purchasedpowers += thepower//maybe New() the new button here?
+	thepower.on_purchase(owner.current)//Grant() is ran in this proc, see changeling_powers.dm
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))

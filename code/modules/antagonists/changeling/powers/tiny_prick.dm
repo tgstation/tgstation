@@ -1,10 +1,13 @@
+/datum/action/changeling/sting//WIP
+	var/sting_icon = null
+
 /obj/effect/proc_holder/changeling/sting
 	name = "Tiny Prick"
 	desc = "Stabby stabby."
 	var/sting_icon = null
 
-/obj/effect/proc_holder/changeling/sting/Click()
-	var/mob/user = usr
+/datum/action/changeling/sting/Trigger()
+	var/mob/user = owner
 	if(!user || !user.mind)
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -16,7 +19,7 @@
 		unset_sting(user)
 	return
 
-/obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
+/datum/action/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
@@ -24,7 +27,7 @@
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
-/obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
+/datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = null
@@ -52,7 +55,7 @@
 		return
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)
-		changeling.chem_charges -= chemical_cost //??
+		changeling.chem_charges -= chemical_cost
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
@@ -64,6 +67,15 @@
 	return 1
 
 
+/datum/action/changeling/sting/transformation
+	name = "Transformation Sting - We silently sting a human, injecting a retrovirus that forces them to transform."
+	stats_id = "Transformation Sting"
+	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
+	sting_icon = "sting_transform"
+	chemical_cost = 50
+	dna_cost = 3
+	var/datum/changelingprofile/selected_dna = null
+
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
@@ -73,7 +85,7 @@
 	dna_cost = 3
 	var/datum/changelingprofile/selected_dna = null
 
-/obj/effect/proc_holder/changeling/sting/transformation/Click()
+/datum/action/changeling/sting/transformation/Trigger()
 	var/mob/user = usr
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
