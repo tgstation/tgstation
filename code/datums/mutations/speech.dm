@@ -279,6 +279,7 @@
 		message = replacetext(message,"bye",pick("ciao","arrivederci"))
 		message = replacetext(message,"thing","thing-a")
 		message = replacetext(message,"whose","whose-a")
+		message = replacetext(message,"thanks","grazie")
 
 		if(prob(10))
 			message += " Ravioli[pick(", ravioli.",", ravioli, linguini.")]!"
