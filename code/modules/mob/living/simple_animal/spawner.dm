@@ -84,9 +84,14 @@
 	max_mobs = 3
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls out of"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/simple_animal/hostile/asteroid/fugu)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
+
+/mob/living/simple_animal/hostile/spawner/mining/goldgrub
+	name = "goldgrub den"
+	desc = "A den housing a nest of goldgrubs, annoying but arguably much better than anything else you'll find in a nest."
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 
 /mob/living/simple_animal/hostile/spawner/mining/goliath
 	name = "goliath den"
