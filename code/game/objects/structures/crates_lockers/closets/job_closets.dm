@@ -105,6 +105,7 @@
 	icon_door = "black"
 
 /obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
+	new /obj/item/clothing/accessory/pocketprotector/cosmetology(src)
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
@@ -177,6 +178,7 @@
 	icon_door = "atmos_wardrobe"
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
+	new /obj/item/clothing/accessory/pocketprotector(src)
 	new /obj/item/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/storage/backpack/satchel/eng(src)
 	new /obj/item/storage/backpack/industrial(src)
@@ -193,6 +195,7 @@
 	icon_door = "yellow"
 
 /obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
+	new /obj/item/clothing/accessory/pocketprotector(src)
 	new /obj/item/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/storage/backpack/industrial(src)
 	new /obj/item/storage/backpack/satchel/eng(src)
@@ -211,6 +214,7 @@
 	name = "medical doctor's wardrobe"
 
 /obj/structure/closet/wardrobe/white/medical/PopulateContents()
+	new /obj/item/clothing/accessory/pocketprotector(src)
 	new /obj/item/storage/backpack/duffelbag/med(src)
 	new /obj/item/storage/backpack/medic(src)
 	new /obj/item/storage/backpack/satchel/med(src)
@@ -318,6 +322,7 @@
 	icon_door = "white"
 
 /obj/structure/closet/wardrobe/science_white/PopulateContents()
+	new /obj/item/clothing/accessory/pocketprotector(src)
 	new /obj/item/storage/backpack/science(src)
 	new /obj/item/storage/backpack/science(src)
 	new /obj/item/storage/backpack/satchel/tox(src)
