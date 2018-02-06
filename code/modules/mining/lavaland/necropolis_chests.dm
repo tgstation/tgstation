@@ -15,7 +15,7 @@
 	var/loot = pick(
 //these numbers represent chances based on other choices, i.e. 1 is not 1/100 it is 1 out of the list
 //1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
-//2: use list() for multiple items bundled together as a result
+//2: use list() for multiple items bundled together as a possible result
 
 1;/obj/item/device/shared_storage/red,
 1;/obj/item/clothing/suit/space/hardsuit/cult,
@@ -48,11 +48,11 @@
 
 	if(ispath(loot))
 		new loot (src)
-
-	if(islist(loot))
-		for(var/i in loot)
-			if(ispath(i))
-				new i (src)
+	else
+		if(islist(loot))
+			for(var/i in loot)
+				if(ispath(i))
+					new i (src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
