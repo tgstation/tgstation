@@ -125,10 +125,11 @@
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
-	heat = 3800
 
+	heat = 3800
 	usesound = 'sound/items/welder.ogg'
-	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
+	tool_behaviour = TOOL_WELDER
+	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()
@@ -141,8 +142,9 @@
 		S.use(1)
 		cell.give(1000)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
-	else if(istype(A, /obj/item/ore/plasma))
-		qdel(A)
+	else if(istype(A, /obj/item/stack/ore/plasma))
+		var/obj/item/stack/ore/S = A
+		S.use(1)
 		cell.give(500)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else

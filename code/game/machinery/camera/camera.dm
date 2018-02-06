@@ -42,10 +42,13 @@
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
-/obj/machinery/camera/Initialize(mapload)
+/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
-	assembly = new(src)
-	assembly.state = 4
+	if(CA)
+		assembly = CA
+	else
+		assembly = new(src)
+		assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))

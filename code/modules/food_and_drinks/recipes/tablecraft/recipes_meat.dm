@@ -188,3 +188,12 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/kebab/rat/double
 	category = CAT_MEAT
+
+/datum/crafting_recipe/food/ricepork
+	name = "Rice and pork"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/salad/ricepork
+	subcategory = CAT_MEAT

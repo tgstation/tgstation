@@ -59,8 +59,11 @@
 			else
 				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
 		else
-			var/pos = length(file_data["[escaped]"]["[category]"]) + 1
-			file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
+			if(isobserver(m))
+				file_data["[escaped]"] = mob_data
+			else
+				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
+				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
@@ -83,7 +86,7 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		
+
 		var/list/antag_info = list()
 		antag_info["key"] = A.owner.key
 		antag_info["name"] = A.owner.name
@@ -292,7 +295,7 @@
 	if(M.mind && !isnewplayer(M))
 		if(M.stat != DEAD && !isbrain(M))
 			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-				if(!M.onCentCom() || !M.onSyndieBase())
+				if(!M.onCentCom() && !M.onSyndieBase())
 					parts += "<div class='panel stationborder'>"
 					parts += "<span class='marooned'>You managed to survive, but were marooned on [station_name()]...</span>"
 				else

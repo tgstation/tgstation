@@ -538,12 +538,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
 	if(istype(W, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = W
 		playsound(src, W.usesound, 100, 1)
-		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
+		to_chat(user, "<span class='notice'>You carefully begin to scrape [src] with [W]...</span>")
 		if(do_after(user, 60 * W.toolspeed, TRUE, src))
-			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
-			new /obj/item/nuke_core/supermatter_sliver(drop_location())
-			matter_power += 200
+			if (scalpel.usesLeft)
+				to_chat(user, "<span class='notice'>You extract a sliver from [src]. [src] begins to react violently!</span>")
+				new /obj/item/nuke_core/supermatter_sliver(drop_location())
+				matter_power += 200
+				scalpel.usesLeft--
+				if (!scalpel.usesLeft) 
+					to_chat(user, "<span class='notice'>A tiny piece of [W] falls off, rendering it useless!</span>")
+			else 
+				to_chat(user, "<span class='notice'>You fail to extract a sliver from [src]. [W] isn't sharp enough anymore!</span>")
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
@@ -581,11 +588,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		matter_power += 200
 	else if(istype(AM, /obj/singularity))
 		return
-	else if(isobj(AM) && !istype(AM, /obj/effect))
-		investigate_log("has consumed [AM].", INVESTIGATE_SUPERMATTER)
+	else if(isobj(AM))
+		if(!istype(AM, /obj/effect))
+			investigate_log("has consumed [AM].", INVESTIGATE_SUPERMATTER)
 		qdel(AM)
-
-	matter_power += 200
+	if(!istype(AM, /obj/effect))
+		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)

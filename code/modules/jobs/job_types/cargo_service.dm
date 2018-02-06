@@ -163,7 +163,7 @@ Bartender
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	backpack_contents = list(/obj/item/storage/box/beanbag=1,/obj/item/book/action_granting/drink_fling=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
 /*
@@ -208,11 +208,13 @@ Cook
 			J.cooks++
 
 /datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-    ..()
-    var/list/possible_boxes = subtypesof(/obj/item/storage/box/ingredients)
-    var/chosen_box = pick(possible_boxes)
-    var/obj/item/storage/box/I = new chosen_box(src)
-    H.equip_to_slot_or_del(I,slot_in_backpack)
+	..()
+	if(visualsOnly)
+		return
+	var/list/possible_boxes = subtypesof(/obj/item/storage/box/ingredients)
+	var/chosen_box = pick(possible_boxes)
+	var/obj/item/storage/box/I = new chosen_box(src)
+	H.equip_to_slot_or_del(I,slot_in_backpack)
 
 /*
 Botanist

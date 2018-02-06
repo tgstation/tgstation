@@ -30,6 +30,7 @@
 	var/light_intensity = 2 //how powerful the emitted light is when used.
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
+	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
 
 /obj/item/weldingtool/Initialize()

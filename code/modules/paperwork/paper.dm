@@ -69,10 +69,6 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/paper/talisman)) //Talismans cannot be read
-		if(!iscultist(user) && !user.stat)
-			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
@@ -296,9 +292,6 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
-			return
-		if(istype(src, /obj/item/paper/talisman/))
-			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
 	else if(istype(P, /obj/item/stamp))
