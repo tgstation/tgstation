@@ -224,10 +224,9 @@
 	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/egg/activate()
-	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
-	egg.reagents.add_reagent(get_random_reagent_id(), 15)
-	egg.desc += " It looks weird..."
+	owner.visible_message("<span class='alertalien'>[owner] [pick(EGG_LAYING_MESSAGES)]</span>")
+	var/turf/T = owner.drop_location()
+	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
 /obj/item/organ/heart/gland/bloody
 	cooldown_low = 200
