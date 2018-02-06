@@ -125,7 +125,7 @@ Buildable meters
 	setDir(turn(dir,-90))
 	fixdir()
 
-/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe/wrench_act(mob/living/user, obj/item/tool)
 	if(!isturf(loc))
 		return TRUE
 
@@ -151,7 +151,7 @@ Buildable meters
 	A.on_construction(color, piping_layer)
 	transfer_fingerprints_to(A)
 
-	playsound(src, W.usesound, 50, 1)
+	playsound(src, tool.usesound, 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \

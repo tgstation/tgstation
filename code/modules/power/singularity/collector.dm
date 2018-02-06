@@ -128,11 +128,11 @@
 	else
 		return ..()
 
-/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/wrench)
-	default_unfasten_wrench(user, wrench, 0)
+/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/tool)
+	default_unfasten_wrench(user, tool, 0)
 	return TRUE
 
-/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/crowbar)
+/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/tool)
 	if(loaded_tank)
 		if(locked)
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -142,7 +142,7 @@
 	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 	return TRUE
 
-/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
+/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/tool)
 	if(!is_station_level(z) && !SSresearch.science_tech)
 		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
 		return TRUE
