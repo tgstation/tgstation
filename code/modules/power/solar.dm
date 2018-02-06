@@ -56,16 +56,14 @@
 		obj_integrity = max_integrity
 	update_icon()
 
-/obj/machinery/power/solar/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
-		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
-			deconstruct(TRUE)
-	else
-		return ..()
+/obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	user.visible_message("[user] begins to take the glass off [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
+	if(I.use_tool(src, user, 50))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		user.visible_message("[user] takes the glass off [src].", "<span class='notice'>You take the glass off [src].</span>")
+		deconstruct(TRUE)
+	return TRUE
 
 /obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -407,8 +405,7 @@
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
-		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 20*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 20, volume=50))
 			if (src.stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )

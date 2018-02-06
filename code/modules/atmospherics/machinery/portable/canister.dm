@@ -278,21 +278,20 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(stat & BROKEN)
-			if(!WT.remove_fuel(0, user))
-				return
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(do_after(user, 30, target = src))
-				deconstruct(TRUE)
-		else
-			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+	if(stat & BROKEN)
+		if(!I.tool_start_check(user, amount=0))
+			return TRUE
+		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
+		if(I.use_tool(src, user, 30, volume=50))
+			deconstruct(TRUE)
 	else
-		return ..()
+		to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
+
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))

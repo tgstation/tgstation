@@ -59,23 +59,24 @@
 			new /obj/item/shard( src.loc )
 	qdel(src)
 
-/obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = I
-		if(broken)
-			user.changeNext_move(CLICK_CD_MELEE)
-			if(WT.remove_fuel(0, user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, 'sound/items/welder.ogg', 100, 1)
-				if(do_after(user, 10*I.toolspeed, target = src))
-					if(!user || !WT || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					broken = 0
-					icon_state = initial(icon_state)
-					desc = initial(desc)
-	else
-		return ..()
+/obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+	if(!broken)
+		return TRUE
+
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+
+	to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+	if(I.use_tool(src, user, 10, volume=50))
+		to_chat(user, "<span class='notice'>You repair [src].</span>")
+		broken = 0
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+
+	return TRUE
 
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
