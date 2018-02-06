@@ -115,7 +115,12 @@
 	name = "The Saltmine"
 	description = "Contains everything that upsets you."
 	admin_notes = "Don't forget: You're here forever."
-	credit_cost = 10000
+	credit_cost = 5000
+
+/datum/map_template/shuttle/emergency/saltmine/prerequisites_met()
+	if("revenant" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
