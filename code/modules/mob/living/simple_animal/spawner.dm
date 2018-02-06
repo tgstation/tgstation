@@ -8,7 +8,8 @@
 	var/max_mobs = 5
 	var/spawn_delay = 0
 	var/spawn_time = 300 //30 seconds default
-	var/mob_type = /mob/living/simple_animal/hostile/carp
+	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	var/chosen_mob_type
 	var/spawn_text = "emerges from"
 	status_flags = 0
 	anchored = TRUE
@@ -42,7 +43,8 @@
 	if(spawn_delay > world.time)
 		return 0
 	spawn_delay = world.time + spawn_time
-	var/mob/living/simple_animal/L = new mob_type(src.loc)
+	chosen_mob_type = pick(mob_types)
+	var/mob/living/simple_animal/L = new chosen_mob_type(src.loc)
 	L.admin_spawned = admin_spawned	//If we were admin spawned, lets have our children count as that as well.
 	spawned_mobs += L
 	L.nest = src
