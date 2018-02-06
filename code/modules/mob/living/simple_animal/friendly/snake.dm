@@ -114,7 +114,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake/boa)) //if a boa is constricting don't DO IT
 		var/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/S = target
 		if(S.constricting)
-			to_chat(src, "<span class='userdanger'>We cannot constrict a boa that is consticting! That would break the snake time constrictinuum!</span>")
+			to_chat(src, "<span class='userdanger'>We cannot constrict a boa that is constricting! That would break the snake time constrictinuum!</span>")
 			return
 	if(isliving(target))
 		var/mob/living/L = target
