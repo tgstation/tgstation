@@ -512,7 +512,6 @@
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bI" = (
-/obj/effect/decal/cleanable/salt,
 /turf/open/chasm,
 /area/shuttle/escape)
 "bJ" = (
@@ -521,6 +520,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/salt,
+/obj/item/clothing/mask/frog,
 /obj/item/storage/box/hug/medical,
 /turf/open/floor/fakepit,
 /area/shuttle/escape)
@@ -553,7 +553,10 @@
 /area/shuttle/escape)
 "jz" = (
 /obj/effect/decal/cleanable/salt,
-/obj/structure/statue/plasma/scientist,
+/obj/structure/statue/plasma/scientist{
+	desc = "This statue is suitably made from Armhulen's tears.";
+	oreAmount = 0
+	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "oC" = (
