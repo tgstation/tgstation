@@ -306,6 +306,11 @@
 /datum/uplink_item/dangerous/powerfist
 	cost = 6
 
+/datum/uplink_item/role_restricted/reverse_bear_trap
+	cost = 1
+	restricted_roles = list() // tg is gay
+	category = "(Pointless) Badassery"
+
 /datum/uplink_item/badass/contender
 	name = "Contender G13"
 	desc = "A poacher's favorite, ArcWorks' Contender G13 can hold any ammo you put into it. Each shot must be loaded individually. Ammo sold seperately!"
