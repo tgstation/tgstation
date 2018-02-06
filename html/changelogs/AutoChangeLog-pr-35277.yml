@@ -1,0 +1,11 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Noblium Formation being multiplicative, so having 500 moles of tritium and 500 moles of nitrogen no longer produces 2500 moles of noblium (it should correctly produce 10 moles)"
+  - bugfix: "Fixes most reactions deleting more gas than exists and making gas out of nowhere"
+  - bugfix: "Fixes Stim Formation invoking a byond bug and not using its intended polynomial formula"
+  - bugfix: "Fixes Cryo Cells not having garbage_collect and clamping"
+  - bugfix: "Fixes Rad Collectors not having clamping"
+  - bugfix: "Fixes Division by Zero when Fusion has no impurities."
+  - bugfix: "Removes a redundant line in lungs"
+  - bugfix: "Fixes rad_act signal not firing from turfs, living mobs, rad collectors and geiger counters"
