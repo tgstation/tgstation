@@ -52,7 +52,7 @@
 )
 
 	if(ispath(loot))
-		loot = new loot (src)
+		new loot (src)
 
 	if(islist(loot))
 		for(var/i in loot)
