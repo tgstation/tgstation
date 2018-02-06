@@ -103,18 +103,19 @@
 	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
 	credit_cost = 5000 // While the shuttle is rusted and poorly maintained, trained bears are costly.
 
-/datum/map_template/shuttle/emergency/saltmine
-	suffix = "saltmine"
-	name = "The Saltmine"
-	description = "Contains everything that upsets you."
-	credit_cost = 5000
-
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
 	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
+
+/datum/map_template/shuttle/emergency/saltmine
+	suffix = "saltmine"
+	name = "The Saltmine"
+	description = "Contains everything that upsets you."
+	admin_notes = "Don't forget: You're here forever."
+	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
