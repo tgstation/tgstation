@@ -13,6 +13,7 @@
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	1000 //The neutrons gotta go somewhere. Completely arbitrary number.
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -122,6 +123,9 @@
 
 		if(burned_fuel)
 			energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+
+		if (location)
+			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 			ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 			cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
