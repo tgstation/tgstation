@@ -44,9 +44,8 @@
 		return TRUE
 
 	if(I.use_tool(src, user, 0, volume=50, amount=15))
-		use(1)
 		new refined_type(drop_location())
-		qdel(src)
+		use(1)
 
 	return TRUE
 
@@ -115,13 +114,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/stack/ore/plasma/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.welding)
-			to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
-	else
-		..()
+/obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
+	return TRUE
 
 
 /obj/item/stack/ore/silver
