@@ -109,11 +109,19 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/boa/AttackingTarget()
-	if(istype(target, /mob/living/simple_animal/mouse))
+	if(istype(target, /mob/living/simple_animal/mouse)) //just for eating mice instead of constricting them
 		. = ..()
-	if(ambush_cooldown < world.time && isliving(target))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake/boa)) //if a boa is constricting don't DO IT
+		var/mob/living/simple_animal/hostile/retaliate/poison/snake/boa/S = target
+		if(S.constricting)
+			to_chat(src, "<span class='userdanger'>We cannot constrict a boa that is consticting! That would break the snake time constrictinuum!</span>")
+			return
+	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat != DEAD)
+		if(L.buckled)
+			to_chat(src, "<span class='userdanger'>We cannot constrict a critter that is buckled!</span>")
+			return
+		if(ambush_cooldown < world.time && L.stat != DEAD)
 			to_chat(src, "<span class='notice'>we begin to constrict [L]!</span>")
 			to_chat(L, "<span class='userdanger'>[src] begins to constrict you!</span>")
 			buckle_mob(L, force = 1)
