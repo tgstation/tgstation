@@ -11,12 +11,10 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-
 	var/loot = pick(
 //these numbers represent chances based on other choices, i.e. 1 is not 1/100 it is 1 out of the list
 //1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
 //2: use list() for multiple items bundled together as a possible result
-
 1;/obj/item/device/shared_storage/red,
 1;/obj/item/clothing/suit/space/hardsuit/cult,
 1;/obj/item/device/soulstone/anybody,
@@ -45,7 +43,6 @@
 1;/obj/item/book_of_babel,
 1;list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult)
 )
-
 	if(ispath(loot))
 		new loot (src)
 	else
