@@ -258,12 +258,6 @@
 /obj/item/toy/syndicateballoon,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
-"aV" = (
-/obj/effect/decal/cleanable/salt,
-/obj/item/grown/bananapeel,
-/mob/living/simple_animal/bot/honkbot,
-/turf/open/floor/fakespace,
-/area/shuttle/escape)
 "aW" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/salt,
@@ -281,13 +275,6 @@
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/salad/validsalad,
 /obj/item/toy/figure/hos,
-/turf/open/floor/fakespace,
-/area/shuttle/escape)
-"aZ" = (
-/obj/item/grown/bananapeel,
-/obj/item/storage/backpack,
-/obj/effect/decal/cleanable/salt,
-/mob/living/simple_animal/bot/honkbot,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "ba" = (
@@ -345,6 +332,7 @@
 /obj/effect/decal/cleanable/salt,
 /obj/effect/decal/cleanable/salt,
 /obj/item/clothing/mask/vape,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bi" = (
@@ -484,6 +472,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/salt,
 /obj/item/bikehorn,
+/obj/item/organ/eyes/moth,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bD" = (
@@ -562,7 +551,16 @@
 /area/shuttle/escape)
 "oC" = (
 /obj/effect/decal/cleanable/salt,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/simple_animal/hostile/retaliate/clown{
+	health = 200;
+	maxHealth = 200
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"rH" = (
+/obj/effect/decal/cleanable/salt,
+/obj/item/mecha_parts/mecha_equipment/weapon/honker,
+/obj/structure/table/reinforced,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "vf" = (
@@ -578,10 +576,35 @@
 /obj/item/device/radio/beacon,
 /turf/open/indestructible/clock_spawn_room,
 /area/shuttle/escape)
+"xd" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/table/reinforced,
+/obj/item/codespeak_manual/unlimited,
+/turf/open/floor/plasteel/cult,
+/area/shuttle/escape)
 "xi" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Ac" = (
+/obj/effect/decal/cleanable/salt,
+/mob/living/simple_animal/bot/honkbot,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"Iq" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/bed/dogbed/ian,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"LR" = (
+/obj/effect/decal/cleanable/salt,
+/obj/mecha/combat/honker{
+	max_integrity = 60
+	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 
@@ -590,7 +613,7 @@ aa
 aa
 ac
 ac
-ad
+ac
 ac
 ad
 ad
@@ -605,8 +628,8 @@ aa
 aa
 ac
 ah
-ak
-ak
+LR
+oC
 vf
 jz
 aU
@@ -624,20 +647,20 @@ ai
 oC
 xi
 av
-ak
+Ac
 ak
 be
 ak
-ak
+Ac
 ak
 ac
 aa
 "}
 (4,1,1) = {"
 aa
-ad
+ac
 aj
-ak
+rH
 ay
 ac
 aJ
@@ -651,16 +674,16 @@ aa
 "}
 (5,1,1) = {"
 aa
-ad
+ac
 ak
 at
 ak
 ac
 aK
-aV
+aK
 bg
 bt
-aV
+aK
 aK
 ac
 aa
@@ -668,7 +691,7 @@ aa
 (6,1,1) = {"
 aa
 ac
-ak
+Iq
 au
 ak
 ac
@@ -689,10 +712,10 @@ av
 az
 ae
 aK
-aV
+aK
 bg
 bt
-aV
+aK
 aK
 aK
 ac
@@ -721,10 +744,10 @@ al
 aA
 aD
 aK
-aV
+aK
 bj
 bw
-aV
+aK
 aK
 aK
 ad
@@ -753,10 +776,10 @@ al
 al
 ae
 aO
-aZ
+aO
 bl
 bt
-aV
+aK
 aK
 aK
 ad
@@ -765,7 +788,7 @@ ad
 aa
 ae
 ao
-al
+xd
 aB
 ae
 aP
