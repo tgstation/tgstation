@@ -1104,7 +1104,7 @@
 	id = "fungalspores"
 	description = "Active fungal spores."
 	color = "#92D17D" // rgb: 146, 209, 125
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
