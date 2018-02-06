@@ -107,7 +107,7 @@
 	suffix = "saltmine"
 	name = "The Saltmine"
 	description = "Contains everything that upsets you."
-	credit_cost = 3000
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
