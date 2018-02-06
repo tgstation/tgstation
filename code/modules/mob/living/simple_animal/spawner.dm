@@ -32,6 +32,8 @@
 
 /mob/living/simple_animal/hostile/spawner/Life()
 	. = ..()
+	if(!.) // dead
+		return
 	spawn_mob()
 
 /mob/living/simple_animal/hostile/spawner/proc/spawn_mob()
@@ -53,7 +55,7 @@
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
 	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 
 /mob/living/simple_animal/hostile/spawner/skeleton
 	name = "bone pit"

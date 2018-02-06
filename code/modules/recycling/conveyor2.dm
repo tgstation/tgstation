@@ -289,7 +289,7 @@
 
 /obj/item/conveyor_construct
 	icon = 'icons/obj/recycling.dmi'
-	icon_state = "conveyor0"
+	icon_state = "conveyor_construct"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = WEIGHT_CLASS_BULKY

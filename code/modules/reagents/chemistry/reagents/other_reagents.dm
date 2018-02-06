@@ -200,6 +200,11 @@
 		data = 1
 	data++
 	M.jitteriness = min(M.jitteriness+4,10)
+	if(iscultist(M))
+		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
+			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				qdel(BS)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -216,7 +221,7 @@
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
-	if(data >= 75)	// 30 units, 135 seconds
+	if(data >= 60)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
@@ -245,7 +250,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("unholywater", (reac_volume/4))
+		M.reagents.add_reagent(id,reac_volume/4)
 		return
 	return ..()
 
@@ -255,17 +260,20 @@
 		M.AdjustUnconscious(-20, 0)
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
+		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
-	else
+		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume += 3
+	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustBrainLoss(3, 150)
-		M.adjustToxLoss(1, 0)
+		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
@@ -1652,7 +1660,7 @@
 	can_synth = 0
 	taste_description = "brains"
 
-/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
 	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
@@ -1763,3 +1771,32 @@
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_PACIFISM, id)
 	..()
+
+/datum/reagent/pax/borg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+  
+/datum/reagent/bz_metabolites
+	name = "BZ metabolites"
+	id = "bz_metabolites"
+	description = "A harmless metabolite of BZ gas"
+	color = "#FAFF00"
+	taste_description = "acrid cinnamon"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(CHANGELING_HIVEMIND_MUTE, id)
+
+/datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
+	..()
+	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
+
+/datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
+	if(L.mind)
+		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			changeling.chem_charges = max(changeling.chem_charges-2, 0)
+	return ..()

@@ -206,6 +206,8 @@
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
+	obj_flags = UNIQUE_RENAME
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -219,6 +221,22 @@
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)
 	return ..()
+
+/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/disk/holodisk))
+		var/obj/item/disk/holodisk/holodiskOriginal = W
+		if (holodiskOriginal.record)
+			if (!record)
+				record = new
+			record.caller_name = holodiskOriginal.record.caller_name
+			record.caller_image = holodiskOriginal.record.caller_image
+			record.entries = holodiskOriginal.record.entries.Copy()
+			record.language = holodiskOriginal.record.language
+			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			name = holodiskOriginal.name
+		else
+			to_chat(user, "[holodiskOriginal] has no record on it!")
+	..()
 
 /obj/item/disk/holodisk/proc/build_record()
 	record = new
@@ -306,8 +324,20 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
+
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown

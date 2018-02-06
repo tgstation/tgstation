@@ -30,8 +30,8 @@
 	var/last_alarm = 0
 	var/area/myarea = null
 
-/obj/machinery/firealarm/New(loc, dir, building)
-	..()
+/obj/machinery/firealarm/Initialize(mapload, dir, building)
+	. = ..()
 	if(dir)
 		src.setDir(dir)
 	if(building)

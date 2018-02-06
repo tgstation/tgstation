@@ -234,6 +234,11 @@
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"T" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "U" = (
 /obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small,
@@ -253,14 +258,10 @@ a
 a
 a
 a
-a
-a
 b
 b
 b
 b
-a
-a
 a
 a
 a
@@ -269,8 +270,6 @@ a
 a
 "}
 (2,1,1) = {"
-a
-a
 a
 a
 a
@@ -287,34 +286,26 @@ a
 a
 a
 a
-a
-a
 "}
 (3,1,1) = {"
 a
 a
 a
-a
-a
 b
 b
-b
+H
 b
 r
 l
 G
+T
 b
 b
-b
-a
-a
 a
 a
 a
 "}
 (4,1,1) = {"
-a
-a
 a
 a
 a
@@ -331,15 +322,11 @@ b
 a
 a
 a
-a
-a
 "}
 (5,1,1) = {"
 a
 a
 a
-a
-a
 b
 L
 l
@@ -350,15 +337,11 @@ j
 l
 l
 b
-a
-a
 a
 a
 a
 "}
 (6,1,1) = {"
-a
-a
 b
 b
 b
@@ -375,12 +358,8 @@ b
 b
 b
 b
-a
-a
 "}
 (7,1,1) = {"
-a
-a
 b
 c
 f
@@ -397,12 +376,8 @@ j
 f
 F
 b
-a
-a
 "}
 (8,1,1) = {"
-a
-a
 b
 c
 f
@@ -419,12 +394,8 @@ j
 f
 F
 b
-a
-a
 "}
 (9,1,1) = {"
-a
-a
 b
 c
 I
@@ -441,12 +412,8 @@ b
 V
 F
 b
-a
-a
 "}
 (10,1,1) = {"
-a
-a
 b
 c
 f
@@ -463,12 +430,8 @@ b
 f
 F
 b
-a
-a
 "}
 (11,1,1) = {"
-a
-a
 b
 c
 f
@@ -485,12 +448,8 @@ b
 f
 F
 b
-a
-a
 "}
 (12,1,1) = {"
-a
-a
 b
 c
 I
@@ -507,12 +466,8 @@ b
 V
 F
 b
-a
-a
 "}
 (13,1,1) = {"
-a
-a
 b
 d
 f
@@ -529,12 +484,8 @@ j
 f
 F
 b
-a
-a
 "}
 (14,1,1) = {"
-a
-a
 b
 d
 f
@@ -551,12 +502,8 @@ j
 f
 e
 b
-a
-a
 "}
 (15,1,1) = {"
-a
-a
 b
 d
 f
@@ -573,13 +520,9 @@ b
 f
 f
 b
-a
-a
 "}
 (16,1,1) = {"
-a
-a
-b
+T
 e
 I
 b
@@ -594,14 +537,10 @@ B
 b
 V
 f
-b
-a
-a
+T
 "}
 (17,1,1) = {"
-a
-a
-b
+T
 f
 f
 b
@@ -616,13 +555,9 @@ C
 b
 f
 f
-b
-a
-a
+T
 "}
 (18,1,1) = {"
-a
-a
 b
 g
 g
@@ -639,12 +574,8 @@ b
 E
 E
 b
-a
-a
 "}
 (19,1,1) = {"
-a
-a
 b
 h
 h
@@ -661,12 +592,8 @@ b
 h
 h
 b
-a
-a
 "}
 (20,1,1) = {"
-a
-a
 b
 i
 i
@@ -683,6 +610,4 @@ b
 i
 i
 b
-a
-a
 "}

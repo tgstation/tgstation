@@ -17,8 +17,11 @@
 #define TRAIT_DISFIGURED		"disfigured"
 #define TRAIT_XENO_HOST			"xeno_host"	//Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_STUNIMMUNE		"stun_immunity"
+#define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_ITALIAN			"italian"
+#define TRAIT_SHOCKIMMUNE		"shock_immunity"
+
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -33,6 +36,7 @@
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
+#define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"

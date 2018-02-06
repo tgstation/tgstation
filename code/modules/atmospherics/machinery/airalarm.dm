@@ -98,7 +98,7 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv/dangerous
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 135, 140) // Partial pressure, kpa
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -134,7 +134,7 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv/dangerous,
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv/dangerous
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 135, 140) // Partial pressure, kpa
 	)
 
 /obj/machinery/airalarm/engine

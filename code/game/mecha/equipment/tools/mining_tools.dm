@@ -110,8 +110,8 @@
 	equip_cooldown = 15
 	var/scanning_time = 0
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()

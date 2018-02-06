@@ -171,7 +171,7 @@ Doesn't work on other aliens/AI.*/
 		return corrode(O,user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
-	set name = "Corrossive Acid"
+	set name = "Corrosive Acid"
 
 	if(!iscarbon(usr))
 		return
