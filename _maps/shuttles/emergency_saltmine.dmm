@@ -41,6 +41,9 @@
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
 /obj/item/card/emag/fake,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "ak" = (
@@ -176,7 +179,9 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/effect/decal/cleanable/salt,
-/obj/machinery/door/airlock/clockwork,
+/obj/machinery/door/airlock/clockwork{
+	req_access = null
+	},
 /turf/open/indestructible/clock_spawn_room,
 /area/shuttle/escape)
 "aH" = (
@@ -251,6 +256,7 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/machinery/door/airlock/titanium,
+/obj/item/soap/deluxe,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "aU" = (
@@ -307,6 +313,7 @@
 	timid = 1;
 	width = 14
 	},
+/obj/item/soap/deluxe,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "be" = (
@@ -551,6 +558,10 @@
 /area/shuttle/escape)
 "oC" = (
 /obj/effect/decal/cleanable/salt,
+/obj/structure/window,
+/obj/structure/window{
+	dir = 4
+	},
 /mob/living/simple_animal/hostile/retaliate/clown{
 	health = 200;
 	maxHealth = 200
@@ -593,6 +604,17 @@
 /mob/living/simple_animal/bot/honkbot,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
+"CB" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/window{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/clown{
+	health = 200;
+	maxHealth = 200
+	},
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
 "Ho" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/window/plasma/reinforced{
@@ -624,6 +646,13 @@
 	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
+"Uc" = (
+/obj/effect/decal/cleanable/salt,
+/obj/item/grown/bananapeel,
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/armor/reactive/table,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -646,7 +675,7 @@ aa
 ac
 ah
 LR
-oC
+CB
 vf
 jz
 aU
@@ -813,7 +842,7 @@ ba
 bm
 Ho
 aK
-aK
+Uc
 HA
 ac
 "}
