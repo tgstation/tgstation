@@ -56,7 +56,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
+	mob_types = list(/mob/living/simple_animal/hostile/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
 
 /mob/living/simple_animal/hostile/spawner/skeleton
@@ -69,7 +69,7 @@
 	maxHealth = 150
 	max_mobs = 15
 	spawn_time = 150
-	mob_type = /mob/living/simple_animal/hostile/skeleton
+	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
 	spawn_text = "climbs out of"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("skeleton")
@@ -84,26 +84,26 @@
 	max_mobs = 3
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls out of"
-	mob_type = /mob/living/simple_animal/hostile/asteroid/goldgrub
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
 
 /mob/living/simple_animal/hostile/spawner/mining/goliath
 	name = "goliath den"
 	desc = "A den housing a nest of goliaths, oh god why?"
-	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath)
 
 /mob/living/simple_animal/hostile/spawner/mining/hivelord
 	name = "hivelord den"
 	desc = "A den housing a nest of hivelords."
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord)
 
 /mob/living/simple_animal/hostile/spawner/mining/basilisk
 	name = "basilisk den"
 	desc = "A den housing a nest of basilisks, bring a coat."
-	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk)
 
 /mob/living/simple_animal/hostile/spawner/mining/wumborian
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
-	mob_type = /mob/living/simple_animal/hostile/asteroid/fugu
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
