@@ -142,12 +142,15 @@
 "aA" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
+/obj/item/twohanded/spear,
+/obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/salt,
 /obj/item/greentext,
+/obj/item/banhammer,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "aC" = (
@@ -290,7 +293,7 @@
 "ba" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/salt,
-/obj/item/gun/ballistic/revolver/russian,
+/obj/item/gun/ballistic/revolver/reverse,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bb" = (
@@ -328,13 +331,13 @@
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/beaker/waterbottle/large,
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bg" = (
 /obj/effect/decal/cleanable/salt,
 /obj/item/grown/bananapeel,
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bh" = (
@@ -346,19 +349,19 @@
 /area/shuttle/escape)
 "bi" = (
 /obj/effect/decal/cleanable/salt,
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /obj/structure/table/glass,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bj" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /obj/effect/decal/cleanable/salt,
 /obj/item/grown/bananapeel,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bk" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/salad/validsalad,
@@ -366,14 +369,14 @@
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /obj/effect/decal/cleanable/salt,
 /obj/item/grown/bananapeel,
 /obj/item/storage/backpack,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bm" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/plasma/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -406,57 +409,52 @@
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/beaker/waterbottle/large,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bt" = (
 /obj/effect/decal/cleanable/salt,
 /obj/item/grown/bananapeel,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
+/obj/structure/window/plasma/reinforced{
+	dir = 1
 	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bu" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
 /obj/item/clothing/head/collectable/wizard,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bv" = (
 /obj/effect/decal/cleanable/salt,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
 /obj/structure/table/glass,
 /obj/item/clothing/head/kitty/genuine,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/salt,
 /obj/item/grown/bananapeel,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/item/device/assembly/flash,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/salt,
 /obj/structure/table/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
 /obj/item/toy/plush/lizardplushie,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
@@ -494,12 +492,8 @@
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/fire{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/storage/firstaid/toxin,
 /obj/effect/decal/cleanable/salt,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/fakepit,
 /area/shuttle/escape)
 "bF" = (
@@ -527,15 +521,11 @@
 /area/shuttle/escape)
 "bJ" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/storage/firstaid/brute,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/salt,
+/obj/item/storage/box/hug/medical,
 /turf/open/floor/fakepit,
 /area/shuttle/escape)
 "bK" = (
@@ -565,6 +555,35 @@
 /obj/item/grenade/flashbang,
 /turf/open/floor/fakepit,
 /area/shuttle/escape)
+"jz" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/statue/plasma/scientist,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"oC" = (
+/obj/effect/decal/cleanable/salt,
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"vf" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/decal/cleanable/salt,
+/obj/structure/table/reinforced,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"wp" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/destructible/clockwork/trap/trigger/pressure_sensor,
+/obj/structure/destructible/clockwork/trap/brass_skewer,
+/obj/item/device/radio/beacon,
+/turf/open/indestructible/clock_spawn_room,
+/area/shuttle/escape)
+"xi" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -588,12 +607,12 @@ ac
 ah
 ak
 ak
-ad
-ak
+vf
+jz
 aU
 aU
 aU
-ak
+jz
 ah
 ac
 aa
@@ -602,8 +621,8 @@ aa
 aa
 ac
 ai
-at
-au
+oC
+xi
 av
 ak
 ak
@@ -634,7 +653,7 @@ aa
 aa
 ad
 ak
-ak
+at
 ak
 ac
 aK
@@ -736,7 +755,7 @@ ae
 aO
 aZ
 bl
-bw
+bt
 aV
 aK
 aK
@@ -752,7 +771,7 @@ ae
 aP
 ba
 bm
-bw
+bt
 aK
 aK
 aK
@@ -776,7 +795,7 @@ ac
 "}
 (14,1,1) = {"
 ab
-af
+wp
 ap
 af
 af
@@ -792,7 +811,7 @@ ac
 "}
 (15,1,1) = {"
 ab
-af
+wp
 aq
 af
 af
@@ -808,7 +827,7 @@ ac
 "}
 (16,1,1) = {"
 ab
-af
+wp
 ar
 aw
 aC
