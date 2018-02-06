@@ -79,6 +79,7 @@
 	A.emag_act(user)
 
 /obj/item/card/emag/fake/afterattack()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 	return
 
 /obj/item/card/id
