@@ -58,6 +58,7 @@
 				var/obj/item/integrated_circuit/IC = V
 				if(IC.removable)
 					only_nodrop_components = FALSE
+					break
 			if(only_nodrop_components)
 				to_chat(user, "<span class='warning'>[EA] has irremovable components attached to the assembly, making it impossible to recycle!</span>")
 				return
