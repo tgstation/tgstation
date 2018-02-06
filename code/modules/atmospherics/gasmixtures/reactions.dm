@@ -13,7 +13,7 @@
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	1000 //The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	1000000 //The neutrons gotta go somewhere. Completely arbitrary number.
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
