@@ -189,6 +189,7 @@
 		update_icons()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
+	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 
