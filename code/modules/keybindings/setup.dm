@@ -12,7 +12,7 @@
 /datum/proc/key_up(key, client/user) // Called when a key is released
 	return
 /datum/proc/keyLoop(client/user) // Called once every frame
-	set waitfor = 0
+	set waitfor = FALSE
 	return
 
 // removes all the existing macros
