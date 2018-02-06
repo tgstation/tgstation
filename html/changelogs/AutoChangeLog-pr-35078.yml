@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Spawning as a syndicate comms officer will now activate an encrypted signal in the Lavaland Syndicate Base, to aid the crew in retaliating."
