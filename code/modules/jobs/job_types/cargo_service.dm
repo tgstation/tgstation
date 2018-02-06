@@ -219,7 +219,7 @@ Cook
 	if(visualsOnly)
 		return
 
-	H.dna.add_mutation(Italian)
+	H.dna.add_mutation(ITALIAN)
 
 
 /*
