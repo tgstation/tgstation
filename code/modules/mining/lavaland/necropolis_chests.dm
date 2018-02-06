@@ -44,12 +44,12 @@
 1;list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult)
 )
 	if(ispath(loot))
-		new loot (src)
+		new loot(src)
 	else
 		if(islist(loot))
 			for(var/i in loot)
 				if(ispath(i))
-					new i (src)
+					new i(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
