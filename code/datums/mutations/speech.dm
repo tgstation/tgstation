@@ -232,7 +232,7 @@
 	owner.remove_language(/datum/language/beachbum)
 
 
-	/datum/mutation/human/italian
+/datum/mutation/human/italian
 	name = "Italian"
 	quality = MINOR_NEGATIVE
 	dna_block = NON_SCANNABLE
