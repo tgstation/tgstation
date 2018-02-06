@@ -38,7 +38,7 @@
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge)
 		use_power(20)
 		defib.cell.give(18) //90% efficiency, slightly better than the cell charger's 87.5%
-	if(isliving(defib.paddles.loc))
+	if(defib && defib.paddles && isliving(defib.paddles.loc))
 		var/mob/living/L = defib.paddles.loc
 		if(!L.Adjacent(src))
 			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
