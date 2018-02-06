@@ -71,7 +71,7 @@
 	icon_living = "nether"
 	health = 50
 	maxHealth = 50
-	spawn_time = 50 //5 seconds
+	spawn_time = 600 //1 minute
 	max_mobs = 15
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"
@@ -93,7 +93,7 @@
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, 1)
 			M.adjustBruteLoss(60)
-			new /obj/effect/gibspawner/human(get_turf(M))
+			new /obj/effect/gibspawner/generic(get_turf(M))
 			if(M.stat == DEAD)
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
 				blank = new(loc)
