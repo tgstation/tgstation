@@ -593,6 +593,23 @@
 /mob/living/simple_animal/bot/honkbot,
 /turf/open/floor/fakespace,
 /area/shuttle/escape)
+"Ho" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/neck/petcollar,
+/obj/item/restraints/handcuffs,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
+"HA" = (
+/obj/effect/decal/cleanable/salt,
+/obj/structure/table/reinforced,
+/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/head/kitty,
+/turf/open/floor/fakespace,
+/area/shuttle/escape)
 "Iq" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/bed/dogbed/ian,
@@ -794,10 +811,10 @@ ae
 aP
 ba
 bm
-bt
+Ho
 aK
 aK
-aK
+HA
 ac
 "}
 (13,1,1) = {"
