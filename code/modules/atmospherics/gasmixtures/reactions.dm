@@ -123,9 +123,8 @@
 
 		if(burned_fuel)
 			energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
-
-		if (location)
-			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+			if(location)
+				radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 			ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 			cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
