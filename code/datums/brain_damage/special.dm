@@ -108,7 +108,7 @@
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
 		user.forceMove(get_turf(linked_to))
-		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", ignored_mob = user)
+		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", null, null, null, user)
 		user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
 
 /datum/brain_trauma/special/psychotic_brawling

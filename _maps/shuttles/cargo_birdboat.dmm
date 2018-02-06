@@ -1,14 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
 "b" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"c" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"d" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "e" = (
@@ -138,21 +129,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"s" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/supply)
-"t" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
 "u" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"v" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "w" = (
 /turf/template_noop,

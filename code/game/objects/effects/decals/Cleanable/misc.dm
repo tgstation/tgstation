@@ -25,6 +25,18 @@
 	. = ..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
+/obj/effect/decal/cleanable/glass
+	name = "tiny shards"
+	desc = "Back to sand."
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "tiny"
+
+/obj/effect/decal/cleanable/glass/Initialize()
+	. = ..()
+	setDir(pick(GLOB.cardinals))
+
+/obj/effect/decal/cleanable/glass/ex_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -179,3 +191,9 @@
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
 	icon_state = "freon"
+
+/obj/effect/decal/cleanable/plasma
+	name = "stabilized plasma"
+	desc = "A puddle of stabilized plasma."
+	icon_state = "flour"
+	color = "#C8A5DC"

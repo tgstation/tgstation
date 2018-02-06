@@ -70,6 +70,7 @@
 	name = "Pirate Cutter";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 22
 	},
 /turf/open/floor/plating,
@@ -678,6 +679,7 @@
 /area/shuttle/caravan/pirate)
 "dI" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dJ" = (
@@ -721,6 +723,9 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dQ" = (
@@ -731,13 +736,13 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dR" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering"
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "dS" = (
@@ -824,6 +829,9 @@
 /area/shuttle/caravan/pirate)
 "eb" = (
 /obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "ec" = (
@@ -863,13 +871,13 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ei" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "ej" = (
@@ -906,6 +914,9 @@
 	dir = 4
 	},
 /obj/machinery/space_heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "eo" = (
@@ -1177,6 +1188,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "eW" = (
@@ -1275,13 +1289,13 @@
 	},
 /area/shuttle/caravan/pirate)
 "ff" = (
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -1313,8 +1327,7 @@
 /obj/machinery/button/door{
 	id = "caravanpirate_bridge";
 	name = "Bridge Blast Door Control";
-	pixel_x = -16;
-	req_access_txt = "150"
+	pixel_x = -16
 	},
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/pirate)
@@ -1337,6 +1350,9 @@
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -1361,11 +1377,11 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "fp" = (
-/obj/machinery/door/airlock/security,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/caravan/pirate)
 "fq" = (
@@ -1401,6 +1417,9 @@
 	anchored = 1
 	},
 /obj/item/wrench,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "fu" = (
@@ -1474,6 +1493,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil/yellow,
 /obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "fD" = (
@@ -1552,12 +1572,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "fO" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
@@ -1806,6 +1826,9 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
+/obj/item/device/gps{
+	gpstag = "Distress Signal"
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 6;
 	initial_gas_mix = "TEMP=2.7"
@@ -2052,12 +2075,12 @@
 	},
 /area/shuttle/caravan/freighter1)
 "hi" = (
-/obj/machinery/door/airlock/command{
-	name = "Bridge"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
 	},
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter1)
@@ -3191,7 +3214,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/syndicate2)
 "km" = (
-/obj/machinery/camera{
+/obj/machinery/camera/xray{
 	c_tag = "External View";
 	dir = 1;
 	network = list("caravansyndicate2");
@@ -3242,6 +3265,7 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 15
 	},
 /turf/open/floor/plating,
@@ -3308,7 +3332,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate/personal,
+/obj/structure/closet/syndicate/personal{
+	anchored = 1
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -3318,7 +3344,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
@@ -3403,6 +3431,7 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 4;
+	timid = 0;
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -3460,8 +3489,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/syndicate,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "kO" = (
@@ -3477,7 +3508,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/closet/syndicate,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "kQ" = (
@@ -3541,6 +3574,7 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 1;
+	timid = 0;
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -3569,6 +3603,7 @@
 	name = "Small Freighter";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 27
 	},
 /turf/open/floor/plating,
@@ -3606,7 +3641,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate1)
 "kX" = (
-/obj/machinery/camera{
+/obj/machinery/camera/xray{
 	c_tag = "External View";
 	dir = 4;
 	network = list("caravansyndicate1");
@@ -3691,8 +3726,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/closet/syndicate,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "ll" = (
@@ -3763,23 +3800,27 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate/personal,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate/personal{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "lv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/closet/syndicate,
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/syndicate{
+	anchored = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "lw" = (

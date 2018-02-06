@@ -120,7 +120,7 @@
 
 		if (istype(E, /datum/stack_recipe_list))
 			var/datum/stack_recipe_list/srl = E
-			t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title]</a>"
+			t1 += "<a href='?src=[REF(src)];sublist=[i]'>[srl.title]</a>"
 
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
@@ -135,7 +135,7 @@
 				title+= "[R.title]"
 			title+= " ([R.req_amount] [singular_name]\s)"
 			if (can_build)
-				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i];multiplier=1'>[title]</A>  ")
+				t1 += text("<A href='?src=[REF(src)];sublist=[recipes_sublist];make=[i];multiplier=1'>[title]</A>  ")
 			else
 				t1 += text("[]", title)
 				continue
@@ -145,9 +145,9 @@
 				var/list/multipliers = list(5,10,25)
 				for (var/n in multipliers)
 					if (max_multiplier>=n)
-						t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
+						t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
 				if (!(max_multiplier in multipliers))
-					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
+					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	var/datum/browser/popup = new(user, "stack", name, 400, 400)
 	popup.set_content(t1)
@@ -232,6 +232,19 @@
 	if(R.on_floor && !isfloorturf(usr.loc))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
+	if(R.placement_checks)
+		switch(R.placement_checks)
+			if(STACK_CHECK_CARDINALS)
+				var/turf/step
+				for(var/direction in GLOB.cardinals)
+					step = get_step(usr, direction)
+					if(locate(R.result_type) in step)
+						to_chat(usr, "<span class='warning'>\The [R.title] must not be built directly adjacent to another!</span>")
+						return 0
+			if(STACK_CHECK_ADJACENT)
+				if(locate(R.result_type) in range(1, usr))
+					to_chat(usr, "<span class='warning'>\The [R.title] must be constructed at least one tile away from others of its type!</span>")
+					return 0
 	return 1
 
 /obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
@@ -360,8 +373,9 @@
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/window_checks = FALSE
+	var/placement_checks = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -371,7 +385,7 @@
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
 	src.window_checks = window_checks
-
+	src.placement_checks = placement_checks
 /*
  * Recipe list datum
  */

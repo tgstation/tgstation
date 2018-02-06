@@ -584,9 +584,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"aY" = (
-/turf/template_noop,
-/area/template_noop)
 "aZ" = (
 /obj/structure/table,
 /obj/item/phone{
@@ -637,8 +634,8 @@ aa
 aa
 aa
 aa
-aY
-aY
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -656,7 +653,7 @@ ab
 ab
 aa
 aa
-aY
+aa
 "}
 (3,1,1) = {"
 ab

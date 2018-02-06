@@ -46,7 +46,7 @@
 			H.set_heartattack(TRUE)
 			if(H.stat == CONSCIOUS)
 				H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart stopped!</span>")
-		
+
 /obj/item/mounted_energy_chainsaw
 	name = "mounted energy chainsaw"
 	desc = "An energy chainsaw that has replaced your arm."
@@ -64,7 +64,16 @@
 	throw_speed = 0
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "shred", "rended", "gutted", "eviscerated")
-	
+
 /obj/item/mounted_energy_chainsaw/attack(mob/living/M, mob/living/user)
 	playsound(src, pick('hippiestation/sound/weapons/echainsawhit1.ogg','hippiestation/sound/weapons/echainsawhit2.ogg'))
 	..()
+
+/obj/item/staff // to make sure people don't get confused
+	desc = "Apparently a staff used by the wizard. Doesn't shoot anything."
+	w_class = WEIGHT_CLASS_NORMAL
+
+
+/obj/item/staff/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spell_catalyst)

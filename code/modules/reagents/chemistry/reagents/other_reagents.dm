@@ -452,6 +452,14 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
+/datum/reagent/mutationtoxin/moth
+	name = "Moth Mutation Toxin"
+	id = "mothmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/moth
+	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
+
 /datum/reagent/mutationtoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
@@ -551,9 +559,9 @@
 	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
 		return
 
-	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+	if(isjellyperson(H))
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
-		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
 		H.reagents.del_reagent(id)
 
@@ -568,7 +576,7 @@
 			if(prob(10))
 				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
 		if(20 to INFINITY)
-			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+			var/species_type = pick(subtypesof(/datum/species/jelly))
 			H.set_species(species_type)
 			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
@@ -1625,7 +1633,7 @@
 	can_synth = 0
 	taste_description = "brains"
 
-/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
 	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
@@ -1736,3 +1744,9 @@
 		var/mob/living/L = M
 		L.remove_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
 	..()
+
+/datum/reagent/pax/borg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM

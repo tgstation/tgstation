@@ -81,13 +81,13 @@
 			log_game("[key_name(user)] set [key_name(M)] on fire")
 	..()
 
-/obj/item/twohanded/fireaxe/fireyaxe/afterattack(atom/target, mob/living/user, proximity_flag)
+/obj/item/twohanded/fireaxe/fireyaxe/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
 	if(!proximity_flag && charged && wielded)
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
 			return
 		var/obj/item/projectile/bullet/incendiary/shell/firehammer/F = new /obj/item/projectile/bullet/incendiary/shell/firehammer(proj_turf)
-		F.preparePixelProjectile(target, get_turf(target), user)
+		F.preparePixelProjectile(target, user, clickparams)
 		F.firer = user
 		playsound(user, 'sound/magic/Fireball.ogg', 100, 1)
 		F.fire()

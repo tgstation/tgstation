@@ -15,10 +15,6 @@
 
 	var/list/datum/brain_trauma/traumas = list()
 
-/obj/item/organ/brain/changeling_brain
-	vital = FALSE
-	decoy_override = TRUE
-
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
 
@@ -126,7 +122,7 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !C.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)

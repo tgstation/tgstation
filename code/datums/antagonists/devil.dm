@@ -87,6 +87,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil
 	name = "Devil"
 	roundend_category = "devils"
+	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
 	//Don't delete upon mind destruction, otherwise soul re-selling will break.
 	delete_on_mind_deletion = FALSE
@@ -111,16 +112,34 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		/obj/effect/proc_holder/spell/targeted/summon_dancefloor))
 	var/ascendable = FALSE
 
+/datum/antagonist/devil/can_be_owned(datum/mind/new_owner)
+	. = ..()
+	return . && (ishuman(new_owner.current) || iscyborg(new_owner.current))
 
-/datum/antagonist/devil/New()
-	..()
-	truename = randomDevilName()
-	ban = randomdevilban()
-	bane = randomdevilbane()
-	obligation = randomdevilobligation()
-	banish = randomdevilbanish()
-	GLOB.allDevils[lowertext(truename)] = src
+/datum/antagonist/devil/get_admin_commands()
+	. = ..()
+	.["Toggle ascendable"] = CALLBACK(src,.proc/admin_toggle_ascendable)
 
+
+/datum/antagonist/devil/proc/admin_toggle_ascendable(mob/admin)
+	ascendable = !ascendable
+	message_admins("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable]")
+	log_admin("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable])")
+
+/datum/antagonist/devil/admin_add(datum/mind/new_owner,mob/admin)
+	switch(alert(admin,"Should the devil be able to ascend",,"Yes","No","Cancel"))
+		if("Yes")
+			ascendable = TRUE
+		if("No")
+			ascendable = FALSE
+		else
+			return
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+	log_admin("[key_name(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+
+/datum/antagonist/devil/antag_listing_name()
+	return ..() + "([truename])"
 
 /proc/devilInfo(name)
 	if(GLOB.allDevils[lowertext(name)])
@@ -480,7 +499,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	.=..()
 
 /datum/antagonist/devil/on_gain()
-	owner.store_memory("Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>")
+	truename = randomDevilName()
+	ban = randomdevilban()
+	bane = randomdevilbane()
+	obligation = randomdevilobligation()
+	banish = randomdevilbanish()
+	GLOB.allDevils[lowertext(truename)] = src
+
+	antag_memory += "Your devilic true name is [truename]<br>[GLOB.lawlorify[LAW][ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][bane]]<br>[GLOB.lawlorify[LAW][obligation]]<br>[GLOB.lawlorify[LAW][banish]]<br>"
 	if(issilicon(owner.current))
 		var/mob/living/silicon/robot_devil = owner.current
 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")

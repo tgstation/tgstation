@@ -253,8 +253,8 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/New()
-	..()
+/obj/machinery/syndicatebomb/empty/Initialize()
+	. = ..()
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
@@ -363,7 +363,7 @@
 
 /obj/item/bombcore/badmin/summon/clown
 	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
-	amt_summon 	= 100
+	amt_summon 	= 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
 	playsound(src, 'sound/misc/sadtrombone.ogg', 50)

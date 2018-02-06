@@ -302,6 +302,20 @@
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	cost = 13
-	
+
 /datum/uplink_item/dangerous/powerfist
 	cost = 6
+
+/datum/uplink_item/badass/contender
+	name = "Contender G13"
+	desc = "A poacher's favorite, ArcWorks' Contender G13 can hold any ammo you put into it. Each shot must be loaded individually. Ammo sold seperately!"
+	item = /obj/item/gun/ballistic/revolver/doublebarrel/contender
+	cost = 7 // You have to buy ammo for it, and there's only two shots. If you really want to get any use out of it, it'll be more around 10 TC.
+	surplus = 45 // Why not? You get a boatload of ammo in Surplus Crates anyhow.
+
+/datum/uplink_item/ammo/buckshotbox
+	name = "Box of Buckshot"
+	desc = "Contains 60 rounds of Buckshot. A popular purchase, whether it be the gondola poachers or the militia."
+	item = /obj/item/ammo_box/buckshotbox
+	cost = 13 // the math has been done, I assure you.
+	surplus = 25 // let's maybe not have players waste 13 TC on ammo every time they get a crate

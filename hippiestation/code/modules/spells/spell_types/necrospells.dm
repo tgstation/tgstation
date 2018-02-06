@@ -5,6 +5,7 @@
 	school = "transmutation"
 	charge_max = 300
 	clothes_req = 1
+	staff_req = 1
 	invocation = "NEK'ROSIS!"
 	invocation_type = "shout"
 	message = "<span class='notice'>You collapse in utter mind-crushing agony!</span>"

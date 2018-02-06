@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	voice_name = "synthesized voice"
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
@@ -42,6 +41,7 @@
 /mob/living/silicon/Initialize()
 	. = ..()
 	GLOB.silicon_mobs += src
+	faction += "silicon"
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()

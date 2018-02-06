@@ -20,7 +20,7 @@
 		make_from.forceMove(src)
 		stored = make_from
 	else
-		stored = new /obj/structure/disposalconstruct(src, make_from = src)
+		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
 	target = get_ranged_target_turf(src, dir, 10)
 

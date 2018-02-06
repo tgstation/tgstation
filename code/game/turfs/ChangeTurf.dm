@@ -1,3 +1,8 @@
+// This is a list of turf types we dont want to assign to baseturfs unless through initialization or explicitly
+GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
+	/turf/open/space,
+	)))
+
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
@@ -50,6 +55,8 @@
 		path = /turf/open/space
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP)) // Don't no-op if the map loader requires it to be reconstructed
 		return src
+	if(flags & CHANGETURF_SKIP)
+		return new path(src)
 
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
@@ -126,10 +133,13 @@
 /turf/proc/PlaceOnBottom(list/new_baseturfs, turf/fake_turf_type)
 	if(fake_turf_type)
 		if(!new_baseturfs)
+			if(!length(baseturfs))
+				baseturfs = list(baseturfs)
 			var/list/old_baseturfs = baseturfs.Copy()
 			assemble_baseturfs(fake_turf_type)
 			if(!length(baseturfs))
 				baseturfs = list(baseturfs)
+			baseturfs -= baseturfs & GLOB.blacklisted_automated_baseturfs
 			baseturfs += old_baseturfs
 			return
 		else if(!length(new_baseturfs))
@@ -142,25 +152,38 @@
 
 // Make a new turf and put it on top
 // The args behave identical to PlaceOnBottom except they go on top
-/turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type)
+// Things placed on top of closed turfs will ignore the topmost closed turf
+// Returns the new turf
+/turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type, flags)
 	var/turf/newT
+	if(flags & CHANGETURF_SKIP) // We haven't been initialized
+		if(initialized)
+			stack_trace("CHANGETURF_SKIP was used in a PlaceOnTop call for a turf that's initialized. This is a mistake. [src]([type])")
+		assemble_baseturfs()
 	if(fake_turf_type)
 		if(!new_baseturfs) // If no baseturfs list then we want to create one from the turf type
-			var/list/old_baseturfs = baseturfs.Copy()
-			newT = ChangeTurf(fake_turf_type)
-			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
 			if(!length(baseturfs))
+				baseturfs = list(baseturfs)
+			var/list/old_baseturfs = baseturfs.Copy()
+			if(!istype(src, /turf/closed))
+				old_baseturfs += type
+			newT = ChangeTurf(fake_turf_type, null, flags)
+			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
+			if(!length(newT.baseturfs))
 				newT.baseturfs = list(baseturfs)
+			newT.baseturfs -= newT.baseturfs & GLOB.blacklisted_automated_baseturfs
 			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
 			return newT
 		if(!length(baseturfs))
 			baseturfs = list(baseturfs)
-		baseturfs += type
+		if(!istype(src, /turf/closed))
+			baseturfs += type
 		baseturfs += new_baseturfs
-		return ChangeTurf(fake_turf_type)
+		return ChangeTurf(fake_turf_type, null, flags)
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	baseturfs += type
+	if(!istype(src, /turf/closed))
+		baseturfs += type
 	var/turf/change_type
 	if(length(new_baseturfs))
 		change_type = new_baseturfs[new_baseturfs.len]
@@ -169,9 +192,10 @@
 			baseturfs += new_baseturfs
 	else
 		change_type = new_baseturfs
-	return ChangeTurf(change_type)
+	return ChangeTurf(change_type, null, flags)
 
 // Copy an existing turf and put it on top
+// Returns the new turf
 /turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
@@ -179,6 +203,7 @@
 
 	if(depth)
 		var/list/target_baseturfs = copytarget.baseturfs
+		target_baseturfs -= target_baseturfs & GLOB.blacklisted_automated_baseturfs
 		var/base_len = length(target_baseturfs)
 		if(!base_len)
 			if(!ignore_bottom)

@@ -126,6 +126,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
@@ -226,7 +227,6 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	SSticker.mode.traitors |= player_mind
 	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))

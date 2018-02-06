@@ -20,6 +20,7 @@
  *		Toy xeno
  *      Kitty toys!
  *		Snowballs
+ *		Clockwork Watches
  */
 
 
@@ -606,6 +607,11 @@
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
 
+/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+	return BRUTELOSS
+
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
 		return
@@ -681,7 +687,7 @@
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
-		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
@@ -1043,6 +1049,31 @@
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
+
+/*
+ * Clockwork Watch
+ */
+
+/obj/item/toy/clockwork_watch
+	name = "steampunk watch"
+	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "dread_ipad"
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/clockwork_watch/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 1800 //3 minutes
+		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='italics'>You hear cogwheels turning.</span>")
+		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, 0)
+	else
+		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
+
+/obj/item/toy/clockwork_watch/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
 
 /*
  * Xenomorph action figure

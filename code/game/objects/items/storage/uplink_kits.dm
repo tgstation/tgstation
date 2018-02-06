@@ -308,3 +308,27 @@
 
 /obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
 	new /obj/item/implanter/radio(src)
+
+/obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/device/radio/headset/headset_cent/empty(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/storage/backpack/satchel(src)
+	new /obj/item/device/pda/heads(src)
+	new /obj/item/clipboard(src)
+
+/obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
+	new /obj/item/clothing/under/chameleon/broken(src)
+	new /obj/item/clothing/suit/chameleon/broken(src)
+	new /obj/item/clothing/gloves/chameleon/broken(src)
+	new /obj/item/clothing/shoes/chameleon/broken(src)
+	new /obj/item/clothing/glasses/chameleon/broken(src)
+	new /obj/item/clothing/head/chameleon/broken(src)
+	new /obj/item/clothing/mask/chameleon/broken(src)
+	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/device/radio/headset/chameleon/broken(src)
+	new /obj/item/stamp/chameleon/broken(src)
+	new /obj/item/device/pda/chameleon/broken(src)
+	// No chameleon laser, they can't randomise for //REASONS//

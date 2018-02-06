@@ -659,7 +659,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
+	var/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -703,9 +703,9 @@
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-	H.grant_language(dt)
+/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
+	var/datum/language_holder/H = get_language_holder(!body)
+	H.grant_language(dt, body)
 
 /atom/movable/proc/grant_all_languages(omnitongue=FALSE)
 	var/datum/language_holder/H = get_language_holder()
@@ -715,9 +715,9 @@
 	var/datum/language_holder/H = get_language_holder()
 	. = H.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-	H.remove_language(dt)
+/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
+	var/datum/language_holder/H = get_language_holder(!body)
+	H.remove_language(dt, body)
 
 /atom/movable/proc/remove_all_languages()
 	var/datum/language_holder/H = get_language_holder()

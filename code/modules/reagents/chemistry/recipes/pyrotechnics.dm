@@ -382,6 +382,13 @@ Hippie: Commented because we added our own reagent processing system.
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
+/datum/chemical_reaction/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	results = list("energized_jelly" = 2)
+	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
+
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
@@ -421,3 +428,11 @@ Hippie: Commented because we added our own reagent processing system.
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
+
+/datum/chemical_reaction/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	results = list("firefighting_foam" = 3)
+	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	required_temp = 200
+	is_cold_recipe = 1

@@ -49,6 +49,7 @@ Possible to do for anyone motivated enough:
 	var/datum/holocall/outgoing_call	//do not modify the datums only check and call the public procs
 	var/obj/item/disk/holodisk/disk //Record disk
 	var/replay_mode = FALSE //currently replaying a recording
+	var/loop_mode = FALSE //currently looping a recording
 	var/record_mode = FALSE //currently recording
 	var/record_start = 0  	//recording start time
 	var/record_user			//user that inititiated the recording
@@ -150,19 +151,20 @@ Possible to do for anyone motivated enough:
 	if(temp)
 		dat = temp
 	else
-		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence.</a><br>"
-		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad.</a><br>"
+		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
+		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
 		if(disk)
 			if(disk.record)
 				//Replay
-				dat += "<a href='?src=[REF(src)];replay_start=1'>Replay disk recording.</a><br>"
+				dat += "<a href='?src=[REF(src)];replay_start=1'>Replay disk recording</a><br>"
+				dat += "<a href='?src=[REF(src)];loop_start=1'>Loop disk recording</a><br>"
 				//Clear
-				dat += "<a href='?src=[REF(src)];record_clear=1'>Clear disk recording.</a><br>"
+				dat += "<a href='?src=[REF(src)];record_clear=1'>Clear disk recording</a><br>"
 			else
 				//Record
-				dat += "<a href='?src=[REF(src)];record_start=1'>Start new recording.</a><br>"
+				dat += "<a href='?src=[REF(src)];record_start=1'>Start new recording</a><br>"
 			//Eject
-			dat += "<a href='?src=[REF(src)];disk_eject=1'>Eject disk.</a><br>"
+			dat += "<a href='?src=[REF(src)];disk_eject=1'>Eject disk</a><br>"
 
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
@@ -172,7 +174,7 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad != src)
-				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)].</a><br>"
+				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
 				one_unanswered_call = TRUE
 			else
 				one_answered_call = TRUE
@@ -183,10 +185,10 @@ Possible to do for anyone motivated enough:
 		for(var/I in holo_calls)
 			var/datum/holocall/HC = I
 			if(HC.connected_holopad == src)
-				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user].</a><br>"
+				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
 
 
-	var/datum/browser/popup = new(user, "holopad", name, 300, 150)
+	var/datum/browser/popup = new(user, "holopad", name, 300, 175)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -265,6 +267,9 @@ Possible to do for anyone motivated enough:
 	else if(href_list["replay_stop"])
 		replay_stop()
 	else if(href_list["replay_start"])
+		replay_start()
+	else if(href_list["loop_start"])
+		loop_mode = TRUE
 		replay_start()
 	else if(href_list["record_start"])
 		record_start(usr)
@@ -464,6 +469,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/replay_stop()
 	if(replay_mode)
 		replay_mode = FALSE
+		loop_mode = FALSE
 		temp = null
 		QDEL_NULL(replay_holo)
 		SetLightsAndPower()
@@ -490,7 +496,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!record_mode)
 		return
 	//make this command so you can have multiple languages in single record
-	if(!disk.record.caller_name && istype(speaker))
+	if((!disk.record.caller_name || disk.record.caller_name == "Unknown") && istype(speaker))
 		disk.record.caller_name = speaker.name
 	if(!disk.record.language)
 		disk.record.language = language
@@ -516,8 +522,11 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!replay_mode)
 		return
 	if(disk.record.entries.len < entry_number)
-		replay_stop()
-		return
+		if (loop_mode)	
+			entry_number = 1
+		else
+			replay_stop()
+			return
 	var/list/entry = disk.record.entries[entry_number]
 	var/command = entry[1]
 	switch(command)

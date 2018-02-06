@@ -16,7 +16,6 @@
 	throw_range = 5
 	force = 5
 	needs_permit = TRUE
-	unique_rename = FALSE
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -159,7 +158,7 @@
 			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
+				process_fire(user, user, FALSE, params, shot_leg)
 				user.dropItemToGround(src, TRUE)
 				return
 
@@ -178,9 +177,9 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, 1, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target,user,1,params, null, bonus_spread)
+	process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -191,7 +190,7 @@
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user) || pin.emagged)
+		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE
 		else
 			pin.auth_fail(user)
@@ -437,7 +436,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, 1, params)
+	process_fire(target, user, TRUE, params)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
