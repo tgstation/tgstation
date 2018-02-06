@@ -215,7 +215,7 @@
 		step_energy_drain = normal_step_energy_drain
 		qdel(SM)
 	if(CP)
-		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
+		armor = armor.modifyRating(energy = (CP.rating * 10)) //Each level of capacitor protects the mech against emp by 10%
 		qdel(CP)
 
 ////////////////////////

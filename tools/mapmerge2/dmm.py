@@ -31,10 +31,12 @@ class DMM:
         return _parse(bytes.decode(ENCODING))
 
     def to_file(self, fname, tgm = True):
+        self._presave_checks()
         with open(fname, 'w', newline='\n', encoding=ENCODING) as f:
             (save_tgm if tgm else save_dmm)(self, f)
 
     def to_bytes(self, tgm = True):
+        self._presave_checks()
         bio = io.BytesIO()
         with io.TextIOWrapper(bio, newline='\n', encoding=ENCODING) as f:
             (save_tgm if tgm else save_dmm)(self, f)
@@ -42,12 +44,7 @@ class DMM:
             return bio.getvalue()
 
     def generate_new_key(self):
-        # ensure that free keys exist by increasing the key length if necessary
-        free_keys = (BASE ** self.key_length) - len(self.dictionary)
-        while free_keys <= 0:
-            self.key_length += 1
-            free_keys = (BASE ** self.key_length) - len(self.dictionary)
-
+        free_keys = self._ensure_free_keys(1)
         # choose one of the free keys at random
         key = 0
         while free_keys:
@@ -60,6 +57,32 @@ class DMM:
             key += 1
 
         raise RuntimeError("ran out of keys, this shouldn't happen")
+
+    def _presave_checks(self):
+        # last-second handling of bogus keys to help prevent and fix broken maps
+        self._ensure_free_keys(0)
+        max_key = max_key_for(self.key_length)
+        bad_keys = {key: 0 for key in self.dictionary.keys() if key > max_key}
+        if bad_keys:
+            print(f"Warning: fixing {len(bad_keys)} overflowing keys")
+            for k in bad_keys:
+                # create a new non-bogus key and transfer that value to it
+                new_key = bad_keys[k] = self.generate_new_key()
+                self.dictionary.forceput(new_key, self.dictionary[k])
+                print(f"    {num_to_key(k, self.key_length, True)} -> {num_to_key(new_key, self.key_length)}")
+            for k, v in self.grid.items():
+                # reassign the grid entries which used the old key
+                self.grid[k] = bad_keys.get(v, v)
+
+    def _ensure_free_keys(self, desired):
+        # ensure that free keys exist by increasing the key length if necessary
+        free_keys = max_key_for(self.key_length) - len(self.dictionary)
+        while free_keys < desired:
+            if self.key_length >= MAX_KEY_LENGTH:
+                raise KeyTooLarge(f"can't expand beyond key length {MAX_KEY_LENGTH} ({len(self.dictionary)} keys)")
+            self.key_length += 1
+            free_keys = max_key_for(self.key_length) - len(self.dictionary)
+        return free_keys
 
     @property
     def coords_zyx(self):
@@ -82,6 +105,7 @@ class DMM:
 # key handling
 
 # Base 52 a-z A-Z dictionary for fast conversion
+MAX_KEY_LENGTH = 3  # things will get ugly fast if you exceed this
 BASE = 52
 base52 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 base52_r = {x: i for i, x in enumerate(base52)}
@@ -93,8 +117,8 @@ def key_to_num(key):
         num = BASE * num + base52_r[ch]
     return num
 
-def num_to_key(num, key_length):
-    if num >= BASE ** key_length:
+def num_to_key(num, key_length, allow_overflow=False):
+    if num >= (BASE ** key_length if allow_overflow else max_key_for(key_length)):
         raise KeyTooLarge(f"num={num} does not fit in key_length={key_length}")
 
     result = ''
@@ -104,6 +128,11 @@ def num_to_key(num, key_length):
 
     assert len(result) <= key_length
     return base52[0] * (key_length - len(result)) + result
+
+def max_key_for(key_length):
+    # keys only go up to "ymo" = 65534, under-estimated just in case
+    # https://secure.byond.com/forum/?post=2340796#comment23770802
+    return min(65530, BASE ** key_length)
 
 class KeyTooLarge(Exception):
     pass

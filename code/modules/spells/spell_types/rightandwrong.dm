@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		if(iswizard(H) || H.mind.special_role == "survivalist")
 			return
 
-	if(prob(GLOB.summon_guns_triggered) && !(H.mind in SSticker.mode.traitors))
+	if(prob(GLOB.summon_guns_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		SSticker.mode.traitors += H.mind
 
 		var/datum/objective/steal_five_of_type/summon_guns/guns = new
@@ -125,7 +125,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		if(iswizard(H) || H.mind.special_role == "survivalist")
 			return
 
-	if(prob(GLOB.summon_magic_triggered) && !(H.mind in SSticker.mode.traitors))
+	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		var/datum/objective/steal_five_of_type/summon_magic/magic = new
 		magic.owner = H.mind
 		H.mind.objectives += magic

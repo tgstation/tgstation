@@ -20,6 +20,7 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -27,6 +28,7 @@
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	create_reagents(5)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -101,27 +103,25 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/attackby(obj/item/W, mob/user, params)
+/obj/item/stock_parts/cell/on_reagent_change(changetype)
+	rigged = reagents.has_reagent("plasma", 5)
 	..()
-	if(istype(W, /obj/item/reagent_containers/syringe))
-		var/obj/item/reagent_containers/syringe/S = W
-		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
-		if(S.reagents.has_reagent("plasma", 5))
-			rigged = 1
-			grind_results["plasma"] = 5
-		S.reagents.clear_reagents()
 
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
 	if (charge==0)
 		return
-	var/explosion_power = round(sqrt(charge)/3)
-	if (explosion_power < 5)
+	var/devastation_range = -1 //round(charge/11000)
+	var/heavy_impact_range = round(sqrt(charge)/60)
+	var/light_impact_range = round(sqrt(charge)/30)
+	var/flash_range = light_impact_range
+	if (light_impact_range==0)
 		rigged = 0
 		corrupt()
 		return
-	dyn_explosion(T, explosion_power, 2, ignorecap = FALSE, flame_range = 2)
+	//explosion(T, 0, 1, 2, 2)
+	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
 
 /obj/item/stock_parts/cell/proc/corrupt()
@@ -170,7 +170,7 @@
 	charge = 0
 
 /obj/item/stock_parts/cell/upgraded
-	name = "high-capacity power cell"
+	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
 	materials = list(MAT_GLASS=50)

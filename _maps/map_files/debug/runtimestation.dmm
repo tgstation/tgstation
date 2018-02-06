@@ -20,10 +20,6 @@
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"ag" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -1303,15 +1299,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"dV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/hallway/primary/central)
 "dW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname,
@@ -2507,7 +2494,7 @@ bI
 cf
 cq
 bu
-dV
+dU
 bE
 bE
 cN

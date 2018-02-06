@@ -425,15 +425,19 @@ GAS ANALYZER
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
 		return
 	var/mob/living/simple_animal/slime/T = M
-	to_chat(user, "Slime scan results:")
-	to_chat(user, "[T.colour] [T.is_adult ? "adult" : "baby"] slime")
+	slime_scan(T, user)
+
+/proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
+	to_chat(user, "========================")
+	to_chat(user, "<b>Slime scan results:</b>")
+	to_chat(user, "<span class='notice'>[T.colour] [T.is_adult ? "adult" : "baby"] slime</span>")
 	to_chat(user, "Nutrition: [T.nutrition]/[T.get_max_nutrition()]")
 	if (T.nutrition < T.get_starve_nutrition())
 		to_chat(user, "<span class='warning'>Warning: slime is starving!</span>")
 	else if (T.nutrition < T.get_hunger_nutrition())
 		to_chat(user, "<span class='warning'>Warning: slime is hungry</span>")
 	to_chat(user, "Electric change strength: [T.powerlevel]")
-	to_chat(user, "Health: [round(T.health/T.maxHealth,0.01)*100]")
+	to_chat(user, "Health: [round(T.health/T.maxHealth,0.01)*100]%")
 	if (T.slime_mutation[4] == T.colour)
 		to_chat(user, "This slime does not evolve any further.")
 	else
@@ -448,5 +452,6 @@ GAS ANALYZER
 			to_chat(user, "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]")
 			to_chat(user, "Genetic destability: [T.mutation_chance] % chance of mutation on splitting")
 	if (T.cores > 1)
-		to_chat(user, "Anomalious slime core amount detected")
+		to_chat(user, "Multiple cores detected")
 	to_chat(user, "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
+	to_chat(user, "========================")

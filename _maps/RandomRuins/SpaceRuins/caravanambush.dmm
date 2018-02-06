@@ -70,6 +70,7 @@
 	name = "Pirate Cutter";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 22
 	},
 /turf/open/floor/plating,
@@ -1825,6 +1826,9 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
+/obj/item/device/gps{
+	gpstag = "Distress Signal"
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 6;
 	initial_gas_mix = "TEMP=2.7"
@@ -3261,6 +3265,7 @@
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 15
 	},
 /turf/open/floor/plating,
@@ -3426,6 +3431,7 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 4;
+	timid = 0;
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -3568,6 +3574,7 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 1;
+	timid = 0;
 	width = 9
 	},
 /turf/open/floor/plating,
@@ -3596,6 +3603,7 @@
 	name = "Small Freighter";
 	port_direction = 8;
 	preferred_direction = 4;
+	timid = 0;
 	width = 27
 	},
 /turf/open/floor/plating,

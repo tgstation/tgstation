@@ -317,15 +317,6 @@
 	icon_state = "darkred"
 	},
 /area/shuttle/escape)
-"aY" = (
-/obj/machinery/flasher{
-	id = "shuttleflash";
-	pixel_x = -26
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
-	},
-/area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -578,10 +569,6 @@
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/chair/office/dark,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/escape)
-"bw" = (
-/obj/machinery/door/airlock/shuttle,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bx" = (
@@ -892,22 +879,6 @@
 	dir = 6
 	},
 /area/shuttle/escape)
-"cf" = (
-/obj/machinery/door/airlock/titanium/glass{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 8
-	},
-/area/shuttle/escape)
-"cg" = (
-/obj/machinery/door/airlock/titanium/glass{
-	name = "Shuttle Engine Room"
-	},
-/turf/open/floor/plasteel/darkgreen/side{
-	dir = 4
-	},
-/area/shuttle/escape)
 "ch" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/light{
@@ -988,18 +959,6 @@
 "cs" = (
 /turf/closed/wall/mineral/plastitanium/interior,
 /area/shuttle/escape)
-"cx" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cy" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
 "cz" = (
 /obj/machinery/button/door{
 	id = "shuttleshutters";
@@ -1009,25 +968,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
-/area/shuttle/escape)
-"cA" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "shuttleshutters";
-	name = "blast shutters"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"cD" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/escape)
-"cI" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/escape)
 "ei" = (
 /obj/machinery/porta_turret/centcom_shuttle{
@@ -1091,15 +1031,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
-"eJ" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/space)
 "eN" = (
 /obj/machinery/light{
 	dir = 4
@@ -1115,9 +1046,6 @@
 "eP" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
-"eQ" = (
-/turf/template_noop,
-/area/template_noop)
 
 (1,1,1) = {"
 aa
@@ -1543,8 +1471,8 @@ bu
 bA
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 cs
 bV
@@ -1577,8 +1505,8 @@ bv
 bB
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 bJ
 br
@@ -1611,8 +1539,8 @@ aC
 bC
 bJ
 ad
-eQ
-eQ
+ad
+ad
 ad
 bJ
 br
@@ -1645,8 +1573,8 @@ bm
 ar
 cs
 ad
-eQ
-eQ
+ad
+ad
 ad
 cs
 bW

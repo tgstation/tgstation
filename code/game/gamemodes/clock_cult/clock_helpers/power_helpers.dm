@@ -7,6 +7,7 @@
 	if(GLOB.ratvar_approaches)
 		amount *= 0.75 //The herald's beacon reduces power costs by 25% across the board!
 	GLOB.clockwork_power = GLOB.ratvar_awakens ? INFINITY : max(0, GLOB.clockwork_power + amount)
+	GLOB.clockwork_power = CLAMP(GLOB.clockwork_power, 0, MAX_CLOCKWORK_POWER)
 	for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects)
 		T.update_icon()
 	var/power_overwhelming = GLOB.clockwork_power

@@ -7,11 +7,15 @@
 /proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
-	while(num_spawned < nodes)
-		var/turf/F = locate(rand(min_x, max_x), rand(min_y, max_y), target_z)
-
-		river_nodes += new /obj/effect/landmark/river_waypoint(F)
-		num_spawned++
+	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
+	while(num_spawned < nodes && possible_locs.len)
+		var/turf/T = pick(possible_locs)
+		var/area/A = get_area(T)
+		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
+			possible_locs -= T
+		else
+			river_nodes += new /obj/effect/landmark/river_waypoint(T)
+			num_spawned++
 
 	//make some randomly pathing rivers
 	for(var/A in river_nodes)
@@ -43,7 +47,7 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area)) //Rivers will skip ruins
+			if(!istype(new_area, whitelist_area) || (cur_turf.flags_1 & NO_LAVA_GEN_1)) //Rivers will skip ruins
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
@@ -71,7 +75,7 @@
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
-		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
+		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.flags_1 & NO_LAVA_GEN_1) )
 			continue
 
 		if(!logged_turf_type && ismineralturf(T))

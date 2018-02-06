@@ -4,16 +4,20 @@
 /datum/antagonist/rev
 	name = "Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
+	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
-	if(new_owner.assigned_role in GLOB.command_positions)
-		return FALSE
-	if(new_owner.unconvertable)
-		return FALSE
+	if(.)
+		if(new_owner.assigned_role in GLOB.command_positions)
+			return FALSE
+		if(new_owner.unconvertable)
+			return FALSE
+		if(new_owner.current && new_owner.current.isloyal())
+			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -25,9 +29,6 @@
 
 /datum/antagonist/rev/proc/equip_rev()
 	return
-
-/datum/antagonist/rev/New()
-	. = ..()
 
 /datum/antagonist/rev/on_gain()
 	. = ..()
@@ -47,6 +48,8 @@
 	if(!new_team)
 		//For now only one revolution at a time
 		for(var/datum/antagonist/rev/head/H in GLOB.antagonists)
+			if(!H.owner)
+				continue
 			if(H.rev_team)
 				rev_team = H.rev_team
 				return
@@ -73,12 +76,73 @@
 	var/datum/mind/old_owner = owner
 	silent = TRUE
 	owner.remove_antag_datum(/datum/antagonist/rev)
-	var/datum/antagonist/rev/head/new_revhead = new(old_owner)
+	var/datum/antagonist/rev/head/new_revhead = new()
 	new_revhead.silent = TRUE
 	old_owner.add_antag_datum(new_revhead,old_team)
 	new_revhead.silent = FALSE
 	to_chat(old_owner, "<span class='userdanger'>You have proved your devotion to revolution! You are a head revolutionary now!</span>")
 
+/datum/antagonist/rev/get_admin_commands()
+	. = ..()
+	.["Promote"] = CALLBACK(src,.proc/admin_promote)
+
+/datum/antagonist/rev/proc/admin_promote(mob/admin)
+	var/datum/mind/O = owner
+	promote()
+	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
+	log_admin("[key_name(admin)] has head-rev'ed [O].")
+
+/datum/antagonist/rev/head/admin_add(datum/mind/new_owner,mob/admin)
+	give_flash = TRUE
+	give_hud = TRUE
+	remove_clumsy = TRUE
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has head-rev'ed [new_owner.current].")
+	log_admin("[key_name(admin)] has head-rev'ed [new_owner.current].")
+	to_chat(new_owner.current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+
+/datum/antagonist/rev/head/get_admin_commands()
+	. = ..()
+	. -= "Promote"
+	.["Take flash"] = CALLBACK(src,.proc/admin_take_flash)
+	.["Give flash"] = CALLBACK(src,.proc/admin_give_flash)
+	.["Repair flash"] = CALLBACK(src,.proc/admin_repair_flash)
+	.["Demote"] = CALLBACK(src,.proc/admin_demote)
+
+/datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
+	var/list/L = owner.current.get_contents()
+	var/obj/item/device/assembly/flash/flash = locate() in L
+	if (!flash)
+		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
+		return
+	qdel(flash)
+
+/datum/antagonist/rev/head/proc/admin_give_flash(mob/admin)
+	//This is probably overkill but making these impact state annoys me
+	var/old_give_flash = give_flash
+	var/old_give_hud = give_hud
+	var/old_remove_clumsy = remove_clumsy
+	give_flash = TRUE
+	give_hud = FALSE
+	remove_clumsy = FALSE
+	equip_rev()
+	give_flash = old_give_flash
+	give_hud = old_give_hud
+	remove_clumsy = old_remove_clumsy
+
+/datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
+	var/list/L = owner.current.get_contents()
+	var/obj/item/device/assembly/flash/flash = locate() in L
+	if (!flash)
+		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
+	else
+		flash.crit_fail = 0
+		flash.update_icon()
+
+/datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
+	message_admins("[key_name_admin(user)] has demoted [owner.current] from head revolutionary.")
+	log_admin("[key_name(user)] has demoted [owner.current] from head revolutionary.")
+	demote()
 
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
@@ -86,6 +150,9 @@
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
+
+/datum/antagonist/rev/head/antag_listing_name()
+	return ..() + "(Leader)"
 
 /datum/antagonist/rev/proc/update_rev_icons_added(mob/living/M)
 	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
@@ -104,8 +171,6 @@
 		return FALSE
 	var/mob/living/carbon/C = candidate //Check to see if the potential rev is implanted
 	if(!istype(C)) //Can't convert simple animals
-		return FALSE
-	if(C.isloyal())
 		return FALSE
 	return TRUE
 
@@ -127,7 +192,7 @@
 	var/old_team = rev_team
 	silent = TRUE
 	owner.remove_antag_datum(/datum/antagonist/rev/head)
-	var/datum/antagonist/rev/new_rev = new /datum/antagonist/rev(old_owner)
+	var/datum/antagonist/rev/new_rev = new /datum/antagonist/rev()
 	new_rev.silent = TRUE
 	old_owner.add_antag_datum(new_rev,old_team)
 	new_rev.silent = FALSE
@@ -280,3 +345,24 @@
 	result += "</div>"
 
 	return result.Join()
+
+/datum/team/revolution/antag_listing_entry()
+	var/common_part = ..()
+	var/heads_report = "<b>Heads of Staff</b><br>"
+	heads_report += "<table cellspacing=5>"
+	for(var/datum/mind/N in SSjob.get_living_heads())
+		var/mob/M = N.current
+		if(M)
+			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			heads_report += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+			heads_report += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+			var/turf/mob_loc = get_turf(M)
+			heads_report += "<td>[mob_loc.loc]</td></tr>"
+		else
+			heads_report += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
+			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+	heads_report += "</table>"
+	return common_part + heads_report
+
+/datum/team/revolution/is_gamemode_hero()
+	return SSticker.mode.name == "revolution"

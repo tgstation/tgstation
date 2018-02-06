@@ -552,3 +552,11 @@
 	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/pineappleslice
+	name = "pineapple slice"
+	desc = "A sliced piece of juicy pineapple."
+	icon_state = "pineapple_slice"
+	filling_color = "#F6CB0B"
+	tastes = list("pineapple" = 1)
+	foodtype = FRUIT
