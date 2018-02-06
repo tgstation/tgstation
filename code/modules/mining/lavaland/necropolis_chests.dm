@@ -14,6 +14,9 @@
 
 	var/loot = pick(
 //these numbers represent chances based on other choices, i.e. 1 is not 1/100 it is 1 out of the list
+//1: you can also embed pick() in itself (with or with out numbers) to create a secondary selection of choices as a result
+//2: use list() for multiple items bundled together
+
 1;/obj/item/device/shared_storage/red,
 1;/obj/item/clothing/suit/space/hardsuit/cult,
 1;/obj/item/device/soulstone/anybody,
@@ -21,9 +24,7 @@
 1;/obj/item/clothing/glasses/godeye,
 1;/obj/item/reagent_containers/glass/bottle/potion/flight,
 1;/obj/item/pickaxe/diamond,
-1;pick(//you can also embed pick() in itself (with or with out numbers) to create forked results
-	/obj/item/disk/design_disk/modkit_disc/resonator_blast,
-	/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
+1;pick(/obj/item/disk/design_disk/modkit_disc/resonator_blast,/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
 1;/obj/item/organ/brain/alien,
 1;/obj/item/organ/heart/cursed/wizard,
 1;/obj/item/ship_in_a_bottle,
@@ -32,23 +33,17 @@
 1;/obj/item/nullrod/scythe/talking,
 1;/obj/item/nullrod/armblade,
 1;/obj/item/guardiancreator,
-1;pick(
-	/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
-	/obj/item/disk/design_disk/modkit_disc/bounty),
+1;pick(/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,/obj/item/disk/design_disk/modkit_disc/bounty),
 1;/obj/item/device/warp_cube/red,
 1;/obj/item/device/wisp_lantern,
 1;/obj/item/device/immortality_talisman,
 1;/obj/item/gun/magic/hook,
 1;/obj/item/voodoo,
 1;/obj/item/grenade/clusterbuster/inferno,
-1;list(//use list() for multiple items
-	/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
-	/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
+1;list(/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
 1;/obj/item/spellbook/oneuse/summonitem,
 1;/obj/item/book_of_babel,
-1;list(
-	/obj/item/borg/upgrade/modkit/lifesteal,
-	/obj/item/bedsheet/cult)
+1;list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult)
 )
 
 	if(ispath(loot))
