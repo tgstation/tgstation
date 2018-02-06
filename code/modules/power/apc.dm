@@ -912,6 +912,8 @@
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
+	if(!is_operational() || failure_timer)
+		return
 	operating = !operating
 	update()
 	update_icon()
