@@ -365,6 +365,7 @@
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
 	item_chair = null
+	var/turns = 0
 
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -373,11 +374,15 @@
 /obj/structure/chair/brass/process()
 	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+	turns++
+	if(turns >= 8)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/brass/ratvar_act()
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
+	turns = 0
 	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(!isprocessing)

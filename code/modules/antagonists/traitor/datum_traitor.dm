@@ -6,7 +6,7 @@
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = /datum/antagonist/traitor/AI
 	var/human_datum = /datum/antagonist/traitor/human
-	var/special_role = "traitor"
+	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE

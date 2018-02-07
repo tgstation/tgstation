@@ -78,6 +78,10 @@
 		return
 	A.emag_act(user)
 
+/obj/item/card/emag/fake/afterattack()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	return
+
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."

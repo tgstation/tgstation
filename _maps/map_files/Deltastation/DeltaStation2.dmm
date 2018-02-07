@@ -40033,7 +40033,7 @@
 	pixel_x = 4;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEg" = (
@@ -40147,7 +40147,7 @@
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEn" = (
@@ -47779,7 +47779,7 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51836,8 +51836,6 @@
 /area/crew_quarters/heads/captain/private)
 "cbf" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/suit/armor/vest/capcarapace,
-/obj/item/clothing/head/caphat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -52708,7 +52706,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/card/id/captains_spare,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -170621,4 +170618,3 @@ aaa
 aaa
 aaa
 "}
-

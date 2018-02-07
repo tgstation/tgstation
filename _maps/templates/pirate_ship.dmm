@@ -664,6 +664,7 @@
 	name = "Pirate Ship";
 	port_direction = 8;
 	preferred_direction = 1;
+	timid = 0;
 	width = 23
 	},
 /obj/docking_port/stationary{
@@ -706,7 +707,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 152
+	req_access = list(152)
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{

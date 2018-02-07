@@ -96,7 +96,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
@@ -145,7 +145,7 @@
 	areastring = "/area/ai_monitored/turret_protected/ai";
 	pixel_y = 24
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
@@ -7526,7 +7526,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/tank/internals/plasma/full,
 /obj/item/disk/nuclear/fake,
-/obj/item/ore/diamond,
+/obj/item/stack/ore/diamond,
 /obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -9098,7 +9098,6 @@
 /area/crew_quarters/heads/captain)
 "axU" = (
 /obj/machinery/computer/card,
-/obj/item/card/id/captains_spare,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -47590,7 +47589,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Crematorium";
 	opacity = 1;
-	req_access = "27"
+	req_access = list(27)
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,

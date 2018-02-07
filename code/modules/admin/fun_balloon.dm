@@ -51,15 +51,15 @@
 		bodies += M
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, "pAI", null, FALSE, 100, bodies)
-	while(candidates.len && bodies.len)
-		var/mob/dead/observer/ghost = pick_n_take(candidates)
+	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
+	while(LAZYLEN(candidates) && LAZYLEN(bodies))
+		var/client/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
 		to_chat(body, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(ghost)] has taken control of ([key_name_admin(body)])")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
-		body.key = ghost.key
+		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle

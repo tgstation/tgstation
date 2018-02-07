@@ -11785,7 +11785,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "azj" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -13140,8 +13140,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aBS" = (
-/obj/item/ore/silver,
-/obj/item/ore/silver,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -13215,7 +13215,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/item/ore/glass,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aCc" = (
@@ -13724,8 +13724,8 @@
 	},
 /obj/machinery/computer/shuttle/mining{
 	dir = 4;
-	req_access = "0";
-	req_one_access = "0"
+	req_access = null;
+	req_one_access = null
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 9
@@ -17462,8 +17462,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/item/ore/glass,
-/obj/item/ore/iron,
+/obj/item/stack/ore/glass,
+/obj/item/stack/ore/iron,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -24400,7 +24400,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aZQ" = (
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	freerange = 1;
@@ -24502,7 +24502,7 @@
 	},
 /area/ai_monitored/turret_protected/ai)
 "aZY" = (
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	freerange = 1;
@@ -28954,7 +28954,6 @@
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
-/obj/item/card/id/captains_spare,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bji" = (
@@ -56419,11 +56418,11 @@
 	},
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -66150,8 +66149,8 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/dropper,
 /obj/structure/sign/warning/biohazard{
@@ -66544,8 +66543,8 @@
 /area/medical/virology)
 "cIu" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -69005,7 +69004,7 @@
 /area/medical/virology)
 "cNt" = (
 /obj/machinery/button/crematorium{
-	id = "cremawheat";
+	id = "crematoriumChapel";
 	pixel_x = -26;
 	req_access_txt = "27"
 	},
@@ -75667,7 +75666,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/ore/slag,
+/obj/item/stack/ore/slag,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "diS" = (
@@ -77190,6 +77189,7 @@
 /area/science/circuit)
 "eFN" = (
 /obj/structure/bodycontainer/crematorium{
+	id = "crematoriumChapel";
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
