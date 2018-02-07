@@ -1,7 +1,7 @@
 /datum/action/changeling/mimicvoice
 	name = "Mimic Voice - We shape our vocal glands to sound like a desired voice."
 	stats_id = "Mimic Voice"
-	button_icon_state = "mimicvoice_tmp"
+	button_icon_state = "mimicvoice_tmp"//TODO: Swap out placeholder
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
 	chemical_cost = 0//constant chemical drain hardcoded
 	dna_cost = 1

@@ -1,13 +1,13 @@
-/obj/effect/proc_holder/changeling/panacea
-	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, and resetting our genetic code completely."
+/datum/action/changeling/panacea
+	name = "Anatomic Panacea - Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, and resetting our genetic code completely."
+	stats_id = "Anatomic Panacea"
 	helptext = "Can be used while unconscious."
 	chemical_cost = 20
 	dna_cost = 1
 	req_stat = UNCONSCIOUS
 
 //Heals the things that the other regenerative abilities don't.
-/obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
+/datum/action/changeling/panacea/sting_action(mob/user)
 	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
 
 	var/list/bad_organs = list(
