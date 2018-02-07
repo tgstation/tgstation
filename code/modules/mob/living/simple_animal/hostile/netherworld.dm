@@ -65,11 +65,10 @@
 	deathmessage = "unwinds in a a paroxysm of laughter."
 	var/list/linked_imlagre = list()
 	var/laughmod = 1 //need this on the mob so it carries over to life, and i like letting admins var as much as they please
-	var/list/laughs
+	var/list/laughs = list('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Initialize(mapload, initial = TRUE)
 	. = ..()
-	laughs = list('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
 	laughmod = rand(0.5,1.5) //they laugh the same every time but it's a random pitch and there are three of them with random pitches so it works out
 	if(initial) //use this var to check if it's the first to spawn
 		var/turf/T = get_turf(src) //cache for speed
@@ -86,10 +85,10 @@
 	..()
 	if(!stat)
 		if(target && prob(20))
-			playsound(src, src.laughs, 80, TRUE, frequency = laughmod) //much more likely to laugh if they're targetting someone
+			playsound(src, src.laughs, 100, TRUE, frequency = laughmod) //much more likely to laugh if they're targetting someone
 			return
 		if(prob(8))
-			playsound(src, src.laughs, 80, TRUE, frequency = laughmod)
+			playsound(src, src.laughs, 100, TRUE, frequency = laughmod)
 			return
 
 
