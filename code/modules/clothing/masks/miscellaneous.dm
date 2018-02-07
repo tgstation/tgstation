@@ -61,7 +61,6 @@
 		message = replacetext(message," ops "," greeks")
 		message = replacetext(message," operative "," greek")
 		message = replacetext(message," operatives "," greeks")
-		message = replacetext(message," ops "," greeks")
 		message = replacetext(message," nuke"," spiciest-a meatball")
 		message = replacetext(message," good"," molto bene")
 		message = replacetext(message," why"," for-a what reason")
@@ -87,7 +86,7 @@
 		message = replacetext(message,"spaghetti", "SPAGHETT")
 		for(var/i in 1 to length(message))//append -a to about 50% of the words
 			if(message[i] == " " && i > 1 && prob(50))
-				if((65 <= text2ascii(message[i-1]) <= 90) || (97 <= text2ascii(message[i-1]) <= 122)//if the previous character is a letter, upper or lowercase
+				if((65 <= text2ascii(message[i-1]) <= 90) || (97 <= text2ascii(message[i-1]) <= 122))//if the previous character is a letter, upper or lowercase
 					replacetext(message[i], " ", "-a ")
 		if(prob(3))
 			message += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
