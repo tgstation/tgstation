@@ -44,8 +44,9 @@
 	icon_state = "random_bloodpack"
 
 /obj/item/reagent_containers/blood/random/Initialize()
+	icon_state = "bloodpack"
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
-	. = ..()
+	return ..()
 
 /obj/item/reagent_containers/blood/APlus
 	blood_type = "A+"
@@ -70,10 +71,6 @@
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
-
-/obj/item/reagent_containers/blood/empty
-	name = "blood pack"
-	icon_state = "empty"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))

@@ -93,7 +93,7 @@
 	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
 
 #undef REGENERATION_DELAY

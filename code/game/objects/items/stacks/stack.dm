@@ -25,7 +25,7 @@
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= amount //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
@@ -232,9 +232,22 @@
 	if(R.on_floor && !isfloorturf(usr.loc))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
+	if(R.placement_checks)
+		switch(R.placement_checks)
+			if(STACK_CHECK_CARDINALS)
+				var/turf/step
+				for(var/direction in GLOB.cardinals)
+					step = get_step(usr, direction)
+					if(locate(R.result_type) in step)
+						to_chat(usr, "<span class='warning'>\The [R.title] must not be built directly adjacent to another!</span>")
+						return 0
+			if(STACK_CHECK_ADJACENT)
+				if(locate(R.result_type) in range(1, usr))
+					to_chat(usr, "<span class='warning'>\The [R.title] must be constructed at least one tile away from others of its type!</span>")
+					return 0
 	return 1
 
-/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
 	if (is_cyborg)
@@ -246,6 +259,20 @@
 	update_icon()
 	update_weight()
 	return 1
+
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
+
+	return TRUE
 
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)
@@ -360,8 +387,9 @@
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/window_checks = FALSE
+	var/placement_checks = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -371,7 +399,7 @@
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
 	src.window_checks = window_checks
-
+	src.placement_checks = placement_checks
 /*
  * Recipe list datum
  */

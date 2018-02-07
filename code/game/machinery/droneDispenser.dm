@@ -210,35 +210,26 @@
 	else
 		icon_state = icon_on
 
-/obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
-	if(istype(O, /obj/item/crowbar))
+/obj/machinery/droneDispenser/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/crowbar))
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
-		playsound(loc, O.usesound, 50, 1)
+		playsound(loc, I.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
-	else if(istype(O, /obj/item/weldingtool))
+	else if(istype(I, /obj/item/weldingtool))
 		if(!(stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
-		var/obj/item/weldingtool/WT = O
-
-		if(!WT.isOn())
+		if(!I.tool_start_check(user, amount=1))
 			return
 
-		if(WT.get_fuel() < 1)
-			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
-			return
-
-		playsound(src, WT.usesound, 50, 1)
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up [src] with [WT].</span>",
+			"<span class='notice'>[user] begins patching up [src] with [I].</span>",
 			"<span class='notice'>You begin restoring the damage to [src]...</span>")
 
-		if(!do_after(user, 40*O.toolspeed, target = src))
-			return
-		if(!src || !WT.remove_fuel(1, user))
+		if(!I.use_tool(src, user, 40, volume=50, amount=1))
 			return
 
 		user.visible_message(

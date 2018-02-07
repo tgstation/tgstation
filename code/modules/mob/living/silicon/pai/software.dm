@@ -235,7 +235,8 @@
 			if(href_list["toggle"])
 				secHUD = !secHUD
 				if(secHUD)
-					add_sec_hud()
+					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+					sec.add_hud_to(src)
 				else
 					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 					sec.remove_hud_from(src)
@@ -243,8 +244,8 @@
 			if(href_list["toggle"])
 				medHUD = !medHUD
 				if(medHUD)
-					add_med_hud()
-
+					var/datum/atom_hud/med = GLOB.huds[med_hud]
+					med.add_hud_to(src)
 				else
 					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
