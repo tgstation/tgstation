@@ -646,7 +646,7 @@
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = "turret"
+	faction = "silicon"
 	emp_vunerable = 0
 	mode = TURRET_LETHAL
 
