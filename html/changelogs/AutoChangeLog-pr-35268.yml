@@ -1,8 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Eggs now contain 5u of egg yolk. Breaking an egg in a glass
-container adds all reagents inside to the container. If you're laying
-abductor gland eggs, then you'll get 5u of egg yolk and 10u of random reagent.
-Egg glands now make you act like a chicken while laying eggs. Egg laying
-makes you use the aliennotice span."

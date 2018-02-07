@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - balance: "The \"construct shell\" option from the cult archives structure will now only yield one shell instead of two."
-  - balance: "Sacrificing suicide victims will now only yield an empty shard."
