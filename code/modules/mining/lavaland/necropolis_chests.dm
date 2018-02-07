@@ -12,9 +12,13 @@
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = pick(
-//these numbers represent chances based on other choices, i.e. 1 is not 1/100 it is 1 out of the list
-//1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
-//2: use list() for multiple items bundled together as a possible result
+/*
+HOW TO DO PROBABILITY WITH PICK: pick(P;Val) where P is the weight (think of is as if there are "P" identical entries, where P is a number
+Note: default internal P is 100. So if you don't bother adding a P to every argument then to get something twice as much you need to use 200.
+1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
+2: use list() for multiple items bundled together as a possible result
+*/
+
 1;/obj/item/device/shared_storage/red,
 1;/obj/item/clothing/suit/space/hardsuit/cult,
 1;/obj/item/device/soulstone/anybody,
@@ -43,13 +47,19 @@
 1;/obj/item/book_of_babel,
 1;list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult)
 )
-	if(ispath(loot))
-		new loot(src)
-	else
-		if(islist(loot))
-			for(var/i in loot)
-				if(ispath(i))
-					new i(src)
+	pathorlist_to_loot(loot)
+
+
+/obj/structure/closet/crate/necropolis/proc/pathorlist_to_loot(var/loot)
+	if(loot)
+		if(ispath(loot))
+			new loot(src)
+		else
+			if(islist(loot))
+				for(var/i in loot)
+					if(ispath(i))
+						new i(src)
+
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -604,17 +614,12 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/PopulateContents()
-	var/loot = rand(1,4)
-	switch(loot)
-		if(1)
-			new /obj/item/melee/ghost_sword(src)
-		if(2)
-			new /obj/item/lava_staff(src)
-		if(3)
-			new /obj/item/spellbook/oneuse/sacredflame(src)
-			new /obj/item/gun/magic/wand/fireball(src)
-		if(4)
-			new /obj/item/dragons_blood(src)
+	var/loot = pick(
+	/obj/item/melee/ghost_sword,
+	/obj/item/lava_staff,
+	/obj/item/dragons_blood,
+	list(/obj/item/spellbook/oneuse/sacredflame,/obj/item/gun/magic/wand/fireball))
+	pathorlist_to_loot(loot)
 
 /obj/structure/closet/crate/necropolis/dragon/crusher
 	name = "firey dragon chest"
@@ -842,14 +847,11 @@
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
-	var/loot = rand(1,3)
-	switch(loot)
-		if(1)
-			new /obj/item/mayhem(src)
-		if(2)
-			new /obj/item/blood_contract(src)
-		if(3)
-			new /obj/item/gun/magic/staff/spellblade(src)
+	var/loot = pick(
+	/obj/item/mayhem,
+	/obj/item/blood_contract,
+	/obj/item/gun/magic/staff/spellblade)
+	pathorlist_to_loot(loot)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
