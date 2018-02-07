@@ -43,8 +43,6 @@
 /obj/item/clothing/mask/fakemoustache/italian
 	name = "italian moustache"
 	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
-	icon_state = "fake-moustache"
-	flags_inv = HIDEFACE
 
 /obj/item/clothing/mask/fakemoustache/italian/speechModification(message)
 	if(copytext(message, 1, 2) != "*")
