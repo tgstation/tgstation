@@ -233,7 +233,7 @@
 				priority_announce("What the fuck was that?!", "General Alert")
 				qdel(B)
 		var/area/A = get_area(usr)
-		if(!A.has_gravity())
+		if(user.has_gravity())
 			var/atom/target = get_edge_target_turf(src, usr.dir)
 			usr.throw_at(target, 1000, 20)
 			to_chat(src, "<span class='warning'>You fly off into the distance!</span>")
