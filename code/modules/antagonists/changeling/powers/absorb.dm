@@ -1,11 +1,11 @@
-/obj/effect/proc_holder/changeling/absorbDNA
-	name = "Absorb DNA"
-	desc = "Absorb the DNA of our victim."
+/datum/action/changeling/absorbDNA
+	name = "Absorb DNA - Absorb the DNA of our victim. Requires that we are strangling them."
+	stats_id = "Absorb"
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
+/datum/action/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -26,7 +26,7 @@
 
 
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
+/datum/action/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1

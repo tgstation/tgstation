@@ -119,7 +119,7 @@
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/datum/action/changeling/S = new path()
-		if(!S.dna_cost)
+		if(!S.dna_cost)//autopurchase 0 cost powers
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)

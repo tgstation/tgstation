@@ -3,17 +3,9 @@
 	stats_id = "Mimic Voice"
 	button_icon_state = "mimicvoice_tmp"
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
-	chemical_cost = 0 //constant chemical drain hardcoded
+	chemical_cost = 0//constant chemical drain hardcoded
 	dna_cost = 1
 	req_human = 1
-
-/*/obj/effect/proc_holder/changeling/mimicvoice
-	name = "Mimic Voice"
-	desc = "We shape our vocal glands to sound like a desired voice."
-	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
-	chemical_cost = 0 //constant chemical drain hardcoded
-	dna_cost = 1
-	req_human = 1*/
 
 // Fake Voice
 /datum/action/changeling/mimicvoice/sting_action(mob/user)
