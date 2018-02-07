@@ -1,3 +1,5 @@
+#define SENSORS_UPDATE_PERIOD 100 //How often the sensor data updates.
+
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
@@ -107,7 +109,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	.["link_allowed"] = isAI(user)
 
 /datum/crewmonitor/proc/update_data(z)
-	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + 100)
+	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
 
 	var/list/results = list()
@@ -192,3 +194,5 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	switch (action)
 		if ("select_person")
 			AI.ai_camera_track(params["name"])
+
+#undef SENSORS_UPDATE_PERIOD
