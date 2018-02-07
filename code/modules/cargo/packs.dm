@@ -1002,10 +1002,11 @@
 				fourfiveeight.boxtag = P.boxtag
 				qdel(P)
 				anomalous_box_provided = TRUE
-				message_admins("An anomalous pizza box was provided in a pizza crate!")
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
 				if(prob(50))
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+				else
+					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
 				break
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
