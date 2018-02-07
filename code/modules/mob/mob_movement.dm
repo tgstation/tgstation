@@ -217,6 +217,12 @@
 				if (locate(/obj/effect/blessing, stepTurf))
 					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
 					return
+				if (istype(stepTurf, /turf/open/space))
+					var/turf/open/space/spess = stepTurf
+					if (spess.destination_z)
+						L.loc = locate(spess.destination_x, spess.destination_y, spess.destination_z)
+						L.setDir(direct)
+						return TRUE
 
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
