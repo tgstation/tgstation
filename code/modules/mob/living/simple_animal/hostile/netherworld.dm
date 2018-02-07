@@ -52,10 +52,10 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre
 	name = "imlagre"
-	desc = "An odd looking blue creature, it never strays far from it's kind for the innate power gained from it."
-	icon_state = "blank-body"
-	icon_living = "blank-body"
-	icon_dead = "blank-dead"
+	desc = "An odd looking blue fellow that always comes in <span class='danger'>3</span>."
+	icon_state = "imlagre4"
+	icon_living = "imlagre4"
+	icon_dead = "imlagredead"
 	gold_core_spawnable = NO_SPAWN
 	health = 50
 	maxHealth = 50
@@ -63,6 +63,52 @@
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	deathmessage = "unwinds in a a paroxysm of laughter."
+	var/list/linked_imlagre = list()
+	var/laughmod = 1 //need this on the mob so it carries over to life, and i like letting admins var as much as they please
+	var/list/laughs
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/Initialize(mapload, initial = TRUE)
+	. = ..()
+	laughs = list('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+	laughmod = rand(0.5,1.5) //they laugh the same every time but it's a random pitch and there are three of them with random pitches so it works out
+	if(initial) //use this var to check if it's the first to spawn
+		var/turf/T = get_turf(src) //cache for speed
+		var/mob/living/simple_animal/hostile/netherworld/imlagre/one = new(T, FALSE) //maintainers no N- BANG BANG BANG AAAAAAH MY GUTS AAAAAAH BANG SPLAT
+		var/mob/living/simple_animal/hostile/netherworld/imlagre/two = new(T, FALSE) //ok but really i need the two vars so i can link everything there's a reason i'm not doing for(var/i in 1 to 2)
+		linked_imlagre.Add(one)
+		linked_imlagre.Add(two)
+		one.linked_imlagre.Add(src)
+		one.linked_imlagre.Add(two)
+		two.linked_imlagre.Add(src)
+		two.linked_imlagre.Add(one)
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/Life()
+	..()
+	if(!stat)
+		if(target && prob(20))
+			playsound(src, src.laughs, 80, TRUE, frequency = laughmod) //much more likely to laugh if they're targetting someone
+			return
+		if(prob(8))
+			playsound(src, src.laughs, 80, TRUE, frequency = laughmod)
+			return
+
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/death()
+	addtimer(CALLBACK(src, .proc/imlagre_revive), 100)
+	. = ..()
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_revive()
+	for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in linked_imlagre)
+		if(!i.stat) //if any of them are alive then REVIVE!!
+			revive(TRUE)
+			var/flufftext = list("wicked", "sinister", "baleful", "hideous", "wild", "malevolent")
+			visible_message("<span class='danger'>[i] winds back together with a [pick(flufftext)] cackle!</span>")
+			adjustBruteLoss(maxHealth * 0.5) //revived at half HP, or, about a carpsful of health
+			return
+		visible_message("<span class='danger'>[src]'s corpse suddenly explodes in a shower of gore!</span>")
+		i.visible_message("<span class='danger'>[i]'s corpse suddenly explodes in a shower of gore!</span>")
+		gib()
+		i.gib()
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
