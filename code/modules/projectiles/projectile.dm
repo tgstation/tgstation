@@ -366,17 +366,23 @@
 	return TRUE
 
 /obj/item/projectile/forceMove(atom/target)
+	var/zc = target.z == z
+	var/old = loc
+	if(zc)
+		before_z_change(old, target)
 	if(hitscan)
-		finalize_hitscan_and_generate_tracers()
+		finalize_hitscan_and_generate_tracers(FALSE)
 	. = ..()
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
 	if(hitscan)
 		record_hitscan_start(RETURN_PRECISE_POINT(src))
+	if(zc)
+		after_z_change(old, target)
 
-/obj/item/projectile/proc/after_z_change(turf/oldloc, turf/newloc)
+/obj/item/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
 
-/obj/item/projectile/proc/before_z_change(turf/oldloc, turf/newloc)
+/obj/item/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
 
 /obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
 	if(pcache)
@@ -511,13 +517,13 @@
 	beam_segments = list()
 	qdel(beam_index)
 
-/obj/item/projectile/proc/finalize_hitscan_and_generate_tracers()
+/obj/item/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
 	if(trajectory && beam_index)
 		var/datum/point/pcache = trajectory.copy_to()
 		beam_segments[beam_index] = pcache
-	generate_hitscan_tracers()
+	generate_hitscan_tracers(null, null, impacting)
 
-/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3)
+/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
 	if(!length(beam_segments))
 		return
 	if(tracer_type)
@@ -531,7 +537,7 @@
 		M.Turn(original_angle)
 		thing.transform = M
 		QDEL_IN(thing, duration)
-	if(impact_type && duration > 0)
+	if(impacting && impact_type && duration > 0)
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
 		var/atom/movable/thing = new impact_type
 		p.move_atom_to_src(thing)
