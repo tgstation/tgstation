@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Killing a revenant will now result in an unique shuttle to be able to be bought. You probably won't like it though."
-  - rscadd: "Fake emag now available."
