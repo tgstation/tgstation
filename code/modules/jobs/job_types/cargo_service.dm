@@ -216,7 +216,7 @@ Cook
 	var/obj/item/storage/box/I = new chosen_box(src)
 	H.equip_to_slot_or_del(I,slot_in_backpack)
 	var/datum/martial_art/cqc/justacook = new
-	justacook.learn(H)
+	justacook.teach(H)
 
 /datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
