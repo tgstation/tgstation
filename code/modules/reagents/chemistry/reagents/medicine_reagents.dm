@@ -50,7 +50,7 @@
 	M.SetKnockdown(0, 0)
 	M.SetStun(0, 0)
 	M.SetUnconscious(0, 0)
-	M.silent = 0
+	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0

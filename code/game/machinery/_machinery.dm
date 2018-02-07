@@ -108,7 +108,7 @@ Class Procs:
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
@@ -478,7 +478,7 @@ Class Procs:
 /obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
 	if(prob(85) && explosive)
-		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
+		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(prob(50))
 		emp_act(EMP_LIGHT)
 	else
