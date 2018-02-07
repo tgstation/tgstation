@@ -119,6 +119,7 @@
 	loop.start()
 
 /obj/item/device/geiger_counter/rad_act(amount)
+	. = ..()
 	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
 		return
 	current_tick_amount += amount
