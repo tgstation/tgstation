@@ -1,6 +1,6 @@
 //Helper proc to get an Eminence mob if it exists
 /proc/get_eminence()
-	return locate(/mob/camera/eminence) in servants_and_ghosts()
+	return locate(/mob/camera/eminence) in SSticker.mode.servants_of_ratvar
 
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
@@ -90,7 +90,7 @@
 		visible_message("<span class='brass'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
 		playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
 	message = "<span class='big brass'><b>The [GLOB.ratvar_awakens ? "Radiance" : "Eminence"]:</b> \"[message]\"</span>"
-	for(var/mob/M in servants_and_ghosts())
+	for(var/mob/M in SSticker.mode.servants_of_ratvar)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [message]")
@@ -189,12 +189,12 @@
 			command_text = "The Eminence orders that defenses should be built starting from the top of Reebe!"
 	if(marker_icon)
 		new/obj/effect/temp_visual/ratvar/command_point(get_turf(A), marker_icon)
-		for(var/mob/M in servants_and_ghosts())
+		for(var/mob/M in SSticker.mode.servants_of_ratvar)
 			to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
 			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 	else
 		hierophant_message("<span class='bold large_brass'>[command_text]</span>")
-		for(var/mob/M in servants_and_ghosts())
+		for(var/mob/M in SSticker.mode.servants_of_ratvar)
 			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 
 /mob/camera/eminence/proc/superheat_wall(turf/closed/wall/clockwork/wall)
