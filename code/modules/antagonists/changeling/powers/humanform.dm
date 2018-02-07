@@ -1,11 +1,11 @@
-/obj/effect/proc_holder/changeling/humanform
-	name = "Human Form"
-	desc = "We change into a human."
+/datum/action/changeling/humanform
+	name = "Human Form - We change into a human."
+	stats_id = "Human Form"
 	chemical_cost = 5
 	req_dna = 1
 
 //Transform into a human.
-/obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
+/datum/action/changeling/humanform/sting_action(mob/living/carbon/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
