@@ -131,33 +131,6 @@
 
 /datum/point/proc/mapcheck()
 	return FALSE	//Space's Enter() proc does this for us.
-	/*
-	. = FALSE
-	var/maxx = world.icon_size * world.maxx
-	var/maxy = world.icon_size * world.maxy
-	var/move_zx = 0
-	var/move_zy = 0
-	if(x < 0)
-		x += maxx
-		move_zx -= 1
-	if(y < 0)
-		y += maxy
-		move_zy -= 1
-	if(x > maxx)
-		x -= maxx
-		move_zx += 1
-	if(y > maxy)
-		y -= maxy
-		move_zy += 1
-	var/datum/space_level/S = SSmapping.get_level(z)
-	if(move_zx != 0)
-		var/datum/space_level/L = S.neigbours["[move_zx < 0? WEST : EAST]"]
-		z = L.z_value
-		. = TRUE
-	if(move_zy != 0)
-		var/datum/space_level/L = S.neigbours["[move_zy < 0? SOUTH : NORTH]"]
-		z = L.z_value
-		. = TRUE*/
 
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
