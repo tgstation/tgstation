@@ -54,7 +54,7 @@
 		return pressure
 
 
-/mob/living/carbon/human/handle_disabilities()
+/mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
 		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
@@ -63,7 +63,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
 

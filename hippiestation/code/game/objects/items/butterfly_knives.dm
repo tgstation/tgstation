@@ -42,7 +42,7 @@
 		return backstab(U,user,backstabforce)
 
 	if(user.zone_selected == "eyes" && active)
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
 	else

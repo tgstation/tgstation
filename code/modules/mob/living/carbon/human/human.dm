@@ -25,9 +25,9 @@
 
 	handcrafting = new()
 	update_teeth()	//hippie - unknown, teeth releated apparently?
-	
+
 	. = ..()
-	
+
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -639,7 +639,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
+	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
 		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
 		return
 	if(is_mouth_covered())

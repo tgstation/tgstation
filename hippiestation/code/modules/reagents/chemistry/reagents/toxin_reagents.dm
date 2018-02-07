@@ -434,8 +434,14 @@
 	if(prob(1))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.add_disability(DISABILITY_CLUMSY, CHEMISTRY_BULLSHIT)
+			H.add_trait(TRAIT_CLUMSY, id)
 
+	..()
+
+/datum/reagent/impedrezene/on_mob_delete(mob/living/M)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.remove_trait(TRAIT_CLUMSY)
 	..()
 
 /datum/reagent/toxin/vomit

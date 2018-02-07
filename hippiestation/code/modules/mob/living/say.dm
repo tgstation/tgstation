@@ -1,5 +1,5 @@
 /mob/living/can_speak_vocal(message)
-	if(has_disability(DISABILITY_MUTE))
+	if(has_trait(TRAIT_MUTE))
 		return FALSE
 
 	if(is_muzzled())
