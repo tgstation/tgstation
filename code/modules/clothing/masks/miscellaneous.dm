@@ -40,6 +40,60 @@
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 
+/obj/item/clothing/mask/fakemoustache/italian
+	name = "italian moustache"
+	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
+	icon_state = "fake-moustache"
+	flags_inv = HIDEFACE
+
+/obj/item/clothing/mask/fakemoustache/italian/speechModification(message)
+	if(copytext(message, 1, 2) != "*")
+		message = " [message] "
+		message = replacetext(message," mom "," mamma ")
+		message = replacetext(message," dad "," pappa ")
+		message = replacetext(message," baby ",pick(" bambino "," little sausage roll "))
+		message = replacetext(message,"spicy","a-spicy")
+		message = replacetext(message," friend "," enemy ")
+		message = replacetext(message," enemy "," friend ")
+		message = replacetext(message,"traitor","mafioso")
+		message = replacetext(message," operative "," greek ")
+		message = replacetext(message," op "," greek ")
+		message = replacetext(message," ops "," greeks")
+		message = replacetext(message," operative "," greek")
+		message = replacetext(message," operatives "," greeks")
+		message = replacetext(message," ops "," greeks")
+		message = replacetext(message," nuke"," spiciest-a meatball")
+		message = replacetext(message," good"," molto bene")
+		message = replacetext(message," why"," for-a what reason")
+		message = replacetext(message," bad"," molto male")
+		message = replacetext(message," sing "," sing-a ")
+		message = replacetext(message," cook "," cook-a ")
+		message = replacetext(message," want "," want-a ")
+		message = replacetext(message," what's "," what's-a ")
+		message = replacetext(message," shitcurity"," carabinieri")
+		message = replacetext(message," shitsec"," carabinieri")
+		message = replacetext(message," assistant "," goombah ")
+		message = replacetext(message," greytide "," curvisti ")
+		message = replacetext(message," greytider "," curvisti ")
+		message = replacetext(message," captain "," capitano ")
+		message = replacetext(message," sec "," polizia ")
+		message = replacetext(message," security "," polizia ")
+		message = replacetext(message,"cheese",pick("parmesano","gorgonzola"))
+		message = replacetext(message," meat",pick(" pepperoni"," prosciutto"))
+		message = replacetext(message,"hello",pick("ciao","buongiorno"))
+		message = replacetext(message," bye ",pick(" ciao "," arrivederci "))
+		message = replacetext(message,"thanks","grazie")
+		message = replacetext(message," wine"," vino")
+		message = replacetext(message,"spaghetti", "SPAGHETT")
+		for(var/i in 1 to length(message))//append -a to about 50% of the words
+			if(message[i] == " " && i > 1 && prob(50))
+				if((65 <= text2ascii(message[i-1]) <= 90) || (97 <= text2ascii(message[i-1]) <= 122)//if the previous character is a letter, upper or lowercase
+					replacetext(message[i], " ", "-a ")
+		if(prob(3))
+			message += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
+
+	return trim(message)
+
 /obj/item/clothing/mask/joy
 	name = "joy mask"
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
