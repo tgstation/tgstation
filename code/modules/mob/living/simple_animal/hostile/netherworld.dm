@@ -50,6 +50,20 @@
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 100, TRUE)
 
+/mob/living/simple_animal/hostile/netherworld/imlagre
+	name = "imlagre"
+	desc = "An odd looking blue creature, it never strays far from it's kind for the innate power gained from it."
+	icon_state = "blank-body"
+	icon_living = "blank-body"
+	icon_dead = "blank-dead"
+	gold_core_spawnable = NO_SPAWN
+	health = 50
+	maxHealth = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	attacktext = "slashes"
+	deathmessage = "unwinds in a a paroxysm of laughter."
+
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
 	desc = "This looks human enough, but its flesh has an ashy texture, and it's face is featureless save an eerie smile."
