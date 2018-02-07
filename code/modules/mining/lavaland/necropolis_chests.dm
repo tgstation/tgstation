@@ -49,7 +49,6 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 )
 	pathorlist_to_loot(loot)
 
-
 /obj/structure/closet/crate/necropolis/proc/pathorlist_to_loot(var/loot)
 	if(loot)
 		if(ispath(loot))
@@ -59,8 +58,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 				for(var/i in loot)
 					if(ispath(i))
 						new i(src)
-
-
+						
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
 	name = "KA Mod Disk"
