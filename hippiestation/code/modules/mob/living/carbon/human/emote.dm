@@ -232,7 +232,6 @@
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")
 				qdel(B)
-		var/area/A = get_area(usr)
 		if(user.has_gravity())
 			var/atom/target = get_edge_target_turf(src, usr.dir)
 			usr.throw_at(target, 1000, 20)
