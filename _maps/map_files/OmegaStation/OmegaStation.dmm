@@ -1717,8 +1717,7 @@
 /area/shuttle/supply)
 "adv" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate,
@@ -11620,8 +11619,7 @@
 /area/maintenance/port/fore)
 "avP" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/clothing/shoes/jackboots,
 /obj/item/device/radio,
@@ -33431,8 +33429,7 @@
 /area/maintenance/starboard)
 "sCQ" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;

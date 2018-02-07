@@ -4927,9 +4927,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5026,9 +5024,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -5186,9 +5182,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5250,9 +5244,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kH" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5339,9 +5331,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kR" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -5350,9 +5340,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kS" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{

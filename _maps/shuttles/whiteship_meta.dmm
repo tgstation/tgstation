@@ -215,8 +215,7 @@
 /obj/item/cigbutt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/tank/internals/oxygen/red,
 /obj/item/tank/internals/air,

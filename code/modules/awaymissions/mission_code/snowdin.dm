@@ -149,6 +149,16 @@
 
 //liquid plasma!!!!!!//
 
+/turf/open/floor/plasteel/vault/snowdin
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	planetary_atmos = 1
+	temperature = 180
+
+/turf/open/floor/plasteel/dark/snowdin
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	planetary_atmos = 1
+	temperature = 180
+
 /turf/open/lava/plasma
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
@@ -539,6 +549,12 @@
 				)
 
 //special items//--
+
+/obj/structure/barricade/wooden/snowed
+	name = "crude plank barricade"
+	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
+	icon_state = "woodenbarricade-snow"
+	max_integrity = 125
 
 /obj/item/clothing/under/syndicate/coldres
 	name = "insulated tactical turtleneck"
