@@ -78,11 +78,13 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
+				if (length(args))
+					return world.PushUsr(M, src, arglist(args))
 				return world.PushUsr(M, src)
-		
+
 	if (!object)
 		return
-		
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
@@ -104,11 +106,13 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
+				if (length(args))
+					return world.PushUsr(M, src, arglist(args))
 				return world.PushUsr(M, src)
-	
+
 	if (!object)
 		return
-		
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
