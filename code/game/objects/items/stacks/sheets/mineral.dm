@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 2, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Breakdown into sand", /obj/item/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
 	))
 
 /obj/item/stack/sheet/mineral/sandstone
@@ -84,12 +84,13 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/ore/glass))
+	if(istype(W, /obj/item/stack/ore/glass))
+		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
 		user.put_in_hands(I)
-		qdel(W)
+		G.use(1)
 	else
 		return ..()
 

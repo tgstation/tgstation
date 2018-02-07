@@ -226,7 +226,7 @@
 	max_mobs = 3
 	spawn_time = 200
 	spawn_text = "peels itself off from"
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	anchored = FALSE

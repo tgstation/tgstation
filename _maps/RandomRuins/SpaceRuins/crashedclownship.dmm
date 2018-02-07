@@ -27,11 +27,11 @@
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/closet/crate,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "j" = (
@@ -39,7 +39,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "k" = (
@@ -84,7 +84,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "p" = (
-/obj/item/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "q" = (
@@ -148,10 +148,10 @@
 /area/ruin/unpowered)
 "y" = (
 /obj/structure/closet/crate,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
-/obj/item/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "z" = (

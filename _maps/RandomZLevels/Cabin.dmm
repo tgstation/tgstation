@@ -812,14 +812,14 @@
 /area/awaymission/cabin)
 "cR" = (
 /obj/machinery/door/poddoor/shutters{
-	id = 42;
+	id = "garage_cabin";
 	name = "garage door"
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin)
 "cS" = (
 /obj/machinery/button/door{
-	id = 42;
+	id = "garage_cabin";
 	pixel_y = 24
 	},
 /turf/open/floor/plating/snowed/temperatre,

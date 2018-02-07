@@ -85,11 +85,56 @@
 	icon_state = "satchel"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = WEIGHT_CLASS_NORMAL
-	storage_slots = 50
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = WEIGHT_CLASS_NORMAL
-	can_hold = list(/obj/item/ore)
+	storage_slots = 8
+	max_combined_w_class = 16 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
+	max_w_class = WEIGHT_CLASS_HUGE
+	can_hold = list(/obj/item/stack/ore)
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	var/datum/component/mobhook
+
+/obj/item/storage/bag/ore/equipped(mob/user)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/Pickup_ores, user))
+
+/obj/item/storage/bag/ore/dropped()
+	. = ..()
+	if (mobhook)
+		QDEL_NULL(mobhook)
+
+/obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
+	var/show_message = FALSE
+	var/obj/structure/ore_box/box
+	var/turf/tile = user.loc
+	if (!isturf(tile))
+		return
+	if (istype(user.pulling, /obj/structure/ore_box))
+		box = user.pulling
+	for(var/A in tile)
+		if (!is_type_in_typecache(A, can_hold))
+			continue
+		if (box)
+			user.transferItemToLoc(A, box)
+			show_message = TRUE
+		else if(can_be_inserted(A, TRUE, user))
+			handle_item_insertion(A, TRUE, user)
+			show_message = TRUE
+		else
+			if(!spam_protection)
+				to_chat(user, "<span class='warning'>Your [name] is full and can't hold any more!</span>")
+				spam_protection = TRUE
+				continue
+	if(show_message)
+		playsound(user, "rustle", 50, TRUE)
+		if (box)
+			user.visible_message("<span class='notice'>[user] offloads the ores beneath them into [box].</span>", \
+			"<span class='notice'>You offload the ores beneath you into your [box].</span>")
+		else
+			user.visible_message("<span class='notice'>[user] scoops up the ores beneath them.</span>", \
+				"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
+	spam_protection = FALSE
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -228,7 +273,7 @@
 	var/col_count = min(7,storage_slots) -1
 	if (adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	src.standard_orient_objs(row_num, col_count, numbered_contents)
+	standard_orient_objs(row_num, col_count, numbered_contents)
 	return
 
 

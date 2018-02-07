@@ -1195,126 +1195,15 @@
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
 
-/datum/reagent/medicine/ketrazine
-	name = "Ketrazine"
-	id = "ketrazine"
-	description = "A powerful and addictive combat stimulant, capable of healing grievous wounds and enabling the user to shrug off stuns and heavy weights by stimulating tendons and muscle groups; however the strain on the body causes severe lasting damage. Use only in life-or-death situations. Overdose is almost invariably fatal."
-	reagent_state = LIQUID
-	color = "#5F42F4"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 20
-	addiction_threshold = 5
+/datum/reagent/medicine/muscle_stimulant
+	name = "Muscle Stimulant"
+	id = "muscle_stimulant"
+	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/ketrazine/on_mob_add(mob/M)
-	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_SLEEPIMMUNE, id)
-		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
-		L.add_trait(TRAIT_GOTTAGOFAST, id)
-
-/datum/reagent/medicine/ketrazine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
-		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
-		L.remove_trait(TRAIT_GOTTAGOFAST, id)
-	..()
-
-/datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-3*REM, 0)
-	M.adjustBruteLoss(-5*REM, 0)
-	M.adjustFireLoss(-5*REM, 0)
-	M.adjustOxyLoss(-5*REM, 0)
-	M.AdjustStun(-80*REM, 0)
-	M.AdjustKnockdown(-70*REM, 0)
-	M.adjustStaminaLoss(-80*REM, 0)
-	M.AdjustUnconscious(-50*REM, 0)
-	M.adjustBrainLoss(0.5*REM,0)
-	switch(current_cycle)
-		if(2 to 12)
-			if(prob(15))
-				to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
-		if(12)
-			to_chat(M, "<span class='warning'>Your muscles begin to ache terribly... </span>" )
-		if(14)
-			to_chat(M, "<span class='warning'>You feel like your body is being ripped to shreds! </span>")
-		if(15 to 25)
-			M.drowsyness += 3
-			M.adjustBruteLoss(10*REM, 0)
-			M.adjustToxLoss(7*REM, 0)
-		if(25 to 30)
-			if(prob(33))
-				to_chat(M, "<span class='warning'>The pain is unbearable! You can barely stand! </span>")
-			M.Sleeping(40, 0)
-			M.AdjustKnockdown(40*REM,0)
-			M.drop_all_held_items()
-			M.Dizzy(3)
-			M.drowsyness +=4
-			M.adjustBruteLoss(15*REM,0)
-			M.adjustToxLoss(10*REM,0)
-			M.adjustStaminaLoss(30*REM,0)
-		if(30 to INFINITY)
-			if(prob(20))
-				to_chat(M, "<span class='warning'>Your body	can't handle the stress! </span>")
-			M.Sleeping(60, 0)
-			M.AdjustKnockdown(80*REM,0)
-			M.drop_all_held_items()
-			M.Dizzy(5)
-			M.drowsyness +=6
-			M.adjustBruteLoss(20*REM,0)
-			M.adjustToxLoss(15*REM,0)
-			M.adjustStaminaLoss(40*REM,0)
-			M.losebreath +=2
-
-
-	..()
-
-/datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+	. = ..()
 	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.add_trait(TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/ketrazine/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+	. = ..()
 	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.remove_trait(TRAIT_GOTTAGOFAST, id)
-
-/datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
-	if(prob(66))
-		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
-		M.drop_all_held_items()
-		M.Dizzy(6)
-		M.Jitter(7)
-		M.adjustOxyLoss(40*REM,0)
-		M.adjustBruteLoss(40*REM,0)
-		M.losebreath +=10
-	..()
-
-/datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
-		to_chat(M, "<span class='warning'>You feel like you need more power... </span>")
-		M.drop_all_held_items()
-		M.Jitter(2)
-		M.Dizzy(2)
-	..()
-
-/datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
-	if(prob(50))
-		to_chat(M, "<span class='warning'>You feel weak and sore, you need something to amp you up! </span>")
-		M.drop_all_held_items()
-		M.adjustToxLoss(2*REM, 0)
-		M.adjustBruteLoss(4*REM,0)
-		M.adjustStaminaLoss(6*REM,0)
-		M.Dizzy(3)
-		M.Jitter(3)
-	..()
-
-/datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
-	if(prob(66))
-		to_chat(M, "<span class='warning'> You need ketrazine! You need it badly! You need it now! </span>")
-		M.drop_all_held_items()
-		M.adjustToxLoss(4*REM, 0)
-		M.adjustBruteLoss(5*REM,0)
-		M.adjustStaminaLoss(7*REM,0)
-		M.Dizzy(7)
-		M.Jitter(7)
-	..()

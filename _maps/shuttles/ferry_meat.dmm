@@ -127,7 +127,7 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access = "28"
+	req_access = list(28)
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
