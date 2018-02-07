@@ -20,13 +20,14 @@
 	switchCamera(cameras[camera])
 
 /datum/trackable
+	var/initialized = FALSE
 	var/list/names = list()
 	var/list/namecounts = list()
 	var/list/humans = list()
 	var/list/others = list()
 
 /mob/living/silicon/ai/proc/trackable_mobs()
-
+	track.initialized = TRUE
 	track.names.Cut()
 	track.namecounts.Cut()
 	track.humans.Cut()
@@ -62,6 +63,9 @@
 
 	if(!target_name)
 		return
+
+	if(!track.initialized)
+		trackable_mobs()
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
