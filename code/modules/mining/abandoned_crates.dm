@@ -40,6 +40,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 */
 
 	var/loot = pick(
+//5%
 5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
@@ -54,7 +55,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 /obj/item/crowbar),
 
 5;/obj/item/reagent_containers/glass/beaker/bluespace,
-5;list(/obj/item/ore/diamond=10),
+5;list(/obj/item/stack/ore/diamond=10),
 5;list(/obj/item/poster/random_contraband=5),
 5;list(/obj/item/reagent_containers/glass/beaker/noreact=3),
 5;/obj/item/seeds/firelemon,
@@ -65,7 +66,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 
 5;list(/obj/item/clothing/under/chameleon,
 /obj/item/clothing/neck/tie/horrible=7),
-
+//2%
 2;/obj/item/melee/classic_baton,
 2;/obj/item/toy/balloon,
 2;pick(subtypesof(/obj/item/toy/prize)),
@@ -77,13 +78,21 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 2;list(/obj/item/clothing/head/kitty=5,
 /obj/item/clothing/neck/petcollar=5),
 
-2;list(pick(3;/obj/item/coin/silver, 3;/obj/item/coin/iron, 1;/obj/item/coin/gold, 1;/obj/item/coin/diamond, 1;/obj/item/coin/plasma, 1;/obj/item/coin/uranium)=rand(4,7)),
+//use list to store an associated value to create multiple & embed pick inside to choose from a selection
+2;list(pick(//2% chance to get coins
+3;/obj/item/coin/silver,//30%
+3;/obj/item/coin/iron,//30%
+1;/obj/item/coin/gold,//10%
+1;/obj/item/coin/diamond,//10%
+1;/obj/item/coin/plasma,//10%
+1;/obj/item/coin/uranium//10%
+)=rand(4,7)),//make 4 to 7 of them
 
 2;list(/obj/item/clothing/suit/ianshirt,
 /obj/item/clothing/suit/hooded/ian_costume),
 
 2;list(pick((subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace))=rand(4,7)),
-2;list(/obj/item/ore/bluespace_crystal=5),
+2;list(/obj/item/stack/ore/bluespace_crystal=5),
 2;/obj/item/pickaxe/drill,
 2;/obj/item/pickaxe/drill/jackhammer,
 2;/obj/item/pickaxe/diamond,
@@ -95,6 +104,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 2;/obj/item/gun/energy/plasmacutter,
 2;/obj/item/toy/katana,
 2;/obj/item/defibrillator/compact,
+//1%
 1;/obj/item/weed_extract,
 1;/obj/item/organ/brain,
 1;/obj/item/organ/brain/alien,
