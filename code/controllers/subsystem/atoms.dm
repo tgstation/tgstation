@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(atoms)
 				CHECK_TICK
 
 	testing("Initialized [count] atoms")
+	pass(count)
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
