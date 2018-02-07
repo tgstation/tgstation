@@ -110,8 +110,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
-	var/point_gain = techweb_scale_bomb(orig_light - 20 - linked_techweb.max_bomb_value)
-	if(!point_gain)
+	var/adjusted = orig_light - 20 - linked_techweb.max_bomb_value
+	if(adjusted <= 0)
+		say("Explosion not large enough for research calculations.")
+		return
+	var/point_gain = techweb_scale_bomb(adjusted)
+	if(point_gain <= 0)
+		say("Explosion not large enough for research calculations.")
 		return
 	linked_techweb.max_bomb_value = orig_light - 20
 	linked_techweb.research_points += point_gain
