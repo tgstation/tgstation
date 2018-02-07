@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "You can now insert holodisks into cameras and take a static holographic picture of someone!"
+  - rscadd: "Hologram recordings can now be offset slightly."

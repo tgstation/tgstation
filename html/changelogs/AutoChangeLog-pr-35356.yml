@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Posibrains have gotten a small firmware update, they will now play a sound on successful activation."

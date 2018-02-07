@@ -1194,3 +1194,16 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/muscle_stimulant
+	name = "Muscle Stimulant"
+	id = "muscle_stimulant"
+	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
+
+/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+	. = ..()
+	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+	. = ..()
+	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
