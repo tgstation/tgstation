@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - balance: "Explosive holoparasites must now be adjacent to turn objects into bombs, instead of being able to do so from any range."
