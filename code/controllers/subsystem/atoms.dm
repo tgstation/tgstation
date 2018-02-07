@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(atoms)
 				++count
 				CHECK_TICK
 
-	log_world("Initialized [count] atoms")
+	testing("Initialized [count] atoms")
 
 	initialized = INITIALIZATION_INNEW_REGULAR
 
