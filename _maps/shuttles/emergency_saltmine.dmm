@@ -554,7 +554,7 @@
 "jz" = (
 /obj/effect/decal/cleanable/salt,
 /obj/structure/statue/plasma/scientist{
-	desc = "This statue is suitably made from Armhulen's tears.";
+	desc = "This statue is suitably made from tears of a certain man, you can still hear him crying to this day.";
 	oreAmount = 0
 	},
 /turf/open/floor/fakespace,
