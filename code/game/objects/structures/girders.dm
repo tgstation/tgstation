@@ -167,7 +167,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype)
+		if(S.sheettype && S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)

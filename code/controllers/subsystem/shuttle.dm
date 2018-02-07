@@ -195,6 +195,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
+/datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
+	emergencyNoRecall = TRUE
+	addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
+
+/datum/controller/subsystem/shuttle/proc/unblock_recall()
+	emergencyNoRecall = FALSE
+
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
