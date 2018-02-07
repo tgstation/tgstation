@@ -702,7 +702,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ch" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
 	dir = 4
 	},
 /turf/open/floor/plating,
