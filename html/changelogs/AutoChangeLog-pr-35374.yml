@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Pressure damage now takes effect in certain situations where it should have but did not."
