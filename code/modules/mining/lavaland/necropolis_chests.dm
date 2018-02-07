@@ -12,53 +12,36 @@
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = pick(
-/*
-HOW TO DO PROBABILITY WITH PICK: pick(P;Val) where P is the weight (think of is as if there are "P" identical entries, where P is a number
-Note: default internal P is 100. So if you don't bother adding a P to every argument then to get something twice as much you need to use 200.
-1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
-2: use list() for multiple items bundled together as a possible result
-*/
+/obj/item/device/shared_storage/red,
+/obj/item/clothing/suit/space/hardsuit/cult,
+/obj/item/device/soulstone/anybody,
+/obj/item/katana/cursed,
+/obj/item/clothing/glasses/godeye,
+/obj/item/reagent_containers/glass/bottle/potion/flight,
+/obj/item/pickaxe/diamond,
+pick(/obj/item/disk/design_disk/modkit_disc/resonator_blast,/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
+/obj/item/organ/brain/alien,
+/obj/item/organ/heart/cursed/wizard,
+/obj/item/ship_in_a_bottle,
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker,
+/obj/item/jacobs_ladder,
+/obj/item/nullrod/scythe/talking,
+/obj/item/nullrod/armblade,
+/obj/item/guardiancreator,
+pick(/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,/obj/item/disk/design_disk/modkit_disc/bounty),
+/obj/item/device/warp_cube/red,
+/obj/item/device/wisp_lantern,
+/obj/item/device/immortality_talisman,
+/obj/item/gun/magic/hook,
+/obj/item/voodoo,
+/obj/item/grenade/clusterbuster/inferno,
+list(/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
+/obj/item/spellbook/oneuse/summonitem,
+/obj/item/book_of_babel,
+list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult))
 
-1;/obj/item/device/shared_storage/red,
-1;/obj/item/clothing/suit/space/hardsuit/cult,
-1;/obj/item/device/soulstone/anybody,
-1;/obj/item/katana/cursed,
-1;/obj/item/clothing/glasses/godeye,
-1;/obj/item/reagent_containers/glass/bottle/potion/flight,
-1;/obj/item/pickaxe/diamond,
-1;pick(/obj/item/disk/design_disk/modkit_disc/resonator_blast,/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
-1;/obj/item/organ/brain/alien,
-1;/obj/item/organ/heart/cursed/wizard,
-1;/obj/item/ship_in_a_bottle,
-1;/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker,
-1;/obj/item/jacobs_ladder,
-1;/obj/item/nullrod/scythe/talking,
-1;/obj/item/nullrod/armblade,
-1;/obj/item/guardiancreator,
-1;pick(/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,/obj/item/disk/design_disk/modkit_disc/bounty),
-1;/obj/item/device/warp_cube/red,
-1;/obj/item/device/wisp_lantern,
-1;/obj/item/device/immortality_talisman,
-1;/obj/item/gun/magic/hook,
-1;/obj/item/voodoo,
-1;/obj/item/grenade/clusterbuster/inferno,
-1;list(/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
-1;/obj/item/spellbook/oneuse/summonitem,
-1;/obj/item/book_of_babel,
-1;list(/obj/item/borg/upgrade/modkit/lifesteal,/obj/item/bedsheet/cult)
-)
 	pathorlist_to_loot(loot)
 
-/obj/structure/closet/crate/necropolis/proc/pathorlist_to_loot(var/loot)
-	if(loot)
-		if(ispath(loot))
-			new loot(src)
-		else
-			if(islist(loot))
-				for(var/i in loot)
-					if(ispath(i))
-						new i(src)
-						
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
 	name = "KA Mod Disk"

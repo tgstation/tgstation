@@ -11,6 +11,17 @@
 	var/codelen = 4
 	tamperproof = 90
 
+/obj/structure/closet/crate/proc/pathorlist_to_loot(var/loot)//needs this path for necro crates
+	if(loot)
+		if(ispath(loot))
+			new loot(src)
+		else
+			if(islist(loot))
+				for(var/i in loot)
+					for(var/ii in 1 to (loot[i] ? loot[i] : 1))//does i-in-loot have an associated value? if so use it, otherwise 1
+						if(ispath(i))
+							new i(src)
+
 /obj/structure/closet/crate/secure/loot/Initialize()
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
@@ -20,137 +31,59 @@
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
 
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
-	switch(loot)
-		if(1 to 5) //5% chance
-			new /obj/item/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/lighter(src)
-		if(6 to 10)
-			new /obj/item/bedsheet(src)
-			new /obj/item/kitchen/knife(src)
-			new /obj/item/wirecutters(src)
-			new /obj/item/screwdriver(src)
-			new /obj/item/weldingtool(src)
-			new /obj/item/hatchet(src)
-			new /obj/item/crowbar(src)
-		if(11 to 15)
-			new /obj/item/reagent_containers/glass/beaker/bluespace(src)
-		if(16 to 20)
-			for(var/i in 1 to 10)
-				new /obj/item/ore/diamond(src)
-		if(21 to 25)
-			for(var/i in 1 to 5)
-				new /obj/item/poster/random_contraband(src)
-		if(26 to 30)
-			for(var/i in 1 to 3)
-				new /obj/item/reagent_containers/glass/beaker/noreact(src)
-		if(31 to 35)
-			new /obj/item/seeds/firelemon(src)
-		if(36 to 40)
-			new /obj/item/melee/baton(src)
-		if(41 to 45)
-			new /obj/item/clothing/under/shorts/red(src)
-			new /obj/item/clothing/under/shorts/blue(src)
-		if(46 to 50)
-			new /obj/item/clothing/under/chameleon(src)
-			for(var/i in 1 to 7)
-				new /obj/item/clothing/neck/tie/horrible(src)
-		if(51 to 52) // 2% chance
-			new /obj/item/melee/classic_baton(src)
-		if(53 to 54)
-			new /obj/item/toy/balloon(src)
-		if(55 to 56)
-			var/newitem = pick(subtypesof(/obj/item/toy/prize))
-			new newitem(src)
-		if(57 to 58)
-			new /obj/item/toy/syndicateballoon(src)
-		if(59 to 60)
-			new /obj/item/borg/upgrade/modkit/aoe/mobs(src)
-			new /obj/item/clothing/suit/space(src)
-			new /obj/item/clothing/head/helmet/space(src)
-		if(61 to 62)
-			for(var/i in 1 to 5)
-				new /obj/item/clothing/head/kitty(src)
-				new /obj/item/clothing/neck/petcollar(src)
-		if(63 to 64)
-			for(var/i in 1 to rand(4, 7))
-				var/newcoin = pick(3;/obj/item/coin/silver, 3;/obj/item/coin/iron, 1;/obj/item/coin/gold, 1;/obj/item/coin/diamond, 1;/obj/item/coin/plasma, 1;/obj/item/coin/uranium)
-				new newcoin(src)
-		if(65 to 66)
-			new /obj/item/clothing/suit/ianshirt(src)
-			new /obj/item/clothing/suit/hooded/ian_costume(src)
-		if(67 to 68)
-			for(var/i in 1 to rand(4, 7))
-				var/newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
-				new newitem(src)
-		if(69 to 70)
-			for(var/i in 1 to 5)
-				new /obj/item/ore/bluespace_crystal(src)
-		if(71 to 72)
-			new /obj/item/pickaxe/drill(src)
-		if(73 to 74)
-			new /obj/item/pickaxe/drill/jackhammer(src)
-		if(75 to 76)
-			new /obj/item/pickaxe/diamond(src)
-		if(77 to 78)
-			new /obj/item/pickaxe/drill/diamonddrill(src)
-		if(79 to 80)
-			new /obj/item/cane(src)
-			new /obj/item/clothing/head/collectable/tophat(src)
-		if(81 to 82)
-			new /obj/item/gun/energy/plasmacutter(src)
-		if(83 to 84)
-			new /obj/item/toy/katana(src)
-		if(85 to 86)
-			new /obj/item/defibrillator/compact(src)
-		if(87) //1% chance
-			new /obj/item/weed_extract(src)
-		if(88)
-			new /obj/item/organ/brain(src)
-		if(89)
-			new /obj/item/organ/brain/alien(src)
-		if(90)
-			new /obj/item/organ/heart(src)
-		if(91)
-			new /obj/item/device/soulstone/anybody(src)
-		if(92)
-			new /obj/item/katana(src)
-		if(93)
-			new /obj/item/dnainjector/xraymut(src)
-		if(94)
-			new /obj/item/storage/backpack/clown(src)
-			new /obj/item/clothing/under/rank/clown(src)
-			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/device/pda/clown(src)
-			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/bikehorn(src)
-			new /obj/item/toy/crayon/rainbow(src)
-			new /obj/item/reagent_containers/spray/waterflower(src)
-		if(95)
-			new /obj/item/clothing/under/rank/mime(src)
-			new /obj/item/clothing/shoes/sneakers/black(src)
-			new /obj/item/device/pda/mime(src)
-			new /obj/item/clothing/gloves/color/white(src)
-			new /obj/item/clothing/mask/gas/mime(src)
-			new /obj/item/clothing/head/beret(src)
-			new /obj/item/clothing/suit/suspenders(src)
-			new /obj/item/toy/crayon/mime(src)
-			new /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing(src)
-		if(96)
-			new /obj/item/hand_tele(src)
-		if(97)
-			new /obj/item/clothing/mask/balaclava
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
-		if(98)
-			new /obj/item/katana/cursed(src)
-		if(99)
-			new /obj/item/storage/belt/champion(src)
-			new /obj/item/clothing/mask/luchador(src)
-		if(100)
-			new /obj/item/clothing/head/bearpelt(src)
+/*
+HOW TO DO PROBABILITY WITH PICK: pick(P;Val) where P is the weight (think of is as if there are "P" identical entries, where P is a number
+Note: default internal P is 100. So if you don't bother adding a P to every argument then to get something twice as much you need to use 200.
+1: you can also embed pick() in itself (with or with out numbers) to create a secondary pool of items as a result
+2: use list() for multiple items bundled together as a possible result
+3: alternatively use list() with an associated value to generate multiple copies. example: list(/obj/=10) = 10 copies.of /obj
+*/
+
+	var/loot = pick(
+5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,/obj/item/reagent_containers/food/drinks/bottle/whiskey,/obj/item/lighter),
+5;list(/obj/item/bedsheet,/obj/item/kitchen/knife,/obj/item/wirecutters,/obj/item/screwdriver,/obj/item/weldingtool,/obj/item/hatchet,/obj/item/crowbar),
+5;/obj/item/reagent_containers/glass/beaker/bluespace,
+5;list(/obj/item/ore/diamond=10),
+5;list(/obj/item/poster/random_contraband=5),
+5;list(/obj/item/reagent_containers/glass/beaker/noreact=3),
+5;/obj/item/seeds/firelemon,
+5;/obj/item/melee/baton,
+5;list(/obj/item/clothing/under/shorts/red,/obj/item/clothing/under/shorts/blue),
+5;list(/obj/item/clothing/under/chameleon,/obj/item/clothing/neck/tie/horrible=7),
+2;/obj/item/melee/classic_baton,
+2;/obj/item/toy/balloon,
+2;pick(subtypesof(/obj/item/toy/prize)),
+2;/obj/item/toy/syndicateballoon,
+2;list(/obj/item/borg/upgrade/modkit/aoe/mobs,/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space),
+2;list(/obj/item/clothing/head/kitty=5,/obj/item/clothing/neck/petcollar=5),
+2;list(pick(3;/obj/item/coin/silver, 3;/obj/item/coin/iron, 1;/obj/item/coin/gold, 1;/obj/item/coin/diamond, 1;/obj/item/coin/plasma, 1;/obj/item/coin/uranium)=rand(4,7)),//wew
+2;list(/obj/item/clothing/suit/ianshirt,/obj/item/clothing/suit/hooded/ian_costume),
+2;list(pick((subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace))=rand(4,7)),
+2;list(/obj/item/ore/bluespace_crystal=5),
+2;/obj/item/pickaxe/drill,
+2;/obj/item/pickaxe/drill/jackhammer,
+2;/obj/item/pickaxe/diamond,
+2;/obj/item/pickaxe/drill/diamonddrill,
+2;list(/obj/item/cane,/obj/item/clothing/head/collectable/tophat),
+2;/obj/item/gun/energy/plasmacutter,
+2;/obj/item/toy/katana,
+2;/obj/item/defibrillator/compact,
+1;/obj/item/weed_extract,
+1;/obj/item/organ/brain,
+1;/obj/item/organ/brain/alien,
+1;/obj/item/organ/heart,
+1;/obj/item/device/soulstone/anybody,
+1;/obj/item/katana,
+1;/obj/item/dnainjector/xraymut,
+1;list(/obj/item/storage/backpack/clown,/obj/item/clothing/under/rank/clown,/obj/item/clothing/shoes/clown_shoes,/obj/item/device/pda/clown,/obj/item/clothing/mask/gas/clown_hat,/obj/item/bikehorn,/obj/item/toy/crayon/rainbow,/obj/item/reagent_containers/spray/waterflower),
+1;list(/obj/item/clothing/under/rank/mime,/obj/item/clothing/shoes/sneakers/black,/obj/item/device/pda/mime,/obj/item/clothing/gloves/color/white,/obj/item/clothing/mask/gas/mime,/obj/item/clothing/head/beret,/obj/item/clothing/suit/suspenders,/obj/item/toy/crayon/mime,/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing),
+1;/obj/item/hand_tele,
+1;list(/obj/item/clothing/mask/balaclava,/obj/item/gun/ballistic/automatic/pistol,/obj/item/ammo_box/magazine/m10mm),
+1;/obj/item/katana/cursed,
+1;list(/obj/item/storage/belt/champion,/obj/item/clothing/mask/luchador),
+1;/obj/item/clothing/head/bearpelt)
+
+	pathorlist_to_loot(loot)
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
