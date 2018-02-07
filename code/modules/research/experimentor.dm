@@ -17,6 +17,34 @@
 #define EFFECT_PROB_VERYHIGH 95
 
 #define FAIL 8
+/datum/experiment_type
+	var/name = "Adminhelp"
+	var/list/experiments = list()
+	var/list/item_results = list()
+
+/datum/experiment_type/proc/get_valid_experiments(obj/item/O)
+	var/list/weighted_experiments = list()
+	for(var/datum/experiment/E in experiments)
+		if(E.can_perform(O) && E.weight)
+			weighted_experiments[E] = E.weight
+	return weighted_experiments
+
+/datum/experiment
+	var/weight = 0
+	var/is_bad = FALSE
+	var/experiment_type
+	var/valid_types = typecacheof(/obj/item)
+	var/performed_times = 0
+
+/datum/experiment/proc/can_perform(obj/item/O)
+	. = valid_types[O]
+
+/datum/experiment/proc/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = FALSE
+	performed_times++
+
+/datum/experiment/proc/gather_data(datum/techweb/T,success)
+
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
 	desc = "A \"replacement\" for the deconstructive analyzer with a slight tendency to catastrophically fail."
@@ -36,13 +64,6 @@
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items = list() //items that can cause critical reactions
-
-/obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
-	var/list/temp_list = params2list(source_list)
-	for(var/O in temp_list)
-		temp_list[O] = text2num(temp_list[O])
-	return temp_list
-
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
