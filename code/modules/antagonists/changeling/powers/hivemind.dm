@@ -1,33 +1,51 @@
 //HIVEMIND COMMUNICATION (:g)
-/obj/effect/proc_holder/changeling/hivemind_comms
-	name = "Hivemind Communication"
-	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
+/datum/action/changeling/hivemind_comms
+	name = "Hivemind Communication - We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
+	stats_id = "Hivemind Communication"
 	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
+	needs_button = FALSE
 	dna_cost = 0
 	chemical_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
+/datum/action/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	changeling.changeling_speak = 1
+	changeling.changeling_speak = TRUE//see saymode.dm for where this is actually used
 	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
-	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
+	var/datum/action/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
+		S1.Grant(user)
 		changeling.purchasedpowers+=S1
-	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
+	var/datum/action/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
+		S2.Grant(user)
 		changeling.purchasedpowers+=S2
+
+/datum/action/changeling/hivemind_comms/Remove(mob/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(changeling.changeling_speak)
+		changeling.changeling_speak = FALSE
+	var/datum/action/changeling/hivemind_upload/up = changeling.has_sting(datum/action/changeling/hivemind_upload)
+	if(up)
+		up.Remove(user)
+		changeling.purchasedpowers-=up
+	var/datum/action/changeling/hivemind_download/down = changeling.has_sting(datum/action/changeling/hivemind_download)
+	if(down)
+		down.Remove(user)
+		changeling.purchasedpowers-=down
+	..()
+
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)
 
-/obj/effect/proc_holder/changeling/hivemind_upload
-	name = "Hive Channel DNA"
-	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
+/datum/action/changeling/hivemind_upload
+	name = "Hive Channel DNA - Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
+	stats_id = "Hive Channel DNA"
 	chemical_cost = 10
 	dna_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/living/user)
+/datum/action/changeling/hivemind_upload/sting_action(var/mob/living/user)
 	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
@@ -55,13 +73,13 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	to_chat(user, "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>")
 	return TRUE
 
-/obj/effect/proc_holder/changeling/hivemind_download
-	name = "Hive Absorb DNA"
-	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
+/datum/action/changeling/hivemind_download
+	name = "Hive Absorb DNA - Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
+	desc = "Hive Absorb DNA"
 	chemical_cost = 10
 	dna_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
+/datum/action/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
@@ -74,7 +92,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 		return
 	return 1
 
-/obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
+/datum/action/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in GLOB.hivemind_bank)

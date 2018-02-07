@@ -1,12 +1,12 @@
-/obj/effect/proc_holder/changeling/headcrab
-	name = "Last Resort"
-	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
+/datum/action/changeling/headcrab
+	name = "Last Resort - We sacrifice our current body in a moment of need, placing us in control of a vessel."
+	stats_id = "Last Resort"
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
+/datum/action/changeling/headcrab/sting_action(mob/user)
 	set waitfor = FALSE
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return

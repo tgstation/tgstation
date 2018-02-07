@@ -127,7 +127,7 @@
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/datum/action/changeling/P in purchasedpowers)
 		if(initial(power.name) == P.name)
-			return TRUE
+			return P//I think this should still work
 	return FALSE
 
 

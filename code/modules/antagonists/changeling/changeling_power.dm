@@ -7,6 +7,7 @@
 	background_icon_state = "bg_changeling"
 	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
 	var/stats_id = "Prototype Sting"//shouldnt use the name for stat tracking as that now includes the desc as well
+	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
 	var/helptext = "" // Details
 	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
 	var/dna_cost = -1 //cost of the sting in dna points. 0 = auto-purchase (see changeling.dm), -1 = cannot be purchased
@@ -24,7 +25,8 @@ if you override it, MAKE SURE you call parent or it will not be usable
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)
 	if(!is_respec)
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, stats_id)
-	Grant(user)//how powers are added rather than the checks in mob.dm
+	if(needs_button)
+		Grant(user)//how powers are added rather than the checks in mob.dm
 
 /datum/action/changeling/Trigger()
 	var/mob/user = owner
