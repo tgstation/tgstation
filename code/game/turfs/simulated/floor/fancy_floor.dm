@@ -72,7 +72,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
-	var/ore_type = /obj/item/ore/glass
+	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
@@ -81,9 +81,8 @@
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/shovel) && params)
-		new ore_type(src)
-		new ore_type(src) //Make some sand if you shovel grass
-		user.visible_message("[user] digs up [src].", "<span class='notice'>You [src.turfverb] [src].</span>")
+		new ore_type(src, 2)
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
@@ -109,7 +108,7 @@
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	ore_type = /obj/item/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0
 
@@ -126,7 +125,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	floor_tile = /obj/item/stack/tile/basalt
-	ore_type = /obj/item/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	turfverb = "dig up"
 	slowdown = 0
 

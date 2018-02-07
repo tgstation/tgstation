@@ -420,7 +420,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/user)
 	qdel(masters[user]) // Get rid of user's hologram
-	qdel(holorays[user])
 	unset_holo(user)
 	return TRUE
 
@@ -429,6 +428,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(istype(AI) && AI.current == src)
 		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
+	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)
 	SetLightsAndPower()
 	return TRUE

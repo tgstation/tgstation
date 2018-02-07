@@ -70,7 +70,7 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/proc/use(amount)
+/obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -170,7 +170,7 @@
 	charge = 0
 
 /obj/item/stock_parts/cell/upgraded
-	name = "high-capacity power cell"
+	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
 	materials = list(MAT_GLASS=50)

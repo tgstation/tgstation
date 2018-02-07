@@ -43,7 +43,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,/obj/item/reagent_containers/food/drinks/bottle/whiskey,/obj/item/lighter),
 5;list(/obj/item/bedsheet,/obj/item/kitchen/knife,/obj/item/wirecutters,/obj/item/screwdriver,/obj/item/weldingtool,/obj/item/hatchet,/obj/item/crowbar),
 5;/obj/item/reagent_containers/glass/beaker/bluespace,
-5;list(/obj/item/ore/diamond=10),
+5;list(/obj/item/stack/ore/diamond=10),
 5;list(/obj/item/poster/random_contraband=5),
 5;list(/obj/item/reagent_containers/glass/beaker/noreact=3),
 5;/obj/item/seeds/firelemon,
@@ -59,7 +59,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 2;list(pick(3;/obj/item/coin/silver, 3;/obj/item/coin/iron, 1;/obj/item/coin/gold, 1;/obj/item/coin/diamond, 1;/obj/item/coin/plasma, 1;/obj/item/coin/uranium)=rand(4,7)),//wew
 2;list(/obj/item/clothing/suit/ianshirt,/obj/item/clothing/suit/hooded/ian_costume),
 2;list(pick((subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace))=rand(4,7)),
-2;list(/obj/item/ore/bluespace_crystal=5),
+2;list(/obj/item/stack/ore/bluespace_crystal=5),
 2;/obj/item/pickaxe/drill,
 2;/obj/item/pickaxe/drill/jackhammer,
 2;/obj/item/pickaxe/diamond,
@@ -129,7 +129,7 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
+				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()

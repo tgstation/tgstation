@@ -55,6 +55,109 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">07 February 2018</h2>
+			<h3 class="author">DaedalusGame updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes Noblium Formation being multiplicative, so having 500 moles of tritium and 500 moles of nitrogen no longer produces 2500 moles of noblium (it should correctly produce 10 moles)</li>
+				<li class="bugfix">Fixes most reactions deleting more gas than exists and making gas out of nowhere</li>
+				<li class="bugfix">Fixes Stim Formation invoking a byond bug and not using its intended polynomial formula</li>
+				<li class="bugfix">Fixes Cryo Cells not having garbage_collect and clamping</li>
+				<li class="bugfix">Fixes Rad Collectors not having clamping</li>
+				<li class="bugfix">Fixes Division by Zero when Fusion has no impurities.</li>
+				<li class="bugfix">Removes a redundant line in lungs</li>
+				<li class="bugfix">Fixes rad_act signal not firing from turfs, living mobs, rad collectors and geiger counters</li>
+				<li class="bugfix">fixes lava burning into chasm tiles i hate hate hate hate them so much grrrr</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Moved the pocket protector to lockers instead of on the uniform.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Mining drone upgrades are no longer referred to as "ugprade"</li>
+			</ul>
+			<h3 class="author">Kor updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Spawning as a syndicate comms officer will now activate an encrypted signal in the Lavaland Syndicate Base, to aid the crew in retaliating.</li>
+			</ul>
+			<h3 class="author">Ordo updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Mamma-mia! The chef speaks-a so different now!</li>
+			</ul>
+			<h3 class="author">Robustin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">The "construct shell" option from the cult archives structure will now only yield one shell instead of two.</li>
+				<li class="balance">Sacrificing suicide victims will now only yield an empty shard.</li>
+			</ul>
+			<h3 class="author">Skylar Lineman updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Nanotrasen has new intelligence that the newest batch of Syndicate agent equipment includes sticky explosives disguised as potatoes, designed to incite terror among whoever is unlucky enough to have one stuck onto their hands.</li>
+				<li class="rscadd">Nanotrasen's toy suppliers have also started making faux versions of these, with less-forceful attachment mechanisms and absolutely zero explosive materials for a child-safe experience. experimental: Explosive Hot Potatoes are now available for purchase by syndicate-affiliated cooks, botanists, clowns, and mimes.</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Eggs now contain 5u of egg yolk. Breaking an egg in a glass container adds all reagents inside to the container. If you're laying abductor gland eggs, then you'll get 5u of egg yolk and 10u of random reagent. Egg glands now make you act like a chicken while laying eggs. Egg laying makes you use the aliennotice span.</li>
+			</ul>
+
+			<h2 class="date">06 February 2018</h2>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">AIs can no longer turn on broken APCs,</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Defibrillator mounts no longer spam the error log while empty.</li>
+				<li class="bugfix">The various ships in the caravan ambush space ruin can now fly again.</li>
+			</ul>
+
+			<h2 class="date">05 February 2018</h2>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Regular cyborgs now start with a normal high capacity cell instead of a snowflake cell. Resulting in less confusing and 2.5MJ more electric charge.</li>
+				<li class="bugfix">Fixed name of the upgraded power cell</li>
+				<li class="refactor">Removed duplicate cell giving code in transformation proc.</li>
+				<li class="bugfix">Fixed the crematorium on meta and box.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Rearranged the mining vendor items by price and item group.</li>
+				<li class="tweak">In order to promote back-breaking physical labor, Nanotrasen has additionally made conscription kits available at mining equipment vendors.</li>
+			</ul>
+			<h3 class="author">Iamgoofball updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Blood cultists can't space base anymore</li>
+			</ul>
+			<h3 class="author">MMMiracles updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A once-thought abandoned arctic post has recently had its gateway coordinates re-enabled for access via the Gateway link. Contact your local Exploration Division for more details.</li>
+			</ul>
+			<h3 class="author">More Robust Than You updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Holorays are now properly deleted if you switch holopads automatically</li>
+			</ul>
+			<h3 class="author">Naksu and kevinz000 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Ores are no longer completely impervious to explosions, but rather "proper" ores are destroyed by the strongest explosions and sand is blown away everything but the weakest ones. This shouldn't affect ore spawns from explosions</li>
+				<li class="tweak">Lavaland bomb cap reduced to double the station bombcap.</li>
+				<li class="refactor">Ores are now stackable. Ore stacks now have the appearance of loose ores and are not called "sheets" by machines that consume them.</li>
+				<li class="code_imp">Material container component now uses the singular names of stack objects.</li>
+				<li class="refactor">/obj/item/ore/Crossed() is now removed in favor of the ore satchel utilizing a redirect component</li>
+			</ul>
+			<h3 class="author">ShiggyDiggyDo updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">You no longer win double the articles at the arcade</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Research investigate logs now actually include the name of the researcher.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes intelligence potions removing previously known mob languages</li>
+				<li class="tweak">Slime scanning now has a more readable output, especially when scanning multiple slimes at once</li>
+				<li class="tweak">Eggs from the abductor egg gland now have a random reagent instead of acid</li>
+			</ul>
+
 			<h2 class="date">04 February 2018</h2>
 			<h3 class="author">Buggy123 updated:</h3>
 			<ul class="changes bgimages16">
@@ -1887,80 +1990,6 @@
 			<h3 class="author">deathride58 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="config">The default view range can now be defined in the config. The default is 15x15, which is simplified to 7 by BYOND. For reference, Goonstation's widescreen range is 21x15. Do note that changing this value will affect the title screen. The title screen images and the title screen area on the Centcom z-level will have to be updated if the default view range is changed.</li>
-			</ul>
-
-			<h2 class="date">06 December 2017</h2>
-			<h3 class="author">Dax Dupont & Alek2ander updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Binary chat messages been made more visible.</li>
-			</ul>
-			<h3 class="author">Revenant Defile ability updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Revenant's Defile now removes salt piles</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Brain damage has been completely reworked! remove: Brain damage now no longer simply makes you dumb. Although most of its effects have been shifted into a brain trauma.</li>
-				<li class="rscadd">Every time you take brain damage, there's a chance you'll suffer a brain trauma. There are many variations of brain traumas, split in mild, severe, and special.</li>
-				<li class="rscadd">Mild brain traumas are the easiest to get, can be lightly to moderately annoying, and can be cured with mannitol and time.</li>
-				<li class="rscadd">Severe brain traumas are much rarer and require extensive brain damage before you have a chance to get them; they are usually very debilitating. Unlike mild traumas, they require surgery to cure. A new surgery procedure has been added for this, the aptly named Brain Surgery. It can also heal minor traumas.</li>
-				<li class="rscadd">Special brain traumas are rarely gained in place of Severe traumas: they are either complex or beneficial. However, they are also even easier to cure than mild traumas, which means that keeping these will usually mean keeping a mild trauma along with it.</li>
-				<li class="rscadd">Mobs can only naturally have one mild trauma and one severe or special trauma.</li>
-				<li class="balance">Brain damage will now kill and ruin the brain if it goes above 200. If it somehow goes above 400, the brain will melt and be destroyed completely.</li>
-				<li class="balance">Many brain-damaging effects have been given a damage cap, making them non-lethal.</li>
-				<li class="rscdel">The Unintelligible mutation has been removed and made into a brain trauma.</li>
-				<li class="rscdel">Brain damage no longer makes using machines a living hell.</li>
-				<li class="rscadd">Abductors give minor traumas to people they experiment on.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The drone dispenser on Metastation has been moved to the maintenance by Robotics.</li>
-			</ul>
-
-			<h2 class="date">05 December 2017</h2>
-			<h3 class="author">Cyberboss updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="sounddel">Reduced the volume of showers</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen is happy to announce the pinnacle in plasma research! The Disco Inferno shuttle design is the result of decades of plasma research. Burn, baby, burn!</li>
-			</ul>
-			<h3 class="author">MrPerson & ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Completely changed how keyboard input is read.</li>
-				<li class="rscadd">Holding two directions at the same time will now move you diagonally. This works with the arrow keys, wasd, and the numpad.</li>
-				<li class="tweak">Moving diagonally takes twice as long as moving a cardinal direction.</li>
-				<li class="bugfix">You can use control to turn using wasd and the numpad instead of just the arrow keys.</li>
-				<li class="rscdel">Some old non-hotkey mode behaviors, especially in relation to chatbox interaction, can't be kept with the new system. Of key note: You can't type while walking. This is due to limitations of byond and the work necessary to overcome it is better done as another overhaul allowing custom controls.</li>
-			</ul>
-			<h3 class="author">Robustin updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Reverted changes in 3d sound system that tripled the distance that sound would carry.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">Energy values are now measured in joules. What was previously 1 unit is now 1 kJ.</li>
-				<li class="bugfix">Syndicate uplink implants now work again.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Stethoscopes now inform the user if the target can be defibrillated; the user will hear a "faint, fluttery pulse."</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Quiet areas of libraries on station have now been equipped with a vending machine containing suitable recreational activities.</li>
-			</ul>
-
-			<h2 class="date">04 December 2017</h2>
-			<h3 class="author">AnturK updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now record and replay holopad messages using holodisks.</li>
-				<li class="rscadd">Holodisks are printable in autolathes.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You now need fuel in your welder to repair mechs.</li>
 			</ul>
 		</div>
 
