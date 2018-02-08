@@ -290,12 +290,12 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		for(var/obj/item/I in BP.embedded_objects)
-			if(prob(I.embedded_pain_chance))
-				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
+			if(prob(I.embedding.embedded_pain_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_pain_multiplier)
 				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
-			if(prob(I.embedded_fall_chance))
-				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
+			if(prob(I.embedding.embedded_fall_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")

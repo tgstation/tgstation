@@ -256,6 +256,7 @@
 #include "code\datums\datumvars.dm"
 #include "code\datums\dna.dm"
 #include "code\datums\dog_fashion.dm"
+#include "code\datums\embedding_behavior.dm"
 #include "code\datums\emotes.dm"
 #include "code\datums\explosion.dm"
 #include "code\datums\forced_movement.dm"

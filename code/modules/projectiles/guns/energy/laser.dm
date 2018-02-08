@@ -14,7 +14,7 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
-	needs_permit = 0
+	item_flags = NONE
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
@@ -116,9 +116,8 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	needs_permit = FALSE
+	clumsy_check = 0
 	item_flags = NONE
-	clumsy_check = FALSE
 	pin = /obj/item/device/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
@@ -131,7 +130,6 @@
 	icon_state = "redtag"
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	needs_permit = FALSE
 	item_flags = NONE
 	clumsy_check = FALSE
 	pin = /obj/item/device/firing_pin/tag/red
