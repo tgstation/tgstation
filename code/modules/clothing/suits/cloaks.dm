@@ -1,6 +1,6 @@
 //Cloaks. No, not THAT kind of cloak.
 
-/obj/item/clothing/neck/cloak
+/obj/item/clothing/suit/hooded/cloak
 	name = "brown cloak"
 	desc = "It's a cape that can be worn around your neck."
 	icon = 'icons/obj/clothing/cloaks.dmi'
@@ -18,43 +18,96 @@
 	flags_1 = NODROP_1
 	flags_inv = HIDEHAIR|HIDEEARS
 
-/obj/item/clothing/neck/cloak/suicide_act(mob/user)
+/obj/item/clothing/suit/hooded/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/clothing/neck/cloak/hos
+/obj/item/clothing/suit/hooded/cloak/hos
 	name = "head of security's cloak"
 	desc = "Worn by Securistan, ruling the station with an iron fist."
 	icon_state = "hoscloak"
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hos
 
-/obj/item/clothing/neck/cloak/qm
+
+
+
+/obj/item/clothing/head/hooded/cloakhood/hos
+	icon_state = "hoshood"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
+
+/obj/item/clothing/suit/hooded/cloak/qm
 	name = "quartermaster's cloak"
 	desc = "Worn by Cargonia, supplying the station with the necessary tools for survival."
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/twohanded/spear, /obj/item/twohanded/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/qm
 
-/obj/item/clothing/neck/cloak/cmo
+/obj/item/clothing/head/hooded/cloakhood/qm
+	icon_state = "qmhood"
+	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+
+
+/obj/item/clothing/suit/hooded/cloak/cmo
 	name = "chief medical officer's cloak"
 	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay."
 	icon_state = "cmocloak"
+	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/device/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/cmo
 
-/obj/item/clothing/neck/cloak/ce
+/obj/item/clothing/head/hooded/cloakhood/cmo
+	icon_state = "cmohood"
+	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+
+
+/obj/item/clothing/suit/hooded/cloak/ce
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power."
 	icon_state = "cecloak"
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen,/obj/item/construction, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/ce
 
-/obj/item/clothing/neck/cloak/rd
+
+/obj/item/clothing/head/hooded/cloakhood/ce
+	icon_state = "cehood"
+	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+
+
+/obj/item/clothing/suit/hooded/cloak/rd
 	name = "research director's cloak"
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe."
 	icon_state = "rdcloak"
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen,/obj/item/construction, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/rd
 
-/obj/item/clothing/neck/cloak/cap
+
+/obj/item/clothing/head/hooded/cloakhood/rd
+	icon_state = "rdhood"
+	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+
+
+/obj/item/clothing/suit/hooded/cloak/cap
 	name = "captain's cloak"
 	desc = "Worn by the commander of Space Station 13."
 	icon_state = "capcloak"
+	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 90)
+	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/cap
 
-/obj/item/clothing/neck/cloak/hop
+/obj/item/clothing/head/hooded/cloakhood/cap
+	icon_state = "caphood"
+	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 90)
+
+
+/obj/item/clothing/suit/hooded/cloak/hop
 	name = "head of personnel's cloak"
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hop
+
+/obj/item/clothing/head/hooded/cloakhood/hop
+	icon_state = "hophood"
+	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
 
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
@@ -75,6 +128,7 @@
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
 	icon_state = "dragon"
+	icon = 'icons/obj/clothing/suits.dmi'
 	desc = "A suit of armour fashioned from the remains of an ash drake."
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/twohanded/spear)
 	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50, fire = 100, acid = 100)

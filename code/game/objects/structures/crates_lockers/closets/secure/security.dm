@@ -9,7 +9,7 @@
 	new /obj/item/storage/backpack/captain(src)
 	new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
-	new /obj/item/clothing/neck/cloak/cap(src)
+	new /obj/item/clothing/suit/hooded/cloak/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
@@ -40,7 +40,7 @@
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/hop(src)
+	new /obj/item/clothing/suit/hooded/cloak/hop(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
 	new /obj/item/clothing/head/hopcap(src)
 	new /obj/item/cartridge/hop(src)
@@ -66,7 +66,7 @@
 
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/hos(src)
+	new /obj/item/clothing/suit/hooded/cloak/hos(src)
 	new /obj/item/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
