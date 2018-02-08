@@ -11,7 +11,9 @@ SUBSYSTEM_DEF(traumas)
 #define PHOBIA_FILE "phobia.json"
 
 /datum/controller/subsystem/traumas/Initialize()
-	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards", "skeletons", "snakes", "robots", "doctors", "authority", "the supernatural")
+	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards", 
+						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
+						"aliens")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -24,18 +26,22 @@ SUBSYSTEM_DEF(traumas)
 						"robots"	= strings(PHOBIA_FILE, "robots"),
 						"doctors"	= strings(PHOBIA_FILE, "doctors"),
 						"authority"	= strings(PHOBIA_FILE, "authority"),
-						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural")
+						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
+						"aliens"	= strings(PHOBIA_FILE, "aliens")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
-					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
-					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
-					   "skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
+					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209)),
+					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard/)),
+					   "skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton/)),
 					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake)),
 					   "robots"   = typecacheof(list(/mob/living/silicon/robot, /mob/living/silicon/ai, 
-					   /mob/living/simple_animal/drone, /mob/living/simple_animal/bot/)),
-					   "the supernatural"   = typecacheof(list(/mob/living/simple_animal/hostile/construct, 
-					   /mob/living/simple_animal/hostile/clockwork/, /mob/living/simple_animal/drone/cogscarab))
+					   /mob/living/simple_animal/drone, /mob/living/simple_animal/bot/, /mob/living/simple_animal/hostile/swarmer)),
+					   "doctors"   = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
+					   "the supernatural"   = typecacheof(list(/mob/living/simple_animal/hostile/construct/, 
+					   /mob/living/simple_animal/hostile/clockwork/, /mob/living/simple_animal/drone/cogscarab, 
+					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
+					   "aliens"   = typecacheof(list(/mob/living/carbon/alien/, /mob/living/simple_animal/slime/))
 					   )
 
 	phobia_objs = list("spiders"   = typecacheof(list(/obj/structure/spider)),
@@ -59,14 +65,16 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
 						
-						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/item/device/aicard)),
+						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/machinery/recharge_station, 
+						/obj/item/device/aicard, /obj/item/device/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
 						
 						"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical, /obj/item/clothing/under/rank/chemist, 
 						/obj/item/clothing/under/rank/nursesuit, /obj/item/clothing/under/rank/chief_medical_officer, 
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray/, 
 						/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/device/healthanalyzer/, 
 						/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper, 
-						/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell)),
+						/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
+						/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw)),
 						
 						"authority"   = typecacheof(list(/obj/item/clothing/under/rank/captain,  /obj/item/clothing/under/rank/head_of_personnel, 
 						/obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/research_director, 
@@ -87,17 +95,31 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff, 
 						/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
 						/obj/item/gun/magic/staff/, /obj/item/gun/magic/wand/,
-						/obj/item/nullrod, /obj/item/clothing/under/rank/chaplain))
+						/obj/item/nullrod, /obj/item/clothing/under/rank/chaplain)),
+						
+						"aliens"   = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
+						/obj/item/clothing/suit/armor/abductor/, /obj/item/device/abductor/, /obj/item/gun/energy/alien, 
+						/obj/item/abductor_baton, /obj/item/device/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+						/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/surgicaldrill/alien, /obj/item/cautery/alien,
+						/obj/item/clothing/head/helmet/abductor, /obj/structure/bed/abductor, /obj/structure/table_frame/abductor, 
+						/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
+						/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor, 
+						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor
 					   )
+
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork, 
-						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult))
+						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
+						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2, 
+						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor, /obj/structure/alien/))
 						)
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 						  "robots"   = typecacheof(list(/datum/species/android)),
-						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic))
+						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
+						  "aliens" = typecacheof(list(/datum/species/abductor, datum/species/jelly, /datum/species/pod, 
+						  /datum/species/shadow))
 						 )
 
 #undef PHOBIA_FILE
