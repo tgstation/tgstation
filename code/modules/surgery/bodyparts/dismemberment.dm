@@ -4,7 +4,7 @@
 		. = (get_damage() >= (max_damage - I.armour_penetration/2))
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent = FALSE)
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
@@ -19,8 +19,9 @@
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
-	C.emote("scream")
+	if(!silent)
+		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
+		C.emote("scream")
 	drop_limb()
 
 	if(dam_type == BURN)
