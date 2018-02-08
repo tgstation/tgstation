@@ -1,6 +1,6 @@
 /datum/action/changeling/lesserform
-	name = "Lesser Form - We debase ourselves and become lesser. We become a monkey."
-	stats_id = "Lesser Form"
+	name = "Lesser Form"
+	desc = "We debase ourselves and become lesser. We become a monkey."
 	helptext = "The transformation greatly reduces our size, allowing us to slip out of cuffs and climb through vents."
 	chemical_cost = 5
 	dna_cost = 1

@@ -1,6 +1,6 @@
 /datum/action/changeling/humanform
-	name = "Human Form - We change into a human."
-	stats_id = "Human Form"
+	name = "Human Form"
+	desc = "We change into a human."
 	chemical_cost = 5
 	req_dna = 1
 

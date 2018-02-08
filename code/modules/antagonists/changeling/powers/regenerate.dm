@@ -1,6 +1,6 @@
 /datum/action/changeling/regenerate
-	name = "Regenerate - Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel and restoring blood volume."
-	stats_id = "Regenerate"
+	name = "Regenerate"
+	desc = "Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel and restoring blood volume."
 	helptext = "Will alert nearby crew if any external limbs are regenerated. Can be used while unconscious."
 	chemical_cost = 10
 	dna_cost = 0

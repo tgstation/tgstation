@@ -1,6 +1,6 @@
 /datum/action/changeling/headcrab
-	name = "Last Resort - We sacrifice our current body in a moment of need, placing us in control of a vessel."
-	stats_id = "Last Resort"
+	name = "Last Resort"
+	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel that can plant our likeness in a new host."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	chemical_cost = 20
 	dna_cost = 1

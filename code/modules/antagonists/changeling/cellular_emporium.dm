@@ -40,8 +40,8 @@
 			continue
 
 		var/list/AL = list()
-		AL["name"] = initial(ability.name)//TODO: Maybe use stats_id.
-//		AL["desc"] = initial(ability.desc)
+		AL["name"] = initial(ability.name)
+		AL["desc"] = initial(ability.desc)
 		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
 		var/req_dna = initial(ability.req_dna)
@@ -70,7 +70,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)

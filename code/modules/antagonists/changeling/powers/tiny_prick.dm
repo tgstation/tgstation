@@ -1,6 +1,6 @@
 /datum/action/changeling/sting//parent path, not meant for users afaik
-	name = "Tiny Prick - Stabby stabby."
-	stats_id = "Tiny Prick"
+	name = "Tiny Prick"
+	desc = "Stabby stabby"
 	var/sting_icon = null
 
 /datum/action/changeling/sting/Trigger()
@@ -65,8 +65,8 @@
 
 
 /datum/action/changeling/sting/transformation
-	name = "Transformation Sting - We silently sting a human, injecting a retrovirus that forces them to transform."
-	stats_id = "Transformation Sting"
+	name = "Transformation Sting"
+	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	sting_icon = "sting_transform"
 	chemical_cost = 50
@@ -112,8 +112,8 @@
 
 
 /datum/action/changeling/sting/false_armblade
-	name = "False Armblade Sting - We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
-	stats_id = "False Armblade Sting"
+	name = "False Armblade Sting"
+	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
 	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
 	sting_icon = "sting_armblade"
 	chemical_cost = 20
@@ -166,8 +166,8 @@
 	target.update_inv_hands()
 
 /datum/action/changeling/sting/extract_dna
-	name = "Extract DNA Sting - We stealthily sting a target and extract their DNA."
-	stats_id = "Extract DNA Sting"
+	name = "Extract DNA Sting"
+	desc = "We stealthily sting a target and extract their DNA."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
@@ -186,8 +186,8 @@
 	return TRUE
 
 /datum/action/changeling/sting/mute
-	name = "Mute Sting - We silently sting a human, completely silencing them for a short time."
-	stats_id = "Mute Sting"
+	name = "Mute Sting"
+	desc = "We silently sting a human, completely silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
@@ -199,9 +199,9 @@
 	return TRUE
 
 /datum/action/changeling/sting/blind
-	name = "Blind Sting - We temporarily blind our victim."
-	stats_id = "Blind Sting"
-	helptext = "This sting completely blinds a target for a short time."
+	name = "Blind Sting"
+	desc = "We temporarily blind our victim."
+	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
@@ -215,8 +215,8 @@
 	return TRUE
 
 /datum/action/changeling/sting/LSD
-	name = "Hallucination Sting - We cause mass terror to our victim."
-	stats_id = "Hallucination Sting"
+	name = "Hallucination Sting"
+	desc = "We cause mass terror to our victim."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
@@ -232,8 +232,8 @@
 		target.hallucination = max(400, target.hallucination)
 
 /datum/action/changeling/sting/cryo
-	name = "Cryogenic Sting - We silently sting our victim with a cocktail of chemicals that freezes them from the inside."
-	desc = ""
+	name = "Cryogenic Sting"
+	desc = "We silently sting our victim with a cocktail of chemicals that freezes them from the inside."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15

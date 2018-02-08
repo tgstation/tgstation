@@ -1,7 +1,7 @@
 /datum/action/changeling/linglink
-	name = "Hivemind Link - We link our victim's mind into the hivemind for personal interrogation."
-	stats_id = "Hivemind Link"
-	helptext = "If we find someone mad enough to support our cause, this can be a helpful tool to stay in touch."
+	name = "Hivemind Link"
+	desc = "We link our victim's mind into the hivemind for personal interrogation."
+	helptext = "If we find a human mad enough to support our cause, this can be a helpful tool to stay in touch."
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1

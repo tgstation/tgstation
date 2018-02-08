@@ -33,8 +33,7 @@
 	var/canrespec = 0//set to 1 in absorb.dm
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
-	//var/obj/effect/proc_holder/changeling/sting/chosen_sting//This will need reworking...
-	var/datum/action/changeling/sting/chosen_sting//not sure exactly how this will work yet
+	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
@@ -63,6 +62,7 @@
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
+	emporium_action.Grant(owner.current)//where cellular emporium is granted
 
 /datum/antagonist/changeling/on_gain()
 	generate_name()
@@ -183,10 +183,9 @@
 		return 0
 
 //Called in life()
-/datum/antagonist/changeling/proc/regenerate()
+/datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)

@@ -1,7 +1,7 @@
 //HIVEMIND COMMUNICATION (:g)
 /datum/action/changeling/hivemind_comms
-	name = "Hivemind Communication - We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
-	stats_id = "Hivemind Communication"
+	name = "Hivemind Communication"
+	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
 	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
 	needs_button = FALSE
 	dna_cost = 0
@@ -35,8 +35,8 @@
 GLOBAL_LIST_EMPTY(hivemind_bank)
 
 /datum/action/changeling/hivemind_upload
-	name = "Hive Channel DNA - Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
-	stats_id = "Hive Channel DNA"
+	name = "Hive Channel DNA"
+	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
 	chemical_cost = 10
 	dna_cost = -1
 
@@ -69,8 +69,8 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	return TRUE
 
 /datum/action/changeling/hivemind_download
-	name = "Hive Absorb DNA - Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
-	desc = "Hive Absorb DNA"
+	name = "Hive Absorb DNA"
+	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
 	chemical_cost = 10
 	dna_cost = -1
 

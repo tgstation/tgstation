@@ -2,8 +2,8 @@
 //Possible todo: make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
 
 /datum/action/changeling/augmented_eyesight
-	name = "Augmented Eyesight - Creates heat receptors in our eyes and dramatically increases light sensing ability, or protects your vision from flashes."
-	stats_id = "Augmented Eyesight"
+	name = "Augmented Eyesight"
+	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability, or protects your vision from flashes."
 	helptext = "Grants us thermal vision or flash protection. We will become a lot more vulnerable to flash-based devices while thermal vision is active."
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision

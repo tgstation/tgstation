@@ -1,6 +1,6 @@
 /datum/action/changeling/fleshmend
-	name = "Fleshmend - Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Functions while unconscious."
-	stats_id = "Fleshmend"
+	name = "Fleshmend"
+	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Functions while unconscious."
 	helptext = "If we are on fire, the healing effect will not function. Does not regrow limbs or restore lost blood."
 	chemical_cost = 20
 	dna_cost = 2

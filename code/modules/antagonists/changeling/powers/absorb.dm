@@ -1,6 +1,6 @@
 /datum/action/changeling/absorbDNA
-	name = "Absorb DNA - Absorb the DNA of our victim. Requires that we are strangling them."
-	stats_id = "Absorb"
+	name = "Absorb DNA"
+	desc = "Absorb the DNA of our victim. Requires that we are strangling them."
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1

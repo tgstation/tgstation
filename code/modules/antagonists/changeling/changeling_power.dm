@@ -6,7 +6,6 @@
 	name = "Prototype Sting - Debug button, ahelp this"
 	background_icon_state = "bg_changeling"
 	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
-	var/stats_id = "Prototype Sting"//shouldnt use the name for stat tracking as that now includes the desc as well
 	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
 	var/helptext = "" // Details
 	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
@@ -25,7 +24,7 @@ if you override it, MAKE SURE you call parent or it will not be usable
 
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)
 	if(!is_respec)
-		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, stats_id)
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 	if(needs_button)
 		Grant(user)//how powers are added rather than the checks in mob.dm
 
@@ -40,7 +39,7 @@ if you override it, MAKE SURE you call parent or it will not be usable
 		return
 	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(sting_action(user, target))
-		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[stats_id]"))
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 		sting_feedback(user, target)
 		c.chem_charges -= chemical_cost
 
