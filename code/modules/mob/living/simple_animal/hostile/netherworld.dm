@@ -82,7 +82,7 @@
 		two.linked_imlagre.Add(one)
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Life()
-	..()
+	. = ..()
 	if(!stat)
 		if(target && prob(20))
 			playsound(src, src.laughs, 100, TRUE, frequency = laughmod) //much more likely to laugh if they're targetting someone
