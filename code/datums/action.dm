@@ -465,8 +465,6 @@
 /datum/action/item_action/cult_dagger/Grant(mob/M)
 	if(iscultist(M))
 		..()
-		button.screen_loc = "6:157,4:-2"
-		button.moved = "6:157,4:-2"
 	else
 		Remove(owner)
 
