@@ -306,7 +306,10 @@
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
 	if(!issilicon(user))
-		printpicture(user, temp, mobs, flag)
+		// Hippie Start - MSGV style box disguises
+		var/list/disguises = find_disguises(user, turfs)
+		printpicture(user, temp, mobs, flag, disguises)
+		// Hippie End
 	else
 		aipicture(user, temp, mobs, isAi, blueprints)
 

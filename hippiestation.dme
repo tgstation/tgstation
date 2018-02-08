@@ -2719,6 +2719,7 @@
 #include "hippiestation\code\modules\modular_computers\computers\machinery\modular_console.dm"
 #include "hippiestation\code\modules\modular_computers\NTNet\NTNet_relay.dm.dm"
 #include "hippiestation\code\modules\paperwork\photocopier.dm"
+#include "hippiestation\code\modules\paperwork\photography.dm"
 #include "hippiestation\code\modules\pool\pool_controller.dm"
 #include "hippiestation\code\modules\pool\pool_drain.dm"
 #include "hippiestation\code\modules\pool\pool_main.dm"

@@ -319,6 +319,8 @@
 
 	to_chat(user, msg)
 
+	return msg // Hippie - To allow for disguises
+
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()
 	if(!pronoun_replacement)
