@@ -656,7 +656,7 @@
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
-	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
+	if(!issilicon(user) && (!user.canUseTopic(src, BE_CLOSE) || !isturf(loc)))
 		return
 	else
 		togglelock(user)

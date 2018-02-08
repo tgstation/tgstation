@@ -90,7 +90,7 @@
 	return ..()
 
 /obj/item/clothing/AltClick(mob/living/user)
-	if(istype(user) && user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE) && pockets && pockets.quickdraw && pockets.contents.len)
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY) && pockets && pockets.quickdraw && pockets.contents.len)
 		var/obj/item/I = pockets.contents[1]
 		if(!I)
 			return
@@ -244,7 +244,7 @@ BLIND     // can't see anything
 	if(..())
 		return 1
 
-	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else

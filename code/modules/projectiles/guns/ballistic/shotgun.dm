@@ -240,7 +240,7 @@
 		to_chat(user, "You switch to tube A.")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		return
 	pump()
 

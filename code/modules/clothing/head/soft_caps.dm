@@ -23,7 +23,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		return
 	else
 		flip(user)

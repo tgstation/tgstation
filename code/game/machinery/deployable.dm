@@ -142,7 +142,7 @@
 	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
 
 /obj/item/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	toggle_mode(user)
 

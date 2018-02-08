@@ -130,7 +130,7 @@
 	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)

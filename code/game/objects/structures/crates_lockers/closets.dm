@@ -390,7 +390,7 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 	if(opened || !secure)
 		return

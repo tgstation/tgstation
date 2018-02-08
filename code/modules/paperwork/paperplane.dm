@@ -99,7 +99,7 @@
 		H.emote("scream")
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 	user.temporarilyRemoveItemFromInventory(src)

@@ -509,7 +509,7 @@
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]

@@ -89,7 +89,7 @@
 	after_rotation.Invoke(user,rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	return TRUE
