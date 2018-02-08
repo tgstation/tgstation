@@ -42,9 +42,9 @@
 
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
-	if (user.gender == MALE) 
+	if (user.gender == MALE)
 		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
-	else if (user.gender == FEMALE) 
+	else if (user.gender == FEMALE)
 		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 	return OXYLOSS
 
@@ -131,6 +131,7 @@
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
 	var/see_ghosts = 0 //for the spoop of it
+	var/obj/item/disk/holodisk/disk
 
 
 /obj/item/device/camera/CheckParts(list/parts_list)
@@ -189,8 +190,24 @@
 		qdel(I)
 		pictures_left = pictures_max
 		return
+	if(istype(I, /obj/item/disk/holodisk))
+		if (!disk)
+			if(!user.transferItemToLoc(I, src))
+				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>You slide [I] into the back of [src].</span>")
+			disk = I
+		else
+			to_chat(user, "<span class='warning'>There's already a disk inside [src].</span>")
+		return TRUE //no afterattack
 	..()
 
+/obj/item/device/camera/attack_self(mob/user)
+	if(!disk)
+		return
+	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
+	user.put_in_hands(disk)
+	disk = null
 
 /obj/item/device/camera/examine(mob/user)
 	..()
@@ -437,13 +454,24 @@
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
+	if (disk)
+		if(ismob(target))
+			if (disk.record)
+				QDEL_NULL(disk.record)
 
-	captureimage(target, user, flag)
+			disk.record = new
+			var/mob/M = target
+			disk.record.caller_name = M.name
+			disk.record.set_caller_image(M)
+		else 
+			return
+	else
+		captureimage(target, user, flag)
+		pictures_left--
+		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
-	pictures_left--
-	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = "camera_off"
 	on = FALSE
 	addtimer(CALLBACK(src, .proc/cooldown), 64)
@@ -581,11 +609,10 @@
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
-		deconstruct()
+			deconstruct()
 		return
 
 	else if(istype(I, /obj/item/photo))

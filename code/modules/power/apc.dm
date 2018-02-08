@@ -385,7 +385,7 @@
 					return
 				playsound(src.loc, W.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You are trying to remove the power control board...</span>" )
-				if(do_after(user, 50*W.toolspeed, target = src))
+				if(W.use_tool(src, user, 50))
 					if (has_electronics==1)
 						has_electronics = 0
 						if (stat & BROKEN)
@@ -418,12 +418,11 @@
 				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
 				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
 				playsound(src, W.usesound, 50, TRUE)
-				if(!do_after(user, 100 * W.toolspeed, target = src))
-					return
-				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
-				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				QDEL_NULL(integration_cog)
+				if(W.use_tool(src, user, 100))
+					user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
+					"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
+					playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+					QDEL_NULL(integration_cog)
 				return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
@@ -578,17 +577,12 @@
 			return
 
 	else if (istype(W, /obj/item/weldingtool) && opened && has_electronics==0 && !terminal)
-		var/obj/item/weldingtool/WT = W
-		if (WT.get_fuel() < 3)
-			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
+		if(!W.tool_start_check(user, amount=3))
 			return
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, WT.usesound, 50, 1)
-		if(do_after(user, 50*W.toolspeed, target = src))
-			if(!src || !WT.remove_fuel(3, user))
-				return
+		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\

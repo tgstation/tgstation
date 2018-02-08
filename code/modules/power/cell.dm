@@ -70,7 +70,7 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/proc/use(amount)
+/obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0

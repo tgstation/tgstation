@@ -25,7 +25,7 @@
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
-		grind_results[grind_results[i]] *= amount //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+		grind_results[grind_results[i]] *= get_amount() //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
@@ -247,7 +247,7 @@
 					return 0
 	return 1
 
-/obj/item/stack/proc/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
+/obj/item/stack/use(used, transfer = FALSE) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
 	if (is_cyborg)
@@ -259,6 +259,20 @@
 	update_icon()
 	update_weight()
 	return 1
+
+/obj/item/stack/tool_use_check(mob/living/user, amount)
+	if(get_amount() < amount)
+		if(singular_name)
+			if(amount > 1)
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+			else
+				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+		else
+			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+
+		return FALSE
+
+	return TRUE
 
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)

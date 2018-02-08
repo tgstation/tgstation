@@ -101,15 +101,13 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 20*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 20, volume=50))
 				deconstruct(TRUE)
 			return
 
 		if(istype(I, /obj/item/wrench) && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
-			playsound(src.loc, I.usesound, 50, 1)
-			if(do_after(user, 40*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 40, volume=50))
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
@@ -307,23 +305,19 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			playsound(src.loc, W.usesound, 50, 1)
-			if(deconstruction_ready)
-				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
-				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
-					deconstruction_ready = 0
-			else
-				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
-				if (do_after(user, 50*W.toolspeed, target = src))
-					if(!src || !WT.isOn())
-						return
-					to_chat(user, "<span class='notice'>You weaken the table.</span>")
-					deconstruction_ready = 1
+		if(!W.tool_start_check(user, amount=0))
+			return
+
+		if(deconstruction_ready)
+			to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
+			if (W.use_tool(src, user, 50, volume=50))
+				to_chat(user, "<span class='notice'>You strengthen the table.</span>")
+				deconstruction_ready = 0
+		else
+			to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
+			if (W.use_tool(src, user, 50, volume=50))
+				to_chat(user, "<span class='notice'>You weaken the table.</span>")
+				deconstruction_ready = 1
 	else
 		. = ..()
 
