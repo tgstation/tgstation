@@ -13,7 +13,7 @@
 	for(var/datum/reagents/R in reactants)
 		if(R.total_volume)
 			has_reagents = 1
-			total_reagents += R.total_volume // HEHE
+			total_reagents += R.total_volume
 
 	if(!has_reagents)
 		return
