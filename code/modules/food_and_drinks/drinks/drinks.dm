@@ -394,7 +394,7 @@
 	container_type = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	grind_results = list("aluminum" = 10)
+	grind_results = list("aluminium" = 10)
 	
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
