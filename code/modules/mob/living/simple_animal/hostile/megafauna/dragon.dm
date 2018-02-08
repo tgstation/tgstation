@@ -132,7 +132,6 @@ Difficulty: Medium
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
-	var/list/hit_things = list(src)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
@@ -142,12 +141,11 @@ Difficulty: Medium
 		range--
 		new /obj/effect/hotspot(J)
 		J.hotspot_expose(700,50,1)
-		for(var/mob/living/L in J.contents - hit_things)
+		for(var/mob/living/L in J.contents)
 			if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 				continue
 			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
-			hit_things += L
 		previousturf = J
 		sleep(1)
 
