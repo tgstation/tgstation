@@ -1,6 +1,6 @@
 // Foam
 // Similar to smoke, but slower and mobs absorb its reagent through their exposed skin.
-#define ALUMINIUM_FOAM 1
+#define ALUMINUM_FOAM 1
 #define IRON_FOAM 2
 #define RESIN_FOAM 3
 
@@ -71,7 +71,7 @@
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
-	metal = ALUMINIUM_FOAM
+	metal = ALUMINUM_FOAM
 	icon_state = "mfoam"
 
 /obj/effect/particle_effect/foam/metal/MakeSlippery()
@@ -109,7 +109,7 @@
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
 	switch(metal)
-		if(ALUMINIUM_FOAM)
+		if(ALUMINUM_FOAM)
 			new /obj/structure/foamedmetal(get_turf(src))
 		if(IRON_FOAM)
 			new /obj/structure/foamedmetal/iron(get_turf(src))
@@ -345,6 +345,6 @@
 		return TRUE
 	. = ..()
 
-#undef ALUMINIUM_FOAM
+#undef ALUMINUM_FOAM
 #undef IRON_FOAM
 #undef RESIN_FOAM
