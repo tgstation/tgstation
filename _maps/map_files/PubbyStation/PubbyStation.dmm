@@ -16779,7 +16779,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "aQS" = (
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -18479,7 +18479,7 @@
 /area/hydroponics)
 "aUW" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aUX" = (
@@ -21091,7 +21091,7 @@
 /area/crew_quarters/kitchen)
 "bbi" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bbl" = (
@@ -25956,7 +25956,7 @@
 /area/science/explab)
 "boe" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -31596,7 +31596,7 @@
 /area/medical/chemistry)
 "bAg" = (
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /obj/machinery/light,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -37443,7 +37443,7 @@
 "bNP" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/whitegreen/side,
 /area/medical/virology)
 "bNQ" = (
@@ -45036,7 +45036,7 @@
 /area/chapel/main/monastery)
 "chV" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/hydrofloor,
 /area/chapel/main/monastery)
 "chW" = (

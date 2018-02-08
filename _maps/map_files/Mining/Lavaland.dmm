@@ -1993,7 +1993,7 @@
 /area/mine/living_quarters)
 "fv" = (
 /obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/reagentgrinder/hasbeaker,
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fx" = (

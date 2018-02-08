@@ -5,33 +5,39 @@
 	name = "\improper All-In-One Grinder"
 	desc = "From BlenderTech. Will It Blend? Let's test it out!"
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "juicer1"
+	icon_state = "juicer0"
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
+	var/speed = 1
 	var/list/holdingitems
 
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
-	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
-	beaker.desc += " May contain blended dust. Don't breathe this in!"
 
 /obj/machinery/reagentgrinder/Destroy()
-	QDEL_NULL(beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
 	drop_all_items()
 	return ..()
 
 /obj/machinery/reagentgrinder/contents_explosion(severity, target)
 	if(beaker)
 		beaker.ex_act(severity, target)
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	speed = 1
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		speed = M.rating
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -48,10 +54,6 @@
 		AM.forceMove(drop_location())
 	holdingitems = list()
 
-/obj/machinery/reagentgrinder/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (drop_location(), 3)
-	qdel(src)
-
 /obj/machinery/reagentgrinder/update_icon()
 	if(beaker)
 		icon_state = "juicer1"
@@ -59,8 +61,18 @@
 		icon_state = "juicer0"
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
+	//You can only screw open empty grinder
+	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
+
 	if(default_unfasten_wrench(user, I))
 		return
+
+	if(panel_open) //Can't insert objects when its screwed open
+		return TRUE
 
 	if (istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		if (!beaker)
@@ -122,6 +134,8 @@
 	interact(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+	if(panel_open)
+		return
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""
@@ -231,7 +245,7 @@
 	pixel_x = old_px
 
 /obj/machinery/reagentgrinder/proc/operate_for(time, silent = FALSE, juicing = FALSE)
-	shake_for(time)
+	shake_for(time / speed)
 	updateUsrDialog()
 	operating = TRUE
 	if(!silent)
@@ -239,7 +253,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, 1)
-	addtimer(CALLBACK(src, .proc/stop_operating), time)
+	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
@@ -305,3 +319,11 @@
 			var/amount = beaker.reagents.get_reagent_amount("eggyolk")
 			beaker.reagents.remove_reagent("eggyolk", amount)
 			beaker.reagents.add_reagent("mayonnaise", amount)
+
+/obj/machinery/reagentgrinder/hasbeaker/Initialize()
+	. = ..()
+	holdingitems = list()
+	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
+	beaker.desc += " May contain blended dust. Don't breathe this in!"
+	icon_state = "juicer0"
+	update_icon()
