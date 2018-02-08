@@ -269,8 +269,8 @@
 			qdel(src)
 
 /datum/action/innate/cult/blood_spell/veiling
-	name = "Conceal Runes"
-	desc = "A multi-function spell that alternates between hiding and revealing nearby runes."
+	name = "Conceal Presence"
+	desc = "A multi-function spell that alternates between hiding and revealing nearby cult runes, structures, turf, and airlocks."
 	invocation = "Kla'atu barada nikt'o!"
 	button_icon_state = "gone"
 	charges = 10

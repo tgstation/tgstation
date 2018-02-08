@@ -439,7 +439,7 @@
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	name = "maintenance access"
+	name = "airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
 	update_icon()
