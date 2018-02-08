@@ -49,7 +49,7 @@
 		/obj/item/toy/toy_dagger								= 2,
 		/obj/item/extendohand/acme								= 1,
 		/obj/item/hot_potato/harmless/toy						= 1,
-		/obj/item/card/emag/fake								= 1)
+		/obj/item/card/emagfake									= 1)
 
 	light_color = LIGHT_COLOR_GREEN
 
