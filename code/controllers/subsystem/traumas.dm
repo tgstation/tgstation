@@ -111,8 +111,7 @@ SUBSYSTEM_DEF(traumas)
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork, 
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
 						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2, 
-						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor, /obj/structure/alien/))
-						)
+						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor, /obj/structure/alien/)))
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
