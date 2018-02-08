@@ -4,6 +4,8 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
