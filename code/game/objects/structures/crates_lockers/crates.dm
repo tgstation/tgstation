@@ -114,7 +114,7 @@
 	new /obj/item/bodypart/r_leg/robot/surplus(src)
 
 //This is used for crates with randomly generated loot in 'code/modules/mining/abandoned_crates.dm' and 'code/modules/mining/lavaland/necropolis_chests.dm'
-/obj/structure/closet/crate/proc/pathorlist_to_loot(var/loot)
+/obj/structure/closet/crate/proc/pathorlist_to_loot(loot)
 	if(!loot)
 		return
 	if(ispath(loot))
@@ -126,7 +126,7 @@
 				continue
 			for(var/ii in 1 to (loot[i] ? loot[i] : 1))//does i-in-loot have an associated value? if so use it, otherwise 1
 				new i(src)
-
+				
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
