@@ -201,6 +201,20 @@
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
 
+/obj/item/device/geiger_counter/cyborg
+	var/datum/component/mobhook
+
+/obj/item/device/geiger_counter/cyborg/equipped(mob/user)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT), CALLBACK(src, /atom.proc/rad_act))
+
+/obj/item/device/geiger_counter/cyborg/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
+
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE
 #undef RAD_LEVEL_HIGH

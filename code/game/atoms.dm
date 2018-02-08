@@ -370,7 +370,7 @@
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT)
+	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
