@@ -39,7 +39,7 @@
 
 /datum/experiment/power_drain
 	is_bad = TRUE
-	power_cost = 500000
+	power_use = 500000
 
 /datum/experiment/power_drain/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
@@ -53,7 +53,7 @@
 /datum/experiment/blood_drain/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	..()
 	. = FALSE
-	visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
+	E.visible_message("<span class='warning'>[E] draws the life essence of those nearby!</span>")
 	for(var/mob/living/m in oview(4,E))
 		to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [E]!</span>")
 		m.apply_damage(50, BRUTE, "chest")

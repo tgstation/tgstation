@@ -10,7 +10,7 @@
 	. = ..()
 	var/chosen_chem = pick("carbon","radium","toxin","condensedcapsaicin","mushroomhallucinogen","space_drugs","ethanol","beepskysmash")
 	E.visible_message("<span class='danger'>[E] destroys [O], leaking dangerous gas!</span>")
-	E.investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
+	E.investigate_log("Experimentor has released [chosen_chem] smoke.", INVESTIGATE_EXPERIMENTOR)
 	E.create_reagents(50)
 	E.reagents.add_reagent(chosen_chem , 50)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
@@ -28,7 +28,7 @@
 	. = ..()
 	var/chosen_chem = pick("mutationtoxin","nanomachines","sacid")
 	E.visible_message("<span class='danger'>[E]'s chemical chamber has sprung a leak!</span>")
-	E.investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
+	E.investigate_log("Experimentor has released <font color='red'>[chosen_chem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
 	E.create_reagents(50)
 	E.reagents.add_reagent(chosen_chem , 50)
 	var/datum/effect_system/smoke_spread/chem/smoke = new //MAKE THIS FOAM AAAAAA I'M MAD

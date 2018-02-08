@@ -10,7 +10,8 @@
 
 /datum/experiment/clone/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
-	if(uses <= 0)
+	var/datum/experiment_type/clone/mode = E.experiments[/datum/experiment_type/clone]
+	if(!mode || mode.uses <= 0)
 		. = FALSE
 
 /datum/experiment/clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)

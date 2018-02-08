@@ -91,8 +91,8 @@
 	E.visible_message("<span class='warning'>[E] begins cooking [O].</span>")
 	E.investigate_log("Experimentor has microwaved [O].", INVESTIGATE_EXPERIMENTOR)
 	O.microwave_act()
-	addtimer(CALLBACK(src, .proc/reset_exp, E), reset_time)
+	addtimer(CALLBACK(src, .proc/eject, E), E.reset_time)
 
-/datum/experiment/microwave/eject(obj/machinery/rnd/experimentor/E)
+/datum/experiment/microwave/proc/eject(obj/machinery/rnd/experimentor/E)
 	E.eject_item()
 	playsound(E, 'sound/machines/ding.ogg', 50, 1)

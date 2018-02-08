@@ -2241,6 +2241,7 @@
 #include "code\modules\research\experiments\clone.dm"
 #include "code\modules\research\experiments\cool.dm"
 #include "code\modules\research\experiments\destroy.dm"
+#include "code\modules\research\experiments\gas.dm"
 #include "code\modules\research\experiments\heat.dm"
 #include "code\modules\research\experiments\other.dm"
 #include "code\modules\research\experiments\poke.dm"
