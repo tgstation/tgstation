@@ -1482,7 +1482,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-<<<<<<< Floydmaster
 		var/natural = 0
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
@@ -1501,7 +1500,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.bodytemperature += natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-=======
 		if(loc_temp < H.bodytemperature)
 			//Place is colder than we are
 			var/thermal_protection = H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
@@ -1515,7 +1513,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
->>>>>>> Adds mood component, mood event parent, and a ton of mood event examples
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
 		var/burn_damage
