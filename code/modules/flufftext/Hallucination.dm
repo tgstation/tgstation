@@ -1197,3 +1197,41 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	H.preparePixelProjectile(target, start)
 	H.fire()
 	qdel(src)
+
+//Reality Dissociation Syndrome hallucinations only trigger in special cases and have no cost
+/datum/hallucination/rds
+	cost = 0
+
+/datum/hallucination/rds/fourth_wall/New(mob/living/carbon/C, forced = TRUE)
+	..()
+	to_chat(C, "<span class='userdanger extremelybig'>[pick("Leave the server" , "Close the game window")] [pick("immediately", "right now")].</span>")
+
+/datum/hallucination/rds/supermatter/New(mob/living/carbon/C, forced = TRUE)
+	..()
+	SEND_SOUND(C, 'sound/magic/charge.ogg')
+	to_chat(C, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+
+/datum/hallucination/rds/narsie/New(mob/living/carbon/C, forced = TRUE)
+	C.playsound_local(C, 'sound/creatures/narsie_rises.ogg', 50, FALSE, pressure_affected = FALSE)
+	to_chat(C, "<span class='narsie'>NAR-SIE HAS RISEN</span>")
+
+/datum/hallucination/rds/ghosts/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	var/see_invis = C.see_invisible
+	notify_ghosts("[C]'s RDS is making them see ghosts!",
+		enter_link = "<a href=?src=[REF(src)];orbit=1>(Click to orbit and freak them out)</a>",
+		source = C, action = NOTIFY_ORBIT)
+	sleep(50)
+	C.see_invisible = INVISIBILITY_OBSERVER
+	sleep(50)
+	notify_ghosts("[C] can no longer see ghosts.")
+	C.see_invisible = see_invis
+
+/datum/hallucination/rds/ark/New(mob/living/carbon/C, forced = TRUE)
+	set waitfor = FALSE
+	..()
+	C.playsound_local(C, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)
+	C.playsound_local(C, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
+	sleep(27)
+	C.playsound_local(C, 'sound/effects/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)

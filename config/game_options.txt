@@ -487,3 +487,6 @@ MICE_ROUNDSTART 10
 
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
+
+## Uncomment to allow roundstart trait selection in the character setup menu.
+ROUNDSTART_TRAITS

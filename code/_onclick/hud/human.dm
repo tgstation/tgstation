@@ -87,7 +87,10 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
-	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+	if("Night Vision" in owner.client.prefs.positive_traits) //check prefs directly due to the order in which things are made
+		owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness/night_vision)
+	else
+		owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -308,7 +311,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
-	
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()

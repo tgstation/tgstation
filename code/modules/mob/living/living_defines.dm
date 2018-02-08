@@ -34,6 +34,8 @@
 
 	var/list/status_traits = list()
 
+	var/list/roundstart_traits = list()
+
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
 	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.

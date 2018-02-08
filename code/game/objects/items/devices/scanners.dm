@@ -163,6 +163,8 @@ GAS ANALYZER
 			for(var/datum/brain_trauma/B in C.get_traumas())
 				trauma_text += B.scan_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
+		if(C.roundstart_traits && C.client)
+			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.client.prefs.all_traits.Join(", ")].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
 	if (M.radiation)

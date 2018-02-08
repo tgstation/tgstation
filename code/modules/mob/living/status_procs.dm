@@ -146,8 +146,25 @@
 	else
 		status_traits[trait] |= list(source)
 
-/mob/living/proc/remove_trait(trait, list/sources)
+/mob/living/proc/add_roundstart_trait(trait) //separate proc due to the way these ones are handled
+	if(has_trait(trait))
+		return
+	if(!SStraits || !SStraits.traits[trait])
+		return
+	var/datum/trait/T = SStraits.traits[trait]
+	new T (src)
+	return TRUE
+
+/mob/living/proc/remove_trait(trait, list/sources, force)
+	var/datum/trait/T = roundstart_traits[trait]
+	if(T)
+		qdel(T)
+		return TRUE
+
 	if(!status_traits[trait])
+		return
+
+	if(locate(ROUNDSTART_TRAIT) in status_traits[trait] && !force) //mob traits applied through roundstart cannot normally be removed
 		return
 
 	if(!sources) // No defined source cures the trait entirely.
@@ -168,6 +185,8 @@
 		status_traits -= trait
 
 /mob/living/proc/has_trait(trait, list/sources)
+	if(roundstart_traits[trait])
+		return roundstart_traits[trait] //fetch the trait object directly in case we need to modify it
 	if(!status_traits[trait])
 		return FALSE
 

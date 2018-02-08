@@ -258,3 +258,5 @@
 	integer = FALSE
 
 /datum/config_entry/flag/ic_printing
+
+/datum/config_entry/flag/roundstart_traits

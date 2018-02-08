@@ -76,6 +76,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//Mob preview
 	var/icon/preview_icon = null
 
+		//Trait list
+	var/list/positive_traits = list()
+	var/list/negative_traits = list()
+	var/list/neutral_traits = list()
+	var/list/all_traits = list()
+
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
@@ -173,6 +179,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
+			if(CONFIG_GET(flag/roundstart_traits))
+				dat += "<center><h2>Trait Setup</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Traits</a><br></center>"
+				dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -761,6 +771,68 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return job_engsec_low
 	return 0
 
+/datum/preferences/proc/SetTraits(mob/user)
+	if(!SStraits)
+		to_chat(user, "<span class='danger'>The trait subsystem is still initializing! Try again in a minute.</span>")
+		return
+	if(SSticker.HasRoundStarted() && !isnewplayer(user))
+		to_chat(user, "<span class='danger'>You can't configure your traits until next round!</span>")
+		return
+
+	var/list/dat = list()
+	if(!SStraits.traits.len)
+		dat += "The trait subsystem hasn't finished initializing, please hold..."
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
+
+	else
+		dat += "<center><b>Choose trait setup</b></center><br>"
+		dat += "<div align='center'>Left-click to add or remove traits. You need one negative trait for every positive trait.<br>\
+		Traits are applied at roundstart and cannot normally be removed.</div>"
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
+		dat += "<hr>"
+		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
+		/*dat += "<center><font color='#AAFFAA'>[positive_traits.len] / [MAX_POSITIVE_TRAITS]</font> \
+		| <font color='#AAAAFF'>[neutral_traits.len] / [MAX_NEUTRAL_TRAITS]</font> \
+		| <font color='#FFAAAA'>[negative_traits.len] / [MAX_NEGATIVE_TRAITS]</font></center><br>"*/
+		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
+		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
+		for(var/V in SStraits.traits)
+			var/datum/trait/T = SStraits.traits[V]
+			var/trait_name = initial(T.name)
+			var/has_trait
+			var/trait_cost = initial(T.value) * -1
+			for(var/_V in all_traits)
+				if(_V == trait_name)
+					has_trait = TRUE
+			if(has_trait)
+				trait_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(trait_cost > 0)
+				trait_cost = "+[trait_cost]"
+			var/font_color = "#AAAAFF"
+			if(initial(T.value) != 0)
+				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+			if(has_trait)
+				dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+			else
+				dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
+
+	user << browse(null, "window=preferences")
+	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Trait Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
+	popup.set_window_options("can_close=0")
+	popup.set_content(dat.Join())
+	popup.open(0)
+	return
+
+/datum/preferences/proc/GetTraitBalance()
+	var/bal = 0
+	for(var/V in all_traits)
+		var/datum/trait/T = SStraits.traits[V]
+		bal -= initial(T.value)
+	return bal
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
@@ -807,6 +879,61 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				SetChoices(user)
 		return 1
+
+	else if(href_list["preference"] == "trait")
+		switch(href_list["task"])
+			if("close")
+				user << browse(null, "window=mob_occupation")
+				ShowChoices(user)
+			if("update")
+				var/trait = href_list["trait"]
+				var/value = SStraits.trait_points[trait]
+				if(value == 0)
+					if(trait in neutral_traits)
+						neutral_traits -= trait
+						all_traits -= trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						neutral_traits += trait
+						all_traits += trait
+				else
+					var/balance = GetTraitBalance()
+					if(trait in positive_traits)
+						positive_traits -= trait
+						all_traits -= trait
+					else if(trait in negative_traits)
+						if(balance + value < 0)
+							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+							return
+						negative_traits -= trait
+						all_traits -= trait
+					else if(value > 0)
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						if(balance - value < 0)
+							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
+							return
+						positive_traits += trait
+						all_traits += trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						negative_traits += trait
+						all_traits += trait
+				SetTraits(user)
+			if("reset")
+				all_traits = list()
+				positive_traits = list()
+				negative_traits = list()
+				neutral_traits = list()
+				SetTraits(user)
+			else
+				SetTraits(user)
+		return TRUE
 
 	switch(href_list["task"])
 		if("random")
@@ -1331,3 +1458,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+	for(var/trait in all_traits)
+		character.add_roundstart_trait(trait, ROUNDSTART_TRAIT)

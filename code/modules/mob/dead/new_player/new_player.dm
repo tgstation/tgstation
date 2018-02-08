@@ -373,6 +373,10 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
+	for(var/V in character.roundstart_traits)
+		var/datum/trait/T = V
+		T.on_spawn() //so latejoins still get their correct traits
+
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)

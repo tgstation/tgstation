@@ -175,3 +175,6 @@
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
+
+/obj/screen/fullscreen/see_through_darkness/night_vision //the icon for this is a good bit larger, but all it does in-game is remove the corner darkness by default
+	icon_state = "nightvision2"

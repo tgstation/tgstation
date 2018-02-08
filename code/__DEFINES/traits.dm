@@ -21,6 +21,18 @@
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_ITALIAN			"italian"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+#define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
+#define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
+#define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_LIGHT_STEP		"light_step"
+#define TRAIT_SPIRITUAL			"spiritual"
+#define TRAIT_VORACIOUS			"voracious"
+#define TRAIT_SELF_AWARE		"self_aware"
+#define TRAIT_FREERUNNING		"freerunning"
+#define TRAIT_SKITTISH			"skittish"
+#define TRAIT_POOR_AIM			"poor_aim"
+#define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 
 
 // common trait sources
@@ -32,6 +44,7 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_TRAIT "trauma"
+#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"

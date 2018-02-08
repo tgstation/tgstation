@@ -398,7 +398,14 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/proc/togglelock(mob/living/user)
+/obj/structure/closet/CtrlShiftClick(mob/living/user)
+	if(!user.has_trait(TRAIT_SKITTISH))
+		return ..()
+	if(!user.canUseTopic(src) || !isturf(user.loc))
+		return
+	dive_into(user)
+
+/obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
@@ -407,7 +414,7 @@
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
-		else
+		else if(!silent)
 			to_chat(user, "<span class='notice'>Access Denied</span>")
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
@@ -457,3 +464,17 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+/obj/structure/closet/proc/dive_into(mob/living/user)
+	if(!open() && !opened)
+		togglelock(user, TRUE)
+		if(!open())
+			to_chat(user, "<span class='warning'>It won't budge!</span>")
+			return
+	user.visible_message("<span class='warning'>[user] dives into [src] and slams the door shut behind them!</span>", \
+	"<span class='danger'>You dive into [src]!</span>")
+	user.forceMove(src)
+	user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+	close()
+	user.resting = FALSE
+	togglelock(user)
