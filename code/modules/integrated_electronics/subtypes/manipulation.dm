@@ -399,7 +399,7 @@
 	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
 	complexity = 15
 	w_class = WEIGHT_CLASS_SMALL
-	size = 3
+	size = 2
 	inputs = list(
 		"target X rel" = IC_PINTYPE_NUMBER,
 		"target Y rel" = IC_PINTYPE_NUMBER,
@@ -421,7 +421,7 @@
 	if(!A || A.anchored || A.throwing)
 		return
 
-	if(max_w_class && (A.w_class >= max_w_class))
+	if(max_w_class && (A.w_class > max_w_class))
 		return
 
 	// Is the target inside the assembly or close to it?
