@@ -12,41 +12,41 @@
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = pick(
-		/obj/item/device/shared_storage/red,
-		/obj/item/clothing/suit/space/hardsuit/cult,
-		/obj/item/device/soulstone/anybody,
-		/obj/item/katana/cursed,
-		/obj/item/clothing/glasses/godeye,
-		/obj/item/reagent_containers/glass/bottle/potion/flight,
-		/obj/item/pickaxe/diamond,
-		pick(
-			/obj/item/disk/design_disk/modkit_disc/resonator_blast,
-			/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
-		/obj/item/organ/brain/alien,
-		/obj/item/organ/heart/cursed/wizard,
-		/obj/item/ship_in_a_bottle,
-		/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker,
-		/obj/item/jacobs_ladder,
-		/obj/item/nullrod/scythe/talking,
-		/obj/item/nullrod/armblade,
-		/obj/item/guardiancreator,
-		pick(
-			/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
-			/obj/item/disk/design_disk/modkit_disc/bounty),
-		/obj/item/device/warp_cube/red,
-		/obj/item/device/wisp_lantern,
-		/obj/item/device/immortality_talisman,
-		/obj/item/gun/magic/hook,
-		/obj/item/voodoo,
-		/obj/item/grenade/clusterbuster/inferno,
-		list(
-			/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
-			/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
-		/obj/item/spellbook/oneuse/summonitem,
-		/obj/item/book_of_babel,
-		list(
-			/obj/item/borg/upgrade/modkit/lifesteal,
-			/obj/item/bedsheet/cult))
+	/obj/item/device/shared_storage/red,
+	/obj/item/clothing/suit/space/hardsuit/cult,
+	/obj/item/device/soulstone/anybody,
+	/obj/item/katana/cursed,
+	/obj/item/clothing/glasses/godeye,
+	/obj/item/reagent_containers/glass/bottle/potion/flight,
+	/obj/item/pickaxe/diamond,
+	pick(
+		/obj/item/disk/design_disk/modkit_disc/resonator_blast,
+		/obj/item/disk/design_disk/modkit_disc/rapid_repeater),
+	/obj/item/organ/brain/alien,
+	/obj/item/organ/heart/cursed/wizard,
+	/obj/item/ship_in_a_bottle,
+	/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker,
+	/obj/item/jacobs_ladder,
+	/obj/item/nullrod/scythe/talking,
+	/obj/item/nullrod/armblade,
+	/obj/item/guardiancreator,
+	pick(
+		/obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe,
+		/obj/item/disk/design_disk/modkit_disc/bounty),
+	/obj/item/device/warp_cube/red,
+	/obj/item/device/wisp_lantern,
+	/obj/item/device/immortality_talisman,
+	/obj/item/gun/magic/hook,
+	/obj/item/voodoo,
+	/obj/item/grenade/clusterbuster/inferno,
+	list(
+		/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
+		/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor),
+	/obj/item/spellbook/oneuse/summonitem,
+	/obj/item/book_of_babel,
+	list(
+		/obj/item/borg/upgrade/modkit/lifesteal,
+		/obj/item/bedsheet/cult))
 
 	pathorlist_to_loot(loot)
 
@@ -604,12 +604,11 @@
 
 /obj/structure/closet/crate/necropolis/dragon/PopulateContents()
 	var/loot = pick(
-		/obj/item/melee/ghost_sword,
-		/obj/item/lava_staff,
-		/obj/item/dragons_blood,
-		list(
-			/obj/item/spellbook/oneuse/sacredflame,
-			/obj/item/gun/magic/wand/fireball))
+	/obj/item/melee/ghost_sword,
+	/obj/item/lava_staff,
+	/obj/item/dragons_blood,
+	list(/obj/item/spellbook/oneuse/sacredflame,
+		/obj/item/gun/magic/wand/fireball))
 	pathorlist_to_loot(loot)
 
 /obj/structure/closet/crate/necropolis/dragon/crusher
@@ -839,9 +838,9 @@
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
 	var/loot = pick(
-		/obj/item/mayhem,
-		/obj/item/blood_contract,
-		/obj/item/gun/magic/staff/spellblade)
+	/obj/item/mayhem,
+	/obj/item/blood_contract,
+	/obj/item/gun/magic/staff/spellblade)
 	pathorlist_to_loot(loot)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
