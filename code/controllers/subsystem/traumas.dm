@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(traumas)
 					   )
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork, 
-						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)
+						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult))
 						)
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
