@@ -51,7 +51,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 
 /mob/living/carbon/human/lobby/Destroy()
 	DeleteActions()
-	QDEL_NULL(new_character)
+	if(new_character)
+		qdel(new_character)
+	new_character = TRUE	//prevents a qdel loop
 	QDEL_NULL(splash_screen)
 	QDEL_NULL(late_picker)
 	GLOB.lobby_players -= src
