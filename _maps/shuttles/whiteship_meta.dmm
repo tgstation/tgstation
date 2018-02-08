@@ -44,9 +44,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"af" = (
-/turf/template_noop,
-/area/template_noop)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -218,8 +215,7 @@
 /obj/item/cigbutt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/tank/internals/oxygen/red,
 /obj/item/tank/internals/air,
@@ -1291,7 +1287,7 @@
 /area/shuttle/abandoned)
 "cl" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -1633,20 +1629,20 @@
 
 (1,1,1) = {"
 aa
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ab
 ab
 ad
 ab
 ab
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1663,7 +1659,7 @@ au
 au
 au
 cA
-af
+aa
 "}
 (3,1,1) = {"
 ab
@@ -2024,9 +2020,9 @@ ab
 "}
 (24,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ac
 bj
 aB
@@ -2034,16 +2030,16 @@ bH
 bN
 bV
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ac
 bk
 bs
@@ -2051,16 +2047,16 @@ bI
 bO
 bW
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ba
 ac
 ac
@@ -2068,10 +2064,10 @@ ac
 ac
 ac
 ba
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
 aa
@@ -2091,19 +2087,19 @@ aa
 aa
 "}
 (28,1,1) = {"
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

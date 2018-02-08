@@ -58,7 +58,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define HANDS_LAYER				18
+#define HANDS_PART_LAYER		18
 #define GLOVES_LAYER			17
 #define SHOES_LAYER				16
 #define EARS_LAYER				15
@@ -89,7 +89,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_HANDS_LAYER			HANDS_LAYER+1
+#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
 #define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
 #define UNDER_SHOES_LAYER			SHOES_LAYER+1
 #define UNDER_EARS_LAYER			EARS_LAYER+1
@@ -116,7 +116,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
+#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
 #define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
 #define ABOVE_SHOES_LAYER			SHOES_LAYER-1
 #define ABOVE_EARS_LAYER			EARS_LAYER-1
@@ -494,6 +494,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define RIDING_OFFSET_ALL "ALL"
 
+//stack recipe placement check types
+#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
+
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
 
@@ -510,3 +514,5 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")

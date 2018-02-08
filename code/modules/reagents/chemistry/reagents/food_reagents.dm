@@ -530,6 +530,7 @@
 	name = "Egg Yolk"
 	id = "eggyolk"
 	description = "It's full of protein."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
 

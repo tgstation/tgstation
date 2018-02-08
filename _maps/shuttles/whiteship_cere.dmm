@@ -215,8 +215,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
@@ -239,8 +238,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/pickaxe,
 /obj/item/pickaxe,
@@ -289,8 +287,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
@@ -411,8 +408,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
@@ -583,9 +579,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"aY" = (
-/turf/template_noop,
-/area/template_noop)
 "aZ" = (
 /obj/structure/table,
 /obj/item/phone{
@@ -636,8 +629,8 @@ aa
 aa
 aa
 aa
-aY
-aY
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -655,7 +648,7 @@ ab
 ab
 aa
 aa
-aY
+aa
 "}
 (3,1,1) = {"
 ab

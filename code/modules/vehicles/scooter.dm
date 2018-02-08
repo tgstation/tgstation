@@ -12,10 +12,9 @@
 /obj/vehicle/ridden/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
-		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
-		if(do_after(user, 40*I.toolspeed, target = src))
-			var/obj/vehicle/ridden/scooter/skateboard/S = new(loc)
-			new /obj/item/stack/rods(get_turf(src),2)
+		if(I.use_tool(src, user, 40, volume=50))
+			var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location())
+			new /obj/item/stack/rods(drop_location(), 2)
 			to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
 			if(has_buckled_mobs())
 				var/mob/living/carbon/H = buckled_mobs[1]

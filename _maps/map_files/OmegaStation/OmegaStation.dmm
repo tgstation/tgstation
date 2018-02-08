@@ -462,7 +462,7 @@
 /turf/open/floor/plating/asteroid,
 /area/asteroid/nearstation)
 "aaW" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/asteroid,
 /area/asteroid/nearstation)
 "aaX" = (
@@ -927,7 +927,7 @@
 /turf/open/space,
 /area/asteroid/nearstation)
 "abS" = (
-/obj/item/ore/glass,
+/obj/item/stack/ore/glass,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "abT" = (
@@ -1717,8 +1717,7 @@
 /area/shuttle/supply)
 "adv" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate,
@@ -1731,7 +1730,6 @@
 "adx" = (
 /obj/item/clothing/suit/space/orange,
 /obj/item/clothing/head/helmet/space/orange,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
 "adz" = (
@@ -2888,7 +2886,7 @@
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
 "afM" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
@@ -3014,7 +3012,6 @@
 "aga" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
-/obj/item/card/id/captains_spare,
 /obj/item/toy/figure/captain,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -3291,8 +3288,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "agE" = (
-/obj/item/ore/silver,
-/obj/item/ore/iron,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "agF" = (
@@ -5054,7 +5051,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "ajQ" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/astplate,
 /area/asteroid/nearstation)
 "ajR" = (
@@ -6146,7 +6143,6 @@
 /area/quartermaster/storage)
 "alG" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/asteroid/nearstation)
 "alH" = (
@@ -7685,7 +7681,6 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/small,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/freezer,
 /area/hallway/primary/central)
 "aoD" = (
@@ -11062,7 +11057,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -11625,8 +11619,7 @@
 /area/maintenance/port/fore)
 "avP" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/clothing/shoes/jackboots,
 /obj/item/device/radio,
@@ -22001,7 +21994,6 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/revenantspawn,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/maintenance/starboard/aft)
@@ -22614,7 +22606,6 @@
 /area/library)
 "aSe" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
@@ -23527,7 +23518,6 @@
 /area/library)
 "aUk" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -23889,7 +23879,6 @@
 /area/library)
 "aVc" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -24613,7 +24602,6 @@
 /area/library)
 "aWH" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Morgue APC";
@@ -26925,7 +26913,6 @@
 	},
 /area/maintenance/port)
 "bbm" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/bar,
 /area/maintenance/port)
 "bbn" = (
@@ -28030,7 +28017,6 @@
 /area/maintenance/port)
 "bdE" = (
 /obj/structure/chair/stool/bar,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -28043,7 +28029,6 @@
 /area/maintenance/port)
 "bdG" = (
 /obj/structure/chair/stool/bar,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
@@ -28089,7 +28074,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -29835,7 +29819,6 @@
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "bhh" = (
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "bhi" = (
@@ -32616,7 +32599,7 @@
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buP" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "buQ" = (
@@ -33446,8 +33429,7 @@
 /area/maintenance/starboard)
 "sCQ" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -71278,9 +71260,9 @@ aZz
 baq
 bbl
 bbY
-bcP
+bbm
 bdM
-bcP
+bbm
 sKE
 bfv
 bfS
@@ -71535,9 +71517,9 @@ aZA
 bar
 bbm
 bbZ
-bcP
-bcP
-bcP
+bbm
+bbm
+bbm
 baj
 bfu
 bfu
@@ -81821,7 +81803,7 @@ aZl
 sPI
 bfP
 bgm
-bhh
+bhg
 bgm
 sKZ
 bjd
