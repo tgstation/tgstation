@@ -67,6 +67,7 @@
 	name = "cybernetic liver"
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	synthetic = TRUE
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"

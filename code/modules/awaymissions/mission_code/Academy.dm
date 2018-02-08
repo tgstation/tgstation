@@ -92,7 +92,7 @@
 	var/mob/living/current_wizard = null
 	var/next_check = 0
 	var/cooldown = 600
-	var/faction = "wizard"
+	var/faction = ROLE_WIZARD
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
@@ -127,14 +127,13 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, be_special_flag = ROLE_WIZARD, M = current_wizard)
-	var/mob/dead/observer/chosen = null
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
 
-	if(candidates.len)
-		chosen = pick(candidates)
-		message_admins("[key_name_admin(chosen)] was spawned as Wizard Academy Defender")
+	if(LAZYLEN(candidates))
+		var/client/C = pick(candidates)
+		message_admins("[key_name_admin(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
-		current_wizard.key = chosen.key
+		current_wizard.key = C.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
@@ -271,13 +270,11 @@
 			servant_mind.objectives += O
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", "wizard", mob = H)
-			var/mob/dead/observer/chosen = null
-
-			if(candidates.len)
-				chosen = pick(candidates)
-				message_admins("[key_name_admin(chosen)] was spawned as Dice Servant")
-				H.key = chosen.key
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
+			if(LAZYLEN(candidates))
+				var/client/C = pick(candidates)
+				message_admins("[key_name_admin(C)] was spawned as Dice Servant")
+				H.key = C.key
 
 			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new
 			S.target_mob = H

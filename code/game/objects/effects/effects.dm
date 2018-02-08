@@ -4,7 +4,7 @@
 /obj/effect
 	icon = 'icons/effects/effects.dmi'
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-	can_be_hit = FALSE
+	obj_flags = 0
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	return
@@ -18,7 +18,7 @@
 /obj/effect/mech_melee_attack(obj/mecha/M)
 	return 0
 
-/obj/effect/blob_act()
+/obj/effect/blob_act(obj/structure/blob/B)
 	return
 
 /obj/effect/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)

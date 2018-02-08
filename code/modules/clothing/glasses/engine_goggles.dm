@@ -70,26 +70,9 @@
 	if(user.glasses != src || !user.client)
 		return
 	if(mode == MODE_TRAY)
-		scan()
+		t_ray_scan(user, 8, range)
 	else if(mode == MODE_RAD)
 		show_rads()
-
-/obj/item/clothing/glasses/meson/engine/proc/scan()
-	for(var/turf/T in range(range, loc))
-		for(var/obj/O in T.contents)
-			if(O.level != 1)
-				continue
-
-			if(O.invisibility == INVISIBILITY_MAXIMUM)
-				flick_sonar(O)
-
-/obj/item/clothing/glasses/meson/engine/proc/flick_sonar(obj/pipe)
-	var/mob/M = loc
-	var/image/I = new(loc = get_turf(pipe))
-	var/mutable_appearance/MA = new(pipe)
-	MA.alpha = 128
-	I.appearance = MA
-	flick_overlay(I, list(M.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_rads()
 	var/mob/living/carbon/human/user = loc

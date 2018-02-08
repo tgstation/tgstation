@@ -17,8 +17,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
-/obj/machinery/button/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
@@ -88,7 +88,7 @@
 		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -103,12 +103,12 @@
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)

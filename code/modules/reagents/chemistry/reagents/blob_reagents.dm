@@ -301,7 +301,7 @@
 		var/obj/effect/temp_visual/explosion/fast/E = new /obj/effect/temp_visual/explosion/fast(get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in orange(get_turf(M), 1))
-			if("blob" in L.faction) //no friendly fire
+			if(ROLE_BLOB in L.faction) //no friendly fire
 				continue
 			var/aoe_volume = ..(L, TOUCH, initial_volume, 0, L.get_permeability_protection(), O)
 			L.apply_damage(0.4*aoe_volume, BRUTE)
@@ -459,7 +459,7 @@
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	M.apply_damage(0.4*reac_volume, BRUTE)
@@ -481,7 +481,7 @@
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
-			T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)

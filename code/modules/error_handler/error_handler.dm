@@ -60,11 +60,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
 	else
 		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
-		configured_error_cooldown = initial(CE.value)
+		configured_error_cooldown = initial(CE.config_entry_value)
 		CE = /datum/config_entry/number/error_limit
-		configured_error_limit = initial(CE.value)
+		configured_error_limit = initial(CE.config_entry_value)
 		CE = /datum/config_entry/number/error_silence_time
-		configured_error_silence_time = initial(CE.value)
+		configured_error_silence_time = initial(CE.config_entry_value)
 
 
 	//Each occurence of a unique error adds to its cooldown time...
@@ -120,6 +120,12 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	SEND_TEXT(world.log, main_line)
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)
+
+#ifdef UNIT_TESTS
+	if(GLOB.current_test)
+		//good day, sir
+		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
+#endif
 
 /* This logs the runtime in the old format */
 

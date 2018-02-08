@@ -28,8 +28,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_APPLICATION "Application"
 
 //Various costs related to power.
-#define SCRIPT_UNLOCK_THRESHOLD 50000 //Scripts will unlock if the total power reaches this amount
-#define APPLICATION_UNLOCK_THRESHOLD 100000 //Applications will unlock if the total powre reaches this amount
+#define MAX_CLOCKWORK_POWER 50000 //The max power in W that the cult can stockpile
+#define SCRIPT_UNLOCK_THRESHOLD 25000 //Scripts will unlock if the total power reaches this amount
+#define APPLICATION_UNLOCK_THRESHOLD 40000 //Applications will unlock if the total powre reaches this amount
 
 #define ABSCOND_ABDUCTION_COST 95
 
@@ -83,9 +84,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
 
-#define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 200 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
+#define MARAUDER_SCRIPTURE_SCALING_THRESHOLD 600 //The amount of deciseconds that must pass before marauder scripture will not gain a recital penalty
 
-#define MARAUDER_SCRIPTURE_SCALING_TIME 50 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
+#define MARAUDER_SCRIPTURE_SCALING_TIME 20 //The amount of extra deciseconds tacked on to the marauder scripture recital time per recent marauder
 
 #define MARAUDER_SCRIPTURE_SCALING_MAX 300 //The maximum extra time applied to the marauder scripture
 

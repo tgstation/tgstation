@@ -72,6 +72,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/underline_flag = TRUE //flag for underline
 
+/obj/item/device/pda/suicide_act(mob/living/carbon/user)
+	var/deathMessage = msg_input(user)
+	if (!deathMessage)
+		deathMessage = "i ded"
+	user.visible_message("<span class='suicide'>[user] is sending a message to the Grim Reaper! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	tnote += "<i><b>&rarr; To The Grim Reaper:</b></i><br>[deathMessage]<br>"//records a message in their PDA as being sent to the grim reaper
+	return BRUTELOSS
+
 /obj/item/device/pda/examine(mob/user)
 	..()
 	if(!id && !inserted_item)
@@ -383,7 +391,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (MODE_VT)
 						font_mode = FONT_VT
 			if ("Change_Color")
-				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').",background_color)as color
 				background_color = new_color
 
 			if ("Toggle_Underline")

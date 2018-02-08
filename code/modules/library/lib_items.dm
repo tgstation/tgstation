@@ -57,14 +57,12 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
 			if(istype(I, /obj/item/crowbar))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
 
@@ -99,7 +97,7 @@
 				if(!newname)
 					return
 				else
-					name = ("bookcase ([sanitize(newname)])")
+					name = "bookcase ([sanitize(newname)])"
 			else if(istype(I, /obj/item/crowbar))
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")

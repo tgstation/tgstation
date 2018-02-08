@@ -158,7 +158,7 @@
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -181,14 +181,14 @@
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
-	if(!target)
+	if(!target || !total_volume)
 		return
 
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
 	else
-		if(!target.reagents || src.total_volume<=0)
+		if(!target.reagents)
 			return
 		R = target.reagents
 
@@ -442,31 +442,7 @@
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
-				check_ignoreslow(my_atom)
-				check_gofast(my_atom)
-				check_goreallyfast(my_atom)
 	return 1
-
-/datum/reagents/proc/check_ignoreslow(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("morphine"))
-			return 1
-		else
-			M.status_flags &= ~IGNORESLOWDOWN
-
-/datum/reagents/proc/check_gofast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOFAST
-
-/datum/reagents/proc/check_goreallyfast(mob/M)
-	if(ismob(M))
-		if(M.reagents.has_reagent("methamphetamine"))
-			return 1
-		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list

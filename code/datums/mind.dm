@@ -196,12 +196,12 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(/datum/antagonist/traitor)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
-		remove_antag_datum(ANTAG_DATUM_BROTHER)
+		remove_antag_datum(/datum/antagonist/brother)
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -254,7 +254,7 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
-	. = 1
+	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
@@ -265,6 +265,14 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
+		if(!P) // I do not have a pen.
+			var/obj/item/pen/inowhaveapen
+			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+				inowhaveapen = new /obj/item/pen(traitor_mob.back)
+			else
+				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
+				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -600,7 +608,7 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-
+    
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
 			if("unemag")
@@ -671,27 +679,27 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
-	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
+	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/make_Changling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
 		C = add_antag_datum(/datum/antagonist/changeling)
-		special_role = "Changeling"
+		special_role = ROLE_CHANGELING
 	return C
 
 /datum/mind/proc/make_Wizard()
 	if(!has_antag_datum(/datum/antagonist/wizard))
-		special_role = "Wizard"
-		assigned_role = "Wizard"
+		special_role = ROLE_WIZARD
+		assigned_role = ROLE_WIZARD
 		add_antag_datum(/datum/antagonist/wizard)
 
 
 /datum/mind/proc/make_Cultist()
 	if(!has_antag_datum(/datum/antagonist/cult,TRUE))
 		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
-		special_role = "Cultist"
+		special_role = ROLE_CULTIST
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 
@@ -700,7 +708,7 @@
 	head.give_flash = TRUE
 	head.give_hud = TRUE
 	add_antag_datum(head)
-	special_role = "Head Revolutionary"
+	special_role = ROLE_REV_HEAD
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
@@ -801,7 +809,7 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
-	mind.special_role = "Alien"
+	mind.special_role = ROLE_ALIEN
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -816,5 +824,5 @@
 //PAI
 /mob/living/silicon/pai/mind_initialize()
 	..()
-	mind.assigned_role = "pAI"
+	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""

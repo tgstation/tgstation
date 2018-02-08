@@ -3,6 +3,8 @@
 	Lets you read PDA and request console messages.
 */
 
+#define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
+
 // The monitor itself.
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
@@ -20,9 +22,9 @@
 	var/rebootmsg = "<span class='warning'>%$&(�: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
-	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
+	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
-	var/auth = 0 // Are they authenticated?
+	var/auth = FALSE // Are they authenticated?
 	var/optioncount = 7
 	// Custom Message Properties
 	var/customsender = "System Administrator"
@@ -33,20 +35,20 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(istype(O, /obj/item/screwdriver) && emagged)
+	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
 		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	if(!isnull(linkedServer))
-		emagged = TRUE
+		obj_flags |= EMAGGED
 		screen = 2
 		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
+		spark_system.start()
 		var/obj/item/paper/monitorkey/MK = new(loc, linkedServer)
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
@@ -55,6 +57,10 @@
 		message = rebootmsg
 	else
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+
+/obj/machinery/computer/message_monitor/New()
+	. = ..()
+	GLOB.telecomms_list += src
 
 /obj/machinery/computer/message_monitor/Initialize()
 	..()
@@ -67,25 +73,29 @@
 			linkedServer = S
 			break
 
+/obj/machinery/computer/message_monitor/Destroy()
+	GLOB.telecomms_list -= src
+	. = ..()
+
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
 		return
 	//If the computer is being hacked or is emagged, display the reboot message.
-	if(hacking || emagged)
+	if(hacking || (obj_flags & EMAGGED))
 		message = rebootmsg
-	var/dat = "<center><font color='blue'[message]</font>/</center>"
+	var/dat = "<center><font color='blue'[message]</font></center>"
 
 	if(auth)
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='green'>\[Authenticated\]</font></a>&#09;/"
-		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[src.linkedServer && src.linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
+		dat += " Server Power: <A href='?src=[REF(src)];active=1'>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</a></h4>"
 	else
 		dat += "<h4><dd><A href='?src=[REF(src)];auth=1'>&#09;<font color='red'>\[Unauthenticated\]</font></a>&#09;/"
-		dat += " Server Power: <u>[src.linkedServer && src.linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
+		dat += " Server Power: <u>[linkedServer && linkedServer.toggled ? "<font color='green'>\[On\]</font>":"<font color='red'>\[Off\]</font>"]</u></h4>"
 
-	if(hacking || emagged)
+	if(hacking || (obj_flags & EMAGGED))
 		screen = 2
-	else if(!auth || !linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
-		if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
+	else if(!auth || LINKED_SERVER_NONRESPONSIVE)
+		if(LINKED_SERVER_NONRESPONSIVE)
 			message = noserver
 		screen = 0
 
@@ -96,13 +106,13 @@
 			var/i = 0
 			dat += "<dd><A href='?src=[REF(src)];find=1'>&#09;[++i]. Link To A Server</a></dd>"
 			if(auth)
-				if(!linkedServer || (linkedServer.stat & (NOPOWER|BROKEN)))
+				if(LINKED_SERVER_NONRESPONSIVE)
 					dat += "<dd><A>&#09;ERROR: Server not found!</A><br></dd>"
 				else
-					dat += "<dd><A href='?src=[REF(src)];view=1'>&#09;[++i]. View Message Logs </a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];viewr=1'>&#09;[++i]. View Request Console Logs </a></br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];clear=1'>&#09;[++i]. Clear Message Logs</a><br></dd>"
-					dat += "<dd><A href='?src=[REF(src)];clearr=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>"
+					dat += "<dd><A href='?src=[REF(src)];view_logs=1'>&#09;[++i]. View Message Logs </a><br></dd>"
+					dat += "<dd><A href='?src=[REF(src)];view_requests=1'>&#09;[++i]. View Request Console Logs </a></br></dd>"
+					dat += "<dd><A href='?src=[REF(src)];clear_logs=1'>&#09;[++i]. Clear Message Logs</a><br></dd>"
+					dat += "<dd><A href='?src=[REF(src)];clear_requests=1'>&#09;[++i]. Clear Request Console Logs</a><br></dd>"
 					dat += "<dd><A href='?src=[REF(src)];pass=1'>&#09;[++i]. Set Custom Key</a><br></dd>"
 					dat += "<dd><A href='?src=[REF(src)];msg=1'>&#09;[++i]. Send Admin Message</a><br></dd>"
 			else
@@ -125,13 +135,13 @@
 			var/index = 0
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
-			for(var/datum/data_pda_msg/pda in src.linkedServer.pda_msgs)
+			for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
 					break
 				// Del - Sender   - Recepient - Message
 				// X   - Al Green - Your Mom  - WHAT UP!?
-				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.photo ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
+				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.photo ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
@@ -210,20 +220,20 @@
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += {"<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sending Dep.</th><th width='15%'>Receiving Dep.</th>
 			<th width='300px' word-wrap: break-word>Message</th><th width='15%'>Stamp</th><th width='15%'>ID Auth.</th><th width='15%'>Priority.</th></tr>"}
-			for(var/datum/data_rc_msg/rc in src.linkedServer.rc_msgs)
+			for(var/datum/data_rc_msg/rc in linkedServer.rc_msgs)
 				index++
 				if(index > 3000)
 					break
 				// Del - Sender   - Recepient - Message
 				// X   - Al Green - Your Mom  - WHAT UP!?
-				dat += {"<tr><td width = '5%'><center><A href='?src=[REF(src)];deleter=[REF(rc)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[rc.send_dpt]</td>
+				dat += {"<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_requests=[REF(rc)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[rc.send_dpt]</td>
 				<td width='15%'>[rc.rec_dpt]</td><td width='300px'>[rc.message]</td><td width='15%'>[rc.stamp]</td><td width='15%'>[rc.id_auth]</td><td width='15%'>[rc.priority]</td></tr>"}
 			dat += "</table>"
 
 	message = defaultmsg
 	var/datum/browser/popup = new(user, "hologram_console", name, 700, 700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -231,13 +241,13 @@
 	if(isnull(linkedServer))
 		to_chat(user, "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>")
 	else
-		var/currentKey = src.linkedServer.decryptkey
+		var/currentKey = linkedServer.decryptkey
 		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
-	src.hacking = 0
-	src.screen = 0 // Return the screen back to normal
+	hacking = FALSE
+	screen = 0 // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
-	emagged = FALSE
+	obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -252,23 +262,24 @@
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		//Authenticate
 		if (href_list["auth"])
-			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
+			else if(auth)
+				auth = FALSE
+				screen = 0
 			else
-				if(auth)
-					auth = 0
-					screen = 0
-				else
-					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
-					if(dkey && dkey != "")
-						if(src.linkedServer.decryptkey == dkey)
-							auth = 1
-						else
-							message = incorrectkey
+				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+				if(dkey && dkey != "")
+					if(linkedServer.decryptkey == dkey)
+						auth = TRUE
+					else
+						message = incorrectkey
 
 		//Turn the server on/off.
 		if (href_list["active"])
-			if(auth)
+			if(LINKED_SERVER_NONRESPONSIVE)
+				message = noserver
+			else if(auth)
 				linkedServer.toggled = !linkedServer.toggled
 		//Find a server
 		if (href_list["find"])
@@ -286,86 +297,81 @@
 				message = noserver
 
 		//View the logs - KEY REQUIRED
-		if (href_list["view"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+		if (href_list["view_logs"])
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					src.screen = 1
+			else if(auth)
+				screen = 1
 
 		//Clears the logs - KEY REQUIRED
-		if (href_list["clear"])
-			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+		if (href_list["clear_logs"])
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					src.linkedServer.pda_msgs = list()
-					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+			else if(auth)
+				linkedServer.pda_msgs = list()
+				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Clears the request console logs - KEY REQUIRED
-		if (href_list["clearr"])
-			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+		if (href_list["clear_requests"])
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					src.linkedServer.rc_msgs = list()
-					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+			else if(auth)
+				linkedServer.rc_msgs = list()
+				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
-			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					var/dkey = stripped_input(usr, "Please enter the decryption key.")
-					if(dkey && dkey != "")
-						if(src.linkedServer.decryptkey == dkey)
-							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
-							if(length(newkey) <= 3)
-								message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
-							else if(length(newkey) > 16)
-								message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
-							else if(newkey && newkey != "")
-								src.linkedServer.decryptkey = newkey
-							message = "<span class='notice'>NOTICE: Decryption key set.</span>"
-						else
-							message = incorrectkey
+			else if(auth)
+				var/dkey = stripped_input(usr, "Please enter the decryption key.")
+				if(dkey && dkey != "")
+					if(linkedServer.decryptkey == dkey)
+						var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+						if(length(newkey) <= 3)
+							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
+						else if(length(newkey) > 16)
+							message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
+						else if(newkey && newkey != "")
+							linkedServer.decryptkey = newkey
+						message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+					else
+						message = incorrectkey
 
 		//Hack the Console to get the password
 		if (href_list["hack"])
 			if(issilicon(usr) && is_special_character(usr))
-				src.hacking = 1
-				src.screen = 2
+				hacking = TRUE
+				screen = 2
 				//Time it takes to bruteforce is dependant on the password length.
-				spawn(100*length(src.linkedServer.decryptkey))
-					if(src && src.linkedServer && usr)
+				spawn(100*length(linkedServer.decryptkey))
+					if(src && linkedServer && usr)
 						BruteForce(usr)
 		//Delete the log.
-		if (href_list["delete"])
+		if (href_list["delete_logs"])
 			//Are they on the view logs screen?
 			if(screen == 1)
-				if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete"], /datum/data_pda_msg))
-					src.linkedServer.pda_msgs -= locate(href_list["delete"])
+				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+					linkedServer.pda_msgs -= locate(href_list["delete_logs"])
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Delete the request console log.
-		if (href_list["deleter"])
+		if (href_list["delete_requests"])
 			//Are they on the view logs screen?
 			if(screen == 4)
-				if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete"], /datum/data_pda_msg))
-					src.linkedServer.rc_msgs -= locate(href_list["deleter"])
+				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+					linkedServer.rc_msgs -= locate(href_list["delete_requests"])
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Create a custom message
 		if (href_list["msg"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					src.screen = 3
+			else if(auth)
+				screen = 3
 		//Fake messaging selection - KEY REQUIRED
 		if (href_list["select"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 				screen = 0
 			else
@@ -403,11 +409,11 @@
 
 						if(isnull(customrecepient))
 							message = "<span class='notice'>NOTICE: No recepient selected!</span>"
-							return src.attack_hand(usr)
+							return attack_hand(usr)
 
 						if(isnull(custommessage) || custommessage == "")
 							message = "<span class='notice'>NOTICE: No message entered!</span>"
-							return src.attack_hand(usr)
+							return attack_hand(usr)
 
 						var/datum/signal/subspace/pda/signal = new(src, list(
 							"name" = "[customsender]",
@@ -421,18 +427,18 @@
 
 
 		//Request Console Logs - KEY REQUIRED
-		if(href_list["viewr"])
-			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
+		if(href_list["view_requests"])
+			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
-			else
-				if(auth)
-					src.screen = 4
+			else if(auth)
+				screen = 4
 
 		if (href_list["back"])
-			src.screen = 0
+			screen = 0
 
-	return src.attack_hand(usr)
+	return attack_hand(usr)
 
+#undef LINKED_SERVER_NONRESPONSIVE
 
 /obj/item/paper/monitorkey
 	name = "monitor decryption key"

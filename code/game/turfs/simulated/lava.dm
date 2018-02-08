@@ -100,8 +100,8 @@
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
 				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor["fire"] > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor["fire"] = 50
+			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+				O.armor = O.armor.setRating(fire = 50)
 			O.fire_act(10000, 1000)
 
 		else if (isliving(thing))
@@ -139,7 +139,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

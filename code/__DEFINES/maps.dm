@@ -37,18 +37,13 @@ Last space-z level = empty
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
 #define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_LAVALAND 5
 #define ZLEVEL_EMPTY_SPACE 12
-//Unless you modify it in map config should be equal to ZLEVEL_SPACEMAX
-#define ZLEVEL_TRANSIT 13
-
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 13
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 #define ZLEVEL_SPACE_RUIN_COUNT 5
 
 // traits
+// boolean - marks a level as having that property if present
 #define ZTRAIT_CENTCOM "CentCom"
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
@@ -57,6 +52,7 @@ Last space-z level = empty
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+// number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
 // trait definitions
@@ -71,7 +67,7 @@ Last space-z level = empty
     DECLARE_LEVEL("Main Station", CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
     DECLARE_LEVEL("Empty Area 1", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
     DECLARE_LEVEL("Empty Area 2", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 3)),\
+    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)),\
     DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)),\
 )
 
@@ -80,3 +76,13 @@ Last space-z level = empty
 #define CAMERA_LOCK_MINING 2
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
+
+
+//Ruin Generation
+
+#define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)
+
+#define PLACE_DEFAULT "random"
+#define PLACE_SAME_Z "same"
+#define PLACE_SPACE_RUIN "space"
+#define PLACE_LAVA_RUIN "lavaland"

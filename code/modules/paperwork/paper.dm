@@ -69,10 +69,6 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/paper/talisman)) //Talismans cannot be read
-		if(!iscultist(user) && !user.stat)
-			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
@@ -93,7 +89,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.has_disability(DISABILITY_CLUMSY) && prob(25))
+		if(H.has_trait(TRAIT_CLUMSY) && prob(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -297,9 +293,6 @@
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 			return
-		if(istype(src, /obj/item/paper/talisman/))
-			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
-			return
 
 	else if(istype(P, /obj/item/stamp))
 
@@ -317,7 +310,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
-		if(user.has_disability(DISABILITY_CLUMSY) && prob(10))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

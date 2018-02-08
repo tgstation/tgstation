@@ -100,9 +100,8 @@
 		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
 		return
 	state = 4
-	var/obj/machinery/camera/C = new(src.loc)
+	var/obj/machinery/camera/C = new(loc, src)
 	forceMove(C)
-	C.assembly = src
 	C.setDir(src.dir)
 
 	C.network = tempnetwork
@@ -129,16 +128,15 @@
 	qdel(src)
 	return TRUE
 
-/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/WT, mob/living/user)
-	if(!WT.remove_fuel(0, user))
-		return 0
+/obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
+	if(!W.tool_start_check(user, amount=0))
+		return FALSE
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
-	if(do_after(user, 20*WT.toolspeed, target = src))
-		if(WT.isOn())
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-			return 1
-	return 0
+	playsound(src.loc, W.usesound, 50, 1)
+	if(W.use_tool(src, user, 20))
+		playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+		return TRUE
+	return FALSE
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
