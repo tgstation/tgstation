@@ -46,7 +46,9 @@
 		/obj/item/toy/eightball									= 2,
 		/obj/item/toy/windupToolbox								= 2,
 		/obj/item/toy/clockwork_watch							= 2,
-		/obj/item/extendohand/acme								= 1)
+		/obj/item/toy/toy_dagger								= 2,
+		/obj/item/extendohand/acme								= 1,
+		/obj/item/hot_potato/harmless/toy						= 1)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -76,7 +78,7 @@
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses a [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.forceMove(get_turf(src))
 #undef PULSE_MEDAL

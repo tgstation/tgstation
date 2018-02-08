@@ -32,13 +32,12 @@
 			if(state != EMPTY_CORE)
 				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
-			var/obj/item/weldingtool/WT = P
-			if(!WT.isOn())
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
+
+			if(!P.tool_start_check(user, amount=0))
 				return
-			playsound(loc, WT.usesound, 50, 1)
+
 			to_chat(user, "<span class='notice'>You start to deconstruct the frame...</span>")
-			if(do_after(user, 20*P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
+			if(P.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
 				to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 				deconstruct(TRUE)
 			return

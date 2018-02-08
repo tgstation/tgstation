@@ -1,0 +1,7 @@
+author: "Evsey9"
+delete-after: True
+changes: 
+  - balance: "Integrated Circuit Drones are now bulky to improve safety ratings, and therefore, cannot be stored in normal backpacks or pockets, but now can accept modules that bulky circuit machinery can."
+  - balance: "Grabbers can now grab items up to the size of the circuit assembly they are in."
+  - balance: "Grabbers cannot store circuit machinery the same or larger size than the circuit assembly they are in."
+  - tweak: "Throwers now can throw items up to the size of circuit assembly they are in."

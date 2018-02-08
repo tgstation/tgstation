@@ -161,3 +161,9 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
+
+/obj/structure/fluff/fokoff_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "fokof"

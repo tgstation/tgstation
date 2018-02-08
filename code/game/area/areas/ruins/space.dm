@@ -55,6 +55,9 @@
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
 
+/area/ruin/space/has_grav/powered/cat_man
+	name = "Kitty Den"
+
 /area/ruin/space/has_grav/powered/authorship
 	name = "Authorship"
 

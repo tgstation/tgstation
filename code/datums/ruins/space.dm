@@ -274,3 +274,10 @@
 	suffix = "scp_294.dmm"
 	name = "SCP-294 Containment"
 	description = "An abandoned asteroid base that contains several EMP-proof turrets, and a valuable artifact. Should you get past the heavy laser turrets, a valuable treasure awaits."
+
+/datum/map_template/ruin/space/cat_experiments
+	id = "meow"
+	suffix = "mrow_thats_right.dmm"
+	name = "Feline-Human Combination Den"
+	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
+	are morally sound or not is another issue entirely."

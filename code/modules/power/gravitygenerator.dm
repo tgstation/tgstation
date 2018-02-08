@@ -194,14 +194,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 		if(GRAV_NEEDS_WELDING)
 			if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = I
-				if(WT.remove_fuel(1, user))
+				if(I.use_tool(src, user, 0, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
-					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
+					playsound(src, 'sound/items/welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
-				else if(WT.isOn())
-					to_chat(user, "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>")
 				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
