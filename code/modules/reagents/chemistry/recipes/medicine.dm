@@ -242,6 +242,6 @@
 /datum/chemical_reaction/morphine
 	name = "Morphine"
 	id = "morphine"
-	results = list("morphine" = 3)
+	results = list("morphine" = 2)
 	required_reagents = list("carbon" = 2, "hydrogen" = 2, "ethanol" = 1, "oxygen" = 1)
 	required_temp = 480
