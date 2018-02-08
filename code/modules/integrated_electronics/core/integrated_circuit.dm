@@ -135,7 +135,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>"
+	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
 		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"
