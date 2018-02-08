@@ -44,6 +44,9 @@
     }\
 }
 
+//minimum ticker lobby time in seconds
+#define MINIMUM_LOBBY_TIME 30
+
 // Subsystem init_order, from highest priority to lowest priority
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.

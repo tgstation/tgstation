@@ -1384,7 +1384,7 @@
 		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
 
-		var/mob/dead/new_player/NP = new()
+		var/mob/living/carbon/human/lobby/NP = new(null, TRUE)
 		NP.ckey = M.ckey
 		qdel(M)
 
@@ -1574,7 +1574,7 @@
 
 		var/mob/M = locate(href_list["makeanimal"])
 		if(isnewplayer(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/dead/new_player.")
+			to_chat(usr, "This cannot be used on instances of type /mob/living/carbon/human/lobby.")
 			return
 
 		usr.client.cmd_admin_animalize(M)

@@ -333,7 +333,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/dead/new_player/M in sortmob)
+	for(var/mob/living/carbon/human/lobby/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)

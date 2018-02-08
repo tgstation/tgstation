@@ -48,6 +48,9 @@
 		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
 		return
 
+	if(isnewplayer(mob))
+		var/mob/living/carbon/human/lobby/player = mob
+		player.ShowSpeechBubble(raw_msg)
 
 	log_talk(mob,"[key_name(src)] : [raw_msg]",LOGOOC)
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)

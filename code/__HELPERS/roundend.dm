@@ -161,11 +161,18 @@
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+	
 
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
+
+	CHECK_TICK
+	
+	lobby.AtRoundEnd()
+
+	CHECK_TICK
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)

@@ -293,13 +293,16 @@ All ShuttleMove procs go here
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
-			var/throw_dir = move_dir
-			var/turf/target = get_edge_target_turf(src, throw_dir)
-			var/range = movement_force["THROW"]
-			var/speed = range/5
-			src.throw_at(target, range, speed)
+			ShuttleThrow(movement_force, move_dir)
 		if(movement_force["KNOCKDOWN"])
 			Knockdown(movement_force["KNOCKDOWN"])
+
+/mob/living/proc/ShuttleThrow(list/movement_force, move_dir)
+	var/throw_dir = move_dir
+	var/turf/target = get_edge_target_turf(src, throw_dir)
+	var/range = movement_force["THROW"]
+	var/speed = range/5
+	src.throw_at(target, range, speed)
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -331,6 +334,9 @@ All ShuttleMove procs go here
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
+
+/obj/machinery/computer/lobby/poll/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	new_notification.loc = loc
 
 
 /************************************Misc move procs************************************/

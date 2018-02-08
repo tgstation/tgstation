@@ -145,7 +145,7 @@
 
 #define isdead(A) (istype(A, /mob/dead))
 
-#define isnewplayer(A) (istype(A, /mob/dead/new_player))
+#define isnewplayer(A) (istype(A, /mob/living/carbon/human/lobby))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 

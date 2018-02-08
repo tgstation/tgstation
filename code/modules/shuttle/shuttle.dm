@@ -280,6 +280,8 @@
 	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
 	var/list/hidden_turfs = list()
 
+	var/ignore_already_docked = FALSE // canDock will never return SHUTTLE_ALREADY_DOCKED
+
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
 
@@ -347,9 +349,12 @@
 		// by someone other than us
 		if(currently_docked != src)
 			return SHUTTLE_SOMEONE_ELSE_DOCKED
-		else
+
 		// This isn't an error, per se, but we can't let the shuttle code
 		// attempt to move us where we currently are, it will get weird.
+
+		// ...Unless you like it weird (◕‿◕✿)
+		if(!ignore_already_docked)
 			return SHUTTLE_ALREADY_DOCKED
 
 	return SHUTTLE_CAN_DOCK

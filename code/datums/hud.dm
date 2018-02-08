@@ -97,11 +97,5 @@ GLOBAL_LIST_INIT(huds, list(
 			for(var/atom/A in hud.hudatoms)
 				hud.add_to_single_hud(src, A)
 
-/mob/dead/new_player/reload_huds()
-	return
-
 /mob/proc/add_click_catcher()
 	client.screen += client.void
-
-/mob/dead/new_player/add_click_catcher()
-	return

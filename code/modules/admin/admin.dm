@@ -596,6 +596,7 @@
 		return alert("Too late... The game has already started!")
 	if(newtime)
 		SSticker.SetTimeLeft(newtime * 10)
+		newtime = SSticker.GetTimeLeft() / 10
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")

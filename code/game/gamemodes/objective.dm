@@ -569,8 +569,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/n_p = 1 //autowin
 	var/list/datum/mind/owners = get_owners()
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.client && P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
+		for(var/mob/living/carbon/human/lobby/P in GLOB.player_list)
+			if(P.IsReady() && !(P.mind in owners))
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)

@@ -89,8 +89,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 /obj/machinery/requests_console/Initialize()
 	. = ..()
-	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
+	SetName()
+	Radio = new /obj/item/device/radio(src)
+	Radio.listening = FALSE
+
+/obj/machinery/requests_console/proc/SetName()
+	name = "\improper [department] requests console"
 	switch(departmentType)
 		if(1)
 			if(!("[department]" in GLOB.req_console_assistance))
@@ -123,9 +128,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				GLOB.req_console_supplies += department
 			if(!("[department]" in GLOB.req_console_information))
 				GLOB.req_console_information += department
-
-	Radio = new /obj/item/device/radio(src)
-	Radio.listening = 0
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)

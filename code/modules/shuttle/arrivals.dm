@@ -11,6 +11,8 @@
 	callTime = INFINITY
 	ignitionTime = 50
 
+	ignore_already_docked = TRUE
+
 	var/sound_played
 	var/damaged	//too damaged to undock?
 	var/list/areas	//areas in our shuttle
@@ -163,18 +165,13 @@
 		sound_played = TRUE
 		hyperspace_sound(HYPERSPACE_END, areas)
 
-/obj/docking_port/mobile/arrivals/canDock(obj/docking_port/stationary/S)
-	. = ..()
-	if(. == SHUTTLE_ALREADY_DOCKED)
-		. = SHUTTLE_CAN_DOCK
-
 /obj/docking_port/mobile/arrivals/proc/Launch(pickingup)
 	if(pickingup)
 		force_depart = TRUE
 	if(mode == SHUTTLE_IDLE)
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
-		request(SSshuttle.getDock("arrivals_stationary"))		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
+		request(SSshuttle.getDock("arrivals_stationary"))
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)
