@@ -40,10 +40,12 @@
 	desc = "Worn by Cargonia, supplying the station with the necessary tools for survival."
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/twohanded/spear, /obj/item/twohanded/bonespear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife/combat/bone, /obj/item/kitchen/knife/combat/survival)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/qm
+	armor = list(melee = 5, bullet = 5, laser = 0, energy = 0, bomb = 5, bio = 0, rad = 0, fire = 0, acid = 0)
+
 
 /obj/item/clothing/head/hooded/cloakhood/qm
 	icon_state = "qmhood"
-	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list(melee = 5, bullet = 5, laser = 0, energy = 0, bomb = 5, bio = 0, rad = 0, fire = 0, acid = 0)
 
 
 /obj/item/clothing/suit/hooded/cloak/cmo
@@ -52,10 +54,12 @@
 	icon_state = "cmocloak"
 	allowed = list(/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/device/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/device/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/cmo
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 70, rad = 0, fire = 0, acid = 70)
+
 
 /obj/item/clothing/head/hooded/cloakhood/cmo
 	icon_state = "cmohood"
-	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 70, rad = 0, fire = 0, acid = 70)
 
 
 /obj/item/clothing/suit/hooded/cloak/ce
@@ -64,11 +68,12 @@
 	icon_state = "cecloak"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen,/obj/item/construction, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/ce
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 60, acid = 0)
 
 
 /obj/item/clothing/head/hooded/cloakhood/ce
 	icon_state = "cehood"
-	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 60, acid = 0)
 
 
 /obj/item/clothing/suit/hooded/cloak/rd
@@ -77,11 +82,12 @@
 	icon_state = "rdcloak"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen,/obj/item/construction, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/rd
+	armor = list(melee = 0, bullet = 0, laser = 5, energy = 5, bomb = 25, bio = 30, rad = 30, fire = 30, acid = 60)
 
 
 /obj/item/clothing/head/hooded/cloakhood/rd
 	icon_state = "rdhood"
-	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list(melee = 0, bullet = 0, laser = 5, energy = 5, bomb = 25, bio = 30, rad = 30, fire = 30, acid = 60)
 
 
 /obj/item/clothing/suit/hooded/cloak/cap
@@ -102,10 +108,11 @@
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hop
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 20, rad = 0, fire = 10, acid = 20)
 
 /obj/item/clothing/head/hooded/cloakhood/hop
 	icon_state = "hophood"
-	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 20, rad = 0, fire = 10, acid = 20)
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 
