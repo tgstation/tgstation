@@ -191,7 +191,7 @@
 		to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
-	else if(obj_flags & EMAGGED)
+	else if(!(obj_flags & EMAGGED))
 		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 		log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
