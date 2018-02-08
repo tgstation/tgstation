@@ -5,7 +5,6 @@
 	chemical_cost = 10
 	dna_cost = 0
 	req_stat = UNCONSCIOUS
-	always_keep = TRUE
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>You feel an itching, both inside and \

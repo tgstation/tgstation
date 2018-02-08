@@ -103,8 +103,6 @@
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
 		for(var/datum/action/changeling/p in purchasedpowers)
-			if(p.always_keep)
-				continue
 			purchasedpowers -= p
 			p.Remove(owner.current)//Remove() called. TODO: Maybe delete the button here
 
