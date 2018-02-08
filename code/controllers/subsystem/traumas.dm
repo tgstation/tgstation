@@ -79,17 +79,20 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/melee/cultblade/, /obj/item/twohanded/required/cult_bastard, /obj/item/restraints/legcuffs/bola/cult, 
 						/obj/item/clothing/suit/cultrobes/, /obj/item/clothing/suit/space/hardsuit/cult, 
 						/obj/item/clothing/suit/hooded/cultrobes/, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune, 
-						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult, /obj/item/stack/sheet/runed_metal, 
-						/obj/machinery/door/airlock/cult/, /obj/singularity/narsie, /obj/item/device/soulstone,
+						/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult/, /obj/singularity/narsie, 
+						/obj/item/device/soulstone,
 						/obj/structure/destructible/clockwork/, /obj/item/clockwork/, /obj/item/clothing/suit/armor/clockwork, 
 						/obj/item/clothing/glasses/judicial_visor, /obj/effect/clockwork/sigil, /obj/item/stack/tile/brass, 
-						/turf/open/floor/clockwork, /turf/closed/wall/clockwork, /obj/machinery/door/airlock/clockwork/,
+						/obj/machinery/door/airlock/clockwork/,
 						/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff, 
 						/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
 						/obj/item/gun/magic/staff/, /obj/item/gun/magic/wand/,
 						/obj/item/nullrod, /obj/item/clothing/under/rank/chaplain))
 					   )
-	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)))
+	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
+						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork, 
+						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)
+						)
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
