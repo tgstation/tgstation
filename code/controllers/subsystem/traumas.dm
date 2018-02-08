@@ -38,39 +38,48 @@ SUBSYSTEM_DEF(traumas)
 					   )
 
 	phobia_objs = list("spiders"   = typecacheof(list(/obj/structure/spider)),
+					   
 					   "security"  = typecacheof(list(/obj/item/clothing/under/rank/security, /obj/item/clothing/under/rank/warden,
 											 	 /obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/det,
 												 /obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
 												 /obj/machinery/door/airlock/security)),
-					   "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
+					  
+					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/device/instrument/bikehorn,
 												 /obj/item/device/pda/clown, /obj/item/grown/bananapeel)),
-					   "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+					  
+					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
-					   "lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
+					  
+					  "lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
 												 /obj/item/organ/tail/lizard, /obj/item/reagent_containers/food/drinks/bottle/lizardwine)),
-					   "skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
+					  
+					  "skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
+						
 						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/item/device/aicard)),
+						
 						"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical, /obj/item/clothing/under/rank/chemist, 
 						/obj/item/clothing/under/rank/nursesuit, /obj/item/clothing/under/rank/chief_medical_officer, 
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray/, 
 						/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/device/healthanalyzer/, 
 						/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper, 
 						/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell)),
+						
 						"authority"   = typecacheof(list(/obj/item/clothing/under/rank/captain,  /obj/item/clothing/under/rank/head_of_personnel, 
 						/obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/research_director, 
 						/obj/item/clothing/under/rank/chief_medical_officer, /obj/item/clothing/under/rank/chief_engineer, 
 						/obj/item/clothing/under/rank/centcom_officer, /obj/item/clothing/under/rank/centcom_commander, 
 						/obj/item/melee/classic_baton/telescopic, /obj/item/card/id/silver, /obj/item/card/id/gold, 
 						/obj/item/card/id/captains_spare, /obj/item/card/id/centcom, /obj/machinery/door/airlock/command)),
+						
 						"the supernatural"  = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome, 
 						/obj/item/melee/cultblade/, /obj/item/twohanded/required/cult_bastard, /obj/item/restraints/legcuffs/bola/cult, 
 						/obj/item/clothing/suit/cultrobes/, /obj/item/clothing/suit/space/hardsuit/cult, 
 						/obj/item/clothing/suit/hooded/cultrobes/, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune, 
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult, /obj/item/stack/sheet/runed_metal, 
-						/obj/machinery/door/airlock/cult/, /obj/singularity/narsie, /obj/item/device/soulstone
+						/obj/machinery/door/airlock/cult/, /obj/singularity/narsie, /obj/item/device/soulstone,
 						/obj/structure/destructible/clockwork/, /obj/item/clockwork/, /obj/item/clothing/suit/armor/clockwork, 
 						/obj/item/clothing/glasses/judicial_visor, /obj/effect/clockwork/sigil, /obj/item/stack/tile/brass, 
 						/turf/open/floor/clockwork, /turf/closed/wall/clockwork, /obj/machinery/door/airlock/clockwork/,
