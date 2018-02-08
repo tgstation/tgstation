@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(traumas)
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 					   "lizards"  = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
-					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake))
+					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake)),
 					   "robots"   = typecacheof(list(/mob/living/silicon/robot, /mob/living/silicon/AI, 
 					   /mob/living/simple_animal/drone, /mob/living/simple_animal/bot/)),
 					   "the supernatural"   = typecacheof(list(/mob/living/simple_animal/hostile/construct, 
