@@ -107,6 +107,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor, 
 						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor))
 					   )
+
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork, 
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
@@ -118,7 +119,7 @@ SUBSYSTEM_DEF(traumas)
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 						  "robots"   = typecacheof(list(/datum/species/android)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
-						  "aliens" = typecacheof(list(/datum/species/abductor, datum/species/jelly/, /datum/species/pod, 
+						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly/, /datum/species/pod, 
 						  /datum/species/shadow/))
 						 )
 
