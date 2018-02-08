@@ -245,9 +245,6 @@
 	for(var/V in internal_organs)
 		var/obj/item/organ/O = V
 		O.on_life()
-	for(var/V in implants)
-		var/obj/item/implant/O = V
-		O.on_life(src)
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in viruses)

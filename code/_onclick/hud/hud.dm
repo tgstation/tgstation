@@ -65,8 +65,6 @@
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	LAZYINITLIST(adv_health)
-
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null

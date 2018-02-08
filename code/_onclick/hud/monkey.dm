@@ -86,8 +86,7 @@
 
 	for(var/X in subtypesof(/obj/screen/adv_health))
 		var/obj/screen/adv_health/Y = new X()
-		Y.invisibility = INVISIBILITY_ABSTRACT
-		adv_health += Y
+		LAZYADD(adv_health, Y)
 		infodisplay += Y
 
 	pull_icon = new /obj/screen/pull()

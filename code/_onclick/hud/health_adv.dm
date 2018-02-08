@@ -12,6 +12,7 @@
 
 /obj/screen/adv_health/Destroy()
 	QDEL_NULL(color_overlay)
+	return ..()
 
 /obj/screen/adv_health/brute
 	name = "brute health"
