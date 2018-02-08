@@ -11,17 +11,6 @@
 	var/codelen = 4
 	tamperproof = 90
 
-/obj/structure/closet/crate/proc/pathorlist_to_loot(var/loot)//needs this path for necro crates
-	if(loot)
-		if(ispath(loot))
-			new loot(src)
-		else
-			if(islist(loot))
-				for(var/i in loot)
-					for(var/ii in 1 to (loot[i] ? loot[i] : 1))//does i-in-loot have an associated value? if so use it, otherwise 1
-						if(ispath(i))
-							new i(src)
-
 /obj/structure/closet/crate/secure/loot/Initialize()
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
@@ -40,110 +29,93 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 */
 
 	var/loot = pick(
-//5%
-5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/item/lighter),
-
-5;list(/obj/item/bedsheet,
-/obj/item/kitchen/knife,
-/obj/item/wirecutters,
-/obj/item/screwdriver,
-/obj/item/weldingtool,
-/obj/item/hatchet,
-/obj/item/crowbar),
-
-5;/obj/item/reagent_containers/glass/beaker/bluespace,
-5;list(/obj/item/stack/ore/diamond=10),
-5;list(/obj/item/poster/random_contraband=5),
-5;list(/obj/item/reagent_containers/glass/beaker/noreact=3),
-5;/obj/item/seeds/firelemon,
-5;/obj/item/melee/baton,
-
-5;list(/obj/item/clothing/under/shorts/red,
-/obj/item/clothing/under/shorts/blue),
-
-5;list(/obj/item/clothing/under/chameleon,
-/obj/item/clothing/neck/tie/horrible=7),
-//2%
-2;/obj/item/melee/classic_baton,
-2;/obj/item/toy/balloon,
-2;pick(subtypesof(/obj/item/toy/prize)),
-2;/obj/item/toy/syndicateballoon,
-2;list(/obj/item/borg/upgrade/modkit/aoe/mobs,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space),
-
-2;list(/obj/item/clothing/head/kitty=5,
-/obj/item/clothing/neck/petcollar=5),
-
-//use list to store an associated value to create multiple & embed pick inside to choose from a selection
-2;list(pick(//2% chance to get coins
-3;/obj/item/coin/silver,//30%
-3;/obj/item/coin/iron,//30%
-1;/obj/item/coin/gold,//10%
-1;/obj/item/coin/diamond,//10%
-1;/obj/item/coin/plasma,//10%
-1;/obj/item/coin/uranium//10%
-)=rand(4,7)),//make 4 to 7 of them
-
-2;list(/obj/item/clothing/suit/ianshirt,
-/obj/item/clothing/suit/hooded/ian_costume),
-
-2;list(pick((subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace))=rand(4,7)),
-2;list(/obj/item/stack/ore/bluespace_crystal=5),
-2;/obj/item/pickaxe/drill,
-2;/obj/item/pickaxe/drill/jackhammer,
-2;/obj/item/pickaxe/diamond,
-2;/obj/item/pickaxe/drill/diamonddrill,
-
-2;list(/obj/item/cane,
-/obj/item/clothing/head/collectable/tophat),
-
-2;/obj/item/gun/energy/plasmacutter,
-2;/obj/item/toy/katana,
-2;/obj/item/defibrillator/compact,
-//1%
-1;/obj/item/weed_extract,
-1;/obj/item/organ/brain,
-1;/obj/item/organ/brain/alien,
-1;/obj/item/organ/heart,
-1;/obj/item/device/soulstone/anybody,
-1;/obj/item/katana,
-1;/obj/item/dnainjector/xraymut,
-
-1;list(/obj/item/storage/backpack/clown,
-/obj/item/clothing/under/rank/clown,
-/obj/item/clothing/shoes/clown_shoes,
-/obj/item/device/pda/clown,
-/obj/item/clothing/mask/gas/clown_hat,
-/obj/item/bikehorn,
-/obj/item/toy/crayon/rainbow,
-/obj/item/reagent_containers/spray/waterflower),
-
-1;list(/obj/item/clothing/under/rank/mime,
-/obj/item/clothing/shoes/sneakers/black,
-/obj/item/device/pda/mime,
-/obj/item/clothing/gloves/color/white,
-/obj/item/clothing/mask/gas/mime,
-/obj/item/clothing/head/beret,
-/obj/item/clothing/suit/suspenders,
-/obj/item/toy/crayon/mime,
-/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing),
-
-1;/obj/item/hand_tele,
-
-1;list(/obj/item/clothing/mask/balaclava,
-/obj/item/gun/ballistic/automatic/pistol,
-/obj/item/ammo_box/magazine/m10mm),
-
-1;/obj/item/katana/cursed,
-
-1;list(/obj/item/storage/belt/champion,
-/obj/item/clothing/mask/luchador),
-
-1;/obj/item/clothing/head/bearpelt)
+		//5%
+		5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,
+			/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
+			/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+			/obj/item/lighter),
+		5;list(/obj/item/bedsheet,
+			/obj/item/kitchen/knife,
+			/obj/item/wirecutters,
+			/obj/item/screwdriver,
+			/obj/item/weldingtool,
+			/obj/item/hatchet,
+			/obj/item/crowbar),
+		5;/obj/item/reagent_containers/glass/beaker/bluespace,
+		5;list(/obj/item/stack/ore/diamond=10),
+		5;list(/obj/item/poster/random_contraband=5),
+		5;list(/obj/item/reagent_containers/glass/beaker/noreact=3),
+		5;/obj/item/seeds/firelemon,
+		5;/obj/item/melee/baton,
+		5;list(/obj/item/clothing/under/shorts/red,
+			/obj/item/clothing/under/shorts/blue),
+		5;list(/obj/item/clothing/under/chameleon,
+			/obj/item/clothing/neck/tie/horrible=7),
+		//2%
+		2;/obj/item/melee/classic_baton,
+		2;/obj/item/toy/balloon,
+		2;pick(subtypesof(/obj/item/toy/prize)),
+		2;/obj/item/toy/syndicateballoon,
+		2;list(/obj/item/borg/upgrade/modkit/aoe/mobs,
+			/obj/item/clothing/suit/space,
+			/obj/item/clothing/head/helmet/space),
+		2;list(/obj/item/clothing/head/kitty=5,
+			/obj/item/clothing/neck/petcollar=5),
+		//use list to store an associated value to create multiple & embed pick inside to choose from a selection
+		2;list(pick(//2% chance to get coins
+			3;/obj/item/coin/silver,//30%
+			3;/obj/item/coin/iron,//30%
+			1;/obj/item/coin/gold,//10%
+			1;/obj/item/coin/diamond,//10%
+			1;/obj/item/coin/plasma,//10%
+			1;/obj/item/coin/uranium//10%
+			)=rand(4,7)),//make 4 to 7 of them
+		2;list(/obj/item/clothing/suit/ianshirt,
+			/obj/item/clothing/suit/hooded/ian_costume),
+		2;list(pick((subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace))=rand(4,7)),
+		2;list(/obj/item/stack/ore/bluespace_crystal=5),
+		2;/obj/item/pickaxe/drill,
+		2;/obj/item/pickaxe/drill/jackhammer,
+		2;/obj/item/pickaxe/diamond,
+		2;/obj/item/pickaxe/drill/diamonddrill,
+		2;list(/obj/item/cane,
+			/obj/item/clothing/head/collectable/tophat),
+		2;/obj/item/gun/energy/plasmacutter,
+		2;/obj/item/toy/katana,
+		2;/obj/item/defibrillator/compact,
+		//1%
+		1;/obj/item/weed_extract,
+		1;/obj/item/organ/brain,
+		1;/obj/item/organ/brain/alien,
+		1;/obj/item/organ/heart,
+		1;/obj/item/device/soulstone/anybody,
+		1;/obj/item/katana,
+		1;/obj/item/dnainjector/xraymut,
+		1;list(/obj/item/storage/backpack/clown,
+			/obj/item/clothing/under/rank/clown,
+			/obj/item/clothing/shoes/clown_shoes,
+			/obj/item/device/pda/clown,
+			/obj/item/clothing/mask/gas/clown_hat,
+			/obj/item/bikehorn,
+			/obj/item/toy/crayon/rainbow,
+			/obj/item/reagent_containers/spray/waterflower),
+		1;list(/obj/item/clothing/under/rank/mime,
+			/obj/item/clothing/shoes/sneakers/black,
+			/obj/item/device/pda/mime,
+			/obj/item/clothing/gloves/color/white,
+			/obj/item/clothing/mask/gas/mime,
+			/obj/item/clothing/head/beret,
+			/obj/item/clothing/suit/suspenders,
+			/obj/item/toy/crayon/mime,
+			/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing),
+		1;/obj/item/hand_tele,
+		1;list(/obj/item/clothing/mask/balaclava,
+			/obj/item/gun/ballistic/automatic/pistol,
+			/obj/item/ammo_box/magazine/m10mm),
+		1;/obj/item/katana/cursed,
+		1;list(/obj/item/storage/belt/champion,
+			/obj/item/clothing/mask/luchador),
+		1;/obj/item/clothing/head/bearpelt)
 
 	pathorlist_to_loot(loot)
 
