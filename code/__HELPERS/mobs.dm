@@ -277,7 +277,7 @@ Proc for attack log creation, because really why not
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -299,6 +299,16 @@ Proc for attack log creation, because really why not
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, delay, target)
+
+	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+	if(mood)
+		switch(mood.mood) //Alerts do_after delay based on how happy you are
+			if(-INFINITY to MOOD_LEVEL_SAD2)
+				delay *= 1.25
+			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+				delay *= 1.05
+			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+				delay *= 1.1
 
 	var/endtime = world.time + delay
 	var/starttime = world.time

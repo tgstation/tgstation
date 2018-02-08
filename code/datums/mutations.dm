@@ -312,12 +312,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= CLUMSY
+	owner.disabilities |= TRAIT_CLUMSY
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~CLUMSY
+	owner.disabilities &= ~TRAIT_CLUMSY
 
 /datum/mutation/human/tourettes
 	name = "Tourettes Syndrome"
