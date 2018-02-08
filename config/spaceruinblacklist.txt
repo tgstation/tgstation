@@ -42,3 +42,4 @@
 #_maps/RandomRuins/SpaceRuins/bus.dmm
 #_maps/RandomRuins/SpaceRuins/miracle.dmm
 #_maps/RandomRuins/SpaceRuins/oldstation.dmm
+#_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm

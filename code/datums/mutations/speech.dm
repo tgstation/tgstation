@@ -230,3 +230,67 @@
 	..()
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
+
+
+/datum/mutation/human/italian
+	name = "Italian"
+	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>You feel-a the spicy meatballs and-a pasta singing to your-a soul!</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel the urge to switch sides midway through a war. Your love of pasta passes.</span>"
+
+/datum/mutation/human/italian/say_mod(message)
+	if(message)
+		message = " [message] "
+		message = replacetext(message," mom "," mamma ")
+		message = replacetext(message," dad "," pappa ")
+		message = replacetext(message," baby ",pick(" bambino "," little sausage roll "))
+		message = replacetext(message,"spicy","a-spicy")
+		message = replacetext(message,"I'm","I'm-a")
+		message = replacetext(message," friend "," enemy-a ")
+		message = replacetext(message," enemy "," friend-a ")
+		message = replacetext(message,"traitor","mafioso")
+		message = replacetext(message," operative "," greek ")
+		message = replacetext(message," op "," greek ")
+		message = replacetext(message," ops "," greeks")
+		message = replacetext(message," operative "," greek")
+		message = replacetext(message," operatives "," greeks")
+		message = replacetext(message," ops "," greeks")
+		message = replacetext(message," nuke"," spiciest-a meatball")
+		message = replacetext(message," good"," molto bene")
+		message = replacetext(message," why"," for-a what reason")
+		message = replacetext(message," my "," my-a ")
+		message = replacetext(message,"it's","it's-a")
+		message = replacetext(message," bad"," molto male")
+		message = replacetext(message," sing "," sing-a ")
+		message = replacetext(message," cook "," cook-a ")
+		message = replacetext(message," want "," want-a ")
+		message = replacetext(message," what's "," what's-a ")
+		message = replacetext(message," shitcurity"," carabinieri")
+		message = replacetext(message," shitsec"," carabinieri")
+		message = replacetext(message," and "," and-a ")
+		message = replacetext(message," am "," am-a ")
+		message = replacetext(message," assistant "," goombah ")
+		message = replacetext(message," greytide "," curvisti ")
+		message = replacetext(message," greytider "," curvisti ")
+		message = replacetext(message," captain "," capitano ")
+		message = replacetext(message," sec "," polizia ")
+		message = replacetext(message," security "," polizia ")
+		message = replacetext(message,"cheese",pick("parmesano","gorgonzola"))
+		message = replacetext(message," meat",pick(" pepperoni"," prosciutto"))
+		message = replacetext(message,"who's","who's-a")
+		message = replacetext(message,"hello",pick("ciao","buongiorno"))
+		message = replacetext(message," bye ",pick(" ciao "," arrivederci "))
+		message = replacetext(message,"thing","thing-a")
+		message = replacetext(message,"whose","whose-a")
+		message = replacetext(message,"thanks","grazie")
+		message = replacetext(message," wine"," vino")
+		message = replacetext(message,"could","could-a")
+		message = replacetext(message," use"," use-a")
+		message = replacetext(message," make"," make-a")
+		message = replacetext(message,"spaghetti", "SPAGHETT")
+
+		if(prob(3))
+			message += pick(" Ravioli Ravioli give me the Formuoli! ",pick(" Mamma-mia!","Mamma-mia! That's a spicy meat-ball!"))
+			message += " La la la la la funiculi funicula!"
+	return trim(message)

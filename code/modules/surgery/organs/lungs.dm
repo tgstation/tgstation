@@ -282,7 +282,6 @@
 			H.reagents.add_reagent("nitryl_gas",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
-		gas_breathed = 0
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
