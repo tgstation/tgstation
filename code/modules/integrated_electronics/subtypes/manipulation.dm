@@ -405,7 +405,7 @@
 	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
 	complexity = 15
 	w_class = WEIGHT_CLASS_SMALL
-	size = 2
+	size = 3
 	inputs = list(
 		"target X rel" = IC_PINTYPE_NUMBER,
 		"target Y rel" = IC_PINTYPE_NUMBER,
@@ -417,6 +417,7 @@
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
+	cooldown_per_use = 40
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
 	var/max_w_class = assembly.w_class
