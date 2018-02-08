@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user, dont_print = FALSE) // Hippie - Allows us to get a normal examine without printing anything
+/mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -317,12 +317,9 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	msg += "*---------*</span>"
 
-	// Hippie Start - To allow for disguises
-	if (!dont_print)
-		to_chat(user, msg)
+	to_chat(user, msg)
 
-	return msg
-	// Hippie End
+	return msg // Hippie - To allow for disguises
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

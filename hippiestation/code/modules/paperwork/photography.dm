@@ -25,7 +25,7 @@
 
 			var/datum/photo_disguise/D = new()
 			D.name = C.name
-			D.examine_override = C.examine(user, TRUE) // Don't actually print anything please
+			D.examine_override = C.examine(null) // Don't actually print anything please
 			D.disguise_icon = getFlatIcon(C, no_anim = TRUE)
 
 			LAZYSET(targets, C.name, D)
