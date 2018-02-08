@@ -213,8 +213,7 @@
 
 /obj/item/device/geiger_counter/cyborg/dropped()
 	. = ..()
-	if (mobhook)
-		QDEL_NULL(mobhook)
+	QDEL_NULL(mobhook)
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE
