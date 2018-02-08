@@ -36,12 +36,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 /mob/living/carbon/human/lobby/Initialize(mapload, _no_initial_fade_in = FALSE)
 	. = ..()
 
+	if(!loc)
+		loc = locate(1, 1, 1)	//temporary, don't use forceMove or ambience will play
+
 	GLOB.alive_mob_list -= src
 	GLOB.lobby_players += src
 
 	no_initial_fade_in = _no_initial_fade_in
-
-	loc = locate(1, 1, 1)	//temporary, don't use forceMove or ambience will play
 
 	equipOutfit(/datum/outfit/vr_basic, FALSE)
 
