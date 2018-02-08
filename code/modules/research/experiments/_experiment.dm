@@ -29,9 +29,12 @@
 		E.say("Experiment gathered [gained_points] points from dataset.")
 
 //This is just a subtype for experiments that should destroy the object and return the materials
+/datum/experiment/destroy
+	var/immune_flags = INDESTRUCTIBLE //any of these flags prevent the item from being destroyed
+
 /datum/experiment/destroy/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
-	if(. && O.resistance_flags & INDESTRUCTIBLE)
+	if(O.resistance_flags & immune_flags)
 		. = FALSE
 
 /datum/experiment/destroy/perform(obj/machinery/rnd/experimentor/E,obj/item/O)

@@ -7,9 +7,8 @@
 	experiment_type = /datum/experiment_type/poke
 
 /datum/experiment/destroy/lash/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	..()
 	. = FALSE
-	if(!..()) //Ok I admit that this looks ugly. Please help.
-		return FALSE
 	E.visible_message("<span class='danger'>[E] malfunctions and destroys [O], lashing its arms out at nearby people!</span>")
 	for(var/mob/living/m in oview(1, E))
 		m.apply_damage(15, BRUTE, pick("head","chest","groin"))

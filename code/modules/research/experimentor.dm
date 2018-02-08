@@ -47,8 +47,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	circuit = /obj/item/circuitboard/machine/experimentor
 	verb_say = "beeps"
 	var/recently_experimented = 0
-	var/mob/tracked_ian
-	var/mob/tracked_runtime
 	var/bad_thing_coeff = 0
 	var/reset_time = 15
 	var/list/item_reactions = list()
@@ -83,8 +81,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
-	tracked_ian = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
-	tracked_runtime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
 	//SetTypeReactions()
 
 /obj/machinery/rnd/experimentor/RefreshParts()
@@ -220,12 +216,16 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 				var/datum/experiment/EX = new type()
 				EX.init()
 				web.all_experiments[type] = EX
-				for(var/datum/experiment_type/E in web.all_experiment_types)
-					if(ispath(E.type,EX.experiment_type))
+				if(!EX.experiment_type)
+					continue
+				for(var/extype in typesof(EX.experiment_type))
+					var/datum/experiment_type/E = web.all_experiment_types[extype]
+					if(E)
 						E.experiments += EX
-		for(var/datum/experiment_type/E in web.all_experiment_types)
+		for(var/extype in web.all_experiment_types)
+			var/datum/experiment_type/E = web.all_experiment_types[extype]
 			if(!E.hidden)
-				experiments += E
+				experiments[extype] = E
 
 /obj/machinery/rnd/experimentor/proc/eject_item()
 	if(loaded_item)
