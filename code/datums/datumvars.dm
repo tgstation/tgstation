@@ -964,7 +964,7 @@
 					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 					if(!isnull(angle))
 						A.transform = M.Turn(angle)
-			
+
 			href_list["datumrefresh"] = href_list["modtransform"]
 
 		else if(href_list["rotatedatum"])
@@ -1285,3 +1285,18 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
+
+
+		else if(href_list["forceexperiment"])
+			if(!check_rights(NONE))
+				return
+
+			var/obj/machinery/rnd/experimentor/E = locate(href_list["forceexperiment"])
+
+			if(!istype(E))
+				return
+
+			var/list/experiment_options = sortList(typesof(/datum/experiment))
+			var/chosen_path = input(usr, "Choose an experiment to run.", "Choose an experiment.") as null|anything in experiment_options
+			if(chosen_path)
+				E.perform_experiment(chosen_path)

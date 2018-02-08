@@ -7,6 +7,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
 	var/payload = /obj/item/grenade/flashbang/cluster
+	var/prime_sound = 'sound/weapons/armbomb.ogg'
 
 /obj/item/grenade/clusterbuster/prime()
 	update_mob()
@@ -19,11 +20,11 @@
 			numspawned--
 
 	for(var/loop = again ,loop > 0, loop--)
-		new /obj/item/grenade/clusterbuster/segment(loc, payload)//Creates 'segments' that launches a few more payloads
+		new /obj/item/grenade/clusterbuster/segment(loc, payload, prime_sound)//Creates 'segments' that launches a few more payloads
 
 	new /obj/effect/payload_spawner(loc, payload, numspawned)//Launches payload
 
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(loc, prime_sound, 75, 1, -3)
 
 	qdel(src)
 
@@ -37,10 +38,11 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 
-/obj/item/grenade/clusterbuster/segment/New(var/loc, var/payload_type = /obj/item/grenade/flashbang/cluster)
+/obj/item/grenade/clusterbuster/segment/New(var/loc, var/payload_type = /obj/item/grenade/flashbang/cluster, var/sound = 'sound/weapons/armbomb.ogg')
 	..()
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
+	prime_sound = sound
 	active = 1
 	walk_away(src,loc,rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
@@ -49,7 +51,7 @@
 
 	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
 
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(loc, prime_sound, 75, 1, -3)
 
 	qdel(src)
 
@@ -60,14 +62,11 @@
 
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/grenade/P = new type(loc)
-		P.active = 1
+		if(istype(P))
+			P.active = 1
+			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
 		walk_away(P,loc,rand(1,4))
-
-		spawn(rand(15,60))
-			if(P && !QDELETED(P))
-				P.prime()
-			qdel(src)
-
+	qdel(src)
 
 //////////////////////////////////
 //Custom payload clusterbusters

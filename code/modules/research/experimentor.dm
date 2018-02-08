@@ -17,33 +17,24 @@
 #define EFFECT_PROB_VERYHIGH 95
 
 #define FAIL 8
+GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item/grenade,/obj/item/device/aicard,/obj/item/storage/backpack/holding,/obj/item/slime_extract,/obj/item/device/onetankbomb,/obj/item/device/transfer_valve))
+
 /datum/experiment_type
 	var/name = "Adminhelp"
+	var/hidden = FALSE //Whether we should hide this from newly made experimentors
 	var/list/experiments = list()
 	var/list/item_results = list()
 
-/datum/experiment_type/proc/get_valid_experiments(obj/item/O)
+/datum/experiment_type/proc/get_valid_experiments(obj/item/O,bad_things_coeff)
 	var/list/weighted_experiments = list()
 	for(var/datum/experiment/E in experiments)
-		if(E.can_perform(O) && E.weight)
+		if(!E.can_perform(O) || !E.weight)
+			return
+		if(E.is_bad && bad_things_coeff < E.weight)
+			weighted_experiments[E] = E.weight - bad_things_coeff
+		else if(!E.is_bad)
 			weighted_experiments[E] = E.weight
 	return weighted_experiments
-
-/datum/experiment
-	var/weight = 0
-	var/is_bad = FALSE
-	var/experiment_type
-	var/valid_types = typecacheof(/obj/item)
-	var/performed_times = 0
-
-/datum/experiment/proc/can_perform(obj/item/O)
-	. = valid_types[O]
-
-/datum/experiment/proc/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
-	. = FALSE
-	performed_times++
-
-/datum/experiment/proc/gather_data(datum/techweb/T,success)
 
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
@@ -54,18 +45,16 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
-	var/recentlyExperimented = 0
-	var/mob/trackedIan
-	var/mob/trackedRuntime
-	var/badThingCoeff = 0
-	var/resetTime = 15
-	var/cloneMode = FALSE
-	var/cloneCount = 0
+	verb_say = "beeps"
+	var/recently_experimented = 0
+	var/mob/tracked_ian
+	var/mob/tracked_runtime
+	var/bad_thing_coeff = 0
+	var/reset_time = 15
 	var/list/item_reactions = list()
-	var/list/valid_items = list() //valid items for special reactions like transforming
-	var/list/critical_items = list() //items that can cause critical reactions
+	var/list/experiments = list()
 
-/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
+/*/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		if(istype(I, /obj/item/relic))
@@ -88,24 +77,25 @@
 		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null)
-				critical_items += I
+				critical_items += I*/
 
 
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
-	SetTypeReactions()
+	tracked_ian = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
+	tracked_runtime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
+	//SetTypeReactions()
 
 /obj/machinery/rnd/experimentor/RefreshParts()
+	reset_time = initial(reset_time)
+	bad_thing_coeff = initial(bad_thing_coeff)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if(resetTime > 0 && (resetTime - M.rating) >= 1)
-			resetTime -= M.rating
+		reset_time = max(1,reset_time - M.rating)
 	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
-		badThingCoeff += M.rating*2
+		bad_thing_coeff += M.rating*4 //Boosted slightly
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		badThingCoeff += M.rating
+		bad_thing_coeff += M.rating*2 //Ditto
 
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
@@ -115,9 +105,11 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/experimentor/insert_item(obj/item/O, mob/user)
+	if(user.a_intent != INTENT_HARM && istype(O))
 		. = 1
+		if(O.flags_1 & ABSTRACT_1) //Yeah lets just stop this before it becomes a problem.
+			return
 		if(!is_insertion_ready(user))
 			return
 		if(!user.transferItemToLoc(O, src))
@@ -127,7 +119,7 @@
 		flick("h_lathe_load", src)
 
 /obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/O)
-	ejectItem()
+	eject_item()
 	. = ..(O)
 
 /obj/machinery/rnd/experimentor/attack_hand(mob/user)
@@ -139,14 +131,10 @@
 		dat += "<b>Loaded Item:</b> [loaded_item]"
 
 		dat += "<div>Available tests:"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_POKE]'>Poke</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_GAS]'>Gas</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_HEAT]'>Burn</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_COLD]'>Freeze</A></b>"
-		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b></div>"
-		if(istype(loaded_item,/obj/item/relic))
-			dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
+		for(var/experiment in experiments)
+			var/datum/experiment_type/E = experiments[experiment]
+			dat += "<b><a href='byond://?src=[REF(src)];function=[experiment]'>[E.name]</A></b>"
+		dat += "</div>"
 		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
 		var/list/listin = techweb_item_boost_check(src)
 		if(listin)
@@ -179,76 +167,86 @@
 	usr.set_machine(src)
 
 	var/scantype = href_list["function"]
-	var/obj/item/process = locate(href_list["item"]) in src
+	//var/obj/item/process = locate(href_list["item"]) in src
 
 	if(href_list["close"])
 		usr << browse(null, "window=experimentor")
 		return
 	if(scantype == "search")
-		var/obj/machinery/computer/rdconsole/D = locate(/obj/machinery/computer/rdconsole) in oview(3,src)
-		if(D)
-			linked_console = D
+		link_to_rnd()
 	else if(scantype == "eject")
-		ejectItem()
+		eject_item()
 	else if(scantype == "refresh")
 		updateUsrDialog()
 	else
-		if(recentlyExperimented)
+		if(recently_experimented)
 			to_chat(usr, "<span class='warning'>[src] has been used too recently!</span>")
 		else if(!loaded_item)
 			to_chat(usr, "<span class='warning'>[src] is not currently loaded!</span>")
-		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
-			to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please try again.</span>")
+		//else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
+		//	to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please try again.</span>")
 		else
-			var/dotype
-			if(text2num(scantype) == SCANTYPE_DISCOVER)
-				dotype = SCANTYPE_DISCOVER
-			else
-				dotype = matchReaction(process,scantype)
-			experiment(dotype,process)
-			use_power(750)
-			if(dotype != FAIL)
+			var/experiment_type = text2path(scantype)
+			perform_experiment(experiment_type)
+			/*if(dotype != FAIL)
 				var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
 				var/picked = pickweight(nodes)		//This should work.
 				if(linked_console)
-					linked_console.stored_research.boost_with_path(picked, process.type)
+					linked_console.stored_research.boost_with_path(picked, process.type)*/
 	updateUsrDialog()
 
-/obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
-	var/obj/item/D = matching
-	if(D)
-		if(item_reactions.Find("[D.type]"))
-			var/tor = item_reactions["[D.type]"]
-			if(tor == text2num(reaction))
-				return tor
-			else
-				return FAIL
-		else
-			return FAIL
-	else
-		return FAIL
-
-/obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
-	if(loaded_item)
-		if(cloneMode && cloneCount > 0)
+		/*if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
 			var/type_to_make = loaded_item.type
 			new type_to_make(get_turf(pick(oview(1,src))))
 			--cloneCount
 			if(cloneCount == 0)
 				cloneMode = FALSE
-			return
+			return*/
+
+/obj/machinery/rnd/experimentor/proc/link_to_rnd()
+	var/obj/machinery/computer/rdconsole/D = locate(/obj/machinery/computer/rdconsole) in oview(3,src)
+	if(D)
+		linked_console = D
+		var/datum/techweb/web = D.stored_research
+
+		experiments = list()
+		if(!web.all_experiment_types.len)
+			for(var/type in typesof(/datum/experiment_type) - /datum/experiment_type)
+				web.all_experiment_types[type] = new type()
+			for(var/datum/experiment/type in typesof(/datum/experiment))
+				if(!initial(type.weight))
+					continue
+				var/datum/experiment/EX = new type()
+				EX.init()
+				web.all_experiments[type] = EX
+				for(var/datum/experiment_type/E in web.all_experiment_types)
+					if(ispath(E.type,EX.experiment_type))
+						E.experiments += EX
+		for(var/datum/experiment_type/E in web.all_experiment_types)
+			if(!E.hidden)
+				experiments += E
+
+/obj/machinery/rnd/experimentor/proc/eject_item()
+	if(loaded_item)
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
 			dropturf = drop_location()
 		loaded_item.forceMove(dropturf)
-		if(delete)
-			qdel(loaded_item)
 		loaded_item = null
 
-/obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
+/obj/machinery/rnd/experimentor/proc/destroy_item()
+	if(!loaded_item || loaded_item.resistance_flags & INDESTRUCTIBLE)
+		return
+	if(linked_console.linked_lathe)
+		GET_COMPONENT_FROM(linked_materials, /datum/component/material_container, linked_console.linked_lathe)
+		for(var/material in loaded_item.materials)
+			linked_materials.insert_amount( min((linked_materials.max_amount - linked_materials.total_amount), (loaded_item.materials[material])), material)
+	QDEL_NULL(loaded_item)
+
+/obj/machinery/rnd/experimentor/proc/throw_smoke(turf/T,radius=0)
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, where)
+	smoke.set_up(radius, T)
 	smoke.start()
 
 /obj/machinery/rnd/experimentor/proc/pickWeighted(list/from)
@@ -263,6 +261,37 @@
 			counter = counter + 2
 		else
 			counter = 1
+
+/obj/machinery/rnd/experimentor/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Force Experiment"] = "?_src_=vars;[HrefToken()];forceexperiment=[REF(src)]"
+
+/obj/machinery/rnd/experimentor/proc/perform_experiment(type)
+	var/success = FALSE
+
+	if(!linked_console || !type)
+		return FALSE
+
+	recently_experimented = 1
+	icon_state = "h_lathe_wloop"
+
+	if(experiments[type])
+		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
+		var/datum/experiment/picked = pickweight(possible_experiments)
+		var/datum/techweb/web = linked_console.stored_research
+
+		success = picked.perform(src,loaded_item)
+		use_power(picked.power_use)
+		picked.gather_data(src,web,success)
+
+	if(!success)
+		var/a = pick("rumbles","shakes","vibrates","shudders")
+		var/b = pick("crushes","spins","viscerates","smashes","insults")
+		visible_message("<span class='warning'>[loaded_item] [a], and [b], the experiment was a failure.</span>")
+
+	addtimer(CALLBACK(src, .proc/reset_exp), reset_time)
+	return success
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
@@ -546,7 +575,7 @@
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
 	update_icon()
-	recentlyExperimented = FALSE
+	recently_experimented = FALSE
 
 /obj/machinery/rnd/experimentor/update_icon()
 	icon_state = "h_lathe"
