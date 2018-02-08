@@ -19,7 +19,6 @@
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
-
 /*
 HOW TO DO PROBABILITY WITH PICK: pick(P;Val) where P is the weight (think of is as if there are "P" identical entries, where P is a number
 Note: default internal P is 100. So if you don't bother adding a P to every argument then to get something twice as much you need to use 200.
@@ -27,7 +26,6 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 2: use list() for multiple items bundled together as a possible result
 3: alternatively use list() with an associated value to generate multiple copies. example: list(/obj/=10) = 10 copies.of /obj
 */
-
 	var/loot = pick(
 		5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,
 			/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
