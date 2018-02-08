@@ -118,3 +118,28 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	var/turf/T = get_turf(src)
 	GLOB.z_is_planet["[T.z]"] = TRUE
 
+/obj/effect/mapping_helpers/template_spawner //spawning templates
+	name = "template spawner"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "syndballoon"
+	layer = POINT_LAYER
+	var/list/template_name = list("Biological Storage Facility") //list of potential templates to pull from, uses the template's name instead of ID
+	var/map_templates = "space_ruins_templates" //the mapping template list from the mapping subsystem
+	var/datum/map_template/template_to_spawn
+
+/obj/effect/mapping_helpers/template_spawner/proc/get_template(id)
+	var/template_to_spawn = SSmapping.[map_templates][id]
+	if(!template_to_spawn)
+		CRASH("Template ([id]) not found!")
+		qdel(src)
+	return template_to_spawn
+
+/obj/effect/mapping_helpers/template_spawner/Initialize(mapload)
+	if(mapload)
+		var/turf/deploy_location = get_turf(src)
+		var/datum/map_template/template_to_spawn = get_template(pick(template_name))
+		template_to_spawn.load(deploy_location, centered = TRUE)
+		return INITIALIZE_HINT_QDEL
+	else
+		return ..()
+
