@@ -59,10 +59,37 @@ Possible to do for anyone motivated enough:
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
 	var/offset = FALSE
+	var/on_network = TRUE
 
+/obj/machinery/holopad/tutorial
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
+	on_network = FALSE
+	
+/obj/machinery/holopad/tutorial/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
+	if(new_disk && !disk)
+		new_disk.forceMove(src)
+		disk = new_disk
+
+/obj/machinery/holopad/tutorial/attack_hand(mob/user)
+	if(!istype(user))
+		return
+	if(user.incapacitated() || !is_operational())
+		return
+	if(replay_mode)
+		replay_stop()
+	else if(disk && disk.record)
+		replay_start()
+	return
+	
 /obj/machinery/holopad/Initialize()
 	. = ..()
-	holopads += src
+	if(on_network)
+		holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -154,8 +181,9 @@ Possible to do for anyone motivated enough:
 	if(temp)
 		dat = temp
 	else
-		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+		if(on_network)
+			dat += "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
+			dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
 		if(disk)
 			if(disk.record)
 				//Replay
@@ -172,23 +200,24 @@ Possible to do for anyone motivated enough:
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
 
-		var/one_answered_call = FALSE
-		var/one_unanswered_call = FALSE
-		for(var/I in holo_calls)
-			var/datum/holocall/HC = I
-			if(HC.connected_holopad != src)
-				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
-				one_unanswered_call = TRUE
-			else
-				one_answered_call = TRUE
+		if(on_network)
+			var/one_answered_call = FALSE
+			var/one_unanswered_call = FALSE
+			for(var/I in holo_calls)
+				var/datum/holocall/HC = I
+				if(HC.connected_holopad != src)
+					dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
+					one_unanswered_call = TRUE
+				else
+					one_answered_call = TRUE
 
-		if(one_answered_call && one_unanswered_call)
-			dat += "=====================================================<br>"
-		//we loop twice for formatting
-		for(var/I in holo_calls)
-			var/datum/holocall/HC = I
-			if(HC.connected_holopad == src)
-				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
+			if(one_answered_call && one_unanswered_call)
+				dat += "=====================================================<br>"
+			//we loop twice for formatting
+			for(var/I in holo_calls)
+				var/datum/holocall/HC = I
+				if(HC.connected_holopad == src)
+					dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
 
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 175)
@@ -295,6 +324,8 @@ Possible to do for anyone motivated enough:
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
+		return
+	if (!on_network)
 		return
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
