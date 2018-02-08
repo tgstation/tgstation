@@ -58,7 +58,6 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))
@@ -128,7 +127,6 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 /obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()
 	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
 	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE))

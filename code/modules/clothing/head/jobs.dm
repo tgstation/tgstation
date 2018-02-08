@@ -87,7 +87,7 @@
 	to_chat(user, "<span class='notice'>Alt-click to take a candy corn.</span>")
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
 		..()
 		if(loc == user)
 			if(candy_cooldown < world.time)

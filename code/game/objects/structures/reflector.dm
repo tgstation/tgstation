@@ -169,7 +169,6 @@
 
 /obj/structure/reflector/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else if(finished)
 		rotate(user)

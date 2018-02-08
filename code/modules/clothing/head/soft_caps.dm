@@ -23,15 +23,14 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
 		return
 	else
 		flip(user)
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(user.canmove && !user.stat && !user.restrained())
+	if(!user.incapacitated())
 		src.flipped = !src.flipped
 		if(src.flipped)
 			icon_state = "[item_color]soft_flipped"

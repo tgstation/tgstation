@@ -69,7 +69,7 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")

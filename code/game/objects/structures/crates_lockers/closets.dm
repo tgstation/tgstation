@@ -391,7 +391,6 @@
 /obj/structure/closet/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(opened || !secure)
 		return

@@ -735,7 +735,6 @@
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
 	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		togglelock(user)
