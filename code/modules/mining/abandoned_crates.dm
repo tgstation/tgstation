@@ -29,7 +29,6 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 */
 
 	var/loot = pick(
-		//5%
 		5;list(/obj/item/reagent_containers/food/drinks/bottle/rum,
 			/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
 			/obj/item/reagent_containers/food/drinks/bottle/whiskey,
@@ -51,7 +50,6 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 			/obj/item/clothing/under/shorts/blue),
 		5;list(/obj/item/clothing/under/chameleon,
 			/obj/item/clothing/neck/tie/horrible=7),
-		//2%
 		2;/obj/item/melee/classic_baton,
 		2;/obj/item/toy/balloon,
 		2;pick(subtypesof(/obj/item/toy/prize)),
@@ -83,7 +81,6 @@ Note: default internal P is 100. So if you don't bother adding a P to every argu
 		2;/obj/item/gun/energy/plasmacutter,
 		2;/obj/item/toy/katana,
 		2;/obj/item/defibrillator/compact,
-		//1%
 		1;/obj/item/weed_extract,
 		1;/obj/item/organ/brain,
 		1;/obj/item/organ/brain/alien,
