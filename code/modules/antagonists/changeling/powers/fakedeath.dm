@@ -30,7 +30,6 @@
 			user.regenerate_limbs(0, list("head"))
 		user.regenerate_organs()
 		to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
-		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		revive_ready = FALSE
 		name = "Reviving Stasis - We fall into a stasis, allowing us to regenerate and trick our enemies."
 		return TRUE

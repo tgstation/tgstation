@@ -16,6 +16,7 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
+	var/active = FALSE//used by a few powers that toggle
 
 /*
 changeling code now relies on on_purchase to grant powers.

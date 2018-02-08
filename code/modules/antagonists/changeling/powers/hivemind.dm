@@ -25,15 +25,10 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.changeling_speak)
 		changeling.changeling_speak = FALSE
-	var/datum/action/changeling/hivemind_upload/up = changeling.has_sting(datum/action/changeling/hivemind_upload)
-	if(up)
-		up.Remove(user)
-		changeling.purchasedpowers-=up
-	var/datum/action/changeling/hivemind_download/down = changeling.has_sting(datum/action/changeling/hivemind_download)
-	if(down)
-		down.Remove(user)
-		changeling.purchasedpowers-=down
-	..()
+	for(var/datum/action/changeling/p in changeling.purchasedpowers)
+		if(istype(p, /datum/action/changeling/hivemind_upload) || istype(p, /datum/action/changeling/hivemind_download))
+			changeling.purchasedpowers -= p
+			p.Remove(changeling.owner.current)
 
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
