@@ -417,7 +417,7 @@
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	cooldown_per_use = 50
+	cooldown_per_use = 40
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
 	var/max_w_class = assembly.w_class
