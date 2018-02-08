@@ -86,11 +86,11 @@ SUBSYSTEM_DEF(traumas)
 						"the supernatural"  = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome, 
 						/obj/item/melee/cultblade/, /obj/item/twohanded/required/cult_bastard, /obj/item/restraints/legcuffs/bola/cult, 
 						/obj/item/clothing/suit/cultrobes/, /obj/item/clothing/suit/space/hardsuit/cult, 
-						/obj/item/clothing/suit/hooded/cultrobes/, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune, 
+						/obj/item/clothing/suit/hooded/cultrobes/, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune/, 
 						/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult/, /obj/singularity/narsie, 
-						/obj/item/device/soulstone,
+						/obj/item/device/soulstone/,
 						/obj/structure/destructible/clockwork/, /obj/item/clockwork/, /obj/item/clothing/suit/armor/clockwork, 
-						/obj/item/clothing/glasses/judicial_visor, /obj/effect/clockwork/sigil, /obj/item/stack/tile/brass, 
+						/obj/item/clothing/glasses/judicial_visor, /obj/effect/clockwork/sigil/, /obj/item/stack/tile/brass, 
 						/obj/machinery/door/airlock/clockwork/,
 						/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff, 
 						/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
@@ -114,12 +114,12 @@ SUBSYSTEM_DEF(traumas)
 						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor))
 						)
 
-	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
+	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard/)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 						  "robots"   = typecacheof(list(/datum/species/android)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
-						  "aliens" = typecacheof(list(/datum/species/abductor, datum/species/jelly, /datum/species/pod, 
-						  /datum/species/shadow))
+						  "aliens" = typecacheof(list(/datum/species/abductor, datum/species/jelly/, /datum/species/pod, 
+						  /datum/species/shadow/))
 						 )
 
 #undef PHOBIA_FILE
