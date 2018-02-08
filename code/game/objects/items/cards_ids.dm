@@ -113,10 +113,10 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
+		src.add_fingerprint(user)
 
 /obj/item/card/id/examine(mob/user)
 	..()

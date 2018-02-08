@@ -138,7 +138,7 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
-	if(isAI(user))
+	if(isAI(user) && user.canUseTopic(src))
 		hangup_all_calls()
 		return
 

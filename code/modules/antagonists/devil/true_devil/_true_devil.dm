@@ -94,10 +94,10 @@
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
-		return 0
+		return FALSE
 	if(be_close && !in_range(M, src))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666

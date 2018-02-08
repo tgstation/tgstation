@@ -134,7 +134,7 @@
 
 /obj/structure/frame/computer/AltClick(mob/user)
 	..()
-	if(!in_range(src, user) || !isliving(user) || user.incapacitated())
+	if(!isliving(user) || !user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
 		return
 
 	if(anchored)

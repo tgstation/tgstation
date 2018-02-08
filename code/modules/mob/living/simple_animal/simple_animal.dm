@@ -374,14 +374,14 @@
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
-		return 0
+		return FALSE
 	if(no_dextery || dextrous)
 		if(be_close && !in_range(M, src))
-			return 0
+			return FALSE
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, TRUE))

@@ -98,7 +98,7 @@
 	attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!istype(user) || !user.canUseTopic(src, be_close=TRUE, no_dextery=TRUE))
 		return
 	toggle_cabinet(user)
 

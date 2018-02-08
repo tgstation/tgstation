@@ -191,6 +191,8 @@
 		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
 	EmptyExtinguisher(user)
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
