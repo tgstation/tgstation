@@ -1139,9 +1139,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
 			switch(mood.mood)
 				if(-INFINITY to MOOD_LEVEL_SAD4)
-					. += 2
-				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
 					. += 1.5
+				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+					. += 1
 				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
 					. += 0.5
 
@@ -1640,6 +1640,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/I = X
 			if(!(I.resistance_flags & FIRE_PROOF))
 				I.take_damage(H.fire_stacks, BURN, "fire", 0)
+
+		var/thermal_protection = H.get_thermal_protection()
+
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT && !no_protection)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
+			H.bodytemperature += 11
+		else
+			H.bodytemperature += (BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
+
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(NOFIRE in species_traits)
