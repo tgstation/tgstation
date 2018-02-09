@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - code_imp: "Changed can_synth values from 0/1 to FALSE/TRUE"

@@ -334,6 +334,7 @@
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		if(sloc.primary_ai)
+			LAZYCLEARLIST(landmark_loc)
 			landmark_loc += sloc.loc
 			break
 		landmark_loc += sloc.loc

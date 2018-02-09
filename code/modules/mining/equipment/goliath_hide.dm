@@ -21,8 +21,8 @@
 		return
 	if(is_type_in_typecache(target, goliath_platable_armor_typecache))
 		var/obj/item/clothing/C = target
-		if(armor.melee < 60)
-			armor = armor.setRating(melee = min(armor.melee + 10, 60))
+		if(C.armor.melee < 60)
+			C.armor = C.armor.setRating(melee = min(C.armor.melee + 10, 60))
 			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 			use(1)
 		else
@@ -33,7 +33,7 @@
 			D.hides++
 			D.armor = D.armor.setRating(\
 				melee = min(D.armor.melee + 10, 70),\
-				bullet = min(D.armor.laser + 5, 50),\
+				bullet = min(D.armor.bullet + 5, 50),\
 				laser = min(D.armor.laser + 5, 50))
 			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 			D.update_icon()

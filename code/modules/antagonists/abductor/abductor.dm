@@ -148,7 +148,7 @@
 		result += printplayer(abductor_mind)
 		result += printobjectives(abductor_mind)
 
-	return result.Join("<br>")
+	return "<div class='panel redborder'>[result.Join("<br>")]</div>"
 
 /datum/antagonist/abductee
 	name = "Abductee"

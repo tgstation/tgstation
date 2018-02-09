@@ -39,30 +39,34 @@
 	if(default_unfasten_wrench(user, I))
 		return
 	else if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = I
 		switch(state)
 			if(ENGINE_UNWRENCHED)
 				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 			if(EM_SECURED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,ENGINE_WELDTIME*WT.toolspeed, target = src) && WT.isOn())
-						state = ENGINE_WELDED
-						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-						alter_engine_power(engine_power)
+				if(!I.tool_start_check(user, amount=0))
+					return
+
+				user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+					"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+
+				if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+					state = ENGINE_WELDED
+					to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+					alter_engine_power(engine_power)
+
 			if(EM_WELDED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,ENGINE_WELDTIME*WT.toolspeed, target = src) && WT.isOn())
-						state = ENGINE_WRENCHED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-						alter_engine_power(-engine_power)
+				if(!I.tool_start_check(user, amount=0))
+					return
+
+				user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+					"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+					"<span class='italics'>You hear welding.</span>")
+
+				if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+					state = ENGINE_WRENCHED
+					to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+					alter_engine_power(-engine_power)
 		return
 	else
 		return ..()

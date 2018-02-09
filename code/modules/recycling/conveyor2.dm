@@ -118,9 +118,7 @@
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(QDELETED(src))
-				return //prevent multiple decontructs
+		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
 				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 				C.id = id

@@ -125,16 +125,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 				if(L.stat)
 					continue
 				invokers += L
-		if(invokers.len >= req_cultists)
-			invokers -= user
 			if(allow_excess_invokers)
 				chanters += invokers
 			else
 				shuffle_inplace(invokers)
 				for(var/i in 1 to req_cultists)
-					var/L = pick_n_take(invokers)
-					if(L)
-						chanters += L
+					var/C = pick_n_take(invokers)
+					if(!C)
+						break
+					chanters += C
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -316,7 +315,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
 
 	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-	if(sacrificial.mind)
+	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)
 		stone.invisibility = 0

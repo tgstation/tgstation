@@ -72,10 +72,10 @@
 /datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
 	set waitfor = FALSE
 	var/requested_amount
-	var/Itype = I.type
-	if(ispath(Itype, /obj/item/stack) && precise_insertion)
+	if(istype(I, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
-		requested_amount = input(user, "How much do you want to insert?", "Inserting sheets") as num|null
+		var/obj/item/stack/S = I
+		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
 		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || !user.canUseTopic(current_parent) || !user.is_holding(I) || !user.Adjacent(current_parent))
@@ -86,14 +86,15 @@
 	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
 		if(istype(I, /obj/item/stack))
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet[inserted>1 ? "s" : ""] into [parent].</span>")
+			var/obj/item/stack/S = I
+			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name][inserted>1 ? "s" : ""] into [parent].</span>")
 			if(!QDELETED(I))
 				user.put_in_active_hand(I)
 		else
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			qdel(I)
 		if(after_insert)
-			after_insert.Invoke(Itype, last_inserted_id, inserted)
+			after_insert.Invoke(I.type, last_inserted_id, inserted)
 	else
 		user.put_in_active_hand(I)
 
@@ -114,7 +115,7 @@
 		return (total_amount - total_amount_saved)
 	return FALSE
 
-/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt)
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
 	if(isnull(amt))
 		amt = S.amount
 
@@ -132,7 +133,7 @@
 	if(!amt)
 		return FALSE
 
-	last_inserted_id = insert_materials(S,amt)
+	last_inserted_id = insert_materials(S,amt * multiplier)
 	S.use(amt)
 	return amt
 
@@ -140,7 +141,7 @@
 	if(!I)
 		return FALSE
 	if(istype(I, /obj/item/stack))
-		return insert_stack(I, stack_amt)
+		return insert_stack(I, stack_amt, multiplier)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))

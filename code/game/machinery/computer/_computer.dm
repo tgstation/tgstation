@@ -69,14 +69,13 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, I.usesound, 50, 1)
-		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
+/obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
+	if(circuit && !(flags_1&NODECONSTRUCT_1))
+		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
+		if(I.use_tool(src, user, 20, volume=50))
 			deconstruct(TRUE, user)
-	else
-		return ..()
+	return TRUE
+
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

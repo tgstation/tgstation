@@ -353,24 +353,21 @@
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weldingtool/WT = W
 		if (!getBruteLoss())
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
-		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
-			if(src == user)
-				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-				if(!do_after(user, 50, target = src))
-					return
+		if (!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+			return
+		if(src == user)
+			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
+			if(!W.use_tool(src, user, 50))
+				return
 
-			adjustBruteLoss(-30)
-			updatehealth()
-			add_fingerprint(user)
-			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
-			return
-		else
-			to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
-			return
+		adjustBruteLoss(-30)
+		updatehealth()
+		add_fingerprint(user)
+		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+		return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -442,9 +439,8 @@
 			spark_system.start()
 			return
 		else
-			playsound(src, W.usesound, 50, 1)
 			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
-			if(do_after(user, 50*W.toolspeed, target = src) && !cell)
+			if(W.use_tool(src, user, 50, volume=50) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
 

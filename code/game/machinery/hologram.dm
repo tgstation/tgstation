@@ -58,6 +58,7 @@ Possible to do for anyone motivated enough:
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
+	var/offset = FALSE
 
 /obj/machinery/holopad/Initialize()
 	. = ..()
@@ -279,7 +280,16 @@ Possible to do for anyone motivated enough:
 		record_stop()
 	else if(href_list["record_clear"])
 		record_clear()
-
+	else if(href_list["offset"])
+		offset++
+		if (offset > 4)
+			offset = FALSE
+		var/turf/new_turf
+		if (!offset)
+			new_turf = get_turf(src)
+		else
+			new_turf = get_step(src, GLOB.cardinals[offset])
+		replay_holo.forceMove(new_turf)
 	updateDialog()
 
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
@@ -420,7 +430,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/user)
 	qdel(masters[user]) // Get rid of user's hologram
-	qdel(holorays[user])
 	unset_holo(user)
 	return TRUE
 
@@ -429,6 +438,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(istype(AI) && AI.current == src)
 		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
+	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)
 	SetLightsAndPower()
 	return TRUE
@@ -493,7 +503,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		replay_mode = TRUE
 		replay_holo = setup_replay_holo(disk.record)
 		temp = "Replaying...<br>"
-		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay.</A>"
+		temp += "<A href='?src=[REF(src)];offset=1'>Change offset</A><br>"
+		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay</A>"
 		SetLightsAndPower()
 		replay_entry(1)
 	return
@@ -502,6 +513,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(replay_mode)
 		replay_mode = FALSE
 		loop_mode = FALSE
+		offset = FALSE
 		temp = null
 		QDEL_NULL(replay_holo)
 		SetLightsAndPower()
@@ -514,15 +526,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	record_mode = TRUE
 	record_start = world.time
 	record_user = user
-	disk.record.caller_image = get_record_icon(user)
+	disk.record.set_caller_image(user)
 	temp = "Recording...<br>"
 	temp += "<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"
-
-/obj/machinery/holopad/proc/get_record_icon(mob/living/user)
-	var/olddir = user.dir
-	user.setDir(SOUTH)
-	. = getFlatIcon(user)
-	user.setDir(olddir)
 
 /obj/machinery/holopad/proc/record_message(mob/living/speaker,message,language)
 	if(!record_mode)
@@ -553,8 +559,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/replay_entry(entry_number)
 	if(!replay_mode)
 		return
+	if (!disk.record.entries.len) // check for zero entries such as photographs and no text recordings
+		return // and pretty much just display them statically untill manually stopped
 	if(disk.record.entries.len < entry_number)
-		if (loop_mode)
+		if(loop_mode)
 			entry_number = 1
 		else
 			replay_stop()
