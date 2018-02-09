@@ -384,13 +384,13 @@
 	return TRUE
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, TRUE))
+	if(!canUseTopic(who, BE_CLOSE))
 		return
 	else
 		..()
 
 /mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, TRUE))
+	if(!canUseTopic(who, BE_CLOSE))
 		return
 	else
 		..()

@@ -383,7 +383,7 @@
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
 	turns = 0
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		return
 	if(!isprocessing)
 		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \

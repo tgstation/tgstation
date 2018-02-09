@@ -118,7 +118,7 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/defibrillator_mount/AltClick(mob/living/user)
+/obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!defib)

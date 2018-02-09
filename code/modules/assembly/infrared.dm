@@ -161,7 +161,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 
 	setDir(turn(dir, -90))

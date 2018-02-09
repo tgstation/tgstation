@@ -68,7 +68,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(assembly)
 		return assembly.check_interactivity(user)
 	else
-		return user.canUseTopic(src,be_close = TRUE)
+		return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
