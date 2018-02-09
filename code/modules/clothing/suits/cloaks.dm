@@ -28,10 +28,12 @@
 	icon_state = "hoscloak"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hos
 	allowed = list(/obj/item/melee/baton,/obj/item/melee/classic_baton,/obj/item/grenade,/obj/item/gun,/obj/item/reagent_containers/spray/pepper,/obj/item/restraints/handcuffs,/obj/item/device/assembly/flash/handheld,/obj/item/clothing/glasses,/obj/item/ammo_casing/shotgun,/obj/item/ammo_box,/obj/item/reagent_containers/food/snacks/donut,/obj/item/reagent_containers/food/snacks/donut/jelly,/obj/item/kitchen/knife/combat,/obj/item/device/flashlight/seclite,/obj/item/melee/classic_baton/telescopic,/obj/item/device/radio,/obj/item/clothing/gloves/,/obj/item/restraints/legcuffs/bola)
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 20, acid = 40)
+
 
 /obj/item/clothing/head/hooded/cloakhood/hos
 	icon_state = "hoshood"
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 70, acid = 90)
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 20, acid = 40)
 
 /obj/item/clothing/suit/hooded/cloak/qm
 	name = "quartermaster's cloak"
@@ -66,12 +68,12 @@
 	icon_state = "cecloak"
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen,/obj/item/construction, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/ce
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 60, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 30, acid = 0)
 
 
 /obj/item/clothing/head/hooded/cloakhood/ce
 	icon_state = "cehood"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 60, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 0, rad = 40, fire = 30, acid = 0)
 
 
 /obj/item/clothing/suit/hooded/cloak/rd
@@ -92,13 +94,13 @@
 	name = "captain's cloak"
 	desc = "Worn by the commander of Space Station 13."
 	icon_state = "capcloak"
-	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 90)
+	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 30, acid = 60)
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/cap
 
 /obj/item/clothing/head/hooded/cloakhood/cap
 	icon_state = "caphood"
-	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 90)
+	armor = list(melee = 30, bullet = 35, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 30, acid = 60)
 
 
 /obj/item/clothing/suit/hooded/cloak/hop
