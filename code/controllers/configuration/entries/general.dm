@@ -149,6 +149,20 @@
 
 /datum/config_entry/flag/use_exp_restrictions_admin_bypass
 
+/datum/config_entry/flag/use_antag_rep
+
+/datum/config_entry/number/antag_rep_maximum
+        config_entry_value = 200
+        min_val = 0
+
+/datum/config_entry/number/default_antag_tickets
+	config_entry_value = 100
+	min_val = 0
+
+/datum/config_entry/number/max_tickets_per_roll
+	config_entry_value = 100
+	min_val = 0
+
 /datum/config_entry/string/server
 
 /datum/config_entry/string/banappeals

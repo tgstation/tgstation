@@ -46,7 +46,7 @@
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len)
 				break
-			var/datum/mind/changeling = pick(possible_changelings)
+			var/datum/mind/changeling = antag_pick(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
 			changeling.special_role = ROLE_CHANGELING

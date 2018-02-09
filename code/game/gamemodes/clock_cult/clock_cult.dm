@@ -155,7 +155,7 @@ Credit where due:
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
 	while(starter_servants)
-		var/datum/mind/servant = pick(antag_candidates)
+		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
 		servant.assigned_role = ROLE_SERVANT_OF_RATVAR

@@ -283,6 +283,56 @@
 		set_security_level(SEC_LEVEL_BLUE)
 
 
+// This is a frequency selection system. You may imagine it like a raffle where each player can have some number of tickets. The more tickets you have the more likely you are to
+// "win". The default is 100 tickets. If no players use any extra tickets (earned with the antagonist rep system) calling this function should be equivalent to calling the normal
+// pick() function. By default you may use up to 100 extra tickets per roll, meaning at maximum a player may double their chances compared to a player who has no extra tickets.
+//
+// The odds of being picked are simply (your_tickets / total_tickets). Suppose you have one player using fifty (50) extra tickets, and one who uses no extra:
+//     Player A: 150 tickets
+//     Player B: 100 tickets
+//        Total: 250 tickets
+//
+// The odds become:
+//     Player A: 150 / 250 = 0.6 = 60%
+//     Player B: 100 / 250 = 0.4 = 40%
+/datum/game_mode/proc/antag_pick(list/datum/candidates)
+	if(!CONFIG_GET(flag/use_antag_rep) || candidates.len <= 1)
+		return pick(candidates)
+
+	// Tickets start at 100
+	var/DEFAULT_ANTAG_TICKETS = CONFIG_GET(number/default_antag_tickets)
+
+	// You may use up to 100 extra tickets (double your odds)
+	var/MAX_TICKETS_PER_ROLL = CONFIG_GET(number/max_tickets_per_roll)
+
+
+	var/total_tickets = 0
+
+	MAX_TICKETS_PER_ROLL += DEFAULT_ANTAG_TICKETS
+
+	for(var/datum/mind/mind in candidates)
+		total_tickets += min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+
+	var/antag_select = rand(1,total_tickets)
+	var/current = 1
+
+	for(var/datum/mind/mind in candidates)
+		if(current <= antag_select)
+			var/subtract = min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
+			var/start = SSpersistence.antag_rep[ckey(mind.key)]
+			SSpersistence.antag_rep[ckey(mind.key)] = max(0, SSpersistence.antag_rep[ckey(mind.key)] - subtract)
+			WARNING("Player [mind.key] won spending [subtract] tickets from starting value [start]")
+
+			if(SSpersistence.antag_rep[ckey(mind.key)] <= 0)
+				SSpersistence.antag_rep.Remove(ckey(mind.key))
+
+			return mind
+
+		current += min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+
+	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
+	return pick(candidates)
+
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()

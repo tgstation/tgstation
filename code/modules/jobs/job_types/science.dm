@@ -17,6 +17,7 @@ Research Director
 	exp_type_department = EXP_TYPE_SCIENCE
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 4
 
 	outfit = /datum/outfit/job/rd
 
@@ -73,6 +74,7 @@ Scientist
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 2
 
 	outfit = /datum/outfit/job/scientist
 
@@ -108,6 +110,7 @@ Roboticist
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 2
 
 	outfit = /datum/outfit/job/roboticist
 

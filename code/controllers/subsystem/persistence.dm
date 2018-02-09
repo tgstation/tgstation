@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
+	var/list/antag_rep = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -18,6 +19,8 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	if(CONFIG_GET(flag/use_antag_rep))
+		LoadAntagReputation()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -152,6 +155,15 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadAntagReputation()
+	var/json_file = file("data/AntagReputation.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	antag_rep = json["data"]
+
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -183,6 +195,8 @@ SUBSYSTEM_DEF(persistence)
 	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
+	if(CONFIG_GET(flag/use_antag_rep))
+		CollectAntagReputation()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
@@ -253,3 +267,11 @@ SUBSYSTEM_DEF(persistence)
 	file_data["data"] = saved_modes
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectAntagReputation()
+	var/json_file = file("data/AntagReputation.json")
+	var/list/file_data = list()
+	file_data["data"] = antag_rep
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
