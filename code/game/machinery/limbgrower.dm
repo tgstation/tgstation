@@ -34,7 +34,7 @@
 
 /obj/machinery/limbgrower/Initialize()
 	. = ..()
-	create_reagents(0)
+	create_reagents(100)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 
 /obj/machinery/limbgrower/interact(mob/user)
