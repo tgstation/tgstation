@@ -64,9 +64,9 @@
 	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
-		
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+
 	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 		if(mood)
 			mood.add_event("brain_damage", /datum/mood_event/brain_damage)
 		if(prob(3))
