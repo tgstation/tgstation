@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	playsound(get_turf(src), 'sound/effects/bang.ogg', 25, 1)
+	playsound(src, 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
 		return 0//Something is wrong
@@ -342,12 +342,9 @@
 	return
 
 /obj/machinery/power/am_control_unit/proc/ShowInterface(mob/user)
-	if(!user)
+	if(!user || !(in_range(src, user) || issilicon(user)))
 		return
 	var/datum/browser/popup = new(user, "amenew", "Antimatter Control Unit", 500, (issilicon(user) ? 465 : 390)) // Set up the popup browser window
-	if(!(in_range(src, user) || issilicon(user)))
-		popup.close()
-		return
 	var/list/dat = list()
 	dat += "<div class='line'>"
 	dat += "<div class='statusLabel'>Status:</div>"
