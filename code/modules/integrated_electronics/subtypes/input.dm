@@ -143,6 +143,11 @@
 	push_data()
 	activate_pin(2)
 
+//please delete at a later date after people stop using the old named circuit
+/obj/item/integrated_circuit/input/adv_med_scanner/old
+	name = "integrated advanced medical analyser"
+	spawn_flags = 0
+
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
 	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime."

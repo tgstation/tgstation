@@ -120,7 +120,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return
 
 	var/window_height = 350
-	var/window_width = 600
+	var/window_width = 655
 
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
