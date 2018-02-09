@@ -78,7 +78,6 @@
 		return
 	A.emag_act(user)
 
-<<<<<<< HEAD
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
@@ -90,8 +89,6 @@
 /obj/item/card/emagfake/afterattack()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 
-=======
->>>>>>> a30e986b5e190c642796cebc28877e00695b6cab
 /obj/item/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
