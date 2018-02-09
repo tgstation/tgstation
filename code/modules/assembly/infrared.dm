@@ -161,14 +161,14 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		return
 
 	setDir(turn(dir, -90))
 
 /obj/item/device/assembly/infra/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		return
 	else
 		rotate()

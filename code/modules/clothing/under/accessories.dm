@@ -68,8 +68,8 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/living/carbon/human/user)
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+/obj/item/clothing/accessory/AltClick(mob/user)
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")

@@ -23,7 +23,7 @@ obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		adjustmask(user)

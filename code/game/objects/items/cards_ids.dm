@@ -117,6 +117,7 @@
 		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 		add_fingerprint(user)
+		return
 
 /obj/item/card/id/examine(mob/user)
 	..()

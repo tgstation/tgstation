@@ -93,7 +93,7 @@
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		suit_toggle(user)

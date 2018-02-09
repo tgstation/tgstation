@@ -42,7 +42,7 @@
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE) && inserted_key)
+	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
 			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
 			return

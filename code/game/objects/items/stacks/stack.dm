@@ -324,7 +324,7 @@
 		..()
 
 /obj/item/stack/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(is_cyborg)
 		return
@@ -335,7 +335,7 @@
 		var/min = 0
 		var/max = get_amount()
 		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
-		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= get_amount() || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= get_amount() || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return
 		else
 			change_stack(user,stackmaterial)
