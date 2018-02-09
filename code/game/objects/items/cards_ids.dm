@@ -88,7 +88,7 @@
 
 /obj/item/card/emagfake/afterattack()
 	. = ..()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/card/id
 	name = "identification card"
