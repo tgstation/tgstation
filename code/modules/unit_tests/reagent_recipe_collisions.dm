@@ -1,8 +1,8 @@
 
 
-/datum/unit_test/recipe_collisions
+/datum/unit_test/reagent_recipe_collisions
 
-/datum/unit_test/recipe_collisions/Run()
+/datum/unit_test/reagent_recipe_collisions/Run()
 	build_chemical_reactions_list()
 	var/list/reactions = list()
 	for(var/V in GLOB.chemical_reactions_list)
@@ -14,7 +14,7 @@
 			if(recipes_do_conflict(r1, r2))
 				Fail("Chemical recipe conflict between [r1.type] and [r2.type]")
 
-/datum/unit_test/recipe_collisions/proc/recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
+/datum/unit_test/reagent_recipe_collisions/proc/recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
 	//do the non-list tests first, because they are cheaper
 	if(r1.required_temp != r2.required_temp)
 		return FALSE
