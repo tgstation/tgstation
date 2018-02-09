@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the cult master getting two notifications on the cult forge"
-  - rscadd: "Blood spells will now \"follow\" the spell creation button, which is now unlocked by default. If you want your spell \"hotbar\" to appear somewhere else, just move the blood spell button, it will update when you prepare a new spell. Also, individual spells start off locked but if you unlock them they will no longer reposition when the spells are updated."
