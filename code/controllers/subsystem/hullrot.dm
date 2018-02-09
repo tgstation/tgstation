@@ -60,11 +60,12 @@ SUBSYSTEM_DEF(hullrot)
 	..()
 
 // ----------------------------------------------------------------------------
-// General processing
+// Error handling
 
 /datum/controller/subsystem/hullrot/proc/abort(msg)
 	log_world(msg)
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
+	message_admins("[name] aborted, <a href='?src=[REF(src)];[HrefToken()];reconnect=1'>reconnect</a>?")
 	can_fire = FALSE
 
 	var/list/images = list()
@@ -76,6 +77,28 @@ SUBSYSTEM_DEF(hullrot)
 
 /datum/controller/subsystem/hullrot/proc/warn(msg)
 	message_admins("[name] warning: [msg]")
+
+/datum/controller/subsystem/hullrot/proc/reconnect()
+	message_admins("Admin [key_name_admin(usr)] is restarting [name].")
+	Shutdown()
+	can_fire = TRUE
+	currently_playing = initial(currently_playing)  // force a resend
+	Initialize(REALTIMEOFDAY)
+
+/datum/controller/subsystem/hullrot/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Reconnect"] = "?src=[REF(src)];[HrefToken()];reconnect=1"
+
+/datum/controller/subsystem/hullrot/Topic(href, href_list)
+	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
+		return
+
+	if(href_list["reconnect"])
+		reconnect()
+
+// ----------------------------------------------------------------------------
+// General processing
 
 /datum/controller/subsystem/hullrot/proc/control(what, data)
 	if (!loaded_version || !can_fire)
@@ -232,13 +255,3 @@ SUBSYSTEM_DEF(hullrot)
 
 /datum/controller/subsystem/hullrot/proc/set_ghost(client/C)
 	control("SetGhost", C.ckey)
-
-// ----------------------------------------------------------------------------
-// Admin management
-
-/datum/controller/subsystem/hullrot/proc/reconnect()
-	message_admins("Admin [key_name_admin(usr)] is restarting [name].")
-	Shutdown()
-	can_fire = TRUE
-	currently_playing = initial(currently_playing)  // force a resend
-	Initialize(REALTIMEOFDAY)
