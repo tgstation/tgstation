@@ -16,12 +16,14 @@
 
 /datum/unit_test/reagent_recipe_collisions/proc/recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
 	//do the non-list tests first, because they are cheaper
-	if(r1.required_temp != r2.required_temp)
-		return FALSE
-	if(r1.is_cold_recipe != r2.is_cold_recipe)
-		return FALSE
 	if(r1.required_container != r2.required_container)
 		return FALSE
+	if(r1.is_cold_recipe != r2.is_cold_recipe)
+		var/datum/chemical_reaction/cold_one = r1.is_cold_recipe ? r1 : r2
+		var/datum/chemical_reaction/warm_one = r1.is_cold_recipe ? r2 : r1
+		if(cold_one.required_temp < warm_one.required_temp)
+			//the range of temperatures does not overlap, so there is no conflict
+			return FALSE
 
 	//find the reactions with the shorter and longer required_reagents list
 	var/datum/chemical_reaction/long_req
