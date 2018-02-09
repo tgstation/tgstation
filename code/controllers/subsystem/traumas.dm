@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(traumas)
 /datum/controller/subsystem/traumas/Initialize()
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards", 
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens")
+						"aliens", "strangers")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -27,7 +27,8 @@ SUBSYSTEM_DEF(traumas)
 						"doctors"	= strings(PHOBIA_FILE, "doctors"),
 						"authority"	= strings(PHOBIA_FILE, "authority"),
 						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
-						"aliens"	= strings(PHOBIA_FILE, "aliens")
+						"aliens"	= strings(PHOBIA_FILE, "aliens"),
+						"strangers"	= strings(PHOBIA_FILE, "strangers")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
