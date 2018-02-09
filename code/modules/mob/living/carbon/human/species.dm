@@ -961,6 +961,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.dna && H.dna.species && (!(NOHUNGER in H.dna.species.species_traits)))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
+		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+		if(mood)
+			switch(mood.mood) //Alerts do_after delay based on how happy you are
+				if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+					hunger_rate *= 0.9
+				if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+					hunger_rate *= 0.8
+				if(MOOD_LEVEL_HAPPY4 to INFINITY)
+					hunger_rate *= 0.7
+
 		if(H.satiety > 0)
 			H.satiety--
 		if(H.satiety < 0)
@@ -1126,7 +1136,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 25)
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood && (mood.mood <= MOOD_LEVEL_SAD3) && !flight) //How can depression slow you down if you can just fly away from your problems?
+		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
 			switch(mood.mood)
 				if(-INFINITY to MOOD_LEVEL_SAD4)
 					. += 2
@@ -1134,8 +1144,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					. += 1.5
 				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
 					. += 0.5
-					
-		if(H.disabilities & FAT)
+
+		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
@@ -1471,6 +1481,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(NOBREATH in species_traits)
 		return TRUE
 
+
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
 		return
@@ -1500,18 +1511,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.bodytemperature += natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-		if(loc_temp < H.bodytemperature)
-			//Place is colder than we are
-			var/thermal_protection = H.get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR), BODYTEMP_COOLING_MAX)
-		else
-			//Place is hotter than we are
-			var/thermal_protection = H.get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
-
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
@@ -1536,9 +1535,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
+
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		if(mood)
-			mood.clear_event("hot", /datum/mood_event/embedded)
+			mood.clear_event("hot")
 			mood.add_event("cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
@@ -1640,15 +1640,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/I = X
 			if(!(I.resistance_flags & FIRE_PROOF))
 				I.take_damage(H.fire_stacks, BURN, "fire", 0)
-
-		var/thermal_protection = H.get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.bodytemperature += 11
-		else
-			H.bodytemperature += (BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(NOFIRE in species_traits)

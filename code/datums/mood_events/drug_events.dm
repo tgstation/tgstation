@@ -1,8 +1,6 @@
 /datum/mood_event/drugs/high
 	mood_change = 6
-
-/datum/mood_event/drugs/high/add_effects(drug_name)
-	description = "<span class='nicegreen'>Woooow duudeeeeee...I'm tripping on this [drug_name]</span>\n"
+	description = "<span class='nicegreen'>Woooow duudeeeeee...I'm tripping baaalls...</span>\n"
 
 /datum/mood_event/drugs/smoked
 	description = "<span class='nicegreen'>I have had a smoke recently.</span>\n"

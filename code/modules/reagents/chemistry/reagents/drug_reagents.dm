@@ -3,15 +3,16 @@
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	var/trippy = TRUE //Does this drug make you trip?
 
 /datum/reagent/drug/on_mob_life(mob/living/M)
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
+	if(mood && trippy)
 		mood.add_event("[id]_high", /datum/mood_event/drugs/high, name)
 
 /datum/reagent/drug/on_mob_delete(mob/living/M)
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
+	if(mood && trippy)
 		mood.clear_event("[id]_high")
 
 /datum/reagent/drug/space_drugs
@@ -50,11 +51,15 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
 	taste_description = "smoke"
+	trippy = FALSE
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -69,6 +74,7 @@
 	taste_description = "mint"
 	reagent_state = LIQUID
 	color = "#80AF9C"
+	trippy = FALSE
 
 /datum/reagent/drug/crank
 	name = "Crank"

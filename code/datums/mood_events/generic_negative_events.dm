@@ -44,8 +44,8 @@
 
 /datum/mood_event/delam //SM delamination
 	description = "<span class='boldwarning'>Those God damn engineers can't do anything right...</span>\n"
-	mood_change = -8
-	timeout = 6000
+	mood_change = -6
+	timeout = 3000
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
@@ -55,12 +55,12 @@
 /datum/mood_event/dismembered
   description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
   mood_change = -8
-  timeout = 6000
+  timeout = 3000
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
 	mood_change = -4
-	timeout = 3000
+	timeout = 1200
 
 /datum/mood_event/embedded
 	description = "<span class='boldwarning'>Pull it out!</span>\n"

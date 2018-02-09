@@ -33,7 +33,6 @@
 	mood_change = 6
 	timeout = 3000
 
-//Unused so far but I want to remember them to use them later
-/datum/mood_event/clown
-	description = "<span class='nicegreen'>I recently saw a funny clown!</span>\n"
-	mood_change = 1
+/datum/mood_event/oblivious
+	description = "<span class='nicegreen'>What a lovely day.</span>\n"
+	mood_change = 3

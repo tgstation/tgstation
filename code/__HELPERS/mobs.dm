@@ -306,9 +306,9 @@ Proc for attack log creation, because really why not
 			if(-INFINITY to MOOD_LEVEL_SAD2)
 				delay *= 1.25
 			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				delay *= 1.05
+				delay *= 0.95
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				delay *= 1.1
+				delay *= 0.9
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
