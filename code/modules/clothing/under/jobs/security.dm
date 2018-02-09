@@ -28,6 +28,12 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security jumpskirt"
+	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle. This one has a skirt instead of the usual trousers."
+	icon_state = "rsecskirt"
+	item_color = "rsecskirt"
+	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
