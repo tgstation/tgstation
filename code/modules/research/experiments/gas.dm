@@ -1,6 +1,17 @@
 /datum/experiment_type/gas
 	name = "Gas"
 
+/datum/experiment/plasma_mix
+	weight = 20
+	experiment_type = /datum/experiment_type/gas
+	base_points = 250
+	critical = TRUE
+
+/datum/experiment/plasma_mix/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("[E] achieves the perfect mix!")
+	new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,E))))
+
 /datum/experiment/destroy/gas_cloud
 	weight = 20
 	is_bad = TRUE
@@ -31,10 +42,10 @@
 	E.investigate_log("Experimentor has released <font color='red'>[chosen_chem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
 	E.create_reagents(50)
 	E.reagents.add_reagent(chosen_chem , 50)
-	var/datum/effect_system/smoke_spread/chem/smoke = new //MAKE THIS FOAM AAAAAA I'M MAD
-	smoke.set_up(E.reagents, 0, E, silent = 1)
-	playsound(E, 'sound/effects/smoke.ogg', 50, 1, -3)
-	smoke.start()
+	var/datum/effect_system/foam_spread/foam = new
+	foam.set_up(2, E, E.reagents)
+	foam.start()
+	playsound(E, 'sound/effects/splat.ogg', 50, 1, -3)
 	qdel(E.reagents)
 
 /datum/experiment/destroy/emp

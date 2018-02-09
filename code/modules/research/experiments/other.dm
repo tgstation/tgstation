@@ -38,6 +38,8 @@
 	E.visible_message("<span class='warning'>[E] encounters a run-time error!</span>")
 
 /datum/experiment/power_drain
+	weight = 20
+	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 	power_use = 500000
 
@@ -48,6 +50,8 @@
 	E.investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 
 /datum/experiment/blood_drain
+	weight = 20
+	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 
 /datum/experiment/blood_drain/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
@@ -59,3 +63,48 @@
 		m.apply_damage(50, BRUTE, "chest")
 		E.investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", INVESTIGATE_EXPERIMENTOR)
 		. = TRUE
+
+/datum/experiment/destroy/transform/grenade
+	weight = 20
+	experiment_type = /datum/experiment_type
+	is_bad = TRUE
+	var/list/blacklist = list(/obj/item/grenade/chem_grenade,/obj/item/grenade,/obj/item/grenade/chem_grenade,/obj/item/grenade/chem_grenade/adv_release,/obj/item/grenade/chem_grenade/cryo,/obj/item/grenade/chem_grenade/pyro)
+
+/datum/experiment/destroy/transform/grenade/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	E.investigate_log("Experimentor has transformed an [O] into a grenade", INVESTIGATE_EXPERIMENTOR)
+	. = ..()
+
+/datum/experiment/destroy/transform/grenade/make_transform_item(atom/location)
+	var/pickedtype = pick(typesof(/obj/item/grenade) - blacklist)
+	var/obj/item/grenade/G = new pickedtype(location)
+	addtimer(CALLBACK(src, pickedtype.proc/prime), 5)
+	return G
+
+/datum/experiment/destroy/transform/food
+	weight = 20
+	experiment_type = /datum/experiment_type
+	is_bad = TRUE
+
+/datum/experiment/destroy/transform/food/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	E.investigate_log("Experimentor has transformed an [O] into food", INVESTIGATE_EXPERIMENTOR)
+	. = ..()
+
+/datum/experiment/destroy/transform/food/make_transform_item(atom/location)
+	var/pickedtype = get_random_food()
+	return new pickedtype(location)
+
+/datum/experiment/destroy/transform/stock_part
+	weight = 20
+	experiment_type = /datum/experiment_type
+	is_bad = TRUE
+	var/list/blacklist = list(/obj/item/stock_parts,/obj/item/stock_parts/subspace)
+
+/datum/experiment/destroy/transform/stock_part/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	E.investigate_log("Experimentor has transformed an [O] into a stock part", INVESTIGATE_EXPERIMENTOR)
+	. = ..()
+
+/datum/experiment/destroy/transform/stock_part/make_transform_item(atom/location)
+	var/pickedtype = pick(typesof(/obj/item/stock_parts) - blacklist)
+	var/obj/item/grenade/G = new pickedtype(location)
+	addtimer(CALLBACK(src, pickedtype.proc/prime), 5)
+	return G

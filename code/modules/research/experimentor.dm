@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 /datum/experiment_type/proc/get_valid_experiments(obj/item/O,bad_things_coeff)
 	var/list/weighted_experiments = list()
 	for(var/datum/experiment/E in experiments)
-		if(!E.can_perform(O) || !E.weight)
+		if(!E.weight || !E.can_perform(O))
 			return
 		if(E.is_bad && bad_things_coeff < E.weight)
 			weighted_experiments[E] = E.weight - bad_things_coeff
@@ -69,14 +69,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		bad_thing_coeff += M.rating*4 //Boosted slightly
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		bad_thing_coeff += M.rating*2 //Ditto
-
-/obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
-	//snowflake check to only take "made" bombs
-	if(istype(O, /obj/item/device/transfer_valve))
-		var/obj/item/device/transfer_valve/T = O
-		if(!T.tank_one || !T.tank_two || !T.attached_device)
-			return FALSE
-	return TRUE
 
 /obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM && istype(O))
@@ -158,11 +150,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		else
 			var/experiment_type = text2path(scantype)
 			perform_experiment(experiment_type)
-			/*if(dotype != FAIL)
-				var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
-				var/picked = pickweight(nodes)		//This should work.
-				if(linked_console)
-					linked_console.stored_research.boost_with_path(picked, process.type)*/
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/link_to_rnd()
@@ -176,13 +163,11 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 			for(var/type in typesof(/datum/experiment_type) - /datum/experiment_type)
 				web.all_experiment_types[type] = new type()
 			for(var/datum/experiment/type in typesof(/datum/experiment))
-				if(!initial(type.weight))
+				if(!initial(type.experiment_type))
 					continue
 				var/datum/experiment/EX = new type()
 				EX.init()
 				web.all_experiments[type] = EX
-				if(!EX.experiment_type)
-					continue
 				for(var/extype in typesof(EX.experiment_type))
 					var/datum/experiment_type/E = web.all_experiment_types[extype]
 					if(E)
@@ -229,6 +214,7 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	icon_state = "h_lathe_wloop"
 
 	if(experiments[type])
+		var/loaded_type = loaded_item.type
 		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
 		var/datum/experiment/picked = pickweight(possible_experiments)
 		var/datum/techweb/web = linked_console.stored_research
@@ -236,6 +222,9 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		success = picked.perform(src,loaded_item)
 		use_power(picked.power_use)
 		picked.gather_data(src,web,success)
+		if(picked.allow_boost)
+			var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
+			web.boost_with_path(pickweight(nodes), loaded_type)
 
 	if(!success)
 		var/a = pick("rumbles","shakes","vibrates","shudders")

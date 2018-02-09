@@ -5,6 +5,7 @@
 	weight = 20
 	experiment_type = /datum/experiment_type/cool
 	base_points = 250
+	critical = TRUE
 	valid_reagents = list("uranium","frostoil","ephedrine")
 
 /datum/experiment/coffee/coolant_fail/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
@@ -85,3 +86,20 @@
 	E.visible_message("<span class='warning'>[E] cools [O].</span>")
 	E.investigate_log("Experimentor has cooled [O].", INVESTIGATE_EXPERIMENTOR)
 	O.reagents.expose_temperature(50,0.5)
+
+/datum/experiment/snowstorm
+	weight = 20
+	is_bad = TRUE
+	experiment_type = /datum/experiment_type/cool
+
+/datum/experiment/snowstorm/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	var/turf/use_turf = get_turf(E)
+	var/area/use_area = get_area(E)
+	E.visible_message("<span class='warning'>[E] malfunctions, inversing the direction of cooling!</span>") //griff
+	E.investigate_log("Experimentor has caused a snowstorm.", INVESTIGATE_EXPERIMENTOR)
+	A = new /datum/weather/snow_storm(list(use_turf.z))
+	A.name = "cold exhaust"
+	A.area_type = use_area.type
+	A.telegraph_duration = 100
+	A.end_duration = 100

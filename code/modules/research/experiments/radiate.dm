@@ -5,12 +5,13 @@
 	weight = 20
 	experiment_type = /datum/experiment_type/radiate
 	base_points = 250
+	critical = TRUE
 
 /datum/experiment/enable_clone/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
 	if(. && E.linked_console)
 		var/datum/techweb/web = E.linked_console.stored_research
-		return web.all_experiment_types[/datum/experiment_type/clone].hidden //Only perform if clonemode is not enabled
+		. = web.all_experiment_types[/datum/experiment_type/clone].hidden //Only perform if clonemode is not enabled
 
 /datum/experiment/enable_clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
@@ -68,3 +69,15 @@
 	E.visible_message("<span class='danger'>[E] malfunctions, irradiating [O]!</span>")
 	O.rad_act(300)
 	O.AddComponent(/datum/component/radioactive, 50, E)
+
+/datum/experiment/neutron_layer
+	weight = 30
+	experiment_type = /datum/experiment_type/radiate
+
+/datum/experiment/neutron_layer/init()
+	valid_types = typecacheof(/obj/item/clothing)
+
+/datum/experiment/neutron_layer/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("<span class='danger'>[E] adds a thick layer of neutrons to [O].</span>")
+	O.AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION, TRUE, FALSE)

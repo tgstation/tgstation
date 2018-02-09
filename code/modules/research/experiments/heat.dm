@@ -5,6 +5,7 @@
 	weight = 20
 	experiment_type = /datum/experiment_type/destroy
 	base_points = 250
+	critical = TRUE
 	valid_reagents = list("plasma","capsaicin","ethanol")
 
 /datum/experiment/coffee/heater_fail/perform(obj/machinery/rnd/experimentor/E,obj/item/O)

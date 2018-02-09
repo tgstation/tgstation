@@ -38,3 +38,31 @@
 		E.investigate_log("Experimentor has thrown [O] at [target]", INVESTIGATE_EXPERIMENTOR)
 		E.eject_item()
 		O.throw_at(target, 10, 1)
+
+/datum/experiment/open_bomb
+	weight = 20
+	is_bad = TRUE
+	experiment_type = /datum/experiment_type/poke
+
+/datum/experiment/open_bomb/init()
+	valid_types = typecacheof(/obj/item/device/transfer_valve)
+
+/datum/experiment/open_bomb/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	if(. && is_valid_bomb(O))
+		. = TRUE
+
+/datum/experiment/open_bomb/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("<span class='danger'>[E] begins [pick("curiously","mischievously","angrily")] [pick("screwing","twisting","twirling","turning")] open the [O]!</span>")
+	E.investigate_log("Experimentor is activating a bomb.", INVESTIGATE_EXPERIMENTOR)
+	addtimer(CALLBACK(src, .proc/open, E, O), 30)
+	E.reset_time += 30
+
+/datum/experiment/open_bomb/proc/open(obj/machinery/rnd/experimentor/E,obj/item/O)
+	if(E.loaded_item == O)
+		O.toggle_valve()
+		E.visible_message("<span class='danger'>[E] has opened the [O]!</span>")
+	else
+		playsound(E, 'sound/machines/buzz-sigh.ogg', 50, 1)
+	E.RefreshParts()

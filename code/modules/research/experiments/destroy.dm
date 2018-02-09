@@ -5,6 +5,7 @@
 	weight = 20
 	experiment_type = /datum/experiment_type/destroy
 	base_points = 250
+	critical = TRUE
 
 /datum/experiment/destroy/flatten/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
