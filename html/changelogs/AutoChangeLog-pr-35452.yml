@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - code_imp: "Removes grind_results from empty soda cans since they can't be ground."
