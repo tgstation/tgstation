@@ -491,7 +491,6 @@
 	for(var/faction1 in faction)
 		if(faction1 in target.faction)
 			return TRUE
-		continue
 	return FALSE
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
