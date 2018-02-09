@@ -109,12 +109,12 @@
 	icon_state = "hopcloak"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hop
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 20, rad = 0, fire = 10, acid = 20)
+	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/head/hooded/cloakhood/hop
 	icon_state = "hophood"
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 20, rad = 0, fire = 10, acid = 20)
-	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/gun, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/device/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-
+	
 
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
