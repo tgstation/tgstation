@@ -188,7 +188,7 @@
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
 	if(!authenticated) 
-		to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
+		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
 	else if(!(obj_flags & EMAGGED))
