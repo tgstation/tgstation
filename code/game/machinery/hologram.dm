@@ -65,15 +65,17 @@ Possible to do for anyone motivated enough:
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
+	var/proximity_range = 1
 	
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
-	if(!mapload)
-		return
-	var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
-	if(new_disk && !disk)
-		new_disk.forceMove(src)
-		disk = new_disk
+	if(proximity_range)
+		proximity_monitor = new(src, proximity_range)
+	if(mapload)
+		var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
+		if(new_disk && !disk)
+			new_disk.forceMove(src)
+			disk = new_disk
 
 /obj/machinery/holopad/tutorial/attack_hand(mob/user)
 	if(!istype(user))
@@ -86,6 +88,12 @@ Possible to do for anyone motivated enough:
 		replay_start()
 	return
 	
+/obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
+	if (!isliving(AM))
+		return
+	if(!replay_mode && (disk && disk.record))
+		replay_start()
+
 /obj/machinery/holopad/Initialize()
 	. = ..()
 	if(on_network)
