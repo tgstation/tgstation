@@ -2,4 +2,6 @@
 
 #ifdef UNIT_TESTS
 #include "unit_test.dm"
+#include "recipe_collisions.dm"
+#include "reagent_id_typos.dm"
 #endif
