@@ -335,7 +335,7 @@
 				return
 			fuel_injection = max(1, newval)
 			message_admins("AME injection strength set to [fuel_injection] by [usr.real_name] ([key_name_admin(usr)]) at ([COORD(loc)] - [ADMIN_JMP(loc)])",FALSE,TRUE)
-		if("refreshstability")
+		if("refreshicons")
 			check_core_stability()
 
 	updateDialog()
@@ -355,20 +355,22 @@
 		dat += "<div class='statusValue average'>Injecting</div>"
 	else
 		dat += "<div class='statusValue good'>Standby</div>"
-	dat += "<a href='?src=[REF(src)];task=togglestatus;'>Toggle Status</a>"
+	dat += "    <a href='?src=[REF(src)];task=togglestatus;'>Toggle Status</a>"
 	if(!fueljar)
 		dat += "<div class='notice'>No fuel jar detected.</div>"
 	else
 		dat += "<div class='statusDisplay'>"
 		dat += "<div class='line'>"
 		dat += "<div class='statusLabel'>Fuel:</div> "
-		dat += "<div class='statusValue'>[fueljar.fuel]/[fueljar.fuel_max]</div>"
-		dat += "<a href='?src=[REF(src)];task=ejectjar;'>Eject</a></div>"
+		dat += "<div class='statusValue'>[fueljar.fuel]/[fueljar.fuel_max]</div>  "
+		dat += "<a href='?src=[REF(src)];task=eject;'>Eject</a></div>"
 		dat += "<div class='line'>"
 		dat += "<div class='statusLabel'>Injecting:</div> "
-		dat += "<div class='statusValue'><a href='?src=[REF(src)];task=set_strength;'>[fuel_injection]</a></div>"
-	dat += "<div class='statusDisplay'><div class='line'><div class='statusLabel'>Stability:</div>"
-	dat += "<div class='statusValue'>[stability]%</div></div></div></div>"
+		dat += "<div class='statusValue'><a href='?src=[REF(src)];task=set_strength;'>[fuel_injection]</a></div></div><div class='clearBoth'></div></div>"
+	dat += "<div class='statusDisplay'>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Stability:</div>"
+	dat += "<div class='statusValue'>[stability]%</div><div class='clearBoth'></div></div>"
 	dat += "<div class='line'>"
 	dat += "<div class='statusLabel'>Shielding Count:</div>"
 	dat += "<div class='statusValue'>[linked_shielding.len]</div></div>"
@@ -384,7 +386,7 @@
 	dat += "<div class='statusValue'>[stability]</div></div>"
 	dat += "<div class='line'>"
 	dat += "<div class='statusLabel'>Last Produced:</div>"
-	dat += "<div class='statusValue'>[stored_power]</div></div></div>"
+	dat += "<div class='statusValue'>[stored_power]</div></div><div class='clearBoth'></div></div>"
 
 	popup.set_content(dat.Join())
 	popup.open()
