@@ -3,6 +3,7 @@
 	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
 	show_name_in_check_antagonists = TRUE
+	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
@@ -13,7 +14,7 @@
 
 /datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_removed(M)	
+	update_ninja_icons_removed(M)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
@@ -34,7 +35,7 @@
 					possible_targets[M] = 1						//good-guy
 
 	var/list/possible_objectives = list(1,2,3,4)
-	
+
 	while(objectives.len < quantity)
 		switch(pick_n_take(possible_objectives))
 			if(1)	//research

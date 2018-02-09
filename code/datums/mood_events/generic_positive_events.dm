@@ -36,3 +36,15 @@
 /datum/mood_event/oblivious
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
 	mood_change = 3
+
+/datum/mood_event/focused
+	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
+	mood_change = 12
+
+/datum/mood_event/revolution
+	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
+	mood_change = 2
+
+/datum/mood_event/cult
+	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
+	mood_change = 40 //maybe being a cultist isnt that bad after all
