@@ -122,3 +122,7 @@
 /obj/item/implanter/radio
 	name = "implanter (internal radio)"
 	imp_type = /obj/item/implant/radio
+
+/obj/item/implanter/radio/syndicate
+	name = "implanter (internal syndicate radio)"
+	imp_type = /obj/item/implant/radio/syndicate
