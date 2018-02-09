@@ -14,6 +14,8 @@
 	objective2.owner = owner
 	objectives += objective2
 
+	owner.objectives |= objectives
+
 /datum/antagonist/revenant/on_gain()
 		forge_objectives()
 		. = ..()
