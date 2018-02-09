@@ -86,7 +86,6 @@ Possible to do for anyone motivated enough:
 		replay_stop()
 	else if(disk && disk.record)
 		replay_start()
-	return
 	
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
