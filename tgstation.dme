@@ -114,6 +114,8 @@
 #include "code\__HELPERS\shell.dm"
 #include "code\__HELPERS\stat_tracking.dm"
 #include "code\__HELPERS\text.dm"
+#include "code\__HELPERS\text_goon_ru.dm"
+#include "code\__HELPERS\text_ru.dm"
 #include "code\__HELPERS\time.dm"
 #include "code\__HELPERS\type2type.dm"
 #include "code\__HELPERS\unsorted.dm"
