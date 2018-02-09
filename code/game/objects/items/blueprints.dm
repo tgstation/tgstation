@@ -191,6 +191,7 @@
 				var/obj/machinery/door/firedoor/FD = D
 				FD.CalculateAffectingAreas()
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
+	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	interact()
 	return 1
 

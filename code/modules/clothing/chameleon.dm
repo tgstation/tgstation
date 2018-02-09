@@ -409,11 +409,11 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	flags_1 = NOSLIP_1
-	
+
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
-	chameleon_action.emp_randomise(INFINITY)	
-	
+	chameleon_action.emp_randomise(INFINITY)
+
 /obj/item/gun/energy/laser/chameleon
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
@@ -431,6 +431,8 @@
 	var/list/ammo_copy_vars
 	var/list/gun_copy_vars
 	var/badmin_mode = FALSE
+	var/can_hitscan = FALSE
+	var/hitscan_mode = FALSE
 	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
 /obj/item/gun/energy/laser/chameleon/Initialize()
@@ -441,7 +443,7 @@
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
 	chameleon_action.initialize_disguises()
 
-	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags")
+	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags", "tracer_type", "muzzle_type", "impact_type")
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
 	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
 	chameleon_gun_vars = list()
@@ -493,6 +495,11 @@
 	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
 		var/obj/item/ammo_casing/energy/chameleon/AC = chambered
 		AC.projectile_vars = chameleon_projectile_vars.Copy()
+	if(!P.tracer_type)
+		can_hitscan = FALSE
+		set_hitscan(FALSE)
+	else
+		can_hitscan = TRUE
 	if(badmin_mode)
 		qdel(chambered.BB)
 		chambered.projectile_type = P.type
@@ -528,6 +535,22 @@
 		else if(istype(G, /obj/item/gun/syringe))
 			var/obj/item/ammo_casing/AC = new /obj/item/ammo_casing/syringegun(src)
 			set_chameleon_ammo(AC)
+
+/obj/item/gun/energy/laser/chameleon/attack_self(mob/user)
+	. = ..()
+	if(!can_hitscan)
+		to_chat(user, "<span class='warning'>[src]'s current disguised gun does not allow it to enable high velocity mode!</span>")
+		return
+	if(!chambered)
+		to_chat(user, "<span class='warning'>Unknown error in energy lens: Please reset chameleon disguise and try again.</span>")
+		return
+	set_hitscan(!hitscan_mode)
+	to_chat(user, "<span class='notice'>You toggle [src]'s high velocity beam mode to [hitscan_mode? "on" : "off"].</span>")
+
+/obj/item/gun/energy/laser/chameleon/proc/set_hitscan(hitscan)
+	var/obj/item/ammo_casing/energy/chameleon/AC = chambered
+	AC.hitscan_mode = hitscan
+	hitscan_mode = hitscan
 
 /obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	reset_chameleon_vars()

@@ -6,7 +6,7 @@
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = /datum/antagonist/traitor/AI
 	var/human_datum = /datum/antagonist/traitor/human
-	var/special_role = "traitor"
+	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
@@ -85,7 +85,9 @@
 	return
 
 /datum/antagonist/traitor/human/forge_traitor_objectives()
-	var/is_hijacker = prob(10)
+	var/is_hijacker = FALSE
+	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors

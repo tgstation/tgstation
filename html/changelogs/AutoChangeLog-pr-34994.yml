@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Attempting to join into a command role as a nonhuman species no longer lets you keep your nonhuman species languages if you are transformed into a human because of a config option"

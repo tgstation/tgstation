@@ -57,37 +57,32 @@
 
 /obj/item/device/radio/intercom/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/screwdriver))
-		var/obj/item/screwdriver/S = I
 		if(unfastened)
 			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
-			playsound(src, S.usesound, 50, 1)
-			if(!do_after(user, 30 * S.toolspeed, target = src))
-				return
-			user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
-			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-			unfastened = FALSE
+			playsound(src, I.usesound, 50, 1)
+			if(I.use_tool(src, user, 30))
+				user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+				unfastened = FALSE
 		else
 			user.visible_message("<span class='notice'>[user] starts loosening [src]'s screws...</span>", "<span class='notice'>You start unscrewing [src]...</span>")
-			playsound(src, S.usesound, 50, 1)
-			if(!do_after(user, 60 * S.toolspeed, target = src))
-				return
-			user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
-			playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-			unfastened = TRUE
+			playsound(src, I.usesound, 50, 1)
+			if(I.use_tool(src, user, 40))
+				user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+				unfastened = TRUE
 		return
 	else if(istype(I, /obj/item/wrench))
 		if(!unfastened)
 			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
 			return
-		var/obj/item/wrench/W = I
 		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
-		playsound(src, W.usesound, 50, 1)
-		if(!do_after(user, 80 * W.toolspeed, target = src))
-			return
-		user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
-		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-		new/obj/item/wallframe/intercom(get_turf(src))
-		qdel(src)
+		playsound(src, I.usesound, 50, 1)
+		if(I.use_tool(src, user, 80))
+			user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			new/obj/item/wallframe/intercom(get_turf(src))
+			qdel(src)
 		return
 	return ..()
 

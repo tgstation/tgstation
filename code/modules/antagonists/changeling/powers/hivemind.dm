@@ -27,7 +27,10 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	chemical_cost = 10
 	dna_cost = -1
 
-/obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/living/user)
+	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
+		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
@@ -60,6 +63,9 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
+		return
+	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]

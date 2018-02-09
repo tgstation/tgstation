@@ -1079,8 +1079,7 @@
 /area/holodeck/rec_center/kobayashi)
 "dv" = (
 /obj/structure/closet{
-	density = 0;
-	opened = 1
+	density = 0
 	},
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
@@ -5695,6 +5694,14 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
+"pR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/ferry)
 "pX" = (
 /obj/item/storage/crayons,
 /obj/structure/table,
@@ -8313,6 +8320,7 @@
 	dwidth = 2;
 	height = 13;
 	id = "ferry_away";
+	json_key = "ferry";
 	name = "CentCom Ferry Dock";
 	width = 5
 	},
@@ -8972,8 +8980,7 @@
 /area/wizard_station)
 "zp" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
@@ -50112,7 +50119,7 @@ qb
 mD
 rs
 sw
-tw
+pR
 sw
 uQ
 mD

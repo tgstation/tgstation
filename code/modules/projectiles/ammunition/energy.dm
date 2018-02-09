@@ -12,6 +12,7 @@
 /obj/item/ammo_casing/energy/chameleon
 	projectile_type = /obj/item/projectile/energy/chameleon
 	e_cost = 0
+	var/hitscan_mode = FALSE
 	var/list/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -19,8 +20,10 @@
 	if(!BB)
 		newshot()
 	for(var/V in projectile_vars)
-		if(BB.vars[V])
+		if(BB.vars.Find(V))
 			BB.vars[V] = projectile_vars[V]
+	if(hitscan_mode)
+		BB.hitscan = TRUE
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam/laser
@@ -69,9 +72,15 @@
 	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 
+/obj/item/ammo_casing/energy/laser/bluetag/hitscan
+	projectile_type = /obj/item/projectile/beam/lasertag/bluetag/hitscan
+
 /obj/item/ammo_casing/energy/laser/redtag
 	projectile_type = /obj/item/projectile/beam/lasertag/redtag
 	select_name = "redtag"
+
+/obj/item/ammo_casing/energy/laser/redtag/hitscan
+	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray

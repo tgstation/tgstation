@@ -13,13 +13,13 @@
 	if(!placement_override)
 		if(!pop_override)
 			for(var/mob/living/M in range(7, src))
-				if("blob" in M.faction)
+				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
 					return 0
 			for(var/mob/living/M in view(13, src))
-				if("blob" in M.faction)
+				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
@@ -157,7 +157,7 @@
 		return
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
-	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = initial(B.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 		B.update_icon()
@@ -251,7 +251,7 @@
 	if(can_buy(4))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
-			if("blob" in L.faction) //no friendly/dead fire
+			if(ROLE_BLOB in L.faction) //no friendly/dead fire
 				continue
 			if(L.stat != DEAD)
 				attacksuccess = TRUE
