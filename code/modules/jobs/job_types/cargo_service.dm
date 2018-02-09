@@ -11,7 +11,7 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
-	antag_rep = 3
+	antag_rep = 12
 
 	outfit = /datum/outfit/job/quartermaster
 
@@ -42,7 +42,7 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 1
+	antag_rep = 4
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -71,7 +71,7 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 2
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/miner
 
@@ -150,7 +150,7 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 1
+	antag_rep = 4
 
 	outfit = /datum/outfit/job/bartender
 
@@ -184,7 +184,7 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
-	antag_rep = 2
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/cook
 
@@ -235,7 +235,7 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 2
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/botanist
 
@@ -275,7 +275,7 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
-	antag_rep = 2
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/janitor
 
