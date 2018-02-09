@@ -96,7 +96,7 @@
 				severity = 0
 
 			//chance to actually hit the eyes depends on internal component
-			if(prob(effectchance * diode.rating) && C.flash_act(severity))
+			if((C == user || prob(effectchance * diode.rating)) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
