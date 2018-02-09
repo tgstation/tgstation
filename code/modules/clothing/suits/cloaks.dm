@@ -27,9 +27,7 @@
 	desc = "Worn by Securistan, ruling the station with an iron fist."
 	icon_state = "hoscloak"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/hos
-
-
-
+	allowed = list(/obj/item/melee/baton,/obj/item/melee/classic_baton,/obj/item/grenade,/obj/item/gun,/obj/item/reagent_containers/spray/pepper,/obj/item/restraints/handcuffs,/obj/item/device/assembly/flash/handheld,/obj/item/clothing/glasses,/obj/item/ammo_casing/shotgun,/obj/item/ammo_box,/obj/item/reagent_containers/food/snacks/donut,/obj/item/reagent_containers/food/snacks/donut/jelly,/obj/item/kitchen/knife/combat,/obj/item/device/flashlight/seclite,/obj/item/melee/classic_baton/telescopic,/obj/item/device/radio,/obj/item/clothing/gloves/,/obj/item/restraints/legcuffs/bola)
 
 /obj/item/clothing/head/hooded/cloakhood/hos
 	icon_state = "hoshood"
