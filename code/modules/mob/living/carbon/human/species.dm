@@ -1128,7 +1128,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
-		//var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80 //Commented out for moodlets, temporary.
 		if(health_deficiency >= 40)
 			if(flight)
 				. += (health_deficiency / 75)

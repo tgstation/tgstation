@@ -99,7 +99,7 @@
 
 /obj/item/clothing/mask/joy
 	name = "joy mask"
-	desc = "Express your mood or hide your sorrows with this laughing face with crying tears of joy cutout."
+	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
 	icon_state = "joy"
 
 /obj/item/clothing/mask/pig
