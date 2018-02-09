@@ -26,7 +26,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower", "defibrillator")
+	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower")
 	research_cost = 2500
 	export_price = 5000
 
