@@ -317,18 +317,20 @@
 	var/current = 1
 
 	for(var/datum/mind/mind in candidates)
+		var/p_ckey = ckey(mind.key)
+
 		if(current <= antag_select)
-			var/subtract = min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
-			var/start = SSpersistence.antag_rep[ckey(mind.key)]
-			SSpersistence.antag_rep[ckey(mind.key)] = max(0, SSpersistence.antag_rep[ckey(mind.key)] - subtract)
+			var/subtract = min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
+			var/start = SSpersistence.antag_rep[p_ckey]
+			SSpersistence.antag_rep[p_ckey] = max(0, SSpersistence.antag_rep[p_ckey] - subtract)
 			WARNING("Player [mind.key] won spending [subtract] tickets from starting value [start]")
 
-			if(SSpersistence.antag_rep[ckey(mind.key)] <= 0)
-				SSpersistence.antag_rep.Remove(ckey(mind.key))
+			if(SSpersistence.antag_rep[p_ckey] <= 0)
+				SSpersistence.antag_rep.Remove(p_ckey)
 
 			return mind
 
-		current += min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+		current += min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
 
 	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
 	return pick(candidates)
