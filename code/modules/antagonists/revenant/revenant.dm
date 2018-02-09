@@ -224,6 +224,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
 	ghostize(0)//Don't re-enter invisible corpse
+	SSshuttle.shuttle_purchase_requirements_met |= "revenant"
 
 
 //reveal, stun, icon updates, cast checks, and essence changing
