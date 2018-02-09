@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Fixed borgs applying cuffs on people without the right number of arms."
-  - refactor: "Handcuff code has been rejiggled and snowflake code has been removed."
-  - rscdel: "Removed unused cable cuffs module stuff for borgs."
