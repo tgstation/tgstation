@@ -147,6 +147,8 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
 	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/security/skirt(src)
+	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/jackboots(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/sec(src)
