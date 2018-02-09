@@ -8,10 +8,10 @@
 
 /datum/antagonist/revenant/proc/forge_objectives()
 	var/datum/objective/revenant/objective = new
-	objective.owner = mind
+	objective.owner = owner
 	objectives += objective
 	var/datum/objective/revenantFluff/objective2 = new
-	objective2.owner = mind
+	objective2.owner = owner
 	objectives += objective2
 
 /datum/antagonist/revenant/on_gain()

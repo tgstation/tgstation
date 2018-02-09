@@ -15,7 +15,7 @@
 	give_powers()
 
 /datum/antagonist/wishgranter/greet()
-	to_chat(user, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
+	to_chat(owner, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/wishgranter/proc/give_powers()

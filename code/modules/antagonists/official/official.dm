@@ -15,7 +15,7 @@
 	H.equipOutfit(/datum/outfit/centcom_official)
 
 	if(CONFIG_GET(flag/enforce_human_authority))
-		newmob.set_species(/datum/species/human)
+		H.set_species(/datum/species/human)
 
 /datum/antagonist/official/proc/forge_objectives()
 	if(!mission)

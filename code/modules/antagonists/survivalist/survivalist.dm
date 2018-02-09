@@ -1,17 +1,17 @@
 /datum/antagonist/survivalist
 	name = "Survivalist"
 	show_in_antagpanel = FALSE
-	show_name_in_antagpanel = TRUE
+	show_name_in_check_antagonists = TRUE
 	var/greet_message = ""
 
 /datum/antagonist/survivalist/proc/forge_objectives()
 	var/datum/objective/survive/survive = new
-	survive.owner = H.mind
+	survive.owner = owner
 	objectives += survive
 
 
 /datum/antagonist/survivalist/on_gain()
-	H.mind.special_role = "survivalist"
+	owner.special_role = "survivalist"
 	forge_objectives()
 	. = ..()
 
