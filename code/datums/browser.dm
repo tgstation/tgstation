@@ -228,13 +228,14 @@
 		return
 
 	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
-
 	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
+			if(!i["allowed_edit"])
+				slidecolor = "locked"
 			output += {"<li>
 	        				<label class="switch">
-	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
-	      							<div class="slider [slidecolor ? "slider[slidecolor]" : ""]"></div>
+	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""][i["allowed_edit"] ? "" : " disabled=1"]>
+	      							<div class="slider [slidecolor ? "[slidecolor]" : ""]"></div>
 	      								<span>[i["name"]]</span>
 	    						</label>
 	    					</li>"}
@@ -285,15 +286,18 @@
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor)
+/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list)
 	if (!User || !(bitfield in GLOB.bitfields))
 		return
 	var/list/pickerlist = list()
 	for (var/i in GLOB.bitfields[bitfield])
+		var/can_edit = 1
+		if(allowed_edit_list && !(allowed_edit_list & GLOB.bitfields[bitfield][i]))
+			can_edit = 0
 		if (current_value & GLOB.bitfields[bitfield][i])
-			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i))
+			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
-			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i))
+			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 
 	if (islist(result))

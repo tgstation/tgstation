@@ -33,7 +33,13 @@ ROUND_END_COUNTDOWN 90
 ## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
 ## You need to set up your database to use the SQL based system.
 ## This flag is automatically enabled if SQL_ENABLED isn't
-ADMIN_LEGACY_SYSTEM
+#ADMIN_LEGACY_SYSTEM
+
+#Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
+#PROTECT_LEGACY_ADMINS
+
+#Uncomment this to stop any ranks loaded by the legacy system from having their flags edited by the permissions panel
+#PROTECT_LEGACY_RANKS
 
 ## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
@@ -56,7 +62,7 @@ BAN_LEGACY_SYSTEM
 ## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 3
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
-#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT 
+#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
@@ -209,7 +215,7 @@ CHECK_RANDOMIZER
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
-##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
+##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
 # GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
@@ -387,7 +393,7 @@ DEBUG_ADMIN_HREFS
 ##	Setting this to 0 will prevent the Master Controller from ticking
 BASE_MC_TICK_RATE 1
 
-##High population MC tick rate 
+##High population MC tick rate
 ##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
 ##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
 ##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.

@@ -156,12 +156,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
+	/*var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
 		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
+			localhost_holder.associate(src)*/
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank

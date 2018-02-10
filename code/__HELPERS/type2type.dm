@@ -178,11 +178,8 @@
 			return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
-/proc/rights2text(rights, seperator="", exclude)
-	if(exclude)
-		seperator += "-"
-	else
-		seperator += "+"
+/proc/rights2text(rights, seperator="", prefix = "+")
+	seperator += prefix
 	if(rights & R_BUILDMODE)
 		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
@@ -211,6 +208,10 @@
 		. += "[seperator]SPAWN"
 	if(rights & R_AUTOLOGIN)
 		. += "[seperator]AUTOLOGIN"
+	if(rights & R_DBRANKS)
+		. += "[seperator]DBRANKS"
+	if(!.)
+		. = "NONE"
 	return .
 
 /proc/ui_style2icon(ui_style)

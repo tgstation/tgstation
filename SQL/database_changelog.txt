@@ -30,12 +30,13 @@ ALTER TABLE `admin_log`
 	CHANGE COLUMN `adminckey` `adminckey` VARCHAR(32) NOT NULL AFTER `datetime`,
 	CHANGE COLUMN `adminip` `adminip` INT(10) UNSIGNED NOT NULL AFTER `adminckey`,
 	ADD COLUMN `operation` ENUM('add admin','remove admin','change admin rank','add rank','remove rank','change rank flags') NOT NULL AFTER `adminip`,
-	CHANGE COLUMN `log` `log` VARCHAR(500) NOT NULL AFTER `operation`;
+	CHANGE COLUMN `log` `log` VARCHAR(1000) NOT NULL AFTER `operation`;
 
 ALTER TABLE `admin_ranks`
 	CHANGE COLUMN `rank` `rank` VARCHAR(32) NOT NULL FIRST,
 	CHANGE COLUMN `flags` `flags` SMALLINT UNSIGNED NOT NULL AFTER `rank`,
 	ADD COLUMN `exclude_flags` SMALLINT UNSIGNED NOT NULL AFTER `flags,`
+	ADD COLUMN `can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL AFTER `exclude_flags`
 	DROP COLUMN `id`,
 	DROP PRIMARY KEY,
 	ADD PRIMARY KEY (`rank`);

@@ -20,9 +20,11 @@
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th style='width:200px;text-align:right;'>CKEY <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
-<th style='width:200px;'>RANK</th>
-<th style='width:100%;'>PERMISSIONS</th>
+<th style='width:150px;text-align:right;'>CKEY <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
+<th style='width:125px;'>RANK</th>
+<th style='width:40%;'>PERMISSIONS</th>
+<th style='width:20%;'>DENIED</th>
+<th style='width:40%;'>ALLOWED TO EDIT</th>
 </tr>
 "})
 
@@ -33,9 +35,6 @@
 			if (!D)
 				continue
 
-		var/rights = rights2text(D.rank.rights," ")+rights2text(D.rank.exclude_rights," ", 1)
-		if(!rights)
-			rights = "*none*"
 		var/deadminlink = ""
 		if (D.deadmined)
 			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;ckey=[adm_ckey]'>\[RA\]</a>"
@@ -45,7 +44,9 @@
 		output += "<tr>"
 		output += "<td style='text-align:right;'>[adm_ckey] [deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
 		output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
-		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></td>"
+		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.rights," ")]</a></td>"
+		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
+		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
 		output += "</tr>"
 
 	output += {"
@@ -54,7 +55,7 @@
 </body>
 </html>"}
 
-	usr << browse(jointext(output, ""),"window=editrights;size=900x650")
+	usr << browse(jointext(output, ""),"window=editrights;size=1000x650")
 
 /datum/admins/proc/edit_rights_topic(list/href_list)
 	if(!check_rights(R_PERMISSIONS))
@@ -64,26 +65,37 @@
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
 		return
+	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/permissions)
+	permissions_assets.send(src)
 	var/admin_ckey = ckey(href_list["ckey"])
+	var/datum/admins/D = GLOB.admin_datums[admin_ckey]
 	var/use_db
 	var/task = href_list["editrights"]
 	var/skip
 	if(task == "activate" || task == "deactivate")
 		skip = 1
-	if(!skip)
-		if(!SSdbcore.Connect())
-			to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>")
-			use_db = "Temporary"
-		if(!use_db)
-			use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
-			if(use_db == "Cancel")
-				return
-			if(use_db == "Permanent")
-				use_db = 1
-				admin_ckey = sanitizeSQL(admin_ckey)
-			else
-				use_db = 0
-	var/datum/admins/D = GLOB.admin_datums[admin_ckey]
+	if(CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
+		if(admin_ckey in GLOB.protected_admins)
+			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>")
+			return
+	if(CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
+		if(D.rank in GLOB.protected_ranks)
+			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
+			return
+	if(check_rights(R_DBRANKS, 0))
+		if(!skip)
+			if(!SSdbcore.Connect())
+				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>")
+				use_db = "Temporary"
+			if(!use_db)
+				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
+				if(use_db == "Cancel")
+					return
+				if(use_db == "Permanent")
+					use_db = 1
+					admin_ckey = sanitizeSQL(admin_ckey)
+				else
+					use_db = 0
 	if(task != "add")
 		D = GLOB.admin_datums[admin_ckey]
 		if(!D)
@@ -159,7 +171,8 @@
 	var/datum/admin_rank/R
 	var/list/rank_names = list("*New Rank*")
 	for(R in GLOB.admin_ranks)
-		rank_names[R.name] = R
+		if((R.rights & usr.client.holder.rank.can_edit_rights) == R.rights)
+			rank_names[R.name] = R
 	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
 	if(new_rank == "*New Rank*")
 		new_rank = sanitizeSQL(ckeyEx(input("Please input a new rank", "New custom rank") as text|null))
@@ -174,7 +187,7 @@
 		GLOB.admin_ranks += R
 	if(use_db)
 		if(!R)
-			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags) VALUES ('[new_rank]', '0', '0')")
+			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_rights) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
 				return
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add rank', 'New rank added: [admin_ckey]')")
@@ -202,25 +215,30 @@
 	log_admin("[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
 
 /datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D)
-	var/new_flags = input_bitfield(usr, "Include permission flags [use_db ? "<br>This will affect ALL admins with this rank." : "<br>This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.rights, 350, 580)
+	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.rights, 350, 580, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
-	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags. [use_db ? "<br>This will affect ALL admins with this rank." : "<br>This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 650, "red")
+	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 670, "red", usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_exclude_flags))
+		return
+	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.can_edit_rights, 350, 700, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
+	if(isnull(new_can_edit_flags))
 		return
 	if(use_db)
 		var/old_flags
 		var/old_exclude_flags
-		var/datum/DBQuery/query_get_rank_flags = SSdbcore.NewQuery("SELECT flags, exclude_flags FROM [format_table_name("admin_ranks")] WHERE rank = '[D.rank.name]'")
+		var/old_can_edit_flags
+		var/datum/DBQuery/query_get_rank_flags = SSdbcore.NewQuery("SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = '[D.rank.name]'")
 		if(!query_get_rank_flags.warn_execute())
 			return
 		if(query_get_rank_flags.NextRow())
 			old_flags = text2num(query_get_rank_flags.item[1])
-			old_exclude_flags = text2num(query_get_rank_flags.item[1])
-		var/datum/DBQuery/query_change_rank_flags = SSdbcore.NewQuery("UPDATE [format_table_name("admin_ranks")] SET flags = '[new_flags]' WHERE rank = '[D.rank.name]'")
+			old_exclude_flags = text2num(query_get_rank_flags.item[2])
+			old_can_edit_flags = text2num(query_get_rank_flags.item[3])
+		var/datum/DBQuery/query_change_rank_flags = SSdbcore.NewQuery("UPDATE [format_table_name("admin_ranks")] SET flags = '[new_flags]', exclude_flags = '[new_exclude_flags]', can_edit_flags = '[new_can_edit_flags]' WHERE rank = '[D.rank.name]'")
 		if(!query_change_rank_flags.warn_execute())
 			return
-		var/datum/DBQuery/query_change_rank_flags_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'change rank flags', 'Permissions of [admin_ckey] changed from[rights2text(old_flags," ")][rights2text(old_exclude_flags," ", 1)] to[rights2text(new_flags," ")][rights2text(new_exclude_flags," ", 1)]')")
+		var/datum/DBQuery/query_change_rank_flags_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'change rank flags', 'Permissions of [admin_ckey] changed from[rights2text(old_flags," ")][rights2text(old_exclude_flags," ", "-")][rights2text(old_can_edit_flags," ", "*")] to[rights2text(new_flags," ")][rights2text(new_exclude_flags," ", "-")][rights2text(new_can_edit_flags," ", "*")]')")
 		if(!query_change_rank_flags_log.warn_execute())
 			return
 		for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -228,6 +246,7 @@
 				continue
 			R.rights = new_flags &= ~new_exclude_flags
 			R.exclude_rights = new_exclude_flags
+			R.can_edit_rights = new_exclude_flags
 		for(var/datum/admins/A in GLOB.admin_datums+GLOB.deadmins)
 			if(A.rank.name != D.rank.name)
 				continue
@@ -237,7 +256,7 @@
 	else
 		D.disassociate()
 		if(!findtext(D.rank.name, "([admin_ckey])")) //not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
-			D.rank = new("[D.rank.name]([admin_ckey])", new_flags, new_exclude_flags) //duplicate our previous admin_rank but with a new name
+			D.rank = new("[D.rank.name]([admin_ckey])", new_flags, new_exclude_flags, new_can_edit_flags) //duplicate our previous admin_rank but with a new name
 			//we don't add this clone to the admin_ranks list, as it is unique to that ckey
 		else
 			D.rank.rights = new_flags &= ~new_exclude_flags

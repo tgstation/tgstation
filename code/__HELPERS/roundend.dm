@@ -493,22 +493,19 @@
 /datum/controller/subsystem/ticker/proc/save_admin_data()
 	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
 		return
-	else
-		load_admins()
-	if(CONFIG_GET(flag/admin_legacy_system)) //database failure when loading admins, reverted to legacy system
+	else if(load_admins()) //returns true if there was a database failure and the backup was loaded from
 		return
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
-	//legacy-format backup file generation
-	//for extra safety in an edge case with multiple servers we don't directly overwrite existing file
-	//instead we'll make these temp files and cut once all data is written
-	for(var/datum/admins/D in GLOB.admin_datums)
-		WRITE_FILE("config/admins_tmp.txt", "[D.target] = [D.rank.name]")
+	//json format backup file generation stored per server
+	var/json_file = file("data/admins_backup.json")
+	var/list/file_data = list("ranks" = list(), "admins" = list())
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		WRITE_FILE("config/admins_ranks_tmp.txt", "[R.name] =[rights2text(R.rights," ")][rights2text(R.exclude_rights," ", 1)]")
-	fdel("config/admins.txt")
-	fdel("config/admins_ranks.txt")
-	fcopy("config/admins_tmp.txt", "config/admins.txt")
-	fcopy("config/admins_ranks_tmp.txt", "config/admins_ranks.txt")
-	fdel("config/admins_tmp.txt")
-	fdel("config/admins_ranks_tmp.txt")
+		file_data["ranks"]["[R.name]"] = list()
+		file_data["ranks"]["[R.name]"]["rights"] = R.rights
+		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
+		file_data["ranks"]["[R.name]"]["can edit rights"] = R.exclude_rights
+	for(var/datum/admins/A in GLOB.admin_datums+GLOB.deadmins)
+		file_data["admins"]["[A.target]"] = A.rank.name
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))

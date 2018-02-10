@@ -20,7 +20,7 @@ import re
 import sys
 
 def parse_text_flags(text, previous):
-    flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVINATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192}
+    flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVINATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192, "DBRANKS":16384}
     flags_int = 8192
     exclude_flags_int = 0
     flags = text.split(" ")
@@ -68,7 +68,7 @@ with open("..\\config\\admin_ranks.txt") as rank_file:
             matches = re.match("(.+)\\b\\s+=\\s*(.*)", line)
             flags = parse_text_flags(matches.group(2), previous)
             previous = flags[0]
-            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags) VALUES ('{1}', {2}, {3})".format(ranks_table, matches.group(1), flags[0], flags[1]))
+            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, 0)".format(ranks_table, matches.group(1), flags[0], flags[1]))
 with open("..\\config\\admins.txt") as admins_file:
     previous = 0
     for line in admins_file:
