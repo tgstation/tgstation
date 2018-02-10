@@ -241,14 +241,13 @@
 	possessed = TRUE
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))
-		theghost = pick(candidates)
+		var/client/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
-		S.ckey = theghost.ckey
+		S.ckey = C.ckey
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)

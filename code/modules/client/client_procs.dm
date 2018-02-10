@@ -519,7 +519,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
+			
+			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 
@@ -561,7 +565,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			
+			//we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 
