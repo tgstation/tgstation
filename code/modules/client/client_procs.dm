@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [blacklisted_builds[byond_build]].</span>")
 		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
 		if(connecting_admin)
-			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions"
+			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
 		else 
 			qdel(src)
 			return
