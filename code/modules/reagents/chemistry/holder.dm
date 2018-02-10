@@ -339,6 +339,7 @@
 
 	var/reaction_occurred = 0
 	do
+		var/list/possible_reactions = list()
 		reaction_occurred = 0
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
@@ -355,18 +356,14 @@
 				var/total_matching_catalysts= 0
 				var/matching_container = 0
 				var/matching_other = 0
-				var/list/multipliers = new/list()
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
 				var/meets_temp_requirement = 0
-
-				var/list/cached_results = C.results
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
 						break
 					total_matching_reagents++
-					multipliers += round(get_reagent_amount(B) / cached_required_reagents[B])
 				for(var/B in cached_required_catalysts)
 					if(!has_reagent(B, cached_required_catalysts[B]))
 						break
@@ -398,37 +395,54 @@
 					meets_temp_requirement = 1
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-					var/multiplier = min(multipliers)
-					for(var/B in cached_required_reagents)
-						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+					possible_reactions  += C
 
-					for(var/P in C.results)
-						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
+		if(possible_reactions.len)
+			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
+			//select the reaction with the most extreme temperature requirements
+			for(var/V in possible_reactions)
+				var/datum/chemical_reaction/competitor = V
+				if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
+					if(competitor.required_temp < selected_reaction.required_temp)
+						selected_reaction = competitor
+				else
+					if(competitor.required_temp > selected_reaction.required_temp)
+						selected_reaction = competitor
+			var/list/cached_required_reagents = selected_reaction.required_reagents
+			var/list/cached_results = selected_reaction.results
+			var/list/multiplier = INFINITY
+			for(var/B in cached_required_reagents)
+				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
-					var/list/seen = viewers(4, get_turf(my_atom))
-					var/iconhtml = icon2html(cached_my_atom, seen)
-					if(cached_my_atom)
-						if(!ismob(cached_my_atom)) // No bubbling mobs
-							if(C.mix_sound)
-								playsound(get_turf(cached_my_atom), C.mix_sound, 80, 1)
+			for(var/B in cached_required_reagents)
+				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
-							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+			for(var/P in selected_reaction.results)
+				multiplier = max(multiplier, 1) //this shouldnt happen ...
+				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
+				add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
-						if(istype(cached_my_atom, /obj/item/slime_extract))
-							var/obj/item/slime_extract/ME2 = my_atom
-							ME2.Uses--
-							if(ME2.Uses <= 0) // give the notification that the slime core is dead
-								for(var/mob/M in seen)
-									to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-									ME2.name = "used slime extract"
-									ME2.desc = "This extract has been used up."
+			var/list/seen = viewers(4, get_turf(my_atom))
+			var/iconhtml = icon2html(cached_my_atom, seen)
+			if(cached_my_atom)
+				if(!ismob(cached_my_atom)) // No bubbling mobs
+					if(selected_reaction.mix_sound)
+						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
 
-					C.on_reaction(src, multiplier)
-					reaction_occurred = 1
-					break
+					for(var/mob/M in seen)
+						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+
+				if(istype(cached_my_atom, /obj/item/slime_extract))
+					var/obj/item/slime_extract/ME2 = my_atom
+					ME2.Uses--
+					if(ME2.Uses <= 0) // give the notification that the slime core is dead
+						for(var/mob/M in seen)
+							to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
+
+			selected_reaction.on_reaction(src, multiplier)
+			reaction_occurred = 1
 
 	while(reaction_occurred)
 	update_total()

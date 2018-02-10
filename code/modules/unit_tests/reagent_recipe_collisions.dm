@@ -18,7 +18,11 @@
 	//do the non-list tests first, because they are cheaper
 	if(r1.required_container != r2.required_container)
 		return FALSE
-	if(r1.is_cold_recipe != r2.is_cold_recipe)
+	if(r1.is_cold_recipe == r2.is_cold_recipe)
+		if(r1.required_temp != r2.required_temp)
+			//one reaction requires a more extreme temperature than the other, so there is no conflict
+			return FALSE
+	else
 		var/datum/chemical_reaction/cold_one = r1.is_cold_recipe ? r1 : r2
 		var/datum/chemical_reaction/warm_one = r1.is_cold_recipe ? r2 : r1
 		if(cold_one.required_temp < warm_one.required_temp)
