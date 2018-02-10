@@ -40,12 +40,9 @@
 				anchored = TRUE
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		if(!src.loc)
-			return
-		user.visible_message("[user] destroys the [name]!", \
+		user.visible_message("[user] destroys the [name]!",
 							 "<span class='notice'>You destroy the [name].</span>")
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
