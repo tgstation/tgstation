@@ -11318,6 +11318,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "axX" = (
@@ -11337,6 +11340,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "axY" = (
@@ -11344,12 +11350,18 @@
 /area/engine/engineering)
 "axZ" = (
 /obj/structure/closet/firecloset,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aya" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
@@ -11359,6 +11371,9 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/breath{
 	pixel_x = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
@@ -73732,6 +73747,9 @@
 /area/shuttle/auxillary_base)
 "ddO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ddP" = (
@@ -77203,9 +77221,6 @@
 /area/engine/antimatter)
 "dPz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/fore)
 "eoK" = (
@@ -77292,6 +77307,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"fJZ" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engineering)
 "fUg" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/door/firedoor,
@@ -77640,6 +77661,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"mqH" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/antimatter)
 "mtA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
@@ -77748,7 +77775,7 @@
 	dir = 5
 	},
 /obj/structure/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -77967,9 +77994,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -120713,7 +120737,7 @@ ajb
 ajb
 avz
 axY
-axY
+fJZ
 ayW
 bTq
 aBO
@@ -122255,7 +122279,7 @@ apm
 dnz
 avB
 axY
-jhh
+mqH
 leZ
 aAx
 hWC
