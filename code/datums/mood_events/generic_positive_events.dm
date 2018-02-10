@@ -37,6 +37,11 @@
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
 	mood_change = 3
 
+/datum/mood_event/happytable
+	description = "<span class='nicegreen'>They want to play on the table!</span>\n"
+	mood_change = 2
+	timeout = 1200
+
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
 	mood_change = 12

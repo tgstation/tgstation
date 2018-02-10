@@ -66,6 +66,11 @@
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
 	mood_change = -6
 
+/datum/mood_event/table
+	description = "<span class='warning'>Someone threw me on a table!</span>\n"
+	mood_change = -2
+	timeout = 1200
+
 /datum/mood_event/brain_damage
   mood_change = -3
 
