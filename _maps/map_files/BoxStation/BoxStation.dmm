@@ -54230,6 +54230,9 @@
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "hok" = (
@@ -54241,6 +54244,9 @@
 "hpP" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -54484,10 +54490,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 28
-	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "mBv" = (
@@ -54573,6 +54575,9 @@
 	dir = 4;
 	network = list("SS13","Medbay")
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "omv" = (
@@ -54587,6 +54592,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -54670,6 +54678,9 @@
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -54809,11 +54820,21 @@
 	network = list("SS13");
 	pixel_y = -22
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "twJ" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/am_control_unit,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"twS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "tEf" = (
@@ -78343,7 +78364,7 @@ mfC
 nkj
 kmh
 yln
-mTG
+twS
 szg
 mTG
 mTG

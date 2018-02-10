@@ -74291,6 +74291,21 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"dfr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Station Intercom (Telecomms)";
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "dft" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -77462,11 +77477,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_y = 29
-	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "jhh" = (
@@ -77510,11 +77520,6 @@
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
-"kyo" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
 "kys" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -123821,7 +123826,7 @@ dnh
 auB
 avG
 dqT
-nAD
+dfr
 xpz
 tGl
 dea
@@ -124342,7 +124347,7 @@ dea
 nQP
 jhh
 sba
-kyo
+ack
 aaa
 aaa
 aaf
@@ -124599,7 +124604,7 @@ dea
 mTz
 jhh
 lIg
-kyo
+ack
 aaa
 aaa
 aaf
