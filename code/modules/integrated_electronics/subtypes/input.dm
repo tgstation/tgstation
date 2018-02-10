@@ -105,7 +105,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/adv_med_scanner
-	name = "integrated advanced medical analyser"
+	name = "integrated adv. medical analyser"
 	desc = "A very small version of the medbot's medical analyser. This allows the machine to know how healthy someone is. \
 	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
 	icon_state = "medscan_adv"
@@ -142,6 +142,11 @@
 
 	push_data()
 	activate_pin(2)
+
+//please delete at a later date after people stop using the old named circuit
+/obj/item/integrated_circuit/input/adv_med_scanner/old
+	name = "integrated advanced medical analyser"
+	spawn_flags = 0
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"

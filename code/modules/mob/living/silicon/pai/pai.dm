@@ -74,7 +74,7 @@
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
-	var/silent = 0
+	var/silent = FALSE
 	var/hit_slowdown = 0
 	var/brightness_power = 5
 	var/slowdown = 0
