@@ -413,12 +413,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/powered/scp_294)
-"bh" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/has_grav/powered/scp_294)
 "bi" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/plasteel/airless,
@@ -431,22 +425,6 @@
 /obj/structure/table_frame,
 /obj/effect/spawner/trap,
 /turf/open/floor/plasteel/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"bl" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/has_grav/powered/scp_294)
-"bm" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/scp_294)
-"bn" = (
-/obj/effect/spawner/trap,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
 /area/ruin/space/has_grav/powered/scp_294)
 
 (1,1,1) = {"
@@ -539,7 +517,7 @@ at
 az
 aJ
 aQ
-bm
+bj
 ad
 aa
 aa
@@ -590,12 +568,12 @@ aE
 aX
 aE
 ad
-bn
+bg
 aa
 "}
 (10,1,1) = {"
 ac
-bh
+bg
 ag
 ab
 ap
@@ -682,7 +660,7 @@ aa
 aw
 ac
 ac
-bl
+bg
 ac
 aa
 ac
