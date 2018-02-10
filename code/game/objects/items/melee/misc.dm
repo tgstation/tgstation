@@ -1,5 +1,5 @@
 /obj/item/melee
-	needs_permit = 1
+	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_block())
@@ -148,7 +148,7 @@
 	item_state = null
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	needs_permit = 0
+	item_flags = NONE
 	force = 0
 	on = FALSE
 

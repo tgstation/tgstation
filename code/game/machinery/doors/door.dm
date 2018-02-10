@@ -53,8 +53,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/New()
-	..()
+/obj/machinery/door/Initialize()
+	. = ..()
 	if(density)
 		layer = CLOSED_DOOR_LAYER //Above most items if closed
 	else
@@ -268,10 +268,8 @@
 
 /obj/machinery/door/proc/close()
 	if(density)
-		return 1
-	if(operating)
-		return
-	if(welded)
+		return TRUE
+	if(operating || welded)
 		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))

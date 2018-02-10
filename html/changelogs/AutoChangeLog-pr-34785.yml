@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "People can no longer extract 300 supermatter shard slivers without it exploding."
-  - bugfix: "Fixed thongs not dusting people on use."

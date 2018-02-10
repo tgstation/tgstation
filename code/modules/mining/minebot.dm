@@ -36,9 +36,9 @@
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/gunshot4.ogg'
 	speak_emote = list("states")
-	wanted_objects = list(/obj/item/ore/diamond, /obj/item/ore/gold, /obj/item/ore/silver,
-						  /obj/item/ore/plasma,  /obj/item/ore/uranium,    /obj/item/ore/iron,
-						  /obj/item/ore/bananium, /obj/item/ore/titanium)
+	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
+						  /obj/item/stack/ore/plasma,  /obj/item/stack/ore/uranium,    /obj/item/stack/ore/iron,
+						  /obj/item/stack/ore/bananium, /obj/item/stack/ore/titanium)
 	healable = 0
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
@@ -64,18 +64,21 @@
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.welding && !stat)
-			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
-				return
-			if(maxHealth == health)
-				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
-			else
-				if(W.remove_fuel(0, user))
-					adjustBruteLoss(-10)
-					to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+		if(stat)
 			return
+		if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
+			to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+			return
+
+		if(maxHealth == health)
+			to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
+			return
+
+		if(I.use_tool(src, user, 0, volume=40))
+			adjustBruteLoss(-10)
+			to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+		return
+
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()
@@ -85,7 +88,7 @@
 /mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
-	new /obj/effect/decal/cleanable/robot_debris(src.loc)
+	new /obj/effect/decal/cleanable/robot_debris(loc)
 	DropOre(0)
 	qdel(src)
 	return
@@ -124,20 +127,14 @@
 	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/ore) && mode ==  MINEDRONE_COLLECT)
+	if(istype(target, /obj/item/stack/ore) && mode ==  MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	var/obj/item/ore/O
-	for(O in src.loc)
+	for(var/obj/item/stack/ore/O in range(1, src))
 		O.forceMove(src)
-	for(var/dir in GLOB.alldirs)
-		var/turf/T = get_step(src,dir)
-		for(O in T)
-			O.forceMove(src)
-	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
@@ -146,7 +143,7 @@
 		return
 	if(message)
 		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
-	for(var/obj/item/ore/O in contents)
+	for(var/obj/item/stack/ore/O in contents)
 		contents -= O
 		O.forceMove(drop_location())
 	return
@@ -208,18 +205,18 @@
 
 //Melee
 
-/obj/item/device/mine_bot_ugprade
+/obj/item/device/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/device/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 
-/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
 		to_chat(user, "[src] already has a combat upgrade installed!")
 		return
@@ -229,10 +226,10 @@
 
 //Health
 
-/obj/item/device/mine_bot_ugprade/health
+/obj/item/device/mine_bot_upgrade/health
 	name = "minebot chassis upgrade"
 
-/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
 		to_chat(user, "[src] already has a reinforced chassis!")
 		return
@@ -242,10 +239,10 @@
 
 //Cooldown
 
-/obj/item/device/mine_bot_ugprade/cooldown
+/obj/item/device/mine_bot_upgrade/cooldown
 	name = "minebot cooldown upgrade"
 
-/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
 	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
 		to_chat(user, "[src] already has a decreased weapon cooldown!")
@@ -255,7 +252,7 @@
 
 
 //AI
-/obj/item/slimepotion/sentience/mining
+/obj/item/slimepotion/slime/sentience/mining
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots."
 	icon_state = "door_electronics"

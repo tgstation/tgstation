@@ -62,7 +62,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -73,7 +73,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -167,6 +167,10 @@
 		return
 	user.set_machine(src)
 	interact(user)
+
+/obj/machinery/microwave/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE) && !(operating || broken > 0 || panel_open || !anchored || dirty == 100))
+		cook()
 
 /*******************
 *   Microwave Menu

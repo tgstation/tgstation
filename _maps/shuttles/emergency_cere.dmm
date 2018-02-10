@@ -790,7 +790,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -801,7 +800,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,
@@ -879,8 +877,8 @@
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/AMinus,
 /obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;

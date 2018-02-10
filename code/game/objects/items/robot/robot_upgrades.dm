@@ -387,3 +387,35 @@
 
 	R.make_shell(src)
 	return TRUE
+
+/obj/item/borg/upgrade/expand
+	name = "borg expander"
+	desc = "A cyborg resizer, it makes a cyborg huge."
+	icon_state = "cyborg_upgrade3"
+
+/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	if(locate(/obj/item/borg/upgrade/expand, R))
+		to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
+		return
+
+	R.notransform = TRUE
+	var/prev_lockcharge = R.lockcharge
+	R.SetLockdown(1)
+	R.anchored = TRUE
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(1, R.loc)
+	smoke.start()
+	sleep(2)
+	for(var/i in 1 to 4)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		sleep(12)
+	if(!prev_lockcharge)
+		R.SetLockdown(0)
+	R.anchored = FALSE
+	R.notransform = FALSE
+	R.resize = 2
+	R.update_transform()
+	return TRUE

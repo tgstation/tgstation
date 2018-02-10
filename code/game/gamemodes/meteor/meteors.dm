@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 	var/timerid = null
-	var/list/meteordrop = list(/obj/item/ore/iron)
+	var/list/meteordrop = list(/obj/item/stack/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/gunshot_smg.ogg'
-	meteordrop = list(/obj/item/ore/glass)
+	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 
 //Medium-sized
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/ore/plasma)
+	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 20
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = list(/obj/item/ore/uranium)
+	meteordrop = list(/obj/item/stack/ore/uranium)
 	threat = 15
 
 
@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
-/obj/effect/meteor/meaty/New()
+/obj/effect/meteor/meaty/Initialize()
 	for(var/path in meteordrop)
 		if(path == /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant)
 			meteordrop -= path
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		if(path == /obj/item/organ/tongue)
 			meteordrop -= path
 			meteordrop += pick(typesof(path))
-	..()
+	return ..()
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
@@ -315,9 +315,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	meteordrop = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
-/obj/effect/meteor/meaty/xeno/New()
+/obj/effect/meteor/meaty/xeno/Initialize()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	..()
+	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = list(/obj/item/ore/plasma)
+	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
 
 /obj/effect/meteor/tunguska/Move()
@@ -366,8 +366,8 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/reagent_containers/food/snacks/grown/pumpkin)
 	threat = 100
 
-/obj/effect/meteor/pumpkin/New()
-	..()
+/obj/effect/meteor/pumpkin/Initialize()
+	. = ..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
 #undef DEFAULT_METEOR_LIFETIME

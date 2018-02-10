@@ -17,6 +17,10 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
+/obj/effect/decal/cleanable/ash/crematorium
+//crematoriums need their own ash cause default ash deletes itself if created in an obj
+	turf_loc_check = FALSE
+
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
 	icon_state = "big_ash"
@@ -25,6 +29,18 @@
 	. = ..()
 	reagents.add_reagent("ash", 30) //double the amount of ash.
 
+/obj/effect/decal/cleanable/glass
+	name = "tiny shards"
+	desc = "Back to sand."
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "tiny"
+
+/obj/effect/decal/cleanable/glass/Initialize()
+	. = ..()
+	setDir(pick(GLOB.cardinals))
+
+/obj/effect/decal/cleanable/glass/ex_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -179,3 +195,9 @@
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
 	icon_state = "freon"
+
+/obj/effect/decal/cleanable/plasma
+	name = "stabilized plasma"
+	desc = "A puddle of stabilized plasma."
+	icon_state = "flour"
+	color = "#C8A5DC"
