@@ -21,7 +21,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/initTemplateBounds(var/list/bounds)
+/datum/map_template/proc/initTemplateBounds(var/list/bounds, orientation = 1)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -47,6 +47,13 @@
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+	var/rotation = dir2angle(orientation)-dir2angle(1)
+	if(rotation)
+		if ((rotation % 90) != 0)
+			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		rotation = SIMPLIFY_DEGREES(rotation)
+		for(var/atom/O in atoms)
+			O.shuttleRotate(rotation)
 
 /datum/map_template/proc/load_new_z()
 	var/x = round((world.maxx - width)/2)
@@ -83,7 +90,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	initTemplateBounds(bounds, orientation)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return TRUE
