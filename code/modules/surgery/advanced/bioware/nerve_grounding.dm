@@ -24,7 +24,7 @@
 
 /datum/surgery_step/ground_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully splices [target]'s nervous system!", "<span class='notice'>You successfully splice [target]'s nervous system!</span>")
-	new /datum/bioware/threaded_veins(target)
+	new /datum/bioware/grounded_nerves(target)
 	return TRUE
 
 /datum/bioware/grounded_nerves
