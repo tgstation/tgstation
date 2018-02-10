@@ -6,8 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/dresser/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/wrench))
+/obj/structure/dresser/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(I.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
