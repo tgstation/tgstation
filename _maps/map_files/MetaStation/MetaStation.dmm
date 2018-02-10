@@ -12487,7 +12487,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
+	c_tag = "Antimatter Engine";
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
@@ -74301,7 +74301,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecomms)";
+	name = "Station Intercom (General)";
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
