@@ -87,7 +87,6 @@
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = 3000
 
-
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -109,18 +108,6 @@
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
-
-/datum/map_template/shuttle/emergency/saltmine
-	suffix = "saltmine"
-	name = "The Saltmine"
-	description = "Contains everything that upsets you."
-	admin_notes = "Don't forget: You're here forever."
-	credit_cost = 5000
-
-/datum/map_template/shuttle/emergency/saltmine/prerequisites_met()
-	if("revenant" in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"

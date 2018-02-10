@@ -1088,8 +1088,6 @@
 	item_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
 
 /*
