@@ -39,6 +39,34 @@
 	research_cost = 2500
 	export_price = 5000
 
+/////////////////////////Advanced Surgery/////////////////////////
+/datum/techweb_node/adv_surgery
+	id = "adv_surgery"
+	display_name = "Advanced Surgery"
+	description = "When simple medicine doesn't cut it."
+	prereq_ids = list("adv_biotech")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction")
+	research_cost = 2500
+	export_price = 5000
+
+/datum/techweb_node/exp_surgery
+	id = "exp_surgery"
+	display_name = "Experimental Surgery"
+	description = "When evolution isn't fast enough."
+	prereq_ids = list("adv_surgery")
+	design_ids = list("surgery_revival","surgery_pacify","surgery_vein_thread","surgery_nerve_splice","surgery_nerve_ground","surgery_viral_bond")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/alien_surgery
+	id = "alien_surgery"
+	display_name = "Alien Surgery"
+	description = "Abductors did nothing wrong."
+	prereq_ids = list("exp_surgery", "alientech")
+	design_ids = list("surgery_brainwashing")
+	research_cost = 10000
+	export_price = 5000
+
 /////////////////////////data theory tech/////////////////////////
 /datum/techweb_node/datatheory //Computer science
 	id = "datatheory"

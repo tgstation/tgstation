@@ -59,7 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	M.cure_all_traumas(TRUE, TRUE)
+	M.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.severity == VIRUS_SEVERITY_POSITIVE)
@@ -832,10 +832,8 @@
 	M.adjustBrainLoss(-2*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
-			C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
-		if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
-			C.cure_trauma_type(BRAIN_TRAUMA_MILD)
+		if(prob(10))
+			C.cure_trauma_type(TRAUMA_RESILIENCE_BASIC)
 	..()
 
 /datum/reagent/medicine/mutadone

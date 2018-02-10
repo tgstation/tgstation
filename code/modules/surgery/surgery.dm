@@ -38,7 +38,6 @@
 	// put special restrictions here
 	return 1
 
-
 /datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
 		return 1
@@ -78,8 +77,44 @@
 
 	return propability + success_multiplier
 
+/datum/surgery/advanced
+	name = "advanced surgery"
 
+/datum/surgery/advanced/can_start(mob/user, mob/living/carbon/target)
+	if(!..())
+		return FALSE
+	//Abductor scientists need no instructions
+	if(isabductor(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/species/abductor/S = H.dna.species
+		if(S.scientist)
+			return TRUE
 
+	var/turf/T = get_turf(target)
+	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
+	if(!table || !table.computer)
+		return FALSE
+	if(table.computer.stat & (NOPOWER|BROKEN))
+		return FALSE
+	if(type in table.computer.advanced_surgeries)
+		return TRUE
+
+/obj/item/disk/surgery
+	name = "Surgery Procedure Disk"
+	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
+	icon_state = "datadisk1"
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	var/list/surgeries
+
+/obj/item/disk/surgery/debug
+	name = "Debug Surgery Disk"
+	desc = "A disk that contains all existing surgery procedures."
+	icon_state = "datadisk1"
+	materials = list(MAT_METAL=300, MAT_GLASS=100)
+
+/obj/item/disk/surgery/debug/Initialize()
+	. = ..()
+	surgeries = subtypesof(/datum/surgery/advanced)
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
