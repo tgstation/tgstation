@@ -184,7 +184,7 @@ Class Procs:
 				continue
 			if(isliving(AM))
 				var/mob/living/L = am
-				if(L.buckled)
+				if(L.buckled || L.mob_size >= MOB_SIZE_LARGE)
 					continue
 			target = am
 
