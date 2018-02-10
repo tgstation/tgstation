@@ -46,26 +46,26 @@
 	return ..()
 
 
-/turf/closed/mineral/attackby(obj/item/pickaxe/P, mob/user, params)
+/turf/closed/mineral/attackby(obj/item/I, mob/user, params)
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (istype(P, /obj/item/pickaxe))
+	if (istype(I, /obj/item/pickaxe))
 		var/turf/T = user.loc
 		if (!isturf(T))
 			return
 
-		if(last_act+P.digspeed > world.time)//prevents message spam
+		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
 			return
 		last_act = world.time
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
-		if(do_after(user,P.digspeed, target = src))
+		if(I.use_tool(src, user, 40, volume=50))
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
-				SSblackbox.record_feedback("tally", "pick_used_mining", 1, P.type)
+				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
 
@@ -90,7 +90,7 @@
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
 	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
-	if(do_after(M,40, target = src))
+	if(do_after(M, 40, target = src))
 		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
