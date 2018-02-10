@@ -72,6 +72,26 @@
 /obj/item/banner/proc/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
 	return
 
+/obj/item/banner/greytide
+	name = "greytopia banner"
+	desc = "The banner of the greytide, known to inspire fear in even the most hardened crew."
+	icon_state = "banner_grey"
+	item_state = "banner_grey"
+	job_loyalties = list("Assistant")
+	warcry = "GREYTIDE WORLDWIDE!!"
+
+/obj/item/banner/greytide/mundane
+	inspiration_available = FALSE
+
+/obj/item/banner/greytide/special_inspiration(mob/living/carbon/human/H) //Any banner-specific inspiration effects go here
+	H.spin(20, 1)
+	H.reagents.add_reagent("stimulants", 3)
+	playsound(H, 'sound/effects/huuu.ogg', 40, 1)
+	if(prob(5))
+		H.say("CAPS A CONDOM!!")
+	else
+		H.say("[warcry]")
+
 /obj/item/banner/security
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."

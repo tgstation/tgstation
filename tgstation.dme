@@ -14,6 +14,13 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\boxstation.dm"
+#include "_maps\map_files\generic\CentCom.dmm"
+#include "_maps\map_files\generic\City_of_Cogs.dmm"
+#include "_maps\map_files\generic\Space.dmm"
+#include "_maps\map_files\generic\Space2.dmm"
+#include "_maps\map_files\generic\SpaceStation.dmm"
+#include "_maps\map_files\Mining\Lavaland.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -567,6 +574,7 @@
 #include "code\game\machinery\doors\firedoor.dm"
 #include "code\game\machinery\doors\passworddoor.dm"
 #include "code\game\machinery\doors\poddoor.dm"
+#include "code\game\machinery\doors\scanner.dm"
 #include "code\game\machinery\doors\shutters.dm"
 #include "code\game\machinery\doors\unpowered.dm"
 #include "code\game\machinery\doors\windowdoor.dm"

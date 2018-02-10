@@ -1,0 +1,62 @@
+"a" = (/turf/open/space/basic,/area/template_noop)
+"b" = (/turf/closed/wall/r_wall,/area/greytopia)
+"c" = (/obj/item/banner/greytide{pixel_y = -4},/turf/closed/wall/r_wall,/area/greytopia)
+"d" = (/obj/item/cardboard_cutout/adaptive{name = "Nameless Hero"; icon_state = "cutout_viva"; step_y = 0; pixel_y = -5},/turf/closed/wall/r_wall,/area/greytopia)
+"e" = (/obj/structure/statue/sandstone/assistant{step_y = 0; pixel_y = -5},/turf/closed/wall/r_wall,/area/greytopia)
+"f" = (/obj/structure/weightlifter,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"g" = (/obj/structure/bed,/obj/item/bedsheet/grey,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"h" = (/obj/structure/punching_bag,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"i" = (/mob/living/simple_animal/bot/medbot/mysterious{stationary_mode = 1},/turf/open/floor/plating,/area/greytopia)
+"j" = (/obj/structure/bonfire/dense,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"k" = (/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"l" = (/obj/item/target,/obj/item/gun/energy/laser/chameleon{step_y = -8},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"m" = (/obj/structure/bed,/obj/item/bedsheet/grey,/turf/open/floor/plating{icon_state = "panelscorched"},/area/greytopia)
+"n" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/greytopia)
+"o" = (/obj/structure/chair,/obj/item/device/radio/headset/headset_com{flags_1 = 80; flags_2 = 66; name = "\proper the head of assistants's bowman headset"},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"p" = (/obj/structure/mirror{pixel_x = 5; pixel_y = 0},/turf/closed/wall/r_wall,/area/greytopia)
+"q" = (/obj/structure/sink{dir = 8; pixel_x = -12},/turf/open/floor/plating,/area/greytopia)
+"r" = (/obj/effect/decal/cleanable/blood/gibs/torso,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"s" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"t" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/salad/validsalad{step_x = -9; step_y = 2},/obj/item/reagent_containers/food/snacks/salad/validsalad{step_x = 7; step_y = 1},/obj/item/candle/infinite{step_y = 9},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"u" = (/obj/item/chair,/obj/item/banhammer,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"v" = (/obj/machinery/computer/security/wooden_tv,/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"w" = (/obj/structure/table,/obj/item/stack/tile/plasteel{amount = 15; desc = "Extra sharp, they don't make em like this anymore..."; throwforce = 15},/obj/item/clothing/under/color/grey/glorf{step_x = -6; step_y = 4},/obj/item/candle/infinite{step_x = 11; step_y = -2},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/greytopia)
+"x" = (/turf/open/floor/plating,/area/greytopia)
+"y" = (/obj/machinery/computer/arcade/battle{dir = 4; name = "hacked arcade machine"; obj_flags = 5},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"z" = (/obj/structure/table,/obj/item/reagent_containers/food/snacks/salad/validsalad{step_x = 5; step_y = 10},/obj/item/reagent_containers/food/snacks/salad/validsalad{step_x = 0; step_y = -2},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"A" = (/obj/structure/chair{dir = 8},/turf/open/floor/plating,/area/greytopia)
+"B" = (/turf/open/floor/plating{icon_state = "platingdmg2"},/area/greytopia)
+"C" = (/obj/structure/chair/comfy{dir = 1},/turf/open/floor/plating,/area/greytopia)
+"D" = (/obj/structure/rack,/obj/item/sharpener,/obj/item/sharpener,/obj/item/shield/riot/roman,/obj/item/shield/riot/roman,/obj/item/melee/baton/cattleprod{name = "compact stunprod"; w_class = 3},/obj/item/melee/baton/cattleprod{name = "compact stunprod"; w_class = 3},/obj/item/stock_parts/cell/high{step_x = 6; step_y = -3},/obj/item/stock_parts/cell/high{step_x = 0; step_y = 0},/obj/item/restraints/legcuffs/bola/tactical,/obj/item/restraints/legcuffs/bola/tactical,/turf/open/floor/plating,/area/greytopia)
+"E" = (/obj/structure/chair{dir = 1},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+"F" = (/obj/item/chair{dir = 4},/obj/item/reagent_containers/food/snacks/salad/validsalad{step_x = 25; step_y = 4},/obj/item/banhammer,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating,/area/greytopia)
+"G" = (/obj/machinery/limbgrower,/turf/open/floor/plating,/area/greytopia)
+"H" = (/obj/structure/rack,/obj/item/twohanded/spear{step_x = 7},/obj/item/twohanded/spear{step_x = -5},/obj/item/twohanded/spear{step_x = 2},/obj/item/twohanded/spear/grey_tide{step_x = -2},/obj/item/twohanded/spear{step_x = 2},/obj/item/restraints/handcuffs/cable,/obj/item/restraints/handcuffs/cable,/obj/item/reagent_containers/spray,/obj/item/reagent_containers/spray,/turf/open/floor/plating,/area/greytopia)
+"I" = (/turf/open/floor/plating{icon_state = "panelscorched"},/area/greytopia)
+"J" = (/obj/structure/bonfire/dense,/turf/open/floor/plating,/area/greytopia)
+"K" = (/obj/item/storage/toolbox/mechanical/old,/turf/open/floor/plating,/area/greytopia)
+"L" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/glass/beaker/synthflesh{step_x = -5},/obj/item/reagent_containers/glass/beaker/synthflesh{step_x = 2},/obj/item/reagent_containers/spray/medical/sterilizer{step_x = 8},/obj/item/candle/infinite{step_x = -3; step_y = 9},/turf/open/floor/plating,/area/greytopia)
+"M" = (/obj/structure/rack,/obj/item/screwdriver/caravan,/obj/item/crowbar/red/caravan,/obj/item/wirecutters/caravan{step_y = 6},/obj/item/wrench/caravan,/obj/item/weldingtool/experimental,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plating,/area/greytopia)
+"N" = (/obj/item/banner/greytide{icon_state = "banner_grey"},/turf/open/floor/plating,/area/greytopia)
+"O" = (/obj/machinery/shower{dir = 1},/turf/open/floor/plating{icon_state = "platingdmg1"},/area/greytopia)
+"P" = (/obj/structure/table/reinforced,/obj/item/surgical_drapes,/obj/item/soap{step_y = 9},/turf/open/floor/plating,/area/greytopia)
+"Q" = (/obj/structure/fans/tiny,/turf/open/floor/plating,/area/greytopia)
+"R" = (/obj/machinery/doorscanner{dir = 1; step_x = -17; step_y = -5},/turf/open/floor/plating,/area/greytopia)
+"S" = (/obj/structure/falsewall{layer = 4},/obj/machinery/door/password/voice/greytopia,/turf/open/floor/plating,/area/greytopia)
+"T" = (/turf/closed/wall,/area/greytopia)
+"U" = (/obj/item/toy/beach_ball/holoball,/obj/structure/holohoop{dir = 8; step_x = -1; pixel_x = 11; pixel_y = 2},/turf/open/floor/plating{luminosity = 2},/area/greytopia)
+
+(1,1,1) = {"
+aabbbbbbbaaa
+abbcdedcbbaa
+bbfhgjmklbba
+bpqknokkUbba
+bbyrstukvbba
+bbwxFzABCbba
+bbDxxExiGbba
+bbHIJxJKLbba
+bbMxNxNOPbba
+abbbbQbbbbaa
+aabbbRbbbaaa
+aaaaTSTaaaaa
+"}
