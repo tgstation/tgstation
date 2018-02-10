@@ -752,7 +752,7 @@
 	activate_pin(1)
 	return TRUE
 
-/obj/item/integrated_circuit/input/objscaner
+/obj/item/integrated_circuit/input/obj_scanner
 	name = "scanner"
 	desc = "Scans and obtains a reference for any objects you use on the assembly."
 	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to it's location. \
@@ -765,7 +765,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user,intent)
+/obj/item/integrated_circuit/input/obj_scanner/attackby_react(var/atom/A,var/mob/user,intent)
 	if(intent!=INTENT_HELP)
 		return FALSE
 	if(!check_then_do_work())
@@ -846,7 +846,7 @@
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
-	name = "NTnet scaner"
+	name = "NTnet scanner"
 	desc = "This can return NTnet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
