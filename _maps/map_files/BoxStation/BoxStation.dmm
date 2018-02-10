@@ -44254,6 +44254,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfM" = (
@@ -44977,6 +44978,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "chC" = (
@@ -47704,6 +47708,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpk" = (
@@ -47713,6 +47720,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpl" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpm" = (
@@ -47973,6 +47983,9 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpV" = (
@@ -47987,6 +48000,9 @@
 "cpW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -48196,10 +48212,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cqw" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqx" = (
@@ -48339,6 +48354,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqP" = (
@@ -48452,9 +48468,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "crn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "cro" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -54066,6 +54084,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"dZZ" = (
+/obj/structure/closet/crate/antimatter,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "eaI" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
@@ -54177,6 +54199,21 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hpP" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"hBj" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"hXx" = (
+/turf/closed/wall/r_wall,
+/area/engine/antimatter)
 "ijc" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -54186,6 +54223,16 @@
 /obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"iru" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Antimatter Engine";
+	req_access_txt = "32"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "itG" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -54212,6 +54259,15 @@
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"jeT" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "jgm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -54301,6 +54357,9 @@
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"kmh" = (
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "kob" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -54309,6 +54368,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kzs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "kPd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable{
@@ -54349,6 +54414,12 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/circuit)
+"mwX" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "mBv" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -54372,6 +54443,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"nkj" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "noK" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -54408,6 +54485,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"omv" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"ovd" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "oDF" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
@@ -54418,6 +54508,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"oKg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/closet/crate/antimatter,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "oUh" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -54457,6 +54554,24 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
+"pSE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"pVL" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"pZV" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "qeQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -54486,6 +54601,12 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"rPs" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/engine_smes)
 "saK" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -54504,6 +54625,16 @@
 /obj/item/shovel/spade,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"szg" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "sLv" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -54527,6 +54658,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"twJ" = (
+/obj/structure/cable/yellow,
+/obj/machinery/power/am_control_unit,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "tMl" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
@@ -54603,6 +54739,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vFb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "vPE" = (
 /obj/machinery/light{
 	dir = 4
@@ -54662,6 +54804,12 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"xFt" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "xIa" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/grille_or_trash,
@@ -76706,16 +76854,16 @@ cjJ
 cjJ
 cjJ
 cjJ
-aaa
-crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
 aaa
 aaa
 aaa
@@ -76963,16 +77111,16 @@ cov
 cpj
 cpS
 cjJ
-aaa
-crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dZZ
+kmh
+kmh
+kmh
+kmh
+kmh
+kmh
+kmh
+kmh
+hXx
 aaa
 aaa
 aaa
@@ -77219,17 +77367,17 @@ cnN
 cox
 cpl
 cpU
-cjJ
-aaf
+rPs
+oKg
 crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+crn
+crn
+omv
+kmh
+kmh
+kzs
+kmh
+hXx
 aaa
 aaa
 aaa
@@ -77477,16 +77625,16 @@ cow
 cpk
 cpT
 cjJ
-aaa
-crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hpP
+pVL
+pVL
+pVL
+jeT
+pVL
+ovd
+twJ
+pSE
+hXx
 aaa
 aaa
 aaa
@@ -77734,16 +77882,16 @@ coz
 cpn
 cjJ
 cjJ
-aaa
-crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+nkj
+kmh
+kmh
+kmh
+pZV
+kmh
+kmh
+vFb
+kmh
+hXx
 aaa
 aaa
 aaa
@@ -77990,17 +78138,17 @@ cnO
 coy
 cpm
 cjJ
-aaf
-aaf
-crn
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+kmh
+nkj
+kmh
+kmh
+kmh
+szg
+kmh
+kmh
+kmh
+kmh
+hXx
 aaa
 aaa
 aaa
@@ -78247,19 +78395,19 @@ cnR
 coB
 cjJ
 cjJ
+kmh
+nkj
+kmh
+kmh
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
+hXx
 aaa
 aaa
-crn
-aaf
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
 aaa
 aaf
 ctv
@@ -78504,19 +78652,19 @@ cnQ
 coA
 cpo
 cjJ
+kmh
+nkj
+kmh
+kmh
+hXx
 aaa
 aaa
-crn
-aaf
-aaT
-ctv
-ctv
-ctv
-ctv
-ctv
-ctv
-ctv
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaf
 ctv
@@ -78761,19 +78909,19 @@ cnS
 coC
 cpp
 cjJ
-aaf
-aaf
-cig
-aaf
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
+hpP
+mwX
+kmh
+kmh
+hXx
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
 aaf
 aaf
@@ -79018,17 +79166,17 @@ cnR
 cgT
 cjJ
 ccw
+iru
 ccw
 ccw
-ccw
-aaa
-aaf
-aaa
-aaa
-aaf
+hXx
+hXx
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79279,13 +79427,13 @@ cqw
 cqO
 crp
 aaa
-aaf
 aaa
 aaa
-aaf
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79531,8 +79679,8 @@ cmC
 cfJ
 chB
 cpW
-cgR
-cgR
+xFt
+hBj
 cqN
 cro
 cEl

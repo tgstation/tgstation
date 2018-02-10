@@ -147,3 +147,18 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+
+/obj/structure/closet/crate/antimatter
+	name = "antimatter jar crate"
+	desc = "It's full of antimatter!"
+
+/obj/structure/closet/crate/antimatter/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/am_containment(src)
+
+/obj/structure/closet/crate/antimatter_shielding
+	name = "antimatter shielding crate"
+
+/obj/structure/closet/crate/antimatter_shielding/PopulateContents()
+	for(var/i in 1 to 12)
+		new /obj/item/device/am_shielding_container(src)
