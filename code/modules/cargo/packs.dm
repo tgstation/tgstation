@@ -842,12 +842,12 @@
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
 
-/datum/supply_pack/medical/defibs
-	name = "Defibrillator Crate"
-	cost = 2500
-	contains = list(/obj/item/defibrillator/loaded,
-					/obj/item/defibrillator/loaded)
-	crate_name = "defibrillator crate"
+/datum/supply_pack/medical/defibsmount
+	name = "Defibrillator Mount Crate"
+	cost = 4000
+	contains = list(/obj/machinery/defibrillator_mount,
+					/obj/machinery/defibrillator_mount)
+	crate_name = "defibrillator Mount crate"
 
 /datum/supply_pack/medical/vending
 	name = "Medical Vending Crate"
