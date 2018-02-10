@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "The preference to lock action buttons in place is now correctly saved across rounds."

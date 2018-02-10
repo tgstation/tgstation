@@ -1,6 +1,0 @@
-author: "UI Changes"
-delete-after: True
-changes: 
-  - tweak: "The Scan with Debugger/Device button now reads Copy Ref and no longer sends you to the circuit's page when clicked"
-  - tweak: "The assembly's menu is now slightly wider"
-  - tweak: "The advanced in \"integrated advanced medical analyser\" is now abbreviated to adv."
