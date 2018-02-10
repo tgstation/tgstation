@@ -55,7 +55,7 @@
 	name = "Lexorin"
 	id = "lexorin"
 	results = list("lexorin" = 3)
-	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
+	required_reagents = list("plasma" = 1, "hydrogen" = 1, "oxygen" = 1)
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
