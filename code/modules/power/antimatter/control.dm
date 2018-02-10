@@ -20,7 +20,7 @@
 
 	var/active = FALSE//On or not
 	var/fuel_injection = 2//How much fuel to inject
-	var/shield_icon_delay = 0//delays resetting for a short time
+	var/shield_icon_delay = FALSE//delays resetting for a short time
 	var/reported_core_efficiency = 0
 
 	var/power_cycle = 0
@@ -77,7 +77,7 @@
 	playsound(src, 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
-		return 0//Something is wrong
+		return FALSE//Something is wrong
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
@@ -95,7 +95,7 @@
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
-		playsound(get_turf(src), 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	return
 
 
@@ -113,13 +113,13 @@
 	return FALSE
 
 
-/obj/machinery/power/am_control_unit/blob_act()
+/obj/machinery/power/am_control_unit/blob_act(obj/structure/blob/B)
 	stability -= 20
 	if(prob(100-stability))//Might infect the rest of the machine! Watch out!
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
-			AMS.blob_act(2)
+			AMS.blob_act(B)
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-			AMS.blob_act(1)
+			AMS.blob_act(B)
 		qdel(src)
 		return
 	check_stability()
@@ -216,24 +216,24 @@
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	if(!anchored)
-		return 0
+		return FALSE
 	if(!AMS_linking && !AMS.link_control(src))
-		return 0
+		return FALSE
 	linked_shielding.Add(AMS)
-	update_shield_icons = 1
-	return 1
+	update_shield_icons = TRUE
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
 	if(active)
 		toggle_power()
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
@@ -257,7 +257,7 @@
 /obj/machinery/power/am_control_unit/proc/check_shield_icons()//Forces icon_update for all shields
 	if(shield_icon_delay)
 		return
-	shield_icon_delay = 1
+	shield_icon_delay = TRUE
 	if(update_shield_icons == 2)//2 means to clear everything and rebuild
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			if(AMS.processing)
@@ -271,14 +271,12 @@
 	addtimer(CALLBACK(src, .proc/reset_shield_icon_delay), 20)
 
 /obj/machinery/power/am_control_unit/proc/reset_shield_icon_delay()
-	shield_icon_delay = 0
+	shield_icon_delay = FALSE
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	//if(stored_core_stability_delay || linked_cores.len <= 0)	return
 	if(linked_cores.len <=0)
 		return
-	//stored_core_stability_delay = 1
-	stored_core_stability = 0
+	stored_core_stability = FALSE
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
@@ -292,7 +290,7 @@
 	update_icon()
 
 /obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
-	stored_core_stability_delay = 0
+	stored_core_stability_delay = FALSE
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
