@@ -96,6 +96,7 @@
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	update_icon()
 	return
 
 
@@ -150,10 +151,17 @@
 	else if(!stat && anchored)
 		use_power = IDLE_POWER_USE
 
-	return
+	update_icon()
 
 
 /obj/machinery/power/am_control_unit/update_icon()
+	switch(stored_core_stability)
+		if(0 to 24)
+			icon_mod="fuck"
+		if(25 to 49)
+			icon_mod="critical"
+		if(50 to INFINITY)
+			icon_mod="on"
 	if(active)
 		icon_state = "control_[icon_mod]"
 	else icon_state = "control"
@@ -280,17 +288,7 @@
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	switch(stored_core_stability)
-		if(0 to 24)
-			icon_mod="fuck"
-		if(25 to 49)
-			icon_mod="critical"
-		if(50 to INFINITY)
-			icon_mod="on"
 	update_icon()
-
-/obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
-	stored_core_stability_delay = FALSE
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
