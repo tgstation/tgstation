@@ -16,7 +16,7 @@
 		return
 	H.dna.species.species_traits &= ~NOGUNS
 
-/datum/antagonist/highlander/on_remove()
+/datum/antagonist/highlander/on_removal()
 	owner.objectives -= objectives
 	. = ..()
 
