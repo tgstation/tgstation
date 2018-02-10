@@ -29,7 +29,9 @@
 			//entry when holding them
 			// literally only an option for carbons though
 			to_chat(C, "<span class='warning'>You may not hold items while blood crawling!</span>")
-			return 0
+			return FALSE
+		if(!do_after(src, 10, target = B))
+			return FALSE
 		var/obj/item/bloodcrawl/B1 = new(C)
 		var/obj/item/bloodcrawl/B2 = new(C)
 		B1.icon_state = "bloodhand_left"
@@ -37,11 +39,13 @@
 		C.put_in_hands(B1)
 		C.put_in_hands(B2)
 		C.regenerate_icons()
+	else if(!do_after(src, 10, target = B))
+		return FALSE
 	src.notransform = TRUE
 	spawn(0)
 		bloodpool_sink(B)
 		src.notransform = FALSE
-	return 1
+	return TRUE
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
