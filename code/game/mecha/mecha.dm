@@ -206,8 +206,7 @@
 
 /obj/mecha/CheckParts(list/parts_list)
 	..()
-	var/obj/item/C = locate(/obj/item/stock_parts/cell) in contents
-	cell = C
+	cell = locate(/obj/item/stock_parts/cell) in contents
 	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
 	var/obj/item/stock_parts/capacitor/CP = locate() in contents
 	if(SM)
