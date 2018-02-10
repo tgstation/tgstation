@@ -1,0 +1,5 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - balance: "Changed the chemical recipe for Lexorin from plasma, hydrogen, and nitrogen to plasma, hydrogen, and oxygen."
+  - bugfix: "These were necessary due to recipe conflicts"
