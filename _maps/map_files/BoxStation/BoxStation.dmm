@@ -45004,6 +45004,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "chE" = (
@@ -47333,10 +47334,10 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/loading_area,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cnX" = (
@@ -47478,10 +47479,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cox" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -47723,6 +47724,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpm" = (
@@ -47773,6 +47775,7 @@
 /obj/machinery/computer/rdconsole/production{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cps" = (
@@ -47986,6 +47989,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpV" = (
@@ -47995,6 +47999,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/rnd/protolathe/department/engineering,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpW" = (
@@ -48214,6 +48219,9 @@
 "cqw" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -54095,6 +54103,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ejd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "eyM" = (
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 2;
@@ -54159,6 +54173,15 @@
 "gjl" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"gqd" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -54199,6 +54222,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hok" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "hpP" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -54213,6 +54242,10 @@
 /area/engine/engineering)
 "hXx" = (
 /turf/closed/wall/r_wall,
+/area/engine/antimatter)
+"iau" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
 /area/engine/antimatter)
 "ijc" = (
 /obj/structure/table,
@@ -54230,6 +54263,9 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Antimatter Engine";
 	req_access_txt = "32"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -54259,6 +54295,12 @@
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"jcR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "jeT" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -54360,6 +54402,15 @@
 "kmh" = (
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
+"kny" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "kob" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -54414,6 +54465,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/science/circuit)
+"mfC" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "mwX" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -54443,6 +54498,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"mTG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "nkj" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -54491,6 +54550,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
+"ond" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"ooP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "ovd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/yellow{
@@ -54513,6 +54589,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/closet/crate/antimatter,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "oUh" = (
@@ -54522,6 +54599,12 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"pbc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "pHl" = (
 /obj/structure/table,
 /obj/item/storage/box/beakers{
@@ -54578,6 +54661,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"qfU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "qpv" = (
 /obj/machinery/light{
 	dir = 4
@@ -54605,6 +54694,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
 "saK" = (
@@ -54633,6 +54723,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "sLv" = (
@@ -54661,6 +54752,12 @@
 "twJ" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/am_control_unit,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"tEf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "tMl" = (
@@ -54693,6 +54790,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"uHa" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "uNu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54715,6 +54819,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"vsb" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "vxh" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -54752,6 +54863,12 @@
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"wcA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -54821,6 +54938,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"yln" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 
 (1,1,1) = {"
 aaa
@@ -77112,14 +77235,14 @@ cpj
 cpS
 cjJ
 dZZ
-kmh
-kmh
-kmh
-kmh
-kmh
-kmh
-kmh
-kmh
+pbc
+iau
+iau
+iau
+ooP
+iau
+iau
+jcR
 hXx
 aaa
 aaa
@@ -77369,14 +77492,14 @@ cpl
 cpU
 rPs
 oKg
-crn
-crn
+kny
+gqd
 crn
 omv
 kmh
 kmh
 kzs
-kmh
+wcA
 hXx
 aaa
 aaa
@@ -77628,7 +77751,7 @@ cjJ
 hpP
 pVL
 pVL
-pVL
+uHa
 jeT
 pVL
 ovd
@@ -77890,7 +78013,7 @@ pZV
 kmh
 kmh
 vFb
-kmh
+qfU
 hXx
 aaa
 aaa
@@ -78138,16 +78261,16 @@ cnO
 coy
 cpm
 cjJ
-kmh
+mfC
 nkj
 kmh
-kmh
-kmh
+yln
+mTG
 szg
-kmh
-kmh
-kmh
-kmh
+mTG
+mTG
+mTG
+ejd
 hXx
 aaa
 aaa
@@ -78397,8 +78520,8 @@ cjJ
 cjJ
 kmh
 nkj
-kmh
-kmh
+qfU
+tEf
 hXx
 hXx
 hXx
@@ -78652,10 +78775,10 @@ cnQ
 coA
 cpo
 cjJ
-kmh
-nkj
-kmh
-kmh
+yln
+vsb
+hok
+ejd
 hXx
 aaa
 aaa
@@ -78909,7 +79032,7 @@ cnS
 coC
 cpp
 cjJ
-hpP
+ond
 mwX
 kmh
 kmh
