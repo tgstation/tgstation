@@ -1,0 +1,5 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - rscadd: "You can now smelt titanium glass and plastitanium glass"
+  - rscadd: "Use titanium glass and plastitanium glass to build shuttle windows and plastitanium windows"
