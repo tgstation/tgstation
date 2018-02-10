@@ -218,12 +218,12 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
 		var/datum/experiment/picked = pickweight(possible_experiments)
 		var/datum/techweb/web = linked_console.stored_research
+		var/list/datum/techweb_node/nodes = techweb_item_boost_check(loaded_item)
 
 		success = picked.perform(src,loaded_item)
 		use_power(picked.power_use)
 		picked.gather_data(src,web,success)
 		if(picked.allow_boost)
-			var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
 			web.boost_with_path(pickweight(nodes), loaded_type)
 
 	if(!success)

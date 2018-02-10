@@ -98,7 +98,7 @@
 	var/area/use_area = get_area(E)
 	E.visible_message("<span class='warning'>[E] malfunctions, inversing the direction of cooling!</span>") //griff
 	E.investigate_log("Experimentor has caused a snowstorm.", INVESTIGATE_EXPERIMENTOR)
-	A = new /datum/weather/snow_storm(list(use_turf.z))
+	var/datum/weather/A = new /datum/weather/snow_storm(list(use_turf.z))
 	A.name = "cold exhaust"
 	A.area_type = use_area.type
 	A.telegraph_duration = 100

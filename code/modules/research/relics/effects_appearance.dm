@@ -28,7 +28,7 @@
 /datum/relic_appearance/melee
 	firstname = list("laser","energy","dodecahedric","geo","radial","nuclear","manual")
 	lastname = list("blade","hurtinator","hammer","pulverizer","deboner","cyclotron","din")
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = list("indwelder","crowbar_brass","wrench_brass","rcd","jaws_pry","arcd","drill_screw")
 
 /datum/relic_appearance/melee/tool
@@ -41,4 +41,4 @@
 	item_state = list("rcd","screwdriver_brass","welder1","upindwelder","crowbar_brass","jawsoflife")
 
 /datum/relic_appearance/color/apply(var/obj/item/A)
-	color = color_matrix_rotate_hue(rand(360))
+	A.color = color_matrix_rotate_hue(rand(360))

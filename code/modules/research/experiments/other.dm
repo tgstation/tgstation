@@ -77,7 +77,7 @@
 /datum/experiment/destroy/transform/grenade/make_transform_item(atom/location)
 	var/pickedtype = pick(typesof(/obj/item/grenade) - blacklist)
 	var/obj/item/grenade/G = new pickedtype(location)
-	addtimer(CALLBACK(src, pickedtype.proc/prime), 5)
+	addtimer(CALLBACK(src, /obj/item/grenade.proc/prime), 5)
 	return G
 
 /datum/experiment/destroy/transform/food
@@ -105,6 +105,5 @@
 
 /datum/experiment/destroy/transform/stock_part/make_transform_item(atom/location)
 	var/pickedtype = pick(typesof(/obj/item/stock_parts) - blacklist)
-	var/obj/item/grenade/G = new pickedtype(location)
-	addtimer(CALLBACK(src, pickedtype.proc/prime), 5)
+	var/obj/item/stock_parts/G = new pickedtype(location)
 	return G
