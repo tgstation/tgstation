@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/nullrod, /obj/item/clothing/under/rank/chaplain)),
 						
 						"aliens"   = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
-						/obj/structure/alien/,
+						/obj/structure/alien/, /obj/item/toy/toy_xeno,
 						/obj/item/clothing/suit/armor/abductor/, /obj/item/device/abductor/, /obj/item/gun/energy/alien, 
 						/obj/item/abductor_baton, /obj/item/device/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
 						/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/surgicaldrill/alien, /obj/item/cautery/alien,
