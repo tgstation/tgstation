@@ -103,7 +103,7 @@
 		if(iscatperson(H)) //Catpeople are a bit dumb and think its fun to be on a table
 			mood.add_event("table", /datum/mood_event/happytable)
 			H.startTailWag()
-			addtimer(CALLBACK(H, .proc/endTailWag), 30)
+			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
 		else
 			mood.add_event("table", /datum/mood_event/table)
 
