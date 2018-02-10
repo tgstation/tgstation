@@ -59,7 +59,7 @@
 
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] [src] [anchored ? "to" : "from"] the ground</span>")
-		playsound(src.loc, W.usesound, 75, 1)
+		W.play_tool_sound(src, 75)
 	else
 		return ..()
 

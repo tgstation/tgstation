@@ -73,7 +73,7 @@
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.temporarilyRemoveItemFromInventory(W))

@@ -67,7 +67,7 @@
 	switch(d_state)
 		if(INTACT)
 			if(istype(W, /obj/item/wirecutters))
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
@@ -85,7 +85,7 @@
 				return 1
 
 			else if(istype(W, /obj/item/wirecutters))
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				d_state = INTACT
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair the outer grille.</span>")
@@ -173,7 +173,7 @@
 
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return 1

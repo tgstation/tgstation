@@ -227,7 +227,7 @@
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			panel_open = !panel_open
 			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return

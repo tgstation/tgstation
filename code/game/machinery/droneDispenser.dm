@@ -214,7 +214,7 @@
 	if(istype(I, /obj/item/crowbar))
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
 	else if(istype(I, /obj/item/weldingtool))

@@ -49,11 +49,9 @@
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
-		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(W.use_tool(src, user, 40))
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+		if(W.use_tool(src, user, 40, volume=50))
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			deconstruct(TRUE)
