@@ -85,6 +85,11 @@
 	build_path = /obj/machinery/recharger
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
+/obj/item/circuitboard/machine/cell_charger
+	name = "Cell Charger (Machine Board)"
+	build_path = /obj/machinery/cell_charger
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
+
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
