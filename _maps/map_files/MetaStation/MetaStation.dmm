@@ -11750,6 +11750,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/sign/warning{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "azb" = (
@@ -12468,8 +12471,13 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera{
+	c_tag = "Auxillary Mining Base";
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/antimatter)
 "aAz" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green{
@@ -75911,6 +75919,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/light_switch{
+	pixel_y = 38
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "dmF" = (
@@ -76120,6 +76131,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"dtz" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "dtE" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -77149,6 +77170,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"dGB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light,
+/obj/item/device/radio/intercom{
+	dir = 1;
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "dGH" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
@@ -77370,7 +77403,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
+/area/engine/antimatter)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -77407,6 +77440,11 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
+	},
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_y = 29
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -77472,10 +77510,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"kIE" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "kLW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "kOt" = (
@@ -77508,6 +77554,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"leZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
+/area/engine/antimatter)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_circuit_printer/upgraded,
@@ -77677,8 +77729,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"nIh" = (
+/obj/structure/sign/poster/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "nQP" = (
 /obj/structure/closet/crate/antimatter,
+/obj/machinery/camera{
+	c_tag = "Auxillary Mining Base";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "nSl" = (
@@ -77812,6 +77874,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"qBd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/sign/poster/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "qBh" = (
 /obj/structure/table,
 /obj/item/device/paicard,
@@ -78027,6 +78101,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vjt" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics Tank - N2O";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "vLD" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -78038,6 +78123,16 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"wHS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "wKo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -78054,6 +78149,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"wPI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "wRy" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -122148,8 +122255,8 @@ apm
 dnz
 avB
 axY
-axY
-bTq
+jhh
+leZ
 aAx
 hWC
 aIe
@@ -122406,7 +122513,7 @@ aux
 sRJ
 dPz
 nSl
-xpz
+dtz
 tGl
 dea
 dee
@@ -122919,7 +123026,7 @@ apm
 dnh
 dnS
 dqT
-nAD
+qBd
 xpz
 tGl
 dea
@@ -123176,7 +123283,7 @@ dnh
 auz
 dqp
 dqT
-nAD
+wHS
 xpz
 tGl
 dea
@@ -123433,10 +123540,10 @@ dni
 auA
 dnS
 dqT
-nAD
+wPI
 xpz
 tGl
-dea
+dGB
 axY
 deq
 dey
@@ -124975,7 +125082,7 @@ aaf
 aaf
 ack
 jhh
-nAD
+wPI
 xpz
 lDB
 tnx
@@ -125236,7 +125343,7 @@ nAD
 kTP
 lyi
 foa
-xpz
+nIh
 jhh
 anT
 anT
@@ -125748,8 +125855,8 @@ aaa
 jhh
 xpz
 tAF
-xpz
-xpz
+vjt
+kIE
 gia
 jhh
 aaa

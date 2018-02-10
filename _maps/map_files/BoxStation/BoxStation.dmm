@@ -48363,6 +48363,9 @@
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
 /obj/machinery/light,
+/obj/structure/sign/warning{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqP" = (
@@ -54222,6 +54225,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"hdx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "hok" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -54267,8 +54277,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/antimatter)
 "itG" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -54473,6 +54484,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "mBv" = (
@@ -54486,6 +54501,13 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"mDo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "mNi" = (
 /obj/machinery/light_switch{
 	pixel_x = -20
@@ -54544,6 +54566,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"odW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/camera{
+	c_tag = "Chemistry";
+	dir = 4;
+	network = list("SS13","Medbay")
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "omv" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -54633,6 +54664,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"pMw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/device/radio/intercom{
+	dir = 0;
+	name = "Station Intercom (General)";
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "pNx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -54640,6 +54680,11 @@
 "pSE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway - Aft-Port Corner";
+	dir = 1;
+	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
@@ -54709,6 +54754,14 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"sqe" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "sxs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
@@ -54749,6 +54802,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"tee" = (
+/obj/machinery/camera{
+	c_tag = "Chief Medical Office";
+	dir = 8;
+	network = list("SS13");
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "twJ" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/am_control_unit,
@@ -54824,6 +54886,13 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
+"vvR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/machinery/camera,
 /turf/open/floor/plasteel,
 /area/engine/antimatter)
 "vxh" = (
@@ -54921,6 +54990,15 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"xmE" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	pixel_y = 38
+	},
+/turf/open/floor/plasteel,
+/area/engine/antimatter)
 "xFt" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -77236,12 +77314,12 @@ cpS
 cjJ
 dZZ
 pbc
-iau
-iau
+mDo
+odW
 iau
 ooP
-iau
-iau
+sqe
+pMw
 jcR
 hXx
 aaa
@@ -78005,7 +78083,7 @@ coz
 cpn
 cjJ
 cjJ
-nkj
+xmE
 kmh
 kmh
 kmh
@@ -78269,7 +78347,7 @@ mTG
 szg
 mTG
 mTG
-mTG
+hdx
 ejd
 hXx
 aaa
@@ -78775,7 +78853,7 @@ cnQ
 coA
 cpo
 cjJ
-yln
+vvR
 vsb
 hok
 ejd
@@ -79034,7 +79112,7 @@ cpp
 cjJ
 ond
 mwX
-kmh
+tee
 kmh
 hXx
 aaa
@@ -79290,8 +79368,8 @@ cgT
 cjJ
 ccw
 iru
-ccw
-ccw
+hXx
+hXx
 hXx
 hXx
 aaa
