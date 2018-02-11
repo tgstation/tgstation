@@ -1,0 +1,4 @@
+author: "Mokiros"
+delete-after: True
+changes: 
+  - rscadd: "All-In-One Grinder can now be built with researchable curcuit and micro-manipulator."
