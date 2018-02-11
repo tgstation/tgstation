@@ -48,7 +48,7 @@
 		to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
 		return FALSE
 
-	if((buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT) && !M.restrained()))
+	if((buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT) && !M.restrained())
 		return FALSE
 
 	if(check_loc && M.loc != loc)
