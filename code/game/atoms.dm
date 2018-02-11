@@ -370,7 +370,7 @@
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT)
+	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
@@ -534,38 +534,38 @@
 // Tool behavior procedure. Redirects to tool-specific procs by default.
 // You can override it to catch all tool interactions, for use in complex deconstruction procs.
 // Just don't forget to return ..() in the end.
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type)
+/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
 	switch(tool_type)
 		if(TOOL_CROWBAR)
-			return crowbar_act(user, tool)
+			return crowbar_act(user, I)
 		if(TOOL_MULTITOOL)
-			return multitool_act(user, tool)
+			return multitool_act(user, I)
 		if(TOOL_SCREWDRIVER)
-			return screwdriver_act(user, tool)
+			return screwdriver_act(user, I)
 		if(TOOL_WRENCH)
-			return wrench_act(user, tool)
+			return wrench_act(user, I)
 		if(TOOL_WIRECUTTER)
-			return wirecutter_act(user, tool)
+			return wirecutter_act(user, I)
 		if(TOOL_WELDER)
-			return welder_act(user, tool)
+			return welder_act(user, I)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
-/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
+/atom/proc/crowbar_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/multitool_act(mob/living/user, obj/item/tool)
+/atom/proc/multitool_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
+/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wrench_act(mob/living/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/welder_act(mob/living/user, obj/item/tool)
+/atom/proc/welder_act(mob/living/user, obj/item/I)
 	return
 
 /atom/proc/GenerateTag()

@@ -103,7 +103,7 @@
 			playsound(get_turf(src), C.usesound, 50, 1)
 			user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
 								 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
-			if(!do_after(user, 50*C.toolspeed, target = src))
+			if(!C.use_tool(src, user, 50))
 				return
 			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
@@ -123,14 +123,13 @@
 	return
 
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
-	if(W.remove_fuel(0, user))
-		playsound(get_turf(src), W.usesound, 50, 1)
-		user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
-		if(do_after(user, 40*W.toolspeed, 1, target=src))
-			playsound(get_turf(src), W.usesound, 50, 1)
-			welded = !welded
-			to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
-			update_icon()
+	if(!W.tool_start_check(user, amount=0))
+		return
+	user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
+	if(W.use_tool(src, user, 40, volume=50))
+		welded = !welded
+		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
+		update_icon()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
@@ -211,6 +210,11 @@
 	flags_1 = ON_BORDER_1
 	CanAtmosPass = ATMOS_PASS_PROC
 
+/obj/machinery/door/firedoor/border_only/closed
+	icon_state = "door_closed"
+	opacity = TRUE
+	density = TRUE
+
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
@@ -282,7 +286,7 @@
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts prying something out from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the wire cover...</span>")
-				if(!do_after(user, 50*C.toolspeed, target = src))
+				if(!C.use_tool(src, user, 50))
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
@@ -299,7 +303,7 @@
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \
 									 "<span class='notice'>You begin bolting [src]...</span>")
-				if(!do_after(user, 30*C.toolspeed, target = src))
+				if(!C.use_tool(src, user, 30))
 					return
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					return
@@ -338,7 +342,7 @@
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
-				if(!do_after(user, 60*C.toolspeed, target = src))
+				if(!C.use_tool(src, user, 60))
 					return
 				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
 					return
@@ -353,7 +357,7 @@
 				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
 									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
-				if(!do_after(user, 80*C.toolspeed, target = src))
+				if(!C.use_tool(src, user, 80))
 					return
 				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
 					return
@@ -368,7 +372,7 @@
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
 				playsound(get_turf(src), C.usesound, 50, 1)
-				if(!do_after(user, 50*C.toolspeed, target = src))
+				if(!C.use_tool(src, user, 50))
 					return
 				if(constructionStep != CONSTRUCTION_GUTTED)
 					return
@@ -399,13 +403,14 @@
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
 			if(istype(C, /obj/item/weldingtool))
-				var/obj/item/weldingtool/W = C
-				if(W.remove_fuel(1,user))
-					playsound(get_turf(src), W.usesound, 50, 1)
-					user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
-										 "<span class='notice'>You begin slicing [src] apart...</span>")
-					if(!do_after(user, 80*C.toolspeed, target = src))
-						return
+				if(!C.tool_start_check(user, amount=1))
+					return
+				playsound(get_turf(src), C.usesound, 50, 1)
+				user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
+									 "<span class='notice'>You begin slicing [src] apart...</span>")
+
+				if(C.use_tool(src, user, 40, amount=1))
+					return
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \

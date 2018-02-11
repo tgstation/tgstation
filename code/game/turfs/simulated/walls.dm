@@ -190,18 +190,21 @@
 	return ..()
 
 /turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals) || !istype(W, /obj/item/weldingtool))
+	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
 		return FALSE
-	var/obj/item/weldingtool/WT = W
-	if(WT.remove_fuel(0, user))
+
+	if(istype(W, /obj/item/weldingtool))
+		if(!W.tool_start_check(user, amount=0))
+			return FALSE
+
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
-		playsound(src, W.usesound, 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed * 0.1, target = src))
-			if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT) && LAZYLEN(dent_decals))
+		if(W.use_tool(src, user, slicing_duration, volume=100))
+			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
 				LAZYCLEARLIST(dent_decals)
 			return TRUE
+
 	return FALSE
 
 /turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
@@ -219,27 +222,17 @@
 	return FALSE
 
 /turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-			playsound(src, W.usesound, 100, 1)
-			if(do_after(user, slicing_duration * W.toolspeed, target = src))
-				if(iswallturf(src) && user && !QDELETED(WT) && WT.isOn() && !QDELETED(T) && (user.loc == T) && (user.get_active_held_item() == WT))
-					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
-					dismantle_wall()
-				return TRUE
-	else if(istype(W, /obj/item/gun/energy/plasmacutter))
+	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(!W.tool_start_check(user, amount=0))
+			return FALSE
+
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration * W.toolspeed, target = src))
-			if(!iswallturf(src) || !user || QDELETED(W) || QDELETED(T))
-				return TRUE
-			if((user.loc == T) && (user.get_active_held_item() == W))
+		if(W.use_tool(src, user, slicing_duration, volume=100))
+			if(iswallturf(src))
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
-				visible_message("The wall was sliced apart by [user]!", "<span class='italics'>You hear metal being sliced apart.</span>")
-				return TRUE
+			return TRUE
+
 	return FALSE
 
 

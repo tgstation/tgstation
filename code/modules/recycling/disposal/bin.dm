@@ -86,15 +86,14 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
-					if(!W.isOn())
-						return
-					to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
-					deconstruct()
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
+			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
+			if(I.use_tool(src, user, 20) && panel_open)
+				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
+				deconstruct()
 			return
 
 	if(user.a_intent != INTENT_HARM)

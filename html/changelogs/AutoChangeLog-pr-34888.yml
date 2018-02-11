@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Brass skewers now must be at least one tile apart."
-  - balance: "Steam vents can no longer be placed within cardinal directions of other steam vents, and will not hide objects they're placed on top of."

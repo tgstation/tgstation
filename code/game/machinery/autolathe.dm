@@ -89,18 +89,17 @@
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
-		return
+		return TRUE
 
 	if(exchange_parts(user, O))
-		return
+		return TRUE
 
-	if(panel_open)
-		if(istype(O, /obj/item/crowbar))
-			default_deconstruction_crowbar(O)
-			return TRUE
-		else if(is_wire_tool(O))
-			wires.interact(user)
-			return TRUE
+	if(default_deconstruction_crowbar(O))
+		return TRUE
+
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
 
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
@@ -124,7 +123,7 @@
 	return ..()
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
+	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		switch(id_inserted)

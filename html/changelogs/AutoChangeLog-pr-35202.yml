@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - tweak: "Hijack objectives will only be given out if there are 30 or more players."

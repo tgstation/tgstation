@@ -5807,8 +5807,7 @@
 "amD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -8649,8 +8648,7 @@
 /area/maintenance/port/fore)
 "asU" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -9954,8 +9952,7 @@
 /area/maintenance/port/fore)
 "avq" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar/red,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -10795,8 +10792,7 @@
 "axl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -11852,8 +11848,7 @@
 /area/quartermaster/storage)
 "azA" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/bot,
@@ -12521,7 +12516,6 @@
 /area/engine/atmospherics_engine)
 "aBd" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
@@ -12533,7 +12527,6 @@
 /area/engine/atmospherics_engine)
 "aBe" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12885,8 +12878,7 @@
 /area/quartermaster/warehouse)
 "aBN" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -16688,8 +16680,7 @@
 "aJv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -22164,8 +22155,7 @@
 /area/security/execution/education)
 "aUJ" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
@@ -29173,8 +29163,7 @@
 "bjo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -40033,7 +40022,7 @@
 	pixel_x = 4;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEg" = (
@@ -40147,7 +40136,7 @@
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEn" = (
@@ -47779,7 +47768,7 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51836,8 +51825,6 @@
 /area/crew_quarters/heads/captain/private)
 "cbf" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/suit/armor/vest/capcarapace,
-/obj/item/clothing/head/caphat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -52708,7 +52695,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/card/id/captains_spare,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -56885,8 +56871,7 @@
 /area/maintenance/starboard)
 "clv" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/flashlight,
@@ -61357,8 +61342,7 @@
 /area/maintenance/starboard)
 "cuH" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/clothing/shoes/jackboots,
 /obj/item/device/radio,
@@ -63389,8 +63373,7 @@
 /area/maintenance/starboard)
 "cza" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -68674,8 +68657,7 @@
 "cJM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -70447,8 +70429,7 @@
 /area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -90137,8 +90118,7 @@
 "dCR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -94165,8 +94145,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -94537,8 +94516,7 @@
 "dLT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar/red,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -98794,8 +98772,7 @@
 "dUX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -102096,7 +102073,6 @@
 /area/shuttle/escape)
 "ecg" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -170621,4 +170597,3 @@ aaa
 aaa
 aaa
 "}
-

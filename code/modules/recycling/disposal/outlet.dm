@@ -69,21 +69,16 @@
 	H.vent_gas(T)
 	qdel(H)
 
+/obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
 
-/obj/structure/disposaloutlet/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.remove_fuel(0,user))
-			playsound(src, 'sound/items/welder2.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>You start slicing the floorweld off [src]...</span>")
-			if(do_after(user, 20*I.toolspeed, target = src))
-				if(!W.isOn())
-					return
-				to_chat(user, "<span class='notice'>You slice the floorweld off [src].</span>")
-				stored.forceMove(loc)
-				transfer_fingerprints_to(stored)
-				stored = null
-				qdel(src)
-	else
-		return ..()
+	playsound(src, 'sound/items/welder2.ogg', 100, 1)
+	to_chat(user, "<span class='notice'>You start slicing the floorweld off [src]...</span>")
+	if(I.use_tool(src, user, 20))
+		to_chat(user, "<span class='notice'>You slice the floorweld off [src].</span>")
+		stored.forceMove(loc)
+		transfer_fingerprints_to(stored)
+		stored = null
+		qdel(src)
+	return TRUE

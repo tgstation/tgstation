@@ -118,11 +118,7 @@
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were a syndicate cyborg.")
 		return
 
-	var/ai_is_antag = 0
-	if(connected_ai && connected_ai.mind)
-		if(connected_ai.mind.special_role)
-			ai_is_antag = (connected_ai.mind.special_role == "traitor")
-	if(ai_is_antag)
+	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")

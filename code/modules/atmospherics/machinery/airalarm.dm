@@ -675,7 +675,7 @@
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				playsound(src.loc, W.usesound, 50, 1)
-				if (do_after(user, 20*W.toolspeed, target = src))
+				if (W.use_tool(src, user, 20))
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/electronics/airalarm( src.loc )
@@ -734,8 +734,7 @@
 
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
-	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
 		togglelock(user)

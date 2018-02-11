@@ -136,13 +136,12 @@
 
 		if("crossserver")
 			if(authenticated==2)
-				if(CM.lastTimeUsed + 600 > world.time)
+				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
-
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
-				if(!input || !(usr in view(1,src)))
+				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				send2otherserver("[station_name()]", input,"Comms_Console")
@@ -747,9 +746,9 @@
 
 /datum/comm_message/New(new_title,new_content,new_possible_answers)
 	..()
-	if(title)
+	if(new_title)
 		title = new_title
-	if(content)
+	if(new_content)
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
