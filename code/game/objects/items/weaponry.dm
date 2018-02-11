@@ -208,13 +208,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/supermatter/Initialize()
 	. = ..()
 	shard = new(src)
-	qdel(shard.countdown)
-	shard.countdown = null
+	QDEL_NULL(shard.countdown)
 
 /obj/item/claymore/highlander/supermatter/afterattack(target, mob/user, proximity_flag)
 	..()
 	if(user && target == user)
-		user.dropItemToGround(src)
+		user.dropItemToGround(src, TRUE)
 	if(proximity_flag)
 		consume_everything(target, user)
 
@@ -240,7 +239,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	T.CalculateAdjacentTurfs()
 
 /obj/item/katana
 	name = "katana"
