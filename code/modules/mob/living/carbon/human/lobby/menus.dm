@@ -1,6 +1,15 @@
-/mob/living/carbon/human/lobby/proc/LateChoices()
+/mob/living/carbon/human/lobby/proc/LateChoices(obj/structure/lobby_teleporter/tele_to_tele)
+	if(tele_to_tele)
+		RunSparks()
+		forceMove(get_step(tele_to_tele, WEST))
+
 	//we are being allowed to join, time to disappear
 	PhaseInSplashScreen()
+	setup_character.Remove(src)
+	late_join.Remove(src)
+	become_observer.Remove(src)
+	if(show_player_polls)
+		show_player_polls.Remove(src)
 
 	var/dat = "<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>"
 
@@ -66,9 +75,16 @@
 	if(href_list["close"])
 		if(!QDELETED(src) && !new_character)
 			//still around, they just closed the window
-			MoveToStartArea(TRUE)
+			setDir(WEST)
+			RunSparks()
 			PhaseOutSplashScreen()
+			//regrant options
+			setup_character.Grant(src)
 			late_join.Grant(src)
+			become_observer.Grant(src)
+			if(show_player_polls)
+				show_player_polls.Grant(src)
+			//visify
 			invisibility = 0
 		return
 

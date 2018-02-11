@@ -44,9 +44,12 @@ SUBSYSTEM_DEF(title)
 					player.splash_screen.icon = icon
 
 /datum/controller/subsystem/title/Shutdown()
-	for(var/thing in GLOB.clients)
+	for(var/client/thing in GLOB.clients)
 		if(!thing)
 			continue
+		var/mob/living/carbon/human/lobby/lobby_player = thing.mob
+		if(istype(lobby_player))
+			lobby_player.DeleteActions()	//don't want these on top during the fade
 		var/obj/screen/splash/S = new(thing, FALSE)
 		S.Fade(FALSE,FALSE)
 

@@ -68,10 +68,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 		ready_up.Grant(src)
 	become_observer = new
 	become_observer.Grant(src)
-
-/mob/living/carbon/human/lobby/proc/CheckGrantPollAction()
-	if(IsGuestKey(key) || !SSdbcore.Connect())	//no poll button if can't use it
-		return
 	show_player_polls = new
 	show_player_polls.Grant(src)
 
@@ -81,18 +77,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 	QDEL_NULL(late_join)
 	QDEL_NULL(show_player_polls)
 	QDEL_NULL(become_observer)
-
-/mob/living/carbon/human/lobby/proc/CheckPolls()
-	if(IsGuestKey(src.key) || !SSdbcore.Connect())
-		return
-	var/client/C = client
-	var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(C.holder ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[C.ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[C.ckey]\")")
-	new_poll = query_get_new_polls.Execute() && query_get_new_polls.NextRow()
-
-/mob/living/carbon/human/lobby/proc/RemovePollNotifications()
-	for(var/I in SSticker.lobby.poll_computers)
-		var/obj/machinery/computer/lobby/poll/comp = I
-		client.images -= comp.new_notification
 
 /mob/living/carbon/human/lobby/proc/MoveToStartArea(no_pre_spark = FALSE)
 	if(instant_observer && make_me_an_observer())
@@ -113,6 +97,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 		UNTIL(shuttle.mode == SHUTTLE_CALL)	//let the shuttle roundstart dock
 	window_flash(client, ignorepref = TRUE) //let them know lobby has opened up.
 	MoveToStartArea()
+	update_parallax_teleport()
 
 	if(QDELETED(src))	//instant_observer
 		return
@@ -126,6 +111,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 	for(var/I in SSticker.lobby.poll_computers)
 		var/obj/machinery/computer/lobby/poll/comp = I
 		client.images += comp.new_notification
+
+/mob/living/carbon/human/lobby/proc/LastCallForReady()
+	ready_up.PermaLock()	//no more switcheroo
+	if(IsReady())
+		//stagger for meta prevention
+		addtimer(CALLBACK(src, .proc/OnReadiedUpAndStarting), rand(0, 5 SECONDS))
 
 /mob/living/carbon/human/lobby/proc/OnReadiedUpAndStarting()
 	DeleteActions()
@@ -149,7 +140,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/lobby)
 	//new_character is null here so don't worry about that
 	//rebuild our actions
 	GrantStandardActions(FALSE)
-	CheckGrantPollAction()
 	//Send us back
 	MoveToStartArea()
 

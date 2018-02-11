@@ -38,3 +38,17 @@
 		return
 	instant_ready = istype(get_area(src), /area/shuttle/lobby/start_zone)
 	ready_up.UpdateButtonIcon()
+
+//hide the hider, we have a special boi
+/mob/living/carbon/human/lobby/update_action_buttons()
+	if(..())
+		hud_used.hide_actions_toggle.screen_loc = null
+
+//plain jane here
+/mob/living/carbon/human/lobby/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud(src, ui_style2icon(client.prefs.UI_style))
+
+//no stripperino
+/mob/living/carbon/human/lobby/show_inv()
+	return

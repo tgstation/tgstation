@@ -1,5 +1,9 @@
 /datum/action/lobby
 	icon_icon = 'icons/mob/actions/actions_lobby.dmi'
+	static_location = TRUE
+	var/offset = 0
+
+https://file.house/vzb5.txt'
 
 /datum/action/lobby/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	. = ..()
@@ -23,12 +27,20 @@
 	name = "Ready"
 	desc = "Spawn yourself in a position to join the game immediately when it starts"
 	button_icon_state = "ready"
+	offset = 1
 	//spam protection
 	var/available = TRUE
 	var/next_cd = 2 SECONDS
+	var/timerid
 
 /datum/action/lobby/ready_up/IsAvailable()
 	return available && ..()
+
+/datum/action/lobby/ready_up/proc/PermaLock()
+	available = FALSE
+	if(timerid)
+		deltimer(timerid)
+	UpdateButtonIcon()
 
 /datum/action/lobby/ready_up/proc/MakeAvailable()
 	available = TRUE
@@ -45,7 +57,7 @@
 	if(SSticker.IsPreGame())
 		player.MoveToStartArea()
 		available = FALSE
-		addtimer(CALLBACK(src, .proc/MakeAvailable), next_cd)
+		timerid = addtimer(CALLBACK(src, .proc/MakeAvailable), next_cd, TIMER_STOPPABLE)
 		next_cd += 10
 		if(next_cd == 5 SECONDS)	//3 clicks in lobby
 			to_chat(player, "<span class='boldwarning'>The more you click the \"Ready\" button the less responsive it'll become!</span>")
@@ -63,19 +75,21 @@
 	name = "Join Game"
 	desc = "Pick a job and enter the game"
 	button_icon_state = "late_join"
+	offset = 1
 
 /datum/action/lobby/late_join/Trigger()
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/carbon/human/lobby/player = owner
-	player.AttemptJoin()
+	player.AttemptJoin(SSticker.lobby.GetRandomTeleporter())
 	Remove(player)
 
 /datum/action/lobby/become_observer
 	name = "Observe"
 	desc = "Join the game as a ghost to spectate"
 	button_icon_state = "observe"
+	offset = 2
 
 /datum/action/lobby/become_observer/Trigger()
 	. = ..()
@@ -98,6 +112,11 @@
 	name = "Show Player Polls"
 	desc = "Show active playerbase polls. Not available to guests"
 	button_icon_state = "show_polls"
+	offset = 3
+
+/datum/action/lobby/show_player_polls/IsAvailable()
+	var/mob/living/carbon/human/lobby/player = owner
+	return player.CanSeePolls()
 
 /datum/action/lobby/show_player_polls/Trigger()
 	. = ..()

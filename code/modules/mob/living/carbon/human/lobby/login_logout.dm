@@ -35,9 +35,12 @@
 
 	splash_screen = new(client, !no_initial_fade_in)
 
-	if(!client.holder || !client.holder.fakekey)
+	var/is_stealthmin = client.holder && client.holder.fakekey
+	if(!is_stealthmin)
 		client.prefs.copy_to(src)
-		name = client.key
+	real_name = client.key
+	if(!is_stealthmin)
+		name = real_name
 
 	CheckPolls()
 
@@ -46,7 +49,6 @@
 			//we got time to ensure smooth transitions
 			sleep(30)
 		OnInitializationsComplete(TRUE)
-	CheckGrantPollAction()
 
 /mob/living/carbon/human/lobby/Logout()
 	..()

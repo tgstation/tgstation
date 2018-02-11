@@ -28,7 +28,7 @@
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-/mob/living/carbon/human/lobby/proc/AttemptJoin()
+/mob/living/carbon/human/lobby/proc/AttemptJoin(obj/structure/lobby_teleporter/tele_to_tele)
 	if(!SSticker.HasRoundStarted())
 		to_chat(src, "<span class='danger'>The round is not ready!</span>")
 		return
@@ -51,7 +51,8 @@
 			SSticker.queued_players += usr
 			to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
 		return
-	LateChoices()
+
+	LateChoices(tele_to_tele)
 
 /mob/living/carbon/human/lobby/proc/GetRelevantCap()
 	//Determines Relevent Population Cap

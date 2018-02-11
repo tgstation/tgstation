@@ -88,7 +88,6 @@
 		new /obj/structure/lobby_teleporter(T)
 		if(you_had_your_chance)
 			CHECK_TICK
-	QDEL_LIST(hub_spawners)
 
 	for(var/I in wall_spawners)
 		var/turf/T = get_turf(I)
@@ -114,3 +113,6 @@
 		if(T)
 			//look off
 			T.icon_state = "tele1"
+
+/datum/lobby_manager/proc/GetRandomTeleporter()
+	return locate(/obj/structure/lobby_teleporter) in get_turf(safepick(hub_spawners))

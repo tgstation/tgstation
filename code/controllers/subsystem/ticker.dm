@@ -245,10 +245,7 @@ SUBSYSTEM_DEF(ticker)
 	
 	for(var/I in GLOB.lobby_players)
 		var/mob/living/carbon/human/lobby/player = I
-		QDEL_NULL(player.ready_up)	//no more switcheroo
-		if(player.IsReady())
-			//stagger for meta prevention
-			addtimer(CALLBACK(player, /mob/living/carbon/human/lobby/proc/OnReadiedUpAndStarting), rand(0, 5 SECONDS))
+		player.LastCallForReady()
 
 	var/dont_finish_until = REALTIMEOFDAY + 10 SECONDS
 
@@ -408,7 +405,7 @@ SUBSYSTEM_DEF(ticker)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
-					next_in_line.LateChoices()
+					next_in_line.LateChoices(lobby.GetRandomTeleporter())
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
