@@ -17,6 +17,9 @@
 	var/flurry_of_blows_penalty = -2 // -2 at 1-4, -1 at 5-8, 0 at 9-20
 	var/attacks_w_flurry = 2 // increase to 3 at 11
 	var/ki_level = 0
+	var/cleave_level = 0
+	var/circle_kick = FALSE
+
 	var/list/available_actions = list()
 	var/datum/action/monk_rest/monk_rest = new/datum/action/monk_rest()
 	var/datum/action/monk/stunning_fist/stunning_fist = new/datum/action/monk/stunning_fist()
@@ -55,6 +58,9 @@
 		if(7)
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
 			stunning_fist.max_uses = 7
+		if(8)
+			to_chat(owner, "<span class = 'danger'>You move from one downed target to the next quickly.</span>")
+			cleave_level = 1
 		if(9)
 			to_chat(owner, "<span class = 'danger'>You have become completely confident in your ability to land a strike.</span>")
 			flurry_of_blows_penalty = 0
@@ -64,6 +70,12 @@
 		if(11)
 			to_chat(owner, "<span class = 'danger'>You feel confident enough to strike more and harder.</span>")
 			attacks_w_flurry = 3
+		if(12)
+			to_chat(owner, "<span class = 'danger'>You now use a circle kick to extend your attacks to other foes in combat.</span>")
+			circle_kick = TRUE
+		if(14)
+			to_chat(owner, "<span class = 'danger'>You use a downed foe to strike at their allies.</span>")
+			cleave_level = 2
 		if(15)
 			to_chat(owner, "<span class = 'danger'>You have practiced the Quivering Palm technique enough to use it in combat.</span>")
 			quivering_palm.Grant(owner)
@@ -100,39 +112,63 @@
 		do_level_up()
 		to_chat(owner, "<span class = 'danger'>You feel more confident in your powers.</span>")
 
+/datum/martial_art/monk/proc/trigger_cleave(var/mob/living/carbon/human/A, surrounding_mobs, use_cleave)
+	switch(use_cleave)
 
+/datum/martial_art/monk/proc/do_attack(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D, use_cleave, use_circle, surrounding_mobs)
+	switch(picked_hit_type)
+		if("punched")
+			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		if("kicked")
+			A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+	var/atr = attack_roll(D, flurry_of_blows_penalty)
+	if(atr)
+		var/old_stat = D.stat
+		if(D.stat != DEAD && D.ckey)
+			add_exp(5)
+		var/dmg = rand(HIT_MIN, HIT_MAX)
+		var/was_crit = ""
+		var/armor = (D.run_armor_check("chest", "melee", armour_penetration = ki_level)) / 100
+		if(armor > 1)
+			armor = 1
+		if(atr == ATK_CRIT_HIT)
+			dmg *= 2
+			was_crit = "critically "
+		dmg -= (dmg * armor)
+		D.adjustBruteLoss(dmg)
+		if(use_circle)
+			do_attack(A, pick(surrounding_mobs), FALSE, FALSE, null)
+		if(old_stat != DEAD && D.stat == DEAD)
+			if(use_cleave)
+				switch(use_cleave)
+					if(1)
+						do_attack(A, pick(surrounding_mobs), FALSE, FALSE, null)
+					if(2)
+						for(var/H in surrounding_mobs)
+							do_attack(A, H, FALSE, FALSE, null)
+		add_logs(A, D, "[was_crit]punched (monk)")
+		D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
+				  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
+		return 1
+	else
+		if(D.stat != DEAD && D.ckey)
+			add_exp(2.5)
+		add_logs(A, D, "missed a punch (monk)")
+		D.visible_message("<span class='danger'>[A] missed [D]!</span>", \
+				  "<span class='userdanger'>[A] misses you!</span>")
+		return 0
 
 /datum/martial_art/monk/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
 	var/picked_hit_type = pick("punched", "kicked")
+	var/list/surrounding_mobs
+	if(cleave_level || circle_kick)
+		surrounding_mobs = list()
+		for(var/mob/living/human/H in range(1, A))
+			surrounding_mobs += H
 	for(var/i in 1 to attacks_w_flurry)
-		switch(picked_hit_type)
-			if("punched")
-				A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-			if("kicked")
-				A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-		var/atr = attack_roll(D, flurry_of_blows_penalty)
-		if(atr)
-			var/dmg = rand(HIT_MIN, HIT_MAX)
-			var/was_crit = ""
-			var/armor = (D.run_armor_check("chest", "melee", armour_penetration = ki_level)) / 100
-			if(armor > 1)
-				armor = 1
-			if(atr == ATK_CRIT_HIT)
-				dmg *= 2
-				was_crit = "critically "
-			dmg -= (dmg * armor)
-			D.adjustBruteLoss(dmg) // TODO: code cleave
-			add_exp(5)
-			add_logs(A, D, "[was_crit]punched (monk)")
-			D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
-					  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
-		else
-			add_exp(2.5)
-			add_logs(A, D, "missed a punch (monk)")
-			D.visible_message("<span class='danger'>[A] missed [D]!</span>", \
-					  "<span class='userdanger'>[A] misses you!</span>")
+		do_attack(A, D, cleave_level, circle_kick, surrounding_mobs)
 	return 1
 
 /datum/martial_art/monk/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
@@ -203,7 +239,7 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
-	owner.Sleeping(100)
+	owner.Unconscious(100)
 	to_chat(owner, "<span class='warning'>You fall into a meditative sleep...</span>")
 	var/mob/living/carbon/human/H = owner
 	var/datum/martial_art/monk/MA = H.mind.martial_art
