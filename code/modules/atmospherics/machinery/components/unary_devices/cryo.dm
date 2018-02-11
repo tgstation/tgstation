@@ -184,7 +184,8 @@
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
-				air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
+				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
+				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
@@ -220,7 +221,8 @@
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
 			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
-		air1.gases[/datum/gas/oxygen][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
+		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+		air1.garbage_collect()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
@@ -341,9 +343,9 @@
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < 225)
+		if(mob_occupant.bodytemperature < TCRYO)
 			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < 273.15)
+		else if(mob_occupant.bodytemperature < T0C)
 			data["occupant"]["temperaturestatus"] = "average"
 		else
 			data["occupant"]["temperaturestatus"] = "bad"

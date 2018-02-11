@@ -30,7 +30,9 @@ LOBBY_COUNTDOWN 120
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
 
-## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
 ADMIN_LEGACY_SYSTEM
 
 ## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
@@ -51,7 +53,8 @@ BAN_LEGACY_SYSTEM
 ## Unhash this to enable playtime requirements for head jobs.
 #USE_EXP_RESTRICTIONS_HEADS
 ## Unhash this to override head jobs' playtime requirements with this number of hours.
-#USE_EXP_RESTRICTIONS_HEADS_HOURS 15
+## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
+#USE_EXP_RESTRICTIONS_HEADS_HOURS 3
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
 #USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT 
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
@@ -202,7 +205,7 @@ CHECK_RANDOMIZER
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+# GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos

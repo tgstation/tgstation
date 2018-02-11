@@ -1199,18 +1199,8 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
-/proc/get_areas_in_z(zlevel)
-	. = list()
-	var/validarea = FALSE
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		validarea = TRUE
-		for(var/turf/T in A)
-			if(T.z != zlevel)
-				validarea = FALSE
-				break
-		if(validarea)
-			. += A
+/proc/get_random_station_turf()
+	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1257,6 +1247,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
+
+GLOBAL_REAL_VAR(list/stack_trace_storage)
+/proc/gib_stack_trace()
+	stack_trace_storage = list()
+	stack_trace()
+	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
+	. = stack_trace_storage
+	stack_trace_storage = null
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
@@ -1494,26 +1492,29 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
 // If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
 /proc/REF(input)
 	if(istype(input, /datum))
 		var/datum/thing = input
-		if(thing.use_tag)
+		if(thing.datum_flags & DF_USE_TAG)
 			if(!thing.tag)
-				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
-				thing.use_tag = FALSE
+				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
+				thing.datum_flags &= ~DF_USE_TAG
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
 
 // Makes a call in the context of a different usr
 // Use sparingly
-/world/proc/PushUsr(mob/M, datum/callback/CB)
+/world/proc/PushUsr(mob/M, datum/callback/CB, ...)
 	var/temp = usr
 	usr = M
-	. = CB.Invoke()
+	if (length(args) > 2)
+		. = CB.Invoke(arglist(args.Copy(3)))
+	else
+		. = CB.Invoke()
 	usr = temp
-  
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
@@ -1522,7 +1523,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			. += V
 
 //datum may be null, but it does need to be a typed var
-#define NAMEOF(datum, X) (list(##datum.##X, #X)[2])
+#define NAMEOF(datum, X) (#X || ##datum.##X)
 
 #define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
 //dupe code because dm can't handle 3 level deep macros
@@ -1537,3 +1538,29 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))

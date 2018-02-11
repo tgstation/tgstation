@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -68,18 +68,45 @@ Credit where due:
 /proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
-	var/update_type = ANTAG_DATUM_CLOCKCULT
+	var/update_type = /datum/antagonist/clockcult
 	if(silent)
-		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
+		update_type = /datum/antagonist/clockcult/silent
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
+	
+	if(iscyborg(L))
+		var/mob/living/silicon/robot/R = L
+		if(R.deployed)
+			var/mob/living/silicon/ai/AI = R.mainframe
+			R.undeploy()
+			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>") //The AI needs to be in its core to properly be converted
+	
 	. = L.mind.add_antag_datum(C)
+
+	if(!silent && L)
+		if(.)
+			to_chat(L, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(L) ? "You cannot compute this truth!" : \
+			"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
+			Ratvar, the Clockwork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
+			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
+		else
+			L.visible_message("<span class='boldwarning'>[L] seems to resist an unseen force!</span>", null, null, 7, L)
+			to_chat(L, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(L) ? "You cannot compute this truth!" : \
+			"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and the sound</span> <span class='boldwarning'>\
+			is a meaningless cacophony.</span><br>\
+			<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
+			" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
+			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
+			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
+	
+
+
 
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent
@@ -131,8 +158,8 @@ Credit where due:
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		servant.assigned_role = "Servant of Ratvar"
-		servant.special_role = "Servant of Ratvar"
+		servant.assigned_role = ROLE_SERVANT_OF_RATVAR
+		servant.special_role = ROLE_SERVANT_OF_RATVAR
 		starter_servants--
 	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
 	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer

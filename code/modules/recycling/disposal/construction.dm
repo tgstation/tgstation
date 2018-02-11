@@ -14,13 +14,8 @@
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
 
-
-/obj/structure/disposalconstruct/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
-
-/obj/structure/disposalconstruct/New(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
-	..()
+/obj/structure/disposalconstruct/Initialize(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
+	. = ..()
 	if(make_from)
 		pipe_type = make_from.type
 		setDir(make_from.dir)
@@ -34,7 +29,8 @@
 	pipename = initial(pipe_type.name)
 
 	if(flip)
-		flip()
+		GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
+		rotcomp.BaseRot(null,ROTATION_FLIP)
 
 	update_icon()
 
@@ -91,51 +87,24 @@
 			dpdir |= turn(dir, 180)
 	return dpdir
 
-// flip and rotate verbs
-/obj/structure/disposalconstruct/verb/rotate()
-	set name = "Rotate Pipe"
-	set category = "Object"
-	set src in view(1)
+/obj/structure/disposalconstruct/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated), CALLBACK(src, .proc/after_rot))
 
-	if(usr.incapacitated())
-		return
-
-	if(anchored)
-		to_chat(usr, "<span class='warning'>You must unfasten the pipe before rotating it!</span>")
-		return
-
-	setDir(turn(dir, -90))
+/obj/structure/disposalconstruct/proc/after_rot(mob/user,rotation_type)
+	if(rotation_type == ROTATION_FLIP)
+		var/obj/structure/disposalpipe/temp = pipe_type
+		if(initial(temp.flip_type))
+			if(dir in GLOB.diagonals)	// Fix RPD-induced diagonal turning
+				setDir(turn(dir, 45))
+			pipe_type = initial(temp.flip_type)
 	update_icon()
 
-/obj/structure/disposalconstruct/AltClick(mob/user)
-	..()
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
-
-/obj/structure/disposalconstruct/verb/flip()
-	set name = "Flip Pipe"
-	set category = "Object"
-	set src in view(1)
-
-	if(usr.incapacitated())
-		return
-
+/obj/structure/disposalconstruct/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
-		to_chat(usr, "<span class='warning'>You must unfasten the pipe before flipping it!</span>")
-		return
-
-	setDir(turn(dir, 180))
-
-	var/obj/structure/disposalpipe/temp = pipe_type
-	if(initial(temp.flip_type))
-		if(dir in GLOB.diagonals)	// Fix RPD-induced diagonal turning
-			setDir(turn(dir, 45))
-		pipe_type = initial(temp.flip_type)
-
-	update_icon()
-
+		to_chat(user, "<span class='warning'>You must unfasten the pipe before rotating it!</span>")
+		return FALSE
+	return TRUE
 
 // attackby item
 // wrench: (un)anchor
@@ -191,19 +160,16 @@
 
 	else if(istype(I, /obj/item/weldingtool))
 		if(anchored)
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src, I.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You start welding the [pipename] in place...</span>")
-				if(do_after(user, 8*I.toolspeed, target = src))
-					if(!loc || !W.isOn())
-						return
-					to_chat(user, "<span class='notice'>The [pipename] has been welded in place.</span>")
+			if(!I.tool_start_check(user, amount=0))
+				return
 
-					var/obj/O = new pipe_type(loc, src)
-					transfer_fingerprints_to(O)
+			to_chat(user, "<span class='notice'>You start welding the [pipename] in place...</span>")
+			if(I.use_tool(src, user, 8, volume=50))
+				to_chat(user, "<span class='notice'>The [pipename] has been welded in place.</span>")
+				var/obj/O = new pipe_type(loc, src)
+				transfer_fingerprints_to(O)
 
-					return
+			return
 		else
 			to_chat(user, "<span class='warning'>You need to attach it to the plating first!</span>")
 			return

@@ -19,6 +19,10 @@
 
 	var/list/files = list()
 
+/obj/item/card/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/card/data
 	name = "data disk"
 	desc = "A disk of data."
@@ -56,6 +60,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace
@@ -72,6 +77,18 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+
+/obj/item/card/emagfake
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/emagfake/afterattack()
+	. = ..()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/card/id
 	name = "identification card"
@@ -104,10 +121,11 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
+		add_fingerprint(user)
+		return
 
 /obj/item/card/id/examine(mob/user)
 	..()

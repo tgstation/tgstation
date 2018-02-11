@@ -18,6 +18,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
+	tool_behaviour = TOOL_MULTITOOL
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
@@ -25,8 +26,13 @@
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
+	tool_behaviour = TOOL_MULTITOOL
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
+
+/obj/item/device/multitool/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
+	return OXYLOSS//theres a reason it wasnt recommended by doctors
 
 /obj/item/device/multitool/attack_self(mob/user)
 	if(selected_io)

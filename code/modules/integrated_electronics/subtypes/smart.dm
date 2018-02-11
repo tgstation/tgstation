@@ -4,7 +4,7 @@
 /obj/item/integrated_circuit/smart/basic_pathfinder
 	name = "basic pathfinder"
 	desc = "This complex circuit is able to determine what direction a given target is."
-	extended_desc = "This circuit uses a miniturized, integrated camera to determine where the target is.  If the machine \
+	extended_desc = "This circuit uses a miniturized integrated camera to determine where the target is. If the machine \
 	cannot see the target, it will not be able to calculate the correct direction."
 	icon_state = "numberpad"
 	complexity = 25

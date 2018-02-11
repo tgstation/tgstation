@@ -280,21 +280,21 @@
 	var/cooldown = 0
 
 /obj/item/device/harmalarm/emag_act(mob/user)
-	emagged = !emagged
-	if(emagged)
+	obj_flags ^= EMAGGED
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
 	else
 		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
 
 /obj/item/device/harmalarm/attack_self(mob/user)
-	var/safety = !emagged
+	var/safety = !(obj_flags & EMAGGED)
 	if(cooldown > world.time)
 		to_chat(user, "<font color='red'>The device is still recharging!</font>")
 		return
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		if(R.cell.charge < 1200)
+		if(!R.cell || R.cell.charge < 1200)
 			to_chat(user, "<font color='red'>You don't have enough charge to do this!</font>")
 			return
 		R.cell.charge -= 1000
@@ -652,7 +652,7 @@
 		else
 			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
 			return
-	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
+	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 

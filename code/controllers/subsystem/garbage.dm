@@ -332,7 +332,6 @@ SUBSYSTEM_DEF(garbage)
 /datum/verb/find_refs()
 	set category = "Debug"
 	set name = "Find References"
-	set background = 1
 	set src in world
 
 	find_references(FALSE)
@@ -385,7 +384,6 @@ SUBSYSTEM_DEF(garbage)
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"
 	set name = "qdel() then Find References"
-	set background = 1
 	set src in world
 
 	qdel(src)

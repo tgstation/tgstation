@@ -51,15 +51,10 @@
 		SetSlotFromZone()
 		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
 		update_icon()
-	else if(istype(W, /obj/item/card/emag))
-		emag_act()
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	..()
-
-/obj/item/organ/cyberimp/arm/emag_act()
-	return 0
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
 	if(prob(15/severity) && owner)
@@ -110,7 +105,7 @@
 
 	var/result = (zone == "r_arm" ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
 	if(!result)
-		to_chat(owner, "<span class='warning'>Your [src] fails to activate!</span>")
+		to_chat(owner, "<span class='warning'>Your [name] fails to activate!</span>")
 		return
 
 	// Activate the hand that now holds our item.
@@ -124,10 +119,6 @@
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if(crit_fail || (!holder && !contents.len))
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
-		return
-
-	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
-	if(istype(owner.get_active_held_item(), /obj/item/card/emag) && emag_act())
 		return
 
 	if(!holder || (holder in src))
@@ -175,7 +166,6 @@
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = "l_arm"
-
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"

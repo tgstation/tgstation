@@ -30,8 +30,8 @@
 	var/last_alarm = 0
 	var/area/myarea = null
 
-/obj/machinery/firealarm/New(loc, dir, building)
-	..()
+/obj/machinery/firealarm/Initialize(mapload, dir, building)
+	. = ..()
 	if(dir)
 		src.setDir(dir)
 	if(building)
@@ -86,16 +86,16 @@
 	..()
 
 /obj/machinery/firealarm/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !emagged && detecting && !stat)
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !stat)
 		alarm()
 	..()
 
@@ -122,7 +122,7 @@
 
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
-	data["emagged"] = emagged
+	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
 
 	if(is_station_level(z))
 		data["seclevel"] = get_security_level()
@@ -158,15 +158,16 @@
 	if(panel_open)
 
 		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
-			var/obj/item/weldingtool/WT = W
 			if(obj_integrity < max_integrity)
-				if(WT.remove_fuel(0,user))
-					to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-					playsound(loc, WT.usesound, 40, 1)
-					if(do_after(user, 40*WT.toolspeed, target = src))
-						obj_integrity = max_integrity
-						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-						to_chat(user, "<span class='notice'>You repair [src].</span>")
+				if(!W.tool_start_check(user, amount=0))
+					return
+
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+				playsound(loc, W.usesound, 40, 1)
+				if(W.use_tool(src, user, 40))
+					obj_integrity = max_integrity
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
@@ -201,10 +202,9 @@
 					return
 
 				else if(istype(W, /obj/item/crowbar))
-					playsound(src.loc, W.usesound, 50, 1)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
-					if(do_after(user, 20*W.toolspeed, target = src))
+					if(W.use_tool(src, user, 20, volume=50))
 						if(buildstage == 1)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")

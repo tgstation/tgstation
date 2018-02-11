@@ -77,6 +77,8 @@
 	return 1
 
 /datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
+	if(!istype(H) || !H.mind)
+		return FALSE
 	if(H.mind.martial_art)
 		if(make_temporary)
 			if(!H.mind.martial_art.allow_temp_override)
@@ -100,7 +102,7 @@
 		base = M
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
-	if(H.mind.martial_art != src)
+	if(!istype(H) || !H.mind || H.mind.martial_art != src)
 		return
 	owner = null
 	on_remove(H)

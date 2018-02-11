@@ -4,10 +4,10 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing
 	name = "weapon firing mechanism"
 	desc = "This somewhat complicated system allows one to slot in a gun, direct it towards a position, and remotely fire it."
-	extended_desc = "The firing mechanism can slot in any energy weapon.  \
-	The first and second inputs need to be numbers.  They are coordinates for the gun to fire at, relative to the machine itself.  \
-	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between  \
-	lethal (TRUE) or stun (FALSE) modes.It uses internal battery of weapon."
+	extended_desc = "The firing mechanism can slot in any energy weapon. \
+	The first and second inputs need to be numbers which correspond to coordinates for the gun to fire at relative to the machine itself. \
+	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible. Mode is switch between \
+	lethal (TRUE) or stun (FALSE) modes. It uses the internal battery of the weapon."
 	complexity = 20
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
@@ -135,7 +135,7 @@
 	icon_state = "locomotion"
 	extended_desc = "The circuit accepts a 'dir' number as a direction to move towards.<br>\
 	Pulsing the 'step towards dir' activator pin will cause the machine to move a meter in that direction, assuming it is not \
-	being held, or anchored in some way.  It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
+	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 20
 	inputs = list("direction" = IC_PINTYPE_DIR)
@@ -236,7 +236,7 @@
 	name = "plant manipulation module"
 	desc = "Used to uproot weeds or harvest plants in trays."
 	icon_state = "plant_m"
-	extended_desc = "The circuit accepts a reference to hydroponic tray. It work from adjacent tiles. \
+	extended_desc = "The circuit accepts a reference to a hydroponic tray in an adjacent tile. \
 	Mode(0- harvest, 1-uproot weeds, 2-uproot plant) determinies action."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 10
@@ -292,9 +292,9 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
+	desc = "A circuit with it's own inventory for items, used to grab and store things."
 	icon_state = "grabber"
-	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
+	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 
@@ -304,19 +304,22 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
 	var/max_items = 10
-
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
+	var/max_w_class = assembly.w_class
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(AM)
 		var/mode = get_pin_data(IC_INPUT, 2)
-
 		if(mode == 1)
 			if(check_target(AM))
-				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
+				var/weightcheck = FALSE
+				if (AM.w_class < max_w_class)
+					weightcheck = TRUE
+				else
+					weightcheck = FALSE
+				if((contents.len < max_items) && (weightcheck))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
@@ -349,13 +352,51 @@
 	set_pin_data(IC_OUTPUT, 3, contents.len)
 	push_data()
 
+/obj/item/integrated_circuit/manipulation/claw
+	name = "pulling claw"
+	desc = "Circuit which can pull things.."
+	icon_state = "pull_claw"
+	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release.1 for pull. 2 for gressive grab."
+	w_class = WEIGHT_CLASS_SMALL
+	size = 3
+
+	complexity = 10
+	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX)
+	outputs = list("is pulling" = IC_PINTYPE_BOOLEAN)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 50
+	var/max_grab = GRAB_PASSIVE
+
+/obj/item/integrated_circuit/manipulation/claw/do_work()
+	var/obj/acting_object = get_object()
+	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	var/mode = get_pin_data(IC_INPUT, 2)
+	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
+	if(AM)
+		if(check_target(AM, exclude_contents = TRUE))
+			acting_object.start_pulling(AM,mode)
+			if(acting_object.pulling)
+				set_pin_data(IC_OUTPUT, 1, TRUE)
+			else
+				set_pin_data(IC_OUTPUT, 1, FALSE)
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/claw/stop_pulling()
+	..()
+	set_pin_data(IC_OUTPUT, 1, FALSE)
+	activate_pin(2)
+	push_data()
+
+
 
 /obj/item/integrated_circuit/manipulation/thrower
 	name = "thrower"
 	desc = "A compact launcher to throw things from inside or nearby tiles."
-	extended_desc = "The first and second inputs need to be numbers.  They are coordinates to throw thing at, relative to the machine itself. \
-	The 'fire' activator will cause the mechanism to attempt to throw thing at the coordinates, if possible. Note that the \
-	projectile need to be inside the machine, or to be on an adjacent tile, and to be up to medium size."
+	extended_desc = "The first and second inputs need to be numbers which correspond to coordinates to throw objects at relative to the machine itself. \
+	The 'fire' activator will cause the mechanism to attempt to throw objects at the coordinates, if possible. Note that the \
+	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
 	complexity = 15
 	w_class = WEIGHT_CLASS_SMALL
 	size = 2
@@ -370,9 +411,9 @@
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
+	var/max_w_class = assembly.w_class
 	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)

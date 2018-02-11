@@ -3,110 +3,86 @@
 #define GIBTONITE_QUALITY_MEDIUM 2
 #define GIBTONITE_QUALITY_LOW 1
 
+#define ORESTACK_OVERLAYS_MAX 10
+
 /**********************Mineral ores**************************/
 
-/obj/item/ore
+/obj/item/stack/ore
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
+	full_w_class = WEIGHT_CLASS_BULKY
+	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
+	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	var/list/stack_overlays
 
-/obj/item/ore/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.remove_fuel(15) && refined_type)
-			new refined_type(get_turf(src.loc))
-			qdel(src)
-		else if(W.isOn())
-			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
-	..()
-
-/obj/item/ore/Crossed(atom/movable/AM)
-	set waitfor = FALSE
-	var/show_message = TRUE
-	for(var/obj/item/ore/O in loc)
-		if(O != src)
-			show_message = FALSE
-			break
-	var/obj/item/storage/bag/ore/OB
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		OB = locate(/obj/item/storage/bag/ore) in H.get_storage_slots()
-		if(!OB)
-			OB = locate(/obj/item/storage/bag/ore) in H.held_items
-	else if(iscyborg(AM))
-		var/mob/living/silicon/robot/R = AM
-		OB = locate(/obj/item/storage/bag/ore) in R.held_items
-	if(OB)
-		var/obj/structure/ore_box/box
-		if(!OB.can_be_inserted(src, TRUE, AM))
-			if(!OB.spam_protection)
-				to_chat(AM, "<span class='warning'>Your [OB.name] is full and can't hold any more ore!</span>")
-				OB.spam_protection = TRUE
-				sleep(1)
-				OB.spam_protection = FALSE
-		else
-			OB.handle_item_insertion(src, TRUE, AM)
-		// Then, if the user is dragging an ore box, empty the satchel
-		// into the box.
-		var/mob/living/L = AM
-		if(istype(L.pulling, /obj/structure/ore_box))
-			box = L.pulling
-			for(var/obj/item/ore/O in OB)
-				OB.remove_from_storage(src, box)
-		if(show_message)
-			playsound(L, "rustle", 50, TRUE)
-			if(box)
-				L.visible_message("<span class='notice'>[L] offloads the ores into [box].</span>", \
-				"<span class='notice'>You offload the ores beneath you into your [box.name].</span>")
-			else
-				L.visible_message("<span class='notice'>[L] scoops up the ores beneath them.</span>", \
-				"<span class='notice'>You scoop up the ores beneath you with your [OB.name].</span>")
+/obj/item/stack/ore/add(amount)
+	var/amount_added = 0
+	while (amount_added < amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
+		var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
+		newore.pixel_x = rand(-8,8)
+		newore.pixel_y = rand(-8,8)
+		LAZYADD(stack_overlays, newore)
+		amount_added++
 	return ..()
 
-/obj/item/ore/uranium
+/obj/item/stack/ore/use(amount)
+	var/newamount = src.amount - amount
+	if (newamount <= ORESTACK_OVERLAYS_MAX)
+		if (LAZYLEN(stack_overlays))
+			stack_overlays.len = newamount-1
+	return ..()
+
+/obj/item/stack/ore/update_icon()
+	. = ..()
+	add_overlay(stack_overlays)
+
+/obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
+	if(!refined_type)
+		return TRUE
+
+	if(I.use_tool(src, user, 0, volume=50, amount=15))
+		new refined_type(drop_location())
+		use(1)
+
+	return TRUE
+
+/obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
+	singular_name = "uranium ore chunk"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
-/obj/item/ore/iron
+/obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
+	singular_name = "iron ore chunk"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
-/obj/item/ore/glass
+/obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
+	singular_name = "sand pile"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/ore/glass/attack_self(mob/living/user)
-	to_chat(user, "<span class='notice'>You use the sand to make sandstone.</span>")
-	var/sandAmt = 1
-	for(var/obj/item/ore/glass/G in user.loc) // The sand on the floor
-		sandAmt += 1
-		qdel(G)
-	while(sandAmt > 0)
-		var/obj/item/stack/sheet/mineral/sandstone/SS = new /obj/item/stack/sheet/mineral/sandstone(user.loc)
-		if(sandAmt >= SS.max_amount)
-			SS.amount = SS.max_amount
-		else
-			SS.amount = sandAmt
-			for(var/obj/item/stack/sheet/mineral/sandstone/SA in user.loc)
-				if(SA != SS && SA.amount < SA.max_amount)
-					SA.attackby(SS, user) //we try to transfer all old unfinished stacks to the new stack we created.
-		sandAmt -= SS.max_amount
-	qdel(src)
-	return
+GLOBAL_LIST_INIT(sand_recipes, list(\
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50)\
+		))
 
-/obj/item/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.sand_recipes
+	. = ..()
+
+/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
@@ -125,65 +101,69 @@
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
-/obj/item/ore/glass/basalt
+/obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
+	singular_name = "volcanic ash pile"
 
-/obj/item/ore/plasma
+/obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
+	singular_name = "plasma ore chunk"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/ore/plasma/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/W = I
-		if(W.welding)
-			to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
-	else
-		..()
+/obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
+	return TRUE
 
 
-/obj/item/ore/silver
+/obj/item/stack/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
+	singular_name = "silver ore chunk"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
-/obj/item/ore/gold
+/obj/item/stack/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
+	singular_name = "gold ore chunk"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
-/obj/item/ore/diamond
+/obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
+	singular_name = "diamond ore chunk"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
-/obj/item/ore/bananium
+/obj/item/stack/ore/bananium
 	name = "bananium ore"
-	icon_state = "Clown ore"
+	icon_state = "Bananium ore"
+	singular_name = "bananium ore chunk"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
-/obj/item/ore/titanium
+/obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
+	singular_name = "titanium ore chunk"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
-/obj/item/ore/slag
+/obj/item/stack/ore/slag
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
+	singular_name = "slag chunk"
 
 /obj/item/twohanded/required/gibtonite
 	name = "gibtonite ore"
@@ -285,13 +265,20 @@
 				explosion(src,0,1,3,adminlog = notify_admins)
 		qdel(src)
 
-/obj/item/ore/Initialize()
+/obj/item/stack/ore/Initialize()
 	. = ..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-/obj/item/ore/ex_act()
-	return
+/obj/item/stack/ore/ex_act(severity, target)
+	if (!severity || severity >= 2)
+		return
+	qdel(src)
+
+/obj/item/ore/stack/glass/ex_act(severity, target)
+	if (severity == EXPLODE_NONE)
+		return
+	qdel(src)
 
 /*****************************Coin********************************/
 
@@ -311,6 +298,25 @@
 	var/cmineral = null
 	var/cooldown = 0
 	var/value = 1
+	var/coinflip
+
+/obj/item/coin/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
+	if (!attack_self(user))
+		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
+		return SHAME
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
+	return MANUAL_SUICIDE
+
+/obj/item/coin/proc/manual_suicide(mob/living/user)
+	var/index = sideslist.Find(coinflip)
+	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
+	if (index==2)//tails
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promply falls over, dead!</span>")
+		user.adjustOxyLoss(200)
+		user.death(0)
+	else
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
 
 /obj/item/coin/Initialize()
 	. = ..()
@@ -364,7 +370,7 @@
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/coin/clown
+/obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
@@ -413,27 +419,25 @@
 		else
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
-
-	else if(istype(W, /obj/item/wirecutters))
-		if(!string_attached)
-			..()
-			return
-
-		var/obj/item/stack/cable_coil/CC = new/obj/item/stack/cable_coil(user.loc)
-		CC.amount = 1
-		CC.update_icon()
-		overlays = list()
-		string_attached = null
-		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else
 		..()
+
+/obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
+	if(!string_attached)
+		return TRUE
+
+	new /obj/item/stack/cable_coil(drop_location(), 1)
+	overlays = list()
+	string_attached = null
+	to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
+	return TRUE
 
 /obj/item/coin/attack_self(mob/user)
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
-			return //do not flip the coin
-		var/coinflip = pick(sideslist)
+			return FALSE//do not flip the coin
+		coinflip = pick(sideslist)
 		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
@@ -444,3 +448,7 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].", \
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+	return TRUE//did the coin flip? useful for suicide_act
+
+
+#undef ORESTACK_OVERLAYS_MAX

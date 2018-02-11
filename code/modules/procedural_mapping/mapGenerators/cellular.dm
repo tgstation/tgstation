@@ -38,8 +38,6 @@
 	current_state = old_state.Copy()
 
 /datum/mapGenerator/ca/generate()
-	set background = 1
-
 	//Abandon all hope for efficency all who enter here
 	//Maybe some less basic implemetation later, but this is just simple admin tool
 	initialize()

@@ -67,7 +67,10 @@
 			return
 		var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 		var/servername = CONFIG_GET(string/servername)
-		src << link("[githuburl]/issues/new[GLOB.round_id ? "?body=[url_encode("Issue reported from Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]\n\n[issue_template]")]" : ""]")
+		var/url_params = "Reporting client version: [byond_version]\n\n[issue_template]"
+		if(GLOB.round_id || servername)
+			url_params = "Issue reported from [GLOB.round_id ? " Round ID: [GLOB.round_id][servername ? " ([servername])" : ""]" : servername]\n\n[url_params]"
+		DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
 	else
 		to_chat(src, "<span class='danger'>The Github URL is not set in the server configuration.</span>")
 	return
@@ -78,6 +81,7 @@
 
 	var/adminhotkeys = {"<font color='purple'>
 Admin:
+\tF3 = asay
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel
 \tF7 = admin-pm

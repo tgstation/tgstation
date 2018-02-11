@@ -86,13 +86,17 @@
 			return
 		if(user.transferItemToLoc(A, src))
 			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
-			suppressed = A
-			S.oldsound = fire_sound
-			fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-			w_class += A.w_class //so pistols do not fit in pockets when suppressed
-			update_icon()
+			install_suppressor(A)
 			return
 	return 0
+
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
+	// this proc assumes that the suppressor is already inside src
+	suppressed = S
+	S.oldsound = fire_sound
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	update_icon()
 
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
@@ -155,7 +159,7 @@
 		sleep(25)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
-			process_fire(user, user, 0, zone_override = "head")
+			process_fire(user, user, FALSE, null, "head")
 			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
@@ -211,7 +215,7 @@
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
-			process_fire(user, user,0)
+			process_fire(user, user, FALSE)
 			. = 1
 
 

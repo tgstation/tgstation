@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	..(severity)
 
 /obj/machinery/announcement_system/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	act_up()

@@ -28,8 +28,13 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] += armor[armor_type]
+	if (islist(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
+		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
+																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
+	if (islist(armor))
+		armor = getArmor(arglist(armor))
+
+	U.armor = U.armor.attachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_equip(U, user)
@@ -42,8 +47,7 @@
 		pockets.forceMove(src)
 		U.pockets = null
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] -= armor[armor_type]
+	U.armor = U.armor.detachArmor(armor)
 
 	if(isliving(user))
 		on_uniform_dropped(U, user)
@@ -65,7 +69,7 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")

@@ -18,12 +18,14 @@
 	dissipate_delay = 5
 	dissipate_strength = 1
 	var/list/orbiting_balls = list()
+	var/miniball = FALSE
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	. = ..()
+	miniball = is_miniball
 	if(!is_miniball)
 		set_light(10, 7, "#EEEEFF")
 
@@ -42,9 +44,10 @@
 	. = ..()
 
 /obj/singularity/energy_ball/admin_investigate_setup()
-	if(istype(loc, /obj/singularity/energy_ball))
-		return
+	if(miniball)
+		return //don't annnounce miniballs
 	..()
+
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -77,7 +80,7 @@
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around 
+		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -144,6 +147,10 @@
 
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(L.incorporeal_move || L.status_flags & GODMODE)
+			return
 	if(!iscarbon(A))
 		return
 	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
@@ -189,7 +196,7 @@
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(C.obj_flags & BEING_SHOCKED))
 				closest_dist = dist
 
 				//we use both of these to save on istype and typecasting overhead later on
@@ -225,7 +232,7 @@
 		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !(M.obj_flags & BEING_SHOCKED))
 				closest_machine = M
 				closest_atom = A
 				closest_dist = dist
@@ -236,7 +243,7 @@
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(B.obj_flags & BEING_SHOCKED))
 				closest_blob = B
 				closest_atom = A
 				closest_dist = dist
@@ -247,7 +254,7 @@
 		else if(isstructure(A))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(S.obj_flags & BEING_SHOCKED))
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist

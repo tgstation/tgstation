@@ -222,7 +222,7 @@
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 
@@ -274,6 +274,10 @@
 
 /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
 	disease = /datum/disease/fluspanish
+
+/obj/effect/mob_spawn/human/corpse/cargo_tech
+	name = "Cargo Tech"
+	outfit = /datum/outfit/job/cargo_tech
 
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"

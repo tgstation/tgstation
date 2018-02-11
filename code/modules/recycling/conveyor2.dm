@@ -104,7 +104,7 @@
 		return
 	if(!operating)
 		return
-	use_power(100)
+	use_power(6)
 	affecting = loc.contents - src		// moved items will be all in loc
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
@@ -118,9 +118,7 @@
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(QDELETED(src))
-				return //prevent multiple decontructs
+		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
 				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 				C.id = id
@@ -289,7 +287,7 @@
 
 /obj/item/conveyor_construct
 	icon = 'icons/obj/recycling.dmi'
-	icon_state = "conveyor0"
+	icon_state = "conveyor_construct"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = WEIGHT_CLASS_BULKY

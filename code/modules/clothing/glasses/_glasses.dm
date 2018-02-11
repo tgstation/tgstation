@@ -11,12 +11,16 @@
 	materials = list(MAT_GLASS = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING
+	var/invis_view = SEE_INVISIBLE_LIVING	//admin only for now
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	var/glass_colour_type //colors your vision when worn
+	
+/obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is stabbing \the [src] into their eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/clothing/glasses/examine(mob/user)
 	..()
@@ -41,7 +45,7 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		if(!(H.has_disability(DISABILITY_BLIND)))
+		if(!(H.has_trait(TRAIT_BLIND)))
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
@@ -58,6 +62,10 @@
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+
+/obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is putting \the [src] to their eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/clothing/glasses/meson/night
 	name = "night vision meson scanner"
@@ -104,6 +112,10 @@
 	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around their neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -168,7 +180,7 @@
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
-	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks flashes."
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = 1
@@ -251,7 +263,7 @@
 	tint = 3			// to make them blind
 
 /obj/item/clothing/glasses/sunglasses/big
-	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
@@ -261,7 +273,7 @@
 	icon_state = "thermal"
 	item_state = "glasses"
 	vision_flags = SEE_MOBS
-	invis_view = 2
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = 0
 	glass_colour_type = /datum/client_colour/glass_colour/red
 

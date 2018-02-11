@@ -22,18 +22,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature //kelvins
-	var/tmp/temperature_archived
-	var/volume //liters
-	var/last_share
+	var/temperature = 0 //kelvins
+	var/tmp/temperature_archived = 0
+	var/volume = CELL_VOLUME //liters
+	var/last_share = 0
 	var/list/reaction_results
 
-/datum/gas_mixture/New(volume = CELL_VOLUME)
+/datum/gas_mixture/New(volume)
 	gases = new
-	temperature = 0
-	temperature_archived = 0
-	src.volume = volume
-	last_share = 0
+	if (!isnull(volume))
+		src.volume = volume
 	reaction_results = new
 
 //listmos procs

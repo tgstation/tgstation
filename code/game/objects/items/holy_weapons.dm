@@ -1,6 +1,6 @@
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -10,7 +10,7 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -229,6 +229,9 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
+/obj/item/nullrod/scythe/talking/relaymove(mob/user)
+	return //stops buckled message spam for the ghost.
+
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
@@ -238,14 +241,13 @@
 	possessed = TRUE
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))
-		theghost = pick(candidates)
+		var/client/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
-		S.ckey = theghost.ckey
+		S.ckey = C.ckey
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
@@ -297,7 +299,7 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	
+
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
 	name = "Pride-struck Hammer"
@@ -308,7 +310,7 @@
 	slot_flags = SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
 	hitsound = 'sound/weapons/blade1.ogg'
-	
+
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity)
 		return
@@ -345,7 +347,7 @@
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
-	desc = "Particularly twisted dieties grant gifts of dubious value."
+	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'

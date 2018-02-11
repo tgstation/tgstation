@@ -41,7 +41,7 @@
 		on_beam_release(current_target)
 	current_target = null
 
-/obj/item/gun/medbeam/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(isliving(user))
 		add_fingerprint(user)
 

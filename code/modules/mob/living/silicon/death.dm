@@ -1,5 +1,5 @@
 /mob/living/silicon/spawn_gibs()
-	new /obj/effect/gibspawner/robot(get_turf(src))
+	new /obj/effect/gibspawner/robot(drop_location())
 
 /mob/living/silicon/spawn_dust()
 	new /obj/effect/decal/remains/robot(loc)

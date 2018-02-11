@@ -73,30 +73,6 @@
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
-/*
-
-*/
-
-/obj/structure/displaycase/proc/is_directional(atom/A)
-	try
-		getFlatIcon(A,defdir=4)
-	catch
-		return 0
-	return 1
-
-/obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
-	//Get flatIcon even if dir is mismatched for directionless icons
-	//SLOW
-	var/icon/I
-	if(is_directional(A))
-		I = getFlatIcon(A)
-	else
-		var/old_dir = A.dir
-		A.setDir(2)
-		I = getFlatIcon(A)
-		A.setDir(old_dir)
-	return I
-
 /obj/structure/displaycase/update_icon()
 	var/icon/I
 	if(open)
@@ -106,7 +82,7 @@
 	if(broken)
 		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
-		var/icon/S = get_flat_icon_directional(showpiece)
+		var/icon/S = getFlatIcon(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
 	src.icon = I
@@ -120,11 +96,13 @@
 		else
 			to_chat(user,  "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weldingtool/WT = W
-		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
+		if(obj_integrity < max_integrity)
+			if(!W.tool_start_check(user, amount=5))
+				return
+
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, WT.usesound, 40, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			playsound(loc, W.usesound, 40, 1)
+			if(W.use_tool(src, user, 40, amount=5))
 				obj_integrity = max_integrity
 				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
@@ -141,7 +119,7 @@
 				qdel(src)
 		else
 			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src].</span>")
-			if(do_after(user, 20*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 20))
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
@@ -202,7 +180,7 @@
 	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)

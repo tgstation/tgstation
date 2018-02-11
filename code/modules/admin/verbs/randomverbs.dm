@@ -280,7 +280,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
 		//Check if they were an alien
-		if(G_found.mind.assigned_role=="Alien")
+		if(G_found.mind.assigned_role == ROLE_ALIEN)
 			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/turf/T
 				if(GLOB.xeno_spawn.len)
@@ -373,26 +373,26 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
-	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(/datum/antagonist/traitor)
 	if(traitordatum)
 		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 		traitordatum.equip()
 
 
 	switch(new_character.mind.special_role)
-		if("Wizard")
+		if(ROLE_WIZARD)
 			new_character.forceMove(pick(GLOB.wizardstart))
 			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
 			A.equip_wizard()
-		if("Syndicate")
+		if(ROLE_SYNDICATE)
 			new_character.forceMove(pick(GLOB.nukeop_start))
 			var/datum/antagonist/nukeop/N = new_character.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 			N.equip_op()
-		if("Space Ninja")
+		if(ROLE_NINJA)
 			var/list/ninja_spawn = list()
 			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 				ninja_spawn += L
-			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(/datum/antagonist/ninja)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
 				new_character.forceMove(pick(ninja_spawn))
@@ -472,7 +472,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "") as message|null
 	if(!input)
 		return
 
@@ -1261,6 +1261,10 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN))
 		return
 
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
+		return
+
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
@@ -1273,6 +1277,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		return
 	if(!C)
 		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='warning'>Tracking is disabled in the server configuration file.</span>")
 		return
 
 	var/list/body = list()

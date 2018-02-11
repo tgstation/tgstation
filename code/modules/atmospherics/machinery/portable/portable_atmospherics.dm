@@ -73,6 +73,8 @@
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
+	pixel_x = 0
+	pixel_y = 0
 	return TRUE
 
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()

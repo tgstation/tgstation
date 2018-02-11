@@ -90,6 +90,16 @@
 	else
 		return ..()
 
+
+/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
+	. = ..()
+	if(. && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.dna.species, /datum/species/pod))
+			var/obj/item/bodypart/NB = pick(H.bodyparts)
+			H.visible_message("<span class='warning'>[src] takes a big chomp out of [H]!</span>", \
+								  "<span class='userdanger'>[src] takes a big chomp out of your [NB]!</span>")
+			NB.dismember()
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -243,7 +253,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
-	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+	var/list/layMessage = EGG_LAYING_MESSAGES
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
@@ -280,7 +290,7 @@
 	if(!.)
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
-		visible_message("[src] [pick(layMessage)]")
+		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
 		E.pixel_x = rand(-6,6)

@@ -153,7 +153,7 @@ doesn't have toxins access.
 	if(stored_research.research_points >= price)
 		investigate_log("[key_name(user)] researched [id]([price]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
-			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "price" = "[price]", "time" = "[SQLtime()]"))
+			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[price]", "time" = SQLtime()))
 		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
 			say("Sucessfully researched [TN.display_name].")
 			var/logname = "Unknown"
@@ -191,10 +191,10 @@ doesn't have toxins access.
 	..()
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 		playsound(src, "sparks", 75, 1)
-		emagged = TRUE
+		obj_flags |= EMAGGED
 	return ..()
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
@@ -219,7 +219,7 @@ doesn't have toxins access.
 	var/list/l = list()
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
 	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
-	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
+	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
 	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
 	l += "[ui_mode == 1? "<span class='linkOn'>Normal View</span>" : "<a href='?src=[REF(src)];ui_mode=1'>Normal View</a>"] | [ui_mode == 2? "<span class='linkOn'>Expert View</span>" : "<a href='?src=[REF(src)];ui_mode=2'>Expert View</a>"] | [ui_mode == 3? "<span class='linkOn'>List View</span>" : "<a href='?src=[REF(src)];ui_mode=3'>List View</a>"]"
 	return l
@@ -883,7 +883,7 @@ doesn't have toxins access.
 			return				//honestly should call them out for href exploiting :^)
 		if(!SSresearch.science_tech.available_nodes[ls["research_node"]])
 			return			//Nope!
-		research_node(ls["research_node"])
+		research_node(ls["research_node"], usr)
 	if(ls["clear_tech"]) //Erase la on the technology disk.
 		if(t_disk)
 			qdel(t_disk.stored_research)

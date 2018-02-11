@@ -159,18 +159,12 @@
 	else if(istype(I, /obj/item/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
-		var/obj/item/weldingtool/WT = I
-		if(!WT.isOn())
-			return
-		if(WT.get_fuel() < 5) //uses up 5 fuel.
-			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
+
+		if(!I.tool_start_check(user, amount=5))  //uses up 5 fuel
 			return
 
-		playsound(loc, WT.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
-			if(!WT.isOn() || !WT.remove_fuel(5, user))
-				return
+		if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
@@ -253,8 +247,8 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/New()
-	..()
+/obj/machinery/syndicatebomb/empty/Initialize()
+	. = ..()
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
@@ -293,7 +287,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src), range_heavy, range_medium, range_light, flame_range = range_flame)
+	explosion(src, range_heavy, range_medium, range_light, flame_range = range_flame)
 	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
@@ -363,7 +357,7 @@
 
 /obj/item/bombcore/badmin/summon/clown
 	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
-	amt_summon 	= 100
+	amt_summon 	= 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
 	playsound(src, 'sound/misc/sadtrombone.ogg', 50)

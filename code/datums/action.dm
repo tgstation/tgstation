@@ -104,7 +104,7 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
 		if(!status_only)
 			button.name = name
@@ -121,7 +121,7 @@
 				if(button.icon_state != background_icon_state)
 					button.icon_state = background_icon_state
 
-			ApplyIcon(button)
+			ApplyIcon(button, force)
 
 		if(!IsAvailable())
 			button.color = rgb(128,0,0,128)
@@ -129,8 +129,8 @@
 			button.color = rgb(255,255,255,255)
 			return 1
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
+/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
@@ -163,11 +163,11 @@
 		I.ui_action_click(owner, src)
 	return 1
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
-		..(current_button)
+		..()
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
 		var/old_layer = I.layer
@@ -215,7 +215,7 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE, force)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
@@ -253,7 +253,7 @@
 	if(..())
 		UpdateButtonIcon()
 
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE, force)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.friendly_fire_check)
@@ -454,7 +454,34 @@
 	name = "Use [target.name]"
 	button.name = name
 
+/datum/action/item_action/cult_dagger
+	name = "Draw Blood Rune"
+	desc = "Use the ritual dagger to create a powerful blood rune"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "draw"
+	buttontooltipstyle = "cult"
+	background_icon_state = "bg_demon"
 
+/datum/action/item_action/cult_dagger/Grant(mob/M)
+	if(iscultist(M))
+		..()
+		button.screen_loc = "6:157,4:-2"
+		button.moved = "6:157,4:-2"
+	else
+		Remove(owner)
+
+/datum/action/item_action/cult_dagger/Trigger()
+	for(var/obj/item/H in owner.held_items) //In case we were already holding another dagger
+		if(istype(H, /obj/item/melee/cultblade/dagger))
+			H.attack_self(owner)
+			return
+	var/obj/item/I = target
+	if(owner.can_equip(I, slot_hands))
+		owner.temporarilyRemoveItemFromInventory(I)
+		owner.put_in_hands(I)
+		I.attack_self(owner)
+	else
+		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
 
 
 //Preset for spells

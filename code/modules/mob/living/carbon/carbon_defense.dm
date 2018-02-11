@@ -213,6 +213,8 @@
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
+	if(has_trait(TRAIT_SHOCKIMMUNE))
+		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
@@ -248,7 +250,7 @@
 		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(status_flags & FAKEDEATH))
+	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
 
 		if(lying)
 			if(buckled)
@@ -290,7 +292,7 @@
 			to_chat(src, "<span class='warning'>Your eyes burn.</span>")
 			adjust_eye_damage(rand(2, 4))
 
-		else if( damage > 3)
+		else if( damage >= 3)
 			to_chat(src, "<span class='warning'>Your eyes itch and burn severely!</span>")
 			adjust_eye_damage(rand(12, 16))
 
@@ -300,12 +302,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_disability(DISABILITY_NEARSIGHT))
+					if(!has_trait(TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_disability(DISABILITY_BLIND))
+					if(!has_trait(TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 

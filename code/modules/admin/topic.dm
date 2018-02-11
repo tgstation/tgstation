@@ -430,9 +430,6 @@
 			if("Yes")
 				delmob = 1
 
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
-
 		switch(href_list["simplemake"])
 			if("observer")
 				M.change_mob_type( /mob/dead/observer , null, null, delmob )
@@ -449,7 +446,10 @@
 			if("larva")
 				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")
-				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				var/posttransformoutfit = usr.client.robust_dress_shop()
+				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+				if(posttransformoutfit && istype(newmob))
+					newmob.equipOutfit(posttransformoutfit)
 			if("slime")
 				M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
 			if("monkey")
@@ -482,6 +482,8 @@
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 
 
 	/////////////////////////////////////new ban stuff
@@ -779,7 +781,7 @@
 		dat += "<tr bgcolor='eeeeee'><th colspan='5'><a href='?src=[REF(src)];[HrefToken()];jobban3=ghostroles;jobban4=[REF(M)]'>Ghost Roles</a></th></tr><tr align='center'>"
 
 		//pAI
-		if(jobban_isbanned(M, "pAI"))
+		if(jobban_isbanned(M, ROLE_PAI))
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=pAI;jobban4=[REF(M)]'><font color=red>pAI</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=pAI;jobban4=[REF(M)]'>pAI</a></td>"
@@ -814,63 +816,67 @@
 		dat += "</tr></table>"
 
 	//Antagonist (Orange)
-		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
+		var/isbanned_dept = jobban_isbanned(M, ROLE_SYNDICATE)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a></th></tr><tr align='center'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=[REF(src)];[HrefToken()];jobban3=Syndicate;jobban4=[REF(M)]'>Antagonist Positions</a> | "
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=teamantags;jobban4=[REF(M)]'>Team Antagonists</a></th>"
+		dat += "<a href='?src=[REF(src)];[HrefToken()];jobban3=convertantags;jobban4=[REF(M)]'>Conversion Antagonists</a></th></tr><tr align='center'>"
 
 		//Traitor
-		if(jobban_isbanned(M, "traitor") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_TRAITOR) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=traitor;jobban4=[REF(M)]'><font color=red>Traitor</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];jobban3=traitor;jobban4=[REF(M)]'>Traitor</a></td>"
 
 		//Changeling
-		if(jobban_isbanned(M, "changeling") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_CHANGELING) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=changeling;jobban4=[REF(M)]'><font color=red>Changeling</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=changeling;jobban4=[REF(M)]'>Changeling</a></td>"
 
 		//Nuke Operative
-		if(jobban_isbanned(M, "operative") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=operative;jobban4=[REF(M)]'><font color=red>Nuke Operative</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=operative;jobban4=[REF(M)]'>Nuke Operative</a></td>"
 
 		//Revolutionary
-		if(jobban_isbanned(M, "revolutionary") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=revolutionary;jobban4=[REF(M)]'><font color=red>Revolutionary</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=revolutionary;jobban4=[REF(M)]'>Revolutionary</a></td>"
 
 		//Cultist
-		if(jobban_isbanned(M, "cultist") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_CULTIST) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cultist;jobban4=[REF(M)]'><font color=red>Cultist</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=cultist;jobban4=[REF(M)]'>Cultist</a></td>"
 
+		dat += "</tr><tr align='center'>" //So things dont get squished.
+
 		//Servant of Ratvar
-		if(jobban_isbanned(M, "servant of Ratvar") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_SERVANT_OF_RATVAR) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=servant of Ratvar;jobban4=[REF(M)]'><font color=red>Servant</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=servant of Ratvar;jobban4=[REF(M)]'>Servant</a></td>"
 
 		//Wizard
-		if(jobban_isbanned(M, "wizard") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_WIZARD) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=wizard;jobban4=[REF(M)]'><font color=red>Wizard</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=wizard;jobban4=[REF(M)]'>Wizard</a></td>"
 
 		//Abductor
-		if(jobban_isbanned(M, "abductor") || isbanned_dept)
+		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'><font color=red>Abductor</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'>Abductor</a></td>"
 
 		//Alien
-		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien candidate;jobban4=[REF(M)]'><font color=red>Alien</font></a></td>"
+		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'><font color=red>Alien</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien candidate;jobban4=[REF(M)]'>Alien</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
 
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
@@ -931,7 +937,11 @@
 						continue
 					joblist += jobPos
 			if("ghostroles")
-				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland")
+				joblist += list(ROLE_PAI, "posibrain", "drone", "deathsquad", "lavaland")
+			if("teamantags")
+				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN)
+			if("convertantags")
+				joblist += list(ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ALIEN)
 			else
 				joblist += href_list["jobban3"]
 
@@ -1228,7 +1238,7 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
+				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [reason]\nThis is a permanent ban.")
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
@@ -1878,10 +1888,24 @@
 
 		var/mob/M = locate(href_list["traitor"])
 		if(!ismob(M))
-			to_chat(usr, "This can only be used on instances of type /mob.")
+			var/datum/mind/D = M
+			if(!istype(D))
+				to_chat(usr, "This can only be used on instances of type /mob and /mind")
+				return
+			else
+				D.traitor_panel()
+		else
+			show_traitor_panel(M)
+	
+	else if(href_list["initmind"])
+		if(!check_rights(R_ADMIN))
 			return
-		show_traitor_panel(M)
-
+		var/mob/M = locate(href_list["initmind"])
+		if(!ismob(M) || M.mind)
+			to_chat(usr, "This can only be used on instances on mindless mobs")
+			return
+		M.mind_initialize()
+		
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return

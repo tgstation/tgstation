@@ -21,6 +21,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
 
 /*
  * Photo
@@ -39,6 +40,13 @@
 	var/blueprints = 0	//Does it include the blueprints?
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
 
+/obj/item/photo/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
+	if (user.gender == MALE)
+		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
+	else if (user.gender == FEMALE)
+		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+	return OXYLOSS
 
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -116,13 +124,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = TRUE
 	var/blueprints = 0	//are blueprints visible in the current photo being created?
 	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
 	var/see_ghosts = 0 //for the spoop of it
+	var/obj/item/disk/holodisk/disk
 
 
 /obj/item/device/camera/CheckParts(list/parts_list)
@@ -181,8 +190,24 @@
 		qdel(I)
 		pictures_left = pictures_max
 		return
+	if(istype(I, /obj/item/disk/holodisk))
+		if (!disk)
+			if(!user.transferItemToLoc(I, src))
+				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>You slide [I] into the back of [src].</span>")
+			disk = I
+		else
+			to_chat(user, "<span class='warning'>There's already a disk inside [src].</span>")
+		return TRUE //no afterattack
 	..()
 
+/obj/item/device/camera/attack_self(mob/user)
+	if(!disk)
+		return
+	to_chat(user, "<span class='notice'>You eject [disk] out the back of [src].</span>")
+	user.put_in_hands(disk)
+	disk = null
 
 /obj/item/device/camera/examine(mob/user)
 	..()
@@ -190,7 +215,7 @@
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
-	var/atoms[] = list()
+	var/list/atoms = list()
 	for(var/turf/T in turfs)
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
@@ -203,27 +228,19 @@
 					continue
 			atoms.Add(A)
 
-	var/list/sorted = list()
-	var/j
-	for(var/i = 1 to atoms.len)
-		var/atom/c = atoms[i]
-		for(j = sorted.len, j > 0, --j)
-			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
-				break
-		sorted.Insert(j+1, c)
+	var/list/sorted = sortTim(atoms,/proc/cmp_atom_layer_asc)
 
 	var/icon/res = icon('icons/effects/96x96.dmi', "")
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
+		var/icon/img = getFlatIcon(A, no_anim = TRUE)
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.lying)
 				img.Turn(L.lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = world.icon_size * (A.x - center.x) + A.pixel_x + 33
+		var/offY = world.icon_size * (A.y - center.y) + A.pixel_y + 33
 		if(ismovableatom(A))
 			var/atom/movable/AM = A
 			offX += AM.step_x
@@ -235,7 +252,9 @@
 			blueprints = 1
 
 	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		var/area/A = T.loc
+		if(A.icon_state)//There's actually something to blend in.
+			res.Blend(getFlatIcon(A,no_anim = TRUE), blendMode2iconMode(A.blend_mode), world.icon_size * (T.x - center.x) + 33, world.icon_size * (T.y - center.y) + 33)
 
 	return res
 
@@ -435,13 +454,24 @@
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
+	if (disk)
+		if(ismob(target))
+			if (disk.record)
+				QDEL_NULL(disk.record)
 
-	captureimage(target, user, flag)
+			disk.record = new
+			var/mob/M = target
+			disk.record.caller_name = M.name
+			disk.record.set_caller_image(M)
+		else 
+			return
+	else
+		captureimage(target, user, flag)
+		pictures_left--
+		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
-	pictures_left--
-	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = "camera_off"
 	on = FALSE
 	addtimer(CALLBACK(src, .proc/cooldown), 64)
@@ -579,11 +609,10 @@
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
-		deconstruct()
+			deconstruct()
 		return
 
 	else if(istype(I, /obj/item/photo))

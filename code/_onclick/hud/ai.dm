@@ -162,7 +162,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/S = usr
-	S.sensor_mode()
+	S.toggle_sensors()
 
 
 /datum/hud/ai

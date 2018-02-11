@@ -42,12 +42,13 @@
 	if(turfs.len > BP_MAX_ROOM_SIZE)
 		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
 		return
-	// This will fuck up shuttles that use the base area type but we need to fix those anyway
-	var/list/areas = list("New Area" = /area, "New Shuttle Area" = /area/shuttle/custom)
+	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turfs.len)
 		var/area/place = get_area(turfs[i])
 		if(blacklisted_areas[place.type])
 			continue
+		if(!place.requires_power || place.noteleport || place.hidden)
+			continue // No expanding powerless rooms etc
 		areas[place.name] = place
 	var/area_choice = input(creator, "Choose an area to expand or make a new area.", "Area Expansion") as null|anything in areas
 	area_choice = areas[area_choice]
@@ -58,7 +59,7 @@
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))
-		var/str = trim(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN))
+		var/str = stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN)
 		if(!str || !length(str)) //cancel
 			return
 		if(length(str) > 50)

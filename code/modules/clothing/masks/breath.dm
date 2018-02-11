@@ -14,13 +14,16 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
 
+obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is wrapping \the [src]'s tube around their neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
+
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		adjustmask(user)

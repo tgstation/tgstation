@@ -45,11 +45,13 @@
 
 	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return FALSE
+	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
 			to_chat(M, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
 		else
 			to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
+		M.buckling = null
 		return FALSE
 
 	if(M.pulledby && buckle_prevents_pull)
@@ -58,6 +60,7 @@
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
 
+	M.buckling = null
 	M.buckled = src
 	M.setDir(dir)
 	buckled_mobs |= M

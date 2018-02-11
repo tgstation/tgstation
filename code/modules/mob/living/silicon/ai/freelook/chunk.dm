@@ -60,9 +60,6 @@
 // The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 
 /datum/camerachunk/proc/update()
-
-	set background = BACKGROUND_ENABLED
-
 	var/list/newVisibleTurfs = list()
 
 	for(var/camera in cameras)

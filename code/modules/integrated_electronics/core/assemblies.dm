@@ -24,7 +24,7 @@
 	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src,be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
 
 /obj/item/device/electronic_assembly/Initialize()
@@ -38,6 +38,7 @@
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
+	check_pulling()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -82,7 +83,7 @@
 		if(!circuit.removable)
 			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -100,7 +101,7 @@
 		if(circuit.removable)
 			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
@@ -109,7 +110,7 @@
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=assembly-[REF(src)];size=655x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/electronic_assembly/Topic(href, href_list)
 	if(..())
@@ -376,6 +377,13 @@
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
 
+/obj/item/device/electronic_assembly/stop_pulling()
+	..()
+	for(var/I in assembly_components)
+		var/obj/item/integrated_circuit/IC = I
+		IC.stop_pulling()
+
+
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/device/electronic_assembly/proc/get_object()
@@ -393,8 +401,7 @@
 	return acting_object.drop_location()
 
 /obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
-	name = "type-a electronic assembly"
-
+  name = "type-a electronic assembly"
 
 /obj/item/device/electronic_assembly/calc
 	name = "type-b electronic assembly"
@@ -484,7 +491,7 @@
 	name = "electronic drone"
 	icon_state = "setup_drone"
 	desc = "It's a case, for building mobile electronics with."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
 
