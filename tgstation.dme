@@ -394,6 +394,7 @@
 #include "code\datums\martial\boxing.dm"
 #include "code\datums\martial\cqc.dm"
 #include "code\datums\martial\krav_maga.dm"
+#include "code\datums\martial\monk.dm"
 #include "code\datums\martial\plasma_fist.dm"
 #include "code\datums\martial\psychotic_brawl.dm"
 #include "code\datums\martial\sleeping_carp.dm"

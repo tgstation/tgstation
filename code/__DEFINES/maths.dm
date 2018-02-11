@@ -91,6 +91,9 @@
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
+// Real modulus that handles decimals
+#define ROLL_DICE(amt, faces) (rand(0, (faces-1)*amt) + amt)
+
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)
