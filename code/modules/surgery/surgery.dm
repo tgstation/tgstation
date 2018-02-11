@@ -42,7 +42,7 @@
 	if(step_in_progress)
 		return 1
 
-	try_to_fail = FALSE
+	var/try_to_fail = FALSE
 	if(intent == INTENT_DISARM)
 		try_to_fail = TRUE
 
