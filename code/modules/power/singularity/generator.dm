@@ -12,7 +12,7 @@
 	// You can buckle someone to the singularity generator, then start the engine. Fun!
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	buckle_requires_restraints = TRUE
+	buckle_restrictions = BUCKLE_REQUIRES_RESTRAINT
 
 	var/energy = 0
 	var/creation_type = /obj/singularity
