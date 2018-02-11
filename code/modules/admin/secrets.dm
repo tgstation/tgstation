@@ -60,6 +60,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=super_onlyone'>There can only be one! WITH SUPERMATTER CLAYMORES!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
@@ -535,6 +536,13 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
 			usr.client.only_one()
+			sound_to_playing_players('sound/misc/highlander.ogg')
+
+		if("super_onlyone")
+			if(!check_rights(R_FUN))
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
+			usr.client.only_one(super = TRUE)
 			sound_to_playing_players('sound/misc/highlander.ogg')
 
 		if("delayed_onlyone")

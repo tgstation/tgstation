@@ -1,6 +1,6 @@
 /datum/antagonist/highlander
 	name = "highlander"
-	var/obj/item/claymore/highlander/sword
+	var/swordtype = /obj/item/claymore/highlander
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 
@@ -63,7 +63,7 @@
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	sword = new(H)
+	var/obj/item/claymore/highlander/sword = new swordtype(H)
 	if(!GLOB.highlander)
 		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
@@ -75,3 +75,9 @@
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
 	antiwelder.icon_state = "bloodhand_right"
 	H.put_in_hands(antiwelder)
+
+/datum/antagonist/highlander/supermatter
+	name = "highlander"
+	swordtype = /obj/item/claymore/highlander/supermatter
+	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
