@@ -145,12 +145,15 @@
 
 /obj/item/hand/attackby(obj/O, mob/user)
 	if(cards.len == 1 && istype(O, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		var/datum/playingcard/P = cards[1]
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
-		if(!cardtext)
+		if(!cardtext || !Adjacent(user))
 			return
 		P.name = cardtext
 		blank = 0
