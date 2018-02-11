@@ -244,7 +244,7 @@
 		return
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
-	var/obj/item/I = L.get_active_held_item()
+	var/obj/item/I
 	switch(action)
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
