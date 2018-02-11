@@ -39,6 +39,9 @@
 	if(!target.mind)
 		user.visible_message("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind...")
 		return FALSE
+	if(target.isloyal())
+		user.visible_message("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")
+		return FALSE
 	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
 	var/datum/objective/brainwashing/brainwash_objective = new(objective)
