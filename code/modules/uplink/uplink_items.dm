@@ -884,6 +884,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor")
 	cost = 5
 
 /datum/uplink_item/device_tools/military_belt
