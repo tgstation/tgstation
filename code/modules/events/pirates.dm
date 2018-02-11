@@ -6,7 +6,7 @@
 	weight = 8
 	max_occurrences = 1
 	min_players = 10
-	earliest_start = 30 MINUTES
+	earliest_start = 18000 //30 minutes
 	gamemode_blacklist = list("nuclear")
 
 /datum/round_event/pirates
@@ -199,7 +199,7 @@
 	name = "pirate shuttle"
 	id = "pirateship"
 	var/engines_cooling = FALSE
-	var/engine_cooldown = 3 MINUTES
+	var/engine_cooldown = 1800 //3 minutes
 
 /obj/docking_port/mobile/pirate/getStatusText()
 	. = ..()
