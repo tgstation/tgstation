@@ -6,7 +6,7 @@
 	weight = 4
 	min_players = 15
 	max_occurrences = 3
-	earliest_start = 25 MINUTES
+	earliest_start = 15000 //25 minutes
 
 /datum/round_event/meteor_wave
 	startWhen		= 6
@@ -58,7 +58,7 @@
 	weight = 5
 	min_players = 20
 	max_occurrences = 3
-	earliest_start = 35 MINUTES
+	earliest_start = 21000 //35 minutes
 
 /datum/round_event/meteor_wave/threatening
 	wave_name = "threatening"
@@ -69,7 +69,7 @@
 	weight = 7
 	min_players = 25
 	max_occurrences = 3
-	earliest_start = 45 MINUTES
+	earliest_start = 27000 //45 minutes
 
 /datum/round_event/meteor_wave/catastrophic
 	wave_name = "catastrophic"
