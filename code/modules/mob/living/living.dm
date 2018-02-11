@@ -1048,30 +1048,34 @@
 	..()
 	update_z(new_z)
 
-/mob/living/MouseDrop(mob/over)
-	. = ..()
-	var/mob/living/user = usr
-	if(!istype(over) || !istype(user))
-		return
-	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
-		return
-	if(can_be_held)
-		mob_try_pickup(over)
-
 /mob/living/proc/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/holder = src.setup_mob_holder()
+	if(!holder) return
+	drop_all_held_items()
+	L.put_in_hands(holder)
 	return
 
+/mob/living/proc/setup_mob_holder()
+	..()
+
 /mob/living/proc/mob_try_pickup(mob/living/user)
-	if(!ishuman(user))
-		return
+	if(!ishuman(user) || !src.Adjacent(user) || !user.canUseTopic(src) || !can_be_held)
+		return FALSE
 	if(user.get_active_held_item())
-		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(buckled)
 		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
 		return FALSE
-	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
+	visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
+					"<span class='userdanger'>[user] starts picking you up!</span>")
 	if(!do_after(user, 20, target = src))
 		return FALSE
+	visible_message("<span class='warning'>[user] picks up [src]!</span>", \
+					"<span class='userdanger'>[user] picks you up!</span>")
+	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 	mob_pickup(user)
 	return TRUE
+
+/mob/living/AltClick(mob/user)
+	mob_try_pickup(user)
+	..()
