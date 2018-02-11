@@ -64,12 +64,6 @@
 	material = WOOD
 	var/drop_amount = 3
 
-/obj/structure/barricade/wooden/snowed
-	name = "crude plank barricade"
-	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
-	icon_state = "woodenbarricade-snow"
-	max_integrity = 125
-
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a crude assortment of planks."
@@ -141,8 +135,8 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
 
-/obj/item/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	toggle_mode(user)
 

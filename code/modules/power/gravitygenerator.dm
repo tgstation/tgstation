@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	power_channel = ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
-	interact_offline = 1
+	interact_offline = TRUE
 	var/on = TRUE
 	var/breaker = 1
 	var/list/parts = list()

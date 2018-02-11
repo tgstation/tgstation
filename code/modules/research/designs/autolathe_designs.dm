@@ -814,6 +814,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
 	build_path = /obj/item/pet_carrier
+	category = list("initial", "Misc")
 
 /datum/design/miniature_power_cell
 	name = "Light Fixture Battery"
