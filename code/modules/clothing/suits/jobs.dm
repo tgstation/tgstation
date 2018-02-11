@@ -76,6 +76,27 @@
 	allowed = list(/obj/item/kitchen)
 	togglename = "sleeves"
 
+/obj/item/clothing/suit/toggle/chef/equipped(mob/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(slot == slot_wear_suit)
+		var/mob/living/carbon/human/H = user
+		if (istype(H.get_item_by_slot(slot_head), /obj/item/clothing/head/chefhat))
+			to_chat(user,"<span class='boldannounce'>As you don the cook's uniform, you recall your teachings from culinary school.</span>")
+			var/datum/martial_art/cqc/style = new
+			style.teach(H,TRUE)
+
+/obj/item/clothing/suit/toggle/chef/dropped(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_wear_suit) == src && istype(H.mind.martial_art, /datum/martial_art/cqc))
+		to_chat(user,"<span class='boldannounce'>Having removed the cook's uniform, you struggle to recall how your hands were supposed to move.</span>")
+		var/datum/martial_art/cqc/style = H.mind.martial_art
+		style.remove(H)
+
 //Cook
 /obj/item/clothing/suit/apron/chef
 	name = "cook's apron"
@@ -85,6 +106,28 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/kitchen)
+
+/obj/item/clothing/suit/apron/chef/equipped(mob/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(slot == slot_wear_suit)
+		var/mob/living/carbon/human/H = user
+		if(H.mind && (H.mind.assigned_role == "Cook"))
+			if (istype(H.get_item_by_slot(slot_head), /obj/item/clothing/head/chefhat))
+				to_chat(user,"<span class='boldannounce'>As you don the cook's uniform, you recall your teachings from culinary school.</span>")
+				var/datum/martial_art/cqc/style = new
+				style.teach(H,TRUE)
+
+/obj/item/clothing/suit/apron/chef/dropped(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_wear_suit) == src && istype(H.mind.martial_art, /datum/martial_art/cqc))
+		to_chat(user,"<span class='boldannounce'>Having removed the cook's uniform, you struggle to recall how your hands were supposed to move.</span>")
+		var/datum/martial_art/cqc/style = H.mind.martial_art
+		style.remove(H)
 
 //Detective
 /obj/item/clothing/suit/det_suit
