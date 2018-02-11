@@ -7,8 +7,8 @@
 
 /datum/martial_art/monk
 	name = "Monk"
-	var/current_exp = 0
-	var/next_level_exp = 50
+	var/current_exp = 100
+	var/next_level_exp = 200
 	var/static/exp_slope = 10.5
 	var/current_level = 1
 	var/level_cap = 20
@@ -19,6 +19,8 @@
 	var/ki_level = 0
 	var/cleave_level = 0
 	var/circle_kick = FALSE
+	var/diamond_body = FALSE
+	var/purity_of_body = FALSE
 
 	var/list/available_actions = list()
 	var/datum/action/monk_rest/monk_rest = new/datum/action/monk_rest()
@@ -34,12 +36,23 @@
 		to_chat(H, "<span class = 'danger'>This technique becomes more powerful the more you use it.</span>")
 		to_chat(H, "<span class = 'danger'>Your power level will increase from 1 to 20, gaining new abilities and growing stronger the more you train.</span>")
 		to_chat(H, "<span class = 'danger'>Your abilities have a use limit, before you need to rest to regain your strength.</span>")
-
+		START_PROCESSING(SSfastprocess, src)
 /datum/martial_art/monk/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You fprget the ways of a Monk...</span>")
 	stunning_fist.Remove(H)
 	quivering_palm.Remove(H)
 	monk_rest.Remove(H)
+	STOP_PROCESSING(SSfastprocess, src)
+
+/datum/martial_art/monk/process()
+	..()
+	if(diamond_body)
+		owner.reagents.remove_all_type(/datum/reagent/toxin, 30)
+	if(purity_of_body)
+		if(owner.viruses && owner.viruses.len)
+			for(var/V in owner.viruses)
+				var/datum/disease/D = V
+				D.cure()
 
 /datum/martial_art/monk/proc/do_level_up()
 	if(current_level % 4 == 0)
@@ -53,8 +66,9 @@
 			to_chat(owner, "<span class = 'danger'>Your Ki has begun to develop, probing at the armor of your foes.</span>")
 			ki_level = 50
 		if(5)
-			to_chat(owner, "<span class = 'danger'>You feel more confident in your strikes.</span>")
+			to_chat(owner, "<span class = 'danger'>You feel more confident in your strikes, and your body is pure.</span>")
 			flurry_of_blows_penalty = -1
+			purity_of_body = TRUE
 		if(7)
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
 			stunning_fist.max_uses = 7
@@ -68,8 +82,9 @@
 			to_chat(owner, "<span class = 'danger'>Your Ki helps you seek the holes in enemy armor.</span>")
 			ki_level = 75
 		if(11)
-			to_chat(owner, "<span class = 'danger'>You feel confident enough to strike more and harder.</span>")
+			to_chat(owner, "<span class = 'danger'>You feel confident enough to strike more and harder, and use this against toxins in your body.</span>")
 			attacks_w_flurry = 3
+			diamond_body = TRUE
 		if(12)
 			to_chat(owner, "<span class = 'danger'>You now use a circle kick to extend your attacks to other foes in combat.</span>")
 			circle_kick = TRUE
@@ -108,19 +123,15 @@
 	if(current_exp >= next_level_exp)
 		current_level++
 		var/next_level = current_level + 1
-		next_level_exp = (next_level^2-next_level) * exp_slope
+		next_level_exp = next_level*100
 		do_level_up()
 		to_chat(owner, "<span class = 'danger'>You feel more confident in your powers.</span>")
 
-/datum/martial_art/monk/proc/trigger_cleave(var/mob/living/carbon/human/A, surrounding_mobs, use_cleave)
-	switch(use_cleave)
-
 /datum/martial_art/monk/proc/do_attack(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D, use_cleave, use_circle, surrounding_mobs)
+	var/picked_hit_type = pick("punched")
 	switch(picked_hit_type)
 		if("punched")
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		if("kicked")
-			A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	var/atr = attack_roll(D, flurry_of_blows_penalty)
 	if(atr)
 		var/old_stat = D.stat
@@ -161,11 +172,10 @@
 /datum/martial_art/monk/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	var/picked_hit_type = pick("punched", "kicked")
 	var/list/surrounding_mobs
 	if(cleave_level || circle_kick)
 		surrounding_mobs = list()
-		for(var/mob/living/human/H in range(1, A))
+		for(var/mob/living/carbon/human/H in range(1, A))
 			surrounding_mobs += H
 	for(var/i in 1 to attacks_w_flurry)
 		do_attack(A, D, cleave_level, circle_kick, surrounding_mobs)
@@ -239,9 +249,9 @@
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
-	owner.Unconscious(100)
-	to_chat(owner, "<span class='warning'>You fall into a meditative sleep...</span>")
 	var/mob/living/carbon/human/H = owner
+	H.AdjustUnconscious(200)
+	to_chat(H, "<span class='warning'>You fall into a meditative sleep...</span>")
 	var/datum/martial_art/monk/MA = H.mind.martial_art
 	for(var/ME in MA.available_actions)
 		var/datum/action/monk/M = ME
