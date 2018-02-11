@@ -132,7 +132,7 @@
 	..()
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/user)
+/obj/structure/urinal/attack_self(mob/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
