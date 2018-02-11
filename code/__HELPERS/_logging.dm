@@ -30,24 +30,18 @@
 	SEND_TEXT(world.log, text)
 #endif
 
-/proc/log_admin(text)
+/proc/write_admin_log(text, private)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_admin))
-		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMIN: [text]")
-
-//Items using this proc are stripped from public logs - use with caution
-/proc/log_admin_private(text)
-	GLOB.admin_log.Add(text)
-	if (CONFIG_GET(flag/log_admin))
-		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMINPRIVATE: [text]")
+		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMIN[private ? "PRIVATE" : null]: [text]")
 
 /proc/log_adminsay(text)
 	if (CONFIG_GET(flag/log_adminchat))
-		log_admin_private("ASAY: [text]")
+		write_admin_log("ASAY: [text]", TRUE)
 
 /proc/log_dsay(text)
 	if (CONFIG_GET(flag/log_adminchat))
-		log_admin("DSAY: [text]")
+		write_admin_log("DSAY: [text]", FALSE)
 
 /proc/log_game(text)
 	if (CONFIG_GET(flag/log_game))

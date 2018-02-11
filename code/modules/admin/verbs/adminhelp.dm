@@ -210,11 +210,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	return ..()
 
-/datum/admin_help/proc/AddInteraction(formatted_message)
+/datum/admin_help/proc/AddInteraction(in_game_formatted_message, log_formatted_message)	//TODO: use log_formatted_message
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2irc(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
-	_interactions += "[time_stamp()]: [formatted_message]"
+	_interactions += "[time_stamp()]: [in_game_formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -536,28 +536,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			return
 
 	GLOB.ahelp_tickets.BrowseTickets(browse_to)
-
-//
-// LOGGING
-//
-
-//Use this proc when an admin takes action that may be related to an open ticket on what
-//what can be a client, ckey, or mob
-/proc/admin_ticket_log(what, message)
-	var/client/C
-	var/mob/Mob = what
-	if(istype(Mob))
-		C = Mob.client
-	else
-		C = what
-	if(istype(C) && C.current_ticket)
-		C.current_ticket.AddInteraction(message)
-		return C.current_ticket
-	if(istext(what))	//ckey
-		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
-		if(AH)
-			AH.AddInteraction(message)
-			return AH
 
 //
 // HELPER PROCS
