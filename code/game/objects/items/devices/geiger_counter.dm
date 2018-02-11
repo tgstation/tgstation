@@ -119,6 +119,7 @@
 	loop.start()
 
 /obj/item/device/geiger_counter/rad_act(amount)
+	. = ..()
 	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
 		return
 	current_tick_amount += amount
@@ -182,7 +183,7 @@
 		return ..()
 
 /obj/item/device/geiger_counter/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return ..()
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")
@@ -199,6 +200,20 @@
 		return 0
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
+
+/obj/item/device/geiger_counter/cyborg
+	var/datum/component/mobhook
+
+/obj/item/device/geiger_counter/cyborg/equipped(mob/user)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_RAD_ACT), CALLBACK(src, /atom.proc/rad_act))
+
+/obj/item/device/geiger_counter/cyborg/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE
