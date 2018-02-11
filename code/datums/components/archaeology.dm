@@ -27,7 +27,7 @@
 	if(!isturf(user.loc))
 		return
 
-	if(istype(I, /obj/item/shovel) || istype(I, /obj/item/pickaxe))
+	if(I.tool_behaviour == TOOL_SHOVEL || I.tool_behaviour == TOOL_MINING)
 		to_chat(user, "<span class='notice'>You start digging...</span>")
 
 		if(I.use_tool(parent, user, 40, volume=50))

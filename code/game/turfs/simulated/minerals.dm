@@ -51,7 +51,7 @@
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	if (istype(I, /obj/item/pickaxe))
+	if(I.tool_behaviour == TOOL_MINING)
 		var/turf/T = user.loc
 		if (!isturf(T))
 			return
@@ -98,14 +98,14 @@
 	..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		var/obj/item/I = H.is_holding_item_of_type(/obj/item/pickaxe)
+		var/obj/item/I = H.is_holding_tool_quality(TOOL_MINING)
 		if(I)
-			attackby(I,H)
+			attackby(I, H)
 		return
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active, /obj/item/pickaxe))
-			attackby(R.module_active,R)
+		if(R.module_active && R.module_active.tool_behaviour == TOOL_MINING)
+			attackby(R.module_active, R)
 			return
 	else
 		return
