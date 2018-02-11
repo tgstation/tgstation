@@ -1206,7 +1206,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/cqc_manual
 	name = "CQC Manual"
 	desc = "Helps you prepare for working under siege."
-	cost = 8
+	cost = 13
 	item = /obj/item/cqc_manual
 	restricted_roles = list("Chef")
 
