@@ -8,9 +8,10 @@
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
-/obj/structure/punching_bag/attack_hand(mob/user as mob)
-		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+/obj/structure/punching_bag/attack_hand(mob/living/user)
+	flick("[icon_state]2", src)
+	playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+	user.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/stacklifter
 	name = "Weight Machine"
@@ -49,6 +50,7 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, finishmessage)
+		user.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -94,3 +96,4 @@
 		icon_state = "fitnessweight"
 		cut_overlay(swole_overlay)
 		to_chat(user, "[finishmessage]")
+		user.apply_status_effect(STATUS_EFFECT_EXERCISED)

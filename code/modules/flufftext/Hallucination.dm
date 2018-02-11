@@ -1114,7 +1114,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
 	target.SetKnockdown(0)
-	target.silent = 0
+	target.silent = FALSE
 	qdel(src)
 
 /datum/hallucination/fire
