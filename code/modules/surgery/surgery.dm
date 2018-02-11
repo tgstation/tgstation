@@ -38,13 +38,17 @@
 	// put special restrictions here
 	return 1
 
-/datum/surgery/proc/next_step(mob/user)
+/datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
 		return 1
 
+	try_to_fail = FALSE
+	if(intent == INTENT_DISARM)
+		try_to_fail = TRUE
+
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
-		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src))
+		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src, try_to_fail))
 			return 1
 	return 0
 

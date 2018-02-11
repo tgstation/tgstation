@@ -8,7 +8,7 @@
 	var/repeatable = 0				//does this step may be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 
 
-/datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = 0
 	if(accept_hand)
 		if(!tool)
@@ -27,7 +27,7 @@
 	if(success)
 		if(target_zone == surgery.location)
 			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
-				initiate(user, target, target_zone, tool, surgery)
+				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 				return 1
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
@@ -48,7 +48,7 @@
 	return 0
 
 
-/datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = 1
 
 	var/speed_mod = 1
@@ -68,7 +68,7 @@
 			prob_chance = implements[implement_type]
 		prob_chance *= surgery.get_propability_multiplier()
 
-		if(prob(prob_chance) || iscyborg(user))
+		if((prob(prob_chance) || iscyborg(user)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
 		else
