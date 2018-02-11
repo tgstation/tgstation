@@ -142,7 +142,7 @@
 			return
 		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
 		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
-		if(!Adjacent(user))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"

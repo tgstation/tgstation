@@ -1051,7 +1051,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if (!in_range(src, usr) && loc != usr)
+			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			scribble_page = curr_page
 			scribble = s

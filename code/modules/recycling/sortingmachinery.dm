@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
-		if(!Adjacent(user))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
@@ -123,7 +123,7 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
-		if(!Adjacent(user))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")

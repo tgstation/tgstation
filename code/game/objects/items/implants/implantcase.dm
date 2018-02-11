@@ -31,7 +31,7 @@
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)
 			return
-		if(!in_range(src, user) && loc != user)
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(t)
 			name = "implant case - '[t]'"

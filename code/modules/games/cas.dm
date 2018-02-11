@@ -146,7 +146,7 @@
 			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
-		if(!cardtext || !Adjacent(user))
+		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
 		name = cardtext
 		buffertext = cardtext

@@ -153,7 +153,7 @@
 			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
-		if(!cardtext || !Adjacent(user))
+		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
 		P.name = cardtext
 		blank = 0

@@ -59,7 +59,7 @@
 			return
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
-		if(loc == user && user.stat == CONSCIOUS)
+		if(user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
 
