@@ -82,10 +82,7 @@
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
-	friend_buckle = FALSE //as hilarious as buckling someone else into a boa would be, no we can't have that
-	friend_unbuckle = FALSE
-	self_unbuckle = FALSE
-	self_buckle = FALSE
+	buckle_restrictions = CANT_BUCKLE_OTHER | CANT_UNBUCKLE_OTHER | CANT_BUCKLE_SELF | CANT_UNBUCKLE_SELF
 	gold_core_spawnable = NO_SPAWN
 	var/ambush_cooldown = 0
 	var/constrict_dmg_define = 10 //admins, set this for what you want the snake's constriction damage. don't set the one below or it'll reset when switching intents
@@ -127,7 +124,7 @@
 			buckle_mob(L, force = 1)
 			icon_state = "boa_constricting"
 			constricting = TRUE
-			layer = 4.21
+			layer = WALL_OBJ_LAYER
 			return
 	. = ..()
 
@@ -135,7 +132,7 @@
 	if(!buckled_mobs) //if the victim gets gibbed while in your grasp!
 		icon_state = "boa"
 		constricting = FALSE
-		layer = 4.1
+		layer = ABOVE_MOB_LAYER
 	for(var/mob/living/L in buckled_mobs)
 		if(constrict_dmg_current >= 1)
 			to_chat(L, "<span class='danger'>You're getting crushed by the immense pressure of the [src]!</span>")
@@ -144,7 +141,7 @@
 			unbuckle_mob(L, force = 1)
 			icon_state = "boa"
 			constricting = FALSE
-			layer = 4.1 //you might think this is not needed since it resets when the boa moves but if it doesn't move it could overlap any mob until it does
+			layer = ABOVE_MOB_LAYER //you might think this is not needed since it resets when the boa moves but if it doesn't move it could overlap any mob until it does
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/boa/Move(turf/NewLoc)
 	if(constricting)
@@ -160,7 +157,7 @@
 	if(stat)
 		unbuckle_all_mobs(force = 1)
 		constricting = FALSE
-		layer = 4.1
+		layer = ABOVE_MOB_LAYER
 		return
 
 /datum/action/innate/jungle
@@ -181,7 +178,7 @@
 		S.unbuckle_all_mobs(force = 1)
 		S.icon_state = "boa"
 		S.constricting = FALSE
-		S.layer = 4.1
+		S.layer = ABOVE_MOB_LAYER
 		S.visible_message("<span class='notice'>[S] releases it's victims.</span>", "<span class='notice'>We let our prey go.</span>")
 
 /datum/action/innate/jungle/constriction_intent

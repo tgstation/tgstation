@@ -131,7 +131,7 @@
 			if("Stake")
 				R.use(1)
 				can_buckle = TRUE
-				buckle_requires_restraints = TRUE
+				buckle_restrictions = BUCKLE_REQUIRES_RESTRAINT
 				to_chat(user, "<span class='italics'>You add a rod to \the [src].")
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16

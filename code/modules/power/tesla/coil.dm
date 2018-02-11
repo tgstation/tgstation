@@ -9,7 +9,7 @@
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	buckle_requires_restraints = TRUE
+	buckle_restrictions = BUCKLE_REQUIRES_RESTRAINT
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
@@ -101,7 +101,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	buckle_requires_restraints = TRUE
+	buckle_restrictions = BUCKLE_REQUIRES_RESTRAINT
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
