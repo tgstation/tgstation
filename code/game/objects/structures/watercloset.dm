@@ -132,7 +132,7 @@
 	..()
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
-/obj/structure/urinal/attack_self(mob/user)
+/obj/structure/urinal/attack_hand(mob/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -193,7 +193,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
-/obj/item/reagent_containers/food/urinalcake/attack_hand(mob/living/user)
+/obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>)
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
