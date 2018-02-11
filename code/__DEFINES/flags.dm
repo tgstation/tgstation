@@ -100,3 +100,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF 32 //acid stuck on it doesn't melt it.
 #define INDESTRUCTIBLE 64 //doesn't take damage
 #define FREEZE_PROOF 128 //can't be frozen
+
+
+//Buckling 'n shit
+
+#define CANT_BUCKLE_OTHER 1
+#define CANT_UNBUCKLE_OTHER 2
+#define CANT_BUCKLE_SELF 4
+#define CANT_UNBUCKLE_SELF 8
+#define BUCKLE_REQUIRES_RESTRAINT 16

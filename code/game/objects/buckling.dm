@@ -3,12 +3,8 @@
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
-	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_restrictions = NONE //Bitflag that can have various restrictions to buckling, for example, preventing you from unbuckling yourself
 	var/list/mob/living/buckled_mobs = null //list()
-	var/friend_buckle = TRUE //if someone else can buckle them
-	var/friend_unbuckle = TRUE //if someone else can unbuckle them
-	var/self_buckle = TRUE //if someone can buckle themselves
-	var/self_unbuckle = TRUE //if someone can unbuckle themselves
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
 
@@ -44,19 +40,23 @@
 	if(!istype(M))
 		return FALSE
 
-	if(!self_buckle && M == usr && !force)
+	if((buckle_restrictions & CANT_BUCKLE_SELF) && M == usr && !force)
 		to_chat(usr, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
 		return FALSE
 
-	if(!friend_buckle && M != usr && !force)
+	if((buckle_restrictions & CANT_BUCKLE_OTHER) && M != usr && !force)
 		to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
+		return FALSE
+
+	if((buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT) && !M.restrained()))
 		return FALSE
 
 	if(check_loc && M.loc != loc)
 		return FALSE
 
-	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
+	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || M == src)
 		return FALSE
+
 	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
@@ -94,11 +94,11 @@
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 
-		if(!self_unbuckle && buckled_mob == usr && !force)
+		if((buckle_restrictions & CANT_UNBUCKLE_SELF) && buckled_mob == usr && !force)
 			to_chat(usr, "<span class='danger'>You are unable to free yourself from [src]!</span>")
 			return FALSE
 
-		if(!friend_unbuckle && buckled_mob != usr && !force)
+		if((buckle_restrictions & CANT_BUCKLE_OTHER) && buckled_mob != usr && !force)
 			to_chat(usr, "<span class='warning'>You are unable to free [buckled_mob] from [src]!</span>")
 			return FALSE
 
