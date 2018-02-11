@@ -135,7 +135,6 @@
 /area/bridge)
 "aw" = (
 /obj/structure/table/reinforced,
-/obj/item/card/id/captains_spare,
 /obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /turf/open/floor/circuit/green,

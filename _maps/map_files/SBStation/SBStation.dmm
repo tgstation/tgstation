@@ -11123,7 +11123,6 @@
 "aAP" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
-/obj/item/card/id/captains_spare,
 /obj/item/lighter,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
