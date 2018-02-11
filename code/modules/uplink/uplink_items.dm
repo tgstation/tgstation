@@ -1203,6 +1203,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
+/datum/uplink_item/role_restricted/cqc_manual
+	name = "CQC Manual"
+	desc = "Helps you prepare for working under siege."
+	cost = 13
+	item = /obj/item/cqc_manual
+	restricted_roles = list("Chef")
+
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
 	desc = "A revolver that always fires at its user. \"Accidentally\" drop your weapon, then watch as the greedy corporate pigs blow their own brains all over the wall. \
