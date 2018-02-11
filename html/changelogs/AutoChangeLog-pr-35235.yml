@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Mining sentience upgrades now grant minebots an ID and radio."

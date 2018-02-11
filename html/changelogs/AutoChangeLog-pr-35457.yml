@@ -1,7 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "You can now win a fake cryptographic sequencer, perfect to go with your fake space suit!"
-  - tweak: "To login with an emag on the APC console you will now need to hit it with the emag.
-removed: Snowflake emagging implants is no more, Swipe it before install."
-  - refactor: "everything uses emag_act() now"
