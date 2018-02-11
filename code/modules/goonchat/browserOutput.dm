@@ -180,7 +180,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
-/proc/to_chat(target, message)
+/proc/to_chat(target, message, flag)
 	if(!target)
 		return
 
@@ -228,7 +228,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			continue
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
+		var/output_message = "[url_encode(url_encode(message))]"
+		if(flag)
+			output_message += "&[url_encode(flag)]"
+		C << output(output_message, "browseroutput:output")
 
 /proc/grab_client(target)
 	if(istype(target, /client))
