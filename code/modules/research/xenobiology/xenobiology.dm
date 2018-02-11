@@ -825,6 +825,26 @@
 	L.regenerate_icons()
 	qdel(src)
 
+/obj/item/slimepotion/slimeradio
+	name = "bluespace radio potion"
+	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+
+/obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
+	if(!ismob(M))
+		return
+	if(!isanimal(M)) //only works on animals that aren't player controlled
+		to_chat(user, "<span class='warning'>[M] is too complex for the potion!</span>")
+		return
+	if(M.stat)
+		to_chat(user, "<span class='warning'>[M] is dead!</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You feed the potion to [M].</span>")
+	to_chat(M, "<span class='notice'>Your mind tingles as you are fed the potion. You can hear radio waves now!</span>")
+	var/obj/item/implant/radio/slime/imp = new(src)
+	imp.implant(M, user)
+	qdel(src)
+
 ////////Adamantine Golem stuff I dunno where else to put it
 
 // This will eventually be removed.
