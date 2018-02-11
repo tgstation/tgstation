@@ -98,7 +98,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				if(cropMap)
 					continue
 				else
-					world.maxz = zcrd //create a new z_level if needed
+					while (zcrd > world.maxz) //create a new z_level if needed
+						world.incrementMaxZ()
 				if(!no_changeturf)
 					WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 

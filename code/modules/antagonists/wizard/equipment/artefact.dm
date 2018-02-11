@@ -157,7 +157,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(!istype(user) || !user.canUseTopic(M,1))
+	if(!istype(user) || !user.canUseTopic(M, BE_CLOSE))
 		return
 
 	if(M.stat != DEAD)
@@ -347,7 +347,7 @@
 	var/mob/living/carbon/last_user
 
 /obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
-	if(!user || QDELETED(src))
+	if(!user || QDELETED(src) || user.notransform)
 		on_cooldown = FALSE
 		return TRUE
 	return FALSE

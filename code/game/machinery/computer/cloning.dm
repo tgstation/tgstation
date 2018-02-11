@@ -72,6 +72,7 @@
 			continue	//how though?
 
 		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
+			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 			records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
@@ -434,7 +435,7 @@
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
-	if(iscarbon(mob_occupant))
+	if(ishuman(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 	if(isbrain(mob_occupant))

@@ -75,7 +75,7 @@
 	if(istype(I, /obj/item/crowbar))
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
@@ -159,13 +159,7 @@
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/screwdriver))
-		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
-		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 20*I.toolspeed, target = src))
-			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
-			exposed = !exposed
-	else if(exposed)
+	if(exposed)
 		if (hiddenitem)
 			to_chat(user, "<span class='warning'>There is already something in the drain enclosure.</span>")
 			return
@@ -177,6 +171,18 @@
 			return
 		hiddenitem = I
 		to_chat(user, "<span class='notice'>You place [I] into the drain enclosure.</span>")
+	else
+		return ..()
+
+/obj/structure/urinal/screwdriver_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
+	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
+	if(I.use_tool(src, user, 20))
+		user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!",
+			"<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>",
+			"<span class='italics'>You hear metal and squishing noises.</span>")
+		exposed = !exposed
+	return TRUE
 
 
 /obj/item/reagent_containers/food/urinalcake
@@ -186,6 +192,11 @@
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
+
+/obj/item/reagent_containers/food/urinalcake/attack_hand(mob/living/user)
+	user.visible_message("[user] squishes [src]!", "You squish [src].")
+	icon_state = "urinalcake_squish"
+	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
 /obj/machinery/shower
 	name = "shower"
@@ -242,19 +253,23 @@
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	if(istype(I, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
-		if(do_after(user, 50*I.toolspeed, target = src))
-			switch(watertemp)
-				if("normal")
-					watertemp = "freezing"
-				if("freezing")
-					watertemp = "boiling"
-				if("boiling")
-					watertemp = "normal"
-			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
-			log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
-			add_hiddenprint(user)
+	else
+		return ..()
+
+/obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
+	if(I.use_tool(src, user, 50))
+		switch(watertemp)
+			if("normal")
+				watertemp = "freezing"
+			if("freezing")
+				watertemp = "boiling"
+			if("boiling")
+				watertemp = "normal"
+		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [watertemp] temperature.</span>")
+		log_game("[key_name(user)] has wrenched a shower to [watertemp] at ([x],[y],[z])")
+		add_hiddenprint(user)
+	return TRUE
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
@@ -606,34 +621,24 @@
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
 		color = input(user,"","Choose Color",color) as color
-	else if(istype(W, /obj/item/screwdriver))
-		if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 50*W.toolspeed, target = src))
-				if(!anchored)
-					return
-				anchored = FALSE
-				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
-		else
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 50*W.toolspeed, target = src))
-				if(anchored)
-					return
-				anchored = TRUE
-				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
-	else if(istype(W, /obj/item/wirecutters))
-		if(!anchored)
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
-			if(do_after(user, 50*W.toolspeed, target = src))
-				if(anchored)
-					return
-				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
-				deconstruct()
 	else
-		. = ..()
+		return ..()
+
+/obj/structure/curtain/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 50)
+	return TRUE
+
+/obj/structure/curtain/wirecutter_act(mob/living/user, obj/item/I)
+	if(anchored)
+		return TRUE
+
+	user.visible_message("<span class='warning'>[user] cuts apart [src].</span>",
+		"<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
+	if(I.use_tool(src, user, 50, volume=100) && !anchored)
+		to_chat(user, "<span class='notice'>You cut apart [src].</span>")
+		deconstruct()
+
+	return TRUE
 
 
 /obj/structure/curtain/attack_hand(mob/user)
