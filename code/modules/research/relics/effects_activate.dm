@@ -113,3 +113,43 @@
 	if(prob(60))
 		A.visible_message("<span class='warning'>[A] falls apart!</span>")
 		qdel(src)
+
+/datum/relic_effect/activate/rcd
+	var/delay = 0
+
+/datum/relic_effect/activate/rcd/activate(obj/item/A,atom/target,mob/user)
+	if(!delay || A.do_after(user, delay, target))
+		if(!..())
+			return
+		rcd_act(A,target,user)
+
+/datum/relic_effect/activate/rcd/proc/rcd_act(obj/item/A,atom/target,mob/user)
+
+/datum/relic_effect/activate/rcd/wall_and_floor
+	var/turf/open/placed_floor = /turf/open/floor/plasteel
+	var/turf/closed/placed_wall = /turf/closed/wall
+
+/datum/relic_effect/activate/rcd/wall_and_floor/apply()
+	placed_floor = pick(subtypesof(/turf/open/floor) - typesof(/turf/open/floor/plating) - typesof(/turf/open/floor/holofloor) - /turf/open/floor/mineral)
+	placed_floor = pick(typesof(/turf/closed/wall) - subtypesof(/turf/closed/wall/mineral/titanium) - subtypesof(/turf/closed/wall/mineral/plastitanium) - /turf/closed/wall/mineral)
+	..()
+
+/datum/relic_effect/activate/rcd/wall_and_floor/rcd_act(obj/item/A,atom/target,mob/user)
+	var/turf/T = get_turf(target)
+	if(is_type(T,/turf/open/space))
+		T.PlaceOnTop(placed_floor)
+	else if(is_type(T,/turf/open) && !is_type(T,/turf/open/indestructible))
+		T.PlaceOnTop(placed_wall)
+
+/datum/relic_effect/activate/rcd/replace_floor
+	var/turf/open/placed_floor
+
+/datum/relic_effect/activate/rcd/replace_floor/apply()
+	placed_floor = pick(subtypesof(/turf/open/floor) - typesof(/turf/open/floor/plating) - typesof(/turf/open/floor/holofloor) - /turf/open/floor/mineral)
+	..()
+
+/datum/relic_effect/activate/rcd/replace_floor/rcd_act(obj/item/A,atom/target,mob/user)
+	var/turf/T = get_turf(target)
+	if(is_type(T,/turf/open/floor))
+		T.remove_tile(user,silent = TRUE)
+		T.ChangeTurf(placed_floor)
