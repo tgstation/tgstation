@@ -69550,10 +69550,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOF" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 2;
