@@ -482,17 +482,8 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/dead/new_player/M = new /mob/dead/new_player()
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		qdel(M)
-		return
-
+	var/mob/living/carbon/human/lobby/M = new(null, TRUE)
 	M.key = key
-//	M.Login()	//wat
-	return
-
-
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -999,3 +990,23 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/proc/LobbyStat()
+	if(!statpanel("Status"))
+		return
+	stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
+
+	if(SSticker.HasRoundStarted())
+		return
+
+	var/time_remaining = SSticker.GetTimeLeft()
+	if(time_remaining > 0)
+		stat(null, "Time To Start: [round(time_remaining/10)]s")
+	else if(time_remaining == -10)
+		stat(null, "Time To Start: DELAYED")
+	else
+		stat(null, "Time To Start: SOON")
+
+	stat(null, "Players: [SSticker.totalPlayers]")
+	if(client.holder)
+		stat(null, "Players Ready: [SSticker.totalPlayersReady]")

@@ -211,13 +211,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
-	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
-	var/eavesdrop_range = 0
-	if(eavesdropping_modes[message_mode])
-		eavesdrop_range = EAVESDROP_EXTRA_RANGE
-	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
-	var/list/the_dead = list()
+/mob/living/proc/GetListeners(range, obj/source, list/the_dead, mode_check)
+	if(!the_dead)
+		the_dead = list()
+	. = get_hearers_in_view(range, source)
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
@@ -225,12 +222,20 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue
 		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
-			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+			if(mode_check && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 				continue
 			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
-		listening |= M
+		. |= M
 		the_dead[M] = TRUE
+
+/mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
+	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
+	var/eavesdrop_range = 0
+	if(eavesdropping_modes[message_mode])
+		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/list/the_dead = list()
+	var/list/listening = GetListeners(message_range+eavesdrop_range, source, the_dead, eavesdropping_modes[message_mode])
 
 	var/eavesdropping
 	var/eavesrendered
@@ -245,7 +250,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+	
+	ShowSpeechBubble(message, listening, bubble_type)
 
+/mob/living/proc/ShowSpeechBubble(message, list/listening, bubble_type = bubble_icon)
+	if(!listening)
+		listening = GetListeners(6, src)
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)

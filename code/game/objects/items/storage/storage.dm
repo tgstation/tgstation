@@ -324,8 +324,8 @@
 /obj/item/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	if(!istype(W))
 		return 0
-	if(usr)
-		if(!usr.transferItemToLoc(W, src))
+	if(user)
+		if(!user.transferItemToLoc(W, src))
 			return 0
 	else
 		W.forceMove(src)
@@ -334,29 +334,29 @@
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
 	W.on_enter_storage(src)
-	if(usr)
-		if(usr.client && usr.s_active != src)
-			usr.client.screen -= W
-		if(usr.observers && usr.observers.len)
-			for(var/M in usr.observers)
+	if(user)
+		if(user.client && user.s_active != src)
+			user.client.screen -= W
+		if(user.observers && user.observers.len)
+			for(var/M in user.observers)
 				var/mob/dead/observe = M
 				if(observe.client && observe.s_active != src)
 					observe.client.screen -= W
 
-		add_fingerprint(usr)
+		add_fingerprint(user)
 		if(rustle_jimmies && !prevent_warning)
 			playsound(src.loc, "rustle", 50, 1, -5)
 
 		if(!prevent_warning)
-			for(var/mob/M in viewers(usr, null))
-				if(M == usr)
-					to_chat(usr, "<span class='notice'>You put [W] [preposition]to [src].</span>")
-				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+			for(var/mob/M in viewers(user, null))
+				if(M == user)
+					to_chat(user, "<span class='notice'>You put [W] [preposition]to [src].</span>")
+				else if(in_range(M, user)) //If someone is standing close enough, they can tell what it is...
+					M.show_message("<span class='notice'>[user] puts [W] [preposition]to [src].</span>", 1)
 				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+					M.show_message("<span class='notice'>[user] puts [W] [preposition]to [src].</span>", 1)
 
-		orient2hud(usr)
+		orient2hud(user)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
 	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt

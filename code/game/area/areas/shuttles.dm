@@ -165,3 +165,11 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+/area/shuttle/lobby
+	name = "Crew Shuttle"
+
+/area/shuttle/lobby/PlayAmbience()
+	return
+
+/area/shuttle/lobby/start_zone

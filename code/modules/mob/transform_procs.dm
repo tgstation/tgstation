@@ -309,7 +309,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/AIize()
-	if (notransform)
+	if (should_abandon_siliconization_due_to_no_transform && notransform)
 		return
 	for(var/t in bodyparts)
 		qdel(t)
@@ -317,7 +317,7 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if (should_abandon_siliconization_due_to_no_transform && notransform)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
@@ -358,7 +358,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if (notransform)
+	if (should_abandon_siliconization_due_to_no_transform && notransform)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)

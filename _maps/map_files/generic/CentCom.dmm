@@ -2076,7 +2076,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fX" = (
-/turf/closed/indestructible/riveted,
+/turf/open/space/basic,
 /area/start)
 "fY" = (
 /obj/effect/landmark/start/new_player,
@@ -13455,6 +13455,2634 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"MF" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MG" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MH" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MI" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MJ" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"MK" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"ML" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MM" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MN" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MO" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MP" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MQ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MR" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"MS" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MT" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"MU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"MV" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MW" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MX" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MY" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"MZ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Na" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/lobby)
+"Nb" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"Nc" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Nd" = (
+/obj/machinery/computer/lobby/poll,
+/turf/open/floor/plasteel/darkred/corner,
+/area/shuttle/lobby)
+"Ne" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Nf" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Ng" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Nh" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Ni" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/lobby/poll,
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"Nj" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Nk" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/corner,
+/area/shuttle/lobby/start_zone)
+"Nl" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nm" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nn" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/lobby/poll,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"No" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Np" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nq" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nr" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/lobby/poll,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Ns" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nt" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nu" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nv" = (
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/lobby/start_zone)
+"Nw" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/lobby/poll,
+/turf/open/floor/plasteel/darkgreen/corner{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Nx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Ny" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Nz" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"NA" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"NB" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"NC" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"ND" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"NE" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"NF" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"NG" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"NH" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"NI" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"NJ" = (
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NK" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NL" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NM" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NN" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NO" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NP" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NQ" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NR" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NS" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NT" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"NU" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"NV" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"NW" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"NX" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"NY" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"NZ" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 6
+	},
+/area/shuttle/lobby)
+"Oa" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ob" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Oc" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Od" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Oe" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"Og" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"Oh" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Oi" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Oj" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ok" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ol" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Om" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"On" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Oo" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Op" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Oq" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Or" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Os" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Ot" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Ou" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Ov" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Ow" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Oy" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Oz" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"OA" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"OB" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"OC" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"OD" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"OE" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"OF" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"OG" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"OH" = (
+/obj/machinery/computer/lobby/poll{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"OI" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"OJ" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"OK" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OL" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OM" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"ON" = (
+/obj/machinery/light,
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OO" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OP" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OQ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OR" = (
+/obj/machinery/light,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OS" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OT" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OU" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"OV" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"OW" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"OX" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"OY" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"OZ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Pa" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/darkred/corner,
+/area/shuttle/lobby)
+"Pb" = (
+/obj/machinery/computer/lobby/setup_character,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Pc" = (
+/obj/machinery/computer/lobby/setup_character,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Pd" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/lobby/setup_character,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 6
+	},
+/area/shuttle/lobby)
+"Pe" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/lobby)
+"Pf" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 6
+	},
+/area/shuttle/lobby)
+"Pg" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ph" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Pi" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Pj" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Pk" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Pl" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"Pm" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Pn" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Po" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Pp" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Pq" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Pr" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"Ps" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Pu" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Pv" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Pw" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Px" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Py" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Pz" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"PA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"PB" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"PC" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"PD" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"PE" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PF" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PG" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PH" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PI" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PJ" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PK" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PL" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PM" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PN" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"PO" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"PP" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PQ" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PR" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PS" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PT" = (
+/obj/structure/chair{
+	item_chair = null
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PU" = (
+/obj/structure/chair{
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PV" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PW" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PX" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PY" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"PZ" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qa" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qb" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Qc" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Qd" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Qe" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Qf" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Qg" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"Qh" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qi" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qj" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qk" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ql" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qm" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qn" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qo" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qp" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qq" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Qr" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"Qs" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qt" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qu" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qv" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qw" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qx" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qy" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Qz" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QA" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QB" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QC" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QD" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QE" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/computer/lobby/setup_character{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"QF" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"QG" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"QH" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"QI" = (
+/obj/structure/window/shuttle{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/docking_port/stationary{
+	dheight = 28;
+	dir = 8;
+	dwidth = 9;
+	height = 29;
+	id = "crew_shuttle";
+	name = "Crew Shuttle Dock";
+	width = 18
+	},
+/obj/docking_port/mobile/crew{
+	dheight = 28;
+	dir = 8;
+	dwidth = 9;
+	height = 29;
+	name = "Crew Shuttle";
+	width = 18
+	},
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"QJ" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"QK" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QL" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QM" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QN" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QO" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QP" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QQ" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QR" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QS" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QT" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"QU" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"QV" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QW" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QX" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QY" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"QZ" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ra" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rb" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rc" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rd" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Re" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rf" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rg" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rh" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Ri" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Rj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Rk" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Rl" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Rm" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"Rn" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ro" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rp" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rq" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rr" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rs" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rt" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ru" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rv" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rw" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Rx" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"Ry" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Rz" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RA" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RB" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RC" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RD" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RE" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RF" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RG" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RH" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RI" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RJ" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"RK" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"RL" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"RM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"RN" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"RO" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"RP" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"RQ" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RR" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RS" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RT" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RU" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RV" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RW" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RX" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RY" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"RZ" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sa" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"Sb" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sc" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sd" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Se" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sf" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sg" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sh" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Si" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sj" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sk" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sl" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Sn" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/computer/lobby/setup_character{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"So" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Sp" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"Sq" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"Sr" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Ss" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"St" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Su" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sv" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sw" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sx" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sy" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Sz" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"SA" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"SB" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"SC" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"SD" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"SE" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SF" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SG" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SH" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SI" = (
+/obj/machinery/light,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SJ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SK" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SL" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SM" = (
+/obj/machinery/light,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SN" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SO" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SP" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"SQ" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"SR" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"SS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"ST" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"SU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"SV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"SW" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"SX" = (
+/obj/machinery/computer/lobby/setup_character{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"SY" = (
+/obj/machinery/light,
+/obj/machinery/computer/lobby/setup_character{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 5
+	},
+/area/shuttle/lobby)
+"SZ" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"Ta" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 5
+	},
+/area/shuttle/lobby)
+"Tb" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Tc" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Td" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Te" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Tf" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Tg" = (
+/obj/machinery/door/poddoor/preopen/lobby,
+/turf/open/floor/light/lobby,
+/area/shuttle/lobby/start_zone)
+"Th" = (
+/obj/effect/landmark/lobby/hub_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ti" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Tj" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Tk" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Tl" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Tm" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"Tn" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Tp" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Tq" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Tr" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ts" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Tt" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Tu" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Tv" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Tw" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Tx" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Tz" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"TA" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"TB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"TC" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"TD" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"TE" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"TF" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"TG" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"TH" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"TI" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"TJ" = (
+/obj/machinery/requests_console/lobby,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"TK" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"TL" = (
+/obj/effect/landmark/lobby/wall_spawner,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TM" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TN" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TP" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TQ" = (
+/obj/structure/chair,
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TR" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TT" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TU" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TV" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"TW" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"TX" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"TY" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"TZ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"Ua" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Ub" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"Uc" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ud" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ue" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Uf" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Ug" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"Ui" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"Uj" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Uk" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ul" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Um" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Un" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Uo" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Up" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Uq" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ur" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Us" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Ut" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Uu" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Uv" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Uw" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Ux" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Uy" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Uz" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"UA" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"UB" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"UC" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"UD" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"UE" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"UF" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"UG" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"UH" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UI" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UJ" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UK" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UL" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UM" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UN" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UO" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UP" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UQ" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"UR" = (
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"US" = (
+/obj/structure/chair{
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"UT" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"UU" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"UV" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"UW" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"UX" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"UY" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"UZ" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"Va" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"Vb" = (
+/obj/effect/landmark/start/new_player,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"Vc" = (
+/obj/machinery/computer/lobby/observer{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 1
+	},
+/area/shuttle/lobby)
+"Vd" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Ve" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/corner{
+	dir = 4
+	},
+/area/shuttle/lobby/start_zone)
+"Vf" = (
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vg" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vh" = (
+/obj/machinery/light,
+/obj/machinery/computer/lobby/observer{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vi" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vj" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vk" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vl" = (
+/obj/machinery/light,
+/obj/machinery/computer/lobby/observer{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vm" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vn" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vo" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vp" = (
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vq" = (
+/obj/machinery/light,
+/obj/machinery/computer/lobby/observer{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/corner{
+	dir = 1
+	},
+/area/shuttle/lobby/start_zone)
+"Vr" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Vs" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Vt" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/lobby)
+"Vu" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Vv" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Vw" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"Vx" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"Vy" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"Vz" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VA" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VC" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VD" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VE" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VF" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VG" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"VH" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VI" = (
+/obj/machinery/door/airlock/shuttle{
+	locked = 1;
+	name = "Crew Shuttle Airlock";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/lobby)
+"VJ" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VK" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VL" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VM" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VN" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/lobby)
+"VO" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby)
+"VP" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/lobby)
+"VQ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/lobby)
+"VR" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"VS" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"VT" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"VU" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/lobby/start_zone)
+"VV" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"VW" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"VX" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"VY" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"VZ" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Wa" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Wb" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wc" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wd" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"We" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wf" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wg" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wh" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wi" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wj" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Wk" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Wl" = (
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkgreen,
+/area/shuttle/lobby/start_zone)
+"Wm" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wn" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wo" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/lobby)
+"Wp" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/computer/lobby/setup_character{
+	dir = 8
+	},
+/obj/effect/landmark/start/ready_player,
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/lobby/start_zone)
+"Wq" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"Wr" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	dir = 1;
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
+"Ws" = (
+/obj/effect/landmark/start/new_player,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 5
+	},
+/area/shuttle/lobby)
+"Wt" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 4
+	},
+/area/shuttle/lobby)
+"Wu" = (
+/obj/effect/landmark/start/new_player,
+/obj/structure/chair{
+	item_chair = null
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/lobby)
 
 (1,1,1) = {"
 aa
@@ -13545,7 +16173,7 @@ fX
 fX
 fX
 fX
-gu
+fX
 aa
 aa
 aa
@@ -15337,7 +17965,7 @@ fX
 fX
 fX
 fX
-fY
+fX
 fX
 fX
 fX
@@ -69972,16 +72600,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+MF
+MI
+MI
+QI
+MI
+MI
+MI
+MF
+MF
 aa
 aa
 aa
@@ -70229,16 +72857,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Pa
+PD
+Qg
+Qg
+Qg
+Qg
+PD
+SV
+MF
 aa
 aa
 aa
@@ -70486,16 +73114,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Pb
+NB
+VV
+VV
+VV
+VV
+St
+SW
+MI
 aa
 aa
 aa
@@ -70743,16 +73371,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MS
+Pb
+NB
+OE
+OE
+OE
+OE
+St
+SW
+MS
 aa
 aa
 aa
@@ -71000,16 +73628,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+OB
+Pd
+NB
+OE
+OE
+OE
+OE
+St
+SY
+OB
 aa
 aa
 aa
@@ -71253,24 +73881,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+MF
+MI
+MF
+MF
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+MF
+MF
+MI
+MF
+MF
 aa
 aa
 aa
@@ -71510,24 +74138,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Nd
+Wq
+NZ
+NE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+Ue
+Ws
+Wt
+UX
+MF
 aa
 aa
 aa
@@ -71767,24 +74395,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Ne
+NC
+NC
+NF
+OE
+OE
+VV
+VV
+VV
+VV
+OE
+OE
+VV
+NC
+NC
+UY
+MF
 aa
 aa
 aa
@@ -72024,24 +74652,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nf
+ND
+ND
+OE
+OE
+OE
+NC
+NC
+NC
+NC
+OE
+OE
+OE
+Ud
+Ud
+SZ
+MI
 aa
 aa
 aa
@@ -72281,24 +74909,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MJ
+Nf
+NE
+NE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+Ue
+Ue
+SZ
+Vy
 aa
 aa
 aa
@@ -72538,24 +75166,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nf
+VV
+VV
+NC
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+NC
+VV
+VV
+SZ
+MI
 aa
 aa
 aa
@@ -72795,24 +75423,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Ni
+Wr
+Oe
+OH
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+OE
+TI
+Oe
+Wu
+Vc
+MF
 aa
 aa
 aa
@@ -73052,24 +75680,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+MF
+MF
+MF
+OB
+Pl
+Pl
+Pl
+Pl
+Pl
+Pl
+Pl
+Pl
+OB
+MF
+MF
+MF
+MF
 aa
 aa
 aa
@@ -73309,24 +75937,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nk
+NI
+Og
+OJ
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+Pm
+OJ
+Og
+UG
+Ve
+MI
 aa
 aa
 aa
@@ -73566,24 +76194,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NJ
+NK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+NK
+NJ
+Vf
+MI
 aa
 aa
 aa
@@ -73823,24 +76451,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+Vf
+MI
 aa
 aa
 aa
@@ -74080,24 +76708,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Nn
+VW
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+PU
+Vh
+MF
 aa
 aa
 aa
@@ -74337,24 +76965,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MJ
+Nl
+NK
+NK
+ON
+VR
+PT
+NK
+NK
+NK
+NK
+ON
+VR
+PT
+NK
+NK
+Vf
+Vy
 aa
 aa
 aa
@@ -74594,24 +77222,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MS
+Nl
+NK
+NK
+VW
+MI
+PU
+NK
+NK
+NK
+NK
+VW
+MI
+PU
+NK
+NK
+Vf
+MS
 aa
 aa
 aa
@@ -74851,24 +77479,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MJ
+Nl
+NK
+NK
+VW
+Pr
+PU
+NK
+NK
+NK
+NK
+VW
+Pr
+PU
+NK
+NK
+Vf
+Vy
 aa
 aa
 aa
@@ -75108,24 +77736,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Nn
+NL
+NK
+VW
+MI
+PU
+NK
+NK
+NK
+NK
+VW
+MI
+PU
+NK
+PU
+Vh
+MF
 aa
 aa
 aa
@@ -75365,24 +77993,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NK
+NK
+ON
+VR
+PT
+NK
+NK
+NK
+NK
+ON
+VR
+PT
+NK
+NK
+Vf
+MI
 aa
 aa
 aa
@@ -75622,24 +78250,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+Vf
+MI
 aa
 aa
 aa
@@ -75879,24 +78507,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+NK
+Vf
+MI
 aa
 aa
 aa
@@ -76136,24 +78764,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MI
+Nl
+NK
+NK
+NK
+NK
+NK
+QD
+QD
+QD
+QD
+NK
+NK
+NK
+NK
+NK
+Vf
+MI
 aa
 aa
 aa
@@ -76393,24 +79021,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+MF
+Nw
+NU
+Os
+OV
+Os
+Os
+Wp
+Rh
+Rh
+QE
+Os
+Os
+Os
+OV
+US
+Vq
+MF
 aa
 aa
 aa
@@ -76650,24 +79278,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Na
+MF
+MI
+MI
+MF
+MF
+MI
+MF
+MI
+MI
+MF
+MI
+MI
+MF
+MF
+MI
+MI
+Na
 aa
 aa
 aa
@@ -76907,24 +79535,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Nb
+Ny
+Ny
+Ny
+Nb
+Ny
+Ny
+Nb
+Ny
+Ny
+Nb
+Ny
+Ny
+Nb
+Ny
+Ny
+Ny
+Nb
 aa
 aa
 aa
@@ -77165,22 +79793,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Nz
+Nz
+Nz
+Nb
+Nz
+Nz
+Nb
+Nz
+Nz
+Nb
+Nz
+Nz
+Nb
+Nz
+Nz
+Nz
 aa
 aa
 aa

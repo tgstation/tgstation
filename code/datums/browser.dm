@@ -29,6 +29,11 @@
 		ref = nref
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 
+/datum/browser/Destroy()
+	if(!isnull(window_id))
+		close()
+	return ..()
+
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
 

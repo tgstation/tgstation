@@ -133,11 +133,14 @@
 
 //This is the proc used to update all the action buttons.
 /mob/proc/update_action_buttons(reload_screen)
+	. = FALSE
 	if(!hud_used || !client)
 		return
 
 	if(hud_used.hud_shown != HUD_STYLE_STANDARD)
 		return
+	
+	. = TRUE
 
 	var/button_number = 0
 

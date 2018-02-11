@@ -56,8 +56,8 @@
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
+	for(var/mob/living/carbon/human/lobby/player in GLOB.player_list)
+		if(player.IsReady())
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -290,16 +290,16 @@
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+	for(var/mob/living/carbon/human/lobby/player in GLOB.player_list)
+		if(player.IsReady())
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
 	// Goodbye antag dante
 	players = shuffle(players)
 
-	for(var/mob/dead/new_player/player in players)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+	for(var/mob/living/carbon/human/lobby/player in players)
+		if(player.IsReady())
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
@@ -312,8 +312,8 @@
 					candidates -= player
 
 	if(candidates.len < recommended_enemies)
-		for(var/mob/dead/new_player/player in players)
-			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+		for(var/mob/living/carbon/human/lobby/player in players)
+			if(player.IsReady())
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
 					if(!jobban_isbanned(player, ROLE_SYNDICATE) && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
@@ -362,8 +362,8 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
+	for(var/mob/living/carbon/human/lobby/P in GLOB.player_list)
+		if(P.IsReady())
 			. ++
 
 //////////////////////////

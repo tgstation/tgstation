@@ -154,9 +154,9 @@
 
 /datum/holiday/april_fools/celebrate()
 	SSticker.login_music = 'sound/ambience/clown.ogg'
-	for(var/mob/dead/new_player/P in GLOB.mob_list)
-		if(P.client)
-			P.client.playtitlemusic()
+	for(var/I in GLOB.lobby_players)
+		var/mob/P = I
+		P.client.playtitlemusic()
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"

@@ -13,7 +13,13 @@
 
 /datum/config_entry/number/lobby_countdown	// In between round countdown.
 	config_entry_value = 120
-	min_val = 0
+	min_val = -1
+
+/datum/config_entry/number/lobby_countdown/ValidateAndSet()
+	. = ..()
+	if(. && config_entry_value > 0 && config_entry_value < MINIMUM_LOBBY_TIME)
+		log_config("Changing [name] from [config_entry_value] to [MINIMUM_LOBBY_TIME]!")
+		config_entry_value = MINIMUM_LOBBY_TIME
 
 /datum/config_entry/number/round_end_countdown	// Post round murder death kill countdown
 	config_entry_value = 25
@@ -23,7 +29,7 @@
 
 /datum/config_entry/flag/log_ooc	// log OOC channel
 
-/datum/config_entry/flag/log_access	// log login/logout
+/datum/config_entry/flag/log_access	// log login/logout		
 
 /datum/config_entry/flag/log_say	// log client say
 

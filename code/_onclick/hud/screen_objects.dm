@@ -546,35 +546,44 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
+/obj/screen/splash/New(client/C, visible) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
 	. = ..()
 
 	holder = C
 
 	if(!visible)
 		alpha = 0
-
-	if(!use_previous_title)
-		if(SStitle.icon)
-			icon = SStitle.icon
 	else
-		if(!SStitle.previous_icon)
-			qdel(src)
-			return
-		icon = SStitle.previous_icon
+		holder.screen += src
 
-	holder.screen += src
+	if(SStitle.icon)
+		icon = SStitle.icon
+
+/obj/screen/splash/proc/AdjustScreen(off = FALSE)
+	if(!holder)
+		qdel(src)
+	else
+		holder.screen -= src
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
 	if(QDELETED(src))
 		return
+	if(!holder)
+		qdel(src)
+		return
 	if(out)
+		alpha = 255
+		holder.screen += src
+		animate(src, alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 		animate(src, alpha = 0, time = 30)
+		addtimer(CALLBACK(src, .proc/AdjustScreen, TRUE), 30, TIMER_CLIENT_TIME)
 	else
 		alpha = 0
+		holder.screen += src
+		animate(src, alpha = 0, time = 0, flags = ANIMATION_END_NOW)
 		animate(src, alpha = 255, time = 30)
 	if(qdel_after)
-		QDEL_IN(src, 30)
+		QDEL_IN_CLIENT_TIME(src, 30)
 
 /obj/screen/splash/Destroy()
 	if(holder)

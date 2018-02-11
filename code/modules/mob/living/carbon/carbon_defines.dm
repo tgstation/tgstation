@@ -59,3 +59,5 @@
 	var/next_hallucination = 0
 	var/cpr_time = 1 //CPR cooldown.
 	var/damageoverlaytemp = 0
+
+	var/should_abandon_siliconization_due_to_no_transform = TRUE

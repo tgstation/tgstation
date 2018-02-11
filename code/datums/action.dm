@@ -19,6 +19,8 @@
 	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
 
+	var/static_location = FALSE	//if the game detemines where the button belongs
+
 /datum/action/New(Target)
 	target = Target
 	button = new
@@ -62,8 +64,9 @@
 		M.actions += src
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
-			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
+			if(!static_location)
+				button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+				button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
 		Remove(owner)
@@ -75,7 +78,8 @@
 		M.actions -= src
 		M.update_action_buttons()
 	owner = null
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
+	if(!static_location)
+		button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
 	button.id = null
 
@@ -132,7 +136,9 @@
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
-		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
+		var/mutable_appearance/ma = mutable_appearance(icon_icon, button_icon_state)
+		ma.appearance_flags |= RESET_TRANSFORM
+		current_button.add_overlay(ma)
 		current_button.button_icon_state = button_icon_state
 
 

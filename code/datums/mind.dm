@@ -776,9 +776,9 @@
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
+	mind.active = TRUE		//indicates that the mind is currently synced with a client
 
-/mob/dead/new_player/sync_mind()
+/mob/living/carbon/human/lobby/sync_mind()
 	return
 
 /mob/dead/observer/sync_mind()

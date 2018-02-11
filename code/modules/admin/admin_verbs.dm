@@ -452,6 +452,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 				mob.alpha = initial(mob.alpha)
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
+			else if(isnewplayer(mob))
+				mob.name = key
+				prefs.copy_to(mob)
 		else
 			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
 			if(!new_key)
@@ -465,6 +468,9 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 				mob.alpha = 0 //JUUUUST IN CASE
 				mob.name = " "
 				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			else if(isnewplayer(mob))
+				mob.name = new_key
+				randomize_human(mob)
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

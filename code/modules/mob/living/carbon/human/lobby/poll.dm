@@ -2,9 +2,12 @@
 	var/optionid
 	var/optiontext
 
-/mob/dead/new_player/proc/handle_player_polling()
+/mob/living/carbon/human/lobby/proc/handle_player_polling()
 	if(!SSdbcore.IsConnected())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
+		return
+	if(IsGuestKey(key))
+		to_chat(src, "<span class='danger'>Guest users may not vote in polls.</span>")
 		return
 	var/datum/DBQuery/query_poll_get = SSdbcore.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
 	if(!query_poll_get.warn_execute())
@@ -19,7 +22,9 @@
 	output += "</table>"
 	src << browse(output,"window=playerpolllist;size=500x300")
 
-/mob/dead/new_player/proc/poll_player(pollid)
+	RemovePollNotifications()
+
+/mob/living/carbon/human/lobby/proc/poll_player(pollid)
 	if(!pollid)
 		return
 	if (!SSdbcore.Connect())
@@ -288,7 +293,7 @@
 						});
 						$( "#sortable" ).disableSelection();
 						$('form').submit(function(){
-						    $('#IRVdata').val($( "#sortable" ).sortable("toArray", { attribute: "voteid" }));
+							$('#IRVdata').val($( "#sortable" ).sortable("toArray", { attribute: "voteid" }));
 						});
 					});
 
@@ -323,7 +328,7 @@
 			src << browse(output,"window=playerpoll;size=500x500")
 	return
 
-/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE)
+/mob/living/carbon/human/lobby/proc/poll_check_voted(pollid, text = FALSE)
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
@@ -342,7 +347,7 @@
 	return .
 
 
-/mob/dead/new_player/proc/vote_rig_check()
+/mob/living/carbon/human/lobby/proc/vote_rig_check()
 	if (usr != src)
 		if (!usr || !src)
 			return 0
@@ -354,7 +359,7 @@
 		return 0
 	return 1
 
-/mob/dead/new_player/proc/vote_valid_check(pollid, holder, type)
+/mob/living/carbon/human/lobby/proc/vote_valid_check(pollid, holder, type)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -369,7 +374,7 @@
 		return 0
 	return 1
 
-/mob/dead/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
+/mob/living/carbon/human/lobby/proc/vote_on_irv_poll(pollid, list/votelist)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -438,7 +443,7 @@
 	return 1
 
 
-/mob/dead/new_player/proc/vote_on_poll(pollid, optionid)
+/mob/living/carbon/human/lobby/proc/vote_on_poll(pollid, optionid)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -458,7 +463,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/dead/new_player/proc/log_text_poll_reply(pollid, replytext)
+/mob/living/carbon/human/lobby/proc/log_text_poll_reply(pollid, replytext)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -485,7 +490,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/dead/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
+/mob/living/carbon/human/lobby/proc/vote_on_numval_poll(pollid, optionid, rating)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -512,7 +517,7 @@
 	usr << browse(null,"window=playerpoll")
 	return 1
 
-/mob/dead/new_player/proc/vote_on_multi_poll(pollid, optionid)
+/mob/living/carbon/human/lobby/proc/vote_on_multi_poll(pollid, optionid)
 	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
@@ -548,3 +553,18 @@
 		return 1
 	usr << browse(null,"window=playerpoll")
 	return 0
+
+/mob/living/carbon/human/lobby/proc/CanSeePolls()
+	return !IsGuestKey(key) && SSdbcore.Connect()
+
+/mob/living/carbon/human/lobby/proc/CheckPolls()
+	if(!CanSeePolls())
+		return
+	var/client/C = client
+	var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(C.holder ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[C.ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[C.ckey]\")")
+	new_poll = query_get_new_polls.Execute() && query_get_new_polls.NextRow()
+
+/mob/living/carbon/human/lobby/proc/RemovePollNotifications()
+	for(var/I in SSticker.lobby.poll_computers)
+		var/obj/machinery/computer/lobby/poll/comp = I
+		client.images -= comp.new_notification

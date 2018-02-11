@@ -25,6 +25,9 @@ STATIONNAME Space Station 13
 #HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
+## Set to -1 for an infinite delay (Requires admin intervention)
+## Cannot be between 0 and 30 non-inclusive due to lobby sequence
+## This will not drop below 30 while initializations are still running
 LOBBY_COUNTDOWN 120
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.

@@ -250,17 +250,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
-// Must be immediate because players will
-// join before SSatom initializes everything.
-INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
-
 /obj/effect/landmark/start/new_player
 	name = "New Player"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/new_player/Initialize()
-	..()
-	GLOB.newplayer_start += loc
-	return INITIALIZE_HINT_QDEL
+	. = ..()
+	SSticker.lobby.spawn_landmarks += src
+
+/obj/effect/landmark/start/new_player/Destroy()
+	SSticker.lobby.spawn_landmarks -= src
+	return ..()
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
@@ -421,3 +421,32 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+/obj/effect/landmark/lobby/hub_spawner/Initialize()
+	. = ..()
+	SSticker.lobby.hub_spawners += src
+
+/obj/effect/landmark/lobby/hub_spawner/Destroy()
+	SSticker.lobby.hub_spawners -= src
+	return ..()
+
+/obj/effect/landmark/lobby/wall_spawner/Initialize()
+	. = ..()
+	SSticker.lobby.wall_spawners += src
+
+/obj/effect/landmark/lobby/wall_spawner/Destroy()
+	SSticker.lobby.wall_spawners -= src
+	return ..()
+
+/obj/effect/landmark/start/ready_player
+	name = "Ready Player"
+	icon_state = "x3"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/ready_player/Initialize()
+	. = ..()
+	SSticker.lobby.ready_landmarks += src
+
+/obj/effect/landmark/start/ready_player/Destroy()
+	SSticker.lobby.ready_landmarks -= src
+	return ..()
