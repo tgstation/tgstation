@@ -157,7 +157,7 @@
 	if(!istype(M))
 		return ..()
 
-	if(!istype(user) || !user.canUseTopic(M,1))
+	if(!istype(user) || !user.canUseTopic(M, BE_CLOSE))
 		return
 
 	if(M.stat != DEAD)

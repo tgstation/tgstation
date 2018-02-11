@@ -94,7 +94,7 @@
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
+	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
 		var/obj/item/card/id/ID = usr.get_active_held_item()

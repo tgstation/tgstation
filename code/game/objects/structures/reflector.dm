@@ -160,7 +160,7 @@
 		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!isnull(new_angle))
@@ -168,8 +168,7 @@
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else if(finished)
 		rotate(user)
