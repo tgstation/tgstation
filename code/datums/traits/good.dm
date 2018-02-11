@@ -39,6 +39,13 @@
 	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
 	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
 
+/datum/trait/night_vision/on_spawn()
+	var/mob/living/carbon/human/H = trait_holder
+	var/obj/item/organ/eyes/eyes = H.getorgan(/obj/item/organ/eyes)
+	if(!eyes || eyes.lighting_alpha)
+		return
+	eyes.Insert(H) //refresh their eyesight and vision
+
 
 
 /datum/trait/selfaware
