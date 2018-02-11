@@ -34,9 +34,9 @@ SUBSYSTEM_DEF(dbcore)
 	//will queue properly with goonchat
 	switch(schema_mismatch)
 		if(1)
-			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			message_admins2("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
-			message_admins("Could not get schema version from database")
+			message_admins2("Could not get schema version from database")
 
 	
 /datum/controller/subsystem/dbcore/Recover()
@@ -131,9 +131,8 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/NewQuery(sql_query, cursor_handler = Default_Cursor)
 	if(IsAdminAdvancedProcCall())
-		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
-		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
-		return FALSE
+		admin_log("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked", message_admins = TRUE, private = TRUE)
+		return
 	return new /datum/DBQuery(sql_query, src, cursor_handler)
 
 /*
