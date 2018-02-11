@@ -37,6 +37,9 @@
 		to_chat(H, "<span class = 'danger'>Your power level will increase from 1 to 20, gaining new abilities and growing stronger the more you train.</span>")
 		to_chat(H, "<span class = 'danger'>Your abilities have a use limit, before you need to rest to regain your strength.</span>")
 		START_PROCESSING(SSfastprocess, src)
+		H.hair_style = "Short Hair"
+		H.facial_hair_style = "Shaved"
+		H.update_hair()
 /datum/martial_art/monk/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You fprget the ways of a Monk...</span>")
 	stunning_fist.Remove(H)
@@ -69,6 +72,8 @@
 			to_chat(owner, "<span class = 'danger'>You feel more confident in your strikes, and your body is pure.</span>")
 			flurry_of_blows_penalty = -1
 			purity_of_body = TRUE
+			owner.hair_style = "Balding Hair"
+			owner.update_hair()
 		if(7)
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
 			stunning_fist.max_uses = 7
@@ -81,6 +86,8 @@
 		if(10)
 			to_chat(owner, "<span class = 'danger'>Your Ki helps you seek the holes in enemy armor.</span>")
 			ki_level = 75
+			owner.hair_style = "Bald"
+			owner.update_hair()
 		if(11)
 			to_chat(owner, "<span class = 'danger'>You feel confident enough to strike more and harder, and use this against toxins in your body.</span>")
 			attacks_w_flurry = 3
