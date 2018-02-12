@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Cell chargers can now be built and upgraded with capacitors!"
-  - bugfix: "Fixed empty subtype batteries not updating icons"
