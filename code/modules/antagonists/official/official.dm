@@ -1,5 +1,5 @@
 /datum/antagonist/official
-	name = "Centcom Official"
+	name = "CentCom Official"
 	show_name_in_check_antagonists = TRUE
 	show_in_antagpanel = FALSE
 	var/datum/objective/mission
