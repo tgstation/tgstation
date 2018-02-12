@@ -661,7 +661,7 @@
 	user.death()
 	to_chat(SM, "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>")
 	to_chat(SM, "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>")
-	SM.name = "[SM.name] as [user.real_name]"
+	SM.name = "[user.real_name]"
 	qdel(src)
 
 /obj/item/slimepotion/slime/steroid
