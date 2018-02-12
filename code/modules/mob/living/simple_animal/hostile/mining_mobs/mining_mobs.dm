@@ -20,7 +20,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 	var/icon_aggro = null
-	var/crusher_drop_mod = 5
+	var/crusher_drop_mod = 2.5
 
 /mob/living/simple_animal/hostile/asteroid/Initialize(mapload)
 	. = ..()
