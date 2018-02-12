@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixes lye/plastic/charcoal conflicts when mixing."
-  - bugfix: "Lye is now made by combining ash with water and carbon. Plastic sheets by heating ash, sulphuric acid and oil."

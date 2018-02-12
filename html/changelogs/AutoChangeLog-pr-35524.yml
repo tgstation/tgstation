@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "AI no longers block ark after mass_recall"
-  - bugfix: "Placed the dispersal logic AFTER the mass_recall on ark activation instead of infront(did nothing before basically)."
