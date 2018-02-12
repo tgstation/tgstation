@@ -48,9 +48,10 @@
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage + 1,max_stages)
+			if(prob(90 - affected_mob.vitamins))
+				stage = min(stage + 1,max_stages)
 	else
-		if(prob(cure_chance))
+		if(prob(cure_chance + min(cure_chance, affected_mob.vitamins)))
 			stage = max(stage - 1, 1)
 
 	if(disease_flags & CURABLE)
@@ -77,7 +78,7 @@
 	if(!(spread_flags & VIRUS_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) || (affected_mob.vitamins > 0 && prob(affected_mob.vitamins * 0.66)))
 		return
 
 	var/spread_range = 2

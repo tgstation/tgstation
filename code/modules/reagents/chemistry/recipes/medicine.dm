@@ -245,3 +245,16 @@
 	results = list("morphine" = 2)
 	required_reagents = list("carbon" = 2, "hydrogen" = 2, "ethanol" = 1, "oxygen" = 1)
 	required_temp = 480
+
+/datum/chemical_reaction/vitamin_supplement
+	name = "Multivitamin"
+	id = "vitamin_supplement"
+	results = list("vitamin_supplement" = 1)
+	required_reagents = list("nutriment" = 1, "vitamin" = 0.2)
+	required_temp = 400
+	mix_message = "The mixture hardens into a fine white powder."
+
+/datum/chemical_reaction/vitamin_supplement/alt
+	name = "Multivitamin Alt."
+	id = "vitamin_supplement2"
+	required_reagents = list("blood" = 2, "vitamin" = 0.2) //This isn't realistic, but just roll with it

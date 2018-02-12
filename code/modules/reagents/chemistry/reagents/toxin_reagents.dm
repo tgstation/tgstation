@@ -8,6 +8,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	taste_description = "bitterness"
 	taste_mult = 1.2
+	healthiness = -0.01
 	var/toxpwr = 1.5
 
 /datum/reagent/toxin/on_mob_life(mob/living/M)
@@ -636,6 +637,7 @@
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	healthiness = -1 //Lipolicide is a treatment for hypervitaminitosis
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)

@@ -225,6 +225,12 @@
 /obj/item/reagent_containers/syringe/lethal/execution
 	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
 
+/obj/item/reagent_containers/syringe/gamma_globulins
+	name = "gamma globulin shot"
+	desc = "Concentrated proteins used to treat malnutrition. Used as a vitamin supplement."
+	list_reagents = list("gamma_globulins" = 15)
+	amount_per_transfer_from_this = 15
+
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."

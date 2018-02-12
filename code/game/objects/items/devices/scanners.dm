@@ -244,6 +244,21 @@ GAS ANALYZER
 		to_chat(user, "<span class='info'>Species: [H.dna.species.name]</span>")
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
+	// Nutrition
+	if(ishuman(M))
+		to_chat(user, "<span class='info'>Vitamin levels:</span> <span class='[M.vitamins >= 0 ? "info" : "danger"] bold'>~[round(M.vitamins)]%</span>")
+		if(M.has_trait(TRAIT_FAT))
+			to_chat(user, "<span class='alert'>Subject is obese.</span>")
+		else if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+			to_chat(user, "<span class='alert'>Subject is not properly fed.</span>")
+		switch(M.vitamins)
+			if(-INFINITY to VITAMIN_LEVEL_MALNOURISHED)
+				to_chat(user, "<span class='alert'>Subject is malnourished.</span>")
+			if(VITAMIN_LEVEL_HEALTHY to VITAMIN_LEVEL_HYPERVITAMINITOSIS)
+				to_chat(user, "<span class='info'>Subject's immune system is functioning above average.</span>")
+			if(VITAMIN_LEVEL_HYPERVITAMINITOSIS to INFINITY)
+				to_chat(user, "<span class='alert'>Subject is suffering from hypervitaminitosis.</span>")
+
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
