@@ -247,7 +247,7 @@ GAS ANALYZER
 	// Nutrition
 	if(ishuman(M))
 		to_chat(user, "<span class='info'>Vitamin levels:</span> <span class='[M.vitamins >= 0 ? "info" : "danger"] bold'>~[round(M.vitamins)]%</span>")
-		if(M.disabilities & FAT)
+		if(M.has_trait(TRAIT_FAT))
 			to_chat(user, "<span class='alert'>Subject is obese.</span>")
 		else if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 			to_chat(user, "<span class='alert'>Subject is not properly fed.</span>")

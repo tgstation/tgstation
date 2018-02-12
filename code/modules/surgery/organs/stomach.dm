@@ -51,9 +51,9 @@
 /obj/item/organ/stomach/proc/handle_nutrition(mob/living/carbon/human/H)
 	//First, calculate the actual vitamin levels
 	var/vitamin_decay_rate = H.vitamins * 0.001 //Vitamin levels will slowly decay towards neutral
-	vitamin_decay_rate = Clamp(vitamin_decay_rate, -0.05, 0.05)
+	vitamin_decay_rate = CLAMP(vitamin_decay_rate, -0.05, 0.05)
 	H.vitamins -= vitamin_decay_rate //Yes, this works for negatives, don't ask me how
-	H.vitamins = Clamp(H.vitamins, -VITAMIN_CLAMP, VITAMIN_CLAMP) //So we don't have 1000% vitamin level
+	H.vitamins = CLAMP(H.vitamins, -VITAMIN_CLAMP, VITAMIN_CLAMP) //So we don't have 1000% vitamin level
 
 	if(H.vitamins < VITAMIN_LEVEL_HYPERVITAMINITOSIS)
 		//Then, our body heals depending on nutrition!
