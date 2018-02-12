@@ -12,7 +12,6 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	can_be_held = TRUE
 
 //Corgis and pugs are now under one dog subtype
 
@@ -123,7 +122,7 @@
 	update_corgi_fluff()
 
 /mob/living/simple_animal/pet/dog/corgi/setup_mob_holder()
-	var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : "corgi"), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi')
+	var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : "corgi"), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi', FALSE)
 	return H
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)

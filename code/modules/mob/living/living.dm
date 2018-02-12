@@ -1056,14 +1056,10 @@
 	return
 
 /mob/living/proc/setup_mob_holder()
-	if(can_be_held && !istext(can_be_held))
-		var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src)
-		return H
 	..()
 
-
 /mob/living/proc/mob_try_pickup(mob/living/user)
-	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
+	if(!ishuman(user) || !src.Adjacent(user) || !user.canUseTopic(src) || !can_be_held)
 		return FALSE
 	if(user.get_active_held_item())
 		return FALSE

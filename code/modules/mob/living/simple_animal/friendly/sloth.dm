@@ -21,7 +21,6 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
-	can_be_held = TRUE
 
 
 //Cargo Sloth

@@ -18,7 +18,6 @@
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault

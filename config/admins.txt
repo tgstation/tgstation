@@ -131,4 +131,8 @@ JStheguy = Game Master
 excessiveuseofcobby = Game Master
 Plizzard = Game Master
 octareenroon91 = Game Master
+<<<<<<< HEAD
 Serpentarium = Game Master
+=======
+Serpentarium = Game Master
+>>>>>>> parent of 3304e5e14f... Fixes Runtime with qdel loop + adds ability to pick up more animals
