@@ -78,7 +78,4 @@
 	H.put_in_hands(antiwelder)
 
 /datum/antagonist/highlander/supermatter
-	name = "highlander"
 	swordtype = /obj/item/claymore/highlander/supermatter
-	show_in_antagpanel = FALSE
-	show_name_in_check_antagonists = TRUE
