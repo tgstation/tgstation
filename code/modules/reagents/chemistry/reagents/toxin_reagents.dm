@@ -848,6 +848,14 @@
 	. = 1 // When the blitzkrieg raged and the bodies stank
 	..() // Pleased to meet you, hope you guess my name
 
+/datum/reagent/toxin/acid/geoacid
+	name = "Geothermal acid"
+	id = "geoacid"
+	description = "Geothermal acid is an extremely corrosive chemical substance, released by geysers in Lavaland."
+	color = "#fbd61e"
+	toxpwr = 0
+	acidpwr = 25.0
+
 /datum/reagent/toxin/peaceborg/confuse
 	name = "Dizzying Solution"
 	id = "dizzysolution"

@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(acid_geysers)
 	visible_message("<span class='warning'>A cloud of acid smoke bursts out of [src]!</span>")
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = src
-	R.add_reagent("sacid", 1000)
+	R.add_reagent("geoacid", 1000)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 6, get_turf(src), silent = TRUE, _spread_delay = 20)
 	smoke.start()
