@@ -61,7 +61,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	var/firstx = 0
 	var/finalx = 1
-	if(dir == 2)
+	if(dir != 1)
 		var/max_index = 1
 		while(dmmRegex.Find(tfile, max_index))
 			max_index = dmmRegex.next
@@ -127,14 +127,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
 			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(ycrd, y_lower, y_upper))
-			ycrd += gridLines.len - 1 // Start at the top and work down
-
-			if(!cropMap && ycrd > world.maxy)
-				if(!measureOnly)
-					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
-			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 
 			var/maxx = xcrdStart
 			if(measureOnly)
@@ -143,6 +135,13 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			else
 				switch(dir)
 					if(1)
+						ycrd += gridLines.len - 1 // Start at the top and work down
+						if(!cropMap && ycrd > world.maxy)
+							if(!measureOnly)
+								world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 						for(var/line in gridLines)
 							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
 								--ycrd
@@ -175,7 +174,14 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									++xcrd
 							--ycrd
 					if(2)
-						ycrd -= gridLines.len - 1
+						ycrd += gridLines.len - 1
+						if(!cropMap && ycrd > world.maxy)
+							if(!measureOnly)
+								world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						ycrd -= gridLines.len - 1 //Had to find the top for bounds, but we work from the bottom for this "upside down" load
 						for(var/line in gridLines)
 							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
 								++ycrd
@@ -207,6 +213,45 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									maxx = max(maxx, xcrd)
 									++xcrd
 							++ycrd
+					if(4)
+						ycrd += finalx - firstx  // Oh shit we're facing east now, the top of the Y-column is now as "tall" as the width of the X-row
+						if(!cropMap && ycrd > world.maxy)
+							if(!measureOnly)
+								world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						for(var/line in gridLines)
+							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+								--ycrd
+								continue
+							if(ycrd <= world.maxy && ycrd >= 1)
+								xcrd = xcrdStart + gridLines.len - 1 // Facing east means the "end" of the X-row is now as "deep" as the height of the Y-column
+								for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+									if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+										--xcrd
+										continue								//X cropping.
+									if(xcrd > world.maxx)
+										if(cropMap)
+											break
+										else
+											world.maxx = xcrd
+
+									if(xcrd >= 1)
+										var/model_key = copytext(line, tpos, tpos + key_len)
+										var/no_afterchange = no_changeturf || zexpansion
+										if(!no_afterchange || (model_key != space_key))
+											if(!grid_models[model_key])
+												throw EXCEPTION("Undefined model key in DMM.")
+											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+										#ifdef TESTING
+										else
+											++turfsSkipped
+										#endif
+										CHECK_TICK
+									maxx = max(maxx, xcrd)
+									--xcrd
+							--ycrd
 
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 

@@ -134,7 +134,7 @@
 	var/datum/map_template/shelter/grey/template
 	var/static/spawned = FALSE
 	invisibility = 0
-	dir = 2
+	dir = 4
 
 /obj/effect/landmark/greytopia/Initialize()
 	..()
