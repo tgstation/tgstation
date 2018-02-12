@@ -576,7 +576,7 @@
 	name = "Stinger"
 	id = "stinger"
 	results = list("stinger" = 15)
-	required_reagents = list("whiskey" = 10, "creme_de_menthe" =5 )
+	required_reagents = list("whiskey" = 10, "creme_de_menthe" = 5 )
 
 /datum/chemical_reaction/quintuplesec
 	name = "Quintuple Sec"
