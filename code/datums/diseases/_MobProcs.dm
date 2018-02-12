@@ -74,6 +74,8 @@
 
 	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
+	if(vitamins && prob(vitamins * 0.66)) // And a stronger immune system can help fend it off
+		return
 	if(!target_zone)
 		target_zone = pick(head_ch;"head",body_ch;"body",hands_ch;"hands",feet_ch;"feet")
 

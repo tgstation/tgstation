@@ -45,6 +45,7 @@
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
+	var/vitamins = VITAMIN_LEVEL_NEUTRAL //Carbon
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon

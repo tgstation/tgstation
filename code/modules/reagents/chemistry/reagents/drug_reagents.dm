@@ -3,6 +3,7 @@
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	healthiness = -0.2
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -66,6 +67,7 @@
 	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	healthiness = -0.5
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/M)
 	if(prob(5))
@@ -113,6 +115,7 @@
 	color = "#0064B4"
 	overdose_threshold = 20
 	addiction_threshold = 15
+	healthiness = -1
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/M)
@@ -165,6 +168,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	healthiness = -1.5 //Come on now, it's meth
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/M)
 	..()

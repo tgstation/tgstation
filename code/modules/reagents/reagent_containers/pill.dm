@@ -158,3 +158,10 @@
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
+
+/obj/item/reagent_containers/pill/vitamin_supplement
+	name = "multivitamin tablet"
+	desc = "A tasteless tablet used as a vitamin supplement. It can't replace a healthy diet, and protects from malnutrition first and foremost."
+	icon_state = "pill18"
+	list_reagents = list("vitamin_supplement" = 15)
+	roundstart = 1

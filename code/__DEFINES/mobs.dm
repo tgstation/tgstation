@@ -79,6 +79,13 @@
 #define NUTRITION_LEVEL_START_MIN 250
 #define NUTRITION_LEVEL_START_MAX 400
 
+//Vitamin levels for humans
+#define VITAMIN_CLAMP 200 //Vitamins can't exceed this amount in either direction
+#define VITAMIN_LEVEL_HYPERVITAMINITOSIS 100 //Too much vitamin concentration leads to toxin damage; this is nearly impossible to reach without supplements
+#define VITAMIN_LEVEL_HEALTHY 25
+#define VITAMIN_LEVEL_NEUTRAL 0
+#define VITAMIN_LEVEL_MALNOURISHED -10
+
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
 #define DISGUST_LEVEL_DISGUSTED 75

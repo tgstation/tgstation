@@ -13,6 +13,7 @@
 	glass_icon_state = "glass_orange"
 	glass_name = "glass of orange juice"
 	glass_desc = "Vitamins! Yay!"
+	healthiness = 0.04
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/M)
 	if(M.getOxyLoss() && prob(30))
@@ -29,6 +30,7 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of tomato juice"
 	glass_desc = "Are you sure this is tomato juice?"
+	healthiness = 0.03
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
 	if(M.getFireLoss() && prob(20))
@@ -45,6 +47,7 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of lime juice"
 	glass_desc = "A glass of sweet-sour lime juice."
+	healthiness = 0.03
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/M)
 	if(M.getToxLoss() && prob(20))
@@ -61,6 +64,7 @@
 	glass_icon_state = "carrotjuice"
 	glass_name = "glass of  carrot juice"
 	glass_desc = "It's just like a carrot but without crunching."
+	healthiness = 0.04
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/M)
 	M.adjust_blurriness(-1)
@@ -83,6 +87,7 @@
 	glass_icon_state = "berryjuice"
 	glass_name = "glass of berry juice"
 	glass_desc = "Berry juice. Or maybe it's jam. Who cares?"
+	healthiness = 0.03
 
 /datum/reagent/consumable/applejuice
 	name = "Apple Juice"
@@ -90,6 +95,7 @@
 	description = "The sweet juice of an apple, fit for all ages."
 	color = "#ECFF56" // rgb: 236, 255, 86
 	taste_description = "apples"
+	healthiness = 0.03
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -100,6 +106,7 @@
 	glass_icon_state = "poisonberryjuice"
 	glass_name = "glass of berry juice"
 	glass_desc = "Berry juice. Or maybe it's poison. Who cares?"
+	healthiness = -0.01
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1, 0)
@@ -115,6 +122,7 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of watermelon juice"
 	glass_desc = "A glass of watermelon juice."
+	healthiness = 0.03
 
 /datum/reagent/consumable/lemonjuice
 	name = "Lemon Juice"
@@ -125,6 +133,7 @@
 	glass_icon_state  = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
+	healthiness = 0.03
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
@@ -135,10 +144,12 @@
 	glass_icon_state = "banana"
 	glass_name = "glass of banana juice"
 	glass_desc = "The raw essence of a banana. HONK."
+	healthiness = 0.01
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
 	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
 		M.heal_bodypart_damage(1,1, 0)
+		M.vitamins += 0.04 //Extra healthy!
 		. = 1
 	..()
 
@@ -155,6 +166,7 @@
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
 	if(ishuman(M) && M.job in list("Mime"))
 		M.heal_bodypart_damage(1,1, 0)
+		M.vitamins += 0.05
 		. = 1
 	..()
 
@@ -205,6 +217,7 @@
 	description = "The juice of a bunch of grapes. Guaranteed non-alcoholic."
 	color = "#290029" // dark purple
 	taste_description = "grape soda"
+	healthiness = 0.05
 
 /datum/reagent/consumable/milk
 	name = "Milk"
@@ -215,6 +228,7 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of milk"
 	glass_desc = "White and nutritious goodness!"
+	healthiness = 0.1 //Strong bones!
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
@@ -237,6 +251,7 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of soy milk"
 	glass_desc = "White and nutritious soy goodness!"
+	healthiness = 0.1
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
@@ -271,6 +286,7 @@
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of coffee"
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+	healthiness = -0.01
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M)
 	M.Jitter(5)
@@ -297,6 +313,7 @@
 	glass_icon_state = "teaglass"
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
+	healthiness = 0.1
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -358,6 +375,7 @@
 	glass_icon_state = "icedteaglass"
 	glass_name = "iced tea"
 	glass_desc = "All natural, antioxidant-rich flavour sensation."
+	healthiness = 0.03
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -379,6 +397,7 @@
 	glass_icon_state  = "glass_brown"
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
+	healthiness = -0.07
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-5)
@@ -395,6 +414,7 @@
 	glass_icon_state = "nuka_colaglass"
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
+	healthiness = -0.2 //You're drinking radiation!
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/M)
 	..()
@@ -428,6 +448,7 @@
 	glass_icon_state = "Space_mountain_wind_glass"
 	glass_name = "glass of Space Mountain Wind"
 	glass_desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
+	healthiness = -0.07
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
@@ -447,6 +468,7 @@
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of Dr. Gibb"
 	glass_desc = "Dr. Gibb. Not as dangerous as the glass_name might imply."
+	healthiness = -0.07
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-6)
@@ -463,6 +485,7 @@
 	glass_icon_state = "space-up_glass"
 	glass_name = "glass of Space-Up"
 	glass_desc = "Space-up. It helps you keep your cool."
+	healthiness = -0.07
 
 
 /datum/reagent/consumable/space_up/on_mob_life(mob/living/M)
@@ -479,6 +502,7 @@
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of lemon-lime"
 	glass_desc = "You're pretty certain a real fruit has never actually touched this."
+	healthiness = -0.06
 
 
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/M)
@@ -495,6 +519,7 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
+	healthiness = -0.07
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
@@ -510,6 +535,7 @@
 	glass_icon_state = "glass_red"
 	glass_name = "glass of Shambler's juice"
 	glass_desc = "Mmm mm, shambly."
+	healthiness = -0.07
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/M)
 	if (M.bodytemperature > BODYTEMP_NORMAL)
@@ -619,6 +645,7 @@
 	glass_icon_state = "doctorsdelightglass"
 	glass_name = "Doctor's Delight"
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
+	healthiness = 0.1
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-0.5, 0)
@@ -641,6 +668,7 @@
 	glass_icon_state = "chocolatepudding"
 	glass_name = "chocolate pudding"
 	glass_desc = "Tasty."
+	healthiness = -0.04
 
 /datum/reagent/consumable/vanillapudding
 	name = "Vanilla Pudding"
@@ -652,6 +680,7 @@
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
+	healthiness = -0.04
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
@@ -696,6 +725,7 @@
 	glass_icon_state = "gibbfloats"
 	glass_name = "Gibbfloat"
 	glass_desc = "Dr. Gibb with ice cream on top."
+	healthiness = -0.15 //So unhealthy, but so delicious...
 
 /datum/reagent/consumable/pumpkinjuice
 	name = "Pumpkin Juice"
@@ -703,6 +733,7 @@
 	description = "Juiced from real pumpkin."
 	color = "#FFA500"
 	taste_description = "pumpkin"
+	healthiness = 0.05
 
 /datum/reagent/consumable/blumpkinjuice
 	name = "Blumpkin Juice"
@@ -720,6 +751,7 @@
 	glass_icon_state = "triplecitrus" //needs own sprite mine are trash
 	glass_name = "glass of triple citrus"
 	glass_desc = "A mixture of citrus juices. Tangy, yet smooth."
+	healthiness = 0.07
 
 /datum/reagent/consumable/grape_soda
 	name = "Grape soda"
@@ -729,6 +761,7 @@
 	taste_description = "grape soda"
 	glass_name = "glass of grape juice"
 	glass_desc = "It's grape (soda)!"
+	healthiness = -0.07
 
 /datum/reagent/consumable/milk/chocolate_milk
 	name = "Chocolate Milk"
@@ -736,3 +769,4 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
+	healthiness = 0.03
