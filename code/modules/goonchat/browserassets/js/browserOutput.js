@@ -642,6 +642,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
+		'senableEmoji' : getCookie('enableemoji')
 	};
 
 	if (savedConfig.sfontSize) {
@@ -696,7 +697,14 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-
+	if (savedConfig.senableEmoji) {
+		if (savedConfig.senableEmoji == 'true') {
+			opts.enableEmoji = true;
+		} else {
+			opts.enableEmoji = false;
+		}
+		internalOutput('<span class="internal boldnshit">Loaded emoji setting of: '+(opts.enableEmoji ? 'enabled' : 'disabled')+'</span>', 'internal');
+	}
 
 	(function() {
 		var dataCookie = getCookie('connData');
@@ -924,6 +932,15 @@ $(function() {
 			opts.pingDisabled = true;
 		}
 		setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
+	});
+
+	$('#toggleEmojis').click(function(e) {
+		if (opts.enableEmoji) {
+			opts.enableEmoji = false;
+		} else {
+			opts.enableEmoji = true;
+		}
+		setCookie('enableemoji', (opts.enableEmoji ? 'true' : 'false'), 365);
 	});
 
 	$('#saveLog').click(function(e) {

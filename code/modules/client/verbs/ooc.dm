@@ -31,6 +31,10 @@
 
 	msg = emoji_parse(msg)
 
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
+
 	if(!holder)
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
