@@ -1163,6 +1163,7 @@
 #include "code\modules\antagonists\devil\true_devil\_true_devil.dm"
 #include "code\modules\antagonists\devil\true_devil\inventory.dm"
 #include "code\modules\antagonists\ert\ert.dm"
+#include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"
