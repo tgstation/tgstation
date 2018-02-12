@@ -431,7 +431,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -611,7 +612,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -761,7 +763,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -860,7 +863,8 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1220,7 +1224,8 @@
 	locked = 1;
 	name = "Worn-out APC";
 	pixel_y = -25;
-	req_access = list(150);
+	req_access = null;
+	req_access_txt = "150";
 	start_charge = 0
 	},
 /turf/open/floor/plasteel/red/side{
@@ -1314,7 +1319,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/light{
 	active_power_usage = 0;
@@ -1497,7 +1503,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = -23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1528,7 +1535,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -4927,9 +4935,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5026,9 +5032,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -5186,9 +5190,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5250,9 +5252,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kH" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5339,9 +5339,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kR" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -5350,9 +5348,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kS" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{

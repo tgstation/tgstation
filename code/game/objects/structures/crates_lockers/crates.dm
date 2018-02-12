@@ -17,6 +17,8 @@
 
 /obj/structure/closet/crate/New()
 	..()
+	if(icon_state == "[initial(icon_state)]open")
+		opened = TRUE
 	update_icon()
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)

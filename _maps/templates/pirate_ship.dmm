@@ -707,7 +707,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(152)
+	req_access = null;
+	req_access_txt = "152"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{

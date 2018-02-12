@@ -158,6 +158,10 @@
 		return 0
 
 /* Cell variants*/
+/obj/item/stock_parts/cell/empty/Initialize()
+	. = ..()
+	charge = 0
+
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT

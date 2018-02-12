@@ -168,10 +168,10 @@
 
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
+	if(over_object == usr)
 		if(!briefcase || !usr.can_hold_items())
 			return
-		if(usr.incapacitated())
+		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")

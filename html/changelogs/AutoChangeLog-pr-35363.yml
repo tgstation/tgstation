@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Brass chairs now stop spinning after eight rotations, so you can't crash the server with them."

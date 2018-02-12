@@ -78,9 +78,17 @@
 		return
 	A.emag_act(user)
 
-/obj/item/card/emag/fake/afterattack()
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	return
+/obj/item/card/emagfake
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/emagfake/afterattack()
+	. = ..()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/card/id
 	name = "identification card"
@@ -113,10 +121,11 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
+		add_fingerprint(user)
+		return
 
 /obj/item/card/id/examine(mob/user)
 	..()
@@ -151,6 +160,12 @@ update_label("John Doe", "Clowny")
 	item_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/id/silver/reaper
+	name = "Thirteen's ID Card (Reaper)"
+	access = list(ACCESS_MAINT_TUNNELS)
+	assignment = "Reaper"
+	registered_name = "Thirteen"
 
 /obj/item/card/id/gold
 	name = "gold identification card"

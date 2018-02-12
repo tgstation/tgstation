@@ -287,7 +287,7 @@
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
-		playsound(user, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
@@ -583,6 +583,12 @@
 		to_chat(user, "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>")
 	else
 		return ..()
+
+/obj/item/circuitboard/machine/reagentgrinder
+	name = "Machine Design (All-In-One Grinder)"
+	build_path = /obj/machinery/reagentgrinder/constructed
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/chem_master/condi
 	name = "CondiMaster 3000 (Machine Board)"
