@@ -21,30 +21,44 @@
 	var/circle_kick = FALSE
 	var/diamond_body = FALSE
 	var/purity_of_body = FALSE
+	var/using_flurry = TRUE
 
 	var/list/available_actions = list()
 	var/datum/action/monk_rest/monk_rest = new/datum/action/monk_rest()
+	var/datum/action/flurry_toggle/flurry_toggle = new/datum/action/flurry_toggle()
 	var/datum/action/monk/stunning_fist/stunning_fist = new/datum/action/monk/stunning_fist()
-	var/datum/action/monk/stunning_fist/quivering_palm = new/datum/action/monk/quivering_palm()
+	var/datum/action/monk/quivering_palm/quivering_palm = new/datum/action/monk/quivering_palm()
+	var/datum/action/monk/wholeness_of_body/wholeness_of_body = new/datum/action/monk/wholeness_of_body()
 	no_guns = TRUE
 
 
 /datum/martial_art/monk/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
 		monk_rest.Grant(H)
+		flurry_toggle.Grant(H)
+		flurry_toggle.martial = src
 		to_chat(H, "<span class = 'userdanger'>You know the ancient Monk techniques!</span>")
 		to_chat(H, "<span class = 'danger'>This technique becomes more powerful the more you use it.</span>")
 		to_chat(H, "<span class = 'danger'>Your power level will increase from 1 to 20, gaining new abilities and growing stronger the more you train.</span>")
 		to_chat(H, "<span class = 'danger'>Your abilities have a use limit, before you need to rest to regain your strength.</span>")
+		to_chat(H, "<span class = 'danger'>You can't gain experience on yourself, dead humans, non humans, or braindead humans.</span>")
 		START_PROCESSING(SSfastprocess, src)
 		H.hair_style = "Short Hair"
 		H.facial_hair_style = "Shaved"
 		H.update_hair()
+
+/datum/martial_art/monk/proc/flurry_penalty()
+	if(using_flurry)
+		return flurry_of_blows_penalty
+	return 0
+
 /datum/martial_art/monk/on_remove(mob/living/carbon/human/H)
-	to_chat(H, "<span class = 'userdanger'>You fprget the ways of a Monk...</span>")
+	to_chat(H, "<span class = 'userdanger'>You forget the ways of a Monk...</span>")
 	stunning_fist.Remove(H)
 	quivering_palm.Remove(H)
+	flurry_toggle.Remove(H)
 	monk_rest.Remove(H)
+	wholeness_of_body.Remove(H)
 	STOP_PROCESSING(SSfastprocess, src)
 
 /datum/martial_art/monk/process()
@@ -64,6 +78,7 @@
 		if(2)
 			to_chat(owner, "<span class = 'danger'>You have practiced the Stunning Fist technique enough to use it in combat.</span>")
 			stunning_fist.Grant(owner)
+			stunning_fist.martial = src
 			available_actions = list(stunning_fist)
 		if(4)
 			to_chat(owner, "<span class = 'danger'>Your Ki has begun to develop, probing at the armor of your foes.</span>")
@@ -75,8 +90,11 @@
 			owner.hair_style = "Balding Hair"
 			owner.update_hair()
 		if(7)
-			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
+			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting. You have figured out the wholeness of your body.</span>")
 			stunning_fist.max_uses = 7
+			wholeness_of_body.Grant(owner)
+			wholeness_of_body.martial = src
+			available_actions = list(stunning_fist, wholeness_of_body)
 		if(8)
 			to_chat(owner, "<span class = 'danger'>You move from one downed target to the next quickly.</span>")
 			cleave_level = 1
@@ -101,7 +119,8 @@
 		if(15)
 			to_chat(owner, "<span class = 'danger'>You have practiced the Quivering Palm technique enough to use it in combat.</span>")
 			quivering_palm.Grant(owner)
-			available_actions = list(stunning_fist, quivering_palm)
+			quivering_palm.martial = src
+			available_actions = list(stunning_fist, wholeness_of_body, quivering_palm)
 		if(16)
 			to_chat(owner, "<span class = 'danger'>Your Ki has fully developed, and can be used to nullify armor.</span>")
 			ki_level = 100
@@ -110,12 +129,40 @@
 			stunning_fist.max_uses = 14
 
 /datum/martial_art/monk/proc/attack_roll(mob/living/T, abm)
+	if(istype(T, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = T
+		if(istype(D.martial, /datum/martial_art/monk))
+			var/datum/martial_art/monk/M = D.martial
+			return M.defense_roll(curr_ab + abm)
 	var/armor_class = 10 + (T.getarmor("chest", "melee") * 0.1)
 	var/attack_bonus = curr_ab + abm
-	var/attack_roll = ROLL_DICE(1,20) + attack_bonus
+	if(T.incapacitated())
+		attack_bonus += 3
+	var/attack_roll = roll(1,20) + attack_bonus
 	if(attack_roll >= armor_class)
-		if(attack_roll == 20)
-			attack_roll = ROLL_DICE(1,20) + attack_bonus
+		if(attack_roll >= 20)
+			attack_roll = roll(1,20) + attack_bonus
+			if(attack_roll >= armor_class)
+				return ATK_CRIT_HIT
+			return ATK_HIT
+		else
+			return ATK_HIT
+	return ATK_MISS
+
+/datum/martial_art/monk/proc/defense_roll(abm)
+	var/armor = (owner.getarmor("chest", "melee") * 0.1)
+	var/armor_class = 10
+	if(!armor)
+		armor_class = 15
+	else
+		armor_class -= armor
+	var/attack_bonus = abm
+	if(owner.incapacitated())
+		attack_bonus += 3
+	var/attack_roll = roll(1,20) + attack_bonus
+	if(attack_roll >= armor_class)
+		if(attack_roll >= 20)
+			attack_roll = roll(1,20) + attack_bonus
 			if(attack_roll >= armor_class)
 				return ATK_CRIT_HIT
 			return ATK_HIT
@@ -139,10 +186,10 @@
 	switch(picked_hit_type)
 		if("punched")
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atr = attack_roll(D, flurry_of_blows_penalty)
+	var/atr = attack_roll(D, flurry_penalty())
 	if(atr)
 		var/old_stat = D.stat
-		if(D.stat != DEAD && D.ckey)
+		if(D.stat != DEAD && D.ckey && D != A)
 			add_exp(5)
 		var/dmg = rand(HIT_MIN, HIT_MAX)
 		var/was_crit = ""
@@ -169,7 +216,7 @@
 				  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
 		return 1
 	else
-		if(D.stat != DEAD && D.ckey)
+		if(D.stat != DEAD && D.ckey && D != A)
 			add_exp(2.5)
 		add_logs(A, D, "missed a punch (monk)")
 		D.visible_message("<span class='danger'>[A] missed [D]!</span>", \
@@ -182,9 +229,12 @@
 	var/list/surrounding_mobs
 	if(cleave_level || circle_kick)
 		surrounding_mobs = list()
-		for(var/mob/living/carbon/human/H in range(1, A))
+		for(var/mob/living/carbon/human/H in orange(1, A))
 			surrounding_mobs += H
-	for(var/i in 1 to attacks_w_flurry)
+	if(using_flurry)
+		for(var/i in 1 to attacks_w_flurry)
+			do_attack(A, D, cleave_level, circle_kick, surrounding_mobs)
+	else
 		do_attack(A, D, cleave_level, circle_kick, surrounding_mobs)
 	return 1
 
@@ -203,16 +253,19 @@
 	return 0
 
 /datum/martial_art/monk/proc/stunning_fist(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	var/atr = attack_roll(D, flurry_of_blows_penalty-4)
+	var/atr = attack_roll(D, flurry_penalty())
 	if(atr)
-		var/fort_save = ROLL_DICE(1,20) // todo: figure out a good way to calc a save bonus
+		var/save_bonus = 0
+		if(D.incapacitated())
+			save_bonus -= 3
+		var/fort_save = roll(1,20) + save_bonus
 		if(fort_save >= 10)
 			D.visible_message("<span class='danger'>[A] punches [D], but [D] is unfazed!</span>", \
 					  "<span class='userdanger'>[A] punches you, but you are unfazed!</span>")
 		else
 			D.Stun(30)
 			D.visible_message("<span class='danger'>[A] punches [D], stunning them!</span>", \
-					  "<span class='userdanger'>[A] misses you!</span>")
+					  "<span class='userdanger'>[A] punches you, and you're stunned!</span>")
 			add_logs(A, D, "stunning fist (monk)")
 	else
 		D.visible_message("<span class='danger'>[A] missed [D]!</span>", \
@@ -220,15 +273,17 @@
 	return 1
 
 /datum/martial_art/monk/proc/quivering_palm(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	var/atr = attack_roll(D, flurry_of_blows_penalty)
+	var/atr = attack_roll(D, flurry_penalty())
 	if(atr)
-		var/fort_save = ROLL_DICE(1,20) + 3 // bonus save for this
+		var/save_bonus = 3
+		if(D.incapacitated())
+			save_bonus -= 3
+		var/fort_save = roll(1,20) + save_bonus // bonus save for this
 		if(fort_save >= 10)
 			D.visible_message("<span class='danger'>[A] punches [D], but [D] is unfazed!</span>", \
 					  "<span class='userdanger'>[A] punches you, but you are unfazed!</span>")
 		else
-			var/datum/disease/DE = new /datum/disease/heart_failure
-			D.ForceContractDisease(DE)
+			D.set_heartattack(TRUE)
 			D.visible_message("<span class='danger'>[A] punches [D], and they start to quiver!</span>", \
 					  "<span class='userdanger'>[A] punches you, and you feel your heart stop!</span>")
 			add_logs(A, D, "quivering palm (monk)")
@@ -264,6 +319,19 @@
 		var/datum/action/monk/M = ME
 		M.uses_left = M.max_uses
 
+/datum/action/flurry_toggle
+	name = "Flurry Of Blows - Enable/Disable, attack more in 1 turn but with an attack penalty at early levels."
+	button_icon_state = "neckchop" // todo: replace
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	var/datum/martial_art/monk/martial
+
+/datum/action/flurry_toggle/Trigger()
+	if(martial)
+		martial.using_flurry = !martial.using_flurry
+		if(martial.using_flurry)
+			to_chat(H, "<span class='warning'>You enable Flurry of Blows.</span>")
+		else
+			to_chat(H, "<span class='warning'>You disable Flurry of Blows.</span>")
 
 /datum/action/monk
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
@@ -271,13 +339,14 @@
 	var/max_uses
 	var/skill_name
 	var/pretty_name
+	var/datum/martial_art/monk/martial
 
 /datum/action/monk/Trigger()
 	if(owner.incapacitated())
 		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
 		return
 	if(!uses_left)
-		to_chat(owner, "<span class='warning'>You must rest before you can use [name]!</span>")
+		to_chat(owner, "<span class='warning'>You must rest before you can use [pretty_name]!</span>")
 		return
 	var/mob/living/carbon/human/H = owner
 	if (H.mind.martial_art.streak == skill_name)
@@ -303,6 +372,30 @@
 	max_uses = 1
 	skill_name = "quivering_palm"
 	pretty_name = "Quivering Palm"
+
+/datum/action/monk/wholeness_of_body
+	name = "Wholeness of Body - Restores health equal to twice the monk's level."
+	button_icon_state = "neckchop" // todo: replace
+	uses_left = 1
+	max_uses = 1
+	skill_name = "wholeness_of_body"
+	pretty_name = "Wholeness Of Body"
+
+
+/datum/action/monk/wholeness_of_body/Trigger()
+	if(!uses_left)
+		to_chat(owner, "<span class='warning'>You must rest before you can use [pretty_name]!</span>")
+		return
+	if(owner.incapacitated())
+		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
+		return
+	var/mob/living/carbon/human/H = owner
+	var/amt_to_heal = martial.current_level * 2
+	H.adjustBruteLoss(-amt_to_heal)
+	H.adjustFireLoss(-amt_to_heal)
+	H.adjustToxLoss(-amt_to_heal)
+	H.adjustOxyLoss(-amt_to_heal)
+
 
 /obj/item/nullrod/monk_manual
 	name = "monk manual"

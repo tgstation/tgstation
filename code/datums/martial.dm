@@ -49,6 +49,29 @@
 		else
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
+	if(istype(D.martial, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = D.martial
+		var/defense_roll = M.defense_roll(0)
+		if(defense_roll)
+			playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
+			if(defense_roll == 2)
+				damage *= 2
+				D.visible_message("<span class='danger'>[A] has critically [atk_verb]ed [D]!</span>", \
+				"<span class='userdanger'>[A] has critically [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(A, D, "critically punched")
+			else
+				D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
+				"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(A, D, "punched")
+			D.apply_damage(damage, BRUTE, affecting)
+			return 1
+		else
+			playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
+			D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
+				"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+			add_logs(A, D, "attempted to [atk_verb]")
+			return 0
+
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \

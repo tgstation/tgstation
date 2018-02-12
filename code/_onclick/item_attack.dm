@@ -50,10 +50,15 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
-	if(force && user.has_trait(TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
-		return
-
+	if(force)
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(istype(D.martial, /datum/martial_art/monk))
+				to_chat(user, "<span class='warning'>Your vows as a Monk prevent you from using [src] in combat!</span>")
+				return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
 	else if(hitsound)
@@ -100,6 +105,45 @@
 					user.add_mob_blood(src)
 		return TRUE //successful attack
 
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
+	if(I.force)
+		if(martial && istype(martial, /datum/martial_art/monk))
+			var/datum/martial_art/monk/M = martial
+			var/defense_roll = M.defense_roll(0)
+			if(defense_roll)
+				var/dmg_to_deal = I.force
+				if(defense_roll == 2)
+					dmg_to_deal *= 2
+					send_item_attack_message(I, user, critical = TRUE)
+				else
+					send_item_attack_message(I, user)
+				apply_damage(dmg_to_deal, I.damtype)
+				if(I.damtype == BRUTE)
+					if(prob(33))
+						I.add_mob_blood(src)
+						var/turf/location = get_turf(src)
+						add_splatter_floor(location)
+						if(get_dist(user, src) <= 1)
+							user.add_mob_blood(src)
+				return TRUE
+			else
+				visible_message("<span class='danger'>[src] dodges the [I]!</span>",\
+				"<span class='userdanger'>[src] dodges the [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+				return FALSE
+
+		else
+			send_item_attack_message(I, user)
+			apply_damage(I.force, I.damtype)
+			if(I.damtype == BRUTE)
+				if(prob(33))
+					I.add_mob_blood(src)
+					var/turf/location = get_turf(src)
+					add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+						user.add_mob_blood(src)
+			return TRUE //successful attack
+
+
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(I.force < force_threshold || I.damtype == STAMINA)
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
@@ -119,12 +163,14 @@
 		else
 			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, critical = FALSE)
 	var/message_verb = "attacked"
 	if(I.attack_verb && I.attack_verb.len)
 		message_verb = "[pick(I.attack_verb)]"
 	else if(!I.force)
 		return
+	if(critical)
+		message_verb = "critically [message_verb]"
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
