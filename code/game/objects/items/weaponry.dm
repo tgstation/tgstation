@@ -203,6 +203,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 
 /obj/item/claymore/highlander/supermatter // THIS IS THE BEST IDEA
+	name = "supermatter claymore"
 	var/obj/machinery/power/supermatter_shard/shard
 
 /obj/item/claymore/highlander/supermatter/Initialize()
