@@ -27,8 +27,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 6
 	throwforce = 10
-	embed_chance = 25 // Look up "is_pointed" to see where we set stakes able to do this.
-	embedded_fall_chance = 0.5 // Chance it will fall out.
+	embedding = list("embed_chance" = 25, "embedded_fall_chance" = 0.5) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
+	//embed_chance = 25  // Look up "is_pointed" to see where we set stakes able to do this.
+	//embedded_fall_chance = 0.5 // Chance it will fall out.
 	obj_integrity = 30
 	max_integrity = 30
 	//embedded_fall_pain_multiplier
@@ -99,13 +100,13 @@
 	B.embedded_objects |= src
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
-	B.receive_damage(w_class * embedded_impact_pain_multiplier)
+	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
 
 	if (C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if (bloodsucker)
 			// If DEAD or TORPID...kill vamp!
-			if (C.stat == DEAD || C.status_flags & FAKEDEATH) // NOTE: This is the ONLY time a staked Torpid vamp dies.
+			if (C.stat == DEAD || C.has_trait(TRAIT_FAKEDEATH)) // NOTE: This is the ONLY time a staked Torpid vamp dies.
 				bloodsucker.FinalDeath()
 				return
 			else
@@ -114,7 +115,7 @@
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
-	return IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (status_flags & FAKEDEATH) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
+	return IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
 
 
 
@@ -152,8 +153,7 @@
 	force = 8
 	throwforce = 12
 	armour_penetration = 10
-	embed_chance = 50
-	embedded_fall_chance = 0 // Chance it will fall out.
+	embedding = list("embed_chance" = 50, "embedded_fall_chance" = 0) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	obj_integrity = 120
 	max_integrity = 120
 
@@ -168,7 +168,7 @@
 	siemens_coefficient = 1 //flags = CONDUCT // var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	force = 9
 	armour_penetration = 25
-	embed_chance = 55
+	embedding = list("embed_chance" = 65) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	obj_integrity = 300
 	max_integrity = 300
 

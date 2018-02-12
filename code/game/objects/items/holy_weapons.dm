@@ -10,7 +10,7 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)

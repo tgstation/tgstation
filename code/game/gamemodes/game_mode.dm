@@ -46,6 +46,8 @@
 
 	var/allow_persistence_save = TRUE
 
+	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
@@ -94,6 +96,7 @@
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
+	gamemode_ready = TRUE
 	return 1
 
 
@@ -161,8 +164,10 @@
 		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
-
+	log_game("Roundtype converted to [replacementmode.name]")
+	
 	. = 1
+
 	sleep(rand(600,1800))
 	if(!SSticker.IsRoundInProgress())
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
@@ -189,7 +194,7 @@
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
-	if(!SSticker.setup_done)
+	if(!SSticker.setup_done || !gamemode_ready)
 		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()

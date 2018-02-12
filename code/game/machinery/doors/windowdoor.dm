@@ -21,8 +21,8 @@
 	var/cable = 2
 	var/list/debris = list()
 
-/obj/machinery/door/window/New(loc, set_dir)
-	..()
+/obj/machinery/door/window/Initialize(mapload, set_dir)
+	. = ..()
 	if(set_dir)
 		setDir(set_dir)
 	if(src.req_access && src.req_access.len)
@@ -132,7 +132,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	if(!src.operating) //in case of emag
 		operating = TRUE
@@ -157,7 +157,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	operating = TRUE
 	do_animate("closing")
@@ -206,8 +206,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(!operating && density && !emagged)
-		emagged = TRUE
+	if(!operating && density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[src.base_state]spark", src)
 		playsound(src, "sparks", 75, 1)
@@ -258,7 +258,7 @@
 						WA.update_icon()
 						WA.created_name = src.name
 
-						if(emagged)
+						if(obj_flags & EMAGGED)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
@@ -329,8 +329,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/made_glow = FALSE
 
-/obj/machinery/door/window/clockwork/New(loc, set_dir)
-	..()
+/obj/machinery/door/window/clockwork/Initialize(mapload, set_dir)
+	. = ..()
 	for(var/i in 1 to 2)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)

@@ -26,13 +26,14 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
+	var/fingerprintslast
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
 
-	if(use_tag)
+	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
@@ -510,6 +511,7 @@
 	var/turf/curturf = get_turf(src)
 	if (curturf)
 		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Modify Transform"] = "?_src_=vars;[HrefToken()];modtransform=[REF(src)]"
 	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
 	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
 	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
@@ -523,24 +525,47 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
+/atom/Exited(atom/movable/AM)
+	SendSignal(COMSIG_ATOM_EXITED, AM)
+
 /atom/proc/return_temperature()
 	return
 
-// Default tool behaviors proc
+// Tool behavior procedure. Redirects to tool-specific procs by default.
+// You can override it to catch all tool interactions, for use in complex deconstruction procs.
+// Just don't forget to return ..() in the end.
+/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type)
+	switch(tool_type)
+		if(TOOL_CROWBAR)
+			return crowbar_act(user, tool)
+		if(TOOL_MULTITOOL)
+			return multitool_act(user, tool)
+		if(TOOL_SCREWDRIVER)
+			return screwdriver_act(user, tool)
+		if(TOOL_WRENCH)
+			return wrench_act(user, tool)
+		if(TOOL_WIRECUTTER)
+			return wirecutter_act(user, tool)
+		if(TOOL_WELDER)
+			return welder_act(user, tool)
 
-/atom/proc/crowbar_act(mob/user, obj/item/tool)
+// Tool-specific behavior procs. To be overridden in subtypes.
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/multitool_act(mob/user, obj/item/tool)
+/atom/proc/multitool_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/wrench_act(mob/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-/atom/proc/wirecutter_act(mob/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+	return
+
+/atom/proc/welder_act(mob/living/user, obj/item/tool)
 	return
 
 /atom/proc/GenerateTag()

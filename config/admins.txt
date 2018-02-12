@@ -35,7 +35,6 @@ Ss4gogeta0	=	Administrator
 Windarkata	=	Administrator
 Bricksqwad	=	Administrator
 Ishiro	=	Administrator
-Wicker0	=	Administrator
 hiimchros	=	Administrator
 InkPacket	=	Administrator
 

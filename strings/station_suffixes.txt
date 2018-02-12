@@ -16,6 +16,7 @@ Moon
 Channel
 Lab
 Star
+Post
 Complex
 Facility
 Zone

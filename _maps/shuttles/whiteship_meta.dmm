@@ -39,15 +39,11 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 28
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"af" = (
-/turf/template_noop,
-/area/template_noop)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -1634,20 +1630,20 @@
 
 (1,1,1) = {"
 aa
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ab
 ab
 ad
 ab
 ab
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1664,7 +1660,7 @@ au
 au
 au
 cA
-af
+aa
 "}
 (3,1,1) = {"
 ab
@@ -2025,9 +2021,9 @@ ab
 "}
 (24,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ac
 bj
 aB
@@ -2035,16 +2031,16 @@ bH
 bN
 bV
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 ac
 bk
 bs
@@ -2052,16 +2048,16 @@ bI
 bO
 bW
 ac
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
 aa
-af
-af
-af
+aa
+aa
+aa
 ba
 ac
 ac
@@ -2069,10 +2065,10 @@ ac
 ac
 ac
 ba
-af
-af
-af
-af
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
 aa
@@ -2092,19 +2088,19 @@ aa
 aa
 "}
 (28,1,1) = {"
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

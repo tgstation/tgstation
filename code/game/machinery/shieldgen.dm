@@ -59,9 +59,11 @@
 	color = "#FF0000"
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_MOB_LAYER
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
+
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -180,10 +182,10 @@
 			anchored = FALSE
 
 	else if(W.GetID())
-		if(allowed(user) && !emagged)
+		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
-		else if(emagged)
+		else if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
@@ -192,10 +194,10 @@
 		return ..()
 
 /obj/machinery/shieldgen/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, "sparks", 100, 1)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
@@ -343,10 +345,10 @@
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
-		if(allowed(user) && !emagged)
+		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
-		else if(emagged)
+		else if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
@@ -381,10 +383,10 @@
 	add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, "sparks", 100, 1)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")

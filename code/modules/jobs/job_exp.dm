@@ -228,7 +228,7 @@ GLOBAL_PROTECT(exp_to_update)
 							play_records[role] += minutes
 							if(announce_changes)
 								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
-				if(mob.mind.special_role && !mob.mind.var_edited)
+				if(mob.mind.special_role && !(mob.mind.datum_flags & DF_VAR_EDITED))
 					var/trackedrole = mob.mind.special_role
 					play_records[trackedrole] += minutes
 					if(announce_changes)

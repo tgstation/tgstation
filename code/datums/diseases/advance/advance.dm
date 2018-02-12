@@ -73,6 +73,9 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
+	if(carrier)
+		return
+
 	if(symptoms && symptoms.len)
 
 		if(!processing)

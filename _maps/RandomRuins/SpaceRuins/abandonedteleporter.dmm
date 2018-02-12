@@ -8,7 +8,7 @@
 "c" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "d" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating/airless,
@@ -81,12 +81,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
-"t" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/abandoned_tele)
 "u" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/airless,
@@ -127,10 +121,6 @@
 "B" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/space/abandoned_tele)
-"C" = (
-/obj/structure/lattice,
-/turf/open/space,
 /area/ruin/space/abandoned_tele)
 
 (1,1,1) = {"
@@ -181,7 +171,7 @@ c
 c
 k
 h
-t
+k
 c
 c
 a
@@ -254,7 +244,7 @@ r
 v
 m
 h
-C
+c
 c
 a
 c

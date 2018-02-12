@@ -17,8 +17,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
-/obj/machinery/button/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
@@ -103,12 +103,12 @@
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)

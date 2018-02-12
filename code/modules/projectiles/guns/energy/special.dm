@@ -89,7 +89,7 @@
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
-	unique_rename = 0
+	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
@@ -125,8 +125,11 @@
 	force = 12
 	sharpness = IS_SHARP
 	can_charge = 0
+
 	heat = 3800
-	toolspeed = 0.7 //plasmacutters can be used as welders for a few things, and are faster than standard welders
+	usesound = 'sound/items/welder.ogg'
+	tool_behaviour = TOOL_WELDER
+	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()

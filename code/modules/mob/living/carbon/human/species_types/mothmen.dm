@@ -13,6 +13,7 @@
 	liked_food = VEGETABLES | DAIRY
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
+	mutanteyes = /obj/item/organ/eyes/moth
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
@@ -21,27 +22,17 @@
 		if(!H.dna.features["moth_wings"])
 			H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
 			handle_mutant_bodyparts(H)
-	C.grant_language(/datum/language/moth)
-
-/datum/species/moth/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.remove_language(/datum/language/moth)
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_moth_name(gender)
+		return random_unique_moth_name()
 
-	var/randname = moth_name(gender)
+	var/randname = moth_name()
 
 	if(lastname)
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/moth/qualifies_for_rank(rank, list/features)
-	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
-		return FALSE
-	return TRUE
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	..()

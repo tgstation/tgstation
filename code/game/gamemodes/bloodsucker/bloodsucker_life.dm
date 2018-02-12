@@ -36,7 +36,7 @@
 			handle_healing_natural()
 
 		// Time to Level?
-		if (world.time > nextLevelTick && !(owner.current.status_flags & FAKEDEATH)) // No warning if already in Torpor.
+		if (world.time > nextLevelTick && !(owner.current.has_trait(TRAIT_FAKEDEATH))) // No warning if already in Torpor.
 			if (world.time > levelnotice_time)
 				levelnotice_time = world.time + 1500
 				to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
@@ -52,7 +52,7 @@
 		//	owner.current.bodytemperature += round((userturf.temperature - owner.current.bodytemperature) / 250, 0.01)   // Constantly blend toward the temperature of the current environment.
 
 		// If not alive...
-		if (owner.current.stat == DEAD || owner.current.status_flags & FAKEDEATH)
+		if (owner.current.stat == DEAD || owner.current.has_trait(TRAIT_FAKEDEATH))
 			// FINAL DEATH? (Fell asleep while staked)
 			if (owner.current.stat == DEAD && owner.current.AmStaked())
 				FinalDeath()

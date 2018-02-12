@@ -6,7 +6,6 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = TRUE
 	density = TRUE
-	on_blueprints = TRUE
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
@@ -33,7 +32,7 @@
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
-		stored = new /obj/structure/disposalconstruct(null, make_from = src)
+		stored = new /obj/structure/disposalconstruct(null, null , SOUTH , FALSE , src)
 
 	trunk_check()
 
@@ -190,7 +189,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	var/obj/structure/disposalholder/H = new()
+	var/obj/structure/disposalholder/H = new(src)
 	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()

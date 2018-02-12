@@ -80,7 +80,7 @@
 		to_chat(user, "<span class='notice'>You give in to the call of an ancient sleep. The light of this world fades...</span>")
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
-		user.status_flags |= FAKEDEATH //play dead
+		user.fakedeath("torpor") // user.status_flags |= FAKEDEATH //play dead
 		user.update_stat()
 		user.update_canmove()
 
@@ -126,14 +126,14 @@
 
 		// Healed Enough to SLEEP instead of DIE?
 		if (user.stat == DEAD && user.can_be_revived())
-			user.status_flags |= FAKEDEATH //play dead
+			user.fakedeath("torpor") // user.status_flags |= FAKEDEATH //play dead
 			user.revive(0)
 			to_chat(user, "<span class='warning'>You crawl back from the brink of Final Death. You will remain torpid until your wounds recover.</span>")
 
 		sleep (10) // Sleep 1.5 second...
 
 		// Not Dead Anymore? Break WITHOUT healing complete.
-		if (!(user.status_flags & FAKEDEATH || user.stat == DEAD))
+		if (!(user.has_trait(TRAIT_FAKEDEATH) || user.stat == DEAD))
 			break
 
 		// Not able to heal anymore? Hard abort!
@@ -220,7 +220,8 @@
 
 // ABORT SPELL //	// USE THIS WHEN FAILING MID-SPELL. NOT THE SAME AS DISABLING BY CLICKING BUTTON //
 /obj/effect/proc_holder/spell/bloodsucker/torpidsleep/cancel_spell(mob/living/user = usr, dispmessage="")
-	user.status_flags &= ~(FAKEDEATH) // Remove it
+	user.cure_fakedeath("torpor") // user.status_flags &= ~(FAKEDEATH) // Remove it
+
 	..() // Set Active FALSE
 
 

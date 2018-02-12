@@ -206,7 +206,7 @@ FORUMURL https://fulpstation.com
 RULESURL https://fulpstation.com/showthread.php?tid=342
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+# GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
