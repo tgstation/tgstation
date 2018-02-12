@@ -1371,7 +1371,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A snappy way to end the day."
 	color = "ccff99"
 	boozepwr = 25
-	taste_description = "chocolate and mint dancing around your mouth"
+	taste_description = "a slap on the face in the best possible way"
 	glass_icon_state = "glass_white"
 	glass_name = "Stinger"
 	glass_desc = "You wonder what would happen if you pointed this at a heat source..."
