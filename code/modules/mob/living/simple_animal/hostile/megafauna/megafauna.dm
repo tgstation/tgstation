@@ -64,7 +64,10 @@
 			spawn_crusher_loot()
 			crusher_kill = TRUE
 		if(!admin_spawned)
-			SSblackbox.record_feedback("tally", "megafauna_kills", 1, "[initial(name)]")
+			if(crusher_kill)
+				SSblackbox.record_feedback("tally", "megafauna_kills_crusher", 1, "[initial(name)]")
+			else
+				SSblackbox.record_feedback("tally", "megafauna_kills", 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type, score_type, crusher_kill)
 		..()
@@ -120,7 +123,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusherkill)
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
 		return FALSE
 
@@ -136,7 +139,7 @@
 				var/suffixm = BOSS_KILL_MEDAL
 				UnlockMedal("Boss [suffixm]",C)
 				UnlockMedal("[medaltype] [suffixm]",C)
-				if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+				if(crusherkill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
 					UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
