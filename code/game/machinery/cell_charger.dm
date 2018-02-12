@@ -63,9 +63,14 @@
 			return
 		return ..()
 
-/obj/machinery/cell_charger/Destroy()
+/obj/machinery/cell_charger/deconstruct()
 	if(charging)
 		charging.forceMove(drop_location())
+	return ..()
+
+/obj/machinery/cell_charger/Destroy()
+	if(charging)
+		QDEL_NULL(charging)
 	return ..()
 
 /obj/machinery/cell_charger/proc/removecell()
