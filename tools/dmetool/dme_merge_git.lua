@@ -80,7 +80,11 @@ local function construct_file_out(DME)
 	end
 	local start_defines = get_highest_key(thing)+1
 	thing[start_defines] = "// BEGIN_INCLUDE"
+<<<<<<< HEAD
 	table.sort(DME.includes, cmp)
+=======
+	table.sort(DME.includes, function(a, b) return tostring(a) < tostring(b) end)
+>>>>>>> 91b6145f11884260c572414bcd979cd4feb93bdb
 	for k,v in pairs(DME.includes) do
 		thing[start_defines+k] = "#include \""..v.."\""
 	end
@@ -99,7 +103,11 @@ for k,v in pairs(int.includes) do
 end
 local out = construct_file_out(inn)
 local fa = io.open(output, "w") --clear out the file!
+<<<<<<< HEAD
 fa:write("")
+=======
+fa:write(" ")
+>>>>>>> 91b6145f11884260c572414bcd979cd4feb93bdb
 fa:close()
 local fb = io.open(output, "a")
 for k,v in pairs(out) do
