@@ -17,7 +17,7 @@ automatically by GUI tools like TortoiseGit and GitHub for Windows, but
  
 ## Current Merge Drivers
 
-* **dme**: runs DMEtool to auto merge the DMEs. Requirea Lua 5.1+ or LuaJIT 2.0+
+* **dme**: runs DMEtool to auto merge the DMEs. Requires Lua 5.1+ or LuaJIT 2.0+
 
 ## Adding New Hooks
 

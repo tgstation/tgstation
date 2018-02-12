@@ -56,6 +56,20 @@ local function table_has_thing(tab, thing)
 	return false
 end
 
+local function cmp(a,b) --thank you RhodiumToad on freenode's #lua for this!
+    local f1,s1,p1 = string.gmatch(a,"([^\\/]*[\\/]?)")
+    local f2,s2,p2 = string.gmatch(b,"([^\\/]*[\\/]?)")
+    repeat
+        p1 = f1(s1,p1)
+        p2 = f2(s2,p2)
+    until p1 ~= p2 or p1 == nil
+    if p1 == nil or p2 == nil then return p2 ~= nil end
+    if p2:sub(-1):match("[\\/]") ~= p1:sub(-1):match("[\\/]") then
+        return p2:sub(-1):match("[\\/]")
+    end
+    return (p1 < p2)
+end
+
 local function construct_file_out(DME)
 	local thing = {}
 	for k,v in pairs(DME.comments) do
@@ -66,7 +80,7 @@ local function construct_file_out(DME)
 	end
 	local start_defines = get_highest_key(thing)+1
 	thing[start_defines] = "// BEGIN_INCLUDE"
-	table.sort(DME.includes, function(a, b) return tostring(a) < tostring(b) end)
+	table.sort(DME.includes, cmp)
 	for k,v in pairs(DME.includes) do
 		thing[start_defines+k] = "#include \""..v.."\""
 	end
@@ -85,7 +99,7 @@ for k,v in pairs(int.includes) do
 end
 local out = construct_file_out(inn)
 local fa = io.open(output, "w") --clear out the file!
-fa:write(" ")
+fa:write("")
 fa:close()
 local fb = io.open(output, "a")
 for k,v in pairs(out) do
