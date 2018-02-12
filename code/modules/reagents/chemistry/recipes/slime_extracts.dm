@@ -468,6 +468,18 @@
 	new /obj/item/slimepotion/slime/sentience(get_turf(holder.my_atom))
 	..()
 
+/datum/chemical_reaction/slime/renaming
+	name = "Renaming Potion"
+	id = "m_renaming_potion"
+	required_container = /obj/item/slime_extract/lightpink
+	required_reagents = list("water" = 1)
+	required_other = 1
+
+/datum/chemical_reaction/slime/renaming/on_reaction(datum/reagents/holder)
+	new /obj/item/slimepotion/slime/renaming(get_turf(holder.my_atom))
+	..()
+
+
 //Adamantine
 /datum/chemical_reaction/slime/adamantine
 	name = "Adamantine"

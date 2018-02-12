@@ -327,7 +327,7 @@
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			var/obj/item/slimepotion/slime/docility/O = new(null, 1)
+			var/obj/item/slimepotion/slime/renaming/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, 1)
@@ -824,6 +824,39 @@
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
+
+/obj/item/slimepotion/slime/renaming
+	name = "renaming potion"
+	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potgreen"
+
+	var/being_used = FALSE
+
+/obj/item/slimepotion/slime/renaming/attack(mob/living/M, mob/user)
+	if(being_used || !ismob(M))
+		return
+	if(!M.ckey) //only works on animals that aren't player controlled
+		to_chat(user, "<span class='warning'>[M] is not self aware, and cannot pick its own name.</span>")
+		return
+
+	being_used = TRUE
+
+	var/new_name = stripped_input(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN)
+
+	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name)
+		being_used = FALSE
+		return
+
+	M.visible_message("<span class='notice'>[M] has a new name, [new_name].</span>", "<span class='notice'>Your old name of [M.real_name] fades away, and your new name [new_name] anchors itself in your mind.</span>")
+	message_admins("[key_name_admin(M)] used [src] to rename themselves from <span class='name'>[M.real_name]</span> to <span class='name'>[new_name]</span>.")
+
+
+	// pass null as first arg to not update records or ID/PDA
+	M.fully_replace_character_name(null, new_name)
+
+	qdel(src)
+
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
