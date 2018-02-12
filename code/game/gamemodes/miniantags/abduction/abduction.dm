@@ -1,10 +1,6 @@
 /datum/game_mode
 	var/list/datum/mind/abductors = list()
 
-// LANDMARKS
-/obj/effect/landmark/abductor
-	var/team_number = 1
-
 /obj/effect/landmark/abductor/agent
 	icon_state = "abductor_agent"
 /obj/effect/landmark/abductor/scientist

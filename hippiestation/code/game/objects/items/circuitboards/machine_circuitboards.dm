@@ -44,5 +44,5 @@
 							/obj/item/stack/sheet/glass = 1,
 							/obj/item/stock_parts/micro_laser = 5,
 							/obj/item/stock_parts/scanning_module = 4,
-							/obj/item/ore/bluespace_crystal/refined = 3,//this thing is an utter SHIT to make
+							/obj/item/stack/ore/bluespace_crystal = 3,//this thing is an utter SHIT to make
 							/obj/item/stock_parts/cell = 1)

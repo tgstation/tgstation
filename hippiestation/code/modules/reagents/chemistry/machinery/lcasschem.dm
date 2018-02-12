@@ -250,7 +250,7 @@
 		icon_state = "blue"
 
 /obj/machinery/chem/bluespace/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ore/bluespace_crystal/refined))
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
 		. = 1 //no afterattack
 		if(crystal_amt >= 10)
 			to_chat(user, "<span class='warning'>The [src] is full!</span>")

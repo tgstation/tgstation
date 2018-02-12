@@ -8,7 +8,7 @@
 	if(vamp_req)
 		if(!is_vampire(user))
 			return FALSE
-		var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
 		if(!V)
 			return FALSE
 		if(V.usable_blood < blood_used)
@@ -35,7 +35,7 @@
 			return
 
 		// enforce blood
-		var/datum/antagonist/vampire/vampire = usr.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/vampire = usr.mind.has_antag_datum(/datum/antagonist/vampire)
 
 		if(blood_used <= vampire.usable_blood)
 			vampire.usable_blood -= blood_used
@@ -89,7 +89,7 @@
 	var/mob/living/carbon/U = user
 	U.stuttering = 0
 
-	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = U.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V) //sanity check
 		return
 	for(var/i = 1 to 5)
@@ -159,11 +159,11 @@
 	var/mob/living/user = loc
 	if(!ishuman(user) || !is_vampire(user))
 		return
-	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
 	name = "[initial(name)] ([V.iscloaking ? "Deactivate" : "Activate"])"
 
 /obj/effect/proc_holder/spell/self/cloak/cast(list/targets, mob/user = usr)
-	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V)
 		return
 	V.iscloaking = !V.iscloaking
@@ -356,7 +356,7 @@
 	if(!is_vampire(user) || !isliving(user))
 		revert_cast()
 		return
-	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V)
 		return
 	if(QDELETED(V.coat) || !V.coat)
@@ -379,7 +379,7 @@
 	var/mob/living/simple_animal/hostile/vampire_bat/bat
 
 /obj/effect/proc_holder/spell/self/batform/cast(list/targets, mob/user = usr)
-	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = user.mind.has_antag_datum(/datum/antagonist/vampire)
 	if(!V)
 		return FALSE
 	if(!bat)

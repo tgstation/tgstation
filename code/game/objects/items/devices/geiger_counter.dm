@@ -170,11 +170,9 @@
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
 			return 0
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
-		playsound(user, I.usesound, 50, 1)
-		if(!do_after(user, 40*I.toolspeed, target = user))
+		if(!I.use_tool(src, user, 40, volume=50))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
-		playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 		obj_flags &= ~EMAGGED
 		radiation_count = 0
 		update_icon()
@@ -183,7 +181,7 @@
 		return ..()
 
 /obj/item/device/geiger_counter/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return ..()
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")

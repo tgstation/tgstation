@@ -318,6 +318,11 @@ h1.alert, h2.alert		{color: #000000;}
 .green					{color: #03ff39;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000;}
+
+.cultitalic				{color: #960000;	font-style: italic;}
+.cultbold				{color: #960000; font-style: italic; font-weight: bold;}
+.cultboldtalic				{color: #960000; font-weight: bold; font-size: 24px;}
+
 .cultlarge				{color: #960000; font-weight: bold; font-size: 24px;}
 .narsie					{color: #960000; font-weight: bold; font-size: 120px;}
 .narsiesmall			{color: #960000; font-weight: bold; font-size: 48px;}

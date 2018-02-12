@@ -625,6 +625,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				if("moth_wings")
+					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
@@ -1464,8 +1466,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
-		if((abs(BODYTEMP_NORMAL - H.bodytemperature) <= 5) && (abs(BODYTEMP_NORMAL - loc_temp) <= 25))
-			return //Performance saver
 		var/natural = 0
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()

@@ -724,8 +724,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
-		if(do_after(user, 60*I.toolspeed, target = src))
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
@@ -737,21 +737,19 @@ GLOBAL_LIST_EMPTY(allCasters)
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = I
 		if(stat & BROKEN)
-			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] is repairing [src].", \
-								"<span class='notice'>You begin repairing [src]...</span>", \
-								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, 1, target = src))
-					if(!WT.isOn() || !(stat & BROKEN))
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-					obj_integrity = max_integrity
-					stat &= ~BROKEN
-					update_icon()
+			if(!I.tool_start_check(user, amount=0))
+				return
+			user.visible_message("[user] is repairing [src].", \
+							"<span class='notice'>You begin repairing [src]...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 40, volume=50))
+				if(!(stat & BROKEN))
+					return
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				obj_integrity = max_integrity
+				stat &= ~BROKEN
+				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else

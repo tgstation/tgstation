@@ -18,7 +18,7 @@
 /mob/living/carbon/human/handle_fire()
 	. = ..()
 	if(mind)
-		var/datum/antagonist/vampire/L = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/L = mind.has_antag_datum(/datum/antagonist/vampire)
 		if(on_fire && stat == DEAD && L && !L.get_ability(/datum/vampire_passive/full))
 			dust()
 
@@ -32,7 +32,7 @@
 
 /mob/living/carbon/proc/vampsight()
 	if(mind)
-		var/datum/antagonist/vampire/V = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/V = mind.has_antag_datum(/datum/antagonist/vampire)
 		if(V)
 			if(V.get_ability(/datum/vampire_passive/full))
 				sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)

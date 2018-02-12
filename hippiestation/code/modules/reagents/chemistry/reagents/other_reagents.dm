@@ -59,7 +59,7 @@
 /datum/reagent/holywater/on_mob_life(mob/living/M)
 	. = ..()
 	if(ishuman(M) && is_vampire(M) && prob(80))
-		var/datum/antagonist/vampire/V = M.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/V = M.mind.has_antag_datum(/datum/antagonist/vampire)
 		if(!V.get_ability(/datum/vampire_passive/full))
 			switch(current_cycle)
 				if(1 to 4)

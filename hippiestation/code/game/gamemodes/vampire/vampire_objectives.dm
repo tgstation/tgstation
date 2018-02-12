@@ -6,7 +6,7 @@
 /datum/objective/blood/check_completion()
 	if(!owner)
 		return FALSE
-	var/datum/antagonist/vampire/vamp = owner.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/vamp = owner.has_antag_datum(/datum/antagonist/vampire)
 	if(vamp && target_amount <= vamp.total_blood)
 		return TRUE
 	else

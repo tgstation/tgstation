@@ -116,8 +116,8 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	clumsy_check = 0
 	item_flags = NONE
+	clumsy_check = FALSE
 	pin = /obj/item/device/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
