@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/upgraded = TRUE			// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
+	var/debug = FALSE			// If it's upgraded and can clone, even without config settings.
 	var/current_category = null
 	var/list/program			// Currently loaded save, in form of list
 
@@ -15,6 +16,11 @@
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE
 	can_clone = TRUE
+
+/obj/item/device/integrated_circuit_printer/debug //translation: "integrated_circuit_printer/local_server"
+	name = "debug circuit printer"
+	debug = TRUE
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/device/integrated_circuit_printer/Initialize()
 	. = ..()
@@ -53,17 +59,20 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	var/HTML = "<center><h2>Integrated Circuit Printer</h2></center><br>"
-	HTML += "Metal: [materials.total_amount]/[materials.max_amount].<br><br>"
+	if(debug)
+		HTML += "<center><h3>DEBUG PRINTER -- Infinite materials. Cloning available.</h3></center>"
+	else
+		HTML += "Metal: [materials.total_amount]/[materials.max_amount].<br><br>"
 
-	if(CONFIG_GET(flag/ic_printing))
+	if(CONFIG_GET(flag/ic_printing) && !debug)
 		HTML += "Assembly cloning: [can_clone ? "Available": "Unavailable"].<br>"
 
-	HTML += "Circuits available: [upgraded ? "Advanced":"Regular"]."
+	HTML += "Circuits available: [upgraded || debug ? "Advanced":"Regular"]."
 	if(!upgraded)
 		HTML += "<br>Crossed out circuits mean that the printer is not sufficiently upgraded to create that circuit."
 
 	HTML += "<hr>"
-	if(can_clone && CONFIG_GET(flag/ic_printing))
+	if((can_clone && CONFIG_GET(flag/ic_printing)) || debug)
 		HTML += "Here you can load script for your assembly.<br>"
 		HTML += " <A href='?src=[REF(src)];print=load'>{Load Program}</a> "
 		if(!program)
@@ -121,7 +130,7 @@
 
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
-		if(!materials.use_amount_type(cost, MAT_METAL))
+		if(!debug && !materials.use_amount_type(cost, MAT_METAL))
 			to_chat(usr, "<span class='warning'>You need [cost] metal to build that!</span>")
 			return TRUE
 
@@ -133,7 +142,7 @@
 			E.update_icon()
 
 	if(href_list["print"])
-		if(!CONFIG_GET(flag/ic_printing))
+		if(!CONFIG_GET(flag/ic_printing) && !debug)
 			to_chat(usr, "<span class='warning'>CentCom has disabled printing of custom circuitry due to recent allegations of copyright infringement.</span>")
 			return
 		switch(href_list["print"])
@@ -171,7 +180,7 @@
 					to_chat(usr, "<span class='warning'>This program uses unknown component designs. Printer upgrade is required to proceed.</span>")
 				else
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-					if(materials.use_amount_type(program["metal_cost"], MAT_METAL))
+					if(debug || materials.use_amount_type(program["metal_cost"], MAT_METAL))
 						SScircuit.load_electronic_assembly(get_turf(src), program)
 						to_chat(usr,  "<span class='notice'>Assembly has been printed.</span>")
 					else
