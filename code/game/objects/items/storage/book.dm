@@ -5,10 +5,14 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	storage_slots = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
+
+/obj/item/storage/book/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
@@ -204,8 +208,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	name = "Syndicate Tome"
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/uses = 1
-
-
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)

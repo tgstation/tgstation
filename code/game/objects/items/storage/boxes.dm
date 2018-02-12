@@ -64,9 +64,6 @@
 	if(!ispath(foldable))
 		return
 
-	//Close any open UI windows first
-	close_all()
-
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 	var/obj/item/I = new foldable
 	qdel(src)
@@ -360,7 +357,11 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	can_hold = list(/obj/item/reagent_containers/food/snacks/donkpocket)
+
+/obj/item/storage/box/donkpockets/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
@@ -370,9 +371,13 @@
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
-	storage_slots = 7
-	can_hold = list(/obj/item/reagent_containers/food/snacks/monkeycube)
 	illustration = null
+
+/obj/item/storage/box/monkeycubes/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
@@ -522,12 +527,15 @@
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
-	storage_slots = 8
-	can_hold = list(/obj/item/toy/snappop)
+
+/obj/item/storage/box/snappops/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/toy/snappop))
+	STR.max_items = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
-	for(var/i in 1 to storage_slots)
-		new /obj/item/toy/snappop(src)
+	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -535,14 +543,17 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
-	storage_slots = 10
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	can_hold = list(/obj/item/match)
+
+/obj/item/storage/box/matches/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 10
+	STR.can_hold = typecacheof(list(/obj/item/match))
 
 /obj/item/storage/box/matches/PopulateContents()
-	for(var/i in 1 to storage_slots)
-		new /obj/item/match(src)
+	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
@@ -557,10 +568,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
-	storage_slots=21
-	can_hold = list(/obj/item/light/tube, /obj/item/light/bulb)
-	max_combined_w_class = 21
-	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
+
+/obj/item/storage/box/lights/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 21
+	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
+	STR.max_combined_w_class = 21
+	STR.click_gather = TRUE
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)

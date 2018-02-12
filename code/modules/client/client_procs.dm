@@ -609,7 +609,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
-	
+
 /client/proc/add_system_note(system_ckey, message)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)

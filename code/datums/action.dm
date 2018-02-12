@@ -21,13 +21,16 @@
 	var/mob/owner
 
 /datum/action/New(Target)
-	target = Target
+	link_to(Target)
 	button = new
 	button.linked_action = src
 	button.name = name
 	button.actiontooltipstyle = buttontooltipstyle
 	if(desc)
 		button.desc = desc
+
+/datum/action/proc/link_to(Target)
+	target = Target
 
 /datum/action/Destroy()
 	if(owner)
@@ -689,3 +692,25 @@
 	else
 		owner.remove_alt_appearance("smallsprite")
 		small = FALSE
+
+/datum/action/item_action/storage_gather_mode
+	name = "Switch gathering mode"
+	desc = "Switches the gathering mode of a storage object."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "storage_gather_switch"
+
+/datum/action/item_action/storage_gather_mode/ApplyIcon(obj/screen/movable/action_button/current_button)
+	. = ..()
+	var/old_layer = target.layer
+	var/old_plane = target.plane
+	target.layer = FLOAT_LAYER //AAAH
+	target.plane = FLOAT_PLANE //^ what that guy said
+	current_button.cut_overlays()
+	current_button.add_overlay(target)
+	target.layer = old_layer
+	target.plane = old_plane
+	current_button.appearance_cache = target.appearance
+
+/datum/action/item_action/storage_gather_mode/Trigger()
+	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
+	STR.gather_mode_switch(owner)
