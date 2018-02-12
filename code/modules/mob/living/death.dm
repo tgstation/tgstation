@@ -74,7 +74,7 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-		if(!SSticker.first_death.len)
+		if(!suiciding && !SSticker.first_death.len) //suicides don't clog up the list, only BRUTAL deaths here
 			var/list/L = list()
 			var/area/A = get_area(src)
 			L["name"] = name
