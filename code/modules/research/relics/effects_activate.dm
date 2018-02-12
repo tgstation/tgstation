@@ -85,7 +85,7 @@
 	QDEL_LIST_IN(dupes, rand(10, 100))
 
 /datum/relic_effect/activate/bomb
-	firstname = list("exploding","fragmenting","fulminating","thermic","blast")
+	firstname = list("exploding","fragmenting","fulminating","thermic","blast","nitro")
 	lastname = list("bomb","surprise","explodinator","destructor","obliteration")
 	var/light = 0
 	var/heavy = 0
