@@ -24,6 +24,7 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	can_be_held = TRUE
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
