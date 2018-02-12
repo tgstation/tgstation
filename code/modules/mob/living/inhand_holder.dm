@@ -47,7 +47,7 @@
 	..()
 	release()
 
-/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)//set true when not relying on DROPDEL_1
+/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
 	if(held_mob)
 		var/mob/living/m = held_mob
 		m.forceMove(get_turf(m))
@@ -61,7 +61,7 @@
 		qdel(src)
 
 /obj/item/clothing/head/mob_holder/relaymove(mob/user)
-	release(TRUE)
+	release()
 
 /obj/item/clothing/head/mob_holder/container_resist()
-	release(TRUE)
+	release()
