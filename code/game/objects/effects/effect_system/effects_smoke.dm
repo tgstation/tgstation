@@ -269,14 +269,14 @@
 	chemholder = null
 	return ..()
 
-/datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0, _spread_delay = 1)
+/datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = FALSE, _spread_delay = 1)
 	if(isturf(loca))
 		location = loca
 	else
 		location = get_turf(loca)
 	spread_delay = _spread_delay
 	amount = radius
-	carry.copy_to(chemholder, carry.total_volume, 4) //The smoke holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
 
 	if(!silent)
 		var/contained = ""

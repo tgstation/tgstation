@@ -441,7 +441,7 @@
 	name = "Chocolate Pudding"
 	id = "chocolatepudding"
 	results = list("chocolatepudding" = 20)
-	required_reagents = list("cocoa" = 5, "milk" = 5, "eggyolk" = 5)
+	required_reagents = list("chocolate_milk" = 10, "eggyolk" = 5)
 
 /datum/chemical_reaction/vanillapudding
 	name = "Vanilla Pudding"

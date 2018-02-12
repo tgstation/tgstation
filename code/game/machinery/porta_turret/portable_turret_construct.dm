@@ -63,21 +63,15 @@
 				return
 
 			else if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = I
-				if(!WT.isOn())
-					return
-				if(WT.get_fuel() < 5) //uses up 5 fuel.
-					to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
+				if(!I.tool_start_check(user, amount=5)) //uses up 5 fuel
 					return
 
-				playsound(loc, WT.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You start to remove the turret's interior metal armor...</span>")
-				if(do_after(user, 20*I.toolspeed, target = src))
-					if(!WT.isOn() || !WT.remove_fuel(5, user))
-						return
+
+				if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 					build_step = PTURRET_BOLTED
 					to_chat(user, "<span class='notice'>You remove the turret's interior metal armor.</span>")
-					new /obj/item/stack/sheet/metal( loc, 2)
+					new /obj/item/stack/sheet/metal(drop_location(), 2)
 					return
 
 
@@ -133,17 +127,11 @@
 
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = I
-				if(!WT.isOn())
+				if(!I.tool_start_check(user, amount=5))
 					return
-				if(WT.get_fuel() < 5)
-					to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
 
-				playsound(loc, WT.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>You begin to weld the turret's armor down...</span>")
-				if(do_after(user, 30*I.toolspeed, target = src))
-					if(!WT.isOn() || !WT.remove_fuel(5, user))
-						return
+				if(I.use_tool(src, user, 30, volume=50, amount=5))
 					build_step = PTURRET_EXTERNAL_ARMOUR_ON
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
 

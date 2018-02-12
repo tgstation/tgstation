@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "Prevents megafauna (and other large things like spiders and mulebots) from going into machines"

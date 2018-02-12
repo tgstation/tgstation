@@ -418,16 +418,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
-			var/mob/dead/observer/new_stand = null
-			if(candidates.len)
-				new_stand = pick(candidates)
+			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, null, FALSE, 100)
+			if(LAZYLEN(candidates))
+				var/client/C = pick(candidates)
 				to_chat(G, "<span class='holoparasite'>Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance.</span>")
 				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.namedatum.colour]\">[G.real_name]</font> has been successfully reset.</span>")
-				message_admins("[key_name_admin(new_stand)] has taken control of ([key_name_admin(G)])")
+				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(G)])")
 				G.ghostize(0)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
-				G.key = new_stand.key
+				G.key = C.key
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")
@@ -494,11 +493,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used = TRUE
 	to_chat(user, "[use_message]")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
-	var/mob/dead/observer/theghost = null
 
-	if(candidates.len)
-		theghost = pick(candidates)
-		spawn_guardian(user, theghost.key)
+	if(LAZYLEN(candidates))
+		var/client/C = pick(candidates)
+		spawn_guardian(user, C.key)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE

@@ -558,7 +558,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
-			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+			if (L.getorganslot(ORGAN_SLOT_HEART))
+				helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+			else
+				helptext = "<span class='warning'>Subject unsuitable for experiments.</span>"
 
 	to_chat(user, "<span class='notice'>Probing result:</span>[species]")
 	to_chat(user, "[helptext]")
@@ -680,7 +683,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))

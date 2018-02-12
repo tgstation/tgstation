@@ -183,6 +183,10 @@
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
+				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
+					WD = new/obj/structure/window/shuttle(drop_location())
+				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
+					WD = new/obj/structure/window/plastitanium(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)

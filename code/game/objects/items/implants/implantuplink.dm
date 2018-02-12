@@ -11,7 +11,7 @@
 	. = ..()
 	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
 
-/obj/item/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/uplink/implant(mob/living/target, mob/user, silent = FALSE)
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 	if(hidden_uplink)
 		for(var/X in target.implants)

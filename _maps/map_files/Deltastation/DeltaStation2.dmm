@@ -5807,8 +5807,7 @@
 "amD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -8649,8 +8648,7 @@
 /area/maintenance/port/fore)
 "asU" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -9954,8 +9952,7 @@
 /area/maintenance/port/fore)
 "avq" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar/red,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -10795,8 +10792,7 @@
 "axl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -11852,8 +11848,7 @@
 /area/quartermaster/storage)
 "azA" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/bot,
@@ -12521,7 +12516,6 @@
 /area/engine/atmospherics_engine)
 "aBd" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/sign/directions/engineering{
@@ -12533,7 +12527,6 @@
 /area/engine/atmospherics_engine)
 "aBe" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12885,8 +12878,7 @@
 /area/quartermaster/warehouse)
 "aBN" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -16688,8 +16680,7 @@
 "aJv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -21995,7 +21986,6 @@
 "aUv" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -22033,7 +22023,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -22166,8 +22155,7 @@
 /area/security/execution/education)
 "aUJ" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
@@ -29175,8 +29163,7 @@
 "bjo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -40035,7 +40022,7 @@
 	pixel_x = 4;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEg" = (
@@ -40149,7 +40136,7 @@
 	pixel_x = -3;
 	req_access_txt = "16"
 	},
-/obj/effect/landmark/tripai,
+/obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bEn" = (
@@ -46466,7 +46453,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -47782,7 +47768,7 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access_txt = "65"
+	req_access = list(65)
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51839,8 +51825,6 @@
 /area/crew_quarters/heads/captain/private)
 "cbf" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/suit/armor/vest/capcarapace,
-/obj/item/clothing/head/caphat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -52711,7 +52695,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/card/id/captains_spare,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -53518,7 +53501,7 @@
 	},
 /area/tcommsat/server)
 "cex" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -56888,8 +56871,7 @@
 /area/maintenance/starboard)
 "clv" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/flashlight,
@@ -61360,8 +61342,7 @@
 /area/maintenance/starboard)
 "cuH" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/clothing/shoes/jackboots,
 /obj/item/device/radio,
@@ -62931,7 +62912,6 @@
 	},
 /area/library)
 "cyd" = (
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -63393,8 +63373,7 @@
 /area/maintenance/starboard)
 "cza" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -68678,8 +68657,7 @@
 "cJM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -70451,8 +70429,7 @@
 /area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -81522,7 +81499,6 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood,
 /area/maintenance/starboard/aft)
 "dkT" = (
@@ -84599,7 +84575,6 @@
 "drv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -85926,7 +85901,6 @@
 	},
 /area/science/explab)
 "duz" = (
-/obj/effect/landmark/revenantspawn,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -90144,8 +90118,7 @@
 "dCR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -90604,21 +90577,24 @@
 	},
 /area/medical/morgue)
 "dDM" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dDN" = (
-/obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/medical/morgue)
 "dDO" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/revenantspawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -90627,6 +90603,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 2
 	},
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -91119,7 +91098,7 @@
 "dEV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
 "dEW" = (
 /turf/open/floor/plasteel/neutral,
@@ -92420,7 +92399,6 @@
 /area/medical/morgue)
 "dHG" = (
 /obj/structure/bodycontainer/morgue,
-/obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -92446,6 +92424,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
 "dHK" = (
@@ -93102,6 +93081,9 @@
 "dIW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -93115,6 +93097,9 @@
 	},
 /obj/structure/sign/poster/official/bless_this_spess{
 	pixel_y = -32
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -93133,15 +93118,18 @@
 	},
 /area/medical/morgue)
 "dIZ" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/revenantspawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dJa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct/small,
-/obj/effect/landmark/event_spawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dJb" = (
@@ -94157,8 +94145,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -94529,8 +94516,7 @@
 "dLT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar/red,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -98786,8 +98772,7 @@
 "dUX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -99097,7 +99082,6 @@
 "dVK" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/dark,
 /area/library/abandoned)
 "dVL" = (
@@ -99427,7 +99411,6 @@
 	},
 /area/medical/virology)
 "dWz" = (
-/obj/effect/landmark/revenantspawn,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/medical/virology)
@@ -100969,10 +100952,11 @@
 /turf/closed/wall/r_wall,
 /area/chapel/office)
 "dZO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
+	dir = 4;
 	id = "cremawheat"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -102089,7 +102073,6 @@
 /area/shuttle/escape)
 "ecg" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -105039,6 +105022,45 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"QOn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
+"QOo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
+"QOp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/neutral,
+/area/medical/morgue)
+"QOq" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/medical/morgue)
+"QOr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -126547,7 +126569,7 @@ dml
 dsX
 djb
 dvU
-dxC
+drv
 dru
 dhD
 aad
@@ -135026,7 +135048,7 @@ doy
 dqo
 drM
 dtf
-duB
+duz
 dwd
 djA
 dzp
@@ -135935,7 +135957,7 @@ aaa
 aaa
 aaa
 aaa
-aci
+aaa
 aaa
 aaa
 aaa
@@ -139535,7 +139557,7 @@ aaa
 aaa
 aaa
 aaa
-aeu
+aaa
 aaa
 aid
 aiA
@@ -143893,7 +143915,7 @@ aad
 aaa
 acF
 aaa
-adu
+aaa
 aaa
 aaa
 aaa
@@ -145827,10 +145849,10 @@ dzR
 dAU
 dCA
 dDM
-dDO
+QOp
 dGl
-dHG
-dDN
+dHH
+QOq
 dCy
 dKZ
 dMy
@@ -146083,7 +146105,7 @@ dym
 dzS
 dAV
 dCB
-dDJ
+QOn
 dEV
 dGm
 dHH
@@ -146341,10 +146363,10 @@ dzT
 dAW
 dCB
 dDN
-dDN
+dEW
 dGl
-dHG
-dDO
+dHH
+QOr
 dCy
 dKX
 dMA
@@ -146363,7 +146385,7 @@ aaa
 aaa
 aaa
 aaa
-dUD
+aaa
 aaa
 aaa
 aaa
@@ -146597,7 +146619,7 @@ dyo
 dzU
 dAX
 dCB
-dDJ
+QOn
 dEW
 dGn
 dHI
@@ -146855,9 +146877,9 @@ dzV
 dAY
 dCB
 dDO
-dDN
+dEW
 dGl
-dHG
+dHH
 dIZ
 dCy
 dKZ
@@ -152153,7 +152175,7 @@ aaa
 aaa
 aaa
 aaa
-aAM
+aaa
 aaa
 aaa
 aaa
@@ -152699,7 +152721,7 @@ aaa
 aaa
 aaa
 aaa
-bAa
+aaa
 aaa
 aaa
 aaa
@@ -152944,7 +152966,7 @@ aad
 aaa
 aaa
 aaa
-bgW
+aaa
 aaa
 aaa
 aaa

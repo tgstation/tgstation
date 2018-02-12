@@ -232,7 +232,7 @@
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
-			if(do_after(user, 20*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 20))
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
@@ -370,6 +370,17 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
+			if(issilicon(A))
+				var/mob/living/silicon/sillycone = A
+				if(sillycone.stat || in_faction(sillycone))
+					continue
+
+				if(iscyborg(sillycone))
+					var/mob/living/silicon/robot/sillyconerobot = A
+					if(faction == "syndicate" && sillyconerobot.emagged == 1)
+						continue
+
+				targets += sillycone
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -559,7 +570,7 @@
 	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = "syndicate"
+	faction = ROLE_SYNDICATE
 	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
 
@@ -580,6 +591,7 @@
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
+
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return

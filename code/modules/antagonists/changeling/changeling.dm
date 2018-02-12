@@ -76,6 +76,13 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
+	//We'll be using this from now on
+	var/mob/living/carbon/C = owner.current
+	if(istype(C))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(B && (B.decoy_override != initial(B.decoy_override)))
+			B.vital = TRUE
+			B.decoy_override = FALSE
 	remove_changeling_powers()
 	owner.objectives -= objectives
 	. = ..()
@@ -389,7 +396,7 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
@@ -397,7 +404,7 @@
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			if(team_mode)
-				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				maroon_objective.find_target()
 			objectives += maroon_objective
@@ -419,7 +426,7 @@
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
 			if(team_mode)
-				identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				identity_theft.find_target()
 			objectives += identity_theft

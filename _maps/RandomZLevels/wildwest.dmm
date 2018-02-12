@@ -31,13 +31,6 @@
 	icon_state = "cult"
 	},
 /area/awaymission/wildwest/vault)
-"ai" = (
-/turf/closed/indestructible{
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
-/area/awaymission/wildwest/vault)
 "aj" = (
 /turf/open/floor/plating{
 	icon_state = "cultdamage3"
@@ -561,9 +554,6 @@
 /obj/machinery/door/window,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
-"cc" = (
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
 "cd" = (
 /obj/effect/mob_spawn/human/cook{
 	mob_name = "Chef"
@@ -932,9 +922,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/awaymission/wildwest/mines)
-"dl" = (
-/turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "dm" = (
 /obj/structure/mineral_door/wood{
@@ -2096,21 +2083,9 @@
 "gJ" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
-"gK" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
-/area/awaymission/wildwest/refine)
-"gM" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gN" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gO" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gP" = (
 /obj/structure/chair,
@@ -2119,17 +2094,8 @@
 "gQ" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wildwest/refine)
-"gR" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
 "gS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/awaymission/wildwest/refine)
-"gT" = (
-/turf/closed/wall/mineral/titanium,
-/area/awaymission/wildwest/refine)
-"gU" = (
-/turf/closed/wall/mineral/titanium,
 /area/awaymission/wildwest/refine)
 "gV" = (
 /obj/effect/landmark/awaystart,
@@ -22574,7 +22540,7 @@ ab
 ah
 ac
 ah
-ai
+ah
 ac
 ac
 ac

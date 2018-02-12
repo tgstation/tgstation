@@ -17,9 +17,10 @@
 /obj/effect/landmark/singularity_pull()
 	return
 
+INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/New()
-	..()
+/obj/effect/landmark/Initialize()
+	. = ..()
 	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()
@@ -185,6 +186,12 @@
 	name = "AI"
 	icon_state = "AI"
 	delete_after_roundstart = FALSE
+	var/primary_ai = TRUE
+
+/obj/effect/landmark/start/ai/secondary
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "ai_spawn"
+	primary_ai = FALSE
 
 
 //Department Security spawns
@@ -272,17 +279,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
-
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-	icon_state = "revenant_spawn"
-
-// triple ais.
-/obj/effect/landmark/tripai
-	name = "tripai"
-	icon_state = "ai_spawn"
-	layer = MOB_LAYER
 
 // xenos.
 /obj/effect/landmark/xeno_spawn

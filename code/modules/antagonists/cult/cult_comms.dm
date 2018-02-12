@@ -14,6 +14,7 @@
 
 /datum/action/innate/cult/comm
 	name = "Communion"
+	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
 
 /datum/action/innate/cult/comm/Activate()
@@ -23,7 +24,7 @@
 
 	cultist_commune(usr, input)
 
-/proc/cultist_commune(mob/living/user, message)
+/datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
 	var/my_message
 	if(!message)
 		return
@@ -33,10 +34,7 @@
 	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
 		span = "cultlarge"
-		if(ishuman(user))
-			title = "Master"
-		else
-			title = "Lord"
+		title = "Master"
 	else if(!ishuman(user))
 		title = "Construct"
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
@@ -50,38 +48,26 @@
 
 	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
 
-/mob/living/proc/cult_help()
-	set category = "Cultist"
-	set name = "How to Play Cult"
-	var/text = ""
-	text += "<center><font color='red' size=3><b><i>Tenets of the Dark One</i></b></font></center><br><br><br>"
+/datum/action/innate/cult/comm/spirit
+	name = "Spiritual Communion"
+	desc = "Conveys a message from the spirit realm that all cultists can hear."
 
-	text += "<font color='red'><b>I. SECRECY</b></font><br>Your cult is a SECRET organization. Your success DEPENDS on keeping your cult's members and locations SECRET for as long as possible. This means that your tome should be hidden \
-	in your bag and never brought out in public. You should never create runes where other crew might find them, and you should avoid using talismans or other cult magic with witnesses around.<br><br>"
+/datum/action/innate/cult/comm/spirit/IsAvailable()
+	if(iscultist(owner.mind.current))
+		return TRUE
 
-	text += "<font color='red'><b>II. TOME</b></font><br>You start with a unique talisman in your bag. This supply talisman can be used 3 times, and creates starter equipment for your cult. The most critical of the talisman's functions is \
-	the power to create a tome. This tome is your most important item and summoning one (in secret) is your FIRST PRIORITY. It lets you talk to fellow cultists and create runes, which in turn is essential to growing the cult's power.<br><br>"
-
-	text += "<font color='red'><b>III. RUNES</b></font><br>Runes are powerful sources of cult magic. Your tome will allow you to draw runes with your blood. Those runes, when hit with an empty hand, will attempt to \
-	trigger the rune's magic. Runes are essential for the cult to convert new members, create powerful minions, or call upon incredibly powerful magic. Some runes require more than one cultist to use.<br><br>"
-
-	text += "<font color='red'><b>IV. TALISMANS</b></font><br>Talismans are a mobile source of cult magic that are NECESSARY to achieve success as a cult. Your starting talisman can produce certain talismans, but you will need \
-	to use the -create talisman- rune (with ordinary paper on top) to get more talismans. Talismans are EXTREMELY powerful, therefore creating more talismans in a HIDDEN location should be one of your TOP PRIORITIES.<br><br>"
-
-	text += "<font color='red'><b>V. GROW THE CULT</b></font><br>There are certain basic strategies that all cultists should master. STUN talismans are the foundation of a successful cult. If you intend to convert the stunned person \
-	you should use cuffs or a talisman of shackling on them and remove their headset before they recover (it takes about 10 seconds to recover). If you intend to sacrifice the victim, striking them quickly and repeatedly with your tome \
-	will knock them out before they can recover. Sacrificed victims will their soul behind in a shard, these shards can be used on construct shells to make powerful servants for the cult. Remember you need TWO cultists standing near a \
-	conversion rune to convert someone. Your construct minions cannot trigger most runes, but they will count as cultists in helping you trigger more powerful runes like conversion or blood boil.<br><br>"
-
-	text += "<font color='red'><b>VI. VICTORY</b></font><br>You have two ultimate goals as a cultist, sacrifice your target, and summon Nar-Sie. Sacrificing the target involves killing that individual and then placing \
-	their corpse on a sacrifice rune and triggering that rune with THREE cultists. Do NOT lose the target's corpse! Only once the target is sacrificed can Nar-Sie be summoned. Summoning Nar-Sie will take nearly one minute \
-	just to draw the massive rune needed. Do not create the rune until your cult is ready, the crew will receive the NAME and LOCATION of anyone who attempts to create the Nar-Sie rune. Once the Nar-Sie rune is drawn \
-	you must gathered 9 cultists (or constructs) over the rune and then click it to bring the Dark One into this world!<br><br>"
-
-	var/datum/browser/popup = new(usr, "mind", "", 800, 600)
-	popup.set_content(text)
-	popup.open()
-	return 1
+/datum/action/innate/cult/comm/spirit/cultist_commune(mob/living/user, message)
+	var/my_message
+	if(!message)
+		return
+	my_message = "<span class='cultboldtalic'>The [user.name]: [message]</span>"
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(iscultist(M))
+			to_chat(M, my_message)
+		else if(M in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(M, user)
+			to_chat(M, "[link] [my_message]")
 
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
@@ -139,7 +125,7 @@
 				if(!B.current.incapacitated())
 					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.</span>")
 		return FALSE
-	team.cult_mastered = TRUE
+	team.cult_master = Nominee
 	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
 	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
 	for(var/datum/mind/B in team.members)
@@ -171,7 +157,7 @@
 			if(!is_blocked_turf(T, TRUE))
 				destinations += T
 		if(!LAZYLEN(destinations))
-			to_chat(owner, "<span class='warning'>You need more space to summon the cult!</span>")
+			to_chat(owner, "<span class='warning'>You need more space to summon your cult!</span>")
 			return
 		if(do_after(owner, 30, target = owner))
 			for(var/datum/mind/B in antag.cult_team.members)
@@ -234,8 +220,6 @@
 	..()
 
 /datum/action/innate/cult/master/cultmark/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master))
-		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
 			to_chat(owner, "<span class='cultlarge'><b>You need to wait [DisplayTimeText(cooldown - world.time)] before you can mark another target!</b></span>")
@@ -278,6 +262,9 @@
 	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 
 	if(target in view(7, get_turf(ranged_ability_user)))
+		if(C.cult_team.blood_target)
+			to_chat(ranged_ability_user, "<span class='cult'>The cult has already designated a target!</span>")
+			return FALSE
 		C.cult_team.blood_target = target
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
@@ -288,7 +275,7 @@
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
 		for(var/datum/mind/B in SSticker.mode.cult)
 			if(B.current && B.current.stat != DEAD && B.current.client)
-				to_chat(B.current, "<span class='cultlarge'><b>Master [ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+				to_chat(B.current, "<span class='cultlarge'><b>[ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
 				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 				B.current.client.images += C.cult_team.blood_target_image
 		attached_action.owner.update_action_buttons_icon()
@@ -306,6 +293,82 @@
 	QDEL_NULL(team.blood_target_image)
 	team.blood_target = null
 
+
+/datum/action/innate/cult/master/cultmark/ghost
+	name = "Mark a Blood Target for the Cult"
+	desc = "Marks a target for the entire cult to track."
+
+/datum/action/innate/cult/master/cultmark/IsAvailable()
+	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+		return TRUE
+	else
+		qdel(src)
+
+/datum/action/innate/cult/ghostmark //Ghost version
+	name = "Blood Mark your Target"
+	desc = "Marks whatever you are orbitting - for the entire cult to track."
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/cooldown = 0
+	var/base_cooldown = 600
+
+/datum/action/innate/cult/ghostmark/IsAvailable()
+	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+		return TRUE
+	else
+		qdel(src)
+
+/datum/action/innate/cult/ghostmark/proc/reset_button()
+	if(owner)
+		name = "Blood Mark your Target"
+		desc = "Marks whatever you are orbitting - for the entire cult to track."
+		button_icon_state = "cult_mark"
+		owner.update_action_buttons_icon()
+		SEND_SOUND(owner, 'sound/magic/enter_blood.ogg')
+		to_chat(owner,"<span class='cultbold'>Your previous mark is gone - you are now ready to create a new blood mark.</span>")
+
+/datum/action/innate/cult/ghostmark/Activate()
+	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(C.cult_team.blood_target)
+		if(cooldown>world.time)
+			reset_blood_target(C.cult_team)
+			to_chat(owner, "<span class='cultbold'>You have cleared the cult's blood target!</span>")
+			qdel(C.cult_team.blood_target_reset_timer)
+			return
+		else
+			to_chat(owner, "<span class='cultbold'>The cult has already designated a target!</span>")
+			return
+	if(cooldown>world.time)
+		to_chat(owner, "<span class='cultbold'>You aren't ready to place another blood mark yet!</span>")
+		return
+	if(owner.orbiting && owner.orbiting.orbiting)
+		target = owner.orbiting.orbiting
+	else
+		target = get_turf(owner)
+	if(!target)
+		return
+	C.cult_team.blood_target = target
+	var/area/A = get_area(target)
+	cooldown = world.time + base_cooldown
+	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
+	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
+	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
+	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
+	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+	owner.client.images += C.cult_team.blood_target_image
+	for(var/datum/mind/B in SSticker.mode.cult)
+		if(B.current && B.current.stat != DEAD && B.current.client)
+			to_chat(B.current, "<span class='cultlarge'><b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
+			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+			B.current.client.images += C.cult_team.blood_target_image
+	to_chat(owner,"<span class='cultbold'>You have marked the [target] for the cult! It will last for [base_cooldown/10] seconds.</span>")
+	name = "Clear the Blood Mark"
+	desc = "Remove the Blood Mark you previously set."
+	button_icon_state = "emp"
+	owner.update_action_buttons_icon()
+	C.cult_team.blood_target_reset_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_blood_target,C.cult_team), base_cooldown, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/reset_button), base_cooldown)
 
 
 //////// ELDRITCH PULSE /////////
@@ -342,6 +405,7 @@
 	QDEL_NULL(PM)
 	return ..()
 
+
 /datum/action/innate/cult/master/pulse/Activate()
 	PM.toggle(owner) //the important bit
 	return TRUE
@@ -352,8 +416,9 @@
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()
-	QDEL_NULL(attached_action)
+	attached_action = null
 	return ..()
+
 
 /obj/effect/proc_holder/pulse/proc/toggle(mob/user)
 	if(active)
