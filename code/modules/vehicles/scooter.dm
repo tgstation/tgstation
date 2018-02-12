@@ -66,13 +66,14 @@
 /obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
+		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		if(!istype(H.head,/obj/item/clothing/head/helmet/) && !istype(H.head,/obj/item/clothing/head/hardhat))
+		var/head_slot = H.get_item_by_slot(slot_head)
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(3)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
