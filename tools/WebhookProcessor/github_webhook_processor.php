@@ -456,6 +456,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$label_values = array(
 		'Fix' => 2,
 		'Refactor' => 2,
+		'CI/Tests' => 3,
 		'Code Improvement' => 1,
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
