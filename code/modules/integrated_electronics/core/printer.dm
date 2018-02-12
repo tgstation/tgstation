@@ -10,7 +10,7 @@
 	var/list/program			// Currently loaded save, in form of list
 
 /obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src, be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE

@@ -3,7 +3,7 @@
 
 /mob/living/carbon/human/Stat()
 	. = ..()
-	var/datum/antagonist/vampire/vamp = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/vamp = mind.has_antag_datum(/datum/antagonist/vampire)
 	if(vamp && statpanel("Status"))
 		stat("Total Blood", vamp.total_blood)
 		stat("Usable Blood", vamp.usable_blood)
@@ -11,7 +11,7 @@
 /mob/living/carbon/human/Life()
 	. = ..()
 	if(is_vampire(src))
-		var/datum/antagonist/vampire/vamp = mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+		var/datum/antagonist/vampire/vamp = mind.has_antag_datum(/datum/antagonist/vampire)
 		vamp.vampire_life()
 
 
@@ -66,7 +66,7 @@
 
 /datum/game_mode/vampire/post_setup()
 	for(var/datum/mind/vamp in pre_vamps)
-		addtimer(CALLBACK(vamp, /datum/mind.proc/add_antag_datum, ANTAG_DATUM_VAMPIRE), rand(10,100))
+		addtimer(CALLBACK(vamp, /datum/mind.proc/add_antag_datum, /datum/antagonist/vampire), rand(10,100))
 	..()
 	return TRUE
 
@@ -78,7 +78,7 @@
 			if(!vamp.current)
 				vampwin = 0
 
-			var/datum/antagonist/vampire/V = vamp.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+			var/datum/antagonist/vampire/V = vamp.has_antag_datum(/datum/antagonist/vampire)
 
 			if(!V)
 				continue
@@ -118,18 +118,18 @@
 /proc/add_vampire(mob/living/L)
 	if(!L || !L.mind || is_vampire(L))
 		return FALSE
-	var/datum/antagonist/vampire/vamp = L.mind.add_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/vamp = L.mind.add_antag_datum(/datum/antagonist/vampire)
 	return vamp
 
 /proc/remove_vampire(mob/living/L)
 	if(!L || !L.mind || !is_vampire(L))
 		return FALSE
-	var/datum/antagonist/vamp = L.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vamp = L.mind.has_antag_datum(/datum/antagonist/vampire)
 	vamp.on_removal()
 	return TRUE
 
 /proc/is_vampire(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/vampire)
 
 /datum/game_mode/proc/update_vampire_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/vamphud = GLOB.huds[ANTAG_HUD_VAMPIRE]

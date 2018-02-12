@@ -53,6 +53,5 @@ if [ "$BUILD_TOOLS" = false ]; then
 	else
 		tools/travis/dm.sh -DTRAVISBUILDING hippiestation.dme && DreamDaemon hippiestation.dmb -close -trusted -params "test-run&log-directory=travis"
 		cat data/logs/travis/clean_run.lk
-
 	fi;
 fi;

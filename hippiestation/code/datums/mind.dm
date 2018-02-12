@@ -42,13 +42,13 @@
 			log_admin("[key_name(usr)] has full-vampired [current].")
 			if(!is_vampire(current))
 				add_vampire(current)
-				var/datum/antagonist/vampire/V = has_antag_datum(ANTAG_DATUM_VAMPIRE)
+				var/datum/antagonist/vampire/V = has_antag_datum(/datum/antagonist/vampire)
 				if(V)
 					V.total_blood = 1500
 					V.usable_blood = 1500
 					V.check_vampire_upgrade()
 			else
-				var/datum/antagonist/vampire/V = has_antag_datum(ANTAG_DATUM_VAMPIRE)
+				var/datum/antagonist/vampire/V = has_antag_datum(/datum/antagonist/vampire)
 				if(V)
 					V.total_blood = 1500
 					V.usable_blood = 1500

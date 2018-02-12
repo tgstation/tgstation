@@ -19,9 +19,6 @@ GLOBAL_PROTECT(security_mode)
 
 	config.Load()
 
-
-	hippie_initialize()
-
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
 	SSdbcore.CheckSchemaVersion()

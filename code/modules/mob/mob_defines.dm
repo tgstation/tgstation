@@ -23,10 +23,10 @@
 	*/
 	var/zone_selected = null
 
-	//hippie start
+	// Hippie Start
 	var/macro_default = "default"
 	var/macro_hotkeys = "hotkeys"
-	//hippie end
+	// Hippie End
 
 	var/computer_id = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)

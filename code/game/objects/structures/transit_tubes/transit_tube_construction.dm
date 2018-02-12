@@ -28,22 +28,17 @@
 			build_type = flipped_build_type
 		else
 			build_type = initial(build_type)
-		icon_state = "[base_icon][flipped]"	
+		icon_state = "[base_icon][flipped]"
 
-/obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
-		add_fingerprint(user)
-		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(QDELETED(src))
-				return
-			to_chat(user, "<span class='notice'>You attach the [name].</span>")
-			var/obj/structure/transit_tube/R = new build_type(loc, dir)
-			transfer_fingerprints_to(R)
-			qdel(src)
-	else
-		return ..()
+/obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
+	add_fingerprint(user)
+	if(I.use_tool(src, user, 40, volume=50))
+		to_chat(user, "<span class='notice'>You attach the [name].</span>")
+		var/obj/structure/transit_tube/R = new build_type(loc, dir)
+		transfer_fingerprints_to(R)
+		qdel(src)
+	return TRUE
 
 // transit tube station
 /obj/structure/c_transit_tube/station

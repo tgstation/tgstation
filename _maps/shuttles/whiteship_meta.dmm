@@ -39,7 +39,6 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	roundstart_move = "whiteship_away";
 	timid = 1;
 	width = 28
 	},
@@ -216,8 +215,7 @@
 /obj/item/cigbutt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/tank/internals/oxygen/red,
 /obj/item/tank/internals/air,
@@ -1289,7 +1287,7 @@
 /area/shuttle/abandoned)
 "cl" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},

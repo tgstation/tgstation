@@ -109,7 +109,8 @@
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	user.remove_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
-	qdel(src) //If this ever happens, it's because you lost an arm
+	if(!QDELETED(src))
+		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
 	..()

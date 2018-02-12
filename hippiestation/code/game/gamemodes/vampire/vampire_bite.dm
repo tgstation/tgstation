@@ -1,7 +1,7 @@
 /mob/living/carbon/human/proc/handle_vamp_biting(var/mob/living/carbon/human/M)
 	if(!is_vampire(M) || M == src || M.zone_selected != "head")
 		return FALSE
-	var/datum/antagonist/vampire/V = M.mind.has_antag_datum(ANTAG_DATUM_VAMPIRE)
+	var/datum/antagonist/vampire/V = M.mind.has_antag_datum(/datum/antagonist/vampire)
 	if((NOBLOOD in dna.species.species_traits) || dna.species.exotic_blood || !blood_volume)
 		to_chat(M, "<span class='warning'>They have no blood!</span>")
 		return FALSE

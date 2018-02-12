@@ -13,13 +13,12 @@
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, I.usesound, 50, 1)
-		if(!do_after(user, 50, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
-		playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
-		new/obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 50))
+			user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
+			playsound(user, 'sound/items/deconstruct.ogg', 50, 1)
+			new/obj/item/stack/sheet/metal(drop_location())
+			qdel(src)
 		return
 	..()
 
@@ -162,20 +161,8 @@
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
 
-/obj/structure/fluff/hivebot_swarm_core
-	name = "hivebot swarm core"
-	desc = "The dented, ruined husk of a powerful machine."
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "hivebot_swarm_core_dead"
-	pixel_x = -32
-	pixel_y = -16
-	density = 1
-
-/obj/structure/fluff/hivebot_swarm_core/examine(mob/user)
-	..()
-	to_chat(user, "<span class='warning'>It's gently vibrating...</span>") //Hint at the treasure inside
-
-/obj/structure/fluff/hivebot_swarm_core/Destroy()
-	visible_message("<span class='warning'>Something tumbles free of [src]!</span>")
-	new/obj/item/device/hivebot_crux(get_turf(src))
-	return ..()
+/obj/structure/fluff/fokoff_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "fokof"

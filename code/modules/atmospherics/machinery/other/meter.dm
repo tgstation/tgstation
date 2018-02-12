@@ -100,19 +100,20 @@
 	to_chat(user, status())
 
 
-/obj/machinery/meter/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
-		playsound(src, W.usesound, 50, 1)
-		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-		if (do_after(user, 40*W.toolspeed, target = src))
-			user.visible_message( \
-				"[user] unfastens \the [src].", \
-				"<span class='notice'>You unfasten \the [src].</span>", \
-				"<span class='italics'>You hear ratchet.</span>")
-			new /obj/item/pipe_meter(loc)
-			qdel(src)
-	else
-		return ..()
+/obj/machinery/meter/wrench_act(mob/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+	if (I.use_tool(src, user, 40, volume=50))
+		user.visible_message(
+			"[user] unfastens \the [src].",
+			"<span class='notice'>You unfasten \the [src].</span>",
+			"<span class='italics'>You hear ratchet.</span>")
+		deconstruct()
+	return TRUE
+
+/obj/machinery/meter/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/pipe_meter(loc)
+	qdel(src)
 
 /obj/machinery/meter/attack_ai(mob/user)
 	return attack_hand(user)
@@ -131,8 +132,7 @@
 /obj/machinery/meter/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
-		new /obj/item/pipe_meter(loc)
-		qdel(src)
+		deconstruct()
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 //	why are you yelling?

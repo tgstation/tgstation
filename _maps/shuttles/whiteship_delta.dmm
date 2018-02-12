@@ -1518,8 +1518,7 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	roundstart_move = "whiteship_away";
-	timid = 1;
+	timid = 0;
 	width = 32
 	},
 /turf/open/floor/plasteel/neutral,

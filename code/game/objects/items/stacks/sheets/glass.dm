@@ -181,6 +181,41 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	recipes = GLOB.prglass_recipes
 	return ..()
 
+GLOBAL_LIST_INIT(titaniumglass_recipes, list(
+	new/datum/stack_recipe("shuttle window", /obj/structure/window/shuttle/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	))
+
+/obj/item/stack/sheet/titaniumglass
+	name = "titanium glass"
+	desc = "A glass sheet made out of a titanium-silicate alloy."
+	singular_name = "titanium glass sheet"
+	icon_state = "sheet-titaniumglass"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/titaniumglass
+
+/obj/item/stack/sheet/titaniumglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.titaniumglass_recipes
+	return ..()
+
+GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	))
+
+/obj/item/stack/sheet/plastitaniumglass
+	name = "plastitanium glass"
+	desc = "A glass sheet made out of a plasma-titanium-silicate alloy."
+	singular_name = "plastitanium glass sheet"
+	icon_state = "sheet-plastitaniumglass"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_PLASMA=MINERAL_MATERIAL_AMOUNT, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/plastitaniumglass
+
+/obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.plastitaniumglass_recipes
+	return ..()
 
 /obj/item/shard
 	name = "shard"
@@ -244,20 +279,21 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/lightreplacer))
 		I.attackby(src, user)
-	else if(istype(I, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = I
-		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/NG = new (user.loc)
-			for(var/obj/item/stack/sheet/glass/G in user.loc)
-				if(G == NG)
-					continue
-				if(G.amount >= G.max_amount)
-					continue
-				G.attackby(NG, user)
-			to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
-			qdel(src)
 	else
 		return ..()
+
+/obj/item/shard/welder_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 0, volume=50))
+		var/obj/item/stack/sheet/glass/NG = new (user.loc)
+		for(var/obj/item/stack/sheet/glass/G in user.loc)
+			if(G == NG)
+				continue
+			if(G.amount >= G.max_amount)
+				continue
+			G.attackby(NG, user)
+		to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
+		qdel(src)
+	return TRUE
 
 /obj/item/shard/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))

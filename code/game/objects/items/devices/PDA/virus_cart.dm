@@ -46,7 +46,7 @@
 	if(!isnull(target) && !target.toff)
 		charges--
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
-		target.silent = 1
+		target.silent = TRUE
 		target.ttone = "silence"
 	else
 		to_chat(U, "PDA not found.")

@@ -524,7 +524,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
@@ -786,7 +786,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
@@ -1054,7 +1054,7 @@
 	dir = 1;
 	locked = 0;
 	pixel_y = 28;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)

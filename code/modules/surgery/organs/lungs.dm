@@ -249,10 +249,13 @@
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 20
+			H.reagents.add_reagent("bz_metabolites",5)
 			if(prob(33))
 				H.adjustBrainLoss(3, 150)
+
 		else if(bz_pp > 0.01)
 			H.hallucination += 5//Removed at 2 per tick so this will slowly build up
+			H.reagents.add_reagent("bz_metabolites",1)
 
 
 	// Tritium

@@ -386,7 +386,6 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
-	flags_1 = NOSLIP_1
 	resistance_flags = NONE
 	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -412,10 +411,6 @@
 	flags_1 = NOSLIP_1
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/clothing/shoes/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
@@ -447,7 +442,7 @@
 	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/magic, ignore_root_path = FALSE)
 	chameleon_action.initialize_disguises()
-	
+
 	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags", "tracer_type", "muzzle_type", "impact_type")
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
 	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
@@ -584,7 +579,7 @@
 /obj/item/storage/belt/chameleon
 	name = "toolbelt"
 	desc = "Holds tools."
-	silent = 1
+	silent = TRUE
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/chameleon/Initialize()
