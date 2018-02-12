@@ -56,7 +56,7 @@
 			return
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
-			if(istype(D.martial, /datum/martial_art/monk))
+			if(istype(H.mind.martial_art, /datum/martial_art/monk))
 				to_chat(user, "<span class='warning'>Your vows as a Monk prevent you from using [src] in combat!</span>")
 				return
 	if(!force)
@@ -107,8 +107,8 @@
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
-		if(martial && istype(martial, /datum/martial_art/monk))
-			var/datum/martial_art/monk/M = martial
+		if(mind && mind.martial_art && istype(mind.martial_art, /datum/martial_art/monk))
+			var/datum/martial_art/monk/M = mind.martial_art
 			var/defense_roll = M.defense_roll(0)
 			if(defense_roll)
 				var/dmg_to_deal = I.force

@@ -49,8 +49,8 @@
 		else
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
-	if(istype(D.martial, /datum/martial_art/monk))
-		var/datum/martial_art/monk/M = D.martial
+	if(D.mind && istype(D.mind.martial_art, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = D.mind.martial_art
 		var/defense_roll = M.defense_roll(0)
 		if(defense_roll)
 			playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -63,7 +63,7 @@
 				D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 				"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 				add_logs(A, D, "punched")
-			D.apply_damage(damage, BRUTE, affecting)
+			D.apply_damage(damage, BRUTE)
 			return 1
 		else
 			playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)

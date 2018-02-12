@@ -1163,6 +1163,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
+	if(target.mind && istype(target.mind.martial_art, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = target.mind.martial_art
+		var/defense_roll = M.defense_roll(0)
+		if(defense_roll)
+			var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+			playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
+			if(defense_roll == 2)
+				damage *= 2
+				target.visible_message("<span class='danger'>[user] has critically punched [target]!</span>", \
+				"<span class='userdanger'>[user] has critically punched [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(user, target, "critically punched")
+			else
+				target.visible_message("<span class='danger'>[user] has punched [target]!</span>", \
+				"<span class='userdanger'>[user] has punched [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(user, target, "punched")
+			target.apply_damage(damage, BRUTE)
+			return TRUE
+		else
+			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
+			target.visible_message("<span class='warning'>[user] has attempted to punch [target], but they dodged it!</span>", \
+				"<span class='userdanger'>[user] has attempted to punch [target], but they dodged it!</span>", null, COMBAT_MESSAGE_RANGE)
+			add_logs(user, target, "attempted to punch")
+		return FALSE
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
@@ -1306,6 +1329,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
+	if(H.mind && H.mind.martial_art && istype(H.mind.martial_art, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = H.mind.martial_art
+		var/defense_roll = M.defense_roll(0)
+		if(defense_roll)
+			var/dmg_to_deal = I.force
+			if(defense_roll == 2)
+				dmg_to_deal *= 2
+				H.send_item_attack_message(I, user, critical = TRUE)
+			else
+				H.send_item_attack_message(I, user)
+			apply_damage(dmg_to_deal, I.damtype, blocked = armor_block)
+			if(I.damtype == BRUTE)
+				if(prob(33))
+					I.add_mob_blood(src)
+					var/turf/location = get_turf(src)
+					H.add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)
+						user.add_mob_blood(src)
+			return TRUE
+		else
+			H.visible_message("<span class='danger'>[H] dodges the [I]!</span>",\
+			"<span class='userdanger'>[H] dodges the [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+			return FALSE
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
 

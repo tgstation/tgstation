@@ -131,8 +131,8 @@
 /datum/martial_art/monk/proc/attack_roll(mob/living/T, abm)
 	if(istype(T, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = T
-		if(istype(D.martial, /datum/martial_art/monk))
-			var/datum/martial_art/monk/M = D.martial
+		if(H.mind && istype(H.mind.martial_art, /datum/martial_art/monk))
+			var/datum/martial_art/monk/M = H.mind.martial_art
 			return M.defense_roll(curr_ab + abm)
 	var/armor_class = 10 + (T.getarmor("chest", "melee") * 0.1)
 	var/attack_bonus = curr_ab + abm
@@ -211,14 +211,16 @@
 					if(2)
 						for(var/H in surrounding_mobs)
 							do_attack(A, H, FALSE, FALSE, null)
+		playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 		add_logs(A, D, "[was_crit]punched (monk)")
-		D.visible_message("<span class='danger'>[A] [picked_hit_type] [D]!</span>", \
-				  "<span class='userdanger'>[A] [picked_hit_type] you!</span>")
+		D.visible_message("<span class='danger'>[A] [was_crit][picked_hit_type] [D]!</span>", \
+				  "<span class='userdanger'>[A] [was_crit][picked_hit_type] you!</span>")
 		return 1
 	else
 		if(D.stat != DEAD && D.ckey && D != A)
 			add_exp(2.5)
 		add_logs(A, D, "missed a punch (monk)")
+		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='danger'>[A] missed [D]!</span>", \
 				  "<span class='userdanger'>[A] misses you!</span>")
 		return 0
@@ -329,9 +331,9 @@
 	if(martial)
 		martial.using_flurry = !martial.using_flurry
 		if(martial.using_flurry)
-			to_chat(H, "<span class='warning'>You enable Flurry of Blows.</span>")
+			to_chat(owner, "<span class='warning'>You enable Flurry of Blows.</span>")
 		else
-			to_chat(H, "<span class='warning'>You disable Flurry of Blows.</span>")
+			to_chat(owner, "<span class='warning'>You disable Flurry of Blows.</span>")
 
 /datum/action/monk
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
@@ -395,6 +397,8 @@
 	H.adjustFireLoss(-amt_to_heal)
 	H.adjustToxLoss(-amt_to_heal)
 	H.adjustOxyLoss(-amt_to_heal)
+	uses_left--
+	to_chat(owner, "<span class='warning'>You focus on your inner being, identifying that wounds are merely material.</span>")
 
 
 /obj/item/nullrod/monk_manual
