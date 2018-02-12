@@ -16,6 +16,10 @@
 /datum/relic_effect/activate/smoke
 	var/radius = 2
 
+/datum/relic_effect/activate/smoke/apply()
+	radius = rand(0,8)
+	..()
+
 /datum/relic_effect/activate/smoke/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
 		return
@@ -50,13 +54,39 @@
 /datum/relic_effect/activate/fix_lights
 	var/radius = 3
 
+/datum/relic_effect/activate/fix_lights/apply()
+	radius = rand(1,3)
+	..()
+
 /datum/relic_effect/activate/fix_lights/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
 		return
 	for(var/obj/machinery/light/M in view(radius,get_turf(target)))
 		M.fix()
 
+/datum/relic_effect/activate/rapid_dupe
+	firstname = list("annoying","multiplying","duplicating","numerifying","dumb","fragmenting")
+	lastname = list("duplicator","fissionator","spliterator")
+	var/spread = 7
+
+/datum/relic_effect/activate/rapid_dupe/apply()
+	spread = rand(2,7) //1 is stacked thrower circuit tier
+	..()
+
+/datum/relic_effect/activate/rapid_dupe/activate(obj/item/A,atom/target,mob/user)
+	A.audible_message("[A] emits a loud pop!")
+	var/list/dupes = list()
+	var/max = rand(5,10)
+	for(var/counter in 1 to max)
+		var/obj/item/R = new(get_turf(A))
+		R.appearance = A.appearance
+		dupes += R
+		R.throw_at(pick(oview(spread,get_turf(target))),10,1)
+	QDEL_LIST_IN(dupes, rand(10, 100))
+
 /datum/relic_effect/activate/bomb
+	firstname = list("exploding","fragmenting","fulminating","thermic","blast")
+	lastname = list("bomb","surprise","explodinator","destructor","obliteration")
 	var/light = 0
 	var/heavy = 0
 	var/devastation = 0
@@ -64,6 +94,19 @@
 	var/fire = 0
 	var/reusable = FALSE
 	var/timer = 0
+
+/datum/relic_effect/activate/bomb/apply()
+	reusable = prob(10) //Yeah no you only get this rarely my friend and you better hope it's useful
+	light = rand(0,5)
+	heavy = rand(0,5)
+	if(!reusable)
+		devastation = rand(0,5)
+	flash = rand(0,5)
+	fire = rand(0,5)
+	timer = rand(10,120)
+	if(prob(10))
+		timer = timer ** 2 //some bombs take extremely long to trigger
+	..()
 
 /datum/relic_effect/activate/bomb/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
@@ -81,6 +124,13 @@
 	var/radius = 8
 	var/timer = 0
 
+/datum/relic_effect/activate/teleport/apply()
+	radius = rand(1,5)
+	if(prob(20))
+		radius = radius ** 2
+	timer = rand(10,120)
+	..()
+
 /datum/relic_effect/activate/teleport/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
 		return
@@ -95,7 +145,13 @@
 	do_teleport(teleporter, get_turf(teleporter), radius, asoundin = 'sound/effects/phasein.ogg')
 
 /datum/relic_effect/activate/animal_spam
+	firstname = list("summoning","animal attracting","pet")
+	lastname = list("zoo","subspace cage","carrier")
 	var/timer = 0
+
+/datum/relic_effect/activate/animal_spam/apply()
+	timer = rand(10,120)
+	..()
 
 /datum/relic_effect/activate/animal_spam/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
@@ -115,7 +171,13 @@
 		qdel(src)
 
 /datum/relic_effect/activate/rcd
+	firstname = list("rapid construction")
+	lastname = list("builder")
 	var/delay = 0
+
+/datum/relic_effect/activate/rcd/apply()
+	delay = rand(1,15)
+	..()
 
 /datum/relic_effect/activate/rcd/activate(obj/item/A,atom/target,mob/user)
 	if(!delay || A.do_after(user, delay, target))

@@ -1,6 +1,4 @@
 /datum/relic_appearance
-	var/list/firstname
-	var/list/lastname
 	var/icon/icon
 	var/list/icon_state
 	var/icon/item_left

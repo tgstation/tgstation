@@ -1,4 +1,15 @@
+/proc/get_valid_relic_effects(var/type)
+	var/list/L = list()
+	for(var/datum/relic_effect/efftype in typesof(type))
+		if(initial(efftype.weight))
+			L[new efftype()] = efftype.weight
+	return L
+
 /datum/relic_effect
+	var/list/firstname
+	var/list/lastname
+	var/weight
+	var/free = FALSE //Using this doesn't consume charge/trigger cooldown
 	var/list/valid_types //Which types of items this effect is valid for
 	var/list/hogged_signals = list()
 
@@ -6,6 +17,8 @@
 	valid_types = typecacheof(/obj/item)
 
 /datum/relic_effect/proc/use_power(obj/item/A,mob/user)
+	if(free)
+		return TRUE
 	var/datum/component/relic/comp = A.GetComponent(/datum/component/relic)
 	if(!comp.can_use())
 		if(user)
@@ -17,7 +30,3 @@
 /datum/relic_effect/proc/apply(obj/item/A)
 
 /datum/relic_effect/proc/apply_to_component(datum/component/relic/comp) //All of these get called simultaneously
-
-/datum/relic_effect/bullet/proc/on_impact(obj/item/projectile/proj,/atom/A)
-
-/datum/relic_effect/bullet/proc/on_range(obj/item/projectile/proj)
