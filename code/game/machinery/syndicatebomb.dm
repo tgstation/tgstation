@@ -116,14 +116,14 @@
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
@@ -442,7 +442,7 @@
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
 			beakers -= B

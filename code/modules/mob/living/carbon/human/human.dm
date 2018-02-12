@@ -719,13 +719,13 @@
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated() || lying )
-		return
+		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
 		if((be_close == 0) && (dna.check_mutation(TK)))
 			if(tkMaxRangeCheck(src, M))
-				return 1
-		return
-	return 1
+				return TRUE
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
 	if(wear_suit && wear_suit.breakouttime)

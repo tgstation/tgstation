@@ -13270,12 +13270,7 @@
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/silver{
-	access = list(12);
-	assignment = "Reaper";
-	name = "Thirteen's ID Card (Reaper)";
-	registered_name = "Thirteen"
-	},
+/obj/item/card/id/silver/reaper,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/e_gun/advtaser,
 /obj/item/gun/ballistic/revolver/russian,
@@ -69550,10 +69545,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOF" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 2;

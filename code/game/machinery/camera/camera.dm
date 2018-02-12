@@ -139,7 +139,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(panel_open)

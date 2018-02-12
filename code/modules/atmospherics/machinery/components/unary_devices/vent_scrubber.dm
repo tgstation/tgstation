@@ -266,10 +266,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/I)
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
-	playsound(loc, I.usesound, 40, 1)
 	to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
-	if(I.use_tool(src, user, 20))
-		playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
+	if(I.use_tool(src, user, 20, volume=50))
 		if(!welded)
 			user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
 			welded = TRUE
