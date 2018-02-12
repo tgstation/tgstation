@@ -30,7 +30,7 @@
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar))
 		if(!moving)
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
 				empty_pod()

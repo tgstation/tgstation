@@ -47768,7 +47768,8 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
