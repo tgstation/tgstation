@@ -562,7 +562,8 @@
 	id = "quadruple_sec"
 	results = list("eggnog" = 15)
 	required_reagents = list("triple_sec" = 5, "triple_citrus" = 5, "creme_de_menthe" = 5)
-	mix_message = "The snap of a stunbaton emanates clearly from the mixture as it settles."
+	mix_message = "The snap of a taser emanates clearly from the mixture as it settles."
+	mix_sound = 'sound/weapons/taser.ogg'
 
 /datum/chemical_reaction/grasshopper
 	name = "Grasshopper"
@@ -582,3 +583,5 @@
 	id = "quintuple_sec"
 	results = list("eggnog" = 15)
 	required_reagents = list("quadruple_sec" = 5, "clownstears" = 5, "syndicatebomb" = 5)
+	mix_message = "Judgement is upon you."
+	mix_message = 'sound/items/airhorn2.ogg'

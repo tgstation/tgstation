@@ -1336,7 +1336,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Quadruple Sec"
 	id = "quadruple_sec"
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
-	color = "#ffcc66"
+	color = "#cc0000"
 	boozepwr = 25
 	taste_description = "a invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
 	glass_icon_state = "glass_red"
@@ -1347,7 +1347,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Quintuple Sec"
 	id = "quintuple_sec"
 	description = "Law, Order, and Police Brutality distilled into one single elixir of JUSTICE."
-	color = "#ffcc66"
+	color = "#ff3300"
 	boozepwr = 40
 	taste_description = "THE LAW"
 	glass_icon_state = "glass_red"
@@ -1358,8 +1358,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Grasshopper"
 	id = "grasshopper"
 	description = "A fresh and sweet dessert shooter.Difficult to look manly while drinking."
-	color = ""
-	boozepwer = 25
+	color = "00ff00"
+	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
 	glass_icon_state = "glass_green"
 	glass_name = "Grasshopper"
@@ -1369,8 +1369,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Stinger"
 	id = "stinger"
 	description = "A snappy way to end the day."
-	color = ""
-	boozepwer = 25
+	color = "ccff99"
+	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
 	glass_icon_state = "glass_white"
 	glass_name = "Stinger"
