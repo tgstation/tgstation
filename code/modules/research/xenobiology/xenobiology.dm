@@ -832,7 +832,7 @@
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
 	if(!ismob(M))
 		return
-	if(!isanimal(M)) //only works on animals that aren't player controlled
+	if(!isanimal(M))
 		to_chat(user, "<span class='warning'>[M] is too complex for the potion!</span>")
 		return
 	if(M.stat)
