@@ -16,8 +16,7 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
+		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)

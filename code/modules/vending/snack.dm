@@ -44,7 +44,7 @@
 			if(iscompartmentfull(user))
 				break
 			if(!S.junkiness)
-				T.remove_from_storage(S, src)
+				T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src, TRUE)
 				food_load(S)
 				loaded++
 			else

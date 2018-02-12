@@ -144,9 +144,9 @@
 
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
+		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 		data["pillBotContent"] = bottle.contents.len
-		data["pillBotMaxContent"] = bottle.storage_slots
-
+		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
@@ -159,7 +159,6 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
 
 	return data
 
@@ -222,12 +221,18 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
+				var/target_loc = drop_location()
+				var/drop_threshold = INFINITY
+				if(bottle)
+					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					if(STRB)
+						drop_threshold = STRB.max_items - bottle.contents.len
 
 				for(var/i = 0; i < amount; i++)
-					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/reagent_containers/pill(bottle)
+					if(i < drop_threshold)
+						P = new(target_loc)
 					else
-						P = new/obj/item/reagent_containers/pill(drop_location())
+						P = new(drop_location())
 					P.name = trim("[name] pill")
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)

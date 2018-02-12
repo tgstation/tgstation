@@ -72,7 +72,7 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if (istype(O, /obj/item/storage/bag/plants))
+	if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/P = O
 		var/loaded = 0
 		for(var/obj/item/seeds/G in P.contents)
@@ -81,7 +81,7 @@
 			++loaded
 			add_seed(G)
 		if (loaded)
-			to_chat(user, "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>")
+			to_chat(user, "<span class='notice'>You put as many seeds from \the [O.name] into [src] as you can.</span>")
 		else
 			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
 		return
@@ -120,6 +120,7 @@
 	src.amount = am
 
 /obj/machinery/seed_extractor/ui_interact(mob/user)
+	. = ..()
 	if (stat)
 		return FALSE
 
@@ -173,21 +174,21 @@
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
-		return 0
+		return FALSE
 
-	if(ismob(O.loc))
+	GET_COMPONENT_FROM(STR, /datum/component/storage, O.loc)
+	if(STR)
+		if(!STR.remove_from_storage(O,src))
+			return FALSE
+	else if(ismob(O.loc))
 		var/mob/M = O.loc
 		if(!M.transferItemToLoc(O, src))
-			return 0
-	else if(istype(O.loc, /obj/item/storage))
-		var/obj/item/storage/S = O.loc
-		S.remove_from_storage(O,src)
+			return FALSE
 
-	. = 1
+	. = TRUE
 	for (var/datum/seed_pile/N in piles)
 		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)
 			++N.amount
 			return
 
 	piles += new /datum/seed_pile(O.plantname, O.lifespan, O.endurance, O.maturation, O.production, O.yield, O.potency)
-	return
