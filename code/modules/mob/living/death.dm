@@ -82,7 +82,7 @@
 			if(mind.assigned_role)
 				L["role"] = mind.assigned_role
 			L["area"] = A.map_name
-			L["damage"] = "<font color='lightred'>[bruteloss]</font>/<font color='orange'>[fireloss]</font>/<font color='lightgreen'>[toxloss]</font>/<font color='lightblue'>[oxyloss]</font>/<font color='pink'>[cloneloss]</font>"
+			L["damage"] = "<font color='#FF5555'>[bruteloss]</font>/<font color='orange'>[fireloss]</font>/<font color='lightgreen'>[toxloss]</font>/<font color='lightblue'>[oxyloss]</font>/<font color='pink'>[cloneloss]</font>"
 			L["last_words"] = last_words
 			SSticker.first_death = L.Copy()
 
