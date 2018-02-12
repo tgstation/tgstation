@@ -33,6 +33,22 @@
 	var/obj/item/clothing/head/mob_holder/drone/H = new(get_turf(src), src)
 	return H
 
+/obj/item/clothing/head/mob_holder/drone/can_head = TRUE
+/obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
+	. = ..()
+	if(!isdrone(L))
+		qdel(src)
+		return
+	name = "drone (hiding)"
+	desc = "This drone is scared and has curled up into a ball!"
+
+/obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/L)
+	var/mob/living/simple_animal/drone/D = L
+	if(!D)
+		return ..()
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "[D.visualAppearence]_hat"
+
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	..()
 	if(user.a_intent=="help")
