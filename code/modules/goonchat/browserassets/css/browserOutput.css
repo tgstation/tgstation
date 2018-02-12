@@ -417,4 +417,4 @@ h1.alert, h2.alert		{color: #000000;}
 .hidden {display: none; visibility: hidden;}
 
 /* EMOJI STUFF */
-.emoji {max-height: 16px; max-width: 16px}
+.emoji {height: 1.23em; width: 1.23em; margin: 0.05em 0.1em; vertical-align: -0.1em;}

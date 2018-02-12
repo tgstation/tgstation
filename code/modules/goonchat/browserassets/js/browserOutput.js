@@ -941,6 +941,7 @@ $(function() {
 			opts.enableEmoji = true;
 		}
 		setCookie('enableemoji', (opts.enableEmoji ? 'true' : 'false'), 365);
+		internalOutput('<span class="internal boldnshit">Unicode Emojis are now : '+(opts.enableEmoji ? 'enabled' : 'disabled')+'</span>', 'internal');
 	});
 
 	$('#saveLog').click(function(e) {

@@ -28,3 +28,15 @@
 		break
 	return parsed
 
+/client/verb/list_ss13_emojis()
+	set name = "List SS13 Emojis"
+	set category = "OOC"
+
+	if(!CONFIG_GET(flag/emojis))
+		return
+	var/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/msg = "<b>SS13 Emojis:</b>\n"
+	for(var/emoji in 1 to emojis.len)
+		emojis[emoji] = ";[emojis[emoji]];"
+	msg += english_list(emojis, "", "  ", "  ")
+	to_chat(src, msg)
