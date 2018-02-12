@@ -1337,11 +1337,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "quadruple_sec"
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
 	color = "#cc0000"
-<<<<<<< HEAD
-	boozepwr = 25
-=======
 	boozepwr = 30
->>>>>>> origin/Newliquors
 	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
 	glass_icon_state = "glass_red"
 	glass_name = "Quadruple Sec"
