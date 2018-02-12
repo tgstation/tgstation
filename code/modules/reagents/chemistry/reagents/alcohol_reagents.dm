@@ -1319,7 +1319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "a minty, cool, and invigorating splash of cold streamwater"
 	glass_icon_state = "glass_green"
 	glass_name = "Creme de Menthe"
-	glass_desc = "You can almost feel the first breath of spring just looking ait it."
+	glass_desc = "You can almost feel the first breath of spring just looking at it."
 
 /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
@@ -1337,8 +1337,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "quadruple_sec"
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
 	color = "#cc0000"
-	boozepwr = 25
-	taste_description = "a invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
+	boozepwr = 30
+	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
 	glass_icon_state = "glass_red"
 	glass_name = "Quadruple Sec"
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
@@ -1352,12 +1352,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "THE LAW"
 	glass_icon_state = "glass_red"
 	glass_name = "Quintuple Sec"
-	glass_desc = "Now you are become law, destroyer of clowns."
+	glass_desc = "Now you are become LAW, destroyer of clowns."
 
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
 	id = "grasshopper"
-	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking."
+	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking this."
 	color = "00ff00"
 	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
