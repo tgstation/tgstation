@@ -1319,7 +1319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "a minty, cool, and invigorating splash of cold streamwater"
 	glass_icon_state = "glass_green"
 	glass_name = "Creme de Menthe"
-	glass_desc = "You can almost feel the first breath of spring just looking ait it."
+	glass_desc = "You can almost feel the first breath of spring just looking at it."
 
 /datum/reagent/consumable/ethanol/creme_de_cacao
 	name = "Creme de Cacao"
@@ -1338,10 +1338,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
 	color = "#cc0000"
 	boozepwr = 25
-	taste_description = "a invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
+	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
 	glass_icon_state = "glass_red"
 	glass_name = "Quadruple Sec"
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
+
+/datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/M)
+	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes.
+		M.heal_bodypart_damage (1,1,1)
+		M.adjustBruteLoss(-2,0)
+		. = 1
+	return ..()
 
 /datum/reagent/consumable/ethanol/quintuple_sec
 	name = "Quintuple Sec"
@@ -1353,6 +1360,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_red"
 	glass_name = "Quintuple Sec"
 	glass_desc = "Now you are become law, destroyer of clowns."
+
+/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/M)
+	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes but STRONG..
+		M.heal_bodypart_damage (2,2,2)
+		M.adjustBruteLoss(-5,0)
+		M.adjustOxyLoss(-5,0)
+		M.adjustFireLoss(-5,0)
+		M.adjustToxLoss(-5,0)
+		. = 1
+	return ..()
 
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
