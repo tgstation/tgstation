@@ -22,6 +22,7 @@
 	var/diamond_body = FALSE
 	var/purity_of_body = FALSE
 	var/using_flurry = TRUE
+	var/is_disciple = FALSE
 
 	var/list/available_actions = list()
 	var/datum/action/monk_rest/monk_rest = new/datum/action/monk_rest()
@@ -35,6 +36,7 @@
 /datum/martial_art/monk/disciple
 	name = "Disciple Monk"
 	level_cap = 20
+	is_disciple = TRUE
 
 
 /datum/martial_art/monk/teach(mob/living/carbon/human/H,make_temporary=0)
@@ -134,15 +136,18 @@
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
 			stunning_fist.max_uses = 14
 		if(20)
-			to_chat(owner, "<span class = 'danger'>You can now make your first Disciple.</span>")
-			make_disciple.Grant(owner)
-			make_disciple.uses++
+			if(!is_disciple)
+				to_chat(owner, "<span class = 'danger'>You can now make your first Disciple.</span>")
+				make_disciple.Grant(owner)
+				make_disciple.uses++
 		if(25)
-			to_chat(owner, "<span class = 'danger'>You can now make your second Disciple.</span>")
-			make_disciple.uses++
+			if(!is_disciple)
+				to_chat(owner, "<span class = 'danger'>You can now make your second Disciple.</span>")
+				make_disciple.uses++
 		if(30)
-			to_chat(owner, "<span class = 'danger'>You can now make your final Disciple.</span>")
-			make_disciple.uses++
+			if(!is_disciple)
+				to_chat(owner, "<span class = 'danger'>You can now make your final Disciple.</span>")
+				make_disciple.uses++
 
 /datum/martial_art/monk/proc/attack_roll(mob/living/T, abm)
 	if(istype(T, /mob/living/carbon/human))
@@ -424,10 +429,10 @@
 
 
 /datum/action/make_disciple/Trigger()
+	var/mob/living/carbon/human/H = owner
 	if(!uses)
 		to_chat(H, "You can't make anymore disciples!")
 		return
-	var/mob/living/carbon/human/H = owner
 	to_chat(H, "You write down a book from memory for teaching a monk.")
 	new /obj/item/monk_manual(get_turf(H))
 	uses--
