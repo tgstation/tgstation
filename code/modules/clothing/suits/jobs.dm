@@ -82,10 +82,11 @@
 		return
 	if(slot == slot_wear_suit)
 		var/mob/living/carbon/human/H = user
-		if (istype(H.get_item_by_slot(slot_head), /obj/item/clothing/head/chefhat))
-			to_chat(user,"<span class='boldannounce'>As you don the cook's uniform, you recall your teachings from culinary school.</span>")
-			var/datum/martial_art/cqc/style = new
-			style.teach(H,TRUE)
+		if(H.mind && (H.mind.assigned_role == "Cook"))
+			if (istype(H.get_item_by_slot(slot_head), /obj/item/clothing/head/chefhat))
+				to_chat(user,"<span class='boldannounce'>As you don the cook's uniform, you recall your teachings from culinary school.</span>")
+				var/datum/martial_art/cqc/style = new
+				style.teach(H,TRUE)
 
 /obj/item/clothing/suit/toggle/chef/dropped(mob/user)
 	. = ..()
