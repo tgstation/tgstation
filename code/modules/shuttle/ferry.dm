@@ -6,14 +6,14 @@
 	possible_destinations = "ferry_home;ferry_away"
 	req_access = list(ACCESS_CENT_GENERAL)
 
-	var/aiControlDisabled = 1
+	var/aiControlDisabled = TRUE
+	var/allow_emag = FALSE
 
-/obj/machinery/computer/shuttle/ferry/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1));
+/obj/machinery/computer/shuttle/ferry/emag_act()
+	return allow_emag? ..() : FALSE
 
-/obj/machinery/computer/shuttle/ferry/attack_ai(mob/user)
-	if(!src.canAIControl(user))
-		return
+/obj/machinery/computer/shuttle/ferry/attack_ai()
+	return aiControlDisabled? FALSE : ..()
 
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"
