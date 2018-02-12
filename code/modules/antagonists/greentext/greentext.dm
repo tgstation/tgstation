@@ -5,7 +5,7 @@
 
 /datum/antagonist/greentext/proc/forge_objectives()
 	var/datum/objective/O = new /datum/objective("Succeed")
-	O.completed = 1 //YES!
+	O.completed = TRUE //YES!
 	O.owner = owner
 	objectives += O
 	owner.objectives += objectives

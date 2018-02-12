@@ -82,8 +82,6 @@
 	if(!(resistance_flags & ON_FIRE) && !force)
 		return QDEL_HINT_LETMELIVE
 
-	. = ..()
-
 	SSticker.round_end_events -= roundend_callback
 	GLOB.poi_list.Remove(src)
 	for(var/i in GLOB.player_list)
@@ -97,6 +95,7 @@
 		// can't skip the mob check as it also does the decolouring
 		if(!quiet)
 			to_chat(M, message)
+	. = ..()
 
 /obj/item/greentext/quiet
 	quiet = TRUE
