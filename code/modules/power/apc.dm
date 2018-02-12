@@ -656,8 +656,7 @@
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
-	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
 		togglelock(user)

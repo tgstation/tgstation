@@ -562,7 +562,7 @@
 	canSmoothWith = null
 	explosion_block = 3
 	level = 3
-	glass_type = /obj/item/stack/sheet/rglass
+	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
 
 /obj/structure/window/shuttle/narsie_act()
@@ -570,6 +570,9 @@
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
+
+/obj/structure/window/shuttle/unanchored
+	anchored = FALSE
 
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
@@ -588,8 +591,11 @@
 	canSmoothWith = null
 	explosion_block = 3
 	level = 3
-	glass_type = /obj/item/stack/sheet/rglass
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
+
+/obj/structure/window/plastitanium/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
