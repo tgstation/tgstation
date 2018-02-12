@@ -189,6 +189,28 @@
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
+	var/cooked_time = 0
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/Initialize()
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+	cooked_time = world.time
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/process()
+	var/estimate_deheating_time = cooked_time+(7.5 MINUTES)
+	if(istype(loc, /obj/item/donk_bag))
+		estimate_deheating_time = cooked_time+(25 MINUTES)
+	if(world.time >= estimate_deheating_time && prob(4.5)) //So you still have a chance to unwrap and eat it.
+		var/obj/item/reagent_containers/food/snacks/donkpocket/cooled_donk = new(loc)
+		if(istype(loc, /obj/item/donk_bag))
+			var/obj/item/donk_bag/D = loc
+			D.contained_donks += cooled_donk
+			D.update_icon()
+		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
