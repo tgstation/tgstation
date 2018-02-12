@@ -55,13 +55,13 @@
 					return
 			if(CIRCUIT_CORE)
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 					state = SCREWED_CORE
 					update_icon()
 					return
 				if(istype(P, /obj/item/crowbar))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					state = EMPTY_CORE
 					update_icon()
@@ -70,7 +70,7 @@
 					return
 			if(SCREWED_CORE)
 				if(istype(P, /obj/item/screwdriver) && circuit)
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 					state = CIRCUIT_CORE
 					update_icon()
@@ -92,7 +92,7 @@
 					if(brain)
 						to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 					else
-						playsound(loc, P.usesound, 50, 1)
+						P.play_tool_sound(src)
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
 						update_icon()
@@ -151,7 +151,7 @@
 					return
 
 				if(istype(P, /obj/item/crowbar) && brain)
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the brain.</span>")
 					brain.forceMove(loc)
 					brain = null
@@ -160,7 +160,7 @@
 
 			if(GLASS_CORE)
 				if(istype(P, /obj/item/crowbar))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 					state = CABLED_CORE
 					update_icon()
@@ -168,7 +168,7 @@
 					return
 
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
 						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
@@ -197,7 +197,7 @@
 					return
 
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 					state = GLASS_CORE
 					update_icon()

@@ -315,16 +315,10 @@
 		if(mode == 1)
 			if(check_target(AM))
 				var/weightcheck = FALSE
-				if ((!istype(AM,/obj/item/device/electronic_assembly/)) && (!istype(AM,/obj/item/device/transfer_valve)))
-					if (AM.w_class <= max_w_class)
-						weightcheck = TRUE
-					else
-						weightcheck = FALSE
+				if (AM.w_class < max_w_class)
+					weightcheck = TRUE
 				else
-					if (AM.w_class < max_w_class)
-						weightcheck = TRUE
-					else
-						weightcheck = FALSE
+					weightcheck = FALSE
 				if((contents.len < max_items) && (weightcheck))
 					AM.forceMove(src)
 		if(mode == 0)

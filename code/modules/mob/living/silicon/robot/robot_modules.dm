@@ -297,7 +297,7 @@
 		/obj/item/device/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/device/geiger_counter,
+		/obj/item/device/geiger_counter/cyborg,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/device/electroadaptive_pseudocircuit,

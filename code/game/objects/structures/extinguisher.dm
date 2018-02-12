@@ -43,7 +43,7 @@
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench) && !stored_extinguisher)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
@@ -98,7 +98,7 @@
 	attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	toggle_cabinet(user)
 

@@ -69,8 +69,7 @@
 	return ..()
 
 /obj/machinery/cell_charger/Destroy()
-	if(charging)
-		QDEL_NULL(charging)
+	QDEL_NULL(charging)
 	return ..()
 
 /obj/machinery/cell_charger/proc/removecell()

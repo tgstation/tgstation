@@ -603,7 +603,7 @@
 	shoes = /obj/item/clothing/shoes/combat/coldres
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	l_pocket = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female

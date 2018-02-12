@@ -38,18 +38,18 @@
 		var/obj/item/crusher_trophy/T = t
 		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
 
-/obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
-	if(istype(A, /obj/item/crowbar))
+/obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/crowbar))
 		if(LAZYLEN(trophies))
 			to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
-			playsound(loc, A.usesound, 100, 1)
+			I.play_tool_sound(src)
 			for(var/t in trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.remove_from(src, user)
 		else
 			to_chat(user, "<span class='warning'>There are no trophies on [src].</span>")
-	else if(istype(A, /obj/item/crusher_trophy))
-		var/obj/item/crusher_trophy/T = A
+	else if(istype(I, /obj/item/crusher_trophy))
+		var/obj/item/crusher_trophy/T = I
 		T.add_to(src, user)
 	else
 		return ..()

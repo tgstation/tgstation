@@ -191,6 +191,8 @@
 		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
 	EmptyExtinguisher(user)
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)

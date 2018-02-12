@@ -259,5 +259,12 @@
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 
+/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/SM)
+	var/obj/item/implant/radio/mining/imp = new(src)
+	imp.implant(SM, user)
+
+	SM.access_card = new /obj/item/card/id/mining(SM)
+	SM.access_card.flags_1 |= NODROP_1
+
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK

@@ -1,4 +1,0 @@
-author: "Epoc"
-delete-after: True
-changes: 
-  - imageadd: "Belt items now have inhand sprites"

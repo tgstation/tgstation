@@ -248,14 +248,16 @@
 	switch(action)
 		if("cut")
 			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
-				playsound(holder, I.usesound, 20, 1)
+				if(I)
+					I.play_tool_sound(src, 20)
 				cut_color(target_wire)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
-				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
+				if(I)
+					I.play_tool_sound(src, 20)
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
