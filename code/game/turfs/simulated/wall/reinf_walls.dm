@@ -50,25 +50,24 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
-/turf/closed/wall/r_wall/try_destroy(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		to_chat(user, "<span class='notice'>You begin to smash though the [name]...</span>")
+/turf/closed/wall/r_wall/try_destroy(obj/item/I, mob/user, turf/T)
+	if(istype(I, /obj/item/pickaxe/drill/jackhammer))
+		to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
 		if(do_after(user, 50, target = src))
-			if(!istype(src, /turf/closed/wall/r_wall) || !W)
-				return 1
-			D.playDigSound()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [D.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			if(!istype(src, /turf/closed/wall/r_wall))
+				return TRUE
+			I.play_tool_sound(src)
+			visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			dismantle_wall()
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
 			if(istype(W, /obj/item/wirecutters))
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
@@ -86,7 +85,7 @@
 				return 1
 
 			else if(istype(W, /obj/item/wirecutters))
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				d_state = INTACT
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair the outer grille.</span>")
@@ -174,7 +173,7 @@
 
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
-				playsound(src, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return 1

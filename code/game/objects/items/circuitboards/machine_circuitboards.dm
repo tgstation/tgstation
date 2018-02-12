@@ -287,7 +287,7 @@
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
-		playsound(user, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()

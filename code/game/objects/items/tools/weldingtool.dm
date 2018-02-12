@@ -12,7 +12,7 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
-	usesound = 'sound/items/welder.ogg'
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 3

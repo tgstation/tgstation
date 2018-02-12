@@ -151,7 +151,7 @@ Buildable meters
 	A.on_construction(color, piping_layer)
 	transfer_fingerprints_to(A)
 
-	playsound(src, W.usesound, 50, 1)
+	W.play_tool_sound(src)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -205,7 +205,7 @@ Buildable meters
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return TRUE
 	new /obj/machinery/meter(loc, piping_layer)
-	playsound(src, I.usesound, 50, 1)
+	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 
