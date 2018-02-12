@@ -375,6 +375,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 // Medal names
 #define BOSS_KILL_MEDAL "Killer"
+#define BOSS_KILL_MEDAL_CRUSHER "Crusher"
 #define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
 
 // Score names

@@ -59,13 +59,14 @@
 		return
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-		if(C && crusher_loot)
-			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
-				spawn_crusher_loot()
+		var/crusher_kill = FALSE
+		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
+			spawn_crusher_loot()
+			crusher_kill = TRUE
 		if(!admin_spawned)
 			SSblackbox.record_feedback("tally", "megafauna_kills", 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(medal_type,score_type)
+				grant_achievement(medal_type, score_type, crusher_kill)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
@@ -119,7 +120,7 @@
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
 		return FALSE
 
@@ -135,6 +136,8 @@
 				var/suffixm = BOSS_KILL_MEDAL
 				UnlockMedal("Boss [suffixm]",C)
 				UnlockMedal("[medaltype] [suffixm]",C)
+				if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+					UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
 	return TRUE
