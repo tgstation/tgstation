@@ -35,7 +35,7 @@
 	..()
 	A.sharpness = IS_SHARP_ACCURATE
 
-/datum/relic_effect/passive/light/apply(/obj/item/A)
+/datum/relic_effect/passive/light/apply(obj/item/A)
 	if(prob(50))
 		A.light_color = pick(LIGHT_COLOR_GREEN,LIGHT_COLOR_RED,LIGHT_COLOR_YELLOW,LIGHT_COLOR_BLUE,LIGHT_COLOR_CYAN,LIGHT_COLOR_ORANGE,LIGHT_COLOR_PINK)
 	var/power = 0
@@ -67,9 +67,9 @@
 /datum/relic_effect/passive/reagents/fill_beaker/apply(obj/item/A)
 	if(!A.reagents)
 		return
-	var/times = min(rand(1,10),reagents.maximum_volume)
+	var/times = min(rand(1,10),A.reagents.maximum_volume)
 	for(var/count in 1 to times)
-		A.reagents.add_reagent(get_random_reagent_id(),rand(1,round(reagents.maximum_volume / times)))
+		A.reagents.add_reagent(get_random_reagent_id(),rand(1,round(A.reagents.maximum_volume / times)))
 
 /datum/relic_effect/passive/supermatter
 	firstname = list("supermatter")
@@ -103,13 +103,13 @@
 /datum/relic_effect/passive/loadsadosh/apply(obj/item/A)
 	if(!GLOB.exports_list.len)
 		setupExports()
-	var/datum/export/relic = new()
-	relic.specific_relic = A
-	relic.unit_name = A.name
-	relic.cost = rand(1,5000)
+	var/datum/export/relic/E = new()
+	E.specific_relic = A
+	E.unit_name = A.name
+	E.cost = rand(1,5000)
 	if(prob(40)) //Sometimes it's worth even more dosh
-		relic.cost *= rand(1,25)
-	GLOB.exports_list += relic
+		E.cost *= rand(1,25)
+	GLOB.exports_list += E
 
 /datum/export/relic
 	cost = 100

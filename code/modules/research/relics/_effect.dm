@@ -2,7 +2,7 @@
 	var/list/L = list()
 	for(var/datum/relic_effect/efftype in typesof(type))
 		if(initial(efftype.weight))
-			L[new efftype()] = efftype.weight
+			L[efftype] = efftype.weight
 	return L
 
 /datum/relic_effect

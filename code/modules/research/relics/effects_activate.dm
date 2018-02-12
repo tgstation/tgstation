@@ -180,7 +180,7 @@
 	..()
 
 /datum/relic_effect/activate/rcd/activate(obj/item/A,atom/target,mob/user)
-	if(!delay || A.do_after(user, delay, target))
+	if(!delay || do_after(user, delay, target))
 		if(!..())
 			return
 		rcd_act(A,target,user)
@@ -198,9 +198,9 @@
 
 /datum/relic_effect/activate/rcd/wall_and_floor/rcd_act(obj/item/A,atom/target,mob/user)
 	var/turf/T = get_turf(target)
-	if(is_type(T,/turf/open/space))
+	if(istype(T,/turf/open/space))
 		T.PlaceOnTop(placed_floor)
-	else if(is_type(T,/turf/open) && !is_type(T,/turf/open/indestructible))
+	else if(istype(T,/turf/open) && !istype(T,/turf/open/indestructible))
 		T.PlaceOnTop(placed_wall)
 
 /datum/relic_effect/activate/rcd/replace_floor
@@ -211,7 +211,7 @@
 	..()
 
 /datum/relic_effect/activate/rcd/replace_floor/rcd_act(obj/item/A,atom/target,mob/user)
-	var/turf/T = get_turf(target)
-	if(is_type(T,/turf/open/floor))
+	var/turf/open/floor/T = get_turf(target)
+	if(istype(T) && !istype(T,placed_floor))
 		T.remove_tile(user,silent = TRUE)
 		T.ChangeTurf(placed_floor)

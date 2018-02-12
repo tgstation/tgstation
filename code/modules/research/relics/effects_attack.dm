@@ -50,8 +50,8 @@
 		internal.activate(A,target,user)
 
 /datum/relic_effect/attack/ignite
-	first_name = list("burning","nova","blazing","pyro","thermonuclear","fusic","hidrazine","gas","superheated","plasmic","tritium")
-	last_name = list("igniter","flare","burninator","cyclotorch","brumane","incinerator","fulgurite")
+	firstname = list("burning","nova","blazing","pyro","thermonuclear","fusic","hidrazine","gas","superheated","plasmic","tritium")
+	lastname = list("igniter","flare","burninator","cyclotorch","brumane","incinerator","fulgurite")
 	var/apply_stacks = 1
 	var/max_stacks = 10
 

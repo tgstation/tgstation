@@ -35,31 +35,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	var/list/item_reactions = list()
 	var/list/experiments = list()
 
-/*/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
-	var/probWeight = 0
-	for(var/I in typesof(/obj/item))
-		if(istype(I, /obj/item/relic))
-			item_reactions["[I]"] = SCANTYPE_DISCOVER
-		else
-			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
-		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += 15
-				valid_items += I
-				probWeight++
-
-		if(ispath(I, /obj/item/reagent_containers/food))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += rand(1,max(2,35-probWeight))
-				valid_items += I
-
-		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
-			var/obj/item/tempCheck = I
-			if(initial(tempCheck.icon_state) != null)
-				critical_items += I*/
-
 /obj/machinery/rnd/experimentor/RefreshParts()
 	reset_time = initial(reset_time)
 	bad_thing_coeff = initial(bad_thing_coeff)
@@ -213,13 +188,18 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	recently_experimented = 1
 	icon_state = "h_lathe_wloop"
 
-	if(experiments[type])
-		var/loaded_type = loaded_item.type
-		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
-		var/datum/experiment/picked = pickweight(possible_experiments)
-		var/datum/techweb/web = linked_console.stored_research
-		var/list/datum/techweb_node/nodes = techweb_item_boost_check(loaded_item)
+	var/loaded_type = loaded_item.type
+	var/datum/techweb/web = linked_console.stored_research
+	var/list/datum/techweb_node/nodes = techweb_item_boost_check(loaded_item)
+	var/datum/experiment/picked
 
+	if(ispath(type,/datum/experiment) && web.all_experiments[type])
+		picked = web.all_experiments[type]
+	else if(experiments[type])
+		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
+		picked = pickweight(possible_experiments)
+
+	if(picked)
 		success = picked.perform(src,loaded_item)
 		use_power(picked.power_use)
 		picked.gather_data(src,web,success)

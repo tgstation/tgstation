@@ -15,8 +15,9 @@
 /datum/component/relic/proc/use_charge()
 	if(charges > 0)
 		charges--
-	cooldown = TRUE
-	addtimer(CALLBACK(src,.proc/reset_cooldown),cooldown_time)
+	if(cooldown_time)
+		cooldown = TRUE
+		addtimer(CALLBACK(src,.proc/reset_cooldown),cooldown_time)
 
 /datum/component/relic/proc/recharge(amt)
 	charges += amt
