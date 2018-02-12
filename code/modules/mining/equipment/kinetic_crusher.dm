@@ -219,7 +219,7 @@
 	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "watcher_wing"
 	denied_type = /obj/item/crusher_trophy/watcher_wing
-	bonus_value = 8
+	bonus_value = 5
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
@@ -257,6 +257,7 @@
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
+	bonus_value = 8
 
 //legion
 /obj/item/crusher_trophy/legion_skull
