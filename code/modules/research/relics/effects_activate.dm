@@ -1,5 +1,6 @@
 /datum/relic_effect/activate
 	var/range = 0
+	weight = 20
 	hogged_signals = list(COMSIG_ITEM_AFTER_ATTACK,COMSIG_ITEM_ATTACK_SELF)
 
 /datum/relic_effect/activate/apply_to_component(obj/item/A,datum/component/relic/comp)
@@ -188,6 +189,7 @@
 /datum/relic_effect/activate/rcd/proc/rcd_act(obj/item/A,atom/target,mob/user)
 
 /datum/relic_effect/activate/rcd/wall_and_floor
+	weight = 20
 	var/turf/open/placed_floor = /turf/open/floor/plasteel
 	var/turf/closed/placed_wall = /turf/closed/wall
 
@@ -204,6 +206,7 @@
 		T.PlaceOnTop(placed_wall)
 
 /datum/relic_effect/activate/rcd/replace_floor
+	weight = 20
 	var/turf/open/placed_floor
 
 /datum/relic_effect/activate/rcd/replace_floor/apply()

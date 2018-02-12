@@ -15,6 +15,7 @@
 		A.item_state = pick(item_state)
 
 /datum/relic_effect/cosmetic/flash
+	weight = 20
 	firstname = list("tuberous","phosphorescent","fluorescent","flashing","radiant","hypnotizing")
 	lastname = list("bulb","mesmerizer","uv-light","diode","infra-emitter")
 	icon = 'icons/obj/device.dmi'
@@ -24,6 +25,7 @@
 	item_state = list("flashtool","seclite","emp")
 
 /datum/relic_effect/cosmetic/melee
+	weight = 20
 	firstname = list("laser","energy","dodecahedric","geo","radial","nuclear","manual")
 	lastname = list("hurtinator","hammer","pulverizer","deboner","cyclotron","din")
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -33,6 +35,7 @@
 	item_state = list("hammeroff","mjollnir1","mjollnir0","mining_hammer1","hammeroff")
 
 /datum/relic_effect/cosmetic/melee/tool
+	weight = 20
 	firstname = list("mechanical","automatic","serrated","rhombic","triplutic","unstoppable","manual")
 	lastname = list("transfibulator","hydrawrench","decalcificator","hyperscrew","doptergun","cryodrill","spintulator")
 	icon = 'icons/obj/tools.dmi'
@@ -41,10 +44,14 @@
 	item_right = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	item_state = list("rcd","screwdriver_brass","welder1","upindwelder","crowbar_brass","jawsoflife")
 
+/datum/relic_effect/cosmetic/color
+	weight = 20
+
 /datum/relic_effect/cosmetic/color/apply(var/obj/item/A)
 	A.color = color_matrix_rotate_hue(rand(360))
 
 /datum/relic_effect/cosmetic/color/spectral
+	weight = 20
 	firstname = list("spectral","effluevescent","ghastly","paranormal")
 
 /datum/relic_effect/cosmetic/color/spectral/apply(var/obj/item/A)
@@ -53,6 +60,7 @@
 	A.blend_mode = BLEND_ADD
 
 /datum/relic_effect/cosmetic/color/sepia
+	weight = 20
 	firstname = list("antique","historical","artifact")
 
 /datum/relic_effect/cosmetic/color/sepia/apply(var/obj/item/A)

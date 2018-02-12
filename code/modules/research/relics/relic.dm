@@ -5,10 +5,10 @@
 	var/revealed = FALSE
 	var/datum/relic_type/my_type
 
-/obj/item/relic/Initialize(var/datum/relic_type/newtype = null)
+/obj/item/relic/Initialize(mapload,var/datum/relic_type/newtype = null)
 	. = ..()
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
-	if(newtype)
+	if(ispath(newtype))
 		my_type = newtype
 	else
 		var/pickedtype = pick(subtypesof(/datum/relic_type))

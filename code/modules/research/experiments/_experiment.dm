@@ -18,7 +18,7 @@
 
 //Override this proc to check for other qualities of the item (slime core charges, valid bomb, etc)
 /datum/experiment/proc/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
-	. = valid_types[O]
+	. = is_type_in_typecache(O,valid_types)
 	if(. && critical)
 		. = is_valid_critical(O)
 

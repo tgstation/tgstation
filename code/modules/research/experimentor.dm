@@ -8,15 +8,15 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	var/list/experiments = list()
 	var/list/item_results = list()
 
-/datum/experiment_type/proc/get_valid_experiments(obj/item/O,bad_things_coeff)
+/datum/experiment_type/proc/get_valid_experiments(obj/machinery/rnd/experimentor/E,obj/item/O,bad_things_coeff)
 	var/list/weighted_experiments = list()
-	for(var/datum/experiment/E in experiments)
-		if(!E.weight || !E.can_perform(O))
+	for(var/datum/experiment/EX in experiments)
+		if(!EX.weight || !EX.can_perform(E,O))
 			return
-		if(E.is_bad && bad_things_coeff < E.weight)
-			weighted_experiments[E] = E.weight - bad_things_coeff
-		else if(!E.is_bad)
-			weighted_experiments[E] = E.weight
+		if(EX.is_bad && bad_things_coeff < EX.weight)
+			weighted_experiments[EX] = EX.weight - bad_things_coeff
+		else if(!EX.is_bad)
+			weighted_experiments[EX] = EX.weight
 	return weighted_experiments
 
 /obj/machinery/rnd/experimentor
@@ -137,10 +137,10 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		if(!web.all_experiment_types.len)
 			for(var/type in typesof(/datum/experiment_type) - /datum/experiment_type)
 				web.all_experiment_types[type] = new type()
-			for(var/datum/experiment/type in typesof(/datum/experiment))
-				if(!initial(type.experiment_type))
-					continue
+			for(var/type in typesof(/datum/experiment))
 				var/datum/experiment/EX = new type()
+				if(!EX.experiment_type)
+					continue
 				EX.init()
 				web.all_experiments[type] = EX
 				for(var/extype in typesof(EX.experiment_type))
@@ -195,8 +195,8 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 
 	if(ispath(type,/datum/experiment) && web.all_experiments[type])
 		picked = web.all_experiments[type]
-	else if(experiments[type])
-		var/list/possible_experiments = experiments[type].get_valid_experiments(loaded_item,bad_thing_coeff)
+	if(experiments[type])
+		var/list/possible_experiments = experiments[type].get_valid_experiments(src,loaded_item,bad_thing_coeff)
 		picked = pickweight(possible_experiments)
 
 	if(picked)

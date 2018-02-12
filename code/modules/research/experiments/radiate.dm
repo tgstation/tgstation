@@ -20,7 +20,7 @@
 		var/datum/experiment_type/clone/mode = web.all_experiment_types[/datum/experiment_type/clone]
 		mode.hidden = FALSE
 		mode.uses = E.bad_thing_coeff
-		E.experiments |= mode //Give it to this experimentor. Others need to relink to unlock.
+		E.experiments[mode.type] = mode //Give it to this experimentor. Others need to relink to unlock.
 
 		E.visible_message("[E] has activated an unknown subroutine!")
 		playsound(E, 'sound/effects/genetics.ogg', 50, 1)

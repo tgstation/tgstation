@@ -1,15 +1,27 @@
+/datum/relic_effect/passive/size_change
+	weight = 20
+
 /datum/relic_effect/passive/size_change/apply(obj/item/A)
 	A.w_class = CLAMP(A.w_class + rand(1,3) * pick(-1,1),WEIGHT_CLASS_TINY,WEIGHT_CLASS_BULKY)
+
+/datum/relic_effect/passive/throw_power
+	weight = 20
 
 /datum/relic_effect/passive/throw_power/apply(obj/item/A)
 	A.throwforce = rand(0,10)
 	if(prob(50))
 		A.throwforce *= rand(1,4)
 
+/datum/relic_effect/passive/attack_power
+	weight = 20
+
 /datum/relic_effect/passive/attack_power/apply(obj/item/A)
 	A.force = rand(0,15)
 	if(prob(30))
 		A.force *= rand(1,3)
+
+/datum/relic_effect/passive/damage_type
+	weight = 20
 
 /datum/relic_effect/passive/damage_type/apply(obj/item/A)
 	A.damtype = pick(BURN,OXY,TOX)
@@ -19,6 +31,7 @@
 		A.damtype = pick(CLONE,BRAIN)
 
 /datum/relic_effect/passive/sharp
+	weight = 20
 	firstname = list("sharp","slicer","slashing","serrated","hypercutting","triclax")
 	lastname = list("saw","blade","cutter","cutinator","sector","laser")
 
@@ -35,6 +48,9 @@
 	..()
 	A.sharpness = IS_SHARP_ACCURATE
 
+/datum/relic_effect/passive/light
+	weight = 20
+
 /datum/relic_effect/passive/light/apply(obj/item/A)
 	if(prob(50))
 		A.light_color = pick(LIGHT_COLOR_GREEN,LIGHT_COLOR_RED,LIGHT_COLOR_YELLOW,LIGHT_COLOR_BLUE,LIGHT_COLOR_CYAN,LIGHT_COLOR_ORANGE,LIGHT_COLOR_PINK)
@@ -46,6 +62,7 @@
 	A.set_light(l_range = rand(1,20) * 0.5, l_power = power)
 
 /datum/relic_effect/passive/reagents/no_react
+	weight = 20
 	firstname = list("statis","cryo","nanofrost","hyperfreeze","modulated","temporal","stabilized")
 
 /datum/relic_effect/passive/reagents/no_react/apply(obj/item/A)
@@ -53,6 +70,7 @@
 		A.reagents.set_reacting(FALSE)
 
 /datum/relic_effect/passive/reagents/big_beaker
+	weight = 20
 	firstname = list("huge","ginormous","deep","singularity","bluespace")
 
 /datum/relic_effect/passive/reagents/big_beaker/apply(obj/item/A)
@@ -63,6 +81,9 @@
 		A.reagents.maximum_volume *= rand(2,10)
 	else if(prob(5)) //The holy grail rofl
 		A.reagents.maximum_volume = A.reagents.maximum_volume ** rand(2,4)
+
+/datum/relic_effect/passive/reagents/fill_beaker
+	weight = 20
 
 /datum/relic_effect/passive/reagents/fill_beaker/apply(obj/item/A)
 	if(!A.reagents)
@@ -98,6 +119,7 @@
 		qdel(W)
 
 /datum/relic_effect/passive/loadsadosh
+	weight = 20
 	firstname = list("expensive","commercially-viable","nanocorp","THE ARM","syndi")
 
 /datum/relic_effect/passive/loadsadosh/apply(obj/item/A)

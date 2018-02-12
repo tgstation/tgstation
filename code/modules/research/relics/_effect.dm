@@ -1,8 +1,9 @@
 /proc/get_valid_relic_effects(var/type)
 	var/list/L = list()
-	for(var/datum/relic_effect/efftype in typesof(type))
-		if(initial(efftype.weight))
-			L[efftype] = efftype.weight
+	for(var/efftype in typesof(type))
+		var/datum/relic_effect/efftype2 = efftype
+		if(initial(efftype2.weight))
+			L[efftype] = initial(efftype2.weight)
 	return L
 
 /datum/relic_effect

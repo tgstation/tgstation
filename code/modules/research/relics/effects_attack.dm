@@ -14,6 +14,7 @@
 	return use_power(A,user)
 
 /datum/relic_effect/attack/repair_robot
+	weight = 20
 	hogged_signals = list(COMSIG_ITEM_ATTACK)
 	var/healed_brute = 10
 	var/healed_burn = 10
@@ -35,6 +36,7 @@
 		target.adjustFireLoss(-healed_burn)
 
 /datum/relic_effect/attack/activate
+	weight = 20
 	var/datum/relic_effect/activate/internal
 
 /datum/relic_effect/attack/activate/apply()
@@ -50,6 +52,7 @@
 		internal.activate(A,target,user)
 
 /datum/relic_effect/attack/ignite
+	weight = 20
 	firstname = list("burning","nova","blazing","pyro","thermonuclear","fusic","hidrazine","gas","superheated","plasmic","tritium")
 	lastname = list("igniter","flare","burninator","cyclotorch","brumane","incinerator","fulgurite")
 	var/apply_stacks = 1
