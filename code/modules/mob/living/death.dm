@@ -74,6 +74,17 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
+		if(!SSticker.first_death.len)
+			var/list/L = list()
+			var/area/A = get_area(src)
+			L["name"] = name
+			L["role"] = null
+			if(mind.assigned_role)
+				L["role"] = mind.assigned_role
+			L["area"] = A.map_name
+			L["damage"] = "<font color='lightred'>[bruteloss]</font>/<font color='orange'>[fireloss]</font>/<font color='lightgreen'>[toxloss]</font>/<font color='lightblue'>[oxyloss]</font>/<font color='pink'>[cloneloss]</font>"
+			L["last_words"] = last_words
+			SSticker.first_death = L.Copy()
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s
