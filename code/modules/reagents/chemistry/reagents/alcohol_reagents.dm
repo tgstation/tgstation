@@ -1357,7 +1357,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/grasshopper
 	name = "Grasshopper"
 	id = "grasshopper"
-	description = "A fresh and sweet dessert shooter.Difficult to look manly while drinking."
+	description = "A fresh and sweet dessert shooter. Difficult to look manly while drinking."
 	color = "00ff00"
 	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
