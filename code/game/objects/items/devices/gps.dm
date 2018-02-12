@@ -41,10 +41,12 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	toggletracking(user)
 
 /obj/item/device/gps/proc/toggletracking(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, "It's busted!")

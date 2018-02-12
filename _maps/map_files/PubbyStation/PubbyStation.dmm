@@ -7207,8 +7207,7 @@
 /area/crew_quarters/fitness/recreation)
 "ato" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -7526,7 +7525,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/tank/internals/plasma/full,
 /obj/item/disk/nuclear/fake,
-/obj/item/ore/diamond,
+/obj/item/stack/ore/diamond,
 /obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -16450,8 +16449,7 @@
 /area/quartermaster/warehouse)
 "aQf" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/floorgrime,
@@ -17262,8 +17260,7 @@
 /area/maintenance/department/crew_quarters/bar)
 "aRY" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -19193,8 +19190,7 @@
 /area/quartermaster/storage)
 "aWz" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -36440,8 +36436,7 @@
 /area/science/mineral_storeroom)
 "bLj" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
@@ -40161,7 +40156,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -40169,14 +40163,12 @@
 "bUx" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUy" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -40187,7 +40179,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -40195,7 +40186,6 @@
 "bUA" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/space,
@@ -40646,8 +40636,7 @@
 "bVB" = (
 /obj/item/book/manual/barman_recipes,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/cigbutt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -42222,7 +42211,6 @@
 /area/maintenance/disposal/incinerator)
 "bZi" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/machinery/meter,
@@ -42230,7 +42218,6 @@
 /area/maintenance/disposal/incinerator)
 "bZj" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
@@ -42471,7 +42458,6 @@
 /area/maintenance/disposal/incinerator)
 "bZR" = (
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -47589,7 +47575,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Crematorium";
 	opacity = 1;
-	req_access = list(27)
+	req_access = null;
+	req_access_txt = "27"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,

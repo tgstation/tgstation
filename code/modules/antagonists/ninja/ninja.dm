@@ -2,10 +2,10 @@
 	name = "Ninja"
 	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
+	show_name_in_check_antagonists = TRUE
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
-
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -140,9 +140,6 @@
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has [adj] ninja'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has [adj] ninja'ed [new_owner.current].")
-
-/datum/antagonist/ninja/antag_listing_name()
-	return ..() + "(Ninja)"
 
 /datum/antagonist/ninja/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
 	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]

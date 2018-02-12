@@ -1244,6 +1244,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 20
 	restricted_roles = list("Janitor")
 
+/datum/uplink_item/role_restricted/explosive_hot_potato
+	name = "Exploding Hot Potato"
+	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
+	item = /obj/item/hot_potato/syndicate
+	cost = 4
+	surplus = 0
+	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
+
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \

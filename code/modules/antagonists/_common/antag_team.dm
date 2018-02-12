@@ -27,8 +27,25 @@
 /datum/team/proc/roundend_report()
 	var/list/report = list()
 
-	report += "<b>[name]:</b>"
+	report += "<span class='header'>[name]:</span>"
 	report += "The [member_name]s were:"
 	report += printplayerlist(members)
 
-	return report.Join("<br>")
+	if(objectives.len)
+		report += "<span class='header'>Team had following objectives:</span>"
+		var/win = TRUE
+		var/objective_count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+			else
+				report += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				win = FALSE
+			objective_count++
+		if(win)
+			report += "<span class='greentext'>The [name] was successful!</span>"
+		else
+			report += "<span class='redtext'>The [name] have failed!</span>"
+
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"

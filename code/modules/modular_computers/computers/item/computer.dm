@@ -393,18 +393,15 @@
 		return
 
 	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(!WT.isOn())
-			to_chat(user, "<span class='warning'>\The [W] is off.</span>")
-			return
-
 		if(obj_integrity == max_integrity)
 			to_chat(user, "<span class='warning'>\The [src] does not require repairs.</span>")
 			return
 
+		if(!W.tool_start_check(user, amount=1))
+			return
+
 		to_chat(user, "<span class='notice'>You begin repairing damage to \the [src]...</span>")
-		var/dmg = round(max_integrity - obj_integrity)
-		if(WT.remove_fuel(round(dmg/75)) && do_after(usr, dmg/10))
+		if(W.use_tool(src, user, 20, volume=50, amount=1))
 			obj_integrity = max_integrity
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return

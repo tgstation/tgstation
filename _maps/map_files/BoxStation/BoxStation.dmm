@@ -3032,7 +3032,7 @@
 	dir = 4
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -7187,8 +7187,7 @@
 /area/maintenance/port/fore)
 "arM" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -13846,7 +13845,9 @@
 /area/chapel/office)
 "aIB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bodycontainer/crematorium,
+/obj/structure/bodycontainer/crematorium{
+	id = "crematoriumChapel"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aIC" = (
@@ -14271,6 +14272,7 @@
 "aJG" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/button/crematorium{
+	id = "crematoriumChapel";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
@@ -34231,7 +34233,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bHz" = (
-/obj/item/ore/iron,
+/obj/item/stack/ore/iron,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -35471,8 +35473,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bKk" = (
-/obj/item/ore/silver,
-/obj/item/ore/silver,
+/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -49334,7 +49336,8 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -49570,7 +49573,8 @@
 	icon_state = "control_standby";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -49595,7 +49599,8 @@
 	icon_state = "control_standby";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/darkblue/corner{
@@ -49885,7 +49890,8 @@
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -51884,8 +51890,8 @@
 /area/quartermaster/storage)
 "cCp" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/AMinus,
 /obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;

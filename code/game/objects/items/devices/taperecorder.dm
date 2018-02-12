@@ -276,17 +276,11 @@
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined)
-		var/delay = -1
-		if (istype(I, /obj/item/screwdriver))
-			delay = 120*I.toolspeed
-		else if(istype(I, /obj/item/pen))
-			delay = 120*1.5
-		if (delay != -1)
-			to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
-			if(do_after(user, delay, target = src))
-				to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
-				fix()
+	if(ruined && istype(I, /obj/item/screwdriver) || istype(I, /obj/item/pen))
+		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
+		if(I.use_tool(src, user, 120))
+			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
+			fix()
 
 //Random colour tapes
 /obj/item/device/tape/random

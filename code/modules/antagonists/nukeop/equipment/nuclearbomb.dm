@@ -115,9 +115,8 @@
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
 			if(istype(I, /obj/item/screwdriver/nuke))
-				playsound(loc, I.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
-				if(do_after(user, 60*I.toolspeed,target=src))
+				if(I.use_tool(src, user, 60, volume=100))
 					deconstruction_state = NUKESTATE_UNSCREWED
 					to_chat(user, "<span class='notice'>You remove the screws from [src]'s front panel.</span>")
 					update_icon()
@@ -125,14 +124,13 @@
 
 		if(NUKESTATE_PANEL_REMOVED)
 			if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/welder = I
-				playsound(loc, I.usesound, 100, 1)
+				if(!I.tool_start_check(user, amount=1))
+					return
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
-				if(welder.remove_fuel(1,user))
-					if(do_after(user,80*I.toolspeed,target=src))
-						to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
-						deconstruction_state = NUKESTATE_WELDED
-						update_icon()
+				if(I.use_tool(src, user, 80, volume=100, amount=1))
+					to_chat(user, "<span class='notice'>You cut [src]'s inner plate.</span>")
+					deconstruction_state = NUKESTATE_WELDED
+					update_icon()
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -148,19 +146,15 @@
 						to_chat(user, "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>")
 				return
 			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount >= 20)
-					to_chat(user, "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>")
-					if(do_after(user, 100, target=src))
-						if(M.use(20))
-							to_chat(user, "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>")
-							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							STOP_PROCESSING(SSobj, core)
-							update_icon()
-						else
-							to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
-				else
-					to_chat(user, "<span class='warning'>You need more metal to do that!</span>")
+				if(!I.tool_start_check(user, amount=20))
+					return
+
+				to_chat(user, "<span class='notice'>You begin repairing [src]'s inner metal plate...</span>")
+				if(I.use_tool(src, user, 100, amount=20))
+					to_chat(user, "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>")
+					deconstruction_state = NUKESTATE_PANEL_REMOVED
+					STOP_PROCESSING(SSobj, core)
+					update_icon()
 				return
 	. = ..()
 
@@ -169,16 +163,14 @@
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
 			to_chat(user, "<span class='notice'>You start removing [src]'s front panel...</span>")
-			playsound(loc, tool.usesound, 100, 1)
-			if(do_after(user, 30 * tool.toolspeed, target = src))
+			if(tool.use_tool(src, user, 30, volume=100))
 				to_chat(user, "<span class='notice'>You remove [src]'s front panel.</span>")
 				deconstruction_state = NUKESTATE_PANEL_REMOVED
 				update_icon()
 			return TRUE
 		if(NUKESTATE_WELDED)
 			to_chat(user, "<span class='notice'>You start prying off [src]'s inner plate...</span>")
-			playsound(loc, tool.usesound, 100, 1)
-			if(do_after(user, 50 * tool.toolspeed, target = src))
+			if(tool.use_tool(src, user, 30, volume=100))
 				to_chat(user, "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>")
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				update_icon()

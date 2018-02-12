@@ -121,6 +121,19 @@
 			return I
 	return FALSE
 
+//Checks if we're holding a tool that has given quality
+//Returns the tool that has the best version of this quality
+/mob/proc/is_holding_tool_quality(quality)
+	var/obj/item/best_item
+	var/best_quality = INFINITY
+
+	for(var/obj/item/I in held_items)
+		if(I.tool_behaviour == quality && I.toolspeed < best_quality)
+			best_item = I
+			best_quality = I.toolspeed
+
+	return best_item
+
 
 //To appropriately fluff things like "they are holding [I] in their [get_held_index_name(get_held_index_of_item(I))]"
 //Can be overriden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
@@ -286,7 +299,7 @@
 	return doUnEquip(I, force, null, TRUE, idrop)
 
 //DO NOT CALL THIS PROC
-//use one of the above 2 helper procs
+//use one of the above 3 helper procs
 //you may override it, but do not modify the args
 /mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward

@@ -27,11 +27,11 @@
 				var/distance = get_dist(src, O)
 				to_chat(user, "[O] ([distance == 0 ? "same tile" : "[distance] tiles [dir2text(get_dir(src, O))]"])")
 
-/obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/wrench)
+/obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/I)
 	if(!is_servant_of_ratvar(user))
 		return ..()
 	to_chat(user, "<span class='notice'>You break down the delicate components of [src] into brass.</span>")
-	playsound(src, wrench.usesound, 50, TRUE)
+	I.play_tool_sound(src)
 	new/obj/item/stack/tile/brass(get_turf(src))
 	qdel(src)
 	return TRUE
@@ -56,14 +56,14 @@
 		return
 	..()
 
-/obj/structure/destructible/clockwork/trap/wirecutter_act(mob/living/user, obj/item/wirecutters)
+/obj/structure/destructible/clockwork/trap/wirecutter_act(mob/living/user, obj/item/I)
 	if(!is_servant_of_ratvar(user))
 		return
 	if(!wired_to.len)
 		to_chat(user, "<span class='warning'>[src] has no connections!</span>")
 		return
 	to_chat(user, "<span class='notice'>You sever all connections to [src].</span>")
-	playsound(src, wirecutters.usesound, 50, TRUE)
+	I.play_tool_sound(src)
 	for(var/V in wired_to)
 		var/obj/structure/destructible/clockwork/trap/T = V
 		T.wired_to -= src

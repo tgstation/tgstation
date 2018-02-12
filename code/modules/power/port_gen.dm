@@ -195,7 +195,7 @@
 			return
 		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, O.usesound, 50, 1)
+			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else

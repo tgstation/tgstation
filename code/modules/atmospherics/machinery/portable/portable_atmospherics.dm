@@ -92,7 +92,7 @@
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
@@ -107,7 +107,7 @@
 				if(!connect(possible_port))
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
