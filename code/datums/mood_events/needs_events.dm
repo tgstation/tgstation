@@ -5,11 +5,11 @@
 
 /datum/mood_event/nutrition/wellfed
 	description = "<span class='nicegreen'><span class='nicegreen'>My belly feels round and full.</span>\n"
-	mood_change = 4
+	mood_change = 6
 
 /datum/mood_event/nutrition/fed
 	description = "<span class='nicegreen'>I have recently had some food.</span>\n"
-	mood_change = 2
+	mood_change = 3
 
 /datum/mood_event/nutrition/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>\n"

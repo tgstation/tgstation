@@ -4,7 +4,7 @@
 	timeout = 1200
 
 /datum/mood_event/arcade
-	description = "<span class='nicegreen'>That was a fun arcade game.</span>\n"
+	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
 	timeout = 3000
 
@@ -20,7 +20,7 @@
 
 /datum/mood_event/pet_corgi
 	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
-	mood_change = 4
+	mood_change = 3
 	timeout = 3000
 
 /datum/mood_event/honk
@@ -48,7 +48,7 @@
 
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
-	mood_change = 2
+	mood_change = 3
 
 /datum/mood_event/cult
 	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
