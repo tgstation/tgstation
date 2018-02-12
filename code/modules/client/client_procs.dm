@@ -3,6 +3,15 @@
 	////////////
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
+<<<<<<< HEAD
+=======
+GLOBAL_LIST_INIT(blacklisted_builds, list(
+	1407 = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	1408 = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	
+	))
+
+>>>>>>> 097e0dd71e... Merge pull request #35603 from MrStonedOne/patch-480
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
 #define SECOND_COUNT	2
