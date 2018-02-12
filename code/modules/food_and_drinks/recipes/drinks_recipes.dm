@@ -552,7 +552,33 @@
 /datum/chemical_reaction/narsour
 	name = "Nar'sour"
 	id = "narsour"
-	results = list("narsour" = 1) 
+	results = list("narsour" = 1)
 	required_reagents = list("blood" = 1, "lemonjuice" = 1, "demonsblood" = 1)
 	mix_message = "The mixture develops a sinister glow."
 	mix_sound = 'sound/effects/singlebeat.ogg'
+
+/datum/chemical_reaction/quadruplesec
+	name = "Quadruple Sec"
+	id = "quadruple_sec"
+	results = list("eggnog" = 15)
+	required_reagents = list("triple_sec" = 5, "triple_citrus" = 5, "creme_de_menthe" = 5)
+	mix_message = "The snap of a stunbaton emanates clearly from the mixture as it settles."
+
+/datum/chemical_reaction/grasshopper
+	name = "Grasshopper"
+	id = "grasshopper"
+	results = list("grasshopper" = 15)
+	required_reagents = list("cream" = 5, "creme_de_menthe" = 5, "creme_de_cacao" = 5)
+	mix_message = "A vibrant green bubbles forth as the mixture emulsifies."
+
+/datum/chemical_reaction/stinger
+	name = "Stinger"
+	id = "stinger"
+	results = list("stinger" = 15)
+	required_reagents = list("whiskey" = 10, "creme_de_menthe" =5 )
+
+/datum/chemical_reaction/quintuplesec
+	name = "Quintuple Sec"
+	id = "quintuple_sec"
+	results = list("eggnog" = 15)
+	required_reagents = list("quadruple_sec" = 5, "clownstears" = 5, "syndicatebomb" = 5)

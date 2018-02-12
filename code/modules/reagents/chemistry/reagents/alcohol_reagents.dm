@@ -1298,3 +1298,80 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.cultslurring = min(M.cultslurring + 3, 3)
 	M.stuttering = min(M.stuttering + 3, 3)
 	..()
+
+/datum/reagent/consumable/ethanol/triple_sec
+	name = "Triple Sec"
+	id = "triple_sec"
+	description = "A sweet and vibrant orange liqueur."
+	color = "#ffcc66"
+	boozepwr = 30
+	taste_description = "a warm flowery orange taste which recalls the ocean air and summer wind of the caribbean"
+	glass_icon_state = "glass_orange"
+	glass_name = "Triple Sec"
+	glass_desc = "A glass of straight Triple Sec."
+
+/datum/reagent/consumable/ethanol/creme_de_menthe
+	name = "Creme de Menthe"
+	id = "creme_de_menthe"
+	description = "A minty liqueur excellent for refreshing, cool drinks."
+	color = "#00cc00"
+	boozepwr = 20
+	taste_description = "a minty, cool, and invigorating splash of cold streamwater"
+	glass_icon_state = "glass_green"
+	glass_name = "Creme de Menthe"
+	glass_desc = "You can almost feel the first breath of spring just looking ait it."
+
+/datum/reagent/consumable/ethanol/creme_de_cacao
+	name = "Creme de Cacao"
+	id = "creme_de_cacao"
+	description = "A chocolatey liqueur excellent for adding dessert notes to beverages and bribing sororities."
+	color = "#996633"
+	boozepwr = 20
+	taste_description = "a slick and aromatic hint of chocolates swirling in a bite of alcohol"
+	glass_icon_state = "glass_brown"
+	glass_name = "Creme de Cacao"
+	glass_desc = "A million hazing lawsuits and alcohol poisonings have started with this humble ingredient."
+
+/datum/reagent/consumable/ethanol/quadruple_sec
+	name = "Quadruple Sec"
+	id = "quadruple_sec"
+	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
+	color = "#ffcc66"
+	boozepwr = 25
+	taste_description = "a invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
+	glass_icon_state = "glass_red"
+	glass_name = "Quadruple Sec"
+	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
+
+/datum/reagent/consumable/ethanol/quintuple_sec
+	name = "Quintuple Sec"
+	id = "quintuple_sec"
+	description = "Law, Order, and Police Brutality distilled into one single elixir of JUSTICE."
+	color = "#ffcc66"
+	boozepwr = 40
+	taste_description = "THE LAW"
+	glass_icon_state = "glass_red"
+	glass_name = "Quintuple Sec"
+	glass_desc = "Now you are become law, destroyer of clowns."
+
+/datum/reagent/consumable/ethanol/grasshopper
+	name = "Grasshopper"
+	id = "grasshopper"
+	description = "A fresh and sweet dessert shooter.Difficult to look manly while drinking."
+	color = ""
+	boozepwer = 25
+	taste_description = "chocolate and mint dancing around your mouth"
+	glass_icon_state = "glass_green"
+	glass_name = "Grasshopper"
+	glass_desc = "You weren't aware edible beverages could be that green."
+
+/datum/reagent/consumable/ethanol/stinger
+	name = "Stinger"
+	id = "stinger"
+	description = "A snappy way to end the day."
+	color = ""
+	boozepwer = 25
+	taste_description = "chocolate and mint dancing around your mouth"
+	glass_icon_state = "glass_white"
+	glass_name = "Stinger"
+	glass_desc = "You wonder what would happen if you pointed this at a heat source..."
