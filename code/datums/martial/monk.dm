@@ -11,7 +11,7 @@
 	var/next_level_exp = 200
 	var/static/exp_slope = 10.5
 	var/current_level = 1
-	var/level_cap = 20
+	var/level_cap = 30
 
 	var/curr_ab = 3 // increase every 4 levels
 	var/flurry_of_blows_penalty = -2 // -2 at 1-4, -1 at 5-8, 0 at 9-20
@@ -25,11 +25,16 @@
 
 	var/list/available_actions = list()
 	var/datum/action/monk_rest/monk_rest = new/datum/action/monk_rest()
+	var/datum/action/make_disciple/make_disciple = new/datum/action/make_disciple()
 	var/datum/action/flurry_toggle/flurry_toggle = new/datum/action/flurry_toggle()
 	var/datum/action/monk/stunning_fist/stunning_fist = new/datum/action/monk/stunning_fist()
 	var/datum/action/monk/quivering_palm/quivering_palm = new/datum/action/monk/quivering_palm()
 	var/datum/action/monk/wholeness_of_body/wholeness_of_body = new/datum/action/monk/wholeness_of_body()
 	no_guns = TRUE
+
+/datum/martial_art/monk/disciple
+	name = "Disciple Monk"
+	level_cap = 20
 
 
 /datum/martial_art/monk/teach(mob/living/carbon/human/H,make_temporary=0)
@@ -59,6 +64,7 @@
 	flurry_toggle.Remove(H)
 	monk_rest.Remove(H)
 	wholeness_of_body.Remove(H)
+	make_disciple.Remove(H)
 	STOP_PROCESSING(SSfastprocess, src)
 
 /datum/martial_art/monk/process()
@@ -127,6 +133,16 @@
 		if(17)
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting.</span>")
 			stunning_fist.max_uses = 14
+		if(20)
+			to_chat(owner, "<span class = 'danger'>You can now make your first Disciple.</span>")
+			make_disciple.Grant(owner)
+			make_disciple.uses++
+		if(25)
+			to_chat(owner, "<span class = 'danger'>You can now make your second Disciple.</span>")
+			make_disciple.uses++
+		if(30)
+			to_chat(owner, "<span class = 'danger'>You can now make your final Disciple.</span>")
+			make_disciple.uses++
 
 /datum/martial_art/monk/proc/attack_roll(mob/living/T, abm)
 	if(istype(T, /mob/living/carbon/human))
@@ -400,6 +416,22 @@
 	uses_left--
 	to_chat(owner, "<span class='warning'>You focus on your inner being, identifying that wounds are merely material.</span>")
 
+/datum/action/make_disciple
+	name = "Make Disciple"
+	button_icon_state = "neckchop"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	var/uses = 0
+
+
+/datum/action/make_disciple/Trigger()
+	if(!uses)
+		to_chat(H, "You can't make anymore disciples!")
+		return
+	var/mob/living/carbon/human/H = owner
+	to_chat(H, "You write down a book from memory for teaching a monk.")
+	new /obj/item/monk_manual(get_turf(H))
+	uses--
+
 
 /obj/item/nullrod/monk_manual
 	name = "monk manual"
@@ -414,6 +446,23 @@
 		return
 	to_chat(user, "<span class='boldannounce'>You have become a Monk!</span>")
 	var/datum/martial_art/monk/D = new(null)
+	D.teach(user)
+	visible_message("<span class='warning'>You tear up [src] as described in the final pages.</span>")
+	qdel(src)
+
+/obj/item/monk_manual
+	name = "disciple monk manual"
+	desc = "A small, black manual. Inside is the collective history of all Monk orders to ever exist."
+	icon = 'icons/obj/library.dmi'
+	icon_state ="cqcmanual"
+	force = 1
+	throwforce = 1
+
+/obj/item/monk_manual/attack_self(mob/living/carbon/human/user)
+	if(!istype(user) || !user)
+		return
+	to_chat(user, "<span class='boldannounce'>You have become a Disciple Monk!</span>")
+	var/datum/martial_art/monk/disciple/D = new(null)
 	D.teach(user)
 	visible_message("<span class='warning'>You tear up [src] as described in the final pages.</span>")
 	qdel(src)
