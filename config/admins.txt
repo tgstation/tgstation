@@ -132,4 +132,3 @@ excessiveuseofcobby = Game Master
 Plizzard = Game Master
 octareenroon91 = Game Master
 Serpentarium = Game Master
-Jittai = Game Master
