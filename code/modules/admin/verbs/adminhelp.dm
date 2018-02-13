@@ -173,7 +173,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = r_text2ascii(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey

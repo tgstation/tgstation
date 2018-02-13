@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "You can now make pet carriers from the autolathe, to carry around chef meat and other small animals without having to drag them. The HoP, captain, and CMO also start with carriers in their lockers for their pets."

@@ -4,18 +4,15 @@
 			user.get_admin_say()
 			return
 		if("F5")
-			user.admin_ghost()
+			user.cmd_admin_say(verbtextinput("Asay"))
 			return
 		if("F6")
 			player_panel_new()
 			return
 		if("F7")
-			user.togglebuildmodeself()
+			user.stealth()
 			return
 		if("F8")
-			if(user.keys_held["Ctrl"])
-				user.stealth()
-			else
-				user.invisimin()
+			user.togglebuildmodeself()
 			return
 	..()

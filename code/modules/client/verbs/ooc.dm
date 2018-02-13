@@ -24,6 +24,14 @@
 			return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(check_rights_for(src, R_ADMIN))
+	else
+		msg = replacetext(msg, "<p>", "")
+		msg = replacetext(msg, "</p>", "")
+		msg = replacetext(msg, "</font>", "")
+		msg = replacetext(msg, "font size", "")
+		msg = replacetext(msg, "color=", "")
+		msg = replacetext(msg, "face=", "")
 	var/raw_msg = msg
 
 	if(!msg)
@@ -275,7 +283,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	
+
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
 	for(var/client/C in GLOB.clients)

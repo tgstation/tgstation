@@ -449,4 +449,4 @@
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 
 	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3, time_capped=TRUE)

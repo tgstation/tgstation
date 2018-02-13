@@ -325,8 +325,8 @@
 	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
-	damage = 10
-	knockdown = 20
+	damage = 15
+	knockdown = 0
 	speed = 2
 	range = 16
 	forcedodge = TRUE

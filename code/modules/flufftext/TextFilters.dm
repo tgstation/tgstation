@@ -2,7 +2,7 @@
 
 //is this shit even used at all
 /proc/NewStutter(phrase,stun)
-	phrase = html_decode(phrase)
+	phrase = rhtml_decode(phrase)
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 

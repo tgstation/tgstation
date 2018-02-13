@@ -1,0 +1,5 @@
+author: "jammer312"
+delete-after: True
+changes: 
+  - rscadd: "Action buttons now remember positions where you locked."
+  - tweak: "Now locking action buttons prevents them from being reset."

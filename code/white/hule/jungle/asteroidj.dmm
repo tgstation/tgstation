@@ -1,0 +1,81 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral,/area/ruin/unpowered)
+"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered)
+"d" = (/turf/open/floor/jungle,/area/ruin/unpowered)
+"e" = (/obj/structure/flora/rock/jungle,/turf/open/floor/jungle,/area/ruin/unpowered)
+"f" = (/obj/structure/flora/grass/jungle/b,/turf/open/floor/jungle,/area/ruin/unpowered)
+"g" = (/turf/closed/wall/mineral/wood,/area/ruin/unpowered)
+"h" = (/obj/structure/flora/rock/jungle,/mob/living/simple_animal/hostile/jungle/seedling,/turf/open/floor/jungle,/area/ruin/unpowered)
+"i" = (/obj/structure/flora/junglebush,/turf/open/floor/jungle,/area/ruin/unpowered)
+"j" = (/mob/living/simple_animal/hostile/jungle/mook,/turf/open/floor/jungle,/area/ruin/unpowered)
+"k" = (/obj/item/clothing/suit/armor/reactive/stealth,/turf/open/floor/jungle,/area/ruin/unpowered)
+"l" = (/obj/structure/flora/grass/jungle/b,/mob/living/simple_animal/hostile/jungle/seedling,/turf/open/floor/jungle,/area/ruin/unpowered)
+"m" = (/obj/structure/mineral_door/wood,/turf/open/floor/jungle,/area/ruin/unpowered)
+"n" = (/turf/open/water,/area/ruin/unpowered)
+"o" = (/obj/structure/flora/grass/jungle/b,/mob/living/simple_animal/hostile/jungle/mega_arachnid,/turf/open/floor/jungle,/area/ruin/unpowered)
+"p" = (/obj/structure/flora/junglebush,/mob/living/simple_animal/hostile/jungle/seedling,/turf/open/floor/jungle,/area/ruin/unpowered)
+"q" = (/mob/living/simple_animal/hostile/jungle/leaper,/turf/open/water,/area/ruin/unpowered)
+"r" = (/mob/living/simple_animal/hostile/jungle/seedling,/turf/open/floor/jungle,/area/ruin/unpowered)
+"s" = (/obj/structure/flora/junglebush,/obj/structure/flora/junglebush,/turf/open/floor/jungle,/area/ruin/unpowered)
+"t" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
+"u" = (/turf/closed/wall/mineral/titanium,/area/ruin/unpowered)
+"v" = (/turf/closed/wall/r_wall/rust{name = "Ancient reinforced wall"},/area/ruin/powered)
+"w" = (/obj/machinery/door/airlock/hatch{armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70); doorDeni = 'sound/machines/honkbot_evil_laugh.ogg'; name = "Ancient hatch"; req_access_txt = "203"},/turf/open/floor/jungle,/area/ruin/powered)
+"x" = (/turf/closed/wall/mineral/titanium/interior,/area/ruin/unpowered)
+"y" = (/obj/structure/table/reinforced,/obj/item/nullrod/claymore/katana,/mob/living/carbon/monkey{faction = list("jungle"); name = "strange monkey"; viruses = newlist()},/turf/open/floor/jungle,/area/ruin/unpowered)
+"z" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/jungle,/area/ruin/unpowered)
+"A" = (/turf/open/floor/jungle,/area/ruin/powered)
+"B" = (/obj/machinery/door/airlock/titanium,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"C" = (/turf/open/floor/plasteel,/area/ruin/unpowered)
+"D" = (/obj/machinery/door/airlock/titanium{req_access_txt = "203"},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"E" = (/obj/structure/table/reinforced,/turf/open/floor/jungle,/area/ruin/unpowered)
+"F" = (/obj/item/nullrod/claymore/katana,/mob/living/carbon/monkey{faction = list("jungle"); name = "strange monkey"; viruses = newlist()},/turf/open/floor/jungle,/area/ruin/unpowered)
+"G" = (/obj/structure/table/reinforced,/obj/item/twohanded/vibro_weapon,/mob/living/carbon/monkey{butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1, /obj/item/organ/zombie_infection = 1); faction = list("jungle"); health = 1000; name = "strange monkey"; see_in_dark = 8},/turf/open/floor/jungle,/area/ruin/powered)
+"H" = (/mob/living/simple_animal/hostile/jungle/mega_arachnid,/turf/open/floor/jungle,/area/ruin/unpowered)
+"I" = (/mob/living/simple_animal/hostile/poison/bees/toxin{faction = list("jungle"); name = "pchola"; poison_type = "zombiepowder"},/turf/open/floor/jungle,/area/ruin/unpowered)
+"J" = (/mob/living/simple_animal/hostile/poison/bees/queen{name = "pchola"; poison_type = "zombiepowder"},/turf/open/floor/jungle,/area/ruin/unpowered)
+"K" = (/obj/structure/flora/junglebush,/mob/living/simple_animal/hostile/jungle/mega_arachnid,/turf/open/floor/jungle,/area/ruin/unpowered)
+"L" = (/obj/item/seeds/kudzu{anchored = 0; layer = 2; mutations = list("fire_proof","flowering","woodening","aggressive_spread"); name = "hidden pack of kudzu seeds"; potency = 0; production = 10},/turf/closed/wall/mineral/wood,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabbbccccbaaaaaaaaaaaaaaaaa
+aaaaaaaaaabbbbbbbbccccbbbbbbaaaaaaaaaaaa
+aaaaaaaabbbbbbbbbbdddbbbbbbbbaaaaaaaaaaa
+aaaaaccccbbbbbbdddededcccbbccaaaaaaaaaaa
+aaaaaccccbbbbccddffddddccbbccbbbaaaaaaaa
+aaabbccccbccdgdedffhieddcbbbbbbbcaaaaaaa
+aaabbbccbbcjdgffiffffdideddddedbccaaaaaa
+aaaccbbbbejkjgffffflffefifffidddbbbaaaaa
+aaaccbbbbedidmffnnnnnffffofffdpedbbaaaaa
+aaaacbbbejjdjgffnnnnnnnnnnnnnidddbbaabaa
+aaaaabbbggggggffqnffffffffnnnfhdedbbbcaa
+aaaacbbbiididdfnnnfdiiffifnnnfidddbbccca
+aaaccbbbdffddifnnnfifffiifnnnfdidedbccca
+aaaccbbddlfeiffnnnfdiidiffnqnfdedddbccca
+aabbbbbdidiriffnnnifofffffnnnidridebbbba
+abbbbbbdfddedffnnnsiiiiisfnnnfdidddbbbaa
+abbtuuuufuduuuunnnivvwvvifnnnfdreidbbbaa
+aatxxffffidffyznqnivAAAvifnqnfdidddbbbaa
+aaBCDffiEfFiefznnfiwAGAwifnnnfieeedbbbba
+aatxxfefEffffyznnfivAAAvifdnnfdeeidbbbba
+abbtuuuuufufiuunniivvwvvifdnnfiridedbcba
+bbbbbbbffffffffnnfsiiiiisfinnfffdidddcba
+cccbbbbinnnnnnnnnffiiffffffqnfflddHedbba
+accbbbbdnnnnnnnnniffliffiofnnfffdiddbbaa
+aaabbbbedffqnnnnnnnnnnnnnnnnnfffdebbbbaa
+aaaabbbrilennnnnnnnnnnnnnnnnnfipedbbbbaa
+aaabbbbedffnnnnnnnnnnnnnnnnnnfddidbbaaaa
+aaabbbgggmgggnnnqnnnnnqnnnqnnfdrddbcaaaa
+aabbbdeddddegnnnnnnnnnnnnnnnnfidedccaaaa
+aabbbeddIIIdgfffifffffiffffffddeddccaaaa
+abbbbdJdededgdiddpdKfflffidHididedbbaaaa
+accbbeddeddeLdedccccccccccedhdredcbbaaaa
+acccbcccccccgedccccccccccccddiddccbbaaaa
+acccbbbbbbbbbbbbbbccbbbbbccchdhcccbbbaaa
+aaccbbbbbbbbbbbbbbccbbbbbbbbbbbbbbbbbaaa
+aabbbbbbccbbbbbbbbbbbbbbbbbbbcccccbbbaaa
+aaabbbbbccbabbbbbccccbbbbaabbccccccbaaaa
+aaabbbbbaaaaaaaabccccbbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

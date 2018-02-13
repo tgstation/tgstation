@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	message = capitalize(message)
 
-	return message
+	return sanitize_russian(message)
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src
