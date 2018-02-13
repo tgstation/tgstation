@@ -8,11 +8,11 @@
 	var/search = 0
 	var/emoji = ""
 	while(1)
-		search = findtext(text, ":", pos)
+		search = findtext(text, ";", pos)
 		parsed += copytext(text, pos, search)
 		if(search)
 			pos = search
-			search = findtext(text, ":", pos+1)
+			search = findtext(text, ";", pos+1)
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
@@ -28,3 +28,15 @@
 		break
 	return parsed
 
+/client/verb/list_ss13_emojis()
+	set name = "List SS13 Emojis"
+	set category = "OOC"
+
+	if(!CONFIG_GET(flag/emojis))
+		return
+	var/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/msg = "<b>SS13 Emojis:</b>\n"
+	for(var/emoji in 1 to emojis.len)
+		emojis[emoji] = ";[emojis[emoji]];"
+	msg += english_list(emojis, "", "  ", "  ")
+	to_chat(src, msg)

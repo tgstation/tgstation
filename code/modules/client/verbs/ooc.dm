@@ -31,9 +31,10 @@
 
 	msg = emoji_parse(msg)
 
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
-			return
+	if(prefs.oocsafety)
+		if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+			if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+				return
 
 	if(!holder)
 		if(handle_spam_prevention(msg,MUTE_OOC))
@@ -58,6 +59,7 @@
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 
 	for(var/client/C in GLOB.clients)
+		msg = "<span class='emoji_enabled'>[msg]</span>"
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
@@ -275,7 +277,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	
+
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
 	for(var/client/C in GLOB.clients)
