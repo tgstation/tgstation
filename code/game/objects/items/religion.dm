@@ -92,6 +92,14 @@
 	else
 		H.say("[warcry]")
 
+/datum/crafting_recipe/greytide_banner
+	name = "Greytide Banner"
+	result = /obj/item/banner/greytide/mundane
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/clothing/under/color/grey = 1)
+	category = CAT_MISC
+
 /obj/item/banner/security
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."

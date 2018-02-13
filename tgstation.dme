@@ -566,6 +566,7 @@
 #include "code\game\machinery\doors\firedoor.dm"
 #include "code\game\machinery\doors\passworddoor.dm"
 #include "code\game\machinery\doors\poddoor.dm"
+#include "code\game\machinery\doors\scanner.dm"
 #include "code\game\machinery\doors\shutters.dm"
 #include "code\game\machinery\doors\unpowered.dm"
 #include "code\game\machinery\doors\windowdoor.dm"
