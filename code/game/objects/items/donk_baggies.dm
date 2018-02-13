@@ -39,6 +39,12 @@
 		to_chat(user, "<span class='notice'>You remove [new_donk] from [src].</span>")
 		update_icon()
 
+/obj/item/donk_bag/filled/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/food/snacks/donkpocket/I = new(src)
+	contained_donks += I
+	update_icon()
+
 /obj/item/donk_bag/large
 	name = "large sealed donk pocket baggy"
 	desc = "It's a large donk pocket baggy, capable of holding 4 donks and keeping them warm!"
@@ -50,3 +56,11 @@
 		icon_state = "lbag_[contained_donks.len]"
 	else
 		icon_state = "empty_lbag"
+
+
+/obj/item/donk_bag/large/filled/Initialize()
+	. = ..()
+	for(var/i in 1 to max_donks)
+		var/obj/item/reagent_containers/food/snacks/donkpocket/I = new(src)
+		contained_donks += I
+	update_icon()
