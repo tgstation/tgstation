@@ -1337,7 +1337,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "quadruple_sec"
 	description = "Kicks just as hard as licking the powercell on a baton, but tastier."
 	color = "#cc0000"
-	boozepwr = 30
+	boozepwr = 35
 	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
 	glass_icon_state = "glass_red"
 	glass_name = "Quadruple Sec"
@@ -1353,9 +1353,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/quintuple_sec
 	name = "Quintuple Sec"
 	id = "quintuple_sec"
-	description = "Law, Order, and Police Brutality distilled into one single elixir of JUSTICE."
+	description = "Law, Order, Alcohol, and Police Brutality distilled into one single elixir of JUSTICE."
 	color = "#ff3300"
-	boozepwr = 40
+	boozepwr = 80
 	taste_description = "THE LAW"
 	glass_icon_state = "glass_red"
 	glass_name = "Quintuple Sec"
