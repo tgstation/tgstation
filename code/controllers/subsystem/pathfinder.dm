@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/free
 	var/list/flow
 	var/static/space_type_cache
+	var/bug=1
 	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
 
