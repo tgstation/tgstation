@@ -28,16 +28,15 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
-	var/purchasedpowers = list()//aka `stings`
+	var/purchasedpowers = list()
 	var/mimicing = ""
-	var/canrespec = 0//set to 1 in absorb.dm
+	var/canrespec = FALSE//set to TRUE in absorb.dm
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
 	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
-	// wip stuff
 	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
 
@@ -62,7 +61,7 @@
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
-	emporium_action.Grant(owner.current)//where cellular emporium is granted
+	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
 	generate_name()
@@ -99,12 +98,12 @@
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/datum/antagonist/changeling/proc/remove_changeling_powers()//Remove() is ran in this
+/datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
 		for(var/datum/action/changeling/p in purchasedpowers)
 			purchasedpowers -= p
-			p.Remove(owner.current)//Remove() called
+			p.Remove(owner.current)
 
 	//MOVE THIS
 	if(owner.current.hud_used)
@@ -117,7 +116,7 @@
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/datum/action/changeling/S = new path()
-		if(!S.dna_cost)//autopurchase 0 cost powers
+		if(!S.dna_cost)
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
@@ -163,7 +162,7 @@
 		return
 
 	geneticpoints -= thepower.dna_cost
-	purchasedpowers += thepower//maybe New() the new button here?
+	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)//Grant() is ran in this proc, see changeling_powers.dm
 
 /datum/antagonist/changeling/proc/readapt()
