@@ -5,6 +5,7 @@
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
+	gender = NEUTER
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
@@ -14,7 +15,7 @@
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	move_to_delay = 8
+	move_to_delay = 10
 	health = 125
 	maxHealth = 125
 	melee_damage_lower = 15
@@ -50,6 +51,12 @@
 	toggle_mode_action.Grant(src)
 	dump_ore_action = new()
 	dump_ore_action.Grant(src)
+	var/obj/item/implant/radio/mining/imp = new(src)
+	imp.implant(src)
+
+	access_card = new /obj/item/card/id(src)
+	var/datum/outfit/job/miner/M = new
+	access_card.access = M.get_access()
 
 	SetCollectBehavior()
 
@@ -59,7 +66,15 @@
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Using a mining scanner on it will instruct it to drop stored ore. <b>[min(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
+	var/t_He = p_they(TRUE)
+	var/t_him = p_them()
+	var/t_s = p_s()
+	if(health < maxHealth)
+		if(health >= maxHealth * 0.5)
+			to_chat(user, "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
+		else
+			to_chat(user, "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
+	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[min(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
 	Field repairs can be done with a welder.")
 	if(stored_gun && stored_gun.max_mod_capacity)
 		to_chat(user, "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining.")
@@ -265,13 +280,6 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
-
-/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/SM)
-	var/obj/item/implant/radio/mining/imp = new(src)
-	imp.implant(SM, user)
-
-	SM.access_card = new /obj/item/card/id/mining(SM)
-	SM.access_card.flags_1 |= NODROP_1
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK
