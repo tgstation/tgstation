@@ -96,11 +96,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	to_chat(user, "[A] materializes onto the floor.")
 	return A
 
-/datum/uplink_item/Destroy()
-	if(src in GLOB.uplink_items)
-		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
-	return ..()
-
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
