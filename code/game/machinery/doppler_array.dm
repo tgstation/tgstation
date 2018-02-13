@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 
-/obj/machinery/doppler_array/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/wrench))
+/obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench))
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			anchored = FALSE
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
-		playsound(loc, O.usesound, 50, 1)
+		I.play_tool_sound(src)
 	else
 		return ..()
 
@@ -110,10 +110,15 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
-	var/point_gain = techweb_scale_bomb(orig_light - 20 - linked_techweb.max_bomb_value)
-	if(!point_gain)
+	var/adjusted = orig_light - 10 - linked_techweb.max_bomb_value
+	if(adjusted <= 0)
+		say("Explosion not large enough for research calculations.")
 		return
-	linked_techweb.max_bomb_value = orig_light - 20
+	var/point_gain = techweb_scale_bomb(adjusted)
+	if(point_gain <= 0)
+		say("Explosion not large enough for research calculations.")
+		return
+	linked_techweb.max_bomb_value = orig_light - 10
 	linked_techweb.research_points += point_gain
 	say("Gained [point_gain] points from explosion dataset.")
 
@@ -124,4 +129,4 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	linked_techweb = SSresearch.science_tech
 
 /proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 13000
+	return (lightradius ** 0.5) * 5000

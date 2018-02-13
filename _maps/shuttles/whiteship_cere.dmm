@@ -215,8 +215,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
@@ -239,8 +238,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/pickaxe,
 /obj/item/pickaxe,
@@ -289,8 +287,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
@@ -411,8 +408,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,

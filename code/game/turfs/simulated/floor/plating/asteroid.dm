@@ -290,16 +290,16 @@
 	flags_1 = NONE
 	planetary_atmos = TRUE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
+	burnt_states = list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
-	var/flammened = FALSE
-	if(!flammened)
+	if(!burnt)
 		visible_message("<span class='danger'>[src] melts away!.</span>")
 		slowdown = 0
-		flammened = TRUE
+		burnt = TRUE
 		icon_state = "snow_dug"
-	else
-		return FALSE
+		return TRUE
+	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/ice
 	name = "icey snow"

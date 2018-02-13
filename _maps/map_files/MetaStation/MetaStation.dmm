@@ -2034,8 +2034,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/item/wrench,
@@ -9684,15 +9683,13 @@
 /area/maintenance/starboard/fore)
 "auC" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "auD" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -10630,8 +10627,7 @@
 /area/security/brig)
 "awA" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/storage/box/donkpockets,
 /turf/open/floor/plating,
@@ -13274,12 +13270,7 @@
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
-/obj/item/card/id/silver{
-	access = list(12);
-	assignment = "Reaper";
-	name = "Thirteen's ID Card (Reaper)";
-	registered_name = "Thirteen"
-	},
+/obj/item/card/id/silver/reaper,
 /obj/item/lazarus_injector,
 /obj/item/gun/energy/e_gun/advtaser,
 /obj/item/gun/ballistic/revolver/russian,
@@ -17320,8 +17311,7 @@
 "aKw" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/wirecutters,
 /obj/item/weldingtool,
@@ -17933,10 +17923,8 @@
 	},
 /area/hydroponics/garden)
 "aLX" = (
-/obj/machinery/door/firedoor/border_only{
-	density = 1;
+/obj/machinery/door/firedoor/border_only/closed{
 	dir = 8;
-	icon_state = "door_closed";
 	name = "Animal Pen A";
 	opacity = 1
 	},
@@ -19846,8 +19834,7 @@
 /area/quartermaster/storage)
 "aQk" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -19942,8 +19929,7 @@
 /area/quartermaster/qm)
 "aQu" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -20327,10 +20313,8 @@
 	},
 /area/hydroponics/garden)
 "aRg" = (
-/obj/machinery/door/firedoor/border_only{
-	density = 1;
+/obj/machinery/door/firedoor/border_only/closed{
 	dir = 8;
-	icon_state = "door_closed";
 	name = "Animal Pen B";
 	opacity = 1
 	},
@@ -21050,8 +21034,7 @@
 /area/maintenance/port)
 "aSP" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -29600,8 +29583,7 @@
 /area/quartermaster/office)
 "bks" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/brown{
@@ -41146,8 +41128,7 @@
 /area/gateway)
 "bIp" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/rglass{
 	amount = 50
@@ -42372,8 +42353,7 @@
 /area/maintenance/port)
 "bLc" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
@@ -43143,8 +43123,7 @@
 /area/maintenance/port)
 "bMG" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/rack_parts,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -48851,8 +48830,7 @@
 /area/maintenance/port/aft)
 "bYP" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/storage/box/donkpockets,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -53191,8 +53169,7 @@
 /area/maintenance/starboard)
 "chD" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/cane,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -55691,8 +55668,7 @@
 /area/aisat)
 "cmY" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/stripes/line{
@@ -69569,10 +69545,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cOF" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/table,
 /obj/item/storage/box/bodybags{
 	pixel_x = 2;

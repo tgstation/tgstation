@@ -9,7 +9,6 @@
 	..()
 	button.screen_loc = "6:-29,4:-2"
 	button.moved = "6:-29,4:-2"
-	button.locked = TRUE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -22,11 +21,15 @@
 	return ..()
 
 /datum/action/innate/cult/blood_magic/proc/Positioning()
+	var/list/screen_loc_split = splittext(button.screen_loc,",")
+	var/list/screen_loc_X = splittext(screen_loc_split[1],":")
+	var/list/screen_loc_Y = splittext(screen_loc_split[2],":")
+	var/pix_X = text2num(screen_loc_X[2])
 	for(var/datum/action/innate/cult/blood_spell/B in spells)
-		var/pos = -29+spells.Find(B)*31
-		B.button.screen_loc = "6:[pos],4:-2"
-		B.button.moved = B.button.screen_loc
-		B.button.locked = TRUE
+		if(B.button.locked)
+			var/order = pix_X+spells.Find(B)*31
+			B.button.screen_loc = "[screen_loc_X[1]]:[order],[screen_loc_Y[1]]:[screen_loc_Y[2]]"
+			B.button.moved = B.button.screen_loc
 
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
@@ -99,6 +102,7 @@
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	all_magic = BM
 	..()
+	button.locked = TRUE
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)
@@ -172,7 +176,6 @@
 	name = "Twisted Construction"
 	desc = "<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>25 metal into a construct shell<br>Cyborgs directly into constructs<br>Cyborg shells into construct shells<br>Airlocks into runed airlocks (harm intent)"
 	button_icon_state = "transmute"
-	charges = 50
 	magic_path = "/obj/item/melee/blood_magic/construction"
 
 /datum/action/innate/cult/blood_spell/equipment
@@ -180,7 +183,6 @@
 	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the nar'sien bola, and an eldritch longsword."
 	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
-	charges = 1
 
 /datum/action/innate/cult/blood_spell/equipment/Activate()
 	var/choice = alert(owner,"Choose your equipment type",,"Combat Equipment","Ritual Dagger","Cancel")
@@ -271,8 +273,8 @@
 			qdel(src)
 
 /datum/action/innate/cult/blood_spell/veiling
-	name = "Conceal Runes"
-	desc = "A multi-function spell that alternates between hiding and revealing nearby runes."
+	name = "Conceal Presence"
+	desc = "A multi-function spell that alternates between hiding and revealing nearby cult runes, structures, turf, and airlocks."
 	invocation = "Kla'atu barada nikt'o!"
 	button_icon_state = "gone"
 	charges = 10
@@ -291,6 +293,8 @@
 			S.conceal()
 		for(var/turf/open/floor/engine/cult/T  in range(5,owner))
 			T.realappearance.alpha = 0
+		for(var/obj/machinery/door/airlock/cult/AL in range(5, owner))
+			AL.conceal()
 		revealing = TRUE
 		name = "Reveal Runes"
 		button_icon_state = "back"
@@ -302,10 +306,12 @@
 		SEND_SOUND(owner, sound('sound/magic/enter_blood.ogg',0,1,25))
 		for(var/obj/effect/rune/R in range(7,owner)) //More range in case you weren't standing in exactly the same spot
 			R.reveal()
-		for(var/obj/structure/destructible/cult/S in range(7,owner))
+		for(var/obj/structure/destructible/cult/S in range(6,owner))
 			S.reveal()
-		for(var/turf/open/floor/engine/cult/T  in range(7,owner))
+		for(var/turf/open/floor/engine/cult/T  in range(6,owner))
 			T.realappearance.alpha = initial(T.realappearance.alpha)
+		for(var/obj/machinery/door/airlock/cult/AL in range(6, owner))
+			AL.reveal()
 		revealing = FALSE
 		name = "Conceal Runes"
 		button_icon_state = "gone"
@@ -390,6 +396,7 @@
 
 //Stun
 /obj/item/melee/blood_magic/stun
+	name = "Stunning Aura "
 	color = "#ff0000" // red
 	invocation = "Fuu ma'jin!"
 
@@ -425,6 +432,7 @@
 
 //Teleportation
 /obj/item/melee/blood_magic/teleport
+	name = "Shifting Aura"
 	color = RUNE_COLOR_TELEPORT
 	desc = "A potent spell that teleport cultists on contact."
 	invocation = "Sas'so c'arta forbici!"
@@ -469,7 +477,7 @@
 
 //Shackles
 /obj/item/melee/blood_magic/shackles
-	name = "Shadow Shackles"
+	name = "Binding Aura"
 	desc = "Allows you to bind a victim and temporarily silence them."
 	invocation = "In'totum Lig'abis!"
 	color = "#000000" // black
@@ -519,7 +527,7 @@
 
 //Construction: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal
 /obj/item/melee/blood_magic/construction
-	name = "Twisted Construction"
+	name = "Corrupting Aura"
 	desc = "Corrupts metal and plasteel into more sinister forms."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
@@ -529,13 +537,13 @@
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(25))
-				uses-=25
+			if(candidate.use(50))
+				uses--
 				to_chat(user, "<span class='warning'>A dark cloud eminates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need more metal to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need 50 metal to produce a construct shell!</span>")
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
 			var/quantity = min(candidate.amount, uses)
@@ -563,19 +571,19 @@
 						if("Artificer")
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, candidate, user, 0, T)
 					SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-					uses -= 50
+					uses--
 					candidate.mmi = null
 					qdel(candidate)
 				else
 					candidate.color = prev_color
 			else
-				uses -= 50
+				uses--
 				to_chat(user, "<span class='warning'>A dark cloud eminates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/obj/machinery/door/airlock))
 			target.narsie_act()
-			uses -= 50
+			uses--
 			user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
@@ -584,7 +592,7 @@
 
 //Armor: Gives the target a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
-	name = "Sinister Armaments"
+	name = "Bladed Aura"
 	desc = "A spell that will equip the target with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
 
@@ -605,7 +613,7 @@
 		..()
 
 /obj/item/melee/blood_magic/manipulator
-	name = "Blood Rite"
+	name = "Ritual Aura"
 	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Clicking the hand will potentially let you focus the spell into something stronger.</b>"
 	color = "#7D1717"
 
@@ -680,11 +688,11 @@
 			if(missing)
 				if(uses > missing)
 					M.adjustHealth(-missing)
-					M.visible_message("<span class='warning'>[M] is fully-healed by [user]'s blood magic!</span>")
+					M.visible_message("<span class='warning'>[M] is fully healed by [user]'s blood magic!</span>")
 					uses -= missing
 				else
 					M.adjustHealth(-uses)
-					M.visible_message("<span class='warning'>[M] is healed by [user]'sblood magic!</span>")
+					M.visible_message("<span class='warning'>[M] is partially healed by [user]'s blood magic!</span>")
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(M,icon_state="sendbeam",time=10)
@@ -701,21 +709,21 @@
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
 				else
-					temp += max((B.bloodiness**2)/800,0.5)
+					temp += max((B.bloodiness**2)/800,1)
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
 				qdel(B)
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
-	var/obj/item/clothing/shoes/shoecheck = user.shoes
-	if(shoecheck && shoecheck.bloody_shoes["blood"])
-		temp += shoecheck.bloody_shoes["blood"]/20
-		shoecheck.bloody_shoes["blood"] = 0
-	if(temp)
-		user.Beam(T,icon_state="drainbeam",time=15)
-		new /obj/effect/temp_visual/cult/sparks(get_turf(user))
-		playsound(T, 'sound/magic/enter_blood.ogg', 50)
-		to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
-		uses += round(temp)
+		var/obj/item/clothing/shoes/shoecheck = user.shoes
+		if(shoecheck && shoecheck.bloody_shoes["blood"])
+			temp += shoecheck.bloody_shoes["blood"]/20
+			shoecheck.bloody_shoes["blood"] = 0
+		if(temp)
+			user.Beam(T,icon_state="drainbeam",time=15)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
+			playsound(T, 'sound/magic/enter_blood.ogg', 50)
+			to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
+			uses += max(1, round(temp))
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))

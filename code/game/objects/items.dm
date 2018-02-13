@@ -125,12 +125,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-		if (!embedding)
-			embedding = getEmbeddingBehavior()
-		else if (islist(embedding))
-			embedding = getEmbeddingBehavior(arglist(embedding))
-		else if (!istype(embedding, /datum/embedding_behavior))
-			stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+	if (!embedding)
+		embedding = getEmbeddingBehavior()
+	else if (islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+	else if (!istype(embedding, /datum/embedding_behavior))
+		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
 /obj/item/Destroy()
 	flags_1 &= ~DROPDEL_1	//prevent reqdels
@@ -799,9 +799,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return !used
 
 // Plays item's usesound, if any.
-/obj/item/proc/play_tool_sound(atom/target, volume)
+/obj/item/proc/play_tool_sound(atom/target, volume=50)
 	if(target && usesound && volume)
-		playsound(target, usesound, volume, 1)
+		var/played_sound = usesound
+
+		if(islist(usesound))
+			played_sound = pick(usesound)
+
+		playsound(target, played_sound, volume, 1)
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
