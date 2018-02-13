@@ -105,45 +105,6 @@
 					user.add_mob_blood(src)
 		return TRUE //successful attack
 
-/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
-	if(I.force)
-		if(mind && mind.martial_art && istype(mind.martial_art, /datum/martial_art/monk))
-			var/datum/martial_art/monk/M = mind.martial_art
-			var/defense_roll = M.defense_roll(0)
-			if(defense_roll)
-				var/dmg_to_deal = I.force
-				if(defense_roll == 2)
-					dmg_to_deal *= 2
-					send_item_attack_message(I, user, critical = TRUE)
-				else
-					send_item_attack_message(I, user)
-				apply_damage(dmg_to_deal, I.damtype)
-				if(I.damtype == BRUTE)
-					if(prob(33))
-						I.add_mob_blood(src)
-						var/turf/location = get_turf(src)
-						add_splatter_floor(location)
-						if(get_dist(user, src) <= 1)
-							user.add_mob_blood(src)
-				return TRUE
-			else
-				visible_message("<span class='danger'>[src] dodges the [I]!</span>",\
-				"<span class='userdanger'>[src] dodges the [I]!</span>", null, COMBAT_MESSAGE_RANGE)
-				return FALSE
-
-		else
-			send_item_attack_message(I, user)
-			apply_damage(I.force, I.damtype)
-			if(I.damtype == BRUTE)
-				if(prob(33))
-					I.add_mob_blood(src)
-					var/turf/location = get_turf(src)
-					add_splatter_floor(location)
-					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-						user.add_mob_blood(src)
-			return TRUE //successful attack
-
-
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
 	if(I.force < force_threshold || I.damtype == STAMINA)
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
