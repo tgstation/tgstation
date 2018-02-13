@@ -31,7 +31,7 @@
 	new /obj/item/storage/belt/sabre(src)
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
-	new /obj/item/card/id/captains_spare(src)
+	// hippie - Removed spare id from captain's locker
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
