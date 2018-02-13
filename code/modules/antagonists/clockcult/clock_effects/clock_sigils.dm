@@ -43,7 +43,7 @@
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (affects_servants && is_servant_of_ratvar(L))) && (L.mind || L.has_status_effect(STATUS_EFFECT_SIGILMARK)) && !isdrone(L))
-				var/obj/item/I = L.null_rod_check()
+				var/obj/item/I = L.anti_magic_check()
 				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
 					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")

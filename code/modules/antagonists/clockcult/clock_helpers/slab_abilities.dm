@@ -182,7 +182,7 @@
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
 			return
-		var/obj/O = L.null_rod_check()
+		var/obj/O = L.anti_magic_check()
 		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 		if(O)
 			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \

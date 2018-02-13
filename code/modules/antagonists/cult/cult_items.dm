@@ -667,7 +667,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(100)
 				else
@@ -960,7 +960,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(60)
 				else

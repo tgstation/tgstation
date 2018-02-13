@@ -1,3 +1,26 @@
+/datum/component/anti_magic
+	var/magic = FALSE
+	var/holy = FALSE
+
+/datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE)
+	magic = _magic
+	holy = _holy
+
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+	if(!magic && !holy)
+		return
+	var/list/obj/item/item_list = list()
+	if(isliving(src))
+		var/mob/living/L = src
+		item_list |= L.get_equipped_items(TRUE)
+	item_list |= held_items
+	for(var/obj/O in item_list)
+		GET_COMPONENT_FROM(anti_magic, /datum/component/anti_magic, O)
+		if(!anti_magic)
+			continue
+		if((magic && anti_magic.magic) || (holy && anti_magic.holy))
+			return O
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
@@ -12,6 +35,10 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
+
+/obj/item/nullrod/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")

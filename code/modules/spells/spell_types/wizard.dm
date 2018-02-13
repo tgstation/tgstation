@@ -258,6 +258,7 @@
 	sound = 'sound/magic/repulse.ogg'
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
+	var/anti_magic_check = TRUE
 
 	action_icon_state = "repulse"
 
@@ -274,6 +275,11 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
+
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.anti_magic_check(anti_magic_check, FALSE))
+				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
@@ -304,6 +310,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
+	anti_magic_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -328,10 +335,13 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
+		if(L.anti_magic_check(TRUE, TRUE))
+			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		U.IgniteMob()
+		if(!U.anti_magic_check(TRUE, TRUE))
+			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
@@ -356,7 +366,8 @@
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
-			M.electrocute_act(80, src, illusion = 1)
+			if(!M.anti_magic_check())
+				M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)

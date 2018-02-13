@@ -60,7 +60,7 @@
 		else
 			if(isliving(target))
 				var/mob/living/L = target
-				if(!L.null_rod_check())
+				if(!L.anti_magic_check())
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
 						if(R.revealed)
@@ -102,7 +102,7 @@
 /obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		var/obj/item/storage/book/bible/B = L.bible_check()
+		var/obj/item/storage/book/bible/B = L.anti_magic_check(TRUE, TRUE)
 		if(B)
 			if(!(B.resistance_flags & ON_FIRE))
 				to_chat(L, "<span class='warning'>Your [B.name] bursts into flames!</span>")
@@ -110,7 +110,7 @@
 				if(!(BI.resistance_flags & ON_FIRE))
 					BI.fire_act()
 			continue
-		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.null_rod_check())
+		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
 			continue
 		if(L.stat || L.restrained() || L.buckled || L.lying)
 			continue

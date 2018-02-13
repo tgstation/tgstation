@@ -139,7 +139,7 @@
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(L.can_hear() && !L.null_rod_check() && L.stat != DEAD)
+		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)
 				continue
 			if(ishuman(L))

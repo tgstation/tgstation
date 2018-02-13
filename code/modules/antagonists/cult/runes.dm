@@ -179,18 +179,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	..()
 	qdel(src)
 
-/mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
-	var/obj/item/nullrod/N = locate() in src
-	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
-		return N
-	return 0
-
-/mob/proc/bible_check() //The bible, if held, might protect against certain things
-	var/obj/item/storage/book/bible/B = locate() in src
-	if(is_holding(B))
-		return B
-	return 0
-
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
 	cultist_name = "Offer"
@@ -253,10 +241,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
-	if(convertee.null_rod_check())
+	if(convertee.anti_magic_check(TRUE, TRUE))
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
-		log_game("Offer rune failed - convertee had null rod")
+		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
@@ -770,9 +758,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/nullrod/N = L.null_rod_check()
-			if(N)
-				to_chat(L, "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>")
+			var/obj/item/I = L.anti_magic_check()
+			if(I)
+				to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
 				continue
 			to_chat(L, "<span class='cultlarge'>Your blood boils in your veins!</span>")
 			if(is_servant_of_ratvar(L))
@@ -799,8 +787,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/nullrod/N = L.null_rod_check()
-			if(N)
+			var/obj/item/I = L.anti_magic_check()
+			if(I)
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))

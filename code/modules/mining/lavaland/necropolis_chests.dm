@@ -323,6 +323,10 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
+/obj/item/device/immortality_talisman/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /datum/action/item_action/immortality
 	name = "Immortality"
 
@@ -910,16 +914,16 @@
 	if(used)
 		return
 	used = TRUE
-	
+
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
 		da_list[L.real_name] = L
-		
+
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
-	
+
 	choice = da_list[choice]
-	
+
 	if(!choice)
 		return
 
