@@ -2441,6 +2441,7 @@
 #include "hippiestation\code\_globalvars\logging.dm"
 #include "hippiestation\code\_globalvars\misc.dm"
 #include "hippiestation\code\_globalvars\lists\drinking_glass_icons.dm"
+#include "hippiestation\code\_globalvars\lists\flavor_misc.dm"
 #include "hippiestation\code\_globalvars\lists\maintenance_loot.dm"
 #include "hippiestation\code\_globalvars\lists\names.dm"
 #include "hippiestation\code\_globalvars\lists\objects.dm"
