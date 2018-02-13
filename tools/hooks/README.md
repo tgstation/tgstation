@@ -13,7 +13,11 @@ automatically by GUI tools like TortoiseGit and GitHub for Windows, but
 
 ## Current Hooks
 
-* **Pre-commit**: Runs [mapmerge2] on changed maps, if any.
+* **Pre-commit**: Runs [mapmerge2] on changed maps, if any. Also sorts tgstation.dme via DMEtool (requires Lua 5.1+ or LuaJIT 2.0+!)
+ 
+## Current Merge Drivers
+
+* **dme**: runs DMEtool to auto merge the DMEs. Requires Lua 5.1+ or LuaJIT 2.0+
 
 ## Adding New Hooks
 
