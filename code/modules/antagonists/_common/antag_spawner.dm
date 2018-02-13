@@ -203,8 +203,8 @@
 
 	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
 	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
-	var/objective_verb = "Kill"
 	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
+	var/antag_type = /datum/antagonist/slaughter
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -235,24 +235,10 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	var/datum/objective/assassinate/new_objective
-	if(user)
-		new_objective = new /datum/objective/assassinate
-		new_objective.owner = S.mind
-		new_objective.target = user
-		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
-		S.mind.objectives += new_objective
-	var/datum/objective/new_objective2 = new /datum/objective
-	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
-	S.mind.objectives += new_objective2
-	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
+	S.mind.add_antag_datum(antag_type)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")
-	if(new_objective)
-		to_chat(S, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
-	to_chat(S, "<B>Objective #[new_objective ? "[2]":"[1]"]</B>: [new_objective2.explanation_text]")
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -262,5 +248,5 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
-	objective_verb = "Hug and Tickle"
 	demon_type = /mob/living/simple_animal/slaughter/laughter
+	antag_type = /datum/antagonist/slaughter/laughter

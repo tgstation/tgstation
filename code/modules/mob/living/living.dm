@@ -784,13 +784,14 @@
 
 /mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
-		return
+		return FALSE
 	if(no_dextery)
 		if(be_close && in_range(M, src))
-			return 1
+			return TRUE
 	else
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-	return
+	return FALSE
+
 /mob/living/proc/can_use_guns(obj/item/G)
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -862,6 +863,8 @@
 		to_chat(G, "<span class='holoparasite'>Your summoner has changed form!</span>")
 
 /mob/living/rad_act(amount)
+	. = ..()
+
 	if(!amount || amount < RAD_MOB_SKIN_PROTECTION)
 		return
 

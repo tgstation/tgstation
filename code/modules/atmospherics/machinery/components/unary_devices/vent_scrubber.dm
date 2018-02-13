@@ -263,28 +263,21 @@
 	..()
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
-			if(do_after(user, 20*W.toolspeed, target = src))
-				if(!src || !WT.isOn())
-					return
-				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-				if(!welded)
-					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
-					welded = TRUE
-				else
-					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
-					welded = FALSE
-				update_icon()
-				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
-				pipe_vision_img.plane = ABOVE_HUD_PLANE
-			return 0
-	else
-		return ..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/I)
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
+	if(I.use_tool(src, user, 20, volume=50))
+		if(!welded)
+			user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
+			welded = TRUE
+		else
+			user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
+			welded = FALSE
+		update_icon()
+		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+		pipe_vision_img.plane = ABOVE_HUD_PLANE
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	. = ..()

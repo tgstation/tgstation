@@ -8,11 +8,18 @@ GLOBAL_PROTECT(admin_ranks)
 	var/list/subs
 
 /datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		if (name == "NoRank") //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
+			QDEL_IN(src, 0)
+			CRASH("Admin proc call creation of admin datum")
+		return
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			spawn(0)
-				qdel(src)
+			QDEL_IN(src, 0)
 			throw EXCEPTION("invalid admin-rank name")
 			return
 	if(init_rights)
@@ -23,6 +30,14 @@ GLOBAL_PROTECT(admin_ranks)
 		init_subs = list()
 	adds = init_adds
 	subs = init_subs
+
+/datum/admin_rank/Destroy()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return QDEL_HINT_LETMELIVE
+	. = ..()
 
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
@@ -78,7 +93,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
-		log_admin_private("[key_name(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
 		return
 	var/flag = admin_keyword_to_flag(word, previous_rights)
 	if(flag)

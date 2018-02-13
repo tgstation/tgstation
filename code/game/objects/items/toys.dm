@@ -21,6 +21,7 @@
  *      Kitty toys!
  *		Snowballs
  *		Clockwork Watches
+ *		Toy Daggers
  */
 
 
@@ -855,7 +856,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -1074,6 +1075,20 @@
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
+
+/*
+ * Toy Dagger
+ */
+
+/obj/item/toy/toy_dagger
+	name = "toy dagger"
+	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
  * Xenomorph action figure
