@@ -297,10 +297,7 @@
 	. = ..()
 	container_type |= OPENCONTAINER
 	create_reagents(reagent_amount)
-	if(reagent_react)
-		reagents.set_reacting(TRUE)
-	else
-		reagents.set_reacting(FALSE)
+	reagents.set_reacting(reagent_react)
 
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
