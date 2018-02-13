@@ -239,10 +239,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		xeno = new(pump.loc,target)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
+		xeno.throw_at(target,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
+		xeno.throw_at(pump,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		var/xeno_name = xeno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
