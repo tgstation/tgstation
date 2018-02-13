@@ -63,7 +63,7 @@
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
 	prereq_ids = list("exp_surgery", "alientech")
-	design_ids = list("surgery_brainwashing")
+	design_ids = list("surgery_brainwashing","surgery_zombie")
 	research_cost = 10000
 	export_price = 5000
 

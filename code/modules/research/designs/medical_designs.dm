@@ -538,3 +538,13 @@
 	build_path = /obj/item/disk/surgery/vein_threading
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_necrotic_revival
+	name = "Vein Threading Surgery Disk"
+	desc = "A disk containing the instructions for a Necrotic Revival surgery."
+	id = "surgery_zombie"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/necrotic_revival
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
