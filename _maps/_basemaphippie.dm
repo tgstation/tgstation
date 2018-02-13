@@ -1,12 +1,12 @@
 //#define LOWMEMORYMODE //uncomment this to load centcom and runtime station and thats it.
 
-#include "map_files\generic\HippieCentcom.dmm"
+#include "map_files\generic\Centcom.dmm"
 #include "map_files\generic\SpaceStation.dmm"
 
 #ifndef LOWMEMORYMODE
 
 	#include "map_files\generic\Space.dmm"
-	#include "map_files\generic\SpaceDock.dmm"
+	#include "map_files\generic\Space2.dmm"
 	#include "map_files\Mining\Lavaland.dmm"
 	#include "map_files\generic\City_of_Cogs.dmm"
 

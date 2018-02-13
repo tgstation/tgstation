@@ -7,7 +7,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.status_flags |= DISFIGURED
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.gib()
 
 	return (BRUTELOSS)

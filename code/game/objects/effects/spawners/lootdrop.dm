@@ -113,10 +113,10 @@
 /obj/effect/spawner/lootdrop/organ_spawner
 	name = "organ spawner"
 	loot = list(
-		/obj/item/organ/heart/gland/bloody = 7,
-		/obj/item/organ/heart/gland/bodysnatch = 4,
+		/obj/item/organ/heart/gland/electric = 3,
+		/obj/item/organ/heart/gland/trauma = 4,
 		/obj/item/organ/heart/gland/egg = 7,
-		/obj/item/organ/heart/gland/emp = 3,
+		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
 		/obj/item/organ/heart/gland/pop = 5,

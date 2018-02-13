@@ -40,7 +40,7 @@
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return 0 if there is no room for implant / it fails
-/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE)
 	LAZYINITLIST(target.implants)
 	if(!target.can_be_implanted() || !can_be_implanted_in(target))
 		return 0
@@ -74,7 +74,7 @@
 
 	return 1
 
-/obj/item/implant/proc/removed(mob/living/source, silent = 0, special = 0)
+/obj/item/implant/proc/removed(mob/living/source, silent = FALSE, special = 0)
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src

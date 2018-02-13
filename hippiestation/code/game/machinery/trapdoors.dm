@@ -98,7 +98,7 @@
 			var/turf/open/floor/T = get_turf(src)
 			var/M = "fall inside"
 			var/U = "falls inside"
-			if(user.has_disability(DISABILITY_CLUMSY))
+			if(user.has_trait(TRAIT_CLUMSY))
 				chance = 80
 				M = "accidentally do a backward flip, falling inside"
 				U = "accidentally does a backward flip, falling inside"

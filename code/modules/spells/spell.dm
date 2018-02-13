@@ -104,7 +104,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	pass_flags = PASSTABLE
 	density = FALSE
 	opacity = 0
-	base_action = /datum/action/spell_action/spell
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
 
@@ -120,6 +119,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/clothes_req = 1 //see if it requires clothes
 	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
+	var/staff_req = 0 // hippie - used to check if a spell requires a staff
 	var/human_req = 0 //spell can only be cast by humans
 	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_spell"
+	base_action = /datum/action/spell_action/spell
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
@@ -208,6 +209,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if(!is_type_in_typecache(H.head, casting_clothes))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my hat.</span>")
 				return 0
+		//hippie start - check for if a spell needs a spell catalyst
+		if(staff_req)
+			var/catalyst_found = FALSE
+			for(var/obj/O in H.held_items)
+				if(O.GetComponent(/datum/component/spell_catalyst))
+					catalyst_found = TRUE
+					break
+			if(!catalyst_found)
+				to_chat(H, "<span class='notice'>I don't feel strong enough without my staff.</span>")
+				return 0
+		//hippie end
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")

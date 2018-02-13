@@ -146,7 +146,7 @@
 				break
 			if(!S.ckey)
 				if(S.buckled)
-					S.Feedstop(silent=1)
+					S.Feedstop(silent = TRUE)
 				S.visible_message("[S] vanishes in a flash of light!")
 				S.forceMove(X)
 				X.stored_slimes += S

@@ -86,7 +86,7 @@
 	var/obj/item/use_item = src
 	if(current_tool)
 		use_item = current_tool
-	if(!use_item.tool_check(user, target) && pre_attackby(target, user, params))
+	if(!use_item.tool_attack_chain(user, target) && pre_attackby(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(use_item, user, params)
 		if(!resolved && target && !QDELETED(use_item))

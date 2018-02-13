@@ -13,13 +13,13 @@
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
-	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
+	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into their chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(do_after(user,30, target = user))
-		playDigSound()
+		play_tool_sound(user)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")	
 	return SHAME
@@ -33,9 +33,6 @@
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
-
-/obj/item/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),50,1)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -59,7 +56,7 @@
 	item_state = "jackhammer"
 	slot_flags = SLOT_BELT
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
-	digsound = list('sound/weapons/drill.ogg')
+	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
@@ -84,7 +81,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	digsound = list('sound/weapons/sonic_jackhammer.ogg')
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
@@ -99,6 +96,7 @@
 	slot_flags = SLOT_BELT
 	force = 8
 	var/digspeed = 20
+	usesound = 'sound/effects/shovel_dig.ogg'
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -109,7 +107,7 @@
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging their own grave!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(do_after(user,30, target = user))
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		play_tool_sound(user)
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")	
 	return SHAME

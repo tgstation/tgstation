@@ -207,7 +207,7 @@
 		cooldown = world.time + cooldowntime
 		activating = 0
 
-/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
+/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
 	if(activated && (!teleporting || force))
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc

@@ -2,7 +2,7 @@
 	if(stat == DEAD)
 		return
 
-	silent = 0
+	silent = FALSE
 	losebreath = 0
 
 	if(!gibbed)
@@ -19,6 +19,9 @@
 			stomach_contents.Remove(M)
 		M.forceMove(Tsec)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+	
+	throw_hats(500, GLOB.alldirs) // Hippie - Throw our hats all over the place
+		
 	..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)

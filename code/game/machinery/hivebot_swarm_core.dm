@@ -16,7 +16,7 @@
 /obj/machinery/hivebot_swarm_core/Destroy()
 	visible_message("<span class='warning'>[src] falls apart, its red eyes sputtering out.</span>")
 	playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 50, 0)
-	new/obj/structure/fluff/hivebot_swarm_core(get_turf(src))
+	new/obj/machinery/hivebot_swarm_core(get_turf(src))
 	return ..()
 
 /obj/machinery/hivebot_swarm_core/examine(mob/user)

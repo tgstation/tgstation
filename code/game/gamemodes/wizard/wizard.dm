@@ -21,8 +21,8 @@
 /datum/game_mode/wizard/pre_setup()
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
-	wizard.assigned_role = "Wizard"
-	wizard.special_role = "Wizard"
+	wizard.assigned_role = ROLE_WIZARD
+	wizard.special_role = ROLE_WIZARD
 	log_game("[wizard.key] (ckey) has been selected as a Wizard") //TODO: Move these to base antag datum
 	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
@@ -47,7 +47,7 @@
 	for(var/datum/mind/wizard in wizards)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return FALSE
-	
+
 	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
 		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
 			return FALSE
@@ -55,7 +55,7 @@
 	if(SSevents.wizardmode) //If summon events was active, turn it off
 		SSevents.toggleWizardmode()
 		SSevents.resetFrequency()
-	
+
 	return TRUE
 
 /datum/game_mode/wizard/set_round_result()

@@ -73,6 +73,7 @@
 	if(istype(user,/mob/living/carbon/alien))
 		bloodkind = /obj/effect/decal/cleanable/xenoblood
 	var/obj/item/storage/book/bible/Y = locate() in get_turf(user.loc)
+	user.newtonian_move(user.dir)
 	if(istype(Y))
 		user.Stun(20)
 		playsound(Y,'hippiestation/sound/effects/thunder.ogg', 90, 1)
@@ -231,3 +232,7 @@
 				new /obj/effect/immovablerod/butt(B.loc, locate(endx, endy, 1))
 				priority_announce("What the fuck was that?!", "General Alert")
 				qdel(B)
+		if(!user.has_gravity())
+			var/atom/target = get_edge_target_turf(src, usr.dir)
+			usr.throw_at(target, 1000, 20)
+			to_chat(src, "<span class='warning'>You fly off into the distance!</span>")

@@ -67,7 +67,7 @@
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
-	if(has_disability(DISABILITY_DUMB))
+	if(has_trait(TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
@@ -95,3 +95,5 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+
+	return msg // Hippie - To allow for disguises

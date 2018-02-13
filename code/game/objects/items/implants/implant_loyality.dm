@@ -16,7 +16,7 @@
 	return dat
 
 
-/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())
 		if(!target.mind)
 			return TRUE
@@ -38,7 +38,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/implant/mindshield/removed(mob/target, silent = 0, special = 0)
+/obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = 0)
 	if(..())
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")

@@ -10,7 +10,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/nightmare/spawn_role()
-	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -34,7 +34,6 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Nightmare"
 	player_mind.special_role = "Nightmare"
-	SSticker.mode.traitors += player_mind
 	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
 	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)

@@ -60,7 +60,7 @@
 			var/turf/open/floorloc = get_turf(user)
 			floorloc.contents += contents
 			to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
-			playsound(get_turf(user), I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			storedorgan = null
 			if(uses != INFINITE)
 				uses--

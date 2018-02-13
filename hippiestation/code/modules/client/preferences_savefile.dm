@@ -1,9 +1,9 @@
 var/B_shadowling = 8192
 
 /datum/preferences/proc/hippie_character_pref_load(savefile/S)
-	//moths
-	S["feature_moth_wings"] >> features["moth_wings"]
-	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list)
+	//ipcs
+	S["feature_ipc_screen"] >> features["ipc_screen"]
+	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
 	//gear loadout
 	var/text_to_load
 	S["loadout"] >> text_to_load
@@ -77,8 +77,8 @@ var/B_shadowling = 8192
 						be_special += ROLE_VAMPIRE
 
 /datum/preferences/proc/hippie_character_pref_save(savefile/S)
-	//moths
-	S["feature_moth_wings"] << features["moth_wings"]
+	//ipcs
+	S["feature_ipc_screen"] << features["ipc_screen"]
 	//gear loadout
 	if(islist(chosen_gear))
 		if(chosen_gear.len)

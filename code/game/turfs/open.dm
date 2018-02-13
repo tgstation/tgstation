@@ -214,6 +214,13 @@
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
+		// Hippie Start - Throw some hats if we slipped
+		if (prob(33))
+			var/list/L = list()
+			LAZYADD(L, C.dir)
+			C.throw_hats(1 + rand(1, 3), L)
+		// Hippie End
+
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
 			C.Knockdown(knockdown_amount)
@@ -364,7 +371,9 @@
 
 
 /turf/open/rad_act(pulse_strength)
+	. = ..()
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		pulse_strength = min(pulse_strength,air.gases[/datum/gas/carbon_dioxide][MOLES]*1000,air.gases[/datum/gas/oxygen][MOLES]*2000) //Ensures matter is conserved properly
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
 		air.assert_gas(/datum/gas/pluoxium)

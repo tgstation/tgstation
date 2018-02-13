@@ -46,9 +46,6 @@
 /obj/effect/shuttle_build,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"i" = (
-/turf/open/space/basic,
-/area/space)
 
 (1,1,1) = {"
 a
@@ -76,9 +73,9 @@ f
 e
 e
 a
-i
-i
-i
+a
+a
+a
 a
 "}
 (2,1,1) = {"
@@ -107,9 +104,9 @@ f
 f
 e
 a
-i
-i
-i
+a
+a
+a
 a
 "}
 (3,1,1) = {"
@@ -138,9 +135,9 @@ f
 f
 f
 a
-i
-i
-i
+a
+a
+a
 a
 "}
 (4,1,1) = {"
@@ -169,9 +166,9 @@ f
 f
 e
 a
-i
-i
-i
+a
+a
+a
 a
 "}
 (5,1,1) = {"

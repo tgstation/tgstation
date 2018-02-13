@@ -817,7 +817,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 //e.g: rods
 GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/stack/rods,
-	/obj/item/pipe)))
+	/obj/item/pipe,
+	/obj/item/organ/butt))) // Hippie - Because butts aren't sharp or pointy
 
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
@@ -1506,10 +1507,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // Makes a call in the context of a different usr
 // Use sparingly
-/world/proc/PushUsr(mob/M, datum/callback/CB)
+/world/proc/PushUsr(mob/M, datum/callback/CB, ...)
 	var/temp = usr
 	usr = M
-	. = CB.Invoke()
+	if (length(args) > 2)
+		. = CB.Invoke(arglist(args.Copy(3)))
+	else
+		. = CB.Invoke()
 	usr = temp
 
 //Returns a list of all servants of Ratvar and observers.

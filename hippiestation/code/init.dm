@@ -3,5 +3,6 @@
 
 /proc/hippie_initialize()
 	load_mentors()
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list, roundstart = TRUE)
+	LAZYCLEARLIST(mentor_datums)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list, roundstart = TRUE)
 	initialize_global_loadout_items()

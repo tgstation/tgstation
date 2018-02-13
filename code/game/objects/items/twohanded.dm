@@ -289,7 +289,7 @@
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		
+
 		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE//this cant possibly be a good idea
@@ -305,8 +305,8 @@
 			else
 				user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
 				return OXYLOSS
-		
-		
+
+
 	else
 		user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self to death with \the [src]'s handle! It probably would've been cooler if [user.p_they()] turned it on first!</span>")
 	return BRUTELOSS
@@ -343,7 +343,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
+	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 	if((wielded) && prob(50))
@@ -459,7 +459,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedded_impact_pain_multiplier = 3
+	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -516,7 +516,7 @@
 			qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(user.canUseTopic(src, BE_CLOSE))
 		..()
 		if(!explosive)
 			return
@@ -778,7 +778,7 @@
 	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22
 	throw_speed = 4
-	embedded_impact_pain_multiplier = 3
+	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

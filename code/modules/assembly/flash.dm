@@ -40,7 +40,7 @@
 		holder.update_icon()
 
 /obj/item/device/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		flash_carbon(user, user, 15, 0)
 		return FALSE
 	return TRUE

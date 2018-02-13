@@ -38,7 +38,7 @@
 	H.adjustCloneLoss(0.3)
 	H.adjustBrainLoss(0.8)
 	if(stage_ticks == MEESEEKS_TICKS_STAGE_ONE)
-		H.add_disability(DISABILITY_CLUMSY, GENETIC_MUTATION)
+		H.add_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
 		var/datum/mutation/human/HM = GLOB.mutations_list[SMILE]
 		HM.force_give(H)
 	if(stage_ticks == MEESEEKS_TICKS_STAGE_TWO)

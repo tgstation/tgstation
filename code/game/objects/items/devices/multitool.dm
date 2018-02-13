@@ -27,6 +27,7 @@
 	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
 	tool_behaviour = TOOL_MULTITOOL
+	usesound = 'sound/weapons/empty.ogg'
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 

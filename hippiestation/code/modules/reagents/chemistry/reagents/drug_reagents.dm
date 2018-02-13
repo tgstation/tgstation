@@ -151,7 +151,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.status_flags |= GOTTAGOREALLYFAST
+	M.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	M.AdjustUnconscious(-100, 0)
 	M.AdjustStun(-100, 0)
 	M.AdjustKnockdown(-100, 0)
@@ -167,6 +167,11 @@
 		if(I)
 			M.dropItemToGround(M.get_active_held_item())
 	return FINISHONMOBLIFE(M)
+
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/M)
+	if (istype(M))
+		M.remove_trait(TRAIT_GOTTAGOREALLYFAST)
+	..()
 
 /datum/reagent/drug/flipout
 	name = "Flipout"
