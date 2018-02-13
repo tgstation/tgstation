@@ -65,7 +65,7 @@
 			return
 
 	if(client.keys_held["Ctrl"])
-		switch(GLOB.movement_keys[_key])
+		switch(SSinput.movement_keys[_key])
 			if(NORTH)
 				northface()
 				return

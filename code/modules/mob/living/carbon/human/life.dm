@@ -22,8 +22,6 @@
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
 
@@ -54,7 +52,7 @@
 		return pressure
 
 
-/mob/living/carbon/human/handle_disabilities()
+/mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
 		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
@@ -63,7 +61,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
 
@@ -290,41 +288,17 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		for(var/obj/item/I in BP.embedded_objects)
-			if(prob(I.embedded_pain_chance))
-				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
+			if(prob(I.embedding.embedded_pain_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_pain_multiplier)
 				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
-			if(prob(I.embedded_fall_chance))
-				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
+			if(prob(I.embedding.embedded_fall_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-
-/mob/living/carbon/human/proc/can_heartattack()
-	CHECK_DNA_AND_SPECIES(src)
-	if(NOBLOOD in dna.species.species_traits)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
-	if(!can_heartattack())
-		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && heart.beating)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/set_heartattack(status)
-	if(!can_heartattack())
-		return FALSE
-
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!istype(heart))
-		return
-
-	heart.beating = !status
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
@@ -368,12 +342,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 81-90: Extremely high alcohol content - light brain damage, passing out
 91-100: Dangerously toxic - swift death
 */
-
+#define BALLMER_POINTS 5
+GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
+										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
+										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
+										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
+										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."))
+GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
+												"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
+												"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
+												"Best idea ever: Disposal pipes instead of hallways."))
 /mob/living/carbon/human/handle_status_effects()
 	..()
+
+
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
-
 		if(drunkenness >= 6)
 			if(prob(25))
 				slurring += 2
@@ -381,7 +365,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
-
+		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
+			if(SSresearch.science_tech)
+				if(drunkenness >= 12.9 && drunkenness <= 13.8)
+					drunkenness = round(drunkenness, 0.01)
+					var/ballmer_percent = 0
+					if(drunkenness == 13.35) // why run math if I dont have to
+						ballmer_percent = 1
+					else
+						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
+					if(prob(5))
+						say(pick(GLOB.ballmer_good_msg))
+					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
+				if(drunkenness > 26) // by this point you're into windows ME territory
+					if(prob(5))
+						SSresearch.science_tech.research_points -= BALLMER_POINTS
+						say(pick(GLOB.ballmer_windows_me_msg))
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2

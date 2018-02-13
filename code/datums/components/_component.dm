@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		return
+		CRASH("Incompatible [type] assigned to a [P]!")
 
 	_JoinParent(P)
 
@@ -95,7 +95,7 @@
 		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
 			proc_or_callback = CALLBACK(src, proc_or_callback)
 		procs[sig_type] = proc_or_callback
-	
+
 	enabled = TRUE
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
@@ -180,7 +180,7 @@
 
 	var/datum/component/old_comp
 	var/datum/component/new_comp
-	
+
 	if(ispath(nt))
 		if(nt == /datum/component)
 			CRASH("[nt] attempted instantiation!")

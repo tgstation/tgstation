@@ -366,10 +366,14 @@
 	..()
 
 	//Sprite update for when a parrot gets pulled
-	if(pulledby && stat == CONSCIOUS)
+	if(pulledby && !stat && parrot_state != PARROT_WANDER)
+		if(buckled)
+			buckled.unbuckle_mob(src, TRUE)
+			buckled = null
 		icon_state = icon_living
-		if(!client)
-			parrot_state = PARROT_WANDER
+		parrot_state = PARROT_WANDER
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 		return
 
 
@@ -801,10 +805,18 @@
 				if(istype(AM, perch_path))
 					src.forceMove(AM.loc)
 					icon_state = icon_sit
+					parrot_state = PARROT_PERCH
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
 	return
 
+/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+	. = ..()
+	if(. && !stat && client && parrot_state == PARROT_PERCH)
+		parrot_state = PARROT_WANDER
+		icon_state = icon_living
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 
 /mob/living/simple_animal/parrot/proc/perch_mob_player()
 	set name = "Sit on Human's Shoulder"
@@ -814,7 +826,7 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == icon_living)
+	if(!buckled)
 		for(var/mob/living/carbon/human/H in view(src,1))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
@@ -826,7 +838,7 @@
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
-			buckled.unbuckle_mob(src,force=1)
+			buckled.unbuckle_mob(src, TRUE)
 		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
@@ -837,12 +849,12 @@
 	if(!H)
 		return
 	forceMove(get_turf(H))
-	H.buckle_mob(src, force=1)
-	pixel_y = 9
-	pixel_x = pick(-8,8) //pick left or right shoulder
-	icon_state = icon_sit
-	parrot_state = PARROT_PERCH
-	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+	if(H.buckle_mob(src, TRUE))
+		pixel_y = 9
+		pixel_x = pick(-8,8) //pick left or right shoulder
+		icon_state = icon_sit
+		parrot_state = PARROT_PERCH
+		to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -853,13 +865,13 @@
 	if(stat || !client)
 		return
 
-	if(melee_damage_upper)
+	if(a_intent != INTENT_HELP)
 		melee_damage_upper = 0
 		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = INTENT_HARM
-	to_chat(src, "You will now [a_intent] others...")
+	to_chat(src, "You will now [a_intent] others.")
 	return
 
 /*

@@ -11,7 +11,7 @@
 	..()
 
 /datum/round_event/wizard/summonguns/start()
-	rightandwrong(0,,10)
+	rightandwrong(SUMMON_GUNS, null, 10)
 
 /datum/round_event_control/wizard/summonmagic //The Somewhat Less Classic
 	name = "Summon Magic"
@@ -26,4 +26,4 @@
 	..()
 
 /datum/round_event/wizard/summonmagic/start()
-	rightandwrong(1,,10)
+	rightandwrong(SUMMON_MAGIC, null, 10)

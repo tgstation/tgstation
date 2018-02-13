@@ -1,10 +1,12 @@
 /mob
+	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
 	animate_movement = 2
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -21,54 +23,37 @@
 	*/
 	var/zone_selected = null
 
-	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/lastattacker = null
-	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
-	var/other_mobs = null
-
-	var/atom/movable/pulling = null
-	var/grab_state = 0
 
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
-	var/stuttering = 0		//Carbon
-	var/slurring = 0		//Carbon
-	var/cultslurring = 0	//Carbon
-	var/derpspeech = 0      //Carbon
 	var/real_name = null
 	var/spacewalk = FALSE
-	var/druggy = 0			//Carbon
-	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
-	var/lastpuke = 0
 
 	var/name_archive //For admin things like possession
 
-	var/timeofdeath = 0//Living
-	var/cpr_time = 1//Carbon
-
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
-	var/nutrition = NUTRITION_LEVEL_FED + 50//Carbon
+	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
 	var/list/possible_a_intents = null//Living
 	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
+	var/atom/movable/buckling
 
 	//Hands
 	var/active_hand_index = 1
@@ -76,8 +61,6 @@
 	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
 
 	var/obj/item/storage/s_active = null//Carbon
-
-	var/see_override = 0 //0 for no override, sets see_invisible = see_override in mob life process
 
 	var/datum/hud/hud_used = null
 
@@ -87,13 +70,7 @@
 
 	var/in_throw_mode = 0
 
-	var/music_lastplayed = "null"
-
 	var/job = null//Living
-
-	var/radiation = 0//Carbon
-
-	var/voice_name = "unidentifiable voice"
 
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
 	var/move_on_shuttle = 1 // Can move on the shuttle.
@@ -110,9 +87,6 @@
 	var/list/viruses = list() // list of all diseases in a mob
 	var/list/resistances = list()
 
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
@@ -127,12 +101,8 @@
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
-	var/resize = 1 //Badminnery resize
-
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
 
 	var/list/mousemove_intercept_objects
-
-	var/ventcrawl_layer = PIPING_LAYER_DEFAULT

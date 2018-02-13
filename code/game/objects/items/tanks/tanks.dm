@@ -11,6 +11,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
+	materials = list(MAT_METAL = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 80, acid = 30)
 	var/datum/gas_mixture/air_contents = null
@@ -124,7 +125,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.status_flags |= DISFIGURED
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)

@@ -82,7 +82,7 @@
 /obj/item/bodypart/proc/drop_limb(special)
 	if(!owner)
 		return
-	var/turf/T = get_turf(owner)
+	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
 	update_limb(1)
 	C.bodyparts -= src
@@ -130,7 +130,7 @@
 	C.update_hair()
 	C.update_canmove()
 
-	if(!T)	// T = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
@@ -139,7 +139,7 @@
 		qdel(src)
 		return
 
-	forceMove(T)
+	forceMove(Tsec)
 
 
 
@@ -171,7 +171,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.forceMove(C.loc)
+			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -189,7 +189,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.forceMove(C.loc)
+			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -205,7 +205,7 @@
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.loc)
+			owner.legcuffed.forceMove(drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -216,7 +216,7 @@
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.forceMove(owner.loc)
+			owner.legcuffed.forceMove(drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()

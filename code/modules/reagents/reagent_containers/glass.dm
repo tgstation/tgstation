@@ -100,7 +100,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				reagents.add_reagent("eggyolk", 5)
+				E.reagents.trans_to(src, E.reagents.total_volume)
 				qdel(E)
 			return
 	..()
@@ -254,7 +254,7 @@
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
-		user.put_in_hands(new /obj/item/bucket_sensor)
+		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
 	else
 		..()
 

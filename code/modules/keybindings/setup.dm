@@ -12,13 +12,8 @@
 /datum/proc/key_up(key, client/user) // Called when a key is released
 	return
 /datum/proc/keyLoop(client/user) // Called once every frame
+	set waitfor = FALSE
 	return
-
-// Keys used for movement
-GLOBAL_LIST_INIT(movement_keys, list(
-	"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,														// WASD
-	"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,											// Arrow keys & Numpad
-	))
 
 // removes all the existing macros
 /client/proc/erase_all_macros()

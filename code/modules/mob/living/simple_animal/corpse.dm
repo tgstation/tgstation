@@ -187,3 +187,23 @@
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id
+
+/obj/effect/mob_spawn/human/corpse/cat_butcher
+	name = "The Cat Surgeon"
+	id_job = "Cat Surgeon"
+	id_access_list = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+	hair_style = "Cut Hair"
+	facial_hair_style = "Watson Mustache"
+	skin_tone = "caucasian1"
+	outfit = /datum/outfit/cat_butcher
+
+/datum/outfit/cat_butcher
+	name = "Cat Butcher Uniform"
+	uniform = /obj/item/clothing/under/rank/medical/green
+	suit = /obj/item/clothing/suit/apron/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	ears = /obj/item/device/radio/headset
+	back = /obj/item/storage/backpack/satchel/med
+	id = /obj/item/card/id
+	glasses = /obj/item/clothing/glasses/hud/health

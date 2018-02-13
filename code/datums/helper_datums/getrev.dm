@@ -12,9 +12,9 @@
 		logs = splittext(logs[logs.len - 1], " ")
 		date = unix2date(text2num(logs[5]))
 		commit = logs[2]
-		log_world("[date]")
+		log_world("[commit]: [date]")
 	logs = world.file2list(".git/logs/refs/remotes/origin/master")
-	if(logs)
+	if(logs.len)
 		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
 
 	if(testmerge.len)
@@ -24,8 +24,9 @@
 				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
 				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
-		log_world("Based off origin/master commit [originmastercommit]")
-	else
+		if(originmastercommit)
+			log_world("Based off origin/master commit [originmastercommit]")
+	else if(originmastercommit)
 		log_world(originmastercommit)
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
@@ -55,7 +56,8 @@
 		var/pc = GLOB.revdata.originmastercommit
 		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
-		to_chat(src, "Revision unknown")
+		to_chat(src, "Master revision unknown")
+	to_chat(src, "Revision: [GLOB.revdata.commit]")
 	if(SERVER_TOOLS_PRESENT)
 		to_chat(src, "Server tools version: [SERVER_TOOLS_VERSION]")
 		to_chat(src, "Server tools API version: [SERVER_TOOLS_API_VERSION]")

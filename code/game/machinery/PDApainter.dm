@@ -34,7 +34,9 @@
 		/obj/item/device/pda/ai,
 		/obj/item/device/pda/heads,
 		/obj/item/device/pda/clear,
-		/obj/item/device/pda/syndicate)
+		/obj/item/device/pda/syndicate,
+		/obj/item/device/pda/chameleon,
+		/obj/item/device/pda/chameleon/broken)
 
 	for(var/P in typesof(/obj/item/device/pda) - blocked)
 		var/obj/item/device/pda/D = new P
@@ -78,21 +80,21 @@
 		update_icon()
 
 	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		var/obj/item/weldingtool/WT = O
 		if(stat & BROKEN)
-			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] is repairing [src].", \
-								"<span class='notice'>You begin repairing [src]...</span>", \
-								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, 1, target = src))
-					if(!WT.isOn() || !(stat & BROKEN))
-						return
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-					stat &= ~BROKEN
-					obj_integrity = max_integrity
-					update_icon()
+			if(!O.tool_start_check(user, amount=0))
+				return
+			user.visible_message("[user] is repairing [src].", \
+							"<span class='notice'>You begin repairing [src]...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			playsound(loc, O.usesound, 40, 1)
+			if(O.use_tool(src, user, 40))
+				if(!(stat & BROKEN))
+					return
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+				stat &= ~BROKEN
+				obj_integrity = max_integrity
+				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else

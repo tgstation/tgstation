@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
-	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
@@ -14,6 +14,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	GLOB.doppler_arrays += src
+
+/obj/machinery/doppler_array/ComponentInitialize()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
 /obj/machinery/doppler_array/Destroy()
 	GLOB.doppler_arrays -= src
@@ -40,27 +43,9 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		return ..()
 
-/obj/machinery/doppler_array/verb/rotate()
-	set name = "Rotate Tachyon-doppler Dish"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.stat || usr.restrained() || !usr.canmove)
-		return
-	setDir(turn(dir, -90))
-	to_chat(usr, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
+/obj/machinery/doppler_array/proc/rot_message(mob/user)
+	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-
-/obj/machinery/doppler_array/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
 
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
@@ -125,10 +110,15 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
 		return
-	var/point_gain = techweb_scale_bomb(orig_light - 20 - linked_techweb.max_bomb_value)
-	if(!point_gain)
+	var/adjusted = orig_light - 10 - linked_techweb.max_bomb_value
+	if(adjusted <= 0)
+		say("Explosion not large enough for research calculations.")
 		return
-	linked_techweb.max_bomb_value = orig_light - 20
+	var/point_gain = techweb_scale_bomb(adjusted)
+	if(point_gain <= 0)
+		say("Explosion not large enough for research calculations.")
+		return
+	linked_techweb.max_bomb_value = orig_light - 10
 	linked_techweb.research_points += point_gain
 	say("Gained [point_gain] points from explosion dataset.")
 
@@ -139,4 +129,4 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	linked_techweb = SSresearch.science_tech
 
 /proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 13000
+	return (lightradius ** 0.5) * 5000

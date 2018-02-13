@@ -17,6 +17,8 @@
 	var/directional = FALSE
 	var/aim_dir = NORTH
 	var/boom_sizes = list(0, 0, 3)
+	var/can_attach_mob = FALSE
+	var/full_damage_on_mobs = FALSE
 
 /obj/item/grenade/plastic/New()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
@@ -55,6 +57,8 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
+			if(!ismob(target) || full_damage_on_mobs)
+				target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -63,7 +67,6 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-		location.ex_act(2, target)
 	if(ismob(target))
 		var/mob/M = target
 		M.gib()
@@ -95,7 +98,7 @@
 	aim_dir = get_dir(user,AM)
 	if(!flag)
 		return
-	if(ismob(AM))
+	if(ismob(AM) && !can_attach_mob)
 		return
 
 	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
@@ -110,7 +113,7 @@
 			var/obj/item/I = AM
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
-			I.embed_chance = 0
+			I.embedding = I.embedding.setRating(embed_chance = 0)
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
@@ -122,23 +125,29 @@
 		else
 			qdel(src)	//How?
 
+/obj/item/grenade/plastic/proc/shout_syndicate_crap(mob/M)
+	if(!M)
+		return
+	var/message_say = "FOR NO RAISIN!"
+	if(M.mind)
+		var/datum/mind/UM = M
+		if(UM.has_antag_datum(/datum/antagonist/nukeop) || UM.has_antag_datum(/datum/antagonist/traitor))
+			message_say = "FOR THE SYNDICATE!"
+		else if(UM.has_antag_datum(/datum/antagonist/changeling))
+			message_say = "FOR THE HIVE!"
+		else if(UM.has_antag_datum(/datum/antagonist/cult))
+			message_say = "FOR NAR-SIE!"
+		else if(UM.has_antag_datum(/datum/antagonist/clockcult))
+			message_say = "FOR RATVAR!"
+		else if(UM.has_antag_datum(/datum/antagonist/rev))
+			message_say = "VIVA LA REVOLUTION!"
+	M.say(message_say)
+
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
 	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
-	var/message_say = "FOR NO RAISIN!"
-	if(user.mind)
-		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
-				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
-				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
-				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
-	user.say(message_say)
+	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
@@ -159,6 +168,7 @@
 	gender = PLURAL
 	var/timer = 10
 	var/open_panel = 0
+	can_attach_mob = TRUE
 
 /obj/item/grenade/plastic/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
@@ -172,19 +182,7 @@
 
 /obj/item/grenade/plastic/c4/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
-	var/message_say = "FOR NO RAISIN!"
-	if(user.mind)
-		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
-				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
-				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
-				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
-	user.say(message_say)
+	shout_syndicate_crap(user)
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
 	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")
@@ -211,7 +209,7 @@
 /obj/item/grenade/plastic/c4/afterattack(atom/movable/AM, mob/user, flag)
 	if (!flag)
 		return
-	if (ismob(AM))
+	if(ismob(AM) && !can_attach_mob)
 		return
 	if(loc == AM)
 		return
@@ -247,10 +245,11 @@
 		if(!QDELETED(target))
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
+			if(!ismob(target) || full_damage_on_mobs)
+				target.ex_act(2, target)
 	else
 		location = get_turf(src)
 	if(location)
-		location.ex_act(2, target)
 		explosion(location,0,0,3)
 	qdel(src)
 

@@ -4,7 +4,7 @@
 	possible_locs = list("chest")
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(target.has_disability(DISABILITY_FAT))
+	if(target.has_trait(TRAIT_FAT))
 		return 1
 	return 0
 

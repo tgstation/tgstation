@@ -32,7 +32,7 @@
 
 /obj/effect/holodeck_effect/cards/activate(var/obj/machinery/computer/holodeck/HC)
 	D = new(loc)
-	safety(!HC.emagged)
+	safety(!(HC.obj_flags & EMAGGED))
 	D.holo = HC
 	return D
 

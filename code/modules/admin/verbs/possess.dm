@@ -2,7 +2,7 @@
 	set name = "Possess Obj"
 	set category = "Object"
 
-	if(O.dangerous_possession && CONFIG_GET(flag/forbid_singulo_possession))
+	if((O.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
 		to_chat(usr, "[O] is too powerful for you to possess.")
 		return
 

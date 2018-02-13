@@ -112,7 +112,7 @@
 			if(!printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!printer.print_text("<font face=\"[computer.emagged ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
+			if(!printer.print_text("<font face=\"[(computer.obj_flags & EMAGGED) ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")

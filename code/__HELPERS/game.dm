@@ -14,9 +14,11 @@
 	var/turf/T = get_turf(A)
 	return T ? T.loc : null
 
-/proc/get_area_name(atom/X)
-	var/area/Y = get_area(X)
-	return Y.name
+/proc/get_area_name(atom/X, format_text = FALSE)
+	var/area/A = isarea(X) ? X : get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.name) : A.name
 
 /proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
@@ -241,9 +243,6 @@
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-
-	set background = BACKGROUND_ENABLED
-
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/device/radio/R in radios)
@@ -322,9 +321,10 @@
 			break
 
 /proc/get_mob_by_key(key)
+	var/ckey = ckey(key)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
-		if(M.ckey == lowertext(key))
+		if(M.ckey == ckey)
 			return M
 	return null
 
@@ -358,7 +358,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -482,7 +482,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
+			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, ROLE_SYNDICATE))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)

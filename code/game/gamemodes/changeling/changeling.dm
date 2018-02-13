@@ -48,7 +48,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
-			changeling.special_role = "Changeling"
+			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
 		return 1
 	else
@@ -70,7 +70,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
-		var/datum/antagonist/changeling/new_antag = new(changeling)
+		var/datum/antagonist/changeling/new_antag = new()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
 	..()
@@ -82,7 +82,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 - (csc * 2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, ROLE_SYNDICATE))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()

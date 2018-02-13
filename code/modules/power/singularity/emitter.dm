@@ -1,6 +1,6 @@
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 
@@ -75,28 +75,15 @@
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
-/obj/machinery/power/emitter/verb/rotate()
-	set name = "Rotate"
-	set category = "Object"
-	set src in oview(1)
+/obj/machinery/power/emitter/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
-		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
-		return 0
-	src.setDir(turn(src.dir, 270))
-	return 1
-
-/obj/machinery/power/emitter/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
+/obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
+	if (anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -220,10 +207,16 @@
 	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
-	if(state == EM_WELDED)
+	if(active)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+		return FAILED_UNFASTEN
+
+	else if(state == EM_WELDED)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
+
 	return ..()
 
 /obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
@@ -234,46 +227,53 @@
 		else
 			state = EM_UNSECURED
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
-		if(active)
-			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
-			return
-		default_unfasten_wrench(user, W, 0)
-		return
+/obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 0)
+	return TRUE
 
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(active)
-			to_chat(user, "Turn \the [src] off first.")
-			return
-		switch(state)
-			if(EM_UNSECURED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-			if(EM_SECURED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_WELDED
-						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-						connect_to_network()
-			if(EM_WELDED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-						disconnect_from_network()
-		return
+/obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
+	if(active)
+		to_chat(user, "Turn \the [src] off first.")
+		return TRUE
 
-	if(W.GetID())
-		if(emagged)
+	switch(state)
+		if(EM_UNSECURED)
+			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+		if(EM_SECURED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50))
+				state = EM_WELDED
+				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+				connect_to_network()
+		if(EM_WELDED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50))
+				state = EM_SECURED
+				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+				disconnect_from_network()
+
+	return TRUE
+
+/obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/I)
+	default_deconstruction_screwdriver(user, "emitter_open", "emitter", I)
+	return TRUE
+
+
+/obj/machinery/power/emitter/attackby(obj/item/I, mob/user, params)
+	if(I.GetID())
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
@@ -286,29 +286,20 @@
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
-	if(is_wire_tool(W) && panel_open)
+	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
-		return
-
-	if(exchange_parts(user, W))
-		return
-
-	if(default_pry_open(W))
-		return
-
-	if(default_deconstruction_crowbar(W))
+	else if(exchange_parts(user, I))
 		return
 
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
 		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 

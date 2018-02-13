@@ -26,6 +26,8 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
+	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
+	var/spawn_cleanable_shards = TRUE
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -43,9 +45,6 @@
 			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
 		else
 			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
-
-	if(!anchored)
-		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -80,7 +79,8 @@
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION, TRUE, FALSE)
+	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -178,17 +178,19 @@
 		return 1 //skip the afterattack
 
 	add_fingerprint(user)
+
 	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
-		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = max_integrity
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-					update_nearby_icons()
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			playsound(src, I.usesound, 40, 1)
+			if(I.use_tool(src, user, 40))
+				obj_integrity = max_integrity
+				playsound(src, 'sound/items/Welder2.ogg', 50, 1)
+				update_nearby_icons()
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
@@ -199,18 +201,18 @@
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
-					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
 						to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
 				else if(state == WINDOW_OUT_OF_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
-					if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 						anchored = !anchored
 						update_nearby_icons()
 						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
 			else //if we're not reinforced, we don't need to check or update state
 				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
-				if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 					anchored = !anchored
 					air_update_turf(TRUE)
 					update_nearby_icons()
@@ -221,7 +223,7 @@
 		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			playsound(src, I.usesound, 75, 1)
-			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
@@ -229,7 +231,7 @@
 		else if(istype(I, /obj/item/wrench) && !anchored)
 			playsound(src, I.usesound, 75, 1)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
-			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
 				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -284,6 +286,8 @@
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
 		if(!(flags_1 & NODECONSTRUCT_1))
+			if(spawn_cleanable_shards)
+				new /obj/effect/decal/cleanable/glass(get_turf(src))
 			for(var/i in debris)
 				var/obj/item/I = i
 				I.forceMove(drop_location())
@@ -291,62 +295,23 @@
 	qdel(src)
 	update_nearby_icons()
 
-/obj/structure/window/verb/rotate()
-	set name = "Rotate Window Counter-Clockwise"
-	set category = "Object"
-	set src in oview(1)
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
+/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
-	var/target_dir = turn(dir, 90)
+	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir))
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
+	return TRUE
 
-	setDir(target_dir)
+/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
 	air_update_turf(1)
 	ini_dir = dir
-	add_fingerprint(usr)
-	return TRUE
-
-/obj/structure/window/verb/revrotate()
-	set name = "Rotate Window Clockwise"
-	set category = "Object"
-	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
-	if(anchored)
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
-		return FALSE
-
-	var/target_dir = turn(dir, 270)
-
-	if(!valid_window_location(loc, target_dir))
-		to_chat(usr, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
-		return FALSE
-
-	setDir(target_dir)
-	ini_dir = dir
-	add_fingerprint(usr)
-	return TRUE
-
-/obj/structure/window/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		revrotate()
+	add_fingerprint(user)
 
 /obj/structure/window/Destroy()
 	density = FALSE
@@ -432,9 +397,7 @@
 	max_integrity = 50
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/rglass
-
-/obj/structure/window/reinforced/ComponentInitialize()
-	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION, TRUE, FALSE)
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -458,9 +421,8 @@
 	max_integrity = 150
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
-
-/obj/structure/window/plasma/ComponentInitialize()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+	rad_insulation = RAD_NO_INSULATION
+	spawn_cleanable_shards = FALSE
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -525,7 +487,7 @@
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 100
+	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
@@ -654,7 +616,7 @@
 		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
-		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
+		debris += new /obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
@@ -716,6 +678,7 @@
 	decon_speed = 10
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
+	spawn_cleanable_shards = FALSE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'

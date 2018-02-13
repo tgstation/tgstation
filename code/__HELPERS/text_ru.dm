@@ -236,4 +236,5 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 	for(var/s in GLOB.rus_unicode_fix)
 		json = replacetext(json, s, GLOB.rus_unicode_fix[s])
 
+>>>>>>> master
 	return json

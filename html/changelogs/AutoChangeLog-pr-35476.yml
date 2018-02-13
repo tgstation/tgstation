@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Goliath hide plates now properly apply to explorer suits and APLUs again."

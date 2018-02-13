@@ -44,7 +44,8 @@
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, target.dir)
+	new jaunt_in_type(mobloc, holder.dir)
+	target.setDir(holder.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
 	if(!QDELETED(target))
@@ -84,11 +85,17 @@
 		return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
-	if(!(newLoc.flags_1 & NOJAUNT_1))
-		forceMove(newLoc)
-	else
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
+
 	movedelay = world.time + movespeed
+
+	if(newLoc.flags_1 & NOJAUNT_1)
+		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
+		return
+	if (locate(/obj/effect/blessing, newLoc))
+		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
+		return
+
+	forceMove(newLoc)
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

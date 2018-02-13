@@ -11,6 +11,10 @@
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
 
+/obj/item/device/radio/headset/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!</span>")
+	return TOXLOSS
+
 /obj/item/device/radio/headset/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>To speak on the general radio frequency, use ; before speaking.</span>")
@@ -189,6 +193,10 @@
 	icon_state = "cent_headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_com
 	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
+
+/obj/item/device/radio/headset/headset_cent/empty
+	keyslot = null
+	keyslot2 = null
 
 /obj/item/device/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/device/encryptionkey/heads/captain

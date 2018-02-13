@@ -199,8 +199,10 @@
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
 						</table></td>
 						<td><table><td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a><br>
+						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_front'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_front'>Update front photo</a></td>
 						<td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a><br>
+						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_side'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_side'>Update side photo</a></td></table>
 						</td></tr></table></td></tr></table>"}
 					else
@@ -261,7 +263,8 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += "<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"
-					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR>"
+					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
 				else
 		else
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
@@ -609,6 +612,11 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_front"])
 							active1.fields["photo_front"] = photo
+					if("print_photo_front")
+						if(active1.fields["photo_front"])
+							if(istype(active1.fields["photo_front"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_front"]
+								print_photo(P.img, active1.fields["name"])	
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
@@ -619,6 +627,11 @@ What a mess.*/
 						if(photo)
 							qdel(active1.fields["photo_side"])
 							active1.fields["photo_side"] = photo
+					if("print_photo_side")
+						if(active1.fields["photo_side"])
+							if(istype(active1.fields["photo_side"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_side"]
+								print_photo(P.img, active1.fields["name"])	
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
@@ -738,6 +751,23 @@ What a mess.*/
 	else if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
+
+/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, name)
+	if (printing)
+		return
+	printing = TRUE
+	sleep(20)
+	var/obj/item/photo/P = new/obj/item/photo(drop_location())
+	var/icon/small_img = icon(temp)
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
+	small_img.Scale(8, 8)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	P.icon = ic
+	P.img = temp
+	P.desc = "The photo on file for [name]."
+	P.pixel_x = rand(-10, 10)
+	P.pixel_y = rand(-10, 10)
+	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

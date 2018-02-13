@@ -89,47 +89,46 @@
 			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
 			return
 		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
-		if(do_after(user, 80*W.toolspeed, target = src))
-			playsound(src, W.usesound, 50, 1)
+		if(W.use_tool(src, user, 80, volume=50))
 			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 			new framebuildstacktype(drop_location(), framebuildstackamount)
 			if(buildstackamount)
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				user.visible_message("[user] starts to repair [src].",
-									"<span class='notice'>You begin repairing [src]...</span>",
-									"<span class='italics'>You hear welding.</span>")
-				playsound(src, W.usesound, 40, 1)
-				if(do_after(user,40*WT.toolspeed, target = src))
-					obj_integrity = max_integrity
-					user.visible_message("[user] has repaired [src].", \
-										"<span class='notice'>You finish repairing [src].</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to repair [src].",
+								"<span class='notice'>You begin repairing [src]...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if(W.use_tool(src, user, 40, volume=40))
+				obj_integrity = max_integrity
+				user.visible_message("[user] has repaired [src].", \
+									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)
-			if (WT.remove_fuel(0,user))
-				playsound(src, W.usesound, 50, 1)
-				user.visible_message("[user] starts to weld [src] to the floor.",
-									"<span class='notice'>You start to weld [src] to the floor...</span>",
-									"<span class='italics'>You hear welding.</span>")
-				if (do_after(user,20*W.toolspeed, target = src))
-					if(!WT.isOn())
-						return
-					anchored = TRUE
-					to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to weld [src] to the floor.",
+								"<span class='notice'>You start to weld [src] to the floor...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if (W.use_tool(src, user, 20, volume=50))
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
-			if (WT.remove_fuel(0,user))
-				playsound(src, W.usesound, 50, 1)
-				user.visible_message("[user] starts to cut [src] free from the floor.", "<span class='notice'>You start to cut [src] free from the floor...</span>", "<span class='italics'>You hear welding.</span>")
-				if (do_after(user,20*W.toolspeed, target = src))
-					if(!WT.isOn())
-						return
-					anchored = FALSE
-					to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			user.visible_message("[user] starts to cut [src] free from the floor.",
+								"<span class='notice'>You start to cut [src] free from the floor...</span>",
+								"<span class='italics'>You hear welding.</span>")
+			if (W.use_tool(src, user, 20, volume=50))
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
+
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)

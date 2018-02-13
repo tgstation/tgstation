@@ -10,7 +10,7 @@
 /obj/item/integrated_circuit/converter/num2text
 	name = "number to string"
 	desc = "This circuit can convert a number variable into a string."
-	extended_desc = "Because of game limitations null/false variables will output a '0' string."
+	extended_desc = "Because of circuit limitations, null/false variables will output a '0' string."
 	icon_state = "num-string"
 	inputs = list("input" = IC_PINTYPE_NUMBER)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -88,7 +88,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode
 	name = "reference decoder"
-	desc = "This circuit can convert a encoded reference to actual reference."
+	desc = "This circuit can convert an encoded reference to actual reference."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
@@ -104,7 +104,7 @@
 
 /obj/item/integrated_circuit/converter/lowercase
 	name = "lowercase string converter"
-	desc = "this will cause a string to come out in all lowercase."
+	desc = "this circuit will cause a string to come out in all lowercase."
 	icon_state = "lowercase"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -207,7 +207,7 @@
 	name = "find text"
 	desc = "This gives position of sample in the string. Or returns 0."
 	extended_desc = "The first pin is the string to be examined. The second pin is the sample to be found. \
-	For example, 'eat this burger',' ' will give you position 4. This circuit isn't case sensitive."
+	For example, 'eat this burger' will give you position 4. This circuit isn't case sensitive."
 	complexity = 4
 	inputs = list(
 		"string" = IC_PINTYPE_STRING,
@@ -232,7 +232,7 @@
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
-	For example, 'eat this burger',' ' will be converted to list('eat','this','burger')."
+	For example, 'eat this burger' will be converted to list('eat','this','burger')."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(

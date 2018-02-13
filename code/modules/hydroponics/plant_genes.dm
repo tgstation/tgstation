@@ -212,7 +212,7 @@
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
 	// Generates sparks on squash.
 	// Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
-	// Multiplies max charge by (rate*1000) when used in potato power cells.
+	// Also affects plant batteries see capatative cell production datum
 	name = "Electrical Activity"
 	rate = 0.2
 
@@ -266,13 +266,13 @@
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
-	//adds -potency*(rate*0.05) light power to products
+	//adds -potency*(rate*0.2) light power to products
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
-	return -max(S.potency*(rate*0.05), 0.075)
+	return -max(S.potency*(rate*0.2), 0.2)
 
 /datum/plant_gene/trait/glow/red
 	name = "Red Electrical Glow"
@@ -355,8 +355,8 @@
 
 			// The secret of potato supercells!
 			var/datum/plant_gene/trait/cell_charge/CG = G.seed.get_gene(/datum/plant_gene/trait/cell_charge)
-			if(CG) // 10x charge for deafult cell charge gene - 20 000 with 100 potency.
-				pocell.maxcharge *= CG.rate*1000
+			if(CG) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace powercells)
+				pocell.maxcharge *= CG.rate*100
 			pocell.charge = pocell.maxcharge
 			pocell.name = "[G.name] battery"
 			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."

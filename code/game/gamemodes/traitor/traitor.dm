@@ -26,7 +26,7 @@
 	var/list/datum/mind/pre_traitors = list()
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
-	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
+	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
 
 
@@ -61,12 +61,15 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
-		var/datum/antagonist/traitor/new_antag = new antag_datum(traitor)
-		new_antag.should_specialise = TRUE
+		var/datum/antagonist/traitor/new_antag = new antag_datum()
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	..()
+
+	//We're not actually ready until all traitors are assigned.
+	gamemode_ready = FALSE
+	addtimer(VARSET_CALLBACK(src, gamemode_ready, TRUE), 101)
 	return TRUE
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
@@ -76,14 +79,13 @@
 		return
 	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, ROLE_SYNDICATE))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
-	var/datum/antagonist/traitor/new_antag = new antag_datum(character)
-	new_antag.should_specialise = TRUE
+	var/datum/antagonist/traitor/new_antag = new antag_datum()
 	character.add_antag_datum(new_antag)
 
 /datum/game_mode/traitor/generate_report()

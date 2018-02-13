@@ -193,7 +193,7 @@
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
 	icon_state = "spiderling"
-	list_reagents = list("nutrient" = 1, "toxin" = 4)
+	list_reagents = list("nutriment" = 1, "toxin" = 4)
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
@@ -552,3 +552,11 @@
 	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/pineappleslice
+	name = "pineapple slice"
+	desc = "A sliced piece of juicy pineapple."
+	icon_state = "pineapple_slice"
+	filling_color = "#F6CB0B"
+	tastes = list("pineapple" = 1)
+	foodtype = FRUIT

@@ -326,6 +326,12 @@
 			new R(src)
 		revealed = 1
 
+/obj/item/storage/backpack/satchel/flat/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+	if(SSpersistence.spawned_objects[W])
+		to_chat(user, "<span class='warning'>[W] is unstable after its journey through space and time, it wouldn't survive another trip.</span>")
+		return FALSE
+	return ..()
+
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
 	desc = "A large duffel bag for holding extra things."
@@ -553,3 +559,16 @@
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/syringe/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
+
+// For ClownOps.
+/obj/item/storage/backpack/duffelbag/clown/syndie
+	slowdown = 0
+	silent = TRUE
+
+/obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
+	new /obj/item/device/pda/clown(src)
+	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/shoes/clown_shoes(src)
+	new /obj/item/clothing/mask/gas/clown_hat(src)
+	new /obj/item/bikehorn(src)
+	new /obj/item/implanter/sad_trombone(src)

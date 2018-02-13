@@ -19,6 +19,10 @@
 
 	var/list/files = list()
 
+/obj/item/card/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/card/data
 	name = "data disk"
 	desc = "A disk of data."
@@ -56,6 +60,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace

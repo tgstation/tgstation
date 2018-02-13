@@ -194,7 +194,7 @@
 		activate()
 
 /obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
-	var/C = input(owner, "Select Color", "Select color", "#ffffff") as null|color
+	var/C = input(owner, "Select Color", "Select color", "#ffffff") as color|null
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
@@ -316,3 +316,8 @@
 	parent = loc
 	if(!istype(parent))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/organ/eyes/moth
+	name = "moth eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	flash_protect = -1

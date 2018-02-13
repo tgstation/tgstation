@@ -62,7 +62,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if (istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if (istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		if (!beaker)
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
@@ -168,7 +168,7 @@
 
 	var/datum/browser/popup = new(user, "reagentgrinder", "All-In-One Grinder")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open(1)
 	return
 
@@ -201,6 +201,8 @@
 	if(!beaker)
 		return
 	beaker.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(beaker)
 	beaker = null
 	update_icon()
 	updateUsrDialog()

@@ -247,7 +247,7 @@
 			if(prob(75))
 				var/turf/open/T = loc
 				if(istype(T))
-					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
+					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/particle_effect/foam(loc)
@@ -265,7 +265,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()

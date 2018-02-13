@@ -9,17 +9,17 @@
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for (var/obj/machinery/atmospherics/plumbing in GLOB.machines)
 		if (plumbing.nodealert)
-			to_chat(usr, "Unconnected [plumbing.name] located at [plumbing.x],[plumbing.y],[plumbing.z] ([get_area(plumbing.loc)])")
+			to_chat(usr, "Unconnected [plumbing.name] located at [ADMIN_COORDJMP(plumbing)] ([get_area(plumbing.loc)])")
 
 	//Manifolds
 	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
 		if (!pipe.nodes[1] || !pipe.nodes[2] || !pipe.nodes[3])
-			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_COORDJMP(pipe)] ([get_area(pipe.loc)])")
 
 	//Pipes
 	for (var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
 		if (!pipe.nodes[1] || !pipe.nodes[2])
-			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_COORDJMP(pipe)] ([get_area(pipe.loc)])")
 
 /client/proc/powerdebug()
 	set category = "Mapping"
@@ -33,9 +33,9 @@
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				to_chat(usr, "Powernet with no nodes! (number [PN.number]) - example cable at [C.x], [C.y], [C.z] in area [get_area(C.loc)]")
+				to_chat(usr, "Powernet with no nodes! (number [PN.number]) - example cable at [ADMIN_COORDJMP(C)] in area [get_area(C.loc)]")
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
-				to_chat(usr, "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [C.x], [C.y], [C.z] in area [get_area(C.loc)]")
+				to_chat(usr, "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_COORDJMP(C)] in area [get_area(C.loc)]")

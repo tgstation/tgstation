@@ -138,7 +138,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-GLOBAL_LIST(external_rsc_urls)
+GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
 
@@ -149,13 +149,6 @@ GLOBAL_LIST(external_rsc_urls)
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
-
-#if (PRELOAD_RSC == 0)
-	var/static/next_external_rsc = 0
-	if(external_rsc_urls && external_rsc_urls.len)
-		next_external_rsc = WRAP(next_external_rsc+1, 1, external_rsc_urls.len+1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
-#endif
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
@@ -526,7 +519,11 @@ GLOBAL_LIST(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
+			
+			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 
@@ -568,7 +565,11 @@ GLOBAL_LIST(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			
+			//we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 
@@ -612,6 +613,8 @@ GLOBAL_LIST(external_rsc_urls)
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
 		verbs += /client/proc/self_notes
+	if(CONFIG_GET(flag/use_exp_tracking))
+		verbs += /client/proc/self_playtime
 
 
 #undef TOPIC_SPAM_DELAY
@@ -638,6 +641,12 @@ GLOBAL_LIST(external_rsc_urls)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+#if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
+	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
+		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
+#endif
 	//get the common files
 	getFiles(
 		'html/search.js',

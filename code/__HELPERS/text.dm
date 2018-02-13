@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","—è"="&#255;"))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","ˇ"="&#255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -70,12 +70,18 @@
 	var/non_whitespace = 0
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
-			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-	//		if(127 to 255)	return			//rejects weird letters like i??
-			if(0 to 31)		return			//more weird stuff
-			if(32)			continue		//whitespace
-			else			non_whitespace = 1
-	if(non_whitespace)		return sanitize_russian(text)		//only accepts the text if it has some non-spaces
+			if(62,60,92,47)
+				return			//rejects the text if it contains these bad characters: <, >, \ or /
+			if(127 to 255)
+				return			//rejects weird letters like ?
+			if(0 to 31)
+				return			//more weird stuff
+			if(32)
+				continue		//whitespace
+			else
+				non_whitespace = 1
+	if(non_whitespace)
+		return sanitize_russian(text)
 
 
 // Used to get a properly sanitized input, of max_length
@@ -322,28 +328,6 @@
 	if(size <= length)
 		return message
 	return copytext(message, 1, length + 1)
-
-/*
- * Misc
- */
-
-/proc/stringsplit(txt, character)
-	var/cur_text = txt
-	var/last_found = 1
-	var/found_char = findtext(cur_text,character)
-	var/list/list = list()
-	if(found_char)
-		var/fs = copytext(cur_text,last_found,found_char)
-		list += fs
-		last_found = found_char+length(character)
-		found_char = findtext(cur_text,character,last_found)
-	while(found_char)
-		var/found_string = copytext(cur_text,last_found,found_char)
-		last_found = found_char+length(character)
-		list += found_string
-		found_char = findtext(cur_text,character,last_found)
-	list += copytext(cur_text,last_found,length(cur_text)+1)
-	return list
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever

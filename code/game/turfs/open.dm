@@ -168,7 +168,7 @@
 	return 1
 
 /turf/open/proc/water_vapor_gas_act()
-	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+	MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
@@ -352,7 +352,9 @@
 
 
 /turf/open/rad_act(pulse_strength)
+	. = ..()
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		pulse_strength = min(pulse_strength,air.gases[/datum/gas/carbon_dioxide][MOLES]*1000,air.gases[/datum/gas/oxygen][MOLES]*2000) //Ensures matter is conserved properly
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
 		air.assert_gas(/datum/gas/pluoxium)

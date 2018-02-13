@@ -56,7 +56,7 @@
 	if(!legend)
 		var/area/A = get_area()
 		if(get_area_type() == AREA_STATION)
-			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+			. += "<p>According to \the [src], you are now in <b>\"[rhtml_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
 		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)
@@ -177,7 +177,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN))
+	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -191,6 +191,7 @@
 				var/obj/machinery/door/firedoor/FD = D
 				FD.CalculateAffectingAreas()
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
+	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	interact()
 	return 1
 

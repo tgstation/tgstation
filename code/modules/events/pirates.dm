@@ -188,7 +188,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
-	station_lock_override = TRUE
+	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	shuttlePortName = "custom location"
 	x_offset = 9
@@ -264,7 +264,6 @@
 			if(!results.len)
 				return
 			var/atom/movable/AM = pick_n_take(results)
-			var/area/loot_area = get_area(AM)
-			say("Located: [AM.name] at [loot_area.name]")
+			say("Located: [AM.name] at [get_area_name(AM)]")
 
 #undef LOOT_LOCATOR_COOLDOWN

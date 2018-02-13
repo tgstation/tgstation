@@ -42,10 +42,13 @@
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
-/obj/machinery/camera/Initialize(mapload)
+/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
-	assembly = new(src)
-	assembly.state = 4
+	if(CA)
+		assembly = CA
+	else
+		assembly = new(src)
+		assembly.state = 4
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -213,7 +216,7 @@
 					to_chat(AI, "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
 					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[rhtml_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
-					AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
+				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
@@ -364,19 +367,16 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(obj/item/weldingtool/WT, mob/living/user)
+/obj/machinery/camera/proc/weld(obj/item/weldingtool/W, mob/living/user)
 	if(busy)
 		return FALSE
-	if(!WT.remove_fuel(0, user))
+	if(!W.tool_start_check(user, amount=0))
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
 	busy = TRUE
-	if(do_after(user, 100*WT.toolspeed, target = src))
+	if(W.use_tool(src, user, 100, volume=50))
 		busy = FALSE
-		if(!WT.isOn())
-			return FALSE
 		return TRUE
 	busy = FALSE
 	return FALSE

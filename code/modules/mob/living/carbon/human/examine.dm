@@ -85,6 +85,9 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
+	//Status effects
+	msg += status_effect_examines()
+
 	//Jitters
 	switch(jitteriness)
 		if(300 to INFINITY)
@@ -95,7 +98,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		appears_dead = 1
 		if(suiciding)
 			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
@@ -243,7 +246,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(has_disability(DISABILITY_DUMB))
+			if(has_trait(TRAIT_DUMB))
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
@@ -310,3 +313,16 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+
+/mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
+	var/list/dat = list()
+	if(!pronoun_replacement)
+		pronoun_replacement = p_they(TRUE)
+	for(var/V in status_effects)
+		var/datum/status_effect/E = V
+		if(E.examine_text)
+			var/new_text = replacetext(E.examine_text, "SUBJECTPRONOUN", pronoun_replacement)
+			new_text = replacetext(new_text, "[pronoun_replacement] is", "[pronoun_replacement] [p_are()]") //To make sure something become "They are" or "She is", not "They are" and "She are"
+			dat += "[new_text]\n" //dat.Join("\n") doesn't work here, for some reason
+	if(dat.len)
+		return dat.Join()

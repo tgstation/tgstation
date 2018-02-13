@@ -72,6 +72,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/underline_flag = TRUE //flag for underline
 
+/obj/item/device/pda/suicide_act(mob/living/carbon/user)
+	var/deathMessage = msg_input(user)
+	if (!deathMessage)
+		deathMessage = "i ded"
+	user.visible_message("<span class='suicide'>[user] is sending a message to the Grim Reaper! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	tnote += "<i><b>&rarr; To The Grim Reaper:</b></i><br>[deathMessage]<br>"//records a message in their PDA as being sent to the grim reaper
+	return BRUTELOSS
+
 /obj/item/device/pda/examine(mob/user)
 	..()
 	if(!id && !inserted_item)
@@ -94,8 +102,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	update_icon()
 
 /obj/item/device/pda/equipped(mob/user, slot)
+	. = ..()
 	if(!equipped)
 		if(user.client)
+			background_color = user.client.prefs.pda_color
 			switch(user.client.prefs.pda_style)
 				if(MONO)
 					font_index = MODE_MONO
@@ -112,7 +122,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
-		equipped = TRUE
+			equipped = TRUE
 
 /obj/item/device/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -381,7 +391,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (MODE_VT)
 						font_mode = FONT_VT
 			if ("Change_Color")
-				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').")as color
+				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').",background_color)as color
 				background_color = new_color
 
 			if ("Toggle_Underline")
@@ -582,7 +592,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		update_icon()
 
 /obj/item/device/pda/proc/msg_input(mob/living/U = usr)
-	var/t = stripped_input(U, "Please enter message", name, null, MAX_MESSAGE_LEN)
+	var/t = stripped_input(U, "Please enter message", name)
 	if (!t || toff)
 		return
 	if (!in_range(src, U) && loc != U)
@@ -660,7 +670,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+			hrefstart = "<a href='?src=[REF(L)];track=[rhtml_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
@@ -864,7 +874,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
-		note = html_encode(note)
+		note = rhtml_encode(note)
 		notescanned = 1
 		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
