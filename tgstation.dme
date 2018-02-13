@@ -1623,7 +1623,6 @@
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
 #include "code\modules\language\monkey.dm"
-#include "code\modules\language\moth.dm"
 #include "code\modules\language\narsian.dm"
 #include "code\modules\language\ratvarian.dm"
 #include "code\modules\language\slime.dm"
