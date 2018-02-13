@@ -637,6 +637,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = 0 // kinky
 	var/super = 0 //for the fattest vapes dude.
+	var/vapetype = null //only for tanks
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!</span>")//it doesn't give you cancer, it is cancer
@@ -647,7 +648,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 50)
+	reagents.add_reagent("nicotine", (chem_volume/2)) //half tank to start
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
@@ -670,9 +671,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			screw = 1
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
 			if(super)
-				add_overlay("vapeopen_med")
+				add_overlay("[vapetype]vapeopen_med")
 			else
-				add_overlay("vapeopen_low")
+				add_overlay("[vapetype]vapeopen_low")
 		else
 			screw = 0
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
@@ -702,7 +703,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			emagged = TRUE
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
-			add_overlay("vapeopen_high")
+			add_overlay("[vapetype]vapeopen_high")
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()
@@ -794,3 +795,63 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(reagents && reagents.total_volume)
 		hand_reagents()
+
+
+
+/////////////////////////////////////////////
+//Tank vapes for ripping the FATTEST clouds//
+/////////////////////////////////////////////
+/obj/item/clothing/mask/vape/tank
+	name = "\improper Tank Vape"
+	desc = "A tank like box with a screen on it, it is basic but should be able to rip FAT clouds were you to try.."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape"
+	item_state = "tank_vape"
+	w_class = WEIGHT_CLASS_TINY
+	chem_volume = 200 //it's a tank, fuck
+	super = 1 //FAT CLOUDS
+	vapetype = "tank"
+
+/obj/item/clothing/mask/vape/tank/wood
+	name = "\improper Wooden Tank Vape"
+	desc = "A classy looking tank vape with a wooden veneer, extra classy and smooth but also perfectly able to RIP FAT CLOUDS."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_wood"
+	item_state = "tank_vape_wood"
+	w_class = WEIGHT_CLASS_TINY
+	chem_volume = 250 //it's a tank, fuck
+
+/obj/item/clothing/mask/vape/tank/tpriv
+	name = "\improper T-priv Tank Vape"
+	desc = "A cloud machine capable of holding a ludicrous amount of juice, it comes preset on a high wattage."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_tpriv"
+	item_state = "tank_vape_tpriv"
+	w_class = WEIGHT_CLASS_TINY
+	chem_volume = 500 //FUCK
+
+/obj/item/clothing/mask/vape/tank/syndie
+	name = "\improper Gorlex Cloud Ripper 5,000,000"
+	desc = "Is this the holy grail of vaping? I think...yes"
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_syndicate"
+	item_state = "tank_vape_syndicate"
+	w_class = WEIGHT_CLASS_TINY
+	chem_volume = 1000 //FUCK
+
+/obj/item/clothing/mask/vape/tank/equipped(mob/user, slot)
+	if(slot == slot_wear_mask)
+		if(!screw)
+			to_chat(user, "<span class='notice'>You feels your lungs melting as you rip MASSIVE clouds</span>")
+			reagents.set_reacting(TRUE)
+			START_PROCESSING(SSobj, src)
+			icon_state += "_rip" //rip a fat one
+		else //it will not start if the vape is opened.
+			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
+
+/obj/item/clothing/mask/vape/tank/dropped(mob/user)
+	var/mob/living/carbon/C = user
+	if(C.get_item_by_slot(slot_wear_mask) == src)
+		reagents.set_reacting(FALSE)
+		STOP_PROCESSING(SSobj, src)
+		icon_state -= "_rip" //rip a fat one
