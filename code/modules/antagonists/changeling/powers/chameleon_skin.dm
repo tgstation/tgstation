@@ -23,3 +23,4 @@
 		var/datum/mutation/human/HM = GLOB.mutations_list[CHAMELEON]
 		if(HM in C.dna.mutations)
 			HM.force_lose(C)
+	..()

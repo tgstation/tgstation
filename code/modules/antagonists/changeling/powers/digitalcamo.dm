@@ -20,3 +20,4 @@
 /datum/action/changeling/digitalcamo/Remove(mob/user)
 	user.digitalcamo = 0
 	user.digitalinvis = 0
+	..()

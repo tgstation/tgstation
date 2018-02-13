@@ -58,6 +58,7 @@
 /datum/action/changeling/weapon/Remove(mob/user)
 	for(var/obj/item/I in user.held_items)
 		check_weapon(user, I)
+	..()
 
 
 //Parent to space suits and armor.
@@ -107,6 +108,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	check_suit(H)
+	..()
 
 /datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))

@@ -50,3 +50,4 @@
 		else
 			E.flash_protect = 0
 		user.update_sight()
+	..()

@@ -29,6 +29,7 @@
 		if(istype(p, /datum/action/changeling/hivemind_upload) || istype(p, /datum/action/changeling/hivemind_download))
 			changeling.purchasedpowers -= p
 			p.Remove(changeling.owner.current)
+	..()
 
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
