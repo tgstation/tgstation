@@ -38,3 +38,42 @@
 			visible_message("<span class='danger'>[src] slams into [victim] with enough force to level a skyscraper!</span>", "<span class='userdanger'>You crash into [victim] like a thunderbolt!</span>")
 			var/turf/T = get_turf(src)
 			explosion(T, -1, 3, 5, 0, 0, 0) //The reward for lining the spell up to hit another person is a bigger boom!
+
+/mob/living/carbon/proc/throw_hats(var/how_many, var/list/throw_directions)
+	// Using a list so random directions are possible for all the hats we're trying to throw
+	if (how_many <= 0 || LAZYLEN(throw_directions) <= 0 || !head)
+		return
+
+	var/obj/item/clothing/head/Hat = head
+
+	if (!istype(Hat))
+		return
+
+	if (LAZYLEN(Hat.stacked_hats) <= 0)
+		return
+
+	if (how_many > LAZYLEN(Hat.stacked_hats))
+		how_many = LAZYLEN(Hat.stacked_hats)
+
+	while (how_many > 0)
+		how_many -= 1
+		var/obj/item/clothing/head/J = pop(Hat.stacked_hats)
+
+		if (istype(J))
+			J.forceMove(loc)
+
+			// Taken from the knock_out_teeth() proc because we want similar behaviour
+			var/turf/target = get_turf(loc)
+			var/range = rand(2, J.throw_range)
+
+			for (var/i = 1; i < range; i++)
+				var/turf/new_turf = get_step(target, pick(throw_directions))
+				target = new_turf
+				if (new_turf.density)
+					break
+
+			J.throw_at(target, J.throw_range, J.throw_speed)
+
+	Hat.update_overlays()
+	Hat.update_name()
+	update_inv_head()

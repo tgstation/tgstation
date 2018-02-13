@@ -110,7 +110,7 @@
 
 			// In case it's on their head
 			if (istype(user, /mob/living/carbon))
-				var /mob/living/carbon/C = user
+				var/mob/living/carbon/C = user
 				C.update_inv_head()
 	else
 		return ..()

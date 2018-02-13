@@ -171,7 +171,7 @@
 		var/mutable_appearance/hm = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		
 		if (istype(head, /obj/item/clothing/head))
-			var/obj.item/clothing/head/H = head
+			var/obj/item/clothing/head/H = head
 			if (LAZYLEN(H.stacked_hats) > 0)
 				var/I = 1
 				for (var/obj/item/clothing/head/J in H.stacked_hats)

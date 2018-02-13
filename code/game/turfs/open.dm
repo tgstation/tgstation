@@ -214,6 +214,13 @@
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
+		// Hippie Start - Throw some hats if we slipped
+		if (prob(33))
+			var/list/L = list()
+			LAZYADD(L, C.dir)
+			C.throw_hats(1 + rand(1, 3), L)
+		// Hippie End
+
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
 			C.Knockdown(knockdown_amount)

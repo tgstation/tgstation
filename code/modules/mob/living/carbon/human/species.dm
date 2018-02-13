@@ -1330,6 +1330,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
+	// Hippie Start - If we're hit then throw off some hats
+	if (prob(25))
+		var/list/L = list()
+		LAZYADD(L, get_dir(user, H))
+		H.throw_hats(1 + rand(0, FLOOR(I.force / 5, 1)), L)
+	// Hippie End
+
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
