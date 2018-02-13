@@ -12,6 +12,7 @@
 	icon = 'icons/obj/machines/greytopia.dmi'
 	icon_state = "right"
 	anchored = TRUE
+	dir = 1
 
 /obj/machinery/scannerleft
 	name = "mysterious scanner"
@@ -19,6 +20,7 @@
 	icon = 'icons/obj/machines/greytopia.dmi'
 	icon_state = "left"
 	anchored = TRUE
+	dir = 1
 
 /obj/machinery/doorscanner
 	name = "mysterious scanner"
@@ -28,6 +30,7 @@
 	anchored = TRUE
 	var/obj/machinery/door/airlock/vault/scanner/gate
 	var/working = FALSE
+	dir = 1
 
 /obj/machinery/doorscanner/Initialize()
 	..()

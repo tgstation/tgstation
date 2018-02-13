@@ -376,8 +376,8 @@
 /area/greytopia)
 "U" = (
 /obj/machinery/scannerright{
-	step_x = -5;
-	pixel_x = -3
+	step_x = -6;
+	pixel_x = -4
 	},
 /turf/closed/wall/r_wall,
 /area/greytopia)
