@@ -848,8 +848,8 @@
 		being_used = FALSE
 		return
 
-	M.visible_message("<span class='notice'>[M] has a new name, [new_name].</span>", "<span class='notice'>Your old name of [M.real_name] fades away, and your new name [new_name] anchors itself in your mind.</span>")
-	message_admins("[key_name_admin(M)] used [src] to rename themselves from <span class='name'>[M.real_name]</span> to <span class='name'>[new_name]</span>.")
+	M.visible_message("<span class='notice'><span class='name'>[M]</span> has a new name, <span class='name'>[new_name]</span>.</span>", "<span class='notice'>Your old name of <span class='name'>[M.real_name]</span> fades away, and your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
+	message_admins("[ADMIN_LOOKUPFLW(M)] used [src] to rename themselves from <span class='name'>[M.real_name]</span> to <span class='name'>[new_name]</span>.")
 
 
 	// pass null as first arg to not update records or ID/PDA
