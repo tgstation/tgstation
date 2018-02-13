@@ -50,7 +50,7 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
-	
+
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
@@ -84,7 +84,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -140,6 +140,8 @@
 	if(holder)
 		msg = emoji_parse(msg)
 
+	msg = "<span class='emoji_enabled'>[msg]</span>"
+
 	var/keywordparsedmsg = keywords_lookup(msg)
 
 	if(irc)
@@ -149,6 +151,7 @@
 		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
+
 			if(holder)	//both are admins
 				to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 1)]</b>: [keywordparsedmsg]</font>")
 				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>")

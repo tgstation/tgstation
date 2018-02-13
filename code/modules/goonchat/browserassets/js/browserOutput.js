@@ -70,6 +70,9 @@ var opts = {
 
 	'messageCombining': true,
 
+	// Emoji toggle
+	'enableEmoji': true
+
 };
 
 function clamp(val, min, max) {
@@ -106,6 +109,32 @@ function linkify(text) {
 			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
 		}
 	});
+}
+
+function emojiparse(el) {
+
+	if ((typeof UNICODE_9_EMOJI === 'undefined') || (typeof twemoji === 'undefined')) {
+		return; //something didn't load right, probably IE8
+	}
+
+	var $el = $(el);
+
+	var $emojiZone = $el.find(".emoji_enabled");
+
+	if ($emojiZone.length) {
+		$emojiZone.each(function () {
+			var html = $(this).html();
+			html = html.replace(/\:(.*?)\:/g, function (match, p1, offset, s) {
+				var unicode_entity = UNICODE_9_EMOJI[p1];
+				if (unicode_entity) {
+					return unicode_entity;
+				}
+				return match;
+			});
+			html = $.parseHTML(twemoji.parse(html, {size: "svg", ext: ".svg"}));
+			$(this).html(html);
+		});
+	}
 }
 
 function byondDecode(message) {
@@ -198,7 +227,11 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	message = byondDecode(message)
+	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
+	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
+	// Marvelous.
+	message = message.replace(/\+/g, "%20");
+	message = decoder(message);
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -338,6 +371,10 @@ function output(message, flag) {
 
 		$last_message = trimmed_message;
 		entry.innerHTML = trimmed_message;
+		// emoji!
+		if (opts.enableEmoji) {
+			emojiparse(entry);
+		}
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
 		//Actually do the snap
@@ -605,6 +642,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
+		'senableEmoji' : getCookie('enableemoji')
 	};
 
 	if (savedConfig.sfontSize) {
@@ -659,7 +697,14 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-
+	if (savedConfig.senableEmoji) {
+		if (savedConfig.senableEmoji == 'true') {
+			opts.enableEmoji = true;
+		} else {
+			opts.enableEmoji = false;
+		}
+		internalOutput('<span class="internal boldnshit">Loaded emoji setting of: '+(opts.enableEmoji ? 'enabled' : 'disabled')+'</span>', 'internal');
+	}
 
 	(function() {
 		var dataCookie = getCookie('connData');
@@ -887,6 +932,16 @@ $(function() {
 			opts.pingDisabled = true;
 		}
 		setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
+	});
+
+	$('#toggleEmojis').click(function(e) {
+		if (opts.enableEmoji) {
+			opts.enableEmoji = false;
+		} else {
+			opts.enableEmoji = true;
+		}
+		setCookie('enableemoji', (opts.enableEmoji ? 'true' : 'false'), 365);
+		internalOutput('<span class="internal boldnshit">Unicode Emojis are now : '+(opts.enableEmoji ? 'enabled' : 'disabled')+'</span>', 'internal');
 	});
 
 	$('#saveLog').click(function(e) {
