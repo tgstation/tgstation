@@ -649,10 +649,7 @@
 
 
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)//TODO: Look at this as well.
-		/*var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			add_stings_to_statpanel(changeling.purchasedpowers)*/
+		add_spells_to_statpanel(mind.spell_list)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -665,13 +662,6 @@
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
-
-/*/mob/proc/add_stings_to_statpanel(list/stings)//TODO: fix this.
-as far as i can tell Grant() should take care of all ling stuff in this file.
-
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)*/
 
 // facing verbs
 /mob/proc/canface()

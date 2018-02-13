@@ -104,7 +104,7 @@
 		reset_properties()
 		for(var/datum/action/changeling/p in purchasedpowers)
 			purchasedpowers -= p
-			p.Remove(owner.current)//Remove() called. TODO: Maybe delete the button here
+			p.Remove(owner.current)//Remove() called
 
 	//MOVE THIS
 	if(owner.current.hud_used)
@@ -129,7 +129,7 @@
 	return FALSE
 
 
-/datum/antagonist/changeling/proc/purchase_power(sting_name)//TODO: name probably shouldnt be used. test first, but you could make it rely on stats_id, remember to change this where this proc is called in cellular_emporium.dm
+/datum/antagonist/changeling/proc/purchase_power(sting_name)
 	var/datum/action/changeling/thepower = null
 
 	for(var/path in all_powers)
