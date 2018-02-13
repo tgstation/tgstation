@@ -173,8 +173,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 #undef METEOR_MEDAL
 
-/obj/effect/meteor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pickaxe))
+/obj/effect/meteor/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MINING)
 		make_debris()
 		qdel(src)
 	else
