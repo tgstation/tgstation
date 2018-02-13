@@ -46058,7 +46058,7 @@
 /area/hydroponics)
 "bSW" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/hydroponics)
 "bSX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
