@@ -1,25 +1,77 @@
-// Here there are processes designed to work with the Cyrillic alphabet.
-// In particular, most of the code that fixes the "Я" is right there.
+// Тут лежат процессы, предназначенные для работы с кириллицей.
+// В частности, большая часть кода, фиксящего "я", находится именно тут.
+// Документация тоже туточки. Читаем и мотаем на ус.
+
+/*
+Суть фикса "я":
+
+Эта ублюдочная буква имеет код символа 255, а он зарезервирован в BYOND для своих ублюдочных целей.
+В частности, "я" (0xFF) используется как первый байт "макросов" \proper, \improper, \red, \green и подобных им.
+Да, BYOND юзает свою собственную двухбайтовую кодировку в качестве надстройки над ASCII. Браво макакам-разработчикам!
+
+Чтобы "я" отображалась нормально, не исчезала и не пыталась красить цвет в зелёный, необходимо заменять её HTML-кодом символа.
+Однако этот процесс ломает "макросы" бьенда. Обычно они не отображаются, но после замены "я" на код они вылезают в виде "я~" или "y~", где "~" - хуита.
+Поэтому самые частые макросы, \proper, \improper и \t, мы тоже выпилим.
 
 
+Буква "я" должна заменяться, либо на входе, либо на выходе, процессами:
+  sanitize_russian() - заменяет "я" и срезает макросы.
+  rhtml_encode() - заменяет "я", срезает макросы и эскейпит HTML вшитыми средствами бьенда. Полезно на большинстве входов.
 
+Замена происходит на "&#x044f;" - HTML код "я", стандарт Unicode.
+Этот стандарт юзается HTML-окошками, на которых держатся почти все интерфейсы.
+
+По дефолту в фиксе "я" эти процессы вставляются в stripped_input(), stripped_multiline_input() и reject_bad_text().
+Это покрывает собой почти все входы, используемые игроками.
+
+Ещё в reject_bad_text() закомментирована строчка "//if(127 to 255) return", которая заставляет реджектор слать кириллицу лесом.
+
+
+Есть ещё один нужный процесс:
+  russian_html2text(msg) - заменяет "&#x044f;" на "&#255;", стандарт CP1251.
+
+Нужен он потому, что чат и не-HTML часть интерфейсов бьенда принимает только кодировку системы, а она у нас CP1251.
+По дефолту используется в to_chat() и везде, где нужно вывести русский текст в бьендоокна вроде input().
+Ещё Win-1251 используется в "name" объектов, но кириллица в "name" в любом случае вызывает дохуя проблем. Видите такое говно - смело выпиливайие.
+*/
+
+/*
+Суть фикса TG UI:
+
+Все динамические данные попадают в TG UI в виде JSON-объектов. Объекты берутся из бьендопроцесса json_encode().
+Вот только этот процесс считает, что на входе всегда CP1292, и переубедить его нельзя. Как результат, русские буквы кодируются в абракадабру.
+К тому же "буква 255" и тут выходит боком: бьенд режет её и символ за ней, принимая их за макрос.
+
+JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символы имеют вид "\u0000", где 0000 - код символа.
+
+Процесс r_json_encode() - обёртка над json_encode().
+Перед энкодом он заменяет "я" на код. После энкода заменяет коды всех "кривых" символов на правильные руские, и TG UI начинают работать как надо.
+*/
+
+
+// Срезает бьендовые "макросы" с текста.
 /proc/strip_macros(t)
 	t = replacetext(t, "\proper", "")
 	t = replacetext(t, "\improper", "")
 	return t
 
+// Меняет "я" на код, попутно срезая макросы.
 /proc/sanitize_russian(t)
 	t = strip_macros(t)
 	return replacetext(t, "я", "&#x044f;")
 
+// Меняет стандарт "я" с Unicode на CP1251
 /proc/russian_html2text(t)
 	return replacetext(t, "&#x044f;", "&#255;")
 
+// Меняет стандарт "я" с CP1251 на Unicode
 /proc/russian_text2html(t)
 	return replacetext(t, "&#255;", "&#x044f;")
 
+// Срезает макросы, меняет "я" на код И эскейпит HTML-символы.
+// Никогда не пропускайте текст через эту функцию больше чем один раз, на выходе будет каша.
 /proc/rhtml_encode(t)
-	t = rhtml_decode(t)
+	t = rhtml_decode(t) //idk maybe it'll do
 	t = strip_macros(t)
 	var/list/c = splittext(t, "я")
 	if(c.len == 1)
@@ -33,10 +85,12 @@
 		out += html_encode(text)
 	return out
 
+// По идее меняет коды символов обратно на "я" и меняет HTML-эскейп обратно на символы.
+// На деле не используется, ибо зачем?
 /proc/rhtml_decode(var/t)
 	t = replacetext(t, "&#x044f;", "я")
 	t = replacetext(t, "&#255;", "я")
-	t = html_decode(t)
+	t = html_decode(t) //Подозреваю, именно это имелось ввиду, а не rhtml_decode(t)
 	return t
 
 
@@ -133,6 +187,7 @@ GLOBAL_LIST_INIT(rus_unicode_conversion,list(
 
 GLOBAL_LIST_INIT(rus_unicode_fix,null)
 
+// Кодирует все русские символы в HTML-коды Unicode, попутно срезая макросы.
 /proc/r_text2unicode(text)
 	text = strip_macros(text)
 	text = russian_text2html(text)
@@ -151,6 +206,7 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 		output += "&#[text2ascii(t,i)];"
 	return output
 
+// Рекуривно заменяет "я" на код в листе
 /proc/sanitize_russian_list(list)
 	for(var/i in list)
 		if(islist(i))
@@ -163,11 +219,12 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 				sanitize_russian_list(list[i])
 
 
+// Фиксит русский Unicode в сгенерированных json_encode() JSON.
 /proc/r_json_encode(json_data)
-	if(!GLOB.rus_unicode_fix)
+	if(!GLOB.rus_unicode_fix) // Генерируем табилцу замены
 		GLOB.rus_unicode_fix = list()
 		for(var/s in GLOB.rus_unicode_conversion)
-			if(s == "я")
+			if(s == "я") // Буква 255 ломается юникодером, с ней разбираемся отдельно.
 				GLOB.rus_unicode_fix["&#x044f;"] = "\\u[GLOB.rus_unicode_conversion[s]]"
 				continue
 
@@ -179,4 +236,5 @@ GLOBAL_LIST_INIT(rus_unicode_fix,null)
 	for(var/s in GLOB.rus_unicode_fix)
 		json = replacetext(json, s, GLOB.rus_unicode_fix[s])
 
+>>>>>>> master
 	return json
