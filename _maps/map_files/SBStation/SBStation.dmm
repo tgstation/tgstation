@@ -941,10 +941,6 @@
 "abT" = (
 /turf/closed/wall,
 /area/security/courtroom)
-"abU" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "abV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white{
@@ -2027,10 +2023,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
-"aeL" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "aeP" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset,
@@ -2053,7 +2045,7 @@
 	height = 9;
 	id = "arrivals_stationary";
 	name = "arrivals bay";
-	roundstart_template = /datum/map_template/shuttle/arrival/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -2511,6 +2503,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/arrival{
 	dir = 8;
 	icon_state = "arrival"
@@ -3373,6 +3368,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ain" = (
@@ -3783,10 +3781,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
-"ajp" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "ajq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -17056,13 +17050,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"aOs" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/shieldgen,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "aOt" = (
 /obj/structure/cable/white{
 	icon_state = "1-8"
@@ -17089,7 +17076,7 @@
 	height = 4;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/sb;
+	roundstart_template = !INVALID_VALUE!;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -17320,10 +17307,6 @@
 	dir = 9
 	},
 /turf/closed/wall,
-/area/maintenance/starboard/aft)
-"aPh" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aPk" = (
 /obj/item/device/radio/intercom{
@@ -19129,10 +19112,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"aTh" = (
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "aTi" = (
@@ -22965,6 +22944,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "bbU" = (
@@ -23363,7 +23343,9 @@
 "bcW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/holopad,
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "bcZ" = (
@@ -24387,6 +24369,10 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"bQB" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
 "cmS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -24394,6 +24380,41 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"fxe" = (
+/obj/machinery/light/small,
+/turf/open/space/basic,
+/area/space)
+"gyi" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/hallway/primary/fore)
+"iir" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
+"iIq" = (
+/obj/machinery/shieldgen,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"kbz" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8;
+	light_color = "#d1ffee"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
+"lIJ" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "mUi" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -24401,6 +24422,19 @@
 	},
 /turf/open/space/basic,
 /area/engine/engineering)
+"ppl" = (
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"qqm" = (
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
 "qvH" = (
 /obj/structure/sign/plaques/sciencestation{
 	dir = 4;
@@ -24417,6 +24451,39 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
+"tBO" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8;
+	light_color = "#d1ffee"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"tCQ" = (
+/obj/machinery/light/small{
+	dir = 1;
+	light_color = "#ffc1c1"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"vxF" = (
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
+"vXj" = (
+/obj/machinery/light/small{
+	dir = 4;
+	light_color = "#fff4bc"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"wxS" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8;
+	light_color = "#d1ffee"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 
 (1,1,1) = {"
 aaa
@@ -45874,7 +45941,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+beQ
 aaa
 aaa
 aaa
@@ -46124,15 +46191,15 @@ aaa
 aaa
 aaa
 aaa
+aAn
+aBA
+axJ
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aAn
+aBA
+axJ
 aaa
 aaa
 aaa
@@ -46381,15 +46448,15 @@ aaa
 aaa
 aaa
 aaa
+axJ
+aBB
+axJ
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-beQ
-aaa
+axJ
+aBB
+axJ
 aaa
 aaa
 aaa
@@ -46638,14 +46705,14 @@ aaa
 aaa
 aaa
 aaa
-aAn
-aBA
+axJ
+qqm
 axJ
 aaa
 aaa
 aaa
-aAn
-aBA
+axJ
+bQB
 axJ
 aaa
 aaa
@@ -46896,13 +46963,13 @@ are
 axI
 axJ
 axJ
-aBB
+vxF
 axJ
 axJ
 aEY
 axJ
 axJ
-aBB
+vxF
 axJ
 axJ
 axI
@@ -51775,7 +51842,7 @@ aqg
 aps
 avh
 avk
-arD
+ppl
 axU
 azd
 aAy
@@ -52010,8 +52077,8 @@ aaa
 aaa
 aaa
 aaa
-aad
-aad
+aiM
+aiM
 akd
 akQ
 akd
@@ -52266,9 +52333,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
+fxe
 aiM
-aiM
+tBO
 aiM
 akR
 alE
@@ -52315,7 +52382,7 @@ aae
 aae
 aae
 aae
-aae
+aaa
 aaa
 aaa
 aaa
@@ -52525,7 +52592,7 @@ aaa
 aaa
 aaa
 aiN
-ajp
+akR
 aiN
 akR
 akR
@@ -52572,7 +52639,7 @@ aad
 aad
 aad
 aad
-aad
+aaa
 aaa
 aaa
 aaa
@@ -52782,7 +52849,7 @@ aaa
 aaa
 aaa
 aiM
-aiM
+akR
 akf
 akS
 alF
@@ -52826,10 +52893,10 @@ aNE
 aaa
 aad
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -53038,8 +53105,8 @@ aaa
 aaa
 aaa
 aaa
-aad
-aaa
+aiM
+aiM
 aiM
 akT
 akR
@@ -53083,10 +53150,10 @@ aNE
 aaa
 aad
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -53340,10 +53407,10 @@ aNE
 aaa
 aad
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -53597,10 +53664,10 @@ aNE
 aaa
 aad
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -53854,10 +53921,10 @@ aQc
 aPs
 aPs
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -54086,7 +54153,7 @@ aps
 atD
 aps
 aps
-arD
+ave
 arD
 arD
 axV
@@ -54111,10 +54178,10 @@ aQd
 aQL
 aPs
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -54368,10 +54435,10 @@ aQe
 aQM
 aPs
 aaa
-aaa
 aad
 aaa
 aad
+aaa
 aaa
 aaa
 aaa
@@ -54565,8 +54632,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+abA
+abA
 abA
 acJ
 acI
@@ -54625,13 +54692,13 @@ aQf
 aQN
 aPs
 aaa
-aaa
 aac
 aac
 aac
-aaa
-aaa
-aaa
+aad
+aad
+aad
+aad
 aad
 aad
 aac
@@ -54823,7 +54890,7 @@ aad
 aac
 ber
 abA
-abA
+wxS
 abA
 acI
 acI
@@ -54882,10 +54949,10 @@ aQe
 aQM
 aPs
 aaa
-aaa
 bex
 aac
 aac
+aaa
 aaa
 aaa
 aaa
@@ -55080,7 +55147,7 @@ aaa
 aac
 aac
 abB
-abU
+acI
 beD
 acI
 adi
@@ -55138,10 +55205,10 @@ aPp
 aQe
 aQM
 aPs
-aaa
-aaa
+aPs
 aPs
 beN
+aPs
 aPs
 aaa
 aaa
@@ -55337,7 +55404,7 @@ aad
 aac
 aac
 abA
-abA
+acI
 acp
 acK
 adj
@@ -55394,11 +55461,11 @@ aOL
 aPq
 aQg
 aQM
+aSi
 aPs
-aaa
-aaa
-aPs
-aTh
+tCQ
+aRr
+aRr
 aPs
 aaa
 aaa
@@ -55593,8 +55660,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
+abA
+abA
 abA
 acL
 acI
@@ -55651,11 +55718,11 @@ aOM
 aPr
 aQe
 aQM
-aPs
-aPs
+aRt
 aPs
 aSI
 aTg
+aPs
 aRu
 aUh
 aUh
@@ -55908,11 +55975,11 @@ aMe
 aLu
 aQe
 aQM
-aPs
+aRr
 aRN
-aSi
 aRr
 aRr
+lIJ
 aRu
 aSP
 aUE
@@ -56679,7 +56746,7 @@ arD
 aPu
 aQj
 aQP
-aRt
+aRr
 aRO
 bew
 aSJ
@@ -57408,7 +57475,7 @@ aep
 aep
 aep
 ahM
-ain
+iir
 aiS
 ajD
 akp
@@ -60747,7 +60814,7 @@ afw
 afY
 agq
 agO
-ahp
+gyi
 aga
 aga
 aga
@@ -65109,8 +65176,8 @@ aaa
 aaa
 aaa
 aad
-aad
-aad
+aen
+aen
 aen
 aen
 agg
@@ -65367,7 +65434,7 @@ aad
 aac
 ber
 aen
-aen
+kbz
 aen
 afd
 agg
@@ -65624,7 +65691,7 @@ aad
 aac
 aac
 aeo
-aeL
+afd
 beE
 afd
 agg
@@ -65881,7 +65948,7 @@ aaa
 aac
 aac
 aen
-aen
+afd
 afe
 afG
 agg
@@ -66137,8 +66204,8 @@ aaa
 aaa
 aaa
 aaa
-aad
-aad
+aen
+aen
 aen
 aen
 agh
@@ -69267,7 +69334,7 @@ avc
 avc
 aMF
 aNx
-aOs
+aMJ
 aMM
 aaa
 aae
@@ -69781,7 +69848,7 @@ aLd
 avc
 aMH
 aNx
-aMM
+iIq
 aMM
 aaa
 aae
@@ -70039,8 +70106,8 @@ avc
 aMI
 aNx
 aMM
-aaa
-aaa
+aMM
+aMM
 aae
 aaa
 aaa
@@ -70296,7 +70363,7 @@ avc
 aMJ
 aNx
 aOu
-aMM
+aNx
 aMM
 aae
 aad
@@ -70553,11 +70620,11 @@ aLR
 aMK
 aNx
 aOv
-aPh
+aNx
 beM
-aaa
-aaa
-aaa
+aac
+aac
+aac
 aad
 aad
 aaa
@@ -70810,7 +70877,7 @@ avc
 aMJ
 aNx
 aMM
-aMM
+vXj
 aMM
 bev
 aac
@@ -71067,8 +71134,8 @@ aLS
 aML
 aNz
 aMM
-aad
-aad
+aMM
+aMM
 aad
 aad
 aad
