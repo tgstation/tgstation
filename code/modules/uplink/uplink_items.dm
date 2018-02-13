@@ -1,45 +1,31 @@
-GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
-
-/proc/initialize_global_uplink_items()
-	GLOB.uplink_items = list()
-	for(var/item in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/I = new item()
-		if(!I.item)
-			continue
-		if(!GLOB.uplink_items[I.category])
-			GLOB.uplink_items[I.category] = list()
-		GLOB.uplink_items[I.category][I.name] = I
+GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /proc/get_uplink_items(var/datum/game_mode/gamemode = null, allow_sales = TRUE)
-	if(!GLOB.uplink_items.len)
-		initialize_global_uplink_items()
-
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
 
-	for(var/category in GLOB.uplink_items)
-		for(var/item in GLOB.uplink_items[category])
-			var/datum/uplink_item/I = GLOB.uplink_items[category][item]
-			if(!istype(I))
+	for(var/path in GLOB.uplink_items)
+		var/datum/uplink_item/I = new path
+		if(!I.item)
+			continue
+		if(I.include_modes.len)
+			if(!gamemode && SSticker && SSticker.mode && !(SSticker.mode.type in I.include_modes))
 				continue
-			if(I.include_modes.len)
-				if(!gamemode && SSticker && SSticker.mode && !(SSticker.mode.type in I.include_modes))
-					continue
-				if(gamemode && !(gamemode in I.include_modes))
-					continue
-			if(I.exclude_modes.len)
-				if(!gamemode && SSticker && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
-					continue
-				if(gamemode && (gamemode in I.exclude_modes))
-					continue
-			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
+			if(gamemode && !(gamemode in I.include_modes))
 				continue
+		if(I.exclude_modes.len)
+			if(!gamemode && SSticker && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
+				continue
+			if(gamemode && (gamemode in I.exclude_modes))
+				continue
+		if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
+			continue
 
-			if(!filtered_uplink_items[category])
-				filtered_uplink_items[category] = list()
-			filtered_uplink_items[category][item] = new I.type()
-			if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
-				sale_items += I
+		if(!filtered_uplink_items[I.category])
+			filtered_uplink_items[I.category] = list()
+		filtered_uplink_items[I.category][I.name] = I
+		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
+			sale_items += I
 	if(allow_sales)
 		for(var/i in 1 to 3)
 			var/datum/uplink_item/I = pick_n_take(sale_items)
@@ -710,7 +696,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/storage/box/syndie_kit/chameleon
-	cost = 2 
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
