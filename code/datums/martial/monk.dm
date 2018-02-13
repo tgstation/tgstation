@@ -41,6 +41,19 @@
 
 /datum/martial_art/monk/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
+		if(H.client && H.client.prefs.custom_names["human"])
+			H.fully_replace_character_name(H.real_name, H.client.prefs.custom_names["human"])
+		else
+			H.fully_replace_character_name(H.real_name, random_unique_name(H.gender))
+		H.set_species(/datum/species/human)
+		if(H.dna.features["tail_human"] == "Cat")
+			H.dna.features["tail_human"] -= "Cat"
+			H.dna.species.mutant_bodyparts -= "tail_human"
+		if(H.dna.features["ears"] == "Cat")
+			H.dna.features["ears"] -= "Cat"
+			H.dna.species.mutant_bodyparts -= "ears"
+		H.dna.species.no_equip += slot_head
+		H.update_body()
 		monk_rest.Grant(H)
 		flurry_toggle.Grant(H)
 		flurry_toggle.martial = src
