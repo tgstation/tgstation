@@ -12,13 +12,15 @@
 	var/list/obj/machinery/am_shielding/linked_shielding
 	var/list/obj/machinery/am_shielding/linked_cores
 	var/obj/item/am_containment/fueljar
-	var/update_shield_icons = 0
+	var/update_shield_icons = FALSE
 	var/stability = 100
-	var/exploding = 0
+	var/exploding = FALSE
 
-	var/active = 0//On or not
+	var/icon_mod = "on" // on, critical, or fuck
+
+	var/active = FALSE//On or not
 	var/fuel_injection = 2//How much fuel to inject
-	var/shield_icon_delay = 0//delays resetting for a short time
+	var/shield_icon_delay = FALSE//delays resetting for a short time
 	var/reported_core_efficiency = 0
 
 	var/power_cycle = 0
@@ -72,14 +74,14 @@
 
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(src, 'sound/effects/bang.ogg', 25, 1)
 	var/core_power = reported_core_efficiency//Effectively how much fuel we can safely deal with
 	if(core_power <= 0)
-		return 0//Something is wrong
+		return FALSE//Something is wrong
 	var/core_damage = 0
 	var/fuel = fueljar.usefuel(fuel_injection)
 
-	stored_power = (fuel/core_power)*fuel*200000
+	stored_power = (fuel/core_power)*fuel*20000 // Was 200000, was too much.
 	//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 	if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
 		if(prob(50))
@@ -93,7 +95,8 @@
 		for(var/obj/machinery/am_shielding/AMS in linked_cores)
 			AMS.stability -= core_damage
 			AMS.check_stability(1)
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	update_icon()
 	return
 
 
@@ -108,14 +111,16 @@
 				toggle_power()
 			stability -= rand(10,20)
 	..()
-	return 0
+	return FALSE
 
 
-/obj/machinery/power/am_control_unit/blob_act()
+/obj/machinery/power/am_control_unit/blob_act(obj/structure/blob/B)
 	stability -= 20
-	if(prob(100-stability))//Might infect the rest of the machine
+	if(prob(100-stability))//Might infect the rest of the machine! Watch out!
+		for(var/obj/machinery/am_shielding/AMS in linked_cores)
+			AMS.blob_act(B)
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
-			AMS.blob_act()
+			AMS.blob_act(B)
 		qdel(src)
 		return
 	check_stability()
@@ -146,14 +151,20 @@
 	else if(!stat && anchored)
 		use_power = IDLE_POWER_USE
 
-	return
+	update_icon()
 
 
 /obj/machinery/power/am_control_unit/update_icon()
+	switch(stored_core_stability)
+		if(0 to 24)
+			icon_mod="fuck"
+		if(25 to 49)
+			icon_mod="critical"
+		if(50 to INFINITY)
+			icon_mod="on"
 	if(active)
-		icon_state = "control_on"
+		icon_state = "control_[icon_mod]"
 	else icon_state = "control"
-	//No other icons for it atm
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
@@ -213,24 +224,24 @@
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	if(!anchored)
-		return 0
+		return FALSE
 	if(!AMS_linking && !AMS.link_control(src))
-		return 0
+		return FALSE
 	linked_shielding.Add(AMS)
-	update_shield_icons = 1
-	return 1
+	update_shield_icons = TRUE
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS))
-		return 0
+		return FALSE
 	linked_shielding.Remove(AMS)
 	update_shield_icons = 2
 	if(active)
 		toggle_power()
-	return 1
+	return TRUE
 
 
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
@@ -254,7 +265,7 @@
 /obj/machinery/power/am_control_unit/proc/check_shield_icons()//Forces icon_update for all shields
 	if(shield_icon_delay)
 		return
-	shield_icon_delay = 1
+	shield_icon_delay = TRUE
 	if(update_shield_icons == 2)//2 means to clear everything and rebuild
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			if(AMS.processing)
@@ -268,92 +279,107 @@
 	addtimer(CALLBACK(src, .proc/reset_shield_icon_delay), 20)
 
 /obj/machinery/power/am_control_unit/proc/reset_shield_icon_delay()
-	shield_icon_delay = 0
+	shield_icon_delay = FALSE
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
-	if(stored_core_stability_delay || linked_cores.len <= 0)
+	if(linked_cores.len <=0)
 		return
-	stored_core_stability_delay = 1
-	stored_core_stability = 0
+	stored_core_stability = FALSE
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	addtimer(CALLBACK(src, .proc/reset_stored_core_stability_delay), 40)
-
-/obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
-	stored_core_stability_delay = 0
+	update_icon()
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!isAI(user))
+		if(!issilicon(user))
 			user.unset_machine()
-			user << browse(null, "window=AMcontrol")
 			return
 	user.set_machine(src)
-
-	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR>"
-	dat += "<A href='?src=[REF(src)];refresh=1'>Refresh</A><BR>"
-	dat += "<A href='?src=[REF(src)];refreshicons=1'>Force Shielding Update</A><BR><BR>"
-	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=[REF(src)];togglestatus=1'>Toggle Status</A><BR>"
-
-	dat += "Stability: [stability]%<BR>"
-	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
-	dat += "Cores: [linked_cores.len]<BR><BR>"
-	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=[REF(src)];refreshstability=1'>(update)</A><BR>"
-	dat += "Last Produced: [DisplayPower(stored_power)]<BR>"
-
-	dat += "Fuel: "
-	if(!fueljar)
-		dat += "<BR>No fuel receptacle detected."
-	else
-		dat += "<A href='?src=[REF(src)];ejectjar=1'>Eject</A><BR>"
-		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
-
-		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=[REF(src)];strengthdown=1'>--</A>|<A href='?src=[REF(src)];strengthup=1'>++</A><BR><BR>"
-
-
-	user << browse(dat, "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
-	return
+	ShowInterface(user)
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
 	if(..())
-		return
+		return TRUE
 
 	if(href_list["close"])
-		usr << browse(null, "window=AMcontrol")
+		if(usr.machine == src)
+			usr.unset_machine()
+		return TRUE
+
+	//Ignore input if we are broken or guy is not touching us, AI can control from a ways away
+	if(stat & (BROKEN|NOPOWER))
 		usr.unset_machine()
-		return
+		usr << browse(null, "window=AMcontrol")
+		return TRUE
 
-	if(href_list["togglestatus"])
-		toggle_power()
-
-	if(href_list["refreshicons"])
-		update_shield_icons = 1
-
-	if(href_list["ejectjar"])
-		if(fueljar)
-			fueljar.forceMove(drop_location())
+	switch(href_list["task"])
+		if("close")
+			usr << browse(null, "window=AMcontrol")
+			usr.unset_machine()
+		if("togglestatus")
+			toggle_power()
+			message_admins("AME toggled [active?"on":"off"] by [usr.real_name] ([key_name_admin(usr)]) at ([COORD(loc)] - [ADMIN_JMP(loc)]",0,1)
+		if("eject")
+			if(fueljar)
+				fueljar.forceMove(drop_location())
 			fueljar = null
-			//fueljar.control_unit = null currently it does not care where it is
-			//update_icon() when we have the icon for it
-
-	if(href_list["strengthup"])
-		fuel_injection++
-
-	if(href_list["strengthdown"])
-		fuel_injection--
-		if(fuel_injection < 0)
-			fuel_injection = 0
-
-	if(href_list["refreshstability"])
-		check_core_stability()
+		if("set_strength")
+			var/newval = input("Enter new injection strength") as num|null
+			if(!newval)
+				return
+			fuel_injection = max(1, newval)
+			message_admins("AME injection strength set to [fuel_injection] by [usr.real_name] ([key_name_admin(usr)]) at ([COORD(loc)] - [ADMIN_JMP(loc)])",FALSE,TRUE)
+		if("refreshicons")
+			check_core_stability()
 
 	updateDialog()
 	return
+
+/obj/machinery/power/am_control_unit/proc/ShowInterface(mob/user)
+	if(!user || !(in_range(src, user) || issilicon(user)))
+		return
+	var/datum/browser/popup = new(user, "amenew", "Antimatter Control Unit", 500, (issilicon(user) ? 465 : 390)) // Set up the popup browser window
+	var/list/dat = list()
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Status:</div>"
+	if(active)
+		dat += "<div class='statusValue average'>Injecting</div>"
+	else
+		dat += "<div class='statusValue good'>Standby</div>"
+	dat += "    <a href='?src=[REF(src)];task=togglestatus;'>Toggle Status</a>"
+	if(!fueljar)
+		dat += "<div class='notice'>No fuel jar detected.</div>"
+	else
+		dat += "<div class='statusDisplay'>"
+		dat += "<div class='line'>"
+		dat += "<div class='statusLabel'>Fuel:</div> "
+		dat += "<div class='statusValue'>[fueljar.fuel]/[fueljar.fuel_max]</div>  "
+		dat += "<a href='?src=[REF(src)];task=eject;'>Eject</a></div>"
+		dat += "<div class='line'>"
+		dat += "<div class='statusLabel'>Injecting:</div> "
+		dat += "<div class='statusValue'><a href='?src=[REF(src)];task=set_strength;'>[fuel_injection]</a></div></div><div class='clearBoth'></div></div>"
+	dat += "<div class='statusDisplay'>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Stability:</div>"
+	dat += "<div class='statusValue'>[stability]%</div><div class='clearBoth'></div></div>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Shielding Count:</div>"
+	dat += "<div class='statusValue'>[linked_shielding.len]</div></div>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Cores:</div>"
+	dat += "<div class='statusValue'>[linked_cores.len]</div>"
+	dat += "<div style='float: right'><a href='?src=[REF(src)];task=refreshicons;'>Refresh Parts</a></div></div>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Current Efficiency:</div>"
+	dat += "<div class='statusValue'>[reported_core_efficiency]</div></div>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Average Efficiency:</div>"
+	dat += "<div class='statusValue'>[stability]</div></div>"
+	dat += "<div class='line'>"
+	dat += "<div class='statusLabel'>Last Produced:</div>"
+	dat += "<div class='statusValue'>[stored_power]</div></div><div class='clearBoth'></div></div>"
+
+	popup.set_content(dat.Join())
+	popup.open()
