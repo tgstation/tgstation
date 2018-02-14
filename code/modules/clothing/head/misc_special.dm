@@ -224,4 +224,4 @@
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
 	item_state = "foilhat"
-	armor = list(melee = 0, bullet = 0, laser = -5,energy = 0, bomb = 0, bio = 0, rad = -5, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
