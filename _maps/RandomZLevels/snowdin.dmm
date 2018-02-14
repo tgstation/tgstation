@@ -8909,7 +8909,7 @@
 	desc = "A turret built with substandard parts and run down further with age.";
 	icon_state = "syndie_off";
 	dir = 9;
-	faction = "pirate"
+	faction = list("pirate")
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/cave)
