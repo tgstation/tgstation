@@ -45,6 +45,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
+	can_be_held = "pug"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -121,10 +122,6 @@
 		return
 	..()
 	update_corgi_fluff()
-
-/mob/living/simple_animal/pet/dog/corgi/setup_mob_holder()
-	var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : "corgi"), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi')
-	return H
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(usr.stat)

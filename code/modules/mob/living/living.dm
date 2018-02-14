@@ -1061,7 +1061,6 @@
 		return H
 	..()
 
-
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
 		return FALSE
