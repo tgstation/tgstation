@@ -448,9 +448,9 @@
 /area/shuttle/pirate)
 "bg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
 	id_tag = "piratevault";
-	locked = 1;
 	name = "Vault"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -648,9 +648,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bF" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "pirateportexternal";
-	locked = 1
+	id_tag = "pirateportexternal"
 	},
 /obj/docking_port/mobile/pirate{
 	callTime = 100;
@@ -825,9 +825,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bW" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "piratestarboardexternal";
-	locked = 1
+	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -1700,10 +1700,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	heat_proof = 1;
 	id_tag = "pirateturbinebolt";
-	locked = 1;
 	name = "Turbine Access"
 	},
 /turf/open/floor/engine,

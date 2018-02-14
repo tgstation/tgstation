@@ -699,9 +699,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "closed";
-	locked = 1;
 	name = "Gateway";
 	req_access_txt = "150"
 	},
@@ -1023,11 +1022,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cr" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Dormitories"
 	},
 /obj/item/stack/rods,
@@ -1336,12 +1335,12 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cT" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	id_tag = "awaydorm4";
-	locked = 1;
 	name = "Dorm 1";
 	opacity = 0
 	},
@@ -1650,11 +1649,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "du" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
 	},
@@ -1810,11 +1809,11 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
 	},
@@ -2595,11 +2594,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Xenobiology Lab";
 	opacity = 0;
 	req_access_txt = "201"
@@ -3727,11 +3726,11 @@
 /area/awaymission/moonoutpost19/research)
 "hD" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Research Director's Office";
 	opacity = 0;
 	req_access_txt = "201";
@@ -6614,10 +6613,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nO" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
-	icon_state = "closed";
 	id_tag = "awaydorm3";
-	locked = 1;
 	name = "Dorm 3"
 	},
 /turf/open/floor/plasteel{

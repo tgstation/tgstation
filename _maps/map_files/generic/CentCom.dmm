@@ -6784,8 +6784,8 @@
 	},
 /area/centcom/ferry)
 "sH" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
-	locked = 1;
 	name = "Vault Door";
 	req_access_txt = "53"
 	},

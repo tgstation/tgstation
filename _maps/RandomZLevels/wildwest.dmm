@@ -138,9 +138,8 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/vault)
 "aF" = (
-/obj/machinery/door/airlock/vault{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vaultdoors)
 "aG" = (
@@ -153,9 +152,8 @@
 /turf/closed/mineral/gold,
 /area/awaymission/wildwest/mines)
 "aJ" = (
-/obj/machinery/door/airlock/vault{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aK" = (

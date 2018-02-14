@@ -10,10 +10,10 @@
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/virology{
 	frequency = 1449;
 	id_tag = "lavaland_syndie_virology_interior";
-	locked = 1;
 	name = "Virology Lab Interior Airlock";
 	req_access_txt = "150"
 	},
@@ -2857,9 +2857,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
 	id_tag = "syndie_lavaland_vault";
-	locked = 1;
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/vault{
@@ -5422,12 +5422,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "syndie_lavaland_incinerator_interior";
-	locked = 1;
 	name = "Turbine Interior Airlock";
 	req_access_txt = "150"
 	},
@@ -5900,12 +5900,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "syndie_lavaland_incinerator_exterior";
-	locked = 1;
 	name = "Turbine Exterior Airlock";
 	req_access_txt = "150"
 	},

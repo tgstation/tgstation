@@ -101,8 +101,6 @@
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
 	wires = new /datum/wires/airlock(src)
-	if (cyclelinkeddir)
-		cyclelinkairlock()
 	if(frequency)
 		set_frequency(frequency)
 
@@ -127,6 +125,8 @@
 
 /obj/machinery/door/airlock/LateInitialize()
 	. = ..()
+	if (cyclelinkeddir)
+		cyclelinkairlock()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)

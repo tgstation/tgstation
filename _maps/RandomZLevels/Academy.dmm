@@ -233,15 +233,13 @@
 /turf/open/space,
 /area/space/nearstation)
 "aQ" = (
-/obj/machinery/door/airlock/gold{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/gold,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aR" = (
-/obj/machinery/door/airlock/gold{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/gold,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -2021,9 +2019,8 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "gT" = (
-/obj/machinery/door/airlock/gold{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/gold,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},

@@ -1299,18 +1299,18 @@
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "dW" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage C";
 	req_access_txt = "36"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "dX" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage D";
 	req_access_txt = "36"
 	},
@@ -2490,18 +2490,18 @@
 	},
 /area/awaymission/research/interior/security)
 "hI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage A";
 	req_access_txt = "36"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hJ" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
-	locked = 1;
 	name = "Secure Storage B";
 	req_access_txt = "36"
 	},

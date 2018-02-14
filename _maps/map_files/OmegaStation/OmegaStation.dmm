@@ -622,8 +622,8 @@
 /area/asteroid/nearstation)
 "abk" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -647,8 +647,8 @@
 /area/bridge)
 "abl" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -691,8 +691,8 @@
 /area/bridge)
 "abq" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -707,8 +707,8 @@
 /area/bridge)
 "abr" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -4338,8 +4338,8 @@
 /area/maintenance/fore)
 "aiy" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -4361,8 +4361,8 @@
 /area/ai_monitored/nuke_storage)
 "aiA" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	locked = 1;
 	name = "AI Vault Chamber";
 	req_access_txt = "16"
 	},
@@ -4394,8 +4394,8 @@
 /area/ai_monitored/nuke_storage)
 "aiC" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command/glass{
-	cyclelinkeddir = 0;
 	name = "Bridge Access";
 	req_access_txt = "19"
 	},
@@ -22025,8 +22025,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command{
-	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
@@ -22876,8 +22876,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aSM" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command{
-	cyclelinkeddir = 2;
 	name = "Telecomms Server Room";
 	req_access = null;
 	req_access_txt = "61"
@@ -32465,8 +32465,10 @@
 /turf/open/space/basic,
 /area/space)
 "btk" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -32478,8 +32480,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "btl" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34817,8 +34821,8 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sML" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	locked = 1;
 	name = "MiniSat Chamber";
 	req_access_txt = "16"
 	},
@@ -35060,8 +35064,10 @@
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNk" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
 	name = "MiniSat External Access";
 	req_access = null;
 	req_access_txt = "65"
@@ -35214,8 +35220,10 @@
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNy" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
 	name = "MiniSat External Access";
 	req_access = null;
 	req_access_txt = "65"
