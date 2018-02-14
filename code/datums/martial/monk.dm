@@ -53,7 +53,6 @@
 			H.dna.features["ears"] -= "Cat"
 			H.dna.species.mutant_bodyparts -= "ears"
 		H.dna.species.no_equip += slot_head
-		H.update_body()
 		monk_rest.Grant(H)
 		flurry_toggle.Grant(H)
 		flurry_toggle.martial = src
@@ -64,7 +63,7 @@
 		to_chat(H, "<span class = 'danger'>You can't gain experience on yourself, dead humans, non humans, or braindead humans.</span>")
 		START_PROCESSING(SSfastprocess, src)
 		H.hair_style = "Short Hair"
-		H.facial_hair_style = "Shaved"
+		H.update_body()
 		H.update_hair()
 
 /datum/martial_art/monk/proc/flurry_penalty()
