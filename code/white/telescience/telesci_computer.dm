@@ -49,14 +49,14 @@
 	. = ..()
 	if(mapload)
 		for(var/i = 1; i <= starting_crystals; i++)
-			crystals += new /obj/item/ore/bluespace_crystal/artificial(null) // starting crystals
+			crystals += new /obj/item/stack/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/ore/bluespace_crystal))
+	if(istype(W, /obj/item/stack/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
@@ -92,9 +92,6 @@
 /obj/machinery/computer/telescience/interact(mob/user)
 	var/t
 	if(!telepad)
-		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
-		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
-	else
 		if(inserted_gps)
 			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
 			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
@@ -272,7 +269,7 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
+	if(z_co == ZTRAIT_CENTCOM || z_co < 1 || z_co > ZTRAIT_TRANSIT)
 		telefail()
 		temp_msg = "ERROR! Sector is outside known time and space!"
 		return

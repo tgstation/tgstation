@@ -102,16 +102,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/silver(location)
 
-/datum/chemical_reaction/bluespacesolidification
-	name = "Solid Bluespace"
-	id = "solidbluespace"
-	required_reagents = list("frostoil" = 5, "bluespace" = 45)
-	mob_react = 1
-
-/datum/chemical_reaction/bluespacesolidification/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/ore/bluespace_crystal(get_turf(holder.my_atom))
-
-
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"

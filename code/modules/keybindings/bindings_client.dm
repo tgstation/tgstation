@@ -7,7 +7,7 @@
 	_key = rkeyconvert(_key) //if it's cyrillic, returns english equivalent
 
 	keys_held[_key] = world.time
-	var/movement = GLOB.movement_keys[_key]
+	var/movement = SSinput.movement_keys[_key]
 	if(!(next_move_dir_sub & movement))
 		next_move_dir_add |= movement
 
@@ -32,7 +32,7 @@
 	_key = rkeyconvert(_key) //if it's cyrillic, returns english equivalent
 
 	keys_held -= _key
-	var/movement = GLOB.movement_keys[_key]
+	var/movement = SSinput.movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 

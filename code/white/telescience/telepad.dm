@@ -19,11 +19,11 @@
 	name = "Telepad (Machine Board)"
 	build_path = /obj/machinery/telepad
 	req_components = list(
-							/obj/item/ore/bluespace_crystal = 2,
+							/obj/item/stack/ore/bluespace_crystal = 2,
 							/obj/item/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/stack/sheet/glass = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/telepad/RefreshParts()
 	var/E
@@ -83,7 +83,7 @@
 			stage = 0
 	else if(istype(W, /obj/item/weldingtool) && stage == 1)
 		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
+		if(WT.use_tool(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(do_after(user,20*WT.toolspeed, target = src))
@@ -152,7 +152,7 @@
 		last_charge--
 
 /obj/item/rcs/attack_self(mob/user)
-	if(emagged)
+	if(EMAGGED)
 		if(mode == 0)
 			mode = 1
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -163,7 +163,7 @@
 			to_chat(user, "<span class='caution'>You calibrate the telepad locator.</span>")
 
 /obj/item/rcs/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
+	if(!EMAGGED)
+		EMAGGED = TRUE
 		do_sparks(5, TRUE, src)
 		to_chat(user, "<span class='caution'>You emag the RCS. Click on it to toggle between modes.</span>")
