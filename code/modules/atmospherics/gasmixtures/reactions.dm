@@ -159,12 +159,8 @@
 				plasma_burn_rate = min(plasma_burn_rate,cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate) //Ensures matter is conserved properly
 				cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
 				cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
-				if (super_saturation)
-					ASSERT_GAS(/datum/gas/tritium,air)
-					cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
-				else
-					ASSERT_GAS(/datum/gas/carbon_dioxide,air)
-					cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
+				ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
 
 				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
 
