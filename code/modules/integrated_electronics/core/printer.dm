@@ -53,18 +53,14 @@
 			if(EA.battery)
 				to_chat(user, "<span class='warning'>Remove [EA]'s power cell first!</span>")
 				return
-			var/only_nodrop_components = TRUE
 			for(var/V in EA.assembly_components)
 				var/obj/item/integrated_circuit/IC = V
-				if(IC.removable)
-					only_nodrop_components = FALSE
-					break
-			if(only_nodrop_components)
-				to_chat(user, "<span class='warning'>[EA] has irremovable components attached to the assembly, making it impossible to recycle!</span>")
-				return
+				if(!IC.removable)
+					to_chat(user, "<span class='warning'>[EA] has irremovable components in the casing, preventing you from emptying it.</span>")
+					return
 			to_chat(user, "<span class='notice'>You begin recycling [EA]'s components...</span>")
 			playsound(src, 'sound/items/electronic_assembly_emptying.ogg', 50, TRUE)
-			if(!do_after(user, 20, target = src)) //short channel so you don't accidentally start emptying out a complex assembly
+			if(!do_after(user, 30, target = src)) //short channel so you don't accidentally start emptying out a complex assembly
 				return
 			recycling = TRUE
 			var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
@@ -73,7 +69,7 @@
 				if(!mats.has_space(mats.get_item_material_amount(IC)))
 					to_chat(user, "<span class='notice'>[src] can't hold any more materials!</span>")
 					break
-				if(!do_after(user, 2, target = user))
+				if(!do_after(user, 5, target = user))
 					recycling = FALSE
 					return
 				playsound(src, 'sound/items/crowbar.ogg', 50, TRUE)
