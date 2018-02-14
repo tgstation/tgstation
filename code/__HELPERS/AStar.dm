@@ -23,7 +23,8 @@ Actual Adjacent procs :
 	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
 
 */
-
+#define PF_TIEBREAKER 0.005
+//tiebreker weight.To help to choose between equal paths
 //////////////////////
 //datum/PathNode object
 //////////////////////

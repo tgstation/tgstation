@@ -1,5 +1,4 @@
-#define PF_TIEBREAKER 0.005
-//tiebreker weight.To help to choose between equal paths
+
 
 SUBSYSTEM_DEF(pathfinder)
 	name = "pathfinder"
