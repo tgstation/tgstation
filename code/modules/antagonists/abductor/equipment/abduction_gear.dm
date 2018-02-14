@@ -316,6 +316,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/obj/item/organ/heart/gland/G = C.getorganslot("heart")
+		var/obj/O = C.get_item_by_slot(slot_head)
 		if(!istype(G))
 			to_chat(user, "<span class='warning'>Your target does not have an experimental gland!</span>")
 			return
@@ -336,6 +337,10 @@
 			return
 
 		if(QDELETED(G))
+			return
+
+		if(istype(O, /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
 			return
 
 		G.mind_control(command, user)
