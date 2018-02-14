@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Integrated circuits no longer start upgraded."
-  - balance: "The IC printers that are available on round start in the IC labs are no longer upgraded by default. You will need to research these as was intended"
