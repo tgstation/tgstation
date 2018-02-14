@@ -75,6 +75,7 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
+	var/datum/component/mobhook
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -258,7 +259,7 @@
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
 
-/obj/item/gun/energy/beam_rifle/on_mob_move()
+/obj/item/gun/energy/beam_rifle/proc/on_mob_move()
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
@@ -284,12 +285,14 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
+	QDEL_NULL(mobhook)
 	if(istype(current_user))
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
 		LAZYADD(current_user.mousemove_intercept_objects, src)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
