@@ -623,6 +623,10 @@
 	. = ..()
 	QDEL_NULL(mobhook)
 
+/obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
+
 /////////////SHIELDED//////////////////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded

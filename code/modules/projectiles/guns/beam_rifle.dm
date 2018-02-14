@@ -190,6 +190,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
+	QDEL_NULL(mobhook)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)

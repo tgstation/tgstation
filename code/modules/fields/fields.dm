@@ -292,6 +292,7 @@
 /obj/item/device/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
+	QDEL_NULL(mobhook)
 	return ..()
 
 /obj/item/device/multitool/field_debug/proc/setup_debug_field()

@@ -239,6 +239,10 @@
 	. = ..()
 	QDEL_NULL(mobhook)
 
+/obj/item/organ/eyes/robotic/glow/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
+
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()
 	if(!silent)

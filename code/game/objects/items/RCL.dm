@@ -85,7 +85,7 @@
 /obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	setActive(FALSE, null)
+	setActive(FALSE, null) // setactive(FALSE) removes mobhook
 	return ..()
 
 /obj/item/twohanded/rcl/update_icon()
