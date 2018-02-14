@@ -58,7 +58,3 @@
 		add_overlay("[collar_type]collar")
 		add_overlay("[collar_type]tag")
 
-/mob/living/simple_animal/pet/setup_mob_holder()
-	var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi')
-	return H
-

@@ -29,10 +29,6 @@
 				if("Nothing")
 					return
 
-/mob/living/simple_animal/drone/setup_mob_holder()
-	var/obj/item/clothing/head/mob_holder/drone/H = new(get_turf(src), src)
-	return H
-
 /obj/item/clothing/head/mob_holder/drone/can_head = TRUE
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()

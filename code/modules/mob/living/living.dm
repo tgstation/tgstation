@@ -1049,17 +1049,11 @@
 	update_z(new_z)
 
 /mob/living/proc/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = src.setup_mob_holder()
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi')
 	if(!holder) return
 	drop_all_held_items()
 	L.put_in_hands(holder)
 	return
-
-/mob/living/proc/setup_mob_holder()
-	if(can_be_held && !istext(can_be_held))
-		var/obj/item/clothing/head/mob_holder/H = new(get_turf(src), src)
-		return H
-	..()
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
