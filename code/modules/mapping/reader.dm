@@ -164,7 +164,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 											if(!grid_models[model_key])
 												throw EXCEPTION("Undefined model key in DMM.")
 											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
-											to_chat(world, "Parsing [xcrd], [ycrd]")
 										#ifdef TESTING
 										else
 											++turfsSkipped
@@ -198,7 +197,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 											if(!grid_models[model_key])
 												throw EXCEPTION("Undefined model key in DMM.")
 											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
-											to_chat(world, "Parsing [xcrd], [ycrd]")
 										#ifdef TESTING
 										else
 											++turfsSkipped
@@ -235,7 +233,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 											if(!grid_models[model_key])
 												throw EXCEPTION("Undefined model key in DMM.")
 											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
-											to_chat(world, "Parsing [xcrd], [ycrd] and gridlines length is [gridLines.len]")
 										#ifdef TESTING
 										else
 											++turfsSkipped
@@ -271,7 +268,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 											if(!grid_models[model_key])
 												throw EXCEPTION("Undefined model key in DMM.")
 											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
-											to_chat(world, "Parsing [xcrd], [ycrd]")
 										#ifdef TESTING
 										else
 											++turfsSkipped

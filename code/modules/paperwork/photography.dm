@@ -463,7 +463,7 @@
 			var/mob/M = target
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
-		else 
+		else
 			return
 	else
 		captureimage(target, user, flag)
@@ -539,7 +539,7 @@
 	var/obj/item/photo/displayed
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/photo))
+	if(istype(I, /obj/item/photo) || istype(I, /obj/item/canvas))
 		if(!displayed)
 			if(!user.transferItemToLoc(I, src))
 				return
