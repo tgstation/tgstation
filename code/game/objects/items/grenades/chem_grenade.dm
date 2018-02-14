@@ -55,7 +55,7 @@
 			if(beakers.len)
 				stage_change(READY)
 				to_chat(user, "<span class='notice'>You lock the [initial(name)] assembly.</span>")
-				playsound(loc, I.usesound, 25, -3)
+				I.play_tool_sound(src, 25)
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
 		else if(stage == READY && !nadeassembly)

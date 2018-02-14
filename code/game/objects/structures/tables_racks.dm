@@ -441,7 +441,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if(user.a_intent == INTENT_HARM)

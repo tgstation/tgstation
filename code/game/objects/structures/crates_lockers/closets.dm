@@ -251,7 +251,7 @@
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
+		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")

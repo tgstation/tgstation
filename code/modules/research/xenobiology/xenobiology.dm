@@ -661,7 +661,7 @@
 	user.death()
 	to_chat(SM, "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>")
 	to_chat(SM, "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>")
-	SM.name = "[SM.name] as [user.real_name]"
+	SM.name = "[user.real_name]"
 	qdel(src)
 
 /obj/item/slimepotion/slime/steroid
@@ -824,71 +824,6 @@
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
-
-////////Adamantine Golem stuff I dunno where else to put it
-
-// This will eventually be removed.
-
-/obj/item/clothing/under/golem
-	name = "adamantine skin"
-	desc = "A golem's skin."
-	icon_state = "golem"
-	item_state = "golem"
-	item_color = "golem"
-	flags_1 = ABSTRACT_1 | NODROP_1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	has_sensor = NO_SENSORS
-
-/obj/item/clothing/suit/golem
-	name = "adamantine shell"
-	desc = "A golem's thick outer shell."
-	icon_state = "golem"
-	item_state = "golem"
-	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
-	permeability_coefficient = 0.5
-	body_parts_covered = FULL_BODY
-	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = ABSTRACT_1 | NODROP_1
-
-/obj/item/clothing/shoes/golem
-	name = "golem's feet"
-	desc = "Sturdy adamantine feet."
-	icon_state = "golem"
-	item_state = null
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NOSLIP_1 | ABSTRACT_1 | NODROP_1
-
-
-/obj/item/clothing/mask/breath/golem
-	name = "golem's face"
-	desc = "The imposing face of an adamantine golem."
-	icon_state = "golem"
-	item_state = "golem"
-	siemens_coefficient = 0
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = ABSTRACT_1 | NODROP_1
-
-
-/obj/item/clothing/gloves/golem
-	name = "golem's hands"
-	desc = "Strong adamantine hands."
-	icon_state = "golem"
-	item_state = null
-	siemens_coefficient = 0
-	flags_1 = ABSTRACT_1 | NODROP_1
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-
-/obj/item/clothing/head/space/golem
-	icon_state = "golem"
-	item_state = "dermal"
-	item_color = "dermal"
-	name = "golem's head"
-	desc = "A golem's head."
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = ABSTRACT_1 | NODROP_1
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"

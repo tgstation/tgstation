@@ -85,6 +85,11 @@
 	build_path = /obj/machinery/recharger
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
+/obj/item/circuitboard/machine/cell_charger
+	name = "Cell Charger (Machine Board)"
+	build_path = /obj/machinery/cell_charger
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
+
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
@@ -287,7 +292,7 @@
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
-		playsound(user, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()

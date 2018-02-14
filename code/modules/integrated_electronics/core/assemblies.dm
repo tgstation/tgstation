@@ -279,8 +279,8 @@
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
-/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
-	playsound(src, S.usesound, 50, 1)
+/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
 	opened = !opened
 	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
 	update_icon()

@@ -80,8 +80,10 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	pollCultists(owner,C.cult_team)
+	var/choice = alert(owner, "The mantle of leadership is a heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
+	if(choice == "Yes" && IsAvailable())
+		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+		pollCultists(owner,C.cult_team)
 
 /proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
