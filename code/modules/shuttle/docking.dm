@@ -2,6 +2,8 @@
 /obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 
+	SendSignal(COMSIG_SHUTTLE_DOCKING_START)
+
 	if(new_dock.get_docked() == src)
 		remove_ripples()
 		return DOCKING_SUCCESS
@@ -105,6 +107,9 @@
 	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
+
+
+	SendSignal(COMSIG_SHUTTLE_DOCKING_SUCCESS)
 
 	return DOCKING_SUCCESS
 

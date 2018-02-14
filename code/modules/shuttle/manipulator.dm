@@ -289,7 +289,7 @@
 		WARNING(msg)
 		return
 	//Everything fine
-	S.on_bought()
+	S.on_bought(preview_shuttle)
 
 /obj/machinery/shuttle_manipulator/proc/unload_preview()
 	if(preview_shuttle)

@@ -38,6 +38,7 @@ All ShuttleMove procs go here
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
+				shuttle.SendSignal(COMSIG_SHUTTLE_ROADKILL, M)
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
 				M.gib()
 

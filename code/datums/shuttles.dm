@@ -22,7 +22,7 @@
 	. = ..()
 
 //Whatever special stuff you want
-/datum/map_template/shuttle/proc/on_bought()
+/datum/map_template/shuttle/proc/on_bought(obj/docking_port/mobile/M)
 	return
 
 /datum/map_template/shuttle/emergency
@@ -108,6 +108,9 @@
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
+
+/datum/map_template/shuttle/emergency/meteor/on_bought(obj/docking_port/M)
+	M.AddComponent(/datum/component/roadkill_counter)
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
