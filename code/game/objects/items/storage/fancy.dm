@@ -291,7 +291,7 @@
 	desc = "A heart-shaped box for holding tiny chocolates."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "heartbox"
-	icon_type = "chocolate"
+	icon_type = "heart"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	storage_slots = 8
