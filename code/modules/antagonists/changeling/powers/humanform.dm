@@ -1,6 +1,7 @@
 /datum/action/changeling/humanform
 	name = "Human Form"
-	desc = "We change into a human."
+	desc = "We change into a human. Costs 5 chemicals."
+	button_icon_state = "human_form"
 	chemical_cost = 5
 	req_dna = 1
 

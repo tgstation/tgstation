@@ -135,8 +135,9 @@
 \***************************************/
 /datum/action/changeling/weapon/arm_blade
 	name = "Arm Blade"
-	desc = "We reform one of our arms into a deadly blade."
+	desc = "We reform one of our arms into a deadly blade. Costs 20 chemicals."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
+	button_icon_state = "armblade"
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = 1
@@ -211,10 +212,11 @@
 
 /datum/action/changeling/weapon/tentacle
 	name = "Tentacle"
-	desc = "We ready a tentacle to grab items or victims with."
+	desc = "We ready a tentacle to grab items or victims with. Costs 10 chemicals."
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on the intent: \
 	Help will simply drag them closer, Disarm will grab whatever they're holding instead of them, Grab will put the victim in our hold after catching it, \
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
+	button_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
 	req_human = 1
@@ -377,8 +379,9 @@
 \***************************************/
 /datum/action/changeling/weapon/shield
 	name = "Organic Shield"
-	desc = "We reform one of our arms into a hard shield."
+	desc = "We reform one of our arms into a hard shield. Costs 20 chemicals."
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	button_icon_state = "organic_shield"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
@@ -429,8 +432,9 @@
 \***************************************/
 /datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure."
+	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
+	button_icon_state = "organic_suit"
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = 1
@@ -474,8 +478,9 @@
 \***************************************/
 /datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
-	desc = "We turn our skin into tough chitin to protect us from damage."
+	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
+	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1

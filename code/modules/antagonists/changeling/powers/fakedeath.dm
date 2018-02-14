@@ -1,6 +1,7 @@
 /datum/action/changeling/fakedeath
 	name = "Reviving Stasis"
-	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
+	button_icon_state = "fake_death"
 	chemical_cost = 15
 	dna_cost = 0
 	req_dna = 1
@@ -33,6 +34,7 @@
 		revive_ready = FALSE
 		name = "Reviving Stasis"
 		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+		button_icon_state = "fake_death"
 		return TRUE
 
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
@@ -52,8 +54,9 @@
 		if(C && C.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 			to_chat(user, "<span class='notice'>Click the Regenerative Stasis button again to revive.</span>")
-			name = "Revive"
+			name = "Revive"//TODO: test this, i think it may not work
 			desc = "We arise once more."
+			button_icon_state = "revive"
 			revive_ready = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)

@@ -5,6 +5,7 @@
 	name = "Augmented Eyesight"
 	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability, or protects your vision from flashes."
 	helptext = "Grants us thermal vision or flash protection. We will become a lot more vulnerable to flash-based devices while thermal vision is active."
+	button_icon_state = "augmented_eyesight"
 	chemical_cost = 0
 	dna_cost = 2 //Would be 1 without thermal vision
 	active = FALSE
