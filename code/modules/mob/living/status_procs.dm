@@ -146,7 +146,7 @@
 	else
 		status_traits[trait] |= list(source)
 
-/mob/living/proc/add_roundstart_trait(trait) //separate proc due to the way these ones are handled
+/mob/living/proc/add_trait_datum(trait) //separate proc due to the way these ones are handled
 	if(has_trait(trait))
 		return
 	if(!SStraits || !SStraits.traits[trait])
@@ -156,10 +156,6 @@
 	return TRUE
 
 /mob/living/proc/remove_trait(trait, list/sources, force)
-	var/datum/trait/T = roundstart_traits[trait]
-	if(T)
-		qdel(T)
-		return TRUE
 
 	if(!status_traits[trait])
 		return
@@ -184,9 +180,13 @@
 	if(!LAZYLEN(status_traits[trait]))
 		status_traits -= trait
 
+/mob/living/proc/remove_trait_datum(trait)
+	var/datum/trait/T = roundstart_traits[trait]
+	if(T)
+		qdel(T)
+		return TRUE
+
 /mob/living/proc/has_trait(trait, list/sources)
-	if(roundstart_traits[trait])
-		return roundstart_traits[trait] //fetch the trait object directly in case we need to modify it
 	if(!status_traits[trait])
 		return FALSE
 
@@ -199,6 +199,9 @@
 	else
 		if(LAZYLEN(status_traits[trait]))
 			return TRUE
+
+/mob/living/proc/has_trait_datum(trait)
+	return roundstart_traits[trait]
 
 /mob/living/proc/remove_all_traits()
 	status_traits = list()

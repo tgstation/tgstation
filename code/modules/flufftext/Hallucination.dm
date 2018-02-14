@@ -1215,19 +1215,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	C.playsound_local(C, 'sound/creatures/narsie_rises.ogg', 50, FALSE, pressure_affected = FALSE)
 	to_chat(C, "<span class='narsie'>NAR-SIE HAS RISEN</span>")
 
-/datum/hallucination/rds/ghosts/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	var/see_invis = C.see_invisible
-	notify_ghosts("[C]'s RDS is making them see ghosts!",
-		enter_link = "<a href=?src=[REF(src)];orbit=1>(Click to orbit and freak them out)</a>",
-		source = C, action = NOTIFY_ORBIT)
-	sleep(50)
-	C.see_invisible = INVISIBILITY_OBSERVER
-	sleep(50)
-	notify_ghosts("[C] can no longer see ghosts.")
-	C.see_invisible = see_invis
-
 /datum/hallucination/rds/ark/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	..()

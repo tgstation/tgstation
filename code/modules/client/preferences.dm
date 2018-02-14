@@ -81,6 +81,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/negative_traits = list()
 	var/list/neutral_traits = list()
 	var/list/all_traits = list()
+	var/list/character_traits = list()
+	var/generated_char_traits = FALSE
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -775,9 +777,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!SStraits)
 		to_chat(user, "<span class='danger'>The trait subsystem is still initializing! Try again in a minute.</span>")
 		return
-	if(SSticker.HasRoundStarted() && !isnewplayer(user))
-		to_chat(user, "<span class='danger'>You can't configure your traits until next round!</span>")
-		return
 
 	var/list/dat = list()
 	if(!SStraits.traits.len)
@@ -1405,6 +1404,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+	if(!generated_char_traits)
+		generated_char_traits = TRUE //usually it would be better to have a check for character_traits.len but that doesn't FUCKING WORK and I don't know why.
+		character_traits = all_traits
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
@@ -1459,5 +1461,5 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 
-	for(var/trait in all_traits)
-		character.add_roundstart_trait(trait, ROUNDSTART_TRAIT)
+	for(var/trait in character_traits)
+		character.add_trait_datum(trait)

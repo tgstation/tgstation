@@ -13,7 +13,7 @@
 
 /datum/trait/New(mob/living/trait_mob)
 	..()
-	if(!trait_mob || (human_only && !ishuman(trait_mob)) || trait_mob.has_trait(type))
+	if(!trait_mob || (human_only && !ishuman(trait_mob)) || trait_mob.has_trait_datum(type))
 		qdel(src)
 	trait_holder = trait_mob
 	SStraits.trait_objects += src

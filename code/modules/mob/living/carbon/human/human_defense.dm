@@ -709,7 +709,7 @@
 						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
 					else if(oxyloss > 30)
 						to_chat(src, "<span class='danger'>You're choking!</span>")
-			to_chat(src, "<span class='notice'>You have these traits: [client.prefs.all_traits.Join(", ")].</span>")
+			to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

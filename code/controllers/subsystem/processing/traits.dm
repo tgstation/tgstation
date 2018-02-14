@@ -1,5 +1,7 @@
 //Used to process and handle roundstart trait datums
-//Due to their nature, roundstart traits are objects, but are otherwise tied to the normal trait system
+//Trait datums are separate from trait strings:
+// - Trait strings are used for faster checking in code
+// - Trait datums are stored and hold different effects, as well as being a vector for applying trait string
 PROCESSING_SUBSYSTEM_DEF(traits)
 	name = "Traits"
 	init_order = INIT_ORDER_TRAITS
