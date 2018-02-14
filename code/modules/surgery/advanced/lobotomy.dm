@@ -41,6 +41,8 @@
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully lobotomizes [target]!", "<span class='notice'>You succeed in lobotomizing [target].</span>")
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
+		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	switch(rand(1,4))//Now let's see what hopefully-not-important part of the brain we cut off
 		if(1)
 			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)

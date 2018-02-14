@@ -44,11 +44,7 @@
 		return FALSE
 	user.visible_message("[user] successfully brainwashes [target]!", "<span class='notice'>You succeed in brainwashing [target].</span>")
 	to_chat(target, "<span class='userdanger'>A new compulsion fills your mind... you feel forced to obey it!</span>")
-	var/datum/objective/brainwashing/brainwash_objective = new(objective)
-	brainwash_objective.completed = TRUE //no redtexting with this
-	brainwash_objective.owner = target.mind
-	target.mind.objectives += brainwash_objective
-	target.mind.announce_objectives()
+	brainwash(target, objective)
 	message_admins("[key_name_admin(user)] surgically brainwashed [key_name_admin(target)] with the objective '[objective]'.")
 	log_game("[key_name(user)] surgically brainwashed [key_name(target)] with the objective '[objective]'.")
 	return TRUE
@@ -60,6 +56,3 @@
 	else
 		user.visible_message("<span class='warning'>[user] suddenly notices that the brain [user.p_they()] [user.p_were()] working on is not there anymore.", "<span class='warning'>You suddenly notice that the brain you were working on is not there anymore.</span>")
 	return FALSE
-
-/datum/objective/brainwashing
-	completed = TRUE

@@ -28,14 +28,8 @@
 
 /datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully fixes [target]'s brain!", "<span class='notice'>You succeed in fixing [target]'s brain.</span>")
-	if(target.mind)
-		var/cleared_mind = FALSE
-		for(var/datum/objective/brainwashing/B in target.mind.objectives)
-			cleared_mind = TRUE
-			qdel(B)
-		if(cleared_mind)
-			to_chat(target, "<span class='userdanger'>You feel free of your brainwashing compulsion!</span>")
-			target.mind.announce_objectives()
+	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
+		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	target.adjustBrainLoss(-60)
 	target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	return TRUE

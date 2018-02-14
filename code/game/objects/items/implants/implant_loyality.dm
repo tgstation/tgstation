@@ -21,13 +21,8 @@
 		if(!target.mind)
 			return TRUE
 
-		var/unbrainwashed = FALSE
-		for(var/datum/objective/brainwashing/B in target.mind.objectives)
-			unbrainwashed = TRUE
-			qdel(B)
-		if(unbrainwashed)
-			to_chat(target, "<span class='userdanger'>You feel free of your brainwashing compulsion!</span>")
-			target.mind.announce_objectives()
+		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
+			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
 			if(!silent)
