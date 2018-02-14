@@ -17558,7 +17558,7 @@
 /area/crew_quarters/kitchen)
 "aSP" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/crew_quarters/kitchen)
 "aSQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -24115,7 +24115,7 @@
 /area/science/robotics/mechbay)
 "bjQ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bjR" = (
 /obj/structure/table/glass,
