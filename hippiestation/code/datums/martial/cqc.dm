@@ -8,6 +8,14 @@
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	var/just_a_cook = FALSE
+	var/static/list/areas_under_siege = typecacheof(list(/area/crew_quarters/kitchen,
+	                                                     /area/crew_quarters/cafeteria,
+														 /area/crew_quarters/bar))
+
+/datum/martial_art/cqc/under_siege
+	name = "Close Quarters Cooking" // Original name "Culinary School Training"
+	just_a_cook = TRUE
 
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = 0
@@ -98,6 +106,9 @@
 	return 1
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if (just_a_cook)
+		if (!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
@@ -113,6 +124,9 @@
 	return 1
 
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if (just_a_cook)
+		if (!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
@@ -141,6 +155,9 @@
 	return 1
 
 /datum/martial_art/cqc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if (just_a_cook)
+		if (!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("D",D)
 	var/obj/item/I = null
 	if(check_streak(A,D))
