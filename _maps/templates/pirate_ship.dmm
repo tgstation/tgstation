@@ -649,6 +649,7 @@
 /area/shuttle/pirate)
 "bF" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
 	id_tag = "pirateportexternal";
 	locked = 1
 	},
@@ -681,7 +682,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -816,7 +819,9 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "bU" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bV" = (
@@ -825,6 +830,7 @@
 /area/shuttle/pirate)
 "bW" = (
 /obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
 	id_tag = "piratestarboardexternal";
 	locked = 1
 	},
