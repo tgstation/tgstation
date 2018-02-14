@@ -712,6 +712,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2 
 	exclude_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/stealthy_tools/chameleon/nuke
+	cost = 10 
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -1347,27 +1352,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
-
-/datum/uplink_item/badass/costumes
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
-	cost = 4
-	cant_discount = TRUE
-
-/datum/uplink_item/badass/costumes/centcom_official
-	name = "Centcom Official Costume"
-	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. Radio headset does not include key. No gun included."
-	item = /obj/item/storage/box/syndie_kit/centcom_costume
-
-/datum/uplink_item/badass/costumes/clown
-	name = "Clown Costume"
-	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
-	item = /obj/item/storage/backpack/duffelbag/clown/syndie
-
-/datum/uplink_item/badass/costumes/obvious_chameleon
-	name = "Broken Chameleon Kit"
-	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
-	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
