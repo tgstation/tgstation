@@ -41,7 +41,7 @@ Actual Adjacent procs :
 	var/nt		//count the number of Nodes traversed
 	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
 
-/datum/PathNode/New(s,p,pg,ph,pnt,_bf,_i)
+/datum/PathNode/New(s,p,pg,ph,pnt,_bf)
 	source = s
 	prevNode = p
 	g = pg
