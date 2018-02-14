@@ -2045,7 +2045,7 @@
 	height = 9;
 	id = "arrivals_stationary";
 	name = "arrivals bay";
-	roundstart_template = !INVALID_VALUE!;
+	roundstart_template = /datum/map_template/shuttle/arrival/sb;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -17076,7 +17076,7 @@
 	height = 4;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = !INVALID_VALUE!;
+	roundstart_template = /datum/map_template/shuttle/mining/sb;
 	width = 5
 	},
 /turf/open/space/basic,
