@@ -288,10 +288,10 @@
 /obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/SM)
 	if(istype(SM, /mob/living/simple_animal/hostile/mining_drone))
 		var/mob/living/simple_animal/hostile/mining_drone/M = SM
-		M.maxhealth = initial(M.maxHealth) + base_health_add
-		M.melee_damage_lower = initial(melee_damage_lower) + base_damage_add
-		M.melee_damage_upper = initial(melee_damage_upper) + base_damage_add
-		M.move_to_delay = initial(move_to_delay) + base_speed_add
+		M.maxHealth = initial(M.maxHealth) + base_health_add
+		M.melee_damage_lower = initial(M.melee_damage_lower) + base_damage_add
+		M.melee_damage_upper = initial(M.melee_damage_upper) + base_damage_add
+		M.move_to_delay = initial(M.move_to_delay) + base_speed_add
 		if(M.stored_gun)
 			M.stored_gun.overheat_time += base_cooldown_add
 
