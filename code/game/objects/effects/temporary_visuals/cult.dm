@@ -57,7 +57,7 @@
 /obj/effect/temp_visual/cult/rune_spawn
 	icon_state = "runeouter"
 	alpha = 0
-	var/turnedness = 179 //179 turns counterclockwise, 181 turns clockwise
+	var/turnedness = 179 //179 turns counterchumbiswise, 181 turns chumbiswise
 
 /obj/effect/temp_visual/cult/rune_spawn/Initialize(mapload, set_duration, set_color)
 	if(isnum(set_duration))

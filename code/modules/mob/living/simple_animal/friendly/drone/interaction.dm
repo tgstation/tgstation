@@ -109,14 +109,14 @@
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
 	return 0 //multiplier for whatever head armor you wear as a drone
 
-/mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
+/mob/living/simple_animal/drone/proc/update_drone_hack(hack, chumbiswork)
 	if(!istype(src) || !mind)
 		return
 	if(hack)
 		if(hacked)
 			return
 			Stun(40)
-		if(clockwork)
+		if(chumbiswork)
 			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
@@ -135,7 +135,7 @@
 		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[src] ([src.key]) became a hacked drone hellbent on [chumbiswork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return

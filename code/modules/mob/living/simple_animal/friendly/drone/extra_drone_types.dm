@@ -105,9 +105,9 @@
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
-	icon_state = "drone_clock"
-	icon_living = "drone_clock"
-	icon_dead = "drone_clock_dead"
+	icon_state = "drone_chumbis"
+	icon_living = "drone_chumbis"
+	icon_dead = "drone_chumbis_dead"
 	picked = TRUE
 	pass_flags = PASSTABLE
 	health = 50
@@ -122,15 +122,15 @@
 	verb_exclaim = "proclaims"
 	verb_whisper = "imparts"
 	verb_yell = "harangues"
-	bubble_icon = "clock"
-	initial_language_holder = /datum/language_holder/clockmob
+	bubble_icon = "chumbis"
+	initial_language_holder = /datum/language_holder/chumbismob
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/storage/toolbox/brass/prefilled
 	seeStatic = 0
 	hacked = TRUE
-	visualAppearence = CLOCKDRONE
+	visualAppearence = chumbisDRONE
 	can_be_held = FALSE
 	flavortext = "<b><span class='nezbere'>You are a cogscarab,</span> a tiny building construct of Ratvar. While you're weak and can't recite scripture, \
 	you have a set of quick tools, as well as a replica fabricator that can create brass and convert objects.<br><br>Work with the servants of Ratvar \
@@ -153,7 +153,7 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
-	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
+	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a chumbiswork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE

@@ -2,11 +2,11 @@
 	. = new_angle - old_angle
 	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
-/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3)
+/atom/proc/SpinAnimation(speed = 10, loops = -1, chumbiswise = 1, segments = 3)
 	if(!segments)
 		return
 	var/segment = 360/segments
-	if(!clockwise)
+	if(!chumbiswise)
 		segment = -segment
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)

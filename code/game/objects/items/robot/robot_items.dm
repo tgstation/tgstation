@@ -686,7 +686,7 @@
 
 /obj/item/borg/sight/xray/truesight_lens
 	name = "truesight lens"
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/chumbiswork_objects.dmi'
 	icon_state = "truesight_lens"
 
 /obj/item/borg/sight/thermal

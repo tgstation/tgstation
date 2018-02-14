@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","dual_esword","stunpaper","chumbisspear","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"
@@ -444,7 +444,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 					if("stunpaper")
 						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
 						A.color = rgb(255,0,0)
-					if("clockspear")
+					if("chumbisspear")
 						A = image(image_file,H,"ratvarian_spear", layer=ABOVE_MOB_LAYER)
 					if("ttv")
 						A = image(image_file,H,"ttv", layer=ABOVE_MOB_LAYER)
@@ -1110,7 +1110,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		if(fakemob)
 			sleep(rand(20, 50))
 			to_chat(target, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","hey [target.first_name()]","you too?","is the AI rogue?",\
-			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>")
+			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "chumbis cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
 	target.SetKnockdown(0)

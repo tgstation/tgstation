@@ -80,7 +80,7 @@
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_chumbisWISE | ROTATION_COUNTERchumbisWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -103,9 +103,9 @@
 
 /obj/structure/window/ratvar_act()
 	if(!fulltile)
-		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+		new/obj/structure/window/reinforced/chumbiswork(get_turf(src), dir)
 	else
-		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+		new/obj/structure/window/reinforced/chumbiswork/fulltile(get_turf(src))
 	qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
@@ -301,7 +301,7 @@
 		to_chat(user, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return FALSE
 
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
+	var/target_dir = turn(dir, rotation_type == ROTATION_chumbisWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir))
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
@@ -591,11 +591,11 @@
 	glass_type = /obj/item/stack/sheet/rglass
 	glass_amount = 2
 
-/obj/structure/window/reinforced/clockwork
+/obj/structure/window/reinforced/chumbiswork
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass."
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "clockwork_window_single"
+	icon = 'icons/obj/smooth_structures/chumbiswork_window.dmi'
+	icon_state = "chumbiswork_window_single"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 80
 	armor = list("melee" = 60, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
@@ -606,7 +606,7 @@
 	reinf = FALSE
 	var/made_glow = FALSE
 
-/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+/obj/structure/window/reinforced/chumbiswork/Initialize(mapload, direct)
 	if(fulltile)
 		made_glow = TRUE
 	. = ..()
@@ -616,26 +616,26 @@
 		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
-		debris += new /obj/item/clockwork/alloy_shards/medium/gear_bit()
+		debris += new /obj/item/chumbiswork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
 
-/obj/structure/window/reinforced/clockwork/setDir(direct)
+/obj/structure/window/reinforced/chumbiswork/setDir(direct)
 	if(!made_glow)
 		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/window/single(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
 
-/obj/structure/window/reinforced/clockwork/Destroy()
+/obj/structure/window/reinforced/chumbiswork/Destroy()
 	change_construction_value(fulltile ? -2 : -1)
 	return ..()
 
-/obj/structure/window/reinforced/clockwork/ratvar_act()
+/obj/structure/window/reinforced/chumbiswork/ratvar_act()
 	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 		update_icon()
 
-/obj/structure/window/reinforced/clockwork/narsie_act()
+/obj/structure/window/reinforced/chumbiswork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
 	if(src)
 		var/previouscolor = color
@@ -643,11 +643,11 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/obj/structure/window/reinforced/clockwork/unanchored
+/obj/structure/window/reinforced/chumbiswork/unanchored
 	anchored = FALSE
 
-/obj/structure/window/reinforced/clockwork/fulltile
-	icon_state = "clockwork_window"
+/obj/structure/window/reinforced/chumbiswork/fulltile
+	icon_state = "chumbiswork_window"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = TRUE
@@ -657,7 +657,7 @@
 	level = 3
 	glass_amount = 2
 
-/obj/structure/window/reinforced/clockwork/fulltile/unanchored
+/obj/structure/window/reinforced/chumbiswork/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/paperframe

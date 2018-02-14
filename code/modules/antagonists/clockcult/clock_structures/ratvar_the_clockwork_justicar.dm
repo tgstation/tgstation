@@ -1,8 +1,8 @@
-//Ratvar himself. Impossible to damage by most standard means, and converts nearby objects and players into clockwork variants and Servants.
-/obj/structure/destructible/clockwork/massive/ratvar
-	name = "Ratvar, the Clockwork Justiciar"
+//Ratvar himself. Impossible to damage by most standard means, and converts nearby objects and players into chumbiswork variants and Servants.
+/obj/structure/destructible/chumbiswork/massive/ratvar
+	name = "Ratvar, the chumbiswork Justiciar"
 	desc = "..."
-	clockwork_desc = "<span class='large_brass bold italics'>Ratvar, free at last!</span>"
+	chumbiswork_desc = "<span class='large_brass bold italics'>Ratvar, free at last!</span>"
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
 	pixel_x = -235
@@ -17,28 +17,28 @@
 	var/convert_range = 10
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
+/obj/structure/destructible/chumbiswork/massive/ratvar/Initialize()
 	. = ..()
 	GLOB.ratvar_awakens++
-	for(var/obj/O in GLOB.all_clockwork_objects)
+	for(var/obj/O in GLOB.all_chumbiswork_objects)
 		O.ratvar_act()
-	for(var/mob/living/simple_animal/hostile/clockwork/M in GLOB.all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/chumbiswork/M in GLOB.all_chumbiswork_mobs)
 		M.ratvar_act()
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>[text2ratvar("ONCE AGAIN MY LIGHT SHINES AMONG THESE PATHETIC STARS")]</span>")
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')
-	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/chumbiswork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 10, null, FALSE, 0)
 
-/obj/structure/destructible/clockwork/massive/ratvar/Destroy()
+/obj/structure/destructible/chumbiswork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
-	for(var/obj/O in GLOB.all_clockwork_objects)
+	for(var/obj/O in GLOB.all_chumbiswork_objects)
 		O.ratvar_act()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
+/obj/structure/destructible/chumbiswork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || QDELETED(O) || !istype(O) || !O.key)
 		return FALSE
@@ -46,16 +46,16 @@
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
-/obj/structure/destructible/clockwork/massive/ratvar/Collide(atom/A)
+/obj/structure/destructible/chumbiswork/massive/ratvar/Collide(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(T, dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
 
-/obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
+/obj/structure/destructible/chumbiswork/massive/ratvar/Process_Spacemove()
 	return clashing
 
-/obj/structure/destructible/clockwork/massive/ratvar/process()
+/obj/structure/destructible/chumbiswork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
 	for(var/I in circlerangeturfs(src, convert_range))
@@ -95,7 +95,7 @@
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
 	step(src, dir_to_step_in)
 
-/obj/structure/destructible/clockwork/massive/ratvar/proc/clash()
+/obj/structure/destructible/chumbiswork/massive/ratvar/proc/clash()
 	if(clashing || prey != GLOB.cult_narsie)
 		return
 	clashing = TRUE
@@ -106,11 +106,11 @@
 	return TRUE
 
 //Put me in Reebe, will you? Ratvar has found and is going to do a hecking murder on Nar-Sie
-/obj/structure/destructible/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
+/obj/structure/destructible/chumbiswork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
 	var/winner = "Undeclared"
 	var/base_victory_chance = 1
 	while(src && narsie)
-		sound_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg')
+		sound_to_playing_players('sound/magic/chumbiswork/ratvar_attack.ogg')
 		sleep(5.2)
 		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
@@ -124,7 +124,7 @@
 			winner = "Ratvar"
 			break
 		sleep(rand(2,5))
-		sound_to_playing_players('sound/magic/clockwork/narsie_attack.ogg')
+		sound_to_playing_players('sound/magic/chumbiswork/narsie_attack.ogg')
 		sleep(7.4)
 		for(var/mob/M in GLOB.mob_list)
 			if(!isnewplayer(M))
@@ -138,13 +138,13 @@
 		if("Ratvar")
 			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE.", "ROT.")]\"</font></span>\n\
 			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
-			sound_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
+			sound_to_playing_players('sound/magic/chumbiswork/anima_fragment_attack.ogg')
 			sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 			clashing = FALSE
 			qdel(narsie)
 		if("Nar-Sie")
 			send_to_playing_players("<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>") //Broken English
 			sound_to_playing_players('sound/magic/demon_attack1.ogg')
-			sound_to_playing_players('sound/magic/clockwork/anima_fragment_death.ogg', 62)
+			sound_to_playing_players('sound/magic/chumbiswork/anima_fragment_death.ogg', 62)
 			narsie.clashing = FALSE
 			qdel(src)

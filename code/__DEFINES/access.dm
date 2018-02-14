@@ -97,5 +97,5 @@
 
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT 250
-#define ACCESS_CLOCKCULT 251
+#define ACCESS_chumbisCULT 251
 

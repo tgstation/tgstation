@@ -5,18 +5,18 @@
 #define REPLICANT_ALLOY "replicant_alloy"
 #define HIEROPHANT_ANSIBLE "hierophant_ansible" //Use this for construction-related scripture!
 
-GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
-GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
-GLOBAL_VAR_INIT(clockwork_power, 0) //How many watts of power are globally available to the clockwork cult
+GLOBAL_VAR_INIT(chumbiswork_construction_value, 0) //The total value of all structures built by the chumbiswork cult
+GLOBAL_VAR_INIT(chumbiswork_vitality, 0) //How much Vitality is stored, total
+GLOBAL_VAR_INIT(chumbiswork_power, 0) //How many watts of power are globally available to the chumbiswork cult
 
-GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
-GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
+GLOBAL_LIST_EMPTY(all_chumbiswork_objects) //All chumbiswork items, structures, and effects in existence
+GLOBAL_LIST_EMPTY(all_chumbiswork_mobs) //All chumbiswork SERVANTS (not creatures) in existence
 
 GLOBAL_VAR_INIT(ratvar_approaches, 0) //The servants can choose to "herald" Ratvar, permanently buffing them but announcing their presence to the crew.
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
-GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, FALSE) //The Ark on the Reebe z-level
+GLOBAL_VAR_INIT(ark_of_the_chumbiswork_justiciar, FALSE) //The Ark on the Reebe z-level
 
-GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
+GLOBAL_VAR_INIT(chumbiswork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_VAR_INIT(script_scripture_unlocked, FALSE) //If script scripture is available, through converting at least one crewmember
 GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //If script scripture is available
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
@@ -28,32 +28,32 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_APPLICATION "Application"
 
 //Various costs related to power.
-#define MAX_CLOCKWORK_POWER 50000 //The max power in W that the cult can stockpile
+#define MAX_chumbisWORK_POWER 50000 //The max power in W that the cult can stockpile
 #define SCRIPT_UNLOCK_THRESHOLD 25000 //Scripts will unlock if the total power reaches this amount
 #define APPLICATION_UNLOCK_THRESHOLD 40000 //Applications will unlock if the total powre reaches this amount
 
 #define ABSCOND_ABDUCTION_COST 95
 
-//clockcult power defines
-#define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
+//chumbiscult power defines
+#define MIN_chumbisCULT_POWER 25 //the minimum amount of power chumbiscult machines will handle gracefully
 
-#define CLOCKCULT_POWER_UNIT (MIN_CLOCKCULT_POWER*100) //standard power amount for replica fabricator costs
+#define chumbisCULT_POWER_UNIT (MIN_chumbisCULT_POWER*100) //standard power amount for replica fabricator costs
 
-#define POWER_STANDARD (CLOCKCULT_POWER_UNIT*0.2) //how much power is in anything else; doesn't matter as much as the following
+#define POWER_STANDARD (chumbisCULT_POWER_UNIT*0.2) //how much power is in anything else; doesn't matter as much as the following
 
-#define POWER_FLOOR (CLOCKCULT_POWER_UNIT*0.1) //how much power is in a clockwork floor, determines the cost of clockwork floor production
+#define POWER_FLOOR (chumbisCULT_POWER_UNIT*0.1) //how much power is in a chumbiswork floor, determines the cost of chumbiswork floor production
 
-#define POWER_WALL_MINUS_FLOOR (CLOCKCULT_POWER_UNIT*0.4) //how much power is in a clockwork wall, determines the cost of clockwork wall production
+#define POWER_WALL_MINUS_FLOOR (chumbisCULT_POWER_UNIT*0.4) //how much power is in a chumbiswork wall, determines the cost of chumbiswork wall production
 
-#define POWER_GEAR (CLOCKCULT_POWER_UNIT*0.3) //how much power is in a wall gear, minus the brass from the wall
+#define POWER_GEAR (chumbisCULT_POWER_UNIT*0.3) //how much power is in a wall gear, minus the brass from the wall
 
-#define POWER_WALL_TOTAL (POWER_WALL_MINUS_FLOOR+POWER_FLOOR) //how much power is in a clockwork wall and the floor under it
+#define POWER_WALL_TOTAL (POWER_WALL_MINUS_FLOOR+POWER_FLOOR) //how much power is in a chumbiswork wall and the floor under it
 
-#define POWER_ROD (CLOCKCULT_POWER_UNIT*0.01) //how much power is in one rod
+#define POWER_ROD (chumbisCULT_POWER_UNIT*0.01) //how much power is in one rod
 
-#define POWER_METAL (CLOCKCULT_POWER_UNIT*0.02) //how much power is in one sheet of metal
+#define POWER_METAL (chumbisCULT_POWER_UNIT*0.02) //how much power is in one sheet of metal
 
-#define POWER_PLASTEEL (CLOCKCULT_POWER_UNIT*0.05) //how much power is in one sheet of plasteel
+#define POWER_PLASTEEL (chumbisCULT_POWER_UNIT*0.05) //how much power is in one sheet of plasteel
 
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
@@ -67,12 +67,12 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
 
 //Objective text define
-#define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
+#define chumbisCULT_OBJECTIVE "Construct the Ark of the chumbiswork Justicar and free Ratvar."
 
 //Eminence defines
-#define SUPERHEATED_CLOCKWORK_WALL_LIMIT 20 //How many walls can be superheated at once
+#define SUPERHEATED_chumbisWORK_WALL_LIMIT 20 //How many walls can be superheated at once
 
-//misc clockcult stuff
+//misc chumbiscult stuff
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 
-#define CLOCKWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of clockwork armor
+#define chumbisWORK_ARMOR_COOLDOWN 1800 //The cooldown period between summoning suits of chumbiswork armor
 
 #define RATVARIAN_SPEAR_COOLDOWN 300 //The cooldown period between summoning another Ratvarian spear
 

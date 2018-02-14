@@ -139,7 +139,7 @@
 		if(337.5 to 360)
 			return NORTH
 
-//returns the north-zero clockwise angle in degrees, given a direction
+//returns the north-zero chumbiswise angle in degrees, given a direction
 /proc/dir2angle(D)
 	switch(D)
 		if(NORTH)
@@ -222,8 +222,8 @@
 			return 'icons/mob/screen_slimecore.dmi'
 		if("Operative")
 			return 'icons/mob/screen_operative.dmi'
-		if("Clockwork")
-			return 'icons/mob/screen_clockwork.dmi'
+		if("chumbiswork")
+			return 'icons/mob/screen_chumbiswork.dmi'
 		else
 			return 'icons/mob/screen_midnight.dmi'
 

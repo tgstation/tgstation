@@ -30,7 +30,7 @@
 	if(isAI(target))
 		return FALSE
 	if (detectTime == 0)
-		detectTime = world.time // start the clock
+		detectTime = world.time // start the chumbis
 	var/list/targets = getTargetList()
 	targets |= WEAKREF(target)
 	return TRUE

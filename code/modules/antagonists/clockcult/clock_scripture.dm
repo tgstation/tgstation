@@ -7,17 +7,17 @@ Scripts: 5 servants and a cache
 Applications: 8 servants, 3 caches, and 100 CV
 */
 
-/datum/clockwork_scripture
+/datum/chumbiswork_scripture
 	var/descname = "useless" //a simple name for the scripture's effect
 	var/name = "scripture"
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
-	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
+	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See chumbis_unsorted.dm for more details on the language and how to make it.
 	var/chanting = FALSE //If the invocation's words are being spoken
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/power_cost = 5 //In watts, how much a scripture takes to invoke
 	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
-	var/special_power_cost //This should be a define in __DEFINES/clockcult.dm, such as ABSCOND_ABDUCTION_COST
-	var/obj/item/clockwork/slab/slab //The parent clockwork slab
+	var/special_power_cost //This should be a define in __DEFINES/chumbiscult.dm, such as ABSCOND_ABDUCTION_COST
+	var/obj/item/chumbiswork/slab/slab //The parent chumbiswork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
 	var/usage_tip = "This piece seems to serve no purpose and is a waste of components." //A generalized tip that gives advice on a certain scripture
@@ -25,7 +25,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/multiple_invokers_used = FALSE //If scripture requires more than one invoker
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
-	var/quickbind = FALSE //if this scripture can be quickbound to a clockwork slab
+	var/quickbind = FALSE //if this scripture can be quickbound to a chumbiswork slab
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
 	var/primary_component
 	var/important = FALSE //important scripture will be italicized in the slab's interface
@@ -42,13 +42,13 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/static/list/nzcrentr_penalty = list("You'd be easy to hunt in that little hunk of metal.", "Boss says you need to get back to the beacon.", "Boss says I can kill you if you do this again.", \
 	"Sending you power is too difficult here.", "Boss says stop wasting time.")
 
-/datum/clockwork_scripture/New()
+/datum/chumbiswork_scripture/New()
 	creation_update()
 
-/datum/clockwork_scripture/proc/creation_update() //updates any on-creation effects
+/datum/chumbiswork_scripture/proc/creation_update() //updates any on-creation effects
 	return FALSE //return TRUE if updated
 
-/datum/clockwork_scripture/proc/run_scripture()
+/datum/chumbiswork_scripture/proc/run_scripture()
 	var/successful = FALSE
 	if(can_recite() && has_requirements())
 		if(slab.busy)
@@ -59,22 +59,22 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			adjust_clockwork_power(-power_cost)
+			adjust_chumbiswork_power(-power_cost)
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
-			adjust_clockwork_power(power_cost)
+			adjust_chumbiswork_power(power_cost)
 			update_slab_info()
 		else
 			successful = TRUE
 			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				SSblackbox.record_feedback("tally", "clockcult_scripture_recited", 1, name)
+				SSblackbox.record_feedback("tally", "chumbiscult_scripture_recited", 1, name)
 	if(slab)
 		slab.busy = null
 	post_recital()
 	qdel(src)
 	return successful
 
-/datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
+/datum/chumbiswork_scripture/proc/can_recite() //If the words can be spoken
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
 		return FALSE
 	if(!invoker.can_speak_vocal())
@@ -82,12 +82,12 @@ Applications: 8 servants, 3 caches, and 100 CV
 		return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/has_requirements() //if we have the power and invokers to do it
+/datum/chumbiswork_scripture/proc/has_requirements() //if we have the power and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
-		if(!get_clockwork_power(power_cost))
-			to_chat(invoker, "<span class='warning'>There isn't enough power to recite this scripture! ([DisplayPower(get_clockwork_power())]/[DisplayPower(power_cost)])</span>")
+		if(!get_chumbiswork_power(power_cost))
+			to_chat(invoker, "<span class='warning'>There isn't enough power to recite this scripture! ([DisplayPower(get_chumbiswork_power())]/[DisplayPower(power_cost)])</span>")
 			return
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
@@ -122,29 +122,29 @@ Applications: 8 servants, 3 caches, and 100 CV
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
-			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
+			SEND_SOUND(invoker, sound('sound/magic/chumbiswork/invoke_general.ogg'))
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_offstation_penalty()
+/datum/chumbiswork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
 	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
 		channel_time *= 2
 		power_cost *= 2
 		return TRUE
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
+/datum/chumbiswork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
 
-/datum/clockwork_scripture/proc/recital() //The process of speaking the words
+/datum/chumbiswork_scripture/proc/recital() //The process of speaking the words
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
 				if(can_recite_scripture(L))
 					for(var/invocation in invocations)
-						clockwork_say(L, text2ratvar(invocation), whispered)
+						chumbiswork_say(L, text2ratvar(invocation), whispered)
 		else
 			for(var/invocation in invocations)
-				clockwork_say(invoker, text2ratvar(invocation), whispered)
+				chumbiswork_say(invoker, text2ratvar(invocation), whispered)
 	to_chat(invoker, "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>")
 	if(!channel_time)
 		return TRUE
@@ -158,7 +158,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	chanting = FALSE
 	return TRUE
 
-/datum/clockwork_scripture/proc/chant()
+/datum/chumbiswork_scripture/proc/chant()
 	set waitfor = FALSE
 	chanting = TRUE
 	for(var/invocation in invocations)
@@ -168,52 +168,52 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
 				if(can_recite_scripture(L))
-					clockwork_say(L, text2ratvar(invocation), whispered)
+					chumbiswork_say(L, text2ratvar(invocation), whispered)
 		else
-			clockwork_say(invoker, text2ratvar(invocation), whispered)
+			chumbiswork_say(invoker, text2ratvar(invocation), whispered)
 
-/datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
-
-
-/datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+/datum/chumbiswork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
 
 
-/datum/clockwork_scripture/proc/pre_recital() //Called before the scripture is recited
+/datum/chumbiswork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
 
 
-/datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited
+/datum/chumbiswork_scripture/proc/pre_recital() //Called before the scripture is recited
+
+
+/datum/chumbiswork_scripture/proc/post_recital() //Called after the scripture is recited
 
 //Channeled scripture begins instantly but runs constantly
-/datum/clockwork_scripture/channeled
+/datum/chumbiswork_scripture/channeled
 	var/list/chant_invocations = list("AYY LMAO")
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
 
-/datum/clockwork_scripture/channeled/check_offstation_penalty()
+/datum/chumbiswork_scripture/channeled/check_offstation_penalty()
 	. = ..()
 	if(.)
 		chant_interval *= 2
 
-/datum/clockwork_scripture/channeled/scripture_effects()
+/datum/chumbiswork_scripture/channeled/scripture_effects()
 	for(var/i in 1 to chant_amount)
 		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
-		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
+		chumbiswork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
 		if(!chant_effects(i))
 			break
 	if(invoker && slab)
 		chant_end_effects()
 	return TRUE
 
-/datum/clockwork_scripture/channeled/proc/chant_effects(chant_number) //The chant's periodic effects
+/datum/chumbiswork_scripture/channeled/proc/chant_effects(chant_number) //The chant's periodic effects
 
-/datum/clockwork_scripture/channeled/proc/chant_end_effects() //The chant's effect upon ending
+/datum/chumbiswork_scripture/channeled/proc/chant_end_effects() //The chant's effect upon ending
 	to_chat(invoker, "<span class='brass'>You cease your chant.</span>")
 
 
 //Creates an object at the invoker's feet
-/datum/clockwork_scripture/create_object
-	var/object_path = /obj/item/clockwork //The path of the object created
+/datum/chumbiswork_scripture/create_object
+	var/object_path = /obj/item/chumbiswork //The path of the object created
 	var/put_object_in_hands = TRUE
 	var/creator_message = "<span class='brass'>You create a meme.</span>" //Shown to the invoker
 	var/observer_message
@@ -221,12 +221,12 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/atom/movable/prevent_path
 	var/space_allowed = FALSE
 
-/datum/clockwork_scripture/create_object/New()
+/datum/chumbiswork_scripture/create_object/New()
 	..()
 	if(!prevent_path)
 		prevent_path = object_path
 
-/datum/clockwork_scripture/create_object/check_special_requirements()
+/datum/chumbiswork_scripture/create_object/check_special_requirements()
 	var/turf/T = get_turf(invoker)
 	if(!space_allowed && isspaceturf(T))
 		to_chat(invoker, "<span class='warning'>You need solid ground to place this object!</span>")
@@ -236,7 +236,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		return FALSE
 	return TRUE
 
-/datum/clockwork_scripture/create_object/scripture_effects()
+/datum/chumbiswork_scripture/create_object/scripture_effects()
 	if(creator_message && observer_message)
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
@@ -249,20 +249,20 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 
 //Used specifically to create construct shells.
-/datum/clockwork_scripture/create_object/construct
+/datum/chumbiswork_scripture/create_object/construct
 	put_object_in_hands = FALSE
 	var/construct_type //The type of construct that the scripture is made to create, even if not directly
 	var/construct_limit = 1 //How many constructs of this type can exist
 	var/combat_construct = FALSE //If this construct is meant for fighting and shouldn't be at the base before the assault phase
 	var/confirmed = FALSE //If we've confirmed that we want to make this construct outside of the station Z
 
-/datum/clockwork_scripture/create_object/construct/check_special_requirements()
+/datum/chumbiswork_scripture/create_object/construct/check_special_requirements()
 	update_construct_limit()
 	var/constructs = get_constructs()
 	if(constructs >= construct_limit)
 		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [round(construct_limit)] at once.</span>")
 		return
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+	var/obj/structure/destructible/chumbiswork/massive/celestial_gateway/G = GLOB.ark_of_the_chumbiswork_justiciar
 	if(G && !G.active && combat_construct && is_reebe(invoker.z) && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
 		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
 			return
@@ -271,25 +271,25 @@ Applications: 8 servants, 3 caches, and 100 CV
 		confirmed = TRUE
 	return TRUE
 
-/datum/clockwork_scripture/create_object/construct/post_recital()
+/datum/chumbiswork_scripture/create_object/construct/post_recital()
 	creation_update()
 	confirmed = FALSE
 
-/datum/clockwork_scripture/create_object/construct/proc/get_constructs()
+/datum/chumbiswork_scripture/create_object/construct/proc/get_constructs()
 	var/constructs = 0
-	for(var/V in GLOB.all_clockwork_mobs)
+	for(var/V in GLOB.all_chumbiswork_mobs)
 		if(istype(V, construct_type))
 			constructs++
-	for(var/V in GLOB.all_clockwork_objects)
+	for(var/V in GLOB.all_chumbiswork_objects)
 		if(istype(V, object_path)) //nice try
 			constructs++
 	return constructs
 
-/datum/clockwork_scripture/create_object/construct/proc/update_construct_limit() //Change this on a per-scripture basis, for dynamic limits
+/datum/chumbiswork_scripture/create_object/construct/proc/update_construct_limit() //Change this on a per-scripture basis, for dynamic limits
 
 
 //Uses a ranged slab ability, returning only when the ability no longer exists(ie, when interrupted) or finishes.
-/datum/clockwork_scripture/ranged_ability
+/datum/chumbiswork_scripture/ranged_ability
 	var/slab_overlay
 	var/ranged_type = /obj/effect/proc_holder/slab
 	var/ranged_message = "This is a huge goddamn bug, how'd you cast this?"
@@ -297,16 +297,16 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/allow_mobility = TRUE //if moving and swapping hands is allowed during the while
 	var/datum/progressbar/progbar
 
-/datum/clockwork_scripture/ranged_ability/Destroy()
+/datum/chumbiswork_scripture/ranged_ability/Destroy()
 	qdel(progbar)
 	return ..()
 
-/datum/clockwork_scripture/ranged_ability/scripture_effects()
+/datum/chumbiswork_scripture/ranged_ability/scripture_effects()
 	if(slab_overlay)
 		slab.add_overlay(slab_overlay)
-		slab.item_state = "clockwork_slab"
-		slab.lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-		slab.righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+		slab.item_state = "chumbiswork_slab"
+		slab.lefthand_file = 'icons/mob/inhands/antag/chumbiswork_lefthand.dmi'
+		slab.righthand_file = 'icons/mob/inhands/antag/chumbiswork_righthand.dmi'
 		slab.inhand_overlay = slab_overlay
 	slab.slab_ability = new ranged_type(slab)
 	slab.slab_ability.slab = slab

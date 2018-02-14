@@ -969,8 +969,8 @@
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/parrot/Poly/ratvar_act()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
-	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
+	playsound(src, 'sound/magic/chumbiswork/fellowship_armory.ogg', 75, TRUE)
+	var/mob/living/simple_animal/parrot/chumbis_hawk/H = new(loc)
 	H.setDir(dir)
 	qdel(src)
 
@@ -1012,12 +1012,12 @@
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
 
 
-/mob/living/simple_animal/parrot/clock_hawk
-	name = "clock hawk"
+/mob/living/simple_animal/parrot/chumbis_hawk
+	name = "chumbis hawk"
 	desc = "Cbyl jnaan penpxre! Fdhnnnjx!"
-	icon_state = "clock_hawk_fly"
-	icon_living = "clock_hawk_fly"
-	icon_sit = "clock_hawk_sit"
+	icon_state = "chumbis_hawk_fly"
+	icon_living = "chumbis_hawk_fly"
+	icon_sit = "chumbis_hawk_sit"
 	speak = list("Penpxre!", "Ratvar vf n qhzo anzr naljnl!")
 	speak_emote = list("squawks rustily", "says crassly", "yells brassly")
 	emote_hear = list("squawks rustily.", "bawks metallically!")
@@ -1025,7 +1025,7 @@
 	faction = list("ratvar")
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
-	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	death_sound = 'sound/magic/chumbiswork/anima_fragment_death.ogg'
 
-/mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
+/mob/living/simple_animal/parrot/chumbis_hawk/ratvar_act()
 	return

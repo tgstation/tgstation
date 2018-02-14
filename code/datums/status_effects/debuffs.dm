@@ -114,7 +114,7 @@
 	name = "Belligerent"
 	desc = "<b><font color=#880020>Kneel, her-eti'c.</font></b>"
 	icon_state = "belligerent"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"
 
 /datum/status_effect/belligerent/on_apply()
 	return do_movement_toggle(TRUE)
@@ -154,7 +154,7 @@
 	tick_interval = 10
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
-	var/obj/structure/destructible/clockwork/powered/mania_motor/motor
+	var/obj/structure/destructible/chumbiswork/powered/mania_motor/motor
 	var/severity = 0 //goes up to a maximum of MAX_MANIA_SEVERITY
 	var/warned_turnoff = FALSE //if we've warned that the motor is off
 	var/warned_outofsight = FALSE //if we've warned that the target is out of sight of the motor
@@ -166,7 +166,7 @@
 	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"" = TRUE, "\"D*dn't **ey mak* an **te***c*i*n le**?\"" = TRUE, "\"The** f**ls for**t t* make a ***** *f-\"" = TRUE, \
 	"\"No, *O, you **re so cl***-\"" = TRUE, "You hear a yell of frustration, cut off by static." = FALSE)
 
-/datum/status_effect/maniamotor/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/powered/mania_motor/new_motor)
+/datum/status_effect/maniamotor/on_creation(mob/living/new_owner, obj/structure/destructible/chumbiswork/powered/mania_motor/new_motor)
 	. = ..()
 	if(.)
 		motor = new_motor
@@ -185,7 +185,7 @@
 		return
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
-			if(can_access_clockwork_power(motor, motor.mania_cost))
+			if(can_access_chumbiswork_power(motor, motor.mania_cost))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
 				var/pickedmessage = pick(powerloss_messages)
@@ -482,7 +482,7 @@
 	name = "Dazzling Lights"
 	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
 	icon_state = "kindle"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"
 
 
 //Ichorial Stain: Applied to servants revived by a vitality matrix. Prevents them from being revived by one again until the effect fades.
@@ -506,4 +506,4 @@
 	name = "Ichorial Stain"
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"

@@ -33,7 +33,7 @@
 	return
 
 /obj/structure/lattice/ratvar_act()
-	new /obj/structure/lattice/clockwork(loc)
+	new /obj/structure/lattice/chumbiswork(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -54,25 +54,25 @@
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
-/obj/structure/lattice/clockwork
+/obj/structure/lattice/chumbiswork
 	name = "cog lattice"
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
-	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+	icon = 'icons/obj/smooth_structures/lattice_chumbiswork.dmi'
 
-/obj/structure/lattice/clockwork/Initialize(mapload)
-	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
+/obj/structure/lattice/chumbiswork/Initialize(mapload)
+	canSmoothWith += /turf/open/indestructible/chumbis_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
 	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
-/obj/structure/lattice/clockwork/ratvar_act()
+/obj/structure/lattice/chumbiswork/ratvar_act()
 	if(ISODD(x+y))
-		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
+		icon = 'icons/obj/smooth_structures/lattice_chumbiswork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
 	else
-		icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+		icon = 'icons/obj/smooth_structures/lattice_chumbiswork.dmi'
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE
@@ -90,7 +90,7 @@
 	to_chat(user, "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>")
 
 /obj/structure/lattice/catwalk/ratvar_act()
-	new /obj/structure/lattice/catwalk/clockwork(loc)
+	new /obj/structure/lattice/catwalk/chumbiswork(loc)
 
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
@@ -104,17 +104,17 @@
 		C.deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/clockwork
-	name = "clockwork catwalk"
-	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
+/obj/structure/lattice/catwalk/chumbiswork
+	name = "chumbiswork catwalk"
+	icon = 'icons/obj/smooth_structures/catwalk_chumbiswork.dmi'
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,
-	/turf/open/indestructible/clock_spawn_room,
+	/turf/open/indestructible/chumbis_spawn_room,
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
 
-/obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
+/obj/structure/lattice/catwalk/chumbiswork/Initialize(mapload)
 	. = ..()
 	ratvar_act()
 	if(!mapload)
@@ -123,13 +123,13 @@
 	if(is_reebe(z))
 		resistance_flags |= INDESTRUCTIBLE
 
-/obj/structure/lattice/catwalk/clockwork/ratvar_act()
+/obj/structure/lattice/catwalk/chumbiswork/ratvar_act()
 	if(ISODD(x+y))
-		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
+		icon = 'icons/obj/smooth_structures/catwalk_chumbiswork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
 	else
-		icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
+		icon = 'icons/obj/smooth_structures/catwalk_chumbiswork.dmi'
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE

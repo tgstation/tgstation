@@ -38,7 +38,7 @@ Buildable meters
 
 /obj/item/pipe/ComponentInitialize()
 	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE ,null,null, CALLBACK(src, .proc/fixdir))
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_chumbisWISE ,null,null, CALLBACK(src, .proc/fixdir))
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
 	if(make_from)

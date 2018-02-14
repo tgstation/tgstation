@@ -67,25 +67,25 @@
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
 
-/turf/open/indestructible/clock_spawn_room
+/turf/open/indestructible/chumbis_spawn_room
 	name = "cogmetal"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
-	baseturfs = /turf/open/indestructible/clock_spawn_room
+	baseturfs = /turf/open/indestructible/chumbis_spawn_room
 
-/turf/open/indestructible/clock_spawn_room/Entered()
+/turf/open/indestructible/chumbis_spawn_room/Entered()
 	..()
 	START_PROCESSING(SSfastprocess, src)
 
-/turf/open/indestructible/clock_spawn_room/Destroy()
+/turf/open/indestructible/chumbis_spawn_room/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
-/turf/open/indestructible/clock_spawn_room/process()
+/turf/open/indestructible/chumbis_spawn_room/process()
 	if(!port_servants())
 		STOP_PROCESSING(SSfastprocess, src)
 
-/turf/open/indestructible/clock_spawn_room/proc/port_servants()
+/turf/open/indestructible/chumbis_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
 		if(is_servant_of_ratvar(L) && L.stat != DEAD)

@@ -585,7 +585,7 @@
 			to_chat(user, "<span class='notice'>You open [src]. It will now cleave enemies in a wide arc.</span>")
 		else
 			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly and cause beastly enemies to bleed.</span>")
-	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
+	playsound(user, 'sound/magic/chumbiswork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
 	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
@@ -910,16 +910,16 @@
 	if(used)
 		return
 	used = TRUE
-	
+
 	var/list/da_list = list()
 	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
 		var/mob/living/L = I
 		da_list[L.real_name] = L
-		
+
 	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
-	
+
 	choice = da_list[choice]
-	
+
 	if(!choice)
 		return
 

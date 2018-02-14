@@ -290,21 +290,21 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
+/datum/action/item_action/chumbis
+	icon_icon = 'icons/mob/actions/actions_chumbiscult.dmi'
+	background_icon_state = "bg_chumbis"
+	buttontooltipstyle = "chumbiscult"
 
-/datum/action/item_action/clock/IsAvailable()
+/datum/action/item_action/chumbis/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	return ..()
 
-/datum/action/item_action/clock/toggle_visor
+/datum/action/item_action/chumbis/toggle_visor
 	name = "Create Judicial Marker"
 	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
+/datum/action/item_action/chumbis/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -313,12 +313,12 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock/hierophant
+/datum/action/item_action/chumbis/hierophant
 	name = "Hierophant Network"
 	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
 	button_icon_state = "hierophant_slab"
 
-/datum/action/item_action/clock/quickbind
+/datum/action/item_action/chumbis/quickbind
 	name = "Quickbind"
 	desc = "If you're seeing this, file a bug report."
 	var/scripture_index = 0 //the index of the scripture we're associated with

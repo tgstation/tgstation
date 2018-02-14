@@ -1,25 +1,25 @@
-//The base clockwork effect. Can have an alternate desc and will show up in the list of clockwork objects.
-/obj/effect/clockwork
+//The base chumbiswork effect. Can have an alternate desc and will show up in the list of chumbiswork objects.
+/obj/effect/chumbiswork
 	name = "meme machine"
 	desc = "Still don't know what it is."
-	var/clockwork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to clockwork cultists instead of the normal description
-	icon = 'icons/effects/clockwork_effects.dmi'
+	var/chumbiswork_desc = "A fabled artifact from beyond the stars. Contains concentrated meme essence." //Shown to chumbiswork cultists instead of the normal description
+	icon = 'icons/effects/chumbiswork_effects.dmi'
 	icon_state = "ratvars_flame"
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
-/obj/effect/clockwork/Initialize()
+/obj/effect/chumbiswork/Initialize()
 	. = ..()
-	GLOB.all_clockwork_objects += src
+	GLOB.all_chumbiswork_objects += src
 
-/obj/effect/clockwork/Destroy()
-	GLOB.all_clockwork_objects -= src
+/obj/effect/chumbiswork/Destroy()
+	GLOB.all_chumbiswork_objects -= src
 	return ..()
 
-/obj/effect/clockwork/examine(mob/user)
-	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
-		desc = clockwork_desc
+/obj/effect/chumbiswork/examine(mob/user)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && chumbiswork_desc)
+		desc = chumbiswork_desc
 	..()
 	desc = initial(desc)

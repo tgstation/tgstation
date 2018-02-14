@@ -302,9 +302,9 @@
 
 /obj/structure/girder/ratvar_act()
 	if(anchored)
-		new /obj/structure/destructible/clockwork/wall_gear(loc)
+		new /obj/structure/destructible/chumbiswork/wall_gear(loc)
 	else
-		new /obj/structure/destructible/clockwork/wall_gear/displaced(loc)
+		new /obj/structure/destructible/chumbiswork/wall_gear/displaced(loc)
 	qdel(src)
 
 /obj/structure/girder/narsie_act()

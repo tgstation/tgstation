@@ -23,7 +23,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
-	clockwork = TRUE
+	chumbiswork = TRUE
 	var/obj/item/device/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxillary_base
 

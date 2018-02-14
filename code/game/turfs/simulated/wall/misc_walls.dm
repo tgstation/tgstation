@@ -45,28 +45,28 @@
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
 	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
-//Clockwork wall: Causes nearby tinkerer's caches to generate components.
-/turf/closed/wall/clockwork
-	name = "clockwork wall"
+//chumbiswork wall: Causes nearby tinkerer's caches to generate components.
+/turf/closed/wall/chumbiswork
+	name = "chumbiswork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	hardness = 10
 	slicing_duration = 80
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
-	girder_type = /obj/structure/destructible/clockwork/wall_gear
-	baseturfs = /turf/open/floor/clockwork/reebe
+	girder_type = /obj/structure/destructible/chumbiswork/wall_gear
+	baseturfs = /turf/open/floor/chumbiswork/reebe
 	var/heated
-	var/obj/effect/clockwork/overlay/wall/realappearance
+	var/obj/effect/chumbiswork/overlay/wall/realappearance
 
-/turf/closed/wall/clockwork/Initialize()
+/turf/closed/wall/chumbiswork/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/wall(src)
 	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearance = new /obj/effect/clockwork/overlay/wall(src)
+	realappearance = new /obj/effect/chumbiswork/overlay/wall(src)
 	realappearance.linked = src
 
-/turf/closed/wall/clockwork/Destroy()
+/turf/closed/wall/chumbiswork/Destroy()
 	if(realappearance)
 		qdel(realappearance)
 		realappearance = null
@@ -77,20 +77,20 @@
 
 	return ..()
 
-/turf/closed/wall/clockwork/ReplaceWithLattice()
+/turf/closed/wall/chumbiswork/ReplaceWithLattice()
 	..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
 
-/turf/closed/wall/clockwork/narsie_act()
+/turf/closed/wall/chumbiswork/narsie_act()
 	..()
-	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type
+	if(istype(src, /turf/closed/wall/chumbiswork)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
+/turf/closed/wall/chumbiswork/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
 		ScrapeAway()
@@ -108,28 +108,28 @@
 		else
 			O.forceMove(src)
 
-/turf/closed/wall/clockwork/devastate_wall()
+/turf/closed/wall/chumbiswork/devastate_wall()
 	for(var/i in 1 to 2)
-		new/obj/item/clockwork/alloy_shards/large(src)
+		new/obj/item/chumbiswork/alloy_shards/large(src)
 	for(var/i in 1 to 2)
-		new/obj/item/clockwork/alloy_shards/medium(src)
+		new/obj/item/chumbiswork/alloy_shards/medium(src)
 	for(var/i in 1 to 3)
-		new/obj/item/clockwork/alloy_shards/small(src)
+		new/obj/item/chumbiswork/alloy_shards/small(src)
 
-/turf/closed/wall/clockwork/attack_hulk(mob/living/user, does_attack_animation = 0)
+/turf/closed/wall/chumbiswork/attack_hulk(mob/living/user, does_attack_animation = 0)
 	..()
 	if(heated)
 		to_chat(user, "<span class='userdanger'>The wall is searing hot to the touch!</span>")
 		user.adjustFireLoss(5)
 		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
 
-/turf/closed/wall/clockwork/mech_melee_attack(obj/mecha/M)
+/turf/closed/wall/chumbiswork/mech_melee_attack(obj/mecha/M)
 	..()
 	if(heated)
 		to_chat(M.occupant, "<span class='userdanger'>The wall's intense heat completely reflects your [M.name]'s attack!</span>")
 		M.take_damage(20, BURN)
 
-/turf/closed/wall/clockwork/proc/turn_up_the_heat()
+/turf/closed/wall/chumbiswork/proc/turn_up_the_heat()
 	if(!heated)
 		name = "superheated [name]"
 		visible_message("<span class='warning'>[src] sizzles with heat!</span>")

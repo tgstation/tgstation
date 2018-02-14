@@ -1,5 +1,5 @@
-//A massive gear, effectively a girder for clocks.
-/obj/structure/destructible/clockwork/wall_gear
+//A massive gear, effectively a girder for chumbiss.
+/obj/structure/destructible/chumbiswork/wall_gear
 	name = "massive gear"
 	icon_state = "wall_gear"
 	unanchored_icon = "wall_gear"
@@ -9,21 +9,21 @@
 	construction_value = 3
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
-	/obj/item/clockwork/alloy_shards/medium = 4, \
-	/obj/item/clockwork/alloy_shards/small = 2) //slightly more debris than the default, totals 26 alloy
+	debris = list(/obj/item/chumbiswork/alloy_shards/large = 1, \
+	/obj/item/chumbiswork/alloy_shards/medium = 4, \
+	/obj/item/chumbiswork/alloy_shards/small = 2) //slightly more debris than the default, totals 26 alloy
 
-/obj/structure/destructible/clockwork/wall_gear/displaced
+/obj/structure/destructible/chumbiswork/wall_gear/displaced
 	anchored = FALSE
 
-/obj/structure/destructible/clockwork/wall_gear/Initialize()
+/obj/structure/destructible/chumbiswork/wall_gear/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/gear(get_turf(src))
 
-/obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
+/obj/structure/destructible/chumbiswork/wall_gear/emp_act(severity)
 	return
 
-/obj/structure/destructible/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
+/obj/structure/destructible/chumbiswork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		default_unfasten_wrench(user, I, 10)
 		return 1
@@ -54,13 +54,13 @@
 		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			var/brass_floor = FALSE
-			if(istype(T, /turf/open/floor/clockwork)) //if the floor is already brass, costs less to make(conservation of masssssss)
+			if(istype(T, /turf/open/floor/chumbiswork)) //if the floor is already brass, costs less to make(conservation of masssssss)
 				brass_floor = TRUE
 			if(W.use(2 - brass_floor))
 				if(anchored)
-					T.PlaceOnTop(/turf/closed/wall/clockwork)
+					T.PlaceOnTop(/turf/closed/wall/chumbiswork)
 				else
-					T.PlaceOnTop(/turf/open/floor/clockwork)
+					T.PlaceOnTop(/turf/open/floor/chumbiswork)
 					new /obj/structure/falsewall/brass(T)
 				qdel(src)
 			else
@@ -68,7 +68,7 @@
 		return 1
 	return ..()
 
-/obj/structure/destructible/clockwork/wall_gear/deconstruct(disassembled = TRUE)
+/obj/structure/destructible/chumbiswork/wall_gear/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1) && disassembled)
 		new /obj/item/stack/tile/brass(loc, 3)
 	return ..()

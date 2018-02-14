@@ -3,14 +3,14 @@
 /datum/action/innate/call_weapon
 	name = "Call Weapon"
 	desc = "This definitely shouldn't exist."
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	icon_icon = 'icons/mob/actions/actions_chumbiscult.dmi'
 	button_icon_state = "ratvarian_spear"
-	background_icon_state = "bg_clock"
+	background_icon_state = "bg_chumbis"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-	buttontooltipstyle = "clockcult"
+	buttontooltipstyle = "chumbiscult"
 	var/cooldown = 0
-	var/obj/item/clockwork/weapon/weapon_type //The type of weapon to create
-	var/obj/item/clockwork/weapon/weapon
+	var/obj/item/chumbiswork/weapon/weapon_type //The type of weapon to create
+	var/obj/item/chumbiswork/weapon/weapon
 
 /datum/action/innate/call_weapon/IsAvailable()
 	if(!is_servant_of_ratvar(owner))

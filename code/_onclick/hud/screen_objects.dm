@@ -510,14 +510,14 @@
 	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/screen/healths/clock
+/obj/screen/healths/chumbis
 	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_clock"
+	icon_state = "bg_chumbis"
 	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/screen/healths/clock/gear
-	icon = 'icons/mob/clockwork_mobs.dmi'
+/obj/screen/healths/chumbis/gear
+	icon = 'icons/mob/chumbiswork_mobs.dmi'
 	icon_state = "bg_gear"
 	screen_loc = ui_internal
 

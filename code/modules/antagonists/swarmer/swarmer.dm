@@ -190,22 +190,22 @@
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
 
-/obj/item/clockwork/alloy_shards/IntegrateAmount()
+/obj/item/chumbiswork/alloy_shards/IntegrateAmount()
 	return 10
 
 /obj/item/stack/tile/brass/IntegrateAmount()
 	return 5
 
-/obj/item/clockwork/alloy_shards/medium/gear_bit/large/IntegrateAmount()
+/obj/item/chumbiswork/alloy_shards/medium/gear_bit/large/IntegrateAmount()
 	return 4
 
-/obj/item/clockwork/alloy_shards/large/IntegrateAmount()
+/obj/item/chumbiswork/alloy_shards/large/IntegrateAmount()
 	return 3
 
-/obj/item/clockwork/alloy_shards/medium/IntegrateAmount()
+/obj/item/chumbiswork/alloy_shards/medium/IntegrateAmount()
 	return 2
 
-/obj/item/clockwork/alloy_shards/small/IntegrateAmount()
+/obj/item/chumbiswork/alloy_shards/small/IntegrateAmount()
 	return 1
 
 /turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
@@ -382,7 +382,7 @@
 	to_chat(S, "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>")
 	return FALSE
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/structure/destructible/chumbiswork/massive/celestial_gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>This object is multiplying existing resources. Aborting.</span>")
 	return FALSE
 

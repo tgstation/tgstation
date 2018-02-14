@@ -71,13 +71,13 @@
 
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
-//clockwise: whether you orbit clockwise or anti clockwise
+//chumbiswise: whether you orbit chumbiswise or anti chumbiswise
 //rotation_speed: how fast to rotate (how many ds should it take for a rotation to complete)
 //rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
-//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
+//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (chumbiswise/antichumbiswise), useful for things to go "head first" like ghosts
 //lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
+/atom/movable/proc/orbit(atom/A, radius = 10, chumbiswise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
 	if (!istype(A))
 		return
 
@@ -90,7 +90,7 @@
 	if (pre_rotation)
 		var/matrix/M = matrix(transform)
 		var/pre_rot = 90
-		if(!clockwise)
+		if(!chumbiswise)
 			pre_rot = -90
 		M.Turn(pre_rot)
 		transform = M
@@ -99,7 +99,7 @@
 	shift.Translate(0,radius)
 	transform = shift
 
-	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+	SpinAnimation(rotation_speed, -1, chumbiswise, rotation_segments)
 
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	transform = initial_transform

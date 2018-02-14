@@ -206,18 +206,18 @@
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
-/obj/machinery/sleeper/clockwork
+/obj/machinery/sleeper/chumbiswork
 	name = "soothing sleeper"
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
-	icon_state = "sleeper_clockwork"
+	icon_state = "sleeper_chumbiswork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
 	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
 
-/obj/machinery/sleeper/clockwork/process()
+/obj/machinery/sleeper/chumbiswork/process()
 	if(occupant && isliving(occupant))
 		var/mob/living/L = occupant
-		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
-			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)
+		if(GLOB.chumbiswork_vitality) //If there's Vitality, the sleeper has passive healing
+			GLOB.chumbiswork_vitality = max(0, GLOB.chumbiswork_vitality - 1)
 			L.adjustBruteLoss(-1)
 			L.adjustFireLoss(-1)
 			L.adjustOxyLoss(-5)

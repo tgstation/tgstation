@@ -376,7 +376,7 @@
 
 /obj/item/toy/plush/plushvar
 	name = "ratvar plushie"
-	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
+	desc = "An adorable plushie of the chumbiswork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
@@ -408,7 +408,7 @@
 			clash_target = null
 			P.clashing = FALSE
 			return
-		playsound(src, 'sound/magic/clockwork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/chumbiswork/ratvar_attack.ogg', 50, TRUE, frequency = 2)
 		sleep(2.4)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -427,7 +427,7 @@
 		if(QDELETED(P))
 			clash_target = null
 			return
-		playsound(P, 'sound/magic/clockwork/narsie_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(P, 'sound/magic/chumbiswork/narsie_attack.ogg', 50, TRUE, frequency = 2)
 		sleep(3.3)
 		if(QDELETED(src))
 			P.clashing = FALSE
@@ -446,7 +446,7 @@
 	if(a_winnar_is == src)
 		say(pick("DIE.", "ROT."))
 		P.say(pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-"))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/chumbiswork/anima_fragment_attack.ogg', 50, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_dies.ogg', 50, TRUE, frequency = 2)
 		explosion(P, 0, 0, 1)
 		qdel(P)
@@ -454,7 +454,7 @@
 	else
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
-		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
+		playsound(src, 'sound/magic/chumbiswork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
 		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)

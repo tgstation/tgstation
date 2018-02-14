@@ -108,13 +108,13 @@
 	desc = "The air hangs heavy over this sinister flooring."
 	icon_state = "plating"
 	CanAtmosPass = ATMOS_PASS_NO
-	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
+	var/obj/effect/chumbiswork/overlay/floor/bloodcult/realappearance
 
 
 /turf/open/floor/engine/cult/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
-	realappearance = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
+	realappearance = new /obj/effect/chumbiswork/overlay/floor/bloodcult(src)
 	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()

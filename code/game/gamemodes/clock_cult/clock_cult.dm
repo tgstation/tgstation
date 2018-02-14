@@ -2,33 +2,33 @@ GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot
 
 /*
 
-CLOCKWORK CULT: Based off of the failed pull requests from /vg/
+chumbisWORK CULT: Based off of the failed pull requests from /vg/
 
 While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
-Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
+Ratvar, the chumbiswork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
 Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
 This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
-The clockwork version of an arcane tome is the clockwork slab.
+The chumbiswork version of an arcane tome is the chumbiswork slab.
 
 This file's folder contains:
-	clock_cult.dm: Core gamemode files.
-	clock_effect.dm: The base clockwork effect code.
-	- Effect files are in game/gamemodes/clock_cult/clock_effects/
-	clock_item.dm: The base clockwork item code.
-	- Item files are in game/gamemodes/clock_cult/clock_items/
-	clock_mobs.dm: Hostile clockwork creatures.
-	clock_scripture.dm: The base Scripture code.
-	- Scripture files are in game/gamemodes/clock_cult/clock_scripture/
-	clock_structure.dm: The base clockwork structure code, including clockwork machines.
-	- Structure files, and Ratvar, are in game/gamemodes/clock_cult/clock_structures/
+	chumbis_cult.dm: Core gamemode files.
+	chumbis_effect.dm: The base chumbiswork effect code.
+	- Effect files are in game/gamemodes/chumbis_cult/chumbis_effects/
+	chumbis_item.dm: The base chumbiswork item code.
+	- Item files are in game/gamemodes/chumbis_cult/chumbis_items/
+	chumbis_mobs.dm: Hostile chumbiswork creatures.
+	chumbis_scripture.dm: The base Scripture code.
+	- Scripture files are in game/gamemodes/chumbis_cult/chumbis_scripture/
+	chumbis_structure.dm: The base chumbiswork structure code, including chumbiswork machines.
+	- Structure files, and Ratvar, are in game/gamemodes/chumbis_cult/chumbis_structures/
 
-	game/gamemodes/clock_cult/clock_helpers/ contains several helper procs, including the Ratvarian language.
+	game/gamemodes/chumbis_cult/chumbis_helpers/ contains several helper procs, including the Ratvarian language.
 
-	clockcult defines are in __DEFINES/clockcult.dm
+	chumbiscult defines are in __DEFINES/chumbiscult.dm
 
 Credit where due:
 1. VelardAmakar from /vg/ for the entire design document, idea, and plan. Thank you very much.
@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/chumbiscult)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -61,34 +61,34 @@ Credit where due:
 		return FALSE
 	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
 		return FALSE
-	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
+	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || ischumbismob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
 
 /proc/add_servant_of_ratvar(mob/L, silent = FALSE, create_team = TRUE)
 	if(!L || !L.mind)
 		return
-	var/update_type = /datum/antagonist/clockcult
+	var/update_type = /datum/antagonist/chumbiscult
 	if(silent)
-		update_type = /datum/antagonist/clockcult/silent
-	var/datum/antagonist/clockcult/C = new update_type(L.mind)
+		update_type = /datum/antagonist/chumbiscult/silent
+	var/datum/antagonist/chumbiscult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
-	
+
 	if(iscyborg(L))
 		var/mob/living/silicon/robot/R = L
 		if(R.deployed)
 			var/mob/living/silicon/ai/AI = R.mainframe
 			R.undeploy()
 			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>") //The AI needs to be in its core to properly be converted
-	
+
 	. = L.mind.add_antag_datum(C)
 
 	if(!silent && L)
 		if(.)
 			to_chat(L, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. [issilicon(L) ? "You cannot compute this truth!" : \
 			"Your mind is racing!"] You hear the whooshing steam and cl[pick("ank", "ink", "unk", "ang")]ing cogs of a billion billion machines, and all at once it comes to you.<br>\
-			Ratvar, the Clockwork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
+			Ratvar, the chumbiswork Justiciar, [GLOB.ratvar_awakens ? "has been freed from his eternal prison" : "lies in exile, derelict and forgotten in an unseen realm"].</span>")
 			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
 		else
 			L.visible_message("<span class='boldwarning'>[L] seems to resist an unseen force!</span>", null, null, 7, L)
@@ -97,20 +97,20 @@ Credit where due:
 			is a meaningless cacophony.</span><br>\
 			<span class='userdanger'>You see an abomination of rusting parts[GLOB.ratvar_awakens ? ", and it is here.<br>It is too late" : \
 			" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
-			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
+			L.playsound_local(get_turf(L), 'sound/ambience/antag/chumbiscultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
 			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
-	
+
 
 
 
 /proc/remove_servant_of_ratvar(mob/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
-	if(!clock_datum)
+	var/datum/antagonist/chumbiscult/chumbis_datum = L.mind.has_antag_datum(/datum/antagonist/chumbiscult)
+	if(!chumbis_datum)
 		return FALSE
-	clock_datum.silent = silent
-	clock_datum.on_removal()
+	chumbis_datum.silent = silent
+	chumbis_datum.on_removal()
 	return TRUE
 
 ///////////////
@@ -119,11 +119,11 @@ Credit where due:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/clockwork_explanation = "Defend the Ark of the Clockwork Justiciar and free Ratvar." //The description of the current objective
+	var/chumbiswork_explanation = "Defend the Ark of the chumbiswork Justiciar and free Ratvar." //The description of the current objective
 
-/datum/game_mode/clockwork_cult
-	name = "clockwork cult"
-	config_tag = "clockwork_cult"
+/datum/game_mode/chumbiswork_cult
+	name = "chumbiswork cult"
+	config_tag = "chumbiswork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24
@@ -135,14 +135,14 @@ Credit where due:
 	announce_span = "brass"
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
 	<span class='brass'>Servants</span>: Construct defenses to protect the Ark. Sabotage the station!\n\
-	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
+	<span class='notice'>Crew</span>: Stop the servants before they can summon the chumbiswork Justiciar."
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
 
-	var/datum/team/clockcult/main_clockcult
+	var/datum/team/chumbiscult/main_chumbiscult
 
-/datum/game_mode/clockwork_cult/pre_setup()
+/datum/game_mode/chumbiswork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
@@ -165,7 +165,7 @@ Credit where due:
 	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
 	return 1
 
-/datum/game_mode/clockwork_cult/post_setup()
+/datum/game_mode/chumbiswork_cult/post_setup()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
@@ -176,27 +176,27 @@ Credit where due:
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
+	var/obj/structure/destructible/chumbiswork/massive/celestial_gateway/G = GLOB.ark_of_the_chumbiswork_justiciar //that's a mouthful
 	G.final_countdown(ark_time)
 	..()
 	return 1
 
-/datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
+/datum/game_mode/chumbiswork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
 		return 0
-	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
+	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the chumbiswork Justiciar!</span>")
 	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
 	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
 	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
-	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
+	M.playsound_local(get_turf(M), 'sound/ambience/antag/chumbiscultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 	return 1
 
-/datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component
+/datum/game_mode/proc/equip_servant(mob/living/M) //Grants a chumbiswork slab to the mob, with one of each component
 	if(!M || !ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/L = M
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
-	var/obj/item/clockwork/slab/S = new
+	var/obj/item/chumbiswork/slab/S = new
 	var/slot = "At your feet"
 	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
 	if(ishuman(L))
@@ -209,30 +209,30 @@ Credit where due:
 			qdel(S)
 	if(S && !QDELETED(S))
 		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! It'll tell you if anything's changed, as well as what to expect.</span>")
-		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
+		to_chat(L, "<span class='alloy'>[slot] is a <b>chumbiswork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/Clockwork_Cult")
+		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/chumbiswork_Cult")
 		return TRUE
 	return FALSE
 
-/datum/game_mode/clockwork_cult/check_finished()
-	if(GLOB.ark_of_the_clockwork_justiciar && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
+/datum/game_mode/chumbiswork_cult/check_finished()
+	if(GLOB.ark_of_the_chumbiswork_justiciar && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
 		return FALSE
 	return ..()
 
-/datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	return main_clockcult.check_clockwork_victory()
+/datum/game_mode/chumbiswork_cult/proc/check_chumbiswork_victory()
+	return main_chumbiscult.check_chumbiswork_victory()
 
-/datum/game_mode/clockwork_cult/set_round_result()
+/datum/game_mode/chumbiswork_cult/set_round_result()
 	..()
-	if(GLOB.clockwork_gateway_activated)
-		SSticker.news_report = CLOCK_SUMMON
+	if(GLOB.chumbiswork_gateway_activated)
+		SSticker.news_report = chumbis_SUMMON
 		SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 	else
 		SSticker.news_report = CULT_FAILURE
 		SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 
-/datum/game_mode/clockwork_cult/generate_report()
+/datum/game_mode/chumbiswork_cult/generate_report()
 	return "Bluespace monitors near your sector have detected a continuous stream of patterned fluctuations since the station was completed. It is most probable that a powerful entity \
 	from a very far distance away is using to the station as a vector to cross that distance through bluespace. The theoretical power required for this would be monumental, and if \
 	the entity is hostile, it would need to rely on a single central power source - disrupting or destroying that power source would be the best way to prevent said entity from causing \
@@ -241,12 +241,12 @@ Credit where due:
 	your crew to dispatch it in a timely manner."
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
-	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
+	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_chumbisWORK]
 	A.join_hud(M.current)
-	set_antag_hud(M.current, "clockwork")
+	set_antag_hud(M.current, "chumbiswork")
 
 /datum/game_mode/proc/update_servant_icons_removed(datum/mind/M)
-	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_CLOCKWORK]
+	var/datum/atom_hud/antag/A = GLOB.huds[ANTAG_HUD_chumbisWORK]
 	A.leave_hud(M.current)
 	set_antag_hud(M.current, null)
 
@@ -262,7 +262,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
+	/obj/item/chumbiswork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
 	id = /obj/item/device/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -292,7 +292,7 @@ Credit where due:
 
 
 //This paper serves as a quick run-down to the cult as well as a changelog to refer to.
-//Check strings/clockwork_cult_changelog.txt for the changelog, and update it when you can!
+//Check strings/chumbiswork_cult_changelog.txt for the changelog, and update it when you can!
 /obj/item/paper/servant_primer
 	name = "The Ark And You: A Primer On Servitude"
 	color = "#DAAA18"
@@ -322,18 +322,18 @@ Credit where due:
 	<hr>\
 	<h2>Things that have changed:</h2>\
 	<ul>\
-	CLOCKCULTCHANGELOG\
+	chumbisCULTCHANGELOG\
 	</ul>\
 	<hr>\
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()
 	. = ..()
-	var/changelog = world.file2list("strings/clockwork_cult_changelog.txt")
+	var/changelog = world.file2list("strings/chumbiswork_cult_changelog.txt")
 	var/changelog_contents = ""
 	for(var/entry in changelog)
 		changelog_contents += "<li>[entry]</li>"
-	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
+	info = replacetext(info, "chumbisCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
 	if(!is_servant_of_ratvar(user) && !isobserver(user))

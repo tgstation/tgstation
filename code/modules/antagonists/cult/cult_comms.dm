@@ -198,13 +198,13 @@
 			owner.say("C'arta forbici!", language = /datum/language/common)
 		if(2)
 			owner.say("Pleggh e'ntrath!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 50, 1)
+			playsound(get_turf(owner),'sound/magic/chumbiswork/narsie_attack.ogg', 50, 1)
 		if(3)
 			owner.say("Barhah hra zar'garis!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 75, 1)
+			playsound(get_turf(owner),'sound/magic/chumbiswork/narsie_attack.ogg', 75, 1)
 		if(4)
 			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common)
-			playsound(get_turf(owner),'sound/magic/clockwork/narsie_attack.ogg', 100, 1)
+			playsound(get_turf(owner),'sound/magic/chumbiswork/narsie_attack.ogg', 100, 1)
 
 /datum/action/innate/cult/master/cultmark
 	name = "Mark Target"

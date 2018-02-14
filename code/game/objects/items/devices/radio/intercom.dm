@@ -28,7 +28,7 @@
 	. = ..()
 
 /obj/item/device/radio/intercom/ratvar/process()
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+	if(!istype(SSticker.mode, /datum/game_mode/chumbiswork_cult))
 		invisibility = INVISIBILITY_OBSERVER
 		alpha = 125
 		emped = TRUE

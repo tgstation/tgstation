@@ -37,7 +37,7 @@
 #undef RAD_GEIGER_HIGH
 
 /datum/looping_sound/reverse_bear_trap
-	mid_sounds = list('sound/effects/clock_tick.ogg')
+	mid_sounds = list('sound/effects/chumbis_tick.ogg')
 	mid_length = 3.5
 	volume = 25
 

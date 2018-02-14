@@ -7,7 +7,7 @@
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 	circuit = /obj/item/circuitboard/computer/stockexchange
-	clockwork = TRUE //it'd look weird
+	chumbiswork = TRUE //it'd look weird
 
 	light_color = LIGHT_COLOR_GREEN
 

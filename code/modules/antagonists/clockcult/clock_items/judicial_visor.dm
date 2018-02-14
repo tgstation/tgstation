@@ -2,7 +2,7 @@
 /obj/item/clothing/glasses/judicial_visor
 	name = "judicial visor"
 	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/chumbiswork_garb.dmi'
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -11,16 +11,16 @@
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
-	actions_types = list(/datum/action/item_action/clock/toggle_visor)
+	actions_types = list(/datum/action/item_action/chumbis/toggle_visor)
 
 /obj/item/clothing/glasses/judicial_visor/Initialize()
 	. = ..()
-	GLOB.all_clockwork_objects += src
+	GLOB.all_chumbiswork_objects += src
 	blaster = new(src)
 	blaster.visor = src
 
 /obj/item/clothing/glasses/judicial_visor/Destroy()
-	GLOB.all_clockwork_objects -= src
+	GLOB.all_chumbiswork_objects -= src
 	if(blaster.ranged_ability_user)
 		blaster.remove_ranged_ability()
 	blaster.visor = null
@@ -132,10 +132,10 @@
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
 			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
-		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
+		chumbiswork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
-		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
+		new/obj/effect/chumbiswork/judicial_marker(targetturf, ranged_ability_user)
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
@@ -146,29 +146,29 @@
 	return FALSE
 
 //Judicial marker: Created by the judicial visor. Immediately applies Belligerent and briefly knocks down, then after 3 seconds does large damage and briefly knocks down again
-/obj/effect/clockwork/judicial_marker
+/obj/effect/chumbiswork/judicial_marker
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
-	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
+	chumbiswork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
 	layer = BELOW_MOB_LAYER
 	var/mob/user
 
-/obj/effect/clockwork/judicial_marker/Initialize(mapload, caster)
+/obj/effect/chumbiswork/judicial_marker/Initialize(mapload, caster)
 	. = ..()
 	set_light(1.4, 2, "#FE9C11")
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
-/obj/effect/clockwork/judicial_marker/singularity_act()
+/obj/effect/chumbiswork/judicial_marker/singularity_act()
 	return
 
-/obj/effect/clockwork/judicial_marker/singularity_pull()
+/obj/effect/chumbiswork/judicial_marker/singularity_pull()
 	return
 
-/obj/effect/clockwork/judicial_marker/proc/judicialblast()
+/obj/effect/chumbiswork/judicial_marker/proc/judicialblast()
 	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
 	for(var/mob/living/carbon/C in range(1, src))
@@ -212,5 +212,5 @@
 	sleep(3) //so the animation completes properly
 	qdel(src)
 
-/obj/effect/clockwork/judicial_marker/ex_act(severity)
+/obj/effect/chumbiswork/judicial_marker/ex_act(severity)
 	return

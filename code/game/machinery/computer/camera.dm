@@ -152,7 +152,7 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	clockwork = TRUE //it'd look very weird
+	chumbiswork = TRUE //it'd look very weird
 
 	light_power = 0
 
@@ -177,7 +177,7 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
+	chumbiswork = TRUE //it'd look weird
 
 
 /obj/machinery/computer/security/mining

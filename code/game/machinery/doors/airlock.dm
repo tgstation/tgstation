@@ -227,11 +227,11 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	var/obj/machinery/door/airlock/clockwork/A
+	var/obj/machinery/door/airlock/chumbiswork/A
 	if(glass)
-		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+		A = new/obj/machinery/door/airlock/chumbiswork/brass(get_turf(src))
 	else
-		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
+		A = new/obj/machinery/door/airlock/chumbiswork(get_turf(src))
 	A.name = name
 	qdel(src)
 

@@ -1,8 +1,8 @@
 //Spatial gateway: A usually one-way rift to another location.
-/obj/effect/clockwork/spatial_gateway
+/obj/effect/chumbiswork/spatial_gateway
 	name = "spatial gateway"
 	desc = "A gently thrumming tear in reality."
-	clockwork_desc = "A gateway in reality."
+	chumbiswork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = TRUE
 	light_range = 2
@@ -12,29 +12,29 @@
 	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
 	var/uses = 1 //How many objects or mobs can go through the portal
-	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
+	var/obj/effect/chumbiswork/spatial_gateway/linked_gateway //The gateway linked to this one
 	var/timerid
 
-/obj/effect/clockwork/spatial_gateway/Initialize()
+/obj/effect/chumbiswork/spatial_gateway/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
-/obj/effect/clockwork/spatial_gateway/Destroy()
+/obj/effect/chumbiswork/spatial_gateway/Destroy()
 	deltimer(timerid)
 	return ..()
 
-/obj/effect/clockwork/spatial_gateway/proc/check_setup()
+/obj/effect/chumbiswork/spatial_gateway/proc/check_setup()
 	if(!linked_gateway)
 		qdel(src)
 		return
 	if(both_ways)
-		clockwork_desc = "A gateway in reality. It can both send and receive objects."
+		chumbiswork_desc = "A gateway in reality. It can both send and receive objects."
 	else
-		clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
+		chumbiswork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
 	timerid = QDEL_IN(src, lifetime)
 
 //set up a gateway with another gateway
-/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
+/obj/effect/chumbiswork/spatial_gateway/proc/setup_gateway(obj/effect/chumbiswork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
 	if(!gatewayB || !set_duration || !uses)
 		return FALSE
 	linked_gateway = gatewayB
@@ -52,17 +52,17 @@
 	gatewayB.uses = set_uses
 	return TRUE
 
-/obj/effect/clockwork/spatial_gateway/examine(mob/user)
+/obj/effect/chumbiswork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
 
-/obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
+/obj/effect/chumbiswork/spatial_gateway/attack_ghost(mob/user)
 	if(linked_gateway)
 		user.forceMove(get_turf(linked_gateway))
 	..()
 
-/obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
+/obj/effect/chumbiswork/spatial_gateway/attack_hand(mob/living/user)
 	if(!uses)
 		return FALSE
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -79,13 +79,13 @@
 	pass_through_gateway(user)
 	return TRUE
 
-/obj/effect/clockwork/spatial_gateway/attackby(obj/item/I, mob/living/user, params)
+/obj/effect/chumbiswork/spatial_gateway/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/nullrod))
 		user.visible_message("<span class='warning'>[user] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>")
 		qdel(linked_gateway)
 		qdel(src)
 		return TRUE
-	if(istype(I, /obj/item/clockwork/slab))
+	if(istype(I, /obj/item/chumbiswork/slab))
 		to_chat(user, "<span class='heavy_brass'>\"I don't think you want to drop your slab into that.\"\n\"If you really want to, try throwing it.\"</span>")
 		return TRUE
 	if(uses && user.dropItemToGround(I))
@@ -94,7 +94,7 @@
 		return TRUE
 	return ..()
 
-/obj/effect/clockwork/spatial_gateway/ex_act(severity)
+/obj/effect/chumbiswork/spatial_gateway/ex_act(severity)
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
@@ -110,19 +110,19 @@
 	return FALSE
 
 
-/obj/effect/clockwork/spatial_gateway/singularity_act()
+/obj/effect/chumbiswork/spatial_gateway/singularity_act()
 	return
 
-/obj/effect/clockwork/spatial_gateway/singularity_pull()
+/obj/effect/chumbiswork/spatial_gateway/singularity_pull()
 	return
 
 
-/obj/effect/clockwork/spatial_gateway/CollidedWith(atom/movable/AM)
+/obj/effect/chumbiswork/spatial_gateway/CollidedWith(atom/movable/AM)
 	..()
 	if(!QDELETED(AM))
 		pass_through_gateway(AM, FALSE)
 
-/obj/effect/clockwork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
+/obj/effect/chumbiswork/spatial_gateway/proc/pass_through_gateway(atom/movable/A, no_cost)
 	if(!linked_gateway)
 		qdel(src)
 		return FALSE
@@ -154,7 +154,7 @@
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
-/obj/effect/clockwork/spatial_gateway/proc/check_uses()
+/obj/effect/chumbiswork/spatial_gateway/proc/check_uses()
 	if(!uses)
 		qdel(src)
 		qdel(linked_gateway)
@@ -164,7 +164,7 @@
 	var/list/possible_targets = list()
 	var/list/teleportnames = list()
 
-	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+	for(var/obj/structure/destructible/chumbiswork/powered/chumbiswork_obelisk/O in GLOB.all_chumbiswork_objects)
 		if(!O.Adjacent(invoker) && O != src && !is_away_level(O.z) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
@@ -192,13 +192,13 @@
 		if(L.stat != CONSCIOUS)
 			to_chat(invoker, "<span class='warning'>That Servant is no longer conscious!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
-	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
-	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
+	var/istargetobelisk = istype(target, /obj/structure/destructible/chumbiswork/powered/chumbiswork_obelisk)
+	var/issrcobelisk = istype(src, /obj/structure/destructible/chumbiswork/powered/chumbiswork_obelisk)
 	if(issrcobelisk)
 		if(!anchored)
 			to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
 			return FALSE
-		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = src //foolish as I am, how I set this proc up makes substypes unfeasible
+		var/obj/structure/destructible/chumbiswork/powered/chumbiswork_obelisk/CO = src //foolish as I am, how I set this proc up makes substypes unfeasible
 		if(CO.active)
 			to_chat(invoker, "<span class='warning'>[src] is now sustaining a gateway!</span>")
 			return FALSE
@@ -206,7 +206,7 @@
 		if(!target.anchored)
 			to_chat(invoker, "<span class='warning'>That [target.name] is no longer secured!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
-		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		var/obj/structure/destructible/chumbiswork/powered/chumbiswork_obelisk/CO = target
 		if(CO.active)
 			to_chat(invoker, "<span class='warning'>That [target.name] is sustaining a gateway, and cannot receive another!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
@@ -216,8 +216,8 @@
 		CO.active = TRUE //you'd be active in a second but you should update immediately
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [DisplayTimeText(time_duration)] and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
+	var/obj/effect/chumbiswork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/chumbiswork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)

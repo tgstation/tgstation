@@ -4,7 +4,7 @@
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
-	clockwork = TRUE //it'd look weird
+	chumbiswork = TRUE //it'd look weird
 	var/list/prizes = list(
 		/obj/item/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
@@ -45,7 +45,7 @@
 		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
 		/obj/item/toy/windupToolbox								= 2,
-		/obj/item/toy/clockwork_watch							= 2,
+		/obj/item/toy/chumbiswork_watch							= 2,
 		/obj/item/extendohand/acme								= 1,
 		/obj/item/hot_potato/harmless/toy						= 1)
 

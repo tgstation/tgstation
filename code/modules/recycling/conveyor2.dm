@@ -1,5 +1,5 @@
 //conveyor2 is pretty much like the original, except it supports corners, but not diverters.
-//note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
+//note that corner pieces transfer stuff chumbiswise when running forward, and anti-chumbiswise backwards.
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'

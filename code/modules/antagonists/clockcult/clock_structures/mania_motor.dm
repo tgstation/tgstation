@@ -1,8 +1,8 @@
 //Mania Motor: A pair of antenna that, while active, cause a variety of negative mental effects in nearby human mobs.
-/obj/structure/destructible/clockwork/powered/mania_motor
+/obj/structure/destructible/chumbiswork/powered/mania_motor
 	name = "mania motor"
 	desc = "A pair of antenna with what appear to be sockets around the base. It reminds you of an antlion."
-	clockwork_desc = "A transmitter that allows Sevtug to whisper into the minds of nearby non-servants, causing a variety of negative mental effects, up to and including conversion."
+	chumbiswork_desc = "A transmitter that allows Sevtug to whisper into the minds of nearby non-servants, causing a variety of negative mental effects, up to and including conversion."
 	icon_state = "mania_motor_inactive"
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
@@ -11,40 +11,40 @@
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	max_integrity = 100
 	light_color = "#AF0AAF"
-	debris = list(/obj/item/clockwork/alloy_shards/large = 2, \
-	/obj/item/clockwork/alloy_shards/small = 2, \
-	/obj/item/clockwork/component/geis_capacitor/antennae = 1)
+	debris = list(/obj/item/chumbiswork/alloy_shards/large = 2, \
+	/obj/item/chumbiswork/alloy_shards/small = 2, \
+	/obj/item/chumbiswork/component/geis_capacitor/antennae = 1)
 	var/mania_cost = 150
 
-/obj/structure/destructible/clockwork/powered/mania_motor/examine(mob/user)
+/obj/structure/destructible/chumbiswork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='sevtug_small'>It requires <b>[DisplayPower(mania_cost)]</b> to run.</span>")
 
-/obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
+/obj/structure/destructible/chumbiswork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*4)
+			try_use_power(MIN_chumbisCULT_POWER*4)
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle()
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+/obj/structure/destructible/chumbiswork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY) && is_servant_of_ratvar(user))
-		if(!can_access_clockwork_power(src, mania_cost))
+		if(!can_access_chumbiswork_power(src, mania_cost))
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		toggle(0, user)
 
-/obj/structure/destructible/clockwork/powered/mania_motor/toggle(fast_process, mob/living/user)
+/obj/structure/destructible/chumbiswork/powered/mania_motor/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
 		set_light(2, 0.9)
 	else
 		set_light(0)
 
-/obj/structure/destructible/clockwork/powered/mania_motor/process()
+/obj/structure/destructible/chumbiswork/powered/mania_motor/process()
 	if(!try_use_power(mania_cost))
 		forced_disable(FALSE)
 		return

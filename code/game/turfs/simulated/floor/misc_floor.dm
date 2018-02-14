@@ -137,46 +137,46 @@
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-//Clockwork floor: Slowly heals toxin damage on nearby servants.
-/turf/open/floor/clockwork
-	name = "clockwork floor"
+//chumbiswork floor: Slowly heals toxin damage on nearby servants.
+/turf/open/floor/chumbiswork
+	name = "chumbiswork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
-	baseturfs = /turf/open/floor/clockwork
+	baseturfs = /turf/open/floor/chumbiswork
 	var/uses_overlay = TRUE
-	var/obj/effect/clockwork/overlay/floor/realappearence
+	var/obj/effect/chumbiswork/overlay/floor/realappearence
 
-/turf/open/floor/clockwork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
+/turf/open/floor/chumbiswork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
 	return
 
-/turf/open/floor/clockwork/Initialize()
+/turf/open/floor/chumbiswork/Initialize()
 	. = ..()
 	if(uses_overlay)
 		new /obj/effect/temp_visual/ratvar/floor(src)
 		new /obj/effect/temp_visual/ratvar/beam(src)
-		realappearence = new /obj/effect/clockwork/overlay/floor(src)
+		realappearence = new /obj/effect/chumbiswork/overlay/floor(src)
 		realappearence.linked = src
 
-/turf/open/floor/clockwork/Destroy()
+/turf/open/floor/chumbiswork/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(uses_overlay && realappearence)
 		QDEL_NULL(realappearence)
 	return ..()
 
-/turf/open/floor/clockwork/ReplaceWithLattice()
+/turf/open/floor/chumbiswork/ReplaceWithLattice()
 	. = ..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
 
-/turf/open/floor/clockwork/Entered(atom/movable/AM)
+/turf/open/floor/chumbiswork/Entered(atom/movable/AM)
 	..()
 	START_PROCESSING(SSobj, src)
 
-/turf/open/floor/clockwork/process()
+/turf/open/floor/chumbiswork/process()
 	if(!healservants())
 		STOP_PROCESSING(SSobj, src)
 
-/turf/open/floor/clockwork/proc/healservants()
+/turf/open/floor/chumbiswork/proc/healservants()
 	for(var/mob/living/L in src)
 		if(L.stat == DEAD)
 			continue
@@ -196,7 +196,7 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
-/turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
+/turf/open/floor/chumbiswork/crowbar_act(mob/living/user, obj/item/I)
 	if(baseturfs == type)
 		return TRUE
 	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
@@ -205,23 +205,23 @@
 		make_plating()
 	return TRUE
 
-/turf/open/floor/clockwork/make_plating()
+/turf/open/floor/chumbiswork/make_plating()
 	new /obj/item/stack/tile/brass(src)
 	return ..()
 
-/turf/open/floor/clockwork/narsie_act()
+/turf/open/floor/chumbiswork/narsie_act()
 	..()
-	if(istype(src, /turf/open/floor/clockwork)) //if we haven't changed type
+	if(istype(src, /turf/open/floor/chumbiswork)) //if we haven't changed type
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/turf/open/floor/clockwork/reebe
+/turf/open/floor/chumbiswork/reebe
 	name = "cogplate"
 	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
 	icon_state = "reebe"
-	baseturfs = /turf/open/floor/clockwork/reebe
+	baseturfs = /turf/open/floor/chumbiswork/reebe
 	uses_overlay = FALSE
 	planetary_atmos = TRUE
 

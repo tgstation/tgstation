@@ -9,7 +9,7 @@
 	// Possible restyles for the cutout;
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
+		"Traitor", "Nuke Op", "Cultist", "chumbiswork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
 		"Laughter Demon", "Private Security Officer")
@@ -122,7 +122,7 @@
 			name = "Unknown"
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
-		if("Clockwork Cultist")
+		if("chumbiswork Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
 			icon_state = "cutout_servant"

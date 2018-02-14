@@ -472,32 +472,32 @@
 	damage_deflection = 5
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
-//Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
-/obj/machinery/door/airlock/clockwork
+//Pinion airlocks: chumbiswork doors that only let servants of Ratvar through.
+/obj/machinery/door/airlock/chumbiswork
 	name = "pinion airlock"
 	desc = "A massive cogwheel set into two heavy slabs of brass."
-	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/chumbiswork/pinion_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/chumbiswork/overlays.dmi'
 	hackProof = TRUE
 	aiControlDisabled = TRUE
-	req_access = list(ACCESS_CLOCKCULT)
+	req_access = list(ACCESS_chumbisCULT)
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
-/obj/machinery/door/airlock/clockwork/Initialize()
+/obj/machinery/door/airlock/chumbiswork/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/door(loc)
 	new /obj/effect/temp_visual/ratvar/beam/door(loc)
 	change_construction_value(5)
 
-/obj/machinery/door/airlock/clockwork/Destroy()
+/obj/machinery/door/airlock/chumbiswork/Destroy()
 	change_construction_value(-5)
 	return ..()
 
-/obj/machinery/door/airlock/clockwork/examine(mob/user)
+/obj/machinery/door/airlock/chumbiswork/examine(mob/user)
 	..()
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
@@ -507,17 +507,17 @@
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
 	to_chat(user, gear_text)
 
-/obj/machinery/door/airlock/clockwork/emp_act(severity)
+/obj/machinery/door/airlock/chumbiswork/emp_act(severity)
 	if(prob(80/severity))
 		open()
 
-/obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
+/obj/machinery/door/airlock/chumbiswork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
 
-/obj/machinery/door/airlock/clockwork/ratvar_act()
+/obj/machinery/door/airlock/chumbiswork/ratvar_act()
 	return 0
 
-/obj/machinery/door/airlock/clockwork/narsie_act()
+/obj/machinery/door/airlock/chumbiswork/narsie_act()
 	..()
 	if(src)
 		var/previouscolor = color
@@ -525,33 +525,33 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/door/airlock/chumbiswork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))
 		return ..()
 
-/obj/machinery/door/airlock/clockwork/allowed(mob/M)
+/obj/machinery/door/airlock/chumbiswork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/clockwork/hasPower()
+/obj/machinery/door/airlock/chumbiswork/hasPower()
 	return TRUE //yes we do have power
 
-/obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
+/obj/machinery/door/airlock/chumbiswork/obj_break(damage_flag)
 	return
 
-/obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
+/obj/machinery/door/airlock/chumbiswork/deconstruct(disassembled = TRUE)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
 		if(disassembled)
 			new/obj/item/stack/tile/brass(T, 4)
 		else
-			new/obj/item/clockwork/alloy_shards(T)
-		new/obj/item/clockwork/alloy_shards/pinion_lock(T)
+			new/obj/item/chumbiswork/alloy_shards(T)
+		new/obj/item/chumbiswork/alloy_shards/pinion_lock(T)
 	qdel(src)
 
-/obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
+/obj/machinery/door/airlock/chumbiswork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
 	else if(istype(I, /obj/item/wrench))
@@ -584,7 +584,7 @@
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/clockwork/brass
+/obj/machinery/door/airlock/chumbiswork/brass
 	glass = TRUE
 	opacity = 0
 

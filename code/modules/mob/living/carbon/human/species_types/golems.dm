@@ -596,50 +596,50 @@
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
 
-/datum/species/golem/clockwork
-	name = "Clockwork Golem"
-	id = "clockwork golem"
+/datum/species/golem/chumbiswork
+	name = "chumbiswork Golem"
+	id = "chumbiswork golem"
 	say_mod = "clicks"
-	limbs_id = "clockgolem"
-	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
+	limbs_id = "chumbisgolem"
+	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>chumbiswork golem</span><span class='bold alloy'>, you are faster than \
 	other types of golem (being a machine), and are immune to electric shocks.</span>"
 	species_traits = list(SPECIES_INORGANIC,NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE, NOEYES)
 	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
-	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
+	attack_sound = 'sound/magic/chumbiswork/anima_fragment_attack.ogg'
 	sexes = FALSE
 	speedmod = 0
 	siemens_coeff = 0
 	damage_overlay_type = "synth"
-	prefix = "Clockwork"
+	prefix = "chumbiswork"
 	var/has_corpse
 
-/datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
+/datum/species/golem/chumbiswork/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
 	H.faction |= "ratvar"
 
-/datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/H)
+/datum/species/golem/chumbiswork/on_species_loss(mob/living/carbon/human/H)
 	if(!is_servant_of_ratvar(H))
 		H.faction -= "ratvar"
 	. = ..()
 
-/datum/species/golem/clockwork/get_spans()
+/datum/species/golem/chumbiswork/get_spans()
 	return SPAN_ROBOT //beep
 
-/datum/species/golem/clockwork/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/golem/chumbiswork/spec_death(gibbed, mob/living/carbon/human/H)
 	gibbed = !has_corpse ? FALSE : gibbed
 	. = ..()
 	if(!has_corpse)
 		var/turf/T = get_turf(H)
 		H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
-		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE)
+		playsound(H, 'sound/magic/chumbiswork/anima_fragment_death.ogg', 62, TRUE)
 		for(var/i in 1 to rand(3, 5))
-			new/obj/item/clockwork/alloy_shards/small(T)
-		new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
+			new/obj/item/chumbiswork/alloy_shards/small(T)
+		new/obj/item/chumbiswork/alloy_shards/chumbisgolem_remains(T)
 		qdel(H)
 
-/datum/species/golem/clockwork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
-	id = "clockwork golem servant"
+/datum/species/golem/chumbiswork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
+	id = "chumbiswork golem servant"
 	armor = 15 //Balance reasons make this armor weak
 	no_equip = list()
 	nojumpsuit = FALSE

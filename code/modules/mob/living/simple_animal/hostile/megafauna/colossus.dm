@@ -29,7 +29,7 @@ Difficulty: Very Hard
 	health = 2500
 	maxHealth = 2500
 	attacktext = "judges"
-	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
+	attack_sound = 'sound/magic/chumbiswork/ratvar_attack.ogg'
 	icon_state = "eva"
 	icon_living = "eva"
 	icon_dead = "dragon_dead"
@@ -156,7 +156,7 @@ Difficulty: Very Hard
 		if(counter < 1)
 			counter = 16
 		shoot_projectile(null, counter * 22.5)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
+		playsound(get_turf(src), 'sound/magic/chumbiswork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
@@ -172,14 +172,14 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	var/turf/U = get_turf(src)
-	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(U, 'sound/magic/chumbiswork/invoke_general.ogg', 300, 1, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
 			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
 	var/turf/target_turf = get_turf(target)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(src, 'sound/magic/chumbiswork/invoke_general.ogg', 200, 1, 2)
 	newtonian_move(get_dir(target_turf, src))
 	var/angle_to_target = Get_Angle(src, target_turf)
 	if(isnum(set_angle))
@@ -191,7 +191,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(src, 'sound/magic/chumbiswork/invoke_general.ogg', 200, 1, 2)
 	for(var/d in dirs)
 		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
@@ -201,7 +201,7 @@ Difficulty: Very Hard
 		if(M.client)
 			flash_color(M.client, "#C80000", 1)
 			shake_camera(M, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
+	playsound(src, 'sound/magic/chumbiswork/narsie_attack.ogg', 200, 1)
 
 
 

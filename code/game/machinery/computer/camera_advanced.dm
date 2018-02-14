@@ -270,7 +270,7 @@
 
 /obj/machinery/computer/camera_advanced/ratvar/process()
 	if(prob(1))
-		playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 25, TRUE)
+		playsound(src, 'sound/machines/chumbiscult/steam_whoosh.ogg', 25, TRUE)
 		new/obj/effect/temp_visual/steam_release(get_turf(src))
 
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
@@ -290,7 +290,7 @@
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return
-	if(clockwork_ark_active())
+	if(chumbiswork_ark_active())
 		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
 		return
 	. = ..()
@@ -298,10 +298,10 @@
 /datum/action/innate/servant_warp
 	name = "Warp"
 	desc = "Warps to the tile you're viewing. You can use the Abscond scripture to return. Clicking this button again cancels the warp."
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
+	icon_icon = 'icons/mob/actions/actions_chumbiscult.dmi'
 	button_icon_state = "warp_down"
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
+	background_icon_state = "bg_chumbis"
+	buttontooltipstyle = "chumbiscult"
 	var/cancel = FALSE //if TRUE, an active warp will be canceled
 	var/obj/effect/temp_visual/ratvar/warp_marker/warping
 
@@ -329,8 +329,8 @@
 		to_chat(user, "<span class='sevtug_small'>This tile is blessed by holy water and deflects the warp.</span>")
 		return
 	var/area/AR = get_area(T)
-	if(!AR.clockwork_warp_allowed)
-		to_chat(user, "<span class='sevtug_small'>[AR.clockwork_warp_fail]</span>")
+	if(!AR.chumbiswork_warp_allowed)
+		to_chat(user, "<span class='sevtug_small'>[AR.chumbiswork_warp_fail]</span>")
 		return
 	if(alert(user, "Are you sure you want to warp to [AR]?", target.name, "Warp", "Cancel") == "Cancel" || QDELETED(R) || !user.canUseTopic(R))
 		return

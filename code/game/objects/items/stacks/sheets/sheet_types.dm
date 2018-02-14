@@ -8,7 +8,7 @@
  * Cardboard
  * Paper Frames
  * Runed Metal (cult)
- * Brass (clockwork cult)
+ * Brass (chumbiswork cult)
  */
 
 /*
@@ -354,23 +354,23 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
  * Brass
  */
 GLOBAL_LIST_INIT(brass_recipes, list ( \
-	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("wall gear", /obj/structure/destructible/chumbiswork/wall_gear, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
-	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/chumbiswork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/chumbiswork/brass, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/chumbiswork, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
 	null,
-	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/chumbiswork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/chumbiswork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass chair", /obj/structure/chair/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
-	new/datum/stack_recipe("sender - pressure sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("sender - lever", /obj/structure/destructible/clockwork/trap/trigger/lever, 1, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("sender - repeater", /obj/structure/destructible/clockwork/trap/trigger/repeater, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("sender - pressure sensor", /obj/structure/destructible/chumbiswork/trap/trigger/pressure_sensor, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("sender - lever", /obj/structure/destructible/chumbiswork/trap/trigger/lever, 1, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("sender - repeater", /obj/structure/destructible/chumbiswork/trap/trigger/repeater, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
-	new/datum/stack_recipe("receiver - brass skewer", /obj/structure/destructible/clockwork/trap/brass_skewer, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_ADJACENT), \
-	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/clockwork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
+	new/datum/stack_recipe("receiver - brass skewer", /obj/structure/destructible/chumbiswork/trap/brass_skewer, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_ADJACENT), \
+	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/chumbiswork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
 ))
 
 /obj/item/stack/tile/brass
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	max_amount = 50
 	throw_speed = 1
 	throw_range = 3
-	turf_type = /turf/open/floor/clockwork
+	turf_type = /turf/open/floor/chumbiswork
 	novariants = FALSE
 	grind_results = list("iron" = 5, "teslium" = 15)
 

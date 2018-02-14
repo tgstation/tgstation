@@ -1,5 +1,5 @@
 //Marks the point at which "no man's land" begins on Reebe. Servants can't pass beyond this point in any way.
-/obj/effect/clockwork/servant_blocker
+/obj/effect/chumbiswork/servant_blocker
 	name = "glowing arrow"
 	desc = "A faintly glowing image of an arrow on the ground. Convenient!"
 	icon_state = "servant_blocker"
@@ -8,18 +8,18 @@
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 
-/obj/effect/clockwork/servant_blocker/Initialize()
+/obj/effect/chumbiswork/servant_blocker/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/effect/clockwork/servant_blocker/Destroy(force)
+/obj/effect/chumbiswork/servant_blocker/Destroy(force)
 	if(!force)
 		return
 	var/turf/T = get_turf(src)
 	. = ..()
 	T.air_update_turf(TRUE)
 
-/obj/effect/clockwork/servant_blocker/CanPass(atom/movable/M, turf/target)
+/obj/effect/chumbiswork/servant_blocker/CanPass(atom/movable/M, turf/target)
 	var/list/target_contents = M.GetAllContents() + M
 	for(var/mob/living/L in target_contents)
 		if(is_servant_of_ratvar(L) && get_dir(M, src) != dir && L.stat != DEAD) //Unless we're on the side the arrow is pointing directly away from, no-go
@@ -31,14 +31,14 @@
 			return
 	return TRUE
 
-/obj/effect/clockwork/servant_blocker/BlockSuperconductivity()
+/obj/effect/chumbiswork/servant_blocker/BlockSuperconductivity()
 	return TRUE
 
-/obj/effect/clockwork/servant_blocker/singularity_act()
+/obj/effect/chumbiswork/servant_blocker/singularity_act()
 	return
 
-/obj/effect/clockwork/servant_blocker/singularity_pull()
+/obj/effect/chumbiswork/servant_blocker/singularity_pull()
 	return
 
-/obj/effect/clockwork/servant_blocker/ex_act(severity, target)
+/obj/effect/chumbiswork/servant_blocker/ex_act(severity, target)
 	return

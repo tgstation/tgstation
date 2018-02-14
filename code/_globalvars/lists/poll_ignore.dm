@@ -4,7 +4,7 @@
 #define POLL_IGNORE_SENTIENCE_POTION "sentience_potion"
 #define POLL_IGNORE_POSSESSED_BLADE "possessed_blade"
 #define POLL_IGNORE_ALIEN_LARVA "alien_larva"
-#define POLL_IGNORE_CLOCKWORK_MARAUDER "clockwork_marauder"
+#define POLL_IGNORE_chumbisWORK_MARAUDER "chumbiswork_marauder"
 #define POLL_IGNORE_SYNDICATE "syndicate"
 #define POLL_IGNORE_HOLOPARASITE "holoparasite"
 

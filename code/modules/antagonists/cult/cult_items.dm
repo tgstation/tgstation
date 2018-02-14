@@ -849,7 +849,7 @@
 		for(var/turf/T in getline(targets_from,temp_target))
 			if (locate(/obj/effect/blessing, T))
 				temp_target = T
-				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, 1)
+				playsound(T, 'sound/machines/chumbiscult/ark_damage.ogg', 50, 1)
 				new /obj/effect/temp_visual/at_shield(T, T)
 				break
 			T.narsie_act(TRUE, TRUE)

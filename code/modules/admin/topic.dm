@@ -147,13 +147,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
-			if("clockcult")
-				if(src.makeClockCult())
-					message_admins("[key_name(usr)] started a clockwork cult.")
-					log_admin("[key_name(usr)] started a clockwork cult.")
+			if("chumbiscult")
+				if(src.makechumbisCult())
+					message_admins("[key_name(usr)] started a chumbiswork cult.")
+					log_admin("[key_name(usr)] started a chumbiswork cult.")
 				else
-					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a clockwork cult.")
+					message_admins("[key_name_admin(usr)] tried to start a chumbiswork cult. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a chumbiswork cult.")
 			if("revenant")
 				if(src.makeRevenant())
 					message_admins("[key_name(usr)] created a revenant.")
@@ -1896,7 +1896,7 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
-	
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1905,7 +1905,7 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs")
 			return
 		M.mind_initialize()
-		
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return

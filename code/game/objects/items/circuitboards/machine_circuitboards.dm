@@ -35,9 +35,9 @@
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
 
-/obj/item/circuitboard/machine/clockwork
-	name = "clockwork board (Report This)"
-	icon_state = "clock_mod"
+/obj/item/circuitboard/machine/chumbiswork
+	name = "chumbiswork board (Report This)"
+	icon_state = "chumbis_mod"
 
 /obj/item/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"

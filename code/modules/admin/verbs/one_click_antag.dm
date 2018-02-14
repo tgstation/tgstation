@@ -15,7 +15,7 @@
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=chumbiscult'>Make chumbiswork Cult</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
@@ -176,8 +176,8 @@
 	return 0
 
 
-/datum/admins/proc/makeClockCult()
-	var/datum/game_mode/clockwork_cult/temp = new
+/datum/admins/proc/makechumbisCult()
+	var/datum/game_mode/chumbiswork_cult/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		temp.restricted_jobs += temp.protected_jobs
 
@@ -199,9 +199,9 @@
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)
 			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
-			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
+			you see the truth. Ratvar, the chumbiswork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
 			Ratvar, and you will bring him back.</span>")
-			H.playsound_local(get_turf(H), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
+			H.playsound_local(get_turf(H), 'sound/ambience/antag/chumbiscultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 			add_servant_of_ratvar(H, TRUE)
 			SSticker.mode.equip_servant(H)
 			candidates.Remove(H)
@@ -324,7 +324,7 @@
 			return
 	else
 		alert = alert_type
-	
+
 	var/teamsize = 0
 	var/deathsquad = FALSE
 
@@ -343,19 +343,19 @@
 			return makeOfficial()
 		else
 			return
-	
+
 	if(!teamsize)
 		var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
 		if(isnull(teamcheck))
 			return
 		teamsize = min(7,teamcheck)
-	
-	
+
+
 	var/default_mission = deathsquad ? "Leave no witnesses." : "Assist the station."
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", default_mission) as null|text
 	if(!mission)
 		return
-	
+
 	var/prompt_name = deathsquad ? "an elite Nanotrasen Strike Team" : "a Code [alert] Nanotrasen Emergency Response Team"
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [prompt_name] ?", "deathsquad", null)
 	var/teamSpawned = 0
@@ -368,7 +368,7 @@
 		var/datum/team/ert/ert_team = new
 		if(deathsquad)
 			ert_team.name = "Death Squad"
-		
+
 		//Asign team objective
 		var/datum/objective/missionobj = new
 		missionobj.team = ert_team
@@ -395,7 +395,7 @@
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ERTOperative.key = chosen_candidate.key
-			
+
 			if(CONFIG_GET(flag/enforce_human_authority))
 				ERTOperative.set_species(/datum/species/human)
 
@@ -407,9 +407,9 @@
 			else
 				ert_antag.role = deathsquad ? DEATHSQUAD : role_order[WRAP(numagents,1,role_order.len + 1)]
 			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
-			
+
 			ERTOperative.mind.assigned_role = ert_antag.name
-			
+
 			//Logging and cleanup
 			log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
 			numagents--
@@ -417,7 +417,7 @@
 
 		if (teamSpawned)
 			message_admins("[prompt_name] has spawned with the mission: [mission]")
-			
+
 			//Open the Armory doors
 			if(alert != ERT_BLUE)
 				for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)

@@ -26,7 +26,7 @@
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	/turf/closed/wall/chumbiswork)
 	smooth = SMOOTH_TRUE
 
 	var/list/dent_decals
@@ -266,7 +266,7 @@
 /turf/closed/wall/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/closed/wall/clockwork)
+		ChangeTurf(/turf/closed/wall/chumbiswork)
 
 /turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
 	return null
@@ -304,5 +304,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
-	
+
 #undef MAX_DENT_DECALS

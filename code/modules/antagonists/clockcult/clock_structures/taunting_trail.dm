@@ -1,8 +1,8 @@
 //Used by the Taunting Tirade scripture as a trail.
-/obj/structure/destructible/clockwork/taunting_trail
+/obj/structure/destructible/chumbiswork/taunting_trail
 	name = "strange smoke"
 	desc = "A cloud of purple smoke."
-	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
+	chumbiswork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
 	density = TRUE
@@ -14,44 +14,44 @@
 	debris = list()
 	var/timerid
 
-/obj/structure/destructible/clockwork/taunting_trail/Initialize()
+/obj/structure/destructible/chumbiswork/taunting_trail/Initialize()
 	. = ..()
 	timerid = QDEL_IN(src, 15)
-	var/obj/structure/destructible/clockwork/taunting_trail/Tt = locate(/obj/structure/destructible/clockwork/taunting_trail) in loc
+	var/obj/structure/destructible/chumbiswork/taunting_trail/Tt = locate(/obj/structure/destructible/chumbiswork/taunting_trail) in loc
 	if(Tt && Tt != src)
 		if(!step(src, pick(GLOB.alldirs)))
 			qdel(Tt)
 		else
-			for(var/obj/structure/destructible/clockwork/taunting_trail/TT in loc)
+			for(var/obj/structure/destructible/chumbiswork/taunting_trail/TT in loc)
 				if(TT != src)
 					qdel(TT)
 	setDir(pick(GLOB.cardinals))
 	transform = matrix()*1.3
 	animate(src, alpha = 100, time = 15)
 
-/obj/structure/destructible/clockwork/taunting_trail/Destroy()
+/obj/structure/destructible/chumbiswork/taunting_trail/Destroy()
 	deltimer(timerid)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/destructible/chumbiswork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
-/obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target)
+/obj/structure/destructible/chumbiswork/taunting_trail/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
-/obj/structure/destructible/clockwork/taunting_trail/Crossed(atom/movable/AM)
+/obj/structure/destructible/chumbiswork/taunting_trail/Crossed(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/CollidedWith(atom/movable/AM)
+/obj/structure/destructible/chumbiswork/taunting_trail/CollidedWith(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/Collide(atom/movable/AM)
+/obj/structure/destructible/chumbiswork/taunting_trail/Collide(atom/movable/AM)
 	affect_mob(AM)
 	return ..()
 
-/obj/structure/destructible/clockwork/taunting_trail/proc/affect_mob(mob/living/L)
+/obj/structure/destructible/chumbiswork/taunting_trail/proc/affect_mob(mob/living/L)
 	if(istype(L) && !is_servant_of_ratvar(L))
 		if(!L.null_rod_check())
 			L.confused = min(L.confused + 15, 50)

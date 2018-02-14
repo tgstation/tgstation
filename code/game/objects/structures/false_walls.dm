@@ -24,7 +24,7 @@
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	/turf/closed/wall/chumbiswork)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -326,15 +326,15 @@
 	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater)
 
 /obj/structure/falsewall/brass
-	name = "clockwork wall"
+	name = "chumbiswork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
+	icon = 'icons/turf/walls/chumbiswork_wall.dmi'
+	icon_state = "chumbiswork_wall"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	mineral_amount = 1
-	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
-	girder_type = /obj/structure/destructible/clockwork/wall_gear/displaced
-	walltype = /turf/closed/wall/clockwork
+	canSmoothWith = list(/obj/effect/chumbiswork/overlay/wall, /obj/structure/falsewall/brass)
+	girder_type = /obj/structure/destructible/chumbiswork/wall_gear/displaced
+	walltype = /turf/closed/wall/chumbiswork
 	mineral = /obj/item/stack/tile/brass
 
 /obj/structure/falsewall/brass/New(loc)

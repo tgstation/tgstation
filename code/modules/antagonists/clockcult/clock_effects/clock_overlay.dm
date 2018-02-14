@@ -1,49 +1,49 @@
-//an "overlay" used by clockwork walls and floors to appear normal to mesons.
-/obj/effect/clockwork/overlay
+//an "overlay" used by chumbiswork walls and floors to appear normal to mesons.
+/obj/effect/chumbiswork/overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/atom/linked
 
-/obj/effect/clockwork/overlay/examine(mob/user)
+/obj/effect/chumbiswork/overlay/examine(mob/user)
 	if(linked)
 		linked.examine(user)
 
-/obj/effect/clockwork/overlay/ex_act()
+/obj/effect/chumbiswork/overlay/ex_act()
 	return FALSE
 
-/obj/effect/clockwork/overlay/singularity_act()
+/obj/effect/chumbiswork/overlay/singularity_act()
 	return
-/obj/effect/clockwork/overlay/singularity_pull()
-	return
-
-/obj/effect/clockwork/overlay/singularity_pull(S, current_size)
+/obj/effect/chumbiswork/overlay/singularity_pull()
 	return
 
-/obj/effect/clockwork/overlay/Destroy()
+/obj/effect/chumbiswork/overlay/singularity_pull(S, current_size)
+	return
+
+/obj/effect/chumbiswork/overlay/Destroy()
 	if(linked)
 		linked = null
 	. = ..()
 
-/obj/effect/clockwork/overlay/wall
-	name = "clockwork wall"
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	canSmoothWith = list(/obj/effect/clockwork/overlay/wall, /obj/structure/falsewall/brass)
+/obj/effect/chumbiswork/overlay/wall
+	name = "chumbiswork wall"
+	icon = 'icons/turf/walls/chumbiswork_wall.dmi'
+	icon_state = "chumbiswork_wall"
+	canSmoothWith = list(/obj/effect/chumbiswork/overlay/wall, /obj/structure/falsewall/brass)
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
-/obj/effect/clockwork/overlay/wall/Initialize()
+/obj/effect/chumbiswork/overlay/wall/Initialize()
 	. = ..()
 	queue_smooth_neighbors(src)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)
 
-/obj/effect/clockwork/overlay/wall/Destroy()
+/obj/effect/chumbiswork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/clockwork/overlay/floor
+/obj/effect/chumbiswork/overlay/floor
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "clockwork_floor"
+	icon_state = "chumbiswork_floor"
 	layer = TURF_LAYER
 
-/obj/effect/clockwork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
+/obj/effect/chumbiswork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
 	icon_state = "cult"

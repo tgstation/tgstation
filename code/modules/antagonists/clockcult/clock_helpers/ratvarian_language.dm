@@ -98,14 +98,14 @@ List of nuances:
 	return replacetext(text, 				REVERSE_RATVAR_HYPHEN_OF_MATCH,			REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
 
 //Causes the mob or AM in question to speak a message; it assumes that the message is already translated to ratvar speech using text2ratvar()
-/proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
+/proc/chumbiswork_say(atom/movable/AM, message, whisper=FALSE)
 	var/list/spans = list(SPAN_ROBOT)
 
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
-			L.say(message, "clock", spans, language=/datum/language/common, ignore_spam = TRUE)
+			L.say(message, "chumbis", spans, language=/datum/language/common, ignore_spam = TRUE)
 		else
-			L.whisper(message, "clock", spans, language=/datum/language/common)
+			L.whisper(message, "chumbis", spans, language=/datum/language/common)
 	else
 		AM.say(message, language=/datum/language/common)

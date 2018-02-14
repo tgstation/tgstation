@@ -1,6 +1,6 @@
 //The base for slab-bound/based ranged abilities
 /obj/effect/proc_holder/slab
-	var/obj/item/clockwork/slab/slab
+	var/obj/item/chumbiswork/slab/slab
 	var/successful = FALSE
 	var/finished = FALSE
 	var/in_progress = FALSE
@@ -50,7 +50,7 @@
 		to_chat(L, "<span class='userdanger'>[ranged_ability_user] begins forming manacles around your wrists!</span>")
 		if(do_mob(ranged_ability_user, L, 30))
 			if(!L.handcuffed)
-				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
+				L.handcuffed = new/obj/item/restraints/handcuffs/chumbiswork(L)
 				L.update_handcuffed()
 				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
 				add_logs(ranged_ability_user, L, "handcuffed")
@@ -63,13 +63,13 @@
 
 	return TRUE
 
-/obj/item/restraints/handcuffs/clockwork
+/obj/item/restraints/handcuffs/chumbiswork
 	name = "replicant manacles"
 	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
 	icon_state = "brass_manacles"
 	flags_1 = DROPDEL_1
 
-/obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
+/obj/item/restraints/handcuffs/chumbiswork/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [name] come apart at the seams!</span>", \
 	"<span class='userdanger'>Your [name] break apart as they're removed!</span>")
 	. = ..()
@@ -116,12 +116,12 @@
 			L.adjustFireLoss(-burndamage)
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
-			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
+			chumbiswork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
 			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds[has_holy_water ? " and purging the darkness within you" : ""], but a deep nausea overcomes you!</span>")
 		else
-			clockwork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
+			chumbiswork_say(ranged_ability_user, text2ratvar("Purge foul darkness!"))
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
@@ -152,7 +152,7 @@
 
 		var/turf/U = get_turf(target)
 		to_chat(ranged_ability_user, "<span class='brass'>You release the light of Ratvar!</span>")
-		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
+		chumbiswork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
 		add_logs(ranged_ability_user, U, "fired at with Kindle")
 		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
 		var/obj/item/projectile/kindle/A = new(T)
@@ -238,7 +238,7 @@
 		L.apply_status_effect(STATUS_EFFECT_VANGUARD)
 		ranged_ability_user.apply_status_effect(STATUS_EFFECT_VANGUARD)
 
-		clockwork_say(ranged_ability_user, text2ratvar("Shield us from darkness!"))
+		chumbiswork_say(ranged_ability_user, text2ratvar("Shield us from darkness!"))
 
 		remove_ranged_ability()
 
@@ -259,11 +259,11 @@
 	if(target in view(7, get_turf(ranged_ability_user)))
 		successful = TRUE
 
-		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
+		chumbiswork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [target], creating a strange mark!</span>", \
 		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")
 		var/turf/targetturf = get_turf(target)
-		new/obj/effect/clockwork/judicial_marker(targetturf, ranged_ability_user)
+		new/obj/effect/chumbiswork/judicial_marker(targetturf, ranged_ability_user)
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		remove_ranged_ability()
 

@@ -1,6 +1,6 @@
 /obj/item/integrated_circuit/time
 	name = "time circuit"
-	desc = "Now you can build your own clock!"
+	desc = "Now you can build your own chumbis!"
 	complexity = 2
 	inputs = list()
 	outputs = list()
@@ -120,10 +120,10 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 2
 
-/obj/item/integrated_circuit/time/clock
-	name = "integrated clock"
+/obj/item/integrated_circuit/time/chumbis
+	name = "integrated chumbis"
 	desc = "Tells you what the local time is, specific to your station or planet."
-	icon_state = "clock"
+	icon_state = "chumbis"
 	inputs = list()
 	outputs = list(
 		"time" = IC_PINTYPE_STRING,
@@ -135,7 +135,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
 
-/obj/item/integrated_circuit/time/clock/do_work()
+/obj/item/integrated_circuit/time/chumbis/do_work()
 	var/wtime = world.time
 	set_pin_data(IC_OUTPUT, 1, time2text(wtime, "hh:mm:ss") )
 	set_pin_data(IC_OUTPUT, 2, text2num(time2text(wtime, "hh") ) )

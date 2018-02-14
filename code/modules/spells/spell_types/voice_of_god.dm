@@ -11,7 +11,7 @@
 	var/cooldown_mod = 1
 	var/power_mod = 1
 	var/list/spans = list("colossus","yell")
-	var/speech_sound = 'sound/magic/clockwork/invoke_general.ogg'
+	var/speech_sound = 'sound/magic/chumbiswork/invoke_general.ogg'
 
 /obj/effect/proc_holder/spell/voice_of_god/can_cast(mob/user = usr)
 	if(!user.can_speak())

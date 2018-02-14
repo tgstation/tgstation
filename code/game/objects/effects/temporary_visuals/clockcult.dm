@@ -1,7 +1,7 @@
-//temporary visual effects(/obj/effect/temp_visual) used by clockcult stuff
+//temporary visual effects(/obj/effect/temp_visual) used by chumbiscult stuff
 /obj/effect/temp_visual/ratvar
 	name = "ratvar's light"
-	icon = 'icons/effects/clockwork_effects.dmi'
+	icon = 'icons/effects/chumbiswork_effects.dmi'
 	duration = 8
 	randomdir = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -64,7 +64,7 @@
 
 /obj/effect/temp_visual/ratvar/belligerent
 	layer = ABOVE_MOB_LAYER
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/chumbiswork_objects.dmi'
 	icon_state = "belligerent_eye"
 	pixel_y = 20
 	duration = 20
@@ -129,7 +129,7 @@
 	icon_state = "geisbinding_top"
 
 /obj/effect/temp_visual/ratvar/component
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/chumbiswork_objects.dmi'
 	icon_state = "belligerent_eye"
 	layer = ABOVE_MOB_LAYER
 	duration = 10
@@ -257,7 +257,7 @@
 /obj/effect/temp_visual/ratvar/command_point
 	name = "command marker"
 	desc = "An area of importance marked by the Eminence."
-	icon = 'icons/mob/actions/actions_clockcult.dmi'
+	icon = 'icons/mob/actions/actions_chumbiscult.dmi'
 	icon_state = "eminence"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	resistance_flags = INDESTRUCTIBLE

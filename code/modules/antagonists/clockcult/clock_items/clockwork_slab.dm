@@ -1,12 +1,12 @@
-/obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
-	name = "clockwork slab"
-	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.<br>\
+/obj/item/chumbiswork/slab //chumbiswork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
+	name = "chumbiswork slab"
+	desc = "A strange metal tablet. A chumbis in the center turns around and around."
+	chumbiswork_desc = "A link between you and the Celestial Derelict. It contains information, recites scripture, and is your most vital tool as a Servant.<br>\
 	It can be used to link traps and triggers by attacking them with the slab. Keep in mind that traps linked with one another will activate in tandem!"
 
 	icon_state = "dread_ipad"
-	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/chumbiswork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/chumbiswork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 
 	slot_flags = SLOT_BELT
@@ -21,68 +21,68 @@
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/recollection_category = "Default"
 
-	var/list/quickbound = list(/datum/clockwork_scripture/abscond, \
-	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
+	var/list/quickbound = list(/datum/chumbiswork_scripture/abscond, \
+	/datum/chumbiswork_scripture/ranged_ability/kindle, /datum/chumbiswork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 
-	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
+	var/obj/structure/destructible/chumbiswork/trap/linking //If we're linking traps together, which ones we're doing
 
-/obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
+/obj/item/chumbiswork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
 	quickbound = list()
 	no_cost = TRUE
 
-/obj/item/clockwork/slab/debug
+/obj/item/chumbiswork/slab/debug
 	speed_multiplier = 0
 	no_cost = TRUE
 
-/obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
+/obj/item/chumbiswork/slab/debug/attack_hand(mob/living/user)
 	..()
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+/obj/item/chumbiswork/slab/cyborg //three scriptures, plus a spear and fabricator
+	chumbiswork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/ranged_ability/judicial_marker, /datum/chumbiswork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //two scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transmission)
+/obj/item/chumbiswork/slab/cyborg/engineer //two scriptures, plus a fabricator
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/create_object/replicant, /datum/chumbiswork_scripture/create_object/sigil_of_transmission)
 
-/obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix)
+/obj/item/chumbiswork/slab/cyborg/medical //five scriptures, plus a spear
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/ranged_ability/linked_vanguard, /datum/chumbiswork_scripture/ranged_ability/sentinels_compromise, \
+	/datum/chumbiswork_scripture/create_object/vitality_matrix)
 
-/obj/item/clockwork/slab/cyborg/security //twoscriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+/obj/item/chumbiswork/slab/cyborg/security //twoscriptures, plus a spear
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/ranged_ability/hateful_manacles, /datum/chumbiswork_scripture/ranged_ability/judicial_marker)
 
-/obj/item/clockwork/slab/cyborg/peacekeeper //two scriptures, plus a spear
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/hateful_manacles, /datum/clockwork_scripture/ranged_ability/judicial_marker)
+/obj/item/chumbiswork/slab/cyborg/peacekeeper //two scriptures, plus a spear
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/ranged_ability/hateful_manacles, /datum/chumbiswork_scripture/ranged_ability/judicial_marker)
 
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
+/obj/item/chumbiswork/slab/cyborg/janitor //five scriptures, plus a fabricator
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/create_object/replicant, /datum/chumbiswork_scripture/create_object/sigil_of_transgression, \
+	/datum/chumbiswork_scripture/create_object/ocular_warden, /datum/chumbiswork_scripture/create_object/mania_motor)
 
-/obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/create_object/replicant, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+/obj/item/chumbiswork/slab/cyborg/service //five scriptures, plus xray vision
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/create_object/replicant, \
+	/datum/chumbiswork_scripture/spatial_gateway, /datum/chumbiswork_scripture/create_object/chumbiswork_obelisk)
 
-/obj/item/clockwork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway)
+/obj/item/chumbiswork/slab/cyborg/miner //two scriptures, plus a spear and xray vision
+	quickbound = list(/datum/chumbiswork_scripture/abscond, /datum/chumbiswork_scripture/ranged_ability/linked_vanguard, /datum/chumbiswork_scripture/spatial_gateway)
 
-/obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
+/obj/item/chumbiswork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
 		to_chat(user, "<span class='warning'>Use the action buttons to recite your limited set of scripture!</span>")
 	else
 		..()
 
-/obj/item/clockwork/slab/cyborg/ratvar_act()
+/obj/item/chumbiswork/slab/cyborg/ratvar_act()
 	..()
 	if(!GLOB.ratvar_awakens)
 		SStgui.close_uis(src)
 
-/obj/item/clockwork/slab/Initialize()
+/obj/item/chumbiswork/slab/Initialize()
 	. = ..()
 	update_slab_info(src)
 	START_PROCESSING(SSobj, src)
@@ -90,53 +90,53 @@
 		name = "supercharged [name]"
 		speed_multiplier = max(0.1, speed_multiplier - 0.25)
 
-/obj/item/clockwork/slab/Destroy()
+/obj/item/chumbiswork/slab/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(slab_ability && slab_ability.ranged_ability_user)
 		slab_ability.remove_ranged_ability()
 	slab_ability = null
 	return ..()
 
-/obj/item/clockwork/slab/dropped(mob/user)
+/obj/item/chumbiswork/slab/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
-/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/chumbiswork/slab/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 	if(isinhands && item_state && inhand_overlay)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
 		. += M
 
-/obj/item/clockwork/slab/proc/check_on_mob(mob/user)
+/obj/item/chumbiswork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
 		slab_ability.remove_ranged_ability()
 
 //Power generation
-/obj/item/clockwork/slab/process()
+/obj/item/chumbiswork/slab/process()
 	if(GLOB.ratvar_approaches && speed_multiplier == initial(speed_multiplier))
 		name = "supercharged [name]"
 		speed_multiplier = max(0.1, speed_multiplier - 0.25)
-	adjust_clockwork_power(0.1) //Slabs serve as very weak power generators on their own (no, not enough to justify spamming them)
+	adjust_chumbiswork_power(0.1) //Slabs serve as very weak power generators on their own (no, not enough to justify spamming them)
 
-/obj/item/clockwork/slab/examine(mob/user)
+/obj/item/chumbiswork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(LAZYLEN(quickbound))
 			for(var/i in 1 to quickbound.len)
 				if(!quickbound[i])
 					continue
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+				var/datum/chumbiswork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		to_chat(user, "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>")
+		to_chat(user, "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_chumbiswork_power())].</span>")
 
 //Slab actions; Hierophant, Quickbind
-/obj/item/clockwork/slab/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/clock/quickbind))
-		var/datum/action/item_action/clock/quickbind/Q = action
+/obj/item/chumbiswork/slab/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/chumbis/quickbind))
+		var/datum/action/item_action/chumbis/quickbind/Q = action
 		recite_scripture(quickbound[Q.scripture_index], user, FALSE)
 
 //Scripture Recital
-/obj/item/clockwork/slab/attack_self(mob/living/user)
+/obj/item/chumbiswork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
 		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
@@ -159,26 +159,26 @@
 		return 0
 	access_display(user)
 
-/obj/item/clockwork/slab/AltClick(mob/living/user)
+/obj/item/chumbiswork/slab/AltClick(mob/living/user)
 	if(is_servant_of_ratvar(user) && linking)
 		linking = null
 		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 
-/obj/item/clockwork/slab/proc/access_display(mob/living/user)
+/obj/item/chumbiswork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return FALSE
 	ui_interact(user)
 	return TRUE
 
-/obj/item/clockwork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+/obj/item/chumbiswork/slab/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "clockwork_slab", name, 800, 420, master_ui, state)
+		ui = new(user, src, ui_key, "chumbiswork_slab", name, 800, 420, master_ui, state)
 		ui.set_autoupdate(FALSE) //we'll update this occasionally, but not as often as possible
-		ui.set_style("clockwork")
+		ui.set_style("chumbiswork")
 		ui.open()
 
-/obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
+/obj/item/chumbiswork/slab/proc/recite_scripture(datum/chumbiswork_scripture/scripture, mob/living/user)
 	if(!scripture || !user || !user.canUseTopic(src) || (!no_cost && !can_recite_scripture(user)))
 		return FALSE
 	if(user.get_active_held_item() != src)
@@ -189,7 +189,7 @@
 		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
-	var/datum/clockwork_scripture/scripture_to_recite = new scripture
+	var/datum/chumbiswork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
 	scripture_to_recite.run_scripture()
@@ -197,7 +197,7 @@
 
 
 //Guide to Serving Ratvar
-/obj/item/clockwork/slab/proc/recollection()
+/obj/item/chumbiswork/slab/proc/recollection()
 	var/list/textlist = list("If you're seeing this, file a bug report.")
 	if(GLOB.ratvar_awakens)
 		textlist = list("<font color=#BE8700 size=3><b>")
@@ -209,7 +209,7 @@
 		\
 		<b><i>NOTICE:</b> This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.</i><br>\
 		<hr><br>\
-		These pages serve as the archives of Ratvar, the Clockwork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
+		These pages serve as the archives of Ratvar, the chumbiswork Justiciar. This section of your slab has information on being as a Servant, advice for what to do next, and \
 		pointers for serving the master well. You should recommended that you check this area for help if you get stuck or need guidance on what to do next.<br><br>\
 		\
 		<i>Disclaimer: Many objects, terms, and phrases, such as Servant, Cache, and Slab, are capitalized like proper nouns. This is a quirk of the Ratvarian language; \
@@ -224,7 +224,7 @@
 //- Scripture
 //- Power
 //- Conversion
-/obj/item/clockwork/slab/proc/get_recollection_text(section)
+/obj/item/chumbiswork/slab/proc/get_recollection_text(section)
 	var/list/dat = list()
 	switch(section)
 		if("Default")
@@ -233,7 +233,7 @@
 			dat += "<font color=#BE8700 size=3>Getting Started</font><br><br>"
 			dat += "Welcome, Servant! This section houses the utmost basics of being a Servant of Ratvar, and is much more informal than the other sections. Being a Servant of \
 			Ratvar is a very complex role, with many systems, objects, and resources to use effectively and creatively.<br><br>"
-			dat += "This section of your clockwork slab covers everything that Servants have to be aware of, but is a long read because of how in-depth the systems are. Knowing \
+			dat += "This section of your chumbiswork slab covers everything that Servants have to be aware of, but is a long read because of how in-depth the systems are. Knowing \
 			how to use the tools at your disposal makes all the difference between a clueless Servant and a great one.<br><br>"
 			dat += "If this is your first time being a Servant, relax. It's very much possible that you'll fail, but it's impossible to learn without making mistakes. For the time \
 			being, use the Hierophant Network button in the top left-hand corner of your screen to try and get in touch with your fellow Servants; ignore the others for now. This button \
@@ -254,7 +254,7 @@
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Basics")
 			dat += "<font color=#BE8700 size=3>Servant Basics</font><br><br>"
-			dat += "The first thing any Servant should know is their slab, inside and out. The clockwork slab is by far your most important tool. It allows you to speak with your \
+			dat += "The first thing any Servant should know is their slab, inside and out. The chumbiswork slab is by far your most important tool. It allows you to speak with your \
 			fellow Servants, create components that fuel many of your abilities, use those abilities, and should be kept safe and hidden on your person at all times. If you have not \
 			done so already, it's a good idea to check for any fellow Servants using the Hierophant Network button in the top-left corner of your screen; due to the cult's nature, \
 			teamwork is an instrumental component of your success.<br><br>" //get it? component? ha!
@@ -270,38 +270,38 @@
 			dat += "<font color=#BE8700 size=3>General</font><br>"
 			dat += "<font color=#BE8700><b>Servant:</b></font> A person or robot who serves Ratvar. You are one of these.<br>"
 			dat += "<font color=#BE8700><b>Cache:</b></font> A <i>Tinkerer's Cache</i>, which is a structure that stores and creates components.<br>"
-			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All clockwork structures, floors, and walls increase this number.<br>"
+			dat += "<font color=#BE8700><b>CV:</b></font> Construction Value. All chumbiswork structures, floors, and walls increase this number.<br>"
 			dat += "<font color=#BE8700><b>Vitality:</b></font> Used for healing effects, produced by Ratvarian spear attacks and Vitality Matrices.<br>"
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into Servants of Ratvar.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
-			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
+			dat += "<font color=#BE8700><b>Slab:</b></font> A chumbiswork slab, a Servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
 			dat += "<font color=#BE8700><b>Visor:</b></font> A judicial visor, which is a pair of glasses that can smite an area for a brief stun and delayed explosion.<br>"
 			dat += "<font color=#BE8700><b>Wraith Specs:</b></font> Wraith spectacles, which provide true sight (x-ray, night vision) but damage the wearer's eyes.<br>"
 			dat += "<font color=#BE8700><b>Spear:</b></font> A Ratvarian spear, which is a very powerful melee weapon that produces Vitality.<br>"
-			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into clockwork versions.<br><br>"
+			dat += "<font color=#BE8700><b>Fabricator:</b></font> A replica fabricator, which converts objects into chumbiswork versions.<br><br>"
 			dat += "<font color=#BE8700 size=3>Constructs</font><br>"
-			dat += "<font color=#BE8700><b>Marauder:</b></font> A clockwork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
+			dat += "<font color=#BE8700><b>Marauder:</b></font> A chumbiswork marauder, which is a powerful bodyguard that hides in its owner.<br><br>"
 			dat += "<font color=#BE8700 size=3>Structures (* = requires power)</font><br>"
 			dat += "<font color=#BE8700><b>Warden:</b></font> An ocular warden, which is a ranged turret that damages non-Servants that see it.<br>"
 			dat += "<font color=#BE8700><b>Prism*:</b></font> A prolonging prism, which delays the shuttle for two minutes at a huge power cost.<br><br>"
 			dat += "<font color=#BE8700><b>Motor*:</b></font> A mania motor, which serves as area-denial through negative effects and eventual conversion.<br>"
 			dat += "<font color=#BE8700><b>Daemon*:</b></font> A tinkerer's daemon, which quickly creates components.<br>"
-			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A clockwork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
+			dat += "<font color=#BE8700><b>Obelisk*:</b></font> A chumbiswork obelisk, which can broadcast large messages and allows limited teleportation.<br>"
 			dat += "<font color=#BE8700 size=3>Sigils</font><br>"
 			dat += "<i>Note: Sigils can be stacked on top of one another, making certain sigils very effective when paired!</i><br>"
 			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-Servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-Servant to stand on the sigil for seven seconds. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Matrix:</b></font> Drains health from non-Servants, producing Vitality. Can heal and revive Servants.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
-			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
+			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for chumbiswork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
-			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
+			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This chumbiswork slab, for instance, \
 			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>remove me already</b>. This number will increase \
 			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
 			of them to halt progress until one of them is removed from their person.<br><br>"
@@ -313,7 +313,7 @@
 		if("Scripture")
 			dat += "<font color=#BE8700 size=3>The Ancient Scripture</font><br><br>"
 			dat += "If you have experience with the Nar-Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
-			of the cult's supernatural ability comes from. The Servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your clockwork slab.<br><br>"
+			of the cult's supernatural ability comes from. The Servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your chumbiswork slab.<br><br>"
 			dat += "Each piece of scripture has widely-varying effects. Your most important scripture, <i>Geis</i>, is obvious and suspicious, but charges your slab with energy and allows \
 			you to attack a non-Servant in melee range to restrain them and begin converting them into a Servant. This is just one example; each piece of scripture can be simple or \
 			complex, be obvious or have hidden mechanics that can only be found through trial and error.<br><br>"
@@ -330,10 +330,10 @@
 		if("Power")
 			dat += "<font color=#BE8700 size=3>Power! Unlimited Power!</font><br><br>"
 			dat += "In the early stages of the cult, the only resource that must be actively worried about is components. However, as new scripture is unlocked, a new resource \
-			becomes necessary: <b>power</b>. Almost all clockwork structures require power to function in some way. There is nothing special about this power; it's mere electricity, \
+			becomes necessary: <b>power</b>. Almost all chumbiswork structures require power to function in some way. There is nothing special about this power; it's mere electricity, \
 			and can be harnessed in several ways.<br><br>"
 			dat += "To begin with, if there is no other source of power nearby, structures will draw from the area's APC, assuming it has one. This is inefficient and ill-advised as \
-			anything but a last resort. Instead, it is recommended that a <b>Sigil of Transmission</b> is created. This sigil serves as both battery  and power generator for nearby clockwork \
+			anything but a last resort. Instead, it is recommended that a <b>Sigil of Transmission</b> is created. This sigil serves as both battery  and power generator for nearby chumbiswork \
 			structures, and those structures will happily draw power from the sigil before they resort to APCs.<br><br>"
 			dat += "Generating power is less easy. The most reliable and efficient way is using brass sheets; attacking a sigil of transmission with brass sheets will convert them \
 			to power, at a rate of <b>[DisplayPower(POWER_FLOOR)]</b> per sheet. (Brass sheets are created from replica fabricators, which are explained more in detail in the <b>Conversion</b> section.) \
@@ -346,7 +346,7 @@
 			dat += "Because the Servants of Ratvar are a cult, the main method to gain more power is to \"enlighten\" normal crew into new Servants. When a crewmember is converted, \
 			they become a full-fledged Servant, ready and willing to serve the cause of Ratvar. It should also be noted that <i>silicon crew, such as cyborgs and the AI, can be \
 			converted just like normal crew</i> and will gain special abilities; this is covered later. This section will also cover converting the station's structure itself; walls, \
-			floors, windows, tables, and other objects can all be converted into clockwork versions, and serve an important purpose.<br><br>"
+			floors, windows, tables, and other objects can all be converted into chumbiswork versions, and serve an important purpose.<br><br>"
 			dat += "<font color=#BE8700><b>A Note on Geis:</b></font> There are several ways to convert humans and silicons. However, the most important tool to making them work is \
 			<b>Geis</b>, a Driver-tier scripture. Using it whispers an invocation very quickly and charges your slab with power. In addition to <i>making the slab visible in your hand,</i> \
 			you can now use it on a target within melee range to bind and mute them. It is by far your most reliable tool for capturing potential converts and targets, though it is incredibly \
@@ -373,13 +373,13 @@
 			is at all a priority. This is suspicious and will rapidly lead to the crew checking on it, which usually results in the cult's outing. It is, however, necessary to convert \
 			all AIs present on the station before the Ark becomes invokable, so this must be done at some point.<br><br>"
 			dat += "<font color=#BE8700><b>Converting the Station:</b></font> Converted objects all serve a purpose and are important to the cult's success. To convert objects, \
-			a Servant needs to use a <b>replica fabricator,</b> a handheld tool that uses power to replace objects with clockwork versions. Different clockwork objects have different \
-			effects and are often crucial. The most noteworthy are <b>clockwork walls,</b> which automatically \"link\" to any nearby Tinkerer's Caches, causing them to <b>slowly \
-			generate components.</b> This is incredibly useful for obvious reasons, and creating a clockwork wall near every Tinkerer's Cache should be prioritized. Clockwork floors \
-			will slowly heal any toxin damage suffered by Servants standing on them, and clockwork airlocks can only be opened by Servants.<br><br>"
+			a Servant needs to use a <b>replica fabricator,</b> a handheld tool that uses power to replace objects with chumbiswork versions. Different chumbiswork objects have different \
+			effects and are often crucial. The most noteworthy are <b>chumbiswork walls,</b> which automatically \"link\" to any nearby Tinkerer's Caches, causing them to <b>slowly \
+			generate components.</b> This is incredibly useful for obvious reasons, and creating a chumbiswork wall near every Tinkerer's Cache should be prioritized. chumbiswork floors \
+			will slowly heal any toxin damage suffered by Servants standing on them, and chumbiswork airlocks can only be opened by Servants.<br><br>"
 			dat += "The replica fabricator itself is also worth noting. In addition to replacing objects, it can also create brass sheets at the cost of power by using the \
-			fabricator in-hand. It can also be used to repair any damaged clockwork structures.<br><br>"
-			dat += "Replacing objects is almost as, if not as important as, converting new Servants. A base is impossible to manage without clockwork walls at the very least, and \
+			fabricator in-hand. It can also be used to repair any damaged chumbiswork structures.<br><br>"
+			dat += "Replacing objects is almost as, if not as important as, converting new Servants. A base is impossible to manage without chumbiswork walls at the very least, and \
 			once the cult has been outed and the crew are actively searching, there is little reason not to use as many as possible.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		else
@@ -388,7 +388,7 @@
 	return "<br><br>[dat.Join()]<br><br>"
 
 //Gets the quickbound scripture as a text block.
-/obj/item/clockwork/slab/proc/get_recollection_quickbinds()
+/obj/item/chumbiswork/slab/proc/get_recollection_quickbinds()
 	var/list/dat = list()
 	dat += "<font color=#BE8700 size=3>Quickbound Scripture</font><br>\
 	<i>You can have up to five scriptures bound to action buttons for easy use.</i><br><br>"
@@ -397,14 +397,14 @@
 			if(LAZYLEN(quickbound) < i || !quickbound[i])
 				dat += "A <b>Quickbind</b> slot, currently set to <b><font color=#BE8700>Nothing</font></b>.<br>"
 			else
-				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
+				var/datum/chumbiswork_scripture/quickbind_slot = quickbound[i]
 				dat += "A <b>Quickbind</b> slot, currently set to <b><font color=[get_component_color_bright(initial(quickbind_slot.primary_component))]>[initial(quickbind_slot.name)]</font></b>.<br>"
 	return dat.Join()
 
 
-/obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
+/obj/item/chumbiswork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
-	data["power"] = "<b><font color=#B18B25>[DisplayPower(get_clockwork_power())]</b> power is available for scripture and other consumers.</font>"
+	data["power"] = "<b><font color=#B18B25>[DisplayPower(get_chumbiswork_power())]</b> power is available for scripture and other consumers.</font>"
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
@@ -430,7 +430,7 @@
 
 	data["scripture"] = list()
 	for(var/s in GLOB.all_scripture)
-		var/datum/clockwork_scripture/S = GLOB.all_scripture[s]
+		var/datum/chumbiswork_scripture/S = GLOB.all_scripture[s]
 		if(S.tier == selected_scripture) //display only scriptures of the selected tier
 			var/scripture_color = get_component_color_bright(S.primary_component)
 			var/list/temp_info = list("name" = "<font color=[scripture_color]><b>[S.name]</b></font>",
@@ -463,7 +463,7 @@
 		data["rec_binds"] = GLOB.ratvar_awakens ? "" : get_recollection_quickbinds()
 	return data
 
-/obj/item/clockwork/slab/ui_act(action, params)
+/obj/item/chumbiswork/slab/ui_act(action, params)
 	switch(action)
 		if("toggle")
 			recollecting = !recollecting
@@ -472,7 +472,7 @@
 		if("select")
 			selected_scripture = params["category"]
 		if("bind")
-			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
+			var/datum/chumbiswork_scripture/path = text2path(params["category"]) //we need a path and not a string
 			var/found_index = quickbound.Find(path)
 			if(found_index) //hey, we already HAVE this bound
 				if(LAZYLEN(quickbound) == found_index) //if it's the last scripture, remove it instead of leaving a null
@@ -483,7 +483,7 @@
 			else
 				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
-					var/datum/clockwork_scripture/S
+					var/datum/chumbiswork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)
 						S = quickbound[target_index]
 					if(S != path)
@@ -493,27 +493,27 @@
 			ui_interact(usr)
 	return 1
 
-/obj/item/clockwork/slab/proc/quickbind_to_slot(datum/clockwork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
+/obj/item/chumbiswork/slab/proc/quickbind_to_slot(datum/chumbiswork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
 	if(!ispath(scripture) || !scripture || (scripture in quickbound))
 		return
 	while(LAZYLEN(quickbound) < index)
 		quickbound += null
-	var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[index]]
+	var/datum/chumbiswork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[index]]
 	if(quickbind_slot && !quickbind_slot.quickbind)
 		return //we can't unbind things we can't normally bind
 	quickbound[index] = scripture
 	update_quickbind()
 
-/obj/item/clockwork/slab/proc/update_quickbind()
-	for(var/datum/action/item_action/clock/quickbind/Q in actions)
+/obj/item/chumbiswork/slab/proc/update_quickbind()
+	for(var/datum/action/item_action/chumbis/quickbind/Q in actions)
 		qdel(Q) //regenerate all our quickbound scriptures
 	if(LAZYLEN(quickbound))
 		for(var/i in 1 to quickbound.len)
 			if(!quickbound[i])
 				continue
-			var/datum/action/item_action/clock/quickbind/Q = new /datum/action/item_action/clock/quickbind(src)
+			var/datum/action/item_action/chumbis/quickbind/Q = new /datum/action/item_action/chumbis/quickbind(src)
 			Q.scripture_index = i
-			var/datum/clockwork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[i]]
+			var/datum/chumbiswork_scripture/quickbind_slot = GLOB.all_scripture[quickbound[i]]
 			Q.name = "[quickbind_slot.name] ([Q.scripture_index])"
 			Q.desc = quickbind_slot.quickbind_desc
 			Q.button_icon_state = quickbind_slot.name

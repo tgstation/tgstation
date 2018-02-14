@@ -588,9 +588,9 @@
 	name = "Dwarf Beard"
 	icon_state = "facial_dwarf"
 
-/datum/sprite_accessory/facial_hair/fiveoclock
-	name = "Five o Clock Shadow"
-	icon_state = "facial_fiveoclock"
+/datum/sprite_accessory/facial_hair/fiveochumbis
+	name = "Five o chumbis Shadow"
+	icon_state = "facial_fiveochumbis"
 
 /datum/sprite_accessory/facial_hair/fu
 	name = "Fu Manchu"

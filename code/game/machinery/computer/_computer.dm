@@ -14,7 +14,7 @@
 	var/brightness_on = 2
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
-	var/clockwork = FALSE
+	var/chumbiswork = FALSE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -34,16 +34,16 @@
 	return 1
 
 /obj/machinery/computer/ratvar_act()
-	if(!clockwork)
-		clockwork = TRUE
+	if(!chumbiswork)
+		chumbiswork = TRUE
 		icon_screen = "ratvar[rand(1, 4)]"
 		icon_keyboard = "ratvar_key[rand(1, 6)]"
 		icon_state = "ratvarcomputer[rand(1, 4)]"
 		update_icon()
 
 /obj/machinery/computer/narsie_act()
-	if(clockwork && clockwork != initial(clockwork)) //if it's clockwork but isn't normally clockwork
-		clockwork = FALSE
+	if(chumbiswork && chumbiswork != initial(chumbiswork)) //if it's chumbiswork but isn't normally chumbiswork
+		chumbiswork = FALSE
 		icon_screen = initial(icon_screen)
 		icon_keyboard = initial(icon_keyboard)
 		icon_state = initial(icon_state)

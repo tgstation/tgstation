@@ -201,7 +201,7 @@
 /turf/open/floor/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
-		ChangeTurf(/turf/open/floor/clockwork)
+		ChangeTurf(/turf/open/floor/chumbiswork)
 
 /turf/open/floor/acid_melt()
 	ScrapeAway()

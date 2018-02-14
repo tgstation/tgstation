@@ -84,7 +84,7 @@
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
-	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
+	var/obj/item/chumbiswork/integration_cog/integration_cog //Is there a cog siphoning power?
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
@@ -622,7 +622,7 @@
 			if (opened==2)
 				opened = 1
 			update_icon()
-	else if(istype(W, /obj/item/clockwork/integration_cog) && is_servant_of_ratvar(user))
+	else if(istype(W, /obj/item/chumbiswork/integration_cog) && is_servant_of_ratvar(user))
 		if(integration_cog)
 			to_chat(user, "<span class='warning'>This APC already has a cog.</span>")
 			return
@@ -640,11 +640,11 @@
 			user.visible_message("<span class='warning'>[user] installs [W] in [src]!</span>", \
 			"<span class='alloy'>Replicant alloy rapidly covers the APC's innards, replacing the machinery.</span><br>\
 			<span class='brass'>This APC will now passively provide power for the cult!</span>")
-			playsound(user, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+			playsound(user, 'sound/machines/chumbiscult/integration_cog_install.ogg', 50, TRUE)
 			user.transferItemToLoc(W, src)
 			integration_cog = W
 			START_PROCESSING(SSfastprocess, W)
-			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/chumbiscult/steam_whoosh.ogg', 50, FALSE)
 			opened = FALSE
 			locked = FALSE
 			update_icon()

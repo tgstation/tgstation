@@ -375,7 +375,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 //Servant spawn locations
 /obj/effect/landmark/servant_of_ratvar
 	name = "servant of ratvar spawn"
-	icon_state = "clockwork_orange"
+	icon_state = "chumbiswork_orange"
 	layer = MOB_LAYER
 
 /obj/effect/landmark/servant_of_ratvar/Initialize(mapload)

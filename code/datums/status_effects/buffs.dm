@@ -53,7 +53,7 @@
 	name = "Vanguard"
 	desc = "You're absorbing stuns! 25% of all stuns taken will affect you after this effect ends."
 	icon_state = "vanguard"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"
 
 /obj/screen/alert/status_effect/vanguard/MouseEntered(location,control,params)
 	var/mob/living/L = usr
@@ -117,7 +117,7 @@
 	name = "Inath-neq's Endowment"
 	desc = "Adrenaline courses through you as the Resonant Cogwheel's energy shields you from all harm!"
 	icon_state = "inathneqs_endowment"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"
 
 /datum/status_effect/inathneqs_endowment/on_apply()
 	owner.log_message("gained Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)

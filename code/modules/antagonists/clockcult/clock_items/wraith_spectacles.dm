@@ -2,7 +2,7 @@
 /obj/item/clothing/glasses/wraith_spectacles
 	name = "antique spectacles"
 	desc = "Unnerving glasses with opaque yellow lenses."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/chumbiswork_garb.dmi'
 	icon_state = "wraith_specs"
 	item_state = "glasses"
 	actions_types = list(/datum/action/item_action/toggle)
@@ -14,10 +14,10 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/Initialize()
 	. = ..()
-	GLOB.all_clockwork_objects += src
+	GLOB.all_chumbiswork_objects += src
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	GLOB.all_clockwork_objects -= src
+	GLOB.all_chumbiswork_objects -= src
 	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/attack_self(mob/user)
@@ -105,7 +105,7 @@
 	name = "Wraith Spectacles"
 	desc = "You shouldn't actually see this, as it should be procedurally generated."
 	icon_state = "wraithspecs"
-	alerttooltipstyle = "clockcult"
+	alerttooltipstyle = "chumbiscult"
 
 /obj/screen/alert/status_effect/wraith_spectacles/MouseEntered(location,control,params)
 	var/mob/living/carbon/human/L = usr

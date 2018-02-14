@@ -1,8 +1,8 @@
 //Non-servants standing over this will get spikes through the feet, immobilizing them until they're freed.
-/obj/structure/destructible/clockwork/trap/brass_skewer
+/obj/structure/destructible/chumbiswork/trap/brass_skewer
 	name = "brass skewer"
 	desc = "A deadly brass spike, cleverly concealed in the floor. You think you should be safe if you disarm whatever's meant to set it off."
-	clockwork_desc = "A barbaric but undeniably effective weapon: a spear through the chest. It immobilizes anyone unlucky enough to step on it and keeps them in place until they get help.."
+	chumbiswork_desc = "A barbaric but undeniably effective weapon: a spear through the chest. It immobilizes anyone unlucky enough to step on it and keeps them in place until they get help.."
 	icon_state = "brass_skewer"
 	break_message = "<span class='warning'>The skewer snaps in two!</span>"
 	max_integrity = 40
@@ -13,11 +13,11 @@
 	var/wiggle_wiggle
 	var/mutable_appearance/impale_overlay //This is applied to any mob impaled so that they visibly have the skewer coming through their chest
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/Initialize()
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/Destroy()
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
@@ -28,25 +28,25 @@
 		unbuckle_mob(L)
 	return ..()
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/process()
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/process()
 	if(density)
 		if(buckled_mobs && LAZYLEN(buckled_mobs))
 			var/mob/living/spitroast = buckled_mobs[1]
 			spitroast.adjustBruteLoss(0.1)
 
-/obj/structure/destructible/clockwork/trap/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/destructible/chumbiswork/trap/attackby(obj/item/I, mob/living/user, params)
 	if(buckled_mobs && (user in buckled_mobs))
 		to_chat(user, "<span class='warning'>You can't reach!</span>")
 		return
 	..()
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		return L.bullet_act(P)
 	return ..()
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/activate()
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/activate()
 	if(density)
 		return
 	var/mob/living/squirrel = locate() in get_turf(src)
@@ -69,24 +69,24 @@
 		buckle_mob(squirrel, TRUE)
 	else
 		visible_message("<span class='danger'>A massive brass spike erupts from the ground!</span>")
-	playsound(src, 'sound/machines/clockcult/brass_skewer.ogg', 75, FALSE)
+	playsound(src, 'sound/machines/chumbiscult/brass_skewer.ogg', 75, FALSE)
 	icon_state = "[initial(icon_state)]_extended"
 	density = TRUE //Skewers are one-use only
 	desc = "A vicious brass spike protruding from the ground like a stala[pick("gm", "ct")]ite. It makes you sick to look at." //is stalagmite the ground one? or the ceiling one? who can ever remember?
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/user_buckle_mob()
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/user_buckle_mob()
 	return
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/post_buckle_mob(mob/living/L)
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/post_buckle_mob(mob/living/L)
 	if(L in buckled_mobs)
 		L.pixel_y = 3
-		impale_overlay = mutable_appearance('icons/obj/clockwork_objects.dmi', "brass_skewer_pokeybit", ABOVE_MOB_LAYER)
+		impale_overlay = mutable_appearance('icons/obj/chumbiswork_objects.dmi', "brass_skewer_pokeybit", ABOVE_MOB_LAYER)
 		add_overlay(impale_overlay)
 	else
 		L.pixel_y = initial(L.pixel_y)
 		L.cut_overlay(impale_overlay)
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/user_unbuckle_mob(mob/living/skewee, mob/living/user)
+/obj/structure/destructible/chumbiswork/trap/brass_skewer/user_unbuckle_mob(mob/living/skewee, mob/living/user)
 	if(user == skewee)
 		if(wiggle_wiggle)
 			return

@@ -1,46 +1,46 @@
 //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
-/obj/structure/destructible/clockwork/ocular_warden
+/obj/structure/destructible/chumbiswork/ocular_warden
 	name = "ocular warden"
 	desc = "A large brass eye with tendrils trailing below it and a wide red iris."
-	clockwork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
+	chumbiswork_desc = "A fragile turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	icon_state = "ocular_warden"
 	unanchored_icon = "ocular_warden_unwrenched"
 	max_integrity = 25
 	construction_value = 15
 	layer = WALL_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
-	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
+	debris = list(/obj/item/chumbiswork/component/belligerent_eye/blind_eye = 1)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
-/obj/structure/destructible/clockwork/ocular_warden/Initialize()
+/obj/structure/destructible/chumbiswork/ocular_warden/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/structure/destructible/clockwork/ocular_warden/Destroy()
+/obj/structure/destructible/chumbiswork/ocular_warden/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/obj/structure/destructible/clockwork/ocular_warden/examine(mob/user)
+/obj/structure/destructible/chumbiswork/ocular_warden/examine(mob/user)
 	..()
 	to_chat(user, "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>")
 
-/obj/structure/destructible/clockwork/ocular_warden/hulk_damage()
+/obj/structure/destructible/chumbiswork/ocular_warden/hulk_damage()
 	return 25
 
-/obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
+/obj/structure/destructible/chumbiswork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
 	if(!anchored)
-		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
+		for(var/obj/structure/destructible/chumbiswork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(W.anchored)
 				if(!silent)
 					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
 				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
+/obj/structure/destructible/chumbiswork/ocular_warden/ratvar_act()
 	..()
 	if(GLOB.ratvar_awakens)
 		damage_per_tick = 10
@@ -49,7 +49,7 @@
 		damage_per_tick = initial(damage_per_tick)
 		sight_range = initial(sight_range)
 
-/obj/structure/destructible/clockwork/ocular_warden/process()
+/obj/structure/destructible/chumbiswork/ocular_warden/process()
 	if(!anchored)
 		lose_target()
 		return
@@ -68,9 +68,9 @@
 						else
 							R.reveal(10)
 					if(prob(50))
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot1.ogg',75 * get_efficiency_mod(),1)
+						L.playsound_local(null,'sound/machines/chumbiscult/ocularwarden-dot1.ogg',75 * get_efficiency_mod(),1)
 					else
-						L.playsound_local(null,'sound/machines/clockcult/ocularwarden-dot2.ogg',75 * get_efficiency_mod(),1)
+						L.playsound_local(null,'sound/machines/chumbiscult/ocularwarden-dot2.ogg',75 * get_efficiency_mod(),1)
 					L.adjustFireLoss((!iscultist(L) ? damage_per_tick : damage_per_tick * 2) * get_efficiency_mod()) //Nar-Sian cultists take additional damage
 					if(GLOB.ratvar_awakens && L)
 						L.adjust_fire_stacks(damage_per_tick)
@@ -85,7 +85,7 @@
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
-			playsound(src,'sound/machines/clockcult/ocularwarden-target.ogg',50,1)
+			playsound(src,'sound/machines/chumbiscult/ocularwarden-target.ogg',50,1)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			if(isliving(target))
 				var/mob/living/L = target
@@ -99,7 +99,7 @@
 			else
 				setDir(pick(GLOB.cardinals))//Random rotation
 
-/obj/structure/destructible/clockwork/ocular_warden/proc/acquire_nearby_targets()
+/obj/structure/destructible/chumbiswork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
 		var/obj/item/storage/book/bible/B = L.bible_check()
@@ -137,14 +137,14 @@
 			if (M in viewcache)
 				. += M
 
-/obj/structure/destructible/clockwork/ocular_warden/proc/lose_target()
+/obj/structure/destructible/chumbiswork/ocular_warden/proc/lose_target()
 	if(!target)
 		return 0
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/destructible/clockwork/ocular_warden/get_efficiency_mod()
+/obj/structure/destructible/chumbiswork/ocular_warden/get_efficiency_mod()
 	if(GLOB.ratvar_awakens)
 		return 2
 	. = 1

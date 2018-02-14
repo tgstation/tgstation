@@ -132,7 +132,7 @@
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+#define ischumbismob(A) (istype(A, /mob/living/simple_animal/hostile/chumbiswork))
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 

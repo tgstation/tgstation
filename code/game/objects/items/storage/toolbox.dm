@@ -140,7 +140,7 @@
 	max_combined_w_class = 28
 	storage_slots = 28
 	attack_verb = list("robusted", "crushed", "smashed")
-	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
+	var/fabricator_type = /obj/item/chumbiswork/replica_fabricator/scarab
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
 	new fabricator_type(src)
@@ -155,15 +155,15 @@
 	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar
-	var/slab_type = /obj/item/clockwork/slab
+	var/slab_type = /obj/item/chumbiswork/slab
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
 	..()
 	new slab_type(src)
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar/admin
-	slab_type = /obj/item/clockwork/slab/debug
-	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
+	slab_type = /obj/item/chumbiswork/slab/debug
+	fabricator_type = /obj/item/chumbiswork/replica_fabricator/scarab/debug
 
 
 /obj/item/storage/toolbox/artistic

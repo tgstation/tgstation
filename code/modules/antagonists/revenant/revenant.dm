@@ -168,7 +168,7 @@
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
 /mob/living/simple_animal/revenant/ratvar_act()
-	return //clocks get out reee
+	return //chumbiss get out reee
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)

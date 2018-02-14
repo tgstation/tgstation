@@ -2,7 +2,7 @@
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
 	GLOB.alive_mob_list -= src
-	GLOB.all_clockwork_mobs -= src
+	GLOB.all_chumbiswork_mobs -= src
 	GLOB.mob_directory -= tag
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
@@ -284,7 +284,7 @@
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1 
+		return 1
 
 /mob/living/reset_perspective(atom/A)
 	if(..())

@@ -2,9 +2,9 @@
 /obj/item/device/mmi/posibrain/soul_vessel
 	name = "soul vessel"
 	desc = "A heavy brass cube, three inches to a side, with a single protruding cogwheel."
-	var/clockwork_desc = "A soul vessel, an ancient relic that can attract the souls of the damned or simply rip a mind from an unconscious or dead human.\n\
-	<span class='brass'>If active, can serve as a positronic brain, placable in cyborg shells or clockwork construct shells.</span>"
-	icon = 'icons/obj/clockwork_objects.dmi'
+	var/chumbiswork_desc = "A soul vessel, an ancient relic that can attract the souls of the damned or simply rip a mind from an unconscious or dead human.\n\
+	<span class='brass'>If active, can serve as a positronic brain, placable in cyborg shells or chumbiswork construct shells.</span>"
+	icon = 'icons/obj/chumbiswork_objects.dmi'
 	icon_state = "soul_vessel"
 	req_access = list()
 	braintype = "Servant"
@@ -13,7 +13,7 @@
 	fail_message = "<span class='warning'>The cogwheel creaks and grinds to a halt. Maybe you could try again?</span>"
 	new_role = "Soul Vessel"
 	welcome_message = "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>\n\
-	<b>You are a soul vessel - a clockwork mind created by Ratvar, the Clockwork Justiciar.\n\
+	<b>You are a soul vessel - a chumbiswork mind created by Ratvar, the chumbiswork Justiciar.\n\
 	You answer to Ratvar and his servants. It is your discretion as to whether or not to answer to anyone else.\n\
 	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
@@ -30,15 +30,15 @@
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name
-	GLOB.all_clockwork_objects += src
+	GLOB.all_chumbiswork_objects += src
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
-	GLOB.all_clockwork_objects -= src
+	GLOB.all_chumbiswork_objects -= src
 	return ..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)
-	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
-		desc = clockwork_desc
+	if((is_servant_of_ratvar(user) || isobserver(user)) && chumbiswork_desc)
+		desc = chumbiswork_desc
 	..()
 	desc = initial(desc)
 
@@ -91,7 +91,7 @@
 		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
-	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
+	playsound(H, 'sound/magic/chumbiswork/anima_fragment_attack.ogg', 40, 1, -1)
 	H.fakedeath("soul_vessel") //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
 	H.cure_fakedeath("soul_vessel")

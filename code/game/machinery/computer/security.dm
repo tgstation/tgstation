@@ -37,7 +37,7 @@
 	icon_state = "laptop"
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
+	chumbiswork = TRUE //it'd look weird
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/card/id))
@@ -616,7 +616,7 @@ What a mess.*/
 						if(active1.fields["photo_front"])
 							if(istype(active1.fields["photo_front"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_front"]
-								print_photo(P.img, active1.fields["name"])	
+								print_photo(P.img, active1.fields["name"])
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
@@ -631,7 +631,7 @@ What a mess.*/
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
-								print_photo(P.img, active1.fields["name"])	
+								print_photo(P.img, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)

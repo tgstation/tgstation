@@ -137,7 +137,7 @@
 	switch(visualAppearence)
 		if(MAINTDRONE)
 			. = 0
-		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
+		if(REPAIRDRONE,SCOUTDRONE,chumbisDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

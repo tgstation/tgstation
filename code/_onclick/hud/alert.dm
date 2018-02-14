@@ -382,16 +382,16 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 
 
-// CLOCKCULT
-/obj/screen/alert/clockwork
-	alerttooltipstyle = "clockcult"
+// chumbisCULT
+/obj/screen/alert/chumbiswork
+	alerttooltipstyle = "chumbiscult"
 
-/obj/screen/alert/clockwork/infodump
+/obj/screen/alert/chumbiswork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
-	icon_state = "clockinfo"
+	icon_state = "chumbisinfo"
 
-/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+/obj/screen/alert/chumbiswork/infodump/MouseEntered(location,control,params)
 	if(GLOB.ratvar_awakens)
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
@@ -400,14 +400,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-		if(C && C.clock_team)
-			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
+		var/datum/antagonist/chumbiscult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/chumbiscult,TRUE)
+		if(C && C.chumbis_team)
+			textlist += "[C.chumbis_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
 		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		var/obj/structure/destructible/chumbiswork/massive/celestial_gateway/G = GLOB.ark_of_the_chumbiswork_justiciar
 		if(G)
 			var/time_info = G.get_arrival_time(FALSE)
 			var/time_name
@@ -419,7 +419,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
 				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
-		textlist += "<b>[DisplayPower(get_clockwork_power())] / [DisplayPower(MAX_CLOCKWORK_POWER)]</b> power available for use."
+		textlist += "<b>[DisplayPower(get_chumbiswork_power())] / [DisplayPower(MAX_chumbisWORK_POWER)]</b> power available for use."
 		desc = textlist.Join()
 	..()
 
