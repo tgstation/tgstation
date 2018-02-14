@@ -52,7 +52,7 @@
 		//amWelded = TRUE
 		// Weld it
 		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
+		if(WT.use(0))//remove_fuel(0,user))
 			user.visible_message("[user.name] scorched the pointy end of [src] with the welding tool.", \
 						 "<span class='notice'>You scorch the pointy end of [src] with the welding tool.</span>", \
 						 "<span class='italics'>You hear welding.</span>")
@@ -178,7 +178,7 @@
 /obj/item/stake/hardened/silver/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
 		var/obj/item/weldingtool/WT = I
-		if(WT.remove_fuel(0, user))
+		if(WT.use(0))//remove_fuel(0, user))
 			var/obj/item/stack/sheet/mineral/silver/newsheet = new (user.loc)
 			for(var/obj/item/stack/sheet/mineral/silver/S in user.loc)
 				if(S == newsheet)
