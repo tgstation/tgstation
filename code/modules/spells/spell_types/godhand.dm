@@ -57,9 +57,12 @@
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
-	if(M.anti_magic_check())
-		to_chat(user, "<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
-		target.visible_message("<span class='danger'>The spell is reflected by [M], and the feedback blows [user]'s arm off!</span>")
+	var/atom/A = M.anti_magic_check()
+	if(A)
+		if(isitem(A))
+			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<s
+		pan class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
 		user.flash_act()
 		var/obj/item/bodypart/part
 		var/index = user.get_held_index_of_item(src)

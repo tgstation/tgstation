@@ -69,6 +69,14 @@
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
+/datum/species/golem/adamantine/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.add_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+
+/datum/species/golem/adamantine/on_species_loss(mob/living/carbon/C)
+	C.remove_trait(TRAIT_ANTIMAGIC, SPECIES_TRAIT)
+	..()
+
 //The suicide bombers of golemkind
 /datum/species/golem/plasma
 	name = "Plasma Golem"
@@ -160,6 +168,14 @@
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
 	prefix = "Silver"
 	special_names = list("Surfer", "Chariot", "Lining")
+
+/datum/species/golem/silver/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+
+/datum/species/golem/silver/on_species_loss(mob/living/carbon/C)
+	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	..()
 
 //Harder to stun, deals more damage, but it's even slower
 /datum/species/golem/plasteel
@@ -663,6 +679,14 @@
 	punchstunthreshold = 7
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
+
+/datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
+
+/datum/species/golem/cloth/on_species_loss(mob/living/carbon/C)
+	C.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
+	..()
 
 /datum/species/golem/cloth/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

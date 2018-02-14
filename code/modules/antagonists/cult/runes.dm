@@ -758,9 +758,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/I = L.anti_magic_check()
+			var/atom/I = L.anti_magic_check()
 			if(I)
-				to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
+				if(isitem(I))
+					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
 				continue
 			to_chat(L, "<span class='cultlarge'>Your blood boils in your veins!</span>")
 			if(is_servant_of_ratvar(L))
@@ -787,8 +788,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/I = L.anti_magic_check()
-			if(I)
+			if(L.anti_magic_check())
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))

@@ -9,6 +9,8 @@
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
 	if(!magic && !holy)
 		return
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
 	var/list/obj/item/item_list = list()
 	if(isliving(src))
 		var/mob/living/L = src
