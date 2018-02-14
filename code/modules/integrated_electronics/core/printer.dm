@@ -20,6 +20,7 @@
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE
 	can_clone = TRUE
+	fast_clone = TRUE
 
 /obj/item/device/integrated_circuit_printer/Initialize()
 	. = ..()
