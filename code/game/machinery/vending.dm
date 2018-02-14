@@ -260,7 +260,7 @@
 			cut_overlays()
 			if(panel_open)
 				add_overlay("[initial(icon_state)]-panel")
-			playsound(src, W.usesound, 50, 1)
+			W.play_tool_sound(src)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You must first secure [src].</span>")

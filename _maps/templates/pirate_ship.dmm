@@ -664,6 +664,7 @@
 	name = "Pirate Ship";
 	port_direction = 8;
 	preferred_direction = 1;
+	timid = 0;
 	width = 23
 	},
 /obj/docking_port/stationary{
@@ -706,7 +707,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = 152
+	req_access = null;
+	req_access_txt = "152"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
@@ -901,13 +903,6 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"cf" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 1;
-	faction = "pirate"
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1786,6 +1781,13 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
+"dV" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 1;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 
 (1,1,1) = {"
 aa
@@ -1801,7 +1803,7 @@ aj
 aj
 bF
 aj
-cf
+dV
 aj
 aj
 aj
@@ -2321,7 +2323,7 @@ aj
 aj
 bW
 aj
-cf
+dV
 aj
 aj
 aj

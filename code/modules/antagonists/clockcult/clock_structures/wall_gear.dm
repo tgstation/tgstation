@@ -31,9 +31,8 @@
 		if(anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be unsecured to disassemble it!</span>")
 		else
-			playsound(src, I.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] starts to disassemble [src].</span>", "<span class='notice'>You start to disassemble [src]...</span>")
-			if(do_after(user, 30*I.toolspeed, target = src) && !anchored)
+			if(I.use_tool(src, user, 30, volume=100) && !anchored)
 				to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 				deconstruct(TRUE)
 		return 1

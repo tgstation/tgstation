@@ -38,7 +38,7 @@
 	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge)
 		use_power(20)
 		defib.cell.give(18) //90% efficiency, slightly better than the cell charger's 87.5%
-	if(isliving(defib.paddles.loc))
+	if(defib && defib.paddles && isliving(defib.paddles.loc))
 		var/mob/living/L = defib.paddles.loc
 		if(!L.Adjacent(src))
 			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
@@ -118,8 +118,8 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/defibrillator_mount/AltClick(mob/living/user)
-	if(!user.Adjacent(src) || !istype(user))
+/obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!defib)
 		to_chat(user, "<span class='warning'>It'd be hard to remove a defib unit from a mount that has none.</span>")

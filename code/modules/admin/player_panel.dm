@@ -236,7 +236,7 @@
 						if(islarva(M))
 							M_job = "Alien larva"
 						else
-							M_job = "Alien"
+							M_job = ROLE_ALIEN
 					else
 						M_job = "Carbon-based"
 
@@ -244,7 +244,7 @@
 					if(isAI(M))
 						M_job = "AI"
 					else if(ispAI(M))
-						M_job = "pAI"
+						M_job = ROLE_PAI
 					else if(iscyborg(M))
 						M_job = "Cyborg"
 					else

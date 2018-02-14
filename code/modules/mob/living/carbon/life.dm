@@ -250,7 +250,7 @@
 		if(prob(D.infectivity))
 			D.spread()
 
-		if(stat != DEAD && !D.process_dead)
+		if(stat != DEAD || D.process_dead)
 			D.stage_act()
 
 //todo generalize this and move hud out
@@ -464,6 +464,9 @@
 
 /mob/living/carbon/proc/can_heartattack()
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE
 

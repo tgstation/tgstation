@@ -4,13 +4,13 @@
 	icon = 'icons/obj/assemblies/electronic_tools.dmi'
 	icon_state = "circuit_printer"
 	w_class = WEIGHT_CLASS_BULKY
-	var/upgraded = TRUE			// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
+	var/upgraded = FALSE			// When hit with an upgrade disk, will turn true, allowing it to print the higher tier circuits.
 	var/can_clone = FALSE		// Same for above, but will allow the printer to duplicate a specific assembly.
 	var/current_category = null
 	var/list/program			// Currently loaded save, in form of list
 
 /obj/item/device/integrated_circuit_printer/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src, be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/device/integrated_circuit_printer/upgraded
 	upgraded = TRUE
@@ -135,6 +135,9 @@
 	if(href_list["print"])
 		if(!CONFIG_GET(flag/ic_printing))
 			to_chat(usr, "<span class='warning'>CentCom has disabled printing of custom circuitry due to recent allegations of copyright infringement.</span>")
+			return
+		if(!can_clone) // Copying and printing ICs is cloning
+			to_chat(usr, "<span class='warning'>This printer does not have the cloning upgrade.</span>")
 			return
 		switch(href_list["print"])
 			if("load")

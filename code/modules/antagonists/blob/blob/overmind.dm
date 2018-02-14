@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	layer = FLY_LAYER
 
 	pass_flags = PASSBLOB
-	faction = list("blob")
+	faction = list(ROLE_BLOB)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(!Ablob.blob_allowed)
 			continue
 
-		if(!("blob" in L.faction))
+		if(!(ROLE_BLOB in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, 1)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)

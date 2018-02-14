@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
+	var/list/spawned_objects = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -62,7 +63,8 @@ SUBSYSTEM_DEF(persistence)
 		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
 			F.hide(1)
 		if(ispath(path))
-			new path(F)
+			var/spawned_item = new path(F)
+			spawned_objects[spawned_item] = TRUE
 		placed_satchel++
 	var/free_satchels = 0
 	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only

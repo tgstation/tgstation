@@ -156,8 +156,8 @@
 		return
 	P.attackby(T, user, params)
 
-/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	playsound(src, C.usesound, 80, 1)
+/turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
+	I.play_tool_sound(src, 80)
 	return remove_tile(user, silent)
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)

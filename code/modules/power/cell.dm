@@ -20,6 +20,7 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -27,6 +28,7 @@
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	create_reagents(5)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -68,7 +70,7 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/proc/use(amount)
+/obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -101,15 +103,9 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/attackby(obj/item/W, mob/user, params)
+/obj/item/stock_parts/cell/on_reagent_change(changetype)
+	rigged = reagents.has_reagent("plasma", 5)
 	..()
-	if(istype(W, /obj/item/reagent_containers/syringe))
-		var/obj/item/reagent_containers/syringe/S = W
-		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
-		if(S.reagents.has_reagent("plasma", 5))
-			rigged = 1
-			grind_results["plasma"] = 5
-		S.reagents.clear_reagents()
 
 
 /obj/item/stock_parts/cell/proc/explode()
@@ -162,6 +158,10 @@
 		return 0
 
 /* Cell variants*/
+/obj/item/stock_parts/cell/empty/Initialize()
+	. = ..()
+	charge = 0
+
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
@@ -172,9 +172,10 @@
 /obj/item/stock_parts/cell/crap/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/upgraded
-	name = "high-capacity power cell"
+	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
 	materials = list(MAT_GLASS=50)
@@ -195,6 +196,7 @@
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -228,6 +230,7 @@
 /obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
@@ -240,6 +243,7 @@
 /obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
@@ -252,6 +256,7 @@
 /obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/bluespace
 	name = "bluespace power cell"
@@ -265,6 +270,7 @@
 /obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
@@ -318,6 +324,7 @@
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/emproof/emp_act(severity)
 	return

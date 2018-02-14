@@ -155,24 +155,21 @@
 			anchored = TRUE
 			density = initial(pipe_type.density)
 			to_chat(user, "<span class='notice'>You attach the [pipename] to the underfloor.</span>")
-		playsound(src, I.usesound, 100, 1)
+		I.play_tool_sound(src, 100)
 		update_icon()
 
 	else if(istype(I, /obj/item/weldingtool))
 		if(anchored)
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src, I.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You start welding the [pipename] in place...</span>")
-				if(do_after(user, 8*I.toolspeed, target = src))
-					if(!loc || !W.isOn())
-						return
-					to_chat(user, "<span class='notice'>The [pipename] has been welded in place.</span>")
+			if(!I.tool_start_check(user, amount=0))
+				return
 
-					var/obj/O = new pipe_type(loc, src)
-					transfer_fingerprints_to(O)
+			to_chat(user, "<span class='notice'>You start welding the [pipename] in place...</span>")
+			if(I.use_tool(src, user, 8, volume=50))
+				to_chat(user, "<span class='notice'>The [pipename] has been welded in place.</span>")
+				var/obj/O = new pipe_type(loc, src)
+				transfer_fingerprints_to(O)
 
-					return
+			return
 		else
 			to_chat(user, "<span class='warning'>You need to attach it to the plating first!</span>")
 			return
