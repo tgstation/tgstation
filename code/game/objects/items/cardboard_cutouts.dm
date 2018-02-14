@@ -13,10 +13,18 @@
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
 		"Laughter Demon", "Private Security Officer")
+	var/initial_appearance
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
 	var/lastattacker = null
+
+/obj/item/cardboard_cutout/Initialize(mapload)
+	. = ..()
+	if(initial_appearance)
+		change_appearance(initial_appearance)
+	if(pushed_over)
+		push_over()
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
@@ -45,7 +53,7 @@
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
-		change_appearance(I, user)
+		draw_on(I, user)
 		return
 	// Why yes, this does closely resemble mob and object attack code.
 	if(I.flags_1 & NOBLUDGEON_1)
@@ -74,7 +82,7 @@
 	if(prob(P.damage))
 		push_over()
 
-/obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
+/obj/item/cardboard_cutout/proc/draw_on(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
 		return
 	if(pushed_over)
@@ -93,11 +101,16 @@
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
+	
+	change_appearance(new_appearance)
+
+
+/obj/item/cardboard_cutout/proc/change_appearance(var/appearance_id)
 	alpha = 255
 	icon = initial(icon)
 	if(!deceptive)
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
-	switch(new_appearance)
+	switch(appearance_id)
 		if("Assistant")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
@@ -178,10 +191,13 @@
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
 			icon_state = "cutout_ntsec"
-	return 1
+	return TRUE
 
 /obj/item/cardboard_cutout/setDir(newdir)
 	dir = SOUTH
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
+
+/obj/item/cardboard_cutout/adaptive/xenomaid
+	initial_appearance = "Xenomorph Maid"
