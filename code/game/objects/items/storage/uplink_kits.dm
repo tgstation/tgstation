@@ -332,3 +332,10 @@
 	new /obj/item/stamp/chameleon/broken(src)
 	new /obj/item/device/pda/chameleon/broken(src)
 	// No chameleon laser, they can't randomise for //REASONS//
+
+/obj/item/storage/box/syndie_kit/maid_costume/PopulateContents()
+	new /obj/item/clothing/under/maid(src)
+	new /obj/item/cardboard_cutout/adaptive/xenomaid(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/gloves/color/orange(src)
+	new /obj/item/clothing/glasses/regular(src)
