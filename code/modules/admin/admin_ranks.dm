@@ -8,6 +8,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/name = "NoRank"
 	var/rights = R_DEFAULT
 	var/exclude_rights = 0
+	var/include_rights = 0
 	var/can_edit_rights = 0
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
@@ -26,6 +27,7 @@ GLOBAL_PROTECT(protected_ranks)
 		return
 	if(init_rights)
 		rights = init_rights
+	include_rights = rights
 	if(init_exclude_rights)
 		exclude_rights = init_exclude_rights
 		rights &= ~exclude_rights
@@ -100,6 +102,7 @@ GLOBAL_PROTECT(protected_ranks)
 		switch(text2ascii(word,1))
 			if(43)
 				rights |= flag	//+
+				include_rights	|= flag
 			if(45)
 				rights &= ~flag	//-
 				exclude_rights	|= flag
@@ -139,8 +142,8 @@ GLOBAL_PROTECT(protected_ranks)
 	if(!CONFIG_GET(flag/admin_legacy_system))
 		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
-			message_admins("Error loading admin ranks from database. Reverting to legacy system.")
-			log_sql("Error loading admin ranks from database. Reverting to legacy system.")
+			message_admins("Error loading admin ranks from database. Loading from backup.")
+			log_sql("Error loading admin ranks from database. Loading from backup.")
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			//load ranks from backup file
 			var/backup_file = file("data/admins_backup.json")
@@ -149,25 +152,30 @@ GLOBAL_PROTECT(protected_ranks)
 				return
 			var/list/json = json_decode(file2text(backup_file))
 			for(var/J in json["ranks"])
-				if(GLOB.admin_ranks["[J]"]) //this rank was already loaded from txt override
-					continue
-				var/datum/admin_rank/R = new("[J]", J["rights"], J["exclude rights"], J["can edit rights"])
+				for(var/datum/admin_rank/R in GLOB.admin_ranks)
+					if(R.name == "[J]") //this rank was already loaded from txt override
+						continue
+				var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
 				if(!R)
 					continue
 				GLOB.admin_ranks += R
 			return 1
 		else
 			while(query_load_admin_ranks.NextRow())
+				var/skip
 				var/rank_name = query_load_admin_ranks.item[1]
-				if(GLOB.admin_ranks[rank_name]) //this rank was already loaded from txt override
-					continue
-				var/rank_flags = text2num(query_load_admin_ranks.item[2])
-				var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
-				var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
-				var/datum/admin_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
-				if(!R)
-					continue
-				GLOB.admin_ranks += R
+				for(var/datum/admin_rank/R in GLOB.admin_ranks)
+					if(R.name == rank_name) //this rank was already loaded from txt override
+						skip = 1
+						break
+				if(!skip)
+					var/rank_flags = text2num(query_load_admin_ranks.item[2])
+					var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
+					var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
+					var/datum/admin_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
+					if(!R)
+						continue
+					GLOB.admin_ranks += R
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -181,8 +189,8 @@ GLOBAL_PROTECT(protected_ranks)
 /proc/load_admins()
 	var/dbfail
 	if(CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
-		message_admins("Failed to connect to database while loading admins. Reverting to legacy system.")
-		log_sql("Failed to connect to database while loading admins. Reverting to legacy system.")
+		message_admins("Failed to connect to database while loading admins. Loading from backup.")
+		log_sql("Failed to connect to database while loading admins. Loading from backup.")
 		CONFIG_SET(flag/admin_legacy_system, TRUE)
 		dbfail = 1
 	//clear the datums references
@@ -215,27 +223,29 @@ GLOBAL_PROTECT(protected_ranks)
 		new /datum/admins(rank_names[rank], ckey, 0, 1)
 	if(!CONFIG_GET(flag/admin_legacy_system))
 		if(!SSdbcore.Connect())
-			message_admins("Failed to connect to database while loading admins. Reverting to legacy system.")
-			log_sql("Failed to connect to database while loading admins. Reverting to legacy system.")
+			message_admins("Failed to connect to database while loading admins. Loading from backup.")
+			log_sql("Failed to connect to database while loading admins. Loading from backup.")
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			dbfail = 1
 		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
-			message_admins("Error loading admins from database. Reverting to legacy system.")
-			log_sql("Error loading admins from database. Reverting to legacy system.")
+			message_admins("Error loading admins from database. Loading from backup.")
+			log_sql("Error loading admins from database. Loading from backup.")
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			dbfail = 1
 		else
 			while(query_load_admins.NextRow())
 				var/admin_ckey = query_load_admins.item[1]
 				var/admin_rank = query_load_admins.item[2]
+				var/skip
 				if(rank_names[admin_rank] == null)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
 					log_sql("[admin_ckey] loaded with invalid admin rank [admin_rank].")
-					continue
-				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_rank]) //this admin was already loaded from txt override
-					continue
-				new /datum/admins(rank_names[admin_rank], admin_ckey)
+					skip = 1
+				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
+					skip = 1
+				if(!skip)
+					new /datum/admins(rank_names[admin_rank], admin_ckey)
 	//load admins from backup file
 	if(dbfail)
 		var/backup_file = file("data/admins_backup.json")
@@ -243,10 +253,11 @@ GLOBAL_PROTECT(protected_ranks)
 			log_world("Unable to locate admins backup file.")
 			return
 		var/list/json = json_decode(file2text(backup_file))
-		for(var/A in json["admins"])
-			if(GLOB.admin_datums["[A]"] || GLOB.deadmins["[A]"]) //this admin was already loaded from txt override
-				continue
-			new /datum/admins(rank_names[A], "[A]")
+		for(var/J in json["admins"])
+			for(var/A in GLOB.admin_datums + GLOB.deadmins)
+				if(A == "[J]") //this admin was already loaded from txt override
+					continue
+			new /datum/admins(rank_names[json["admins"]["[J]"]], "[J]")
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)

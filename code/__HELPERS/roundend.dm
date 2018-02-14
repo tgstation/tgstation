@@ -502,10 +502,15 @@
 	var/list/file_data = list("ranks" = list(), "admins" = list())
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		file_data["ranks"]["[R.name]"] = list()
-		file_data["ranks"]["[R.name]"]["rights"] = R.rights
+		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
 		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
-		file_data["ranks"]["[R.name]"]["can edit rights"] = R.exclude_rights
-	for(var/datum/admins/A in GLOB.admin_datums+GLOB.deadmins)
-		file_data["admins"]["[A.target]"] = A.rank.name
+		file_data["ranks"]["[R.name]"]["can edit rights"] = R.can_edit_rights
+	for(var/i in GLOB.admin_datums+GLOB.deadmins)
+		var/datum/admins/A = GLOB.admin_datums[i]
+		if(!A)
+			A = GLOB.deadmins[i]
+			if (!A)
+				continue
+		file_data["admins"]["[i]"] = A.rank.name
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))

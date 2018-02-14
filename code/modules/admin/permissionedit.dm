@@ -44,7 +44,7 @@
 		output += "<tr>"
 		output += "<td style='text-align:right;'>[adm_ckey] [deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
 		output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
-		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.rights," ")]</a></td>"
+		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
 		output += "</tr>"
@@ -215,7 +215,7 @@
 	log_admin("[key_name(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
 
 /datum/admins/proc/change_admin_flags(admin_ckey, use_db, datum/admins/D)
-	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.rights, 350, 580, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
+	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.include_rights, 350, 580, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
 	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 670, "red", usr.client.holder.rank.can_edit_rights)
@@ -246,8 +246,14 @@
 				continue
 			R.rights = new_flags &= ~new_exclude_flags
 			R.exclude_rights = new_exclude_flags
-			R.can_edit_rights = new_exclude_flags
-		for(var/datum/admins/A in GLOB.admin_datums+GLOB.deadmins)
+			R.include_rights = new_flags
+			R.can_edit_rights = new_can_edit_flags
+		for(var/i in GLOB.admin_datums+GLOB.deadmins)
+			var/datum/admins/A = GLOB.admin_datums[i]
+			if(!A)
+				A = GLOB.deadmins[i]
+				if (!A)
+					continue
 			if(A.rank.name != D.rank.name)
 				continue
 			var/client/C = GLOB.directory[A.target]
@@ -260,6 +266,7 @@
 			//we don't add this clone to the admin_ranks list, as it is unique to that ckey
 		else
 			D.rank.rights = new_flags &= ~new_exclude_flags
+			D.rank.include_rights = new_flags
 			D.rank.exclude_rights = new_exclude_flags
 		var/client/C = GLOB.directory[admin_ckey] //find the client with the specified ckey (if they are logged in)
 		D.associate(C) //link up with the client and add verbs
