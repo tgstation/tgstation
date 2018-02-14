@@ -61,8 +61,7 @@
 	if(A)
 		if(isitem(A))
 			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
-		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<s
-		pan class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
 		user.flash_act()
 		var/obj/item/bodypart/part
 		var/index = user.get_held_index_of_item(src)
