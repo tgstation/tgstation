@@ -122,9 +122,10 @@
 				S.on_purchase(owner.current,TRUE)
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
-	for(var/datum/action/changeling/P in purchasedpowers)
-		if(initial(power.name) == P.name)
-			return P//I think this should still work
+	for(var/P in purchasedpowers)
+		var/datum/action/changeling/otherpower = P
+		if(initial(power.name) == otherpower.name)
+			return TRUE
 	return FALSE
 
 

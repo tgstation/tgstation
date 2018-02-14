@@ -25,10 +25,11 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.changeling_speak)
 		changeling.changeling_speak = FALSE
-	for(var/datum/action/changeling/p in changeling.purchasedpowers)
-		if(istype(p, /datum/action/changeling/hivemind_upload) || istype(p, /datum/action/changeling/hivemind_download))
-			changeling.purchasedpowers -= p
-			p.Remove(changeling.owner.current)
+	for(var/p in changeling.purchasedpowers)
+		var/datum/action/changeling/otherpower = p
+		if(istype(otherpower, /datum/action/changeling/hivemind_upload) || istype(otherpower, /datum/action/changeling/hivemind_download))
+			changeling.purchasedpowers -= otherpower
+			otherpower.Remove(changeling.owner.current)
 	..()
 
 
