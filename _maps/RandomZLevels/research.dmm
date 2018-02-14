@@ -739,6 +739,7 @@
 	name = "Engine Room";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -757,6 +758,7 @@
 	name = "Engine Room";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 8
 	},
@@ -4035,6 +4037,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mv" = (
@@ -4161,6 +4166,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "mP" = (
@@ -4178,6 +4186,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three";
 	req_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
@@ -4226,6 +4237,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "na" = (
@@ -4250,6 +4262,67 @@
 "nf" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/research/interior/engineering)
+"qC" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"sy" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 4
+	},
+/area/awaymission/research/interior)
+"xy" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Three";
+	req_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"Dd" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod One"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"Fj" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 8
+	},
+/area/awaymission/research/interior)
+"JK" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Two"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
 
 (1,1,1) = {"
 aa
@@ -38586,15 +38659,15 @@ iX
 cd
 ma
 mb
-mu
+Dd
 mb
 mb
 mb
-mO
+JK
 mb
 mb
 mb
-mS
+xy
 mb
 mb
 ad
@@ -39626,7 +39699,7 @@ mE
 mZ
 mv
 mv
-mZ
+qC
 aa
 aa
 aa
@@ -41887,7 +41960,7 @@ cf
 cq
 cA
 cN
-cZ
+sy
 dl
 dz
 cZ
@@ -41939,7 +42012,7 @@ mE
 mZ
 mv
 mv
-mZ
+qC
 aa
 aa
 aa
@@ -42401,7 +42474,7 @@ bd
 cs
 cC
 cP
-da
+Fj
 dn
 dB
 da

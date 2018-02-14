@@ -1140,6 +1140,7 @@
 /area/awaymission/wildwest/gov)
 "dU" = (
 /obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -1528,6 +1529,9 @@
 /area/awaymission/wildwest/gov)
 "fd" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "fe" = (
@@ -1907,6 +1911,9 @@
 /area/awaymission/wildwest/mines)
 "gi" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gj" = (
@@ -2124,6 +2131,41 @@
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wildwest/mines)
+"pD" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"Gh" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/wildwest/gov)
+"Kh" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"RN" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"Ua" = (
+/obj/machinery/door/airlock/sandstone,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating/ironsand{
+	icon_state = "ironsand1"
+	},
+/area/awaymission/wildwest/gov)
 
 (1,1,1) = {"
 aa
@@ -21312,7 +21354,7 @@ eN
 eg
 ex
 eg
-dU
+Ua
 fL
 fL
 fL
@@ -21569,7 +21611,7 @@ eh
 fc
 eh
 es
-dU
+Ua
 fL
 fL
 fL
@@ -23372,7 +23414,7 @@ bv
 fM
 fW
 gb
-gi
+Gh
 go
 fW
 fW
@@ -27991,7 +28033,7 @@ et
 et
 eJ
 eR
-fd
+RN
 fj
 fo
 fA
@@ -29031,10 +29073,10 @@ eu
 eu
 eu
 eu
-fd
+pD
 eu
 eu
-fd
+Kh
 gL
 gQ
 gQ

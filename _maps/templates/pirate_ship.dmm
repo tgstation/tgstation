@@ -675,6 +675,9 @@
 	name = "Deep Space";
 	width = 23
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bG" = (
@@ -683,6 +686,9 @@
 "bH" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bI" = (
@@ -818,6 +824,9 @@
 /area/shuttle/pirate)
 "bU" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bV" = (
@@ -830,6 +839,9 @@
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (

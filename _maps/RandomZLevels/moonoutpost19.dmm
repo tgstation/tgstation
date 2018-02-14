@@ -1657,6 +1657,7 @@
 	opacity = 0;
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -1816,6 +1817,9 @@
 	icon_state = "open";
 	opacity = 0;
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -4008,6 +4012,7 @@
 	req_access_txt = "201";
 	req_one_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6102,12 +6107,18 @@
 "mL" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mM" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6809,6 +6820,45 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space)
+"vV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"zZ" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"Mm" = (
+/obj/machinery/door/airlock/medical{
+	id_tag = "";
+	name = "Research Division";
+	req_access_txt = "201";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"Wf" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
 
 (1,1,1) = {"
 aa
@@ -36264,10 +36314,10 @@ jG
 lF
 lF
 no
-mM
+zZ
 nA
 nK
-mM
+Wf
 dM
 ba
 ba
@@ -36508,7 +36558,7 @@ hN
 ie
 hj
 hj
-ie
+Mm
 jy
 jU
 jE
@@ -36521,10 +36571,10 @@ mN
 mg
 mg
 mg
-mM
+zZ
 lM
 lN
-mM
+Wf
 dM
 ba
 ba
@@ -41659,7 +41709,7 @@ hI
 hJ
 hI
 hI
-mM
+vV
 hI
 hI
 nJ
