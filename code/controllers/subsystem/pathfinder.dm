@@ -1,3 +1,6 @@
+#define PF_TIEBREAKER 0.005
+//tiebreker weight.To help to choose between equal paths
+
 SUBSYSTEM_DEF(pathfinder)
 	name = "pathfinder"
 	init_order = INIT_ORDER_PATH
@@ -7,7 +10,6 @@ SUBSYSTEM_DEF(pathfinder)
 	var/free
 	var/list/flow
 	var/static/space_type_cache
-	var/tiew = 0.005 //tiebreker weight.To help to choose between equal paths
 
 
 /datum/controller/subsystem/pathfinder/Initialize()

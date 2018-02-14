@@ -46,7 +46,7 @@ Actual Adjacent procs :
 	prevNode = p
 	g = pg
 	h = ph
-	f = g + h*(1+SSpathfinder.tiew)
+	f = g + h*(1+ PF_TIEBREAKER)
 	nt = pnt
 	bf = _bf
 
@@ -54,7 +54,7 @@ Actual Adjacent procs :
 	prevNode = p
 	g = pg
 	h = ph
-	f = g + h*(1+SSpathfinder.tiew)
+	f = g + h*(1+ PF_TIEBREAKER)
 	nt = pnt
 
 /datum/PathNode/proc/calc_f()
@@ -89,7 +89,7 @@ Actual Adjacent procs :
 /proc/AStar(caller, var/turf/end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
 	//sanitation
 	var/turf/start = get_turf(caller)
-	if((!start)||(start.z != end.z)||(start == end)) //no PF between z levels
+	if((!start)||(start.z != end.z)||(start == end)) //no pathfinding between z levels
 		return 0
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
