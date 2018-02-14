@@ -4,8 +4,8 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-/obj/item/storage/pill_bottle/dice/New()
-	..()
+/obj/item/storage/pill_bottle/dice/Initialize()
+	. = ..()
 	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
 	if(special_die == "1")
 		new /obj/item/dice/d1(src)
@@ -46,10 +46,10 @@
 	var/can_be_rigged = TRUE
 	var/rigged = FALSE
 
-/obj/item/dice/New()
-	result = rand(1, sides)
+/obj/item/dice/Initialize()
+	. = ..()
+	result = roll(sides)
 	update_icon()
-	..()
 
 /obj/item/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -85,8 +85,8 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/New()
-	..()
+/obj/item/dice/d6/space/Initialize()
+	. = ..()
 	if(prob(10))
 		name = "spess cube"
 
@@ -131,6 +131,7 @@
 	name = "d100"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
+	w_class = WEIGHT_CLASS_SMALL	
 	sides = 100
 
 /obj/item/dice/d100/update_icon()
@@ -164,14 +165,14 @@
 	. = ..()
 
 /obj/item/dice/proc/diceroll(mob/user)
-	result = rand(1, sides)
+	result = roll(sides)
 	if(rigged && result != rigged)
 		if(prob(CLAMP(1/(sides - 1) * 100, 25, 80)))
 			result = rigged
-	var/fake_result = rand(1, sides)//Daredevil isn't as good as he used to be
+	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
 	if(sides == 20 && result == 20)
-		comment = "Nat 20!"
+		comment = "NAT 20!"
 	else if(sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
 	update_icon()
