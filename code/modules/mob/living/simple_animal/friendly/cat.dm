@@ -47,7 +47,6 @@
 			collar_type = "[initial(collar_type)]"
 	regenerate_icons()
 
-
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
 	desc = "It's a cat... in space!"
@@ -67,7 +66,6 @@
 	icon_dead = "original_dead"
 	collar_type = null
 	unique_pet = TRUE
-
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"

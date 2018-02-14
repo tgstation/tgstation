@@ -1059,6 +1059,7 @@
 	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
 		return FALSE
 	if(user.get_active_held_item())
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(buckled)
 		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
