@@ -510,13 +510,25 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	add_logs(user, L, "stunned")
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
+	var/obj/O = L.get_item_by_slot(slot_head)
 	if(L.incapacitated(TRUE, TRUE))
+		if(istype(O, /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but their [O.name] protected them!</span>", \
+								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your [O.name] deflects most of it!</span>")
+			L.drowsyness += 2
+			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
+		if(istype(O, /obj/item/clothing/head/foilhat))
+			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but their [O.name] completely protected them!</span>", \
+								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your [O.name] deflects the effects!</span>")
+			return
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \

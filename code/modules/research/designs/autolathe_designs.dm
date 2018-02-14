@@ -343,6 +343,14 @@
 	build_path = /obj/item/hatchet
 	category = list("initial","Misc")
 
+/datum/design/foilhat
+	name = "Tinfoil Hat"
+	id = "tinfoil_hat"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5500)
+	build_path = /obj/item/clothing/head/foilhat
+	category = list("hacked", "Misc")
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"
