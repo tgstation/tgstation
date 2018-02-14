@@ -276,10 +276,24 @@
 
 /obj/item/slimepotion/slime/sentience/mining
 	name = "minebot AI upgrade"
-	desc = "Can be used to grant sentience to minebots."
+	desc = "Can be used to grant sentience to minebots. Is incompatable with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
+	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
+	var/base_damage_add = 1 //this thus disables other minebot upgrades
+	var/base_speed_add = 1
+	var/base_cooldown_add = 10 //base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
+
+/obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/SM)
+	if(istype(SM, /mob/living/simple_animal/hostile/mining_drone))
+		var/mob/living/simple_animal/hostile/mining_drone/M = SM
+		M.maxhealth = initial(M.maxHealth) + base_health_add
+		M.melee_damage_lower = initial(melee_damage_lower) + base_damage_add
+		M.melee_damage_upper = initial(melee_damage_upper) + base_damage_add
+		M.move_to_delay = initial(move_to_delay) + base_speed_add
+		if(M.stored_gun)
+			M.stored_gun.overheat_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK
