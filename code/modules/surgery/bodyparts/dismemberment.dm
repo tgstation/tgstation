@@ -121,10 +121,6 @@
 			O.transfer_to_limb(src, C)
 
 	update_icon_dropped()
-	if(T)
-		forceMove(T)
-	else
-		moveToNullspace()
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
