@@ -6,6 +6,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1409" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	
 	))
 
