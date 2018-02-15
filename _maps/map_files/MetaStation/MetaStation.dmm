@@ -77254,8 +77254,8 @@
 /area/maintenance/aft)
 "gRS" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer/upgraded,
 /obj/item/device/integrated_electronics/analyzer,
+/obj/item/device/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "hfJ" = (
@@ -77359,7 +77359,7 @@
 /area/science/circuit)
 "llb" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer/upgraded,
+/obj/item/device/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "lsv" = (
