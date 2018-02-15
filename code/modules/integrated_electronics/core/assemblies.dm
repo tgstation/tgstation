@@ -250,19 +250,23 @@
 	assembly_components |= component
 
 
-/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
+/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user, silent)
 	if(!opened)
-		to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
 		return FALSE
 
 	if(!IC.removable)
-		to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
 		return FALSE
 
-	to_chat(user, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
-	playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
-
 	remove_component(IC)
+	if(!silent)
+		to_chat(user, "<span class='notice'>You pop \the [IC] out of the case, and slide it out.</span>")
+		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
+		user.put_in_hands(IC)
+
 	return TRUE
 
 // Actually removes the component, doesn't perform any checks.
