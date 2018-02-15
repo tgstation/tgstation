@@ -1,0 +1,6 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - refactor: "Map initialization now supports stations with multiple z-levels."
+  - bugfix: "The map reader no longer sometimes expands the world size inappropriately."
+  - tweak: "Pride's Mirror's destination has become less predictable."

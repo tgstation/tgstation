@@ -1,8 +1,10 @@
-GLOBAL_VAR_INIT(total_runtimes, 0)
+GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 #ifdef DEBUG
 /world/Error(exception/E, datum/e_src)
+	GLOB.total_runtimes++
+	
 	if(!istype(E)) //Something threw an unusual exception
 		log_world("\[[time_stamp()]] Uncaught exception: [E]")
 		return ..()
@@ -31,8 +33,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
-
-	GLOB.total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
