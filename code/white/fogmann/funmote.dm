@@ -1,7 +1,7 @@
 /datum/emote/living/fart
 	key = "fart"
 	key_third_person = "farts"
-	message = "You farted!"
+	message = "farts"
 	emote_type = EMOTE_AUDIBLE
 
 
