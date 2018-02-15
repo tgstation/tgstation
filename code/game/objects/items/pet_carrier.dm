@@ -70,7 +70,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.canUseTopic(src, be_close=TRUE))
+	if(open || !user.canUseTopic(src, BE_CLOSE))
 		return
 	locked = !locked
 	to_chat(user, "<span class='notice'>You flip the lock switch [locked ? "down" : "up"].</span>")
@@ -151,7 +151,7 @@
 		add_overlay("[locked ? "" : "un"]locked")
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	if(isopenturf(over_atom) && usr.Adjacent(over_atom) && open && occupants.len)
+	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)

@@ -196,7 +196,7 @@
 "aL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/deck,
+/obj/item/toy/cards/deck,
 /obj/item/folder/blue,
 /obj/item/pen,
 /turf/open/floor/plasteel/floorgrime,

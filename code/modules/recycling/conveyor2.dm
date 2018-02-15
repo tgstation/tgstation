@@ -128,7 +128,7 @@
 
 	else if(istype(I, /obj/item/wrench))
 		if(!(stat & BROKEN))
-			playsound(loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")

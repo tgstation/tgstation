@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			wires.interact(user)
 			return
 
-	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
 	if(primed)

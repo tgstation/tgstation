@@ -25,6 +25,7 @@
 	bitesize = 100 // Always eat the apple in one bite
 	foodtype = FRUIT
 	juice_results = list("applejuice" = 0)
+	tastes = list("apple" = 1)
 
 // Posioned Apple
 /obj/item/seeds/apple/poisoned

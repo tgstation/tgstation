@@ -185,6 +185,8 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+	if(be_close && !in_range(M, src))
+		return FALSE
 	return TRUE
 
 /mob/proc/makePAI(delold)
