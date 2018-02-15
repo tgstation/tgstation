@@ -8,14 +8,14 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	var/list/experiments = list()
 	var/list/item_results = list()
 
-/datum/experiment_type/proc/get_valid_experiments(obj/machinery/rnd/experimentor/E,obj/item/O,bad_things_coeff)
+/datum/experiment_type/proc/get_valid_experiments(obj/machinery/rnd/experimentor/E,obj/item/O,bad_things_coeff,only_bad=FALSE)
 	var/list/weighted_experiments = list()
 	for(var/datum/experiment/EX in experiments)
 		if(!EX.weight || !EX.can_perform(E,O))
-			return
+			continue
 		if(EX.is_bad && bad_things_coeff < EX.weight)
 			weighted_experiments[EX] = EX.weight - bad_things_coeff
-		else if(!EX.is_bad)
+		else if(!EX.is_bad && !only_bad)
 			weighted_experiments[EX] = EX.weight
 	return weighted_experiments
 
@@ -205,11 +205,6 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 		picked.gather_data(src,web,success)
 		if(picked.allow_boost)
 			web.boost_with_path(pickweight(nodes), loaded_type)
-
-	if(!success)
-		var/a = pick("rumbles","shakes","vibrates","shudders")
-		var/b = pick("crushes","spins","viscerates","smashes","insults")
-		visible_message("<span class='warning'>[loaded_item] [a], and [b], the experiment was a failure.</span>")
 
 	addtimer(CALLBACK(src, .proc/reset_exp), reset_time)
 	return success

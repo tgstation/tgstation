@@ -16,7 +16,7 @@
 		. = TRUE
 
 /datum/experiment/instead_obliterate
-	weight = 35
+	weight = 30
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/poke
 
@@ -40,7 +40,7 @@
 		O.throw_at(target, 10, 1)
 
 /datum/experiment/open_bomb
-	weight = 20
+	weight = 80
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/poke
 
@@ -66,3 +66,21 @@
 	else
 		playsound(E, 'sound/machines/buzz-sigh.ogg', 50, 1)
 	E.RefreshParts()
+
+/datum/experiment/knock_container
+	weight = 80
+	experiment_type = /datum/experiment_type/poke
+
+/datum/experiment/knock_container/init()
+	valid_types = typecacheof(/obj/item/reagent_containers) //Only works on containers
+
+/datum/experiment/knock_container/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	if(!O.reagents || O.reagents.total_volume <= 0)
+		. = FALSE
+
+/datum/experiment/knock_container/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("<span class='warning'>[E] knocks over [O].</span>")
+	E.investigate_log("Experimentor has splashed [O].", INVESTIGATE_EXPERIMENTOR)
+	chem_splash(get_turf(E),3,list(O.reagents))

@@ -33,7 +33,7 @@
 	qdel(E.reagents)
 
 /datum/experiment/destroy/cold_gas
-	weight = 20
+	weight = 30
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/cool
 	immune_flags = FREEZE_PROOF | INDESTRUCTIBLE
@@ -53,7 +53,7 @@
 	E.air_update_turf()
 
 /datum/experiment/freeze_item
-	weight = 20
+	weight = 50
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/cool
 
@@ -70,7 +70,7 @@
 	E.eject_item()
 
 /datum/experiment/cool_container
-	weight = 20
+	weight = 80
 	experiment_type = /datum/experiment_type/cool
 
 /datum/experiment/cool_container/init()
@@ -96,10 +96,11 @@
 	. = ..()
 	var/turf/use_turf = get_turf(E)
 	var/area/use_area = get_area(E)
-	E.visible_message("<span class='warning'>[E] malfunctions, inversing the direction of cooling!</span>") //griff
+	E.visible_message("<span class='warning'>[E] malfunctions, reversing the direction of cooling!</span>") //nevermind I retract the griff statement, snowstorms do nothing and they're invisible reeee
 	E.investigate_log("Experimentor has caused a snowstorm.", INVESTIGATE_EXPERIMENTOR)
 	var/datum/weather/A = new /datum/weather/snow_storm(list(use_turf.z))
 	A.name = "cold exhaust"
 	A.area_type = use_area.type
-	A.telegraph_duration = 100
+	A.telegraph_duration = 5
 	A.end_duration = 100
+	A.telegraph()

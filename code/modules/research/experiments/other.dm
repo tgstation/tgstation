@@ -27,6 +27,7 @@
 /datum/experiment/destroy/summon_pet/ian/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
 	E.visible_message("<span class='warning'>[E] melts [O], ianizing the air around it!</span>")
+	. = FALSE
 
 /datum/experiment/destroy/summon_pet/runtime
 	weight = 20
@@ -36,6 +37,7 @@
 /datum/experiment/destroy/summon_pet/runtime/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
 	E.visible_message("<span class='warning'>[E] encounters a run-time error!</span>")
+	. = FALSE
 
 /datum/experiment/power_drain
 	weight = 20
@@ -48,9 +50,22 @@
 	E.throw_smoke(get_turf(E),0)
 	E.visible_message("<span class='warning'>[E] begins to smoke and hiss, shaking violently!</span>")
 	E.investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
+	. = FALSE
+
+/datum/experiment/failure
+	weight = 80
+	experiment_type = /datum/experiment_type
+	is_bad = TRUE
+
+/datum/experiment/failure/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	var/a = pick("rumbles","shakes","vibrates","shudders")
+	var/b = pick("crushes","spins","viscerates","smashes","insults")
+	E.visible_message("<span class='warning'>[E] [a], and [b] [O], the experiment was a failure.</span>")
+	. = FALSE
 
 /datum/experiment/blood_drain
-	weight = 20
+	weight = 10
 	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 
@@ -58,14 +73,18 @@
 	..()
 	. = FALSE
 	E.visible_message("<span class='warning'>[E] draws the life essence of those nearby!</span>")
+	base_points = 50
 	for(var/mob/living/m in oview(4,E))
 		to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [E]!</span>")
 		m.apply_damage(50, BRUTE, "chest")
 		E.investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", INVESTIGATE_EXPERIMENTOR)
+		base_points += 50 * log(base_points) //Blood sacrifice used to vastly increase the tech level on an item, let's bring back nostalgic powergaming
 		. = TRUE
+	if(!.)
+		E.visible_message("<span class='notice'>...but nothing happened.</span>")
 
 /datum/experiment/destroy/transform/grenade
-	weight = 20
+	weight = 5
 	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 	var/list/blacklist = list(/obj/item/grenade/chem_grenade,/obj/item/grenade,/obj/item/grenade/chem_grenade,/obj/item/grenade/chem_grenade/adv_release,/obj/item/grenade/chem_grenade/cryo,/obj/item/grenade/chem_grenade/pyro)
@@ -77,11 +96,11 @@
 /datum/experiment/destroy/transform/grenade/make_transform_item(atom/location)
 	var/pickedtype = pick(typesof(/obj/item/grenade) - blacklist)
 	var/obj/item/grenade/G = new pickedtype(location)
-	addtimer(CALLBACK(src, /obj/item/grenade.proc/prime), 5)
+	addtimer(CALLBACK(G, /obj/item/grenade.proc/prime), 5)
 	return G
 
 /datum/experiment/destroy/transform/food
-	weight = 20
+	weight = 5
 	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 
@@ -94,7 +113,7 @@
 	return new pickedtype(location)
 
 /datum/experiment/destroy/transform/stock_part
-	weight = 20
+	weight = 5
 	experiment_type = /datum/experiment_type
 	is_bad = TRUE
 	var/list/blacklist = list(/obj/item/stock_parts,/obj/item/stock_parts/subspace)

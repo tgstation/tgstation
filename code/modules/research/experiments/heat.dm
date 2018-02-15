@@ -26,8 +26,26 @@
 	E.investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 	explosion(E, -1, 0, 0, 0, 0, flame_range = 4)
 
+/datum/experiment/fireball
+	weight = 30
+	is_bad = TRUE
+	experiment_type = /datum/experiment_type/heat
+
+/datum/experiment/fireball/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	E.visible_message("<span class='danger'>[E] dangerously overheats, launching a flaming fuel orb!</span>")
+	var/turf/start = get_turf(E)
+	var/mob/living/target = locate(/atom) in oview(7,E)
+	if(target)
+		var/turf/end = get_turf(target)
+		var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
+		FB.preparePixelProjectile(end, start)
+		FB.fire()
+		E.investigate_log("Experimentor has shot a fireball at [target]", INVESTIGATE_EXPERIMENTOR)
+
+
 /datum/experiment/destroy/hot_gas
-	weight = 20
+	weight = 50
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/heat
 	immune_flags = FIRE_PROOF | INDESTRUCTIBLE
@@ -55,7 +73,7 @@
 	..()
 	. = FALSE
 	E.visible_message("<span class='warning'>[E] malfunctions, activating its emergency coolant systems!</span>")
-	E.throw_smoke(get_turf(E),0)
+	E.throw_smoke(get_turf(E),3)
 	for(var/mob/living/m in oview(1, E))
 		m.apply_damage(5, BURN, pick("head","chest","groin"))
 		E.investigate_log("Experimentor dealt minor burn to [m].", INVESTIGATE_EXPERIMENTOR)
@@ -63,7 +81,7 @@
 	E.eject_item()
 
 /datum/experiment/heat_container
-	weight = 20
+	weight = 80
 	experiment_type = /datum/experiment_type/heat
 
 /datum/experiment/heat_container/init()
@@ -81,7 +99,7 @@
 	O.reagents.expose_temperature(1000,0.5)
 
 /datum/experiment/microwave
-	weight = 20
+	weight = 80
 	experiment_type = /datum/experiment_type/heat
 
 /datum/experiment/microwave/init()

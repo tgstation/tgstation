@@ -26,7 +26,7 @@
 		playsound(E, 'sound/effects/genetics.ogg', 50, 1)
 
 /datum/experiment/destroy/radiation
-	weight = 20
+	weight = 30
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/radiate
 
@@ -42,11 +42,12 @@
 	radiation_pulse(E, 500)
 
 /datum/experiment/toxic_waste
-	weight = 20
+	weight = 50
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/radiate
 
 /datum/experiment/toxic_waste/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
 	E.visible_message("<span class='warning'>[E] malfunctions, spewing toxic waste!</span>")
 	for(var/turf/T in oview(1, E))
 		if(!T.density && prob(70))
@@ -54,7 +55,7 @@
 			reagentdecal.reagents.add_reagent("radium", 7)
 
 /datum/experiment/contaminate
-	weight = 20
+	weight = 30
 	is_bad = TRUE
 	experiment_type = /datum/experiment_type/radiate
 
@@ -70,8 +71,8 @@
 	O.rad_act(300)
 	O.AddComponent(/datum/component/radioactive, 50, E)
 
-/datum/experiment/neutron_layer
-	weight = 30
+/datum/experiment/neutron_layer //TODO: add a new 'improve' reaction unlocked by poke critical reaction.
+	weight = 20
 	experiment_type = /datum/experiment_type/radiate
 
 /datum/experiment/neutron_layer/init()
