@@ -11,6 +11,15 @@
 			to_chat(U, "<span class='notice'>There are now [a_boost] adrenaline boosts remaining.</span>")
 			return
 
+
+	if(istype(I, /obj/item/reagent_containers/glass))//If it's a glass beaker.
+		if(I.reagents.has_reagent("smoke_powder", a_transfer) && s_bombs < s_maxamount)
+			I.reagents.remove_reagent("smoke_powder", a_transfer)
+			s_bombs++;
+			to_chat(U, "<span class='notice'>There are now [s_bombs] smoke bombs remaining.</span>")
+			return
+
+
 	else if(istype(I, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/CELL = I
 		if(CELL.maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)

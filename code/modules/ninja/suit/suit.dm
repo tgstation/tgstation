@@ -45,13 +45,14 @@ Contents:
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
 	var/a_transfer = 20//How much radium is used per adrenaline boost.
 	var/a_maxamount = 7//Maximum number of adrenaline boosts.
+	var/s_maxamount = 20//Maximum number of smoke bombs.
 
 		//Support function variables.
 	var/s_active = 0//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
-	var/s_bombs = 10//Number of starting ninja smoke bombs.
+	var/s_bombs = 10//Number of smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
 
