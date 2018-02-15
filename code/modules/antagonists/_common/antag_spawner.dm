@@ -124,8 +124,8 @@
 		if(!(check_usability(user)))
 			return
 		used = TRUE
-		var/client/C = pick(nuke_candidates)
-		spawn_antag(C, get_turf(src), "syndieborg", user.mind)
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		spawn_antag(G.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
