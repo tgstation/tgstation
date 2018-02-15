@@ -221,7 +221,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (isAI(hclient.client.mob))
 			return TRUE
 		else if (iscyborg(hclient.client.mob))
-			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+			return (locate(/obj/machinery/computer/crew, range(7, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
 		else
 			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
 	else
