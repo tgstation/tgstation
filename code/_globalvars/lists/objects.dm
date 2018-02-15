@@ -30,7 +30,8 @@ GLOBAL_LIST_EMPTY(zombie_infection_list) 		// A list of all zombie_infection org
 GLOBAL_LIST_EMPTY(meteor_list)				// List of all meteors.
 GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
-GLOBAL_LIST_EMPTY(trophy_cases)
+GLOBAL_LIST_EMPTY(trophy_cases)				//List of persistent display cases
+GLOBAL_LIST_EMPTY(persist_frames)			//List of persistent picture frames
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)

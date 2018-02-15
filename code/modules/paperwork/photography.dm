@@ -536,18 +536,21 @@
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
-	var/obj/item/photo/displayed
+	var/obj/item/displayed
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/photo) || istype(I, /obj/item/canvas))
 		if(!displayed)
-			if(!user.transferItemToLoc(I, src))
-				return
-			displayed = I
-			update_icon()
+			display(I, user)
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
+
+/obj/item/wallframe/picture/proc/display(obj/item/I, mob/user)
+	if(!user.transferItemToLoc(I, src))
+		return
+	displayed = I
+	update_icon()
 
 /obj/item/wallframe/picture/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
@@ -564,8 +567,9 @@
 	user.examinate(src)
 
 /obj/item/wallframe/picture/examine(mob/user)
-	if(user.is_holding(src) && displayed)
-		displayed.show(user)
+	if(displayed && istype(displayed, /obj/item/photo))
+		var/obj/item/photo/I = displayed
+		I.show(user)
 	else
 		..()
 
@@ -583,6 +587,35 @@
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		I.forceMove(PF)
+
+
+
+/obj/item/wallframe/picture/persist
+	name = "durable picture frame"
+	var/author
+
+
+/obj/item/wallframe/picture/persist/Initialize()
+	. = ..()
+	GLOB.persist_frames += src
+
+/obj/item/wallframe/picture/persist/Destroy()
+	GLOB.persist_frames -= src
+	return ..()
+
+/obj/item/wallframe/picture/persist/display(obj/item/I, mob/user)
+	. = ..()
+	author = user.real_name
+	var/note = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Frame Plaque")
+	if(note)
+		if(user.Adjacent(src))
+			desc = note
+			to_chat(user, "You update the frame's plaque.")
+		else
+			to_chat(user, "You are too far to set the plaque's text.")
+	if(istype(displayed, /obj/item/photo))
+		SSpersistence.SaveFrame(src)
+
 
 
 /obj/structure/sign/picture_frame

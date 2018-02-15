@@ -11,12 +11,14 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
+	var/list/saved_frames = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
+	LoadFrames()
 	LoadRecentModes()
 	..()
 
@@ -143,6 +145,16 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies = json["data"]
 	SetUpTrophies(saved_trophies.Copy())
 
+/datum/controller/subsystem/persistence/proc/LoadFrames()
+	var/json_file = file("data/npc_saves/Frames.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_frames = json["data"]
+	SetUpFrames(saved_frames.Copy())
+
 /datum/controller/subsystem/persistence/proc/LoadRecentModes()
 	var/json_file = file("data/RecentModes.json")
 	if(!fexists(json_file))
@@ -177,11 +189,38 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()
 
+/datum/controller/subsystem/persistence/proc/SetUpFrames(list/frames)
+	for(var/A in GLOB.persist_frames)
+		var/obj/item/wallframe/picture/persist/F = A
+		var/frame_data = pick_n_take(frames)
+		if(!islist(frames))
+			continue
+		var/list/chosen_frame = frame_data
+
+		if(!chosen_frame || isemptylist(chosen_frame)) //Malformed
+			continue
+
+		var/icon/picimg = icon(chosen_frame["file"])
+		var/obj/item/photo/P = new/obj/item/photo(F.loc)
+		var/icon/small_img = picimg
+		var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
+		small_img.Scale(8, 8)
+		ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+		P.icon = ic
+		P.img = picimg
+		F.desc = chosen_frame["description"]
+		F.author = chosen_frame["author"]
+		F.displayed = P
+		F.after_attach(P)
+		F.update_icon()
+
+
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
+	CollectFrames()
 	CollectRoundtype()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
@@ -236,6 +275,13 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+/datum/controller/subsystem/persistence/proc/CollectFrames()
+	var/json_file = file("data/npc_saves/frames.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_frames
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)
 		var/list/data = list()
@@ -243,6 +289,21 @@ SUBSYSTEM_DEF(persistence)
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
+
+/datum/controller/subsystem/persistence/proc/SaveFrame(obj/item/wallframe/picture/persist/F)
+	if(F.displayed)
+		var/list/data = list()
+		var/obj/item/photo/P = F.displayed
+		var/icon/art = P.img
+		var/photo_file = copytext(md5("\icon[art]"), 1, 6)
+		if(!fexists("data/npc_saves/photos/[photo_file].png"))
+			var/icon/clean = new /icon()
+			clean.Insert(art, "", SOUTH, 1, 0)
+			fcopy(clean, "data/npc_saves/photos/[photo_file].png")
+			data["file"] = "data/npc_saves/photos/[photo_file].png"
+			data["author"] = F.author
+			data["description"] = F.desc
+			saved_frames += list(data)
 
 /datum/controller/subsystem/persistence/proc/CollectRoundtype()
 	saved_modes[3] = saved_modes[2]

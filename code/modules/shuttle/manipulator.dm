@@ -295,3 +295,31 @@
 	if(preview_shuttle)
 		preview_shuttle.jumpToNullSpace()
 	preview_shuttle = null
+
+/obj/machinery/shuttle_hologram //Basically a prop version
+	name = "shuttle hologram"
+	desc = "I shall be telling this with a sigh\n\
+		Somewhere ages and ages hence:\n\
+		Two roads diverged in a wood, and I,\n\
+		I took the one less traveled by,\n\
+		And that has made all the difference."
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
+	icon_state = "holograph_on"
+	anchored = TRUE
+	density = TRUE
+
+/obj/machinery/shuttle_hologram/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/machinery/shuttle_hologram/update_icon()
+	cut_overlays()
+	if(!stat)
+		icon_state = "holograph_on"
+		var/mutable_appearance/hologram_projection = mutable_appearance(icon, "hologram_on")
+		hologram_projection.pixel_y = 22
+		var/mutable_appearance/hologram_ship = mutable_appearance(icon, "hologram_whiteslow")
+		hologram_ship.pixel_y = 27
+		add_overlay(hologram_projection)
+		add_overlay(hologram_ship)
+	icon_state = "holograph_off"
