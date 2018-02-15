@@ -1,15 +1,15 @@
 #define MAXIMUM_EMP_WIRES 3
 
 /proc/is_wire_tool(obj/item/I)
-	if(istype(I, /obj/item/device/multitool))
-		return TRUE
-	if(istype(I, /obj/item/wirecutters))
+	if(!I)
+		return
+
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
 	if(istype(I, /obj/item/device/assembly))
 		var/obj/item/device/assembly/A = I
 		if(A.attachable)
 			return TRUE
-	return
 
 /atom
 	var/datum/wires/wires = null
@@ -244,29 +244,34 @@
 		return
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
-	var/obj/item/I = L.get_active_held_item()
+	var/obj/item/I
 	switch(action)
 		if("cut")
-			if(istype(I, /obj/item/wirecutters) || IsAdminGhost(usr))
-				playsound(holder, I.usesound, 20, 1)
+			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
+			if(I || IsAdminGhost(usr))
+				if(I)
+					I.play_tool_sound(src, 20)
 				cut_color(target_wire)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
-				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
+			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
+			if(I || IsAdminGhost(usr))
+				if(I)
+					I.play_tool_sound(src, 20)
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need a multitool!</span>")
 		if("attach")
 			if(is_attached(target_wire))
-				var/obj/item/O = detach_assembly(target_wire)
-				if(O)
-					L.put_in_hands(O)
+				I = detach_assembly(target_wire)
+				if(I)
+					L.put_in_hands(I)
 					. = TRUE
 			else
+				I = L.get_active_held_item()
 				if(istype(I, /obj/item/device/assembly))
 					var/obj/item/device/assembly/A = I
 					if(A.attachable)

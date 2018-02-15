@@ -66,13 +66,14 @@
 /obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
+		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		if(!istype(H.head,/obj/item/clothing/head/helmet/) && !istype(H.head,/obj/item/clothing/head/hardhat))
+		var/head_slot = H.get_item_by_slot(slot_head)
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(3)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
@@ -101,21 +102,16 @@
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
-		new /obj/item/stack/rods(get_turf(src),10)
-		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
+		new /obj/item/stack/rods(drop_location(), 10)
+		I.play_tool_sound(src)
 		qdel(src)
 		return
 
 	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 5)
-			to_chat(user, "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>")
+		if(!I.tool_start_check(user, amount=5))
 			return
 		to_chat(user, "<span class='notice'>You begin to add wheels to [src].</span>")
-		if(do_after(user, 80, target = src))
-			if(!M || M.get_amount() < 5)
-				return
-			M.use(5)
+		if(I.use_tool(src, user, 80, volume=50, amount=5))
 			to_chat(user, "<span class='notice'>You finish making wheels for [src].</span>")
 			new /obj/vehicle/ridden/scooter/skateboard(user.loc)
 			qdel(src)
@@ -123,27 +119,21 @@
 /obj/vehicle/ridden/scooter/skateboard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
-		playsound(get_turf(user), I.usesound, 50, 1)
-		if(do_after(user, 20, target = src))
+		if(I.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
-			new /obj/item/stack/sheet/metal(get_turf(src),5)
-			new /obj/item/scooter_frame(get_turf(src))
+			new /obj/item/stack/sheet/metal(drop_location(), 5)
+			new /obj/item/scooter_frame(drop_location())
 			if(has_buckled_mobs())
 				var/mob/living/carbon/H = buckled_mobs[1]
 				unbuckle_mob(H)
 			qdel(src)
 
 	else if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/C = I
-		if(C.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need at least two rods to make proper handlebars!</span>")
+		if(!I.tool_start_check(user, amount=2))
 			return
 		to_chat(user, "<span class='notice'>You begin making handlebars for [src].</span>")
-		if(do_after(user, 25, target = src))
-			if(!C || C.get_amount() < 2)
-				return
+		if(I.use_tool(src, user, 25, volume=50, amount=2))
 			to_chat(user, "<span class='notice'>You add the rods to [src], creating handlebars.</span>")
-			C.use(2)
 			var/obj/vehicle/ridden/scooter/S = new(loc)
 			if(has_buckled_mobs())
 				var/mob/living/carbon/H = buckled_mobs[1]

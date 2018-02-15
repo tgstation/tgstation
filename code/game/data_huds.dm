@@ -143,10 +143,6 @@
 	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
-	var/turf/T = get_turf(src)
-	if (T)
-		GLOB.crewmonitor.queueUpdate(T.z)
-
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
@@ -157,10 +153,6 @@
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
 	..()
-
-	var/turf/T = get_turf(src)
-	if(T)
-		GLOB.crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
@@ -215,10 +207,6 @@
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
-
-	var/turf/T = get_turf(src)
-	if (T)
-		GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder

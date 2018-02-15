@@ -419,3 +419,10 @@
 	id = "donksofttoyvendor"
 	build_path = /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	category = list ("Misc. Machinery")
+
+/datum/design/board/cell_charger
+	name = "Machine Design (Cell Charger Board)"
+	desc = "The circuit board for a cell charger."
+	id = "cell_charger"
+	build_path = /obj/item/circuitboard/machine/cell_charger
+	category = list ("Misc. Machinery")

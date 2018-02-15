@@ -161,6 +161,12 @@ update_label("John Doe", "Clowny")
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
+/obj/item/card/id/silver/reaper
+	name = "Thirteen's ID Card (Reaper)"
+	access = list(ACCESS_MAINT_TUNNELS)
+	assignment = "Reaper"
+	registered_name = "Thirteen"
+
 /obj/item/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."

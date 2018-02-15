@@ -724,7 +724,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
@@ -743,12 +743,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 			user.visible_message("[user] is repairing [src].", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, I.usesound, 40, 1)
-			if(I.use_tool(src, user, 40))
+			if(I.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				obj_integrity = max_integrity
 				stat &= ~BROKEN
 				update_icon()

@@ -8,6 +8,14 @@
 	name = "CQC"
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	var/just_a_cook = FALSE
+	var/static/list/areas_under_siege = typecacheof(list(/area/crew_quarters/kitchen,
+														/area/crew_quarters/cafeteria,
+														/area/crew_quarters/bar))
+
+/datum/martial_art/cqc/under_siege
+	name = "Close Quarters Cooking"
+	just_a_cook = TRUE
 
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = 0
@@ -92,6 +100,9 @@
 	return 1
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(just_a_cook)
+		if(!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
@@ -107,6 +118,9 @@
 	return 1
 
 /datum/martial_art/cqc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(just_a_cook)
+		if(!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return 1
@@ -135,6 +149,9 @@
 	return 1
 
 /datum/martial_art/cqc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(just_a_cook)
+		if(!is_type_in_typecache(get_area(A), areas_under_siege))
+			return 0
 	add_to_streak("D",D)
 	var/obj/item/I = null
 	if(check_streak(A,D))
@@ -170,7 +187,6 @@
 	set name = "Remember The Basics"
 	set desc = "You try to remember some of the basics of CQC."
 	set category = "CQC"
-
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "<span class='notice'>Slam</span>: Grab Harm. Slam opponent into the ground, knocking them down.")
@@ -178,7 +194,7 @@
 	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold.")
 	to_chat(usr, "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage.")
 	to_chat(usr, "<span class='notice'>Consecutive CQC</span>: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
-
+		
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
 /obj/item/cqc_manual

@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - rscdel: "Minimap gone from crew monitoring"

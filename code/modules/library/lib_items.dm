@@ -75,7 +75,7 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
 				state = 0
@@ -107,9 +107,9 @@
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
-					playsound(loc, I.usesound, 100, 1)
+					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
-					new /obj/item/stack/sheet/mineral/wood(loc, 2)
+					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = 1
 					icon_state = "bookempty"
 			else

@@ -344,8 +344,8 @@
 			landmark_loc += sloc.loc
 
 	if(!landmark_loc.len)
-		message_admins("[src] cannot be made an AI as there are no valid spawn points. Yell at a mapper!")
-		return
+		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
+		landmark_loc += loc
 
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)

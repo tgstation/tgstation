@@ -383,7 +383,7 @@
 				if (terminal)
 					to_chat(user, "<span class='warning'>Disconnect the wires first!</span>")
 					return
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You are trying to remove the power control board...</span>" )
 				if(W.use_tool(src, user, 50))
 					if (has_electronics==1)
@@ -417,7 +417,7 @@
 			else if(integration_cog)
 				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
 				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
-				playsound(src, W.usesound, 50, TRUE)
+				W.play_tool_sound(src)
 				if(W.use_tool(src, user, 100))
 					user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
 					"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
@@ -467,12 +467,12 @@
 				if (has_electronics==1)
 					has_electronics = 2
 					stat &= ~MAINT
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit electronics into place.</span>")
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the electronics.</span>")
 				else /* has_electronics==0 */
 					to_chat(user, "<span class='warning'>There is nothing to secure!</span>")
