@@ -32,5 +32,5 @@
 	return ..()
 
 /obj/structure/blob/node/Life()
-	Pulse_Area(overmind, 10, 3, 2)
-
+	if(overmind)
+		Pulse_Area(overmind, 10, 3, 2)
