@@ -11,6 +11,17 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
+	var/attachment_holes = TRUE
+
+/turf/open/floor/plating/examine(mob/user)
+	..()
+	if(broken || burnt)
+		to_chat(user, "<span class='notice'>It looks like the dents could be <i>welded</i> smooth.</span>")
+		return
+	if(attachment_holes)
+		to_chat(user, "<span class='notice'>There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>")
 
 /turf/open/floor/plating/Initialize()
 	if (!broken_states)
@@ -18,7 +29,10 @@
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
 	. = ..()
-	icon_plating = icon_state
+	if(!attachment_holes || (!broken && !burnt))
+		icon_plating = icon_state
+	else
+		icon_plating = initial(icon_state)
 
 /turf/open/floor/plating/update_icon()
 	if(!..())
@@ -29,7 +43,7 @@
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
 			return
@@ -48,6 +62,11 @@
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
+			for(var/obj/O in src)
+				if(O.level == 1) //ex. pipes laid underneath a tile
+					for(var/M in O.buckled_mobs)
+						to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
+						return
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
@@ -59,22 +78,26 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
-	else if(istype(C, /obj/item/weldingtool))
-		var/obj/item/weldingtool/welder = C
-		if( welder.isOn() && (broken || burnt) )
-			if(welder.remove_fuel(0,user))
-				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-				playsound(src, welder.usesound, 80, 1)
-				icon_state = icon_plating
-				burnt = 0
-				broken = 0
+
+/turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
+	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
+		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+		icon_state = icon_plating
+		burnt = FALSE
+		broken = FALSE
+
+	return TRUE
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
 	desc = "Thin, fragile flooring created with metal foam."
 	icon_state = "foam_plating"
-	broken_states = list("foam_plating")
-	burnt_states = list("foam_plating")
+
+/turf/open/floor/plating/foam/burn_tile()
+	return //jetfuel can't melt steel foam
+
+/turf/open/floor/plating/foam/break_tile()
+	return //jetfuel can't break steel foam...
 
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/tile/plasteel))
@@ -93,10 +116,10 @@
 		if(prob(I.force * 20 - 25))
 			user.visible_message("<span class='danger'>[user] smashes through [src]!</span>", \
 							"<span class='danger'>You smash through [src] with [I]!</span>")
-			ChangeTurf(baseturf)
+			ScrapeAway()
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
 /turf/open/floor/plating/foam/ex_act()
 	..()
-	ChangeTurf(baseturf)
+	ScrapeAway()

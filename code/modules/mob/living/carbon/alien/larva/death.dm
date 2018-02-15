@@ -8,9 +8,9 @@
 
 /mob/living/carbon/alien/larva/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/larva(get_turf(src))
+		new /obj/effect/gibspawner/larva(drop_location())
 	else
-		new /obj/effect/gibspawner/larvabodypartless(get_turf(src))
+		new /obj/effect/gibspawner/larvabodypartless(drop_location())
 
 /mob/living/carbon/alien/larva/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-l")

@@ -13,6 +13,8 @@
  * Parent class for morgue and crematorium
  * For overriding only
  */
+GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
+
 /obj/structure/bodycontainer
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
@@ -22,11 +24,16 @@
 
 	var/obj/structure/tray/connected = null
 	var/locked = FALSE
-	var/opendir = SOUTH
+	dir = SOUTH
 	var/message_cooldown
-	var/breakout_time = 1
+	var/breakout_time = 600
+
+/obj/structure/bodycontainer/Initialize()
+	. = ..()
+	GLOB.bodycontainers += src
 
 /obj/structure/bodycontainer/Destroy()
+	GLOB.bodycontainers -= src
 	open()
 	if(connected)
 		qdel(connected)
@@ -97,9 +104,9 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
-		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [(breakout_time<1) ? "[breakout_time*60] seconds" : "[breakout_time] minute\s"].)</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a metallic creaking from [src].</span>")
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
@@ -108,12 +115,15 @@
 
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-	var/turf/T = get_step(src, opendir)
+	playsound(src, 'sound/effects/roll.ogg', 5, 1)
+	var/turf/T = get_step(src, dir)
+	connected.dir=dir
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
+	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
@@ -130,12 +140,20 @@
 	name = "morgue"
 	desc = "Used to keep bodies in until someone fetches them."
 	icon_state = "morgue1"
-	opendir = EAST
+	dir = EAST
+	var/beeper = TRUE
 
 /obj/structure/bodycontainer/morgue/New()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
 	..()
+
+/obj/structure/bodycontainer/morgue/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	beeper = !beeper
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "off" : "on"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -149,10 +167,15 @@
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
+
 			for(var/mob/living/M in compiled)
-				if(M.client && !M.suiciding)
+				var/mob/living/mob_occupant = get_mob_or_brainmob(M)
+				if(mob_occupant.client && !mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 					icon_state = "morgue4" // Cloneable
+					if(mob_occupant.stat == DEAD && beeper)
+						playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
 					break
+
 
 /obj/item/paper/guides/jobs/medical/morgue
 	name = "morgue memo"
@@ -166,7 +189,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
 	icon_state = "crema1"
-	opendir = SOUTH
+	dir = SOUTH
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
@@ -228,12 +251,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.ghostize()
 				qdel(M)
 
-		for(var/obj/O in conts) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
-			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
-				qdel(O)
+		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
+			qdel(O)
 
-		new /obj/effect/decal/cleanable/ash(src)
+		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
+			new/obj/effect/decal/cleanable/ash/crematorium(src)
+
 		sleep(30)
+
 		if(!QDELETED(src))
 			locked = FALSE
 			update_icon()
@@ -301,7 +326,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			return
 	if(!ismob(user) || user.lying || user.incapacitated())
 		return
-	O.loc = src.loc
+	O.forceMove(src.loc)
 	if (user != O)
 		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
 	return
@@ -323,7 +348,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	icon_state = "morguet"
 
 /obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
@@ -334,4 +359,4 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSTABLE)
+		. = . || (mover.pass_flags & PASSTABLE)

@@ -4,11 +4,11 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
-	desc = "A slab of meat"
+	desc = "A slab of meat."
 	icon_state = "meat"
 	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
-	list_reagents = list("nutriment" = 3)
+	list_reagents = list("nutriment" = 3, "cooking_oil" = 2) //Meat has fats that a food processor can process into cooking oil
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain
 	slices_num = 3
@@ -82,7 +82,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	icon_state = "lizardmeat"
-	desc = "Delicious dino damage"
+	desc = "Delicious dino damage."
 	filling_color = "#6B8E23"
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtype = MEAT | RAW
@@ -96,7 +96,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	icon_state = "shadowmeat"
-	desc = "Ow, the edge"
+	desc = "Ow, the edge."
 	filling_color = "#202020"
 	tastes = list("darkness" = 1, "meat" = 1)
 	foodtype = MEAT | RAW
@@ -107,6 +107,13 @@
 	list_reagents = list("nutriment" = 3, "uranium" = 3)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtype = MEAT | RAW | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+	icon_state = "mothmeat"
+	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
+	filling_color = "#BF896B"
+	tastes = list("dust" = 1, "powder" = 1, "meat" = 2)
+	foodtype = MEAT | RAW
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	name = "bone"
@@ -119,12 +126,11 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	name = " meat (rotten)"
-	icon_state = "lizardmeat" //Close enough.
+	icon_state = "rottenmeat"
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
 	tastes = list("brains" = 1, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
-
 
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
@@ -164,13 +170,13 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/killertomato
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/slab/bear
 	name = "bear meat"
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
-	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 12, "morphine" = 5, "vitamin" = 2, "cooking_oil" = 6)
 	filling_color = "#FFB6C1"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
@@ -180,7 +186,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	name = "xeno meat"
-	desc = "A slab of meat"
+	desc = "A slab of meat."
 	icon_state = "xenomeat"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	bitesize = 4
@@ -205,20 +211,20 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath
 	name = "goliath meat"
 	desc = "A slab of goliath meat. It's not very edible now, but it cooks great in lava."
-	list_reagents = list("nutriment" = 3, "toxin" = 5)
+	list_reagents = list("nutriment" = 3, "toxin" = 5, "cooking_oil" = 3)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/meat/slab/goliath/burn()
 	visible_message("[src] finishes cooking!")
-	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath/(loc)
+	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5, "cooking_oil" = 1)
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
@@ -228,7 +234,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/gorilla
 	name = "gorilla meat"
 	desc = "Much meatier than monkey meat."
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1, "cooking_oil" = 5) //Plenty of fat!
 
 /obj/item/reagent_containers/food/snacks/meat/rawbacon
 	name = "raw piece of bacon"
@@ -236,7 +242,7 @@
 	icon_state = "bacon"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/bacon
 	bitesize = 2
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 1, "cooking_oil" = 3)
 	filling_color = "#B22222"
 	tastes = list("bacon" = 1)
 	foodtype = RAW | MEAT
@@ -246,7 +252,7 @@
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcooked"
 	list_reagents = list("nutriment" = 2)
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1, "cooking_oil" = 2)
 	filling_color = "#854817"
 	tastes = list("bacon" = 1)
 	foodtype = MEAT
@@ -275,7 +281,7 @@
 /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
 	name = "killer tomato steak"
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
@@ -338,7 +344,7 @@
 	name = "raw killer tomato cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/killertomato
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
 	name = "raw bear cutlet"
@@ -377,7 +383,7 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/killertomato
 	name = "killer tomato cutlet"
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/bear
 	name = "bear cutlet"

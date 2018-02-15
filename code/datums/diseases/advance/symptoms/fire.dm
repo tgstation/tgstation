@@ -35,7 +35,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stage_rate"] >= 4)
 		power = 1.5
 	if(A.properties["stage_rate"] >= 8)
@@ -116,7 +117,8 @@ Bonus
 					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 9) //intense but sporadic effect
 		power = 2
 		symptom_delay_min = 50

@@ -31,7 +31,8 @@ Bonus
 	threshold_desc = "<b>Resistance 8:</b>Additionally regenerates lost blood.<br>"
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 8) //blood regeneration
 		regenerate_blood = TRUE
 

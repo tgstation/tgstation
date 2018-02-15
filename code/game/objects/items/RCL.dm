@@ -12,7 +12,6 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
 	var/active = FALSE
 	actions_types = list(/datum/action/item_action/rcl)
@@ -42,7 +41,7 @@
 		else
 			return
 		update_icon()
-		to_chat(user, "<span class='notice'>You add the cables to the [src]. It now contains [loaded.amount].</span>")
+		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
 	else if(istype(W, /obj/item/screwdriver))
 		if(!loaded)
 			return

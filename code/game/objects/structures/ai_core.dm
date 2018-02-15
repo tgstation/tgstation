@@ -4,6 +4,7 @@
 	name = "\improper AI core"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "0"
+	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
 	var/state = 0
 	var/datum/ai_laws/laws = new()
@@ -31,13 +32,12 @@
 			if(state != EMPTY_CORE)
 				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
-			var/obj/item/weldingtool/WT = P
-			if(!WT.isOn())
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
+
+			if(!P.tool_start_check(user, amount=0))
 				return
-			playsound(loc, WT.usesound, 50, 1)
+
 			to_chat(user, "<span class='notice'>You start to deconstruct the frame...</span>")
-			if(do_after(user, 20*P.toolspeed, target = src) && src && state == EMPTY_CORE && WT && WT.remove_fuel(0, user))
+			if(P.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
 				to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 				deconstruct(TRUE)
 			return
@@ -45,24 +45,23 @@
 		switch(state)
 			if(EMPTY_CORE)
 				if(istype(P, /obj/item/circuitboard/aicore))
-					if(!user.drop_item())
+					if(!user.transferItemToLoc(P, src))
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					update_icon()
 					state = CIRCUIT_CORE
 					circuit = P
-					P.forceMove(src)
 					return
 			if(CIRCUIT_CORE)
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 					state = SCREWED_CORE
 					update_icon()
 					return
 				if(istype(P, /obj/item/crowbar))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 					state = EMPTY_CORE
 					update_icon()
@@ -71,7 +70,7 @@
 					return
 			if(SCREWED_CORE)
 				if(istype(P, /obj/item/screwdriver) && circuit)
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 					state = CIRCUIT_CORE
 					update_icon()
@@ -93,7 +92,7 @@
 					if(brain)
 						to_chat(user, "<span class='warning'>Get that [brain.name] out of there first!</span>")
 					else
-						playsound(loc, P.usesound, 50, 1)
+						P.play_tool_sound(src)
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
 						update_icon()
@@ -135,7 +134,7 @@
 						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
 						return
 
-					if((config) && (!config.allow_ai) || jobban_isbanned(M.brainmob, "AI"))
+					if(!CONFIG_GET(flag/allow_ai) || jobban_isbanned(M.brainmob, "AI"))
 						to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
 
@@ -143,17 +142,16 @@
 						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
 						return
 
-					if(!user.drop_item())
+					if(!user.transferItemToLoc(M,src))
 						return
 
-					M.forceMove(src)
 					brain = M
 					to_chat(user, "<span class='notice'>You add [M.name] to the frame.</span>")
 					update_icon()
 					return
 
 				if(istype(P, /obj/item/crowbar) && brain)
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the brain.</span>")
 					brain.forceMove(loc)
 					brain = null
@@ -162,7 +160,7 @@
 
 			if(GLASS_CORE)
 				if(istype(P, /obj/item/crowbar))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 					state = CABLED_CORE
 					update_icon()
@@ -170,16 +168,23 @@
 					return
 
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
 						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
-						var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+
+						var/mob/living/silicon/ai/A = null
+
+						if (brain.overrides_aicore_laws)
+							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+						else
+							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
-						SSblackbox.inc("cyborg_ais_created",1)
+						SSblackbox.record_feedback("amount", "ais_created", 1)
 						qdel(src)
 					else
 						state = AI_READY_CORE
@@ -192,7 +197,7 @@
 					return
 
 				if(istype(P, /obj/item/screwdriver))
-					playsound(loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 					state = GLASS_CORE
 					update_icon()
@@ -273,4 +278,3 @@ That prevents a few funky behaviors.
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	origin_tech = "programming=3"

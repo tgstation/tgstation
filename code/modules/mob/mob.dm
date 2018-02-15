@@ -1,16 +1,16 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
-	GLOB.living_mob_list -= src
+	GLOB.alive_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
 	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
@@ -20,34 +20,43 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
-		GLOB.living_mob_list += src
+		GLOB.alive_mob_list += src
+	set_focus(src)
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)
-		var/image/I = image('icons/mob/hud.dmi', src, "")
-		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-		hud_list[hud] = I
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -161,12 +170,11 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -198,7 +206,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
@@ -222,7 +231,8 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -243,24 +253,43 @@
 
 	return 0
 
+// reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
+// reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(ismovableatom(A))
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+		if(A)
+			if(ismovableatom(A))
+				//Set the the thing unless it's us
+				if(A != src)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else if(isturf(A))
+				//Set to the turf unless it's our current turf
+				if(A != loc)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else
+				//Do nothing
 		else
+			//Reset to common defaults: mob if on turf, otherwise current loc
 			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1
+		return 1 
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		if(client.eye != src)
+		if(client.eye && client.eye != src)
 			var/atom/AT = client.eye
 			AT.get_remote_view_fullscreens(src)
 		else
@@ -304,7 +333,7 @@
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
+/mob/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
 		return FALSE
 	if(!(AM.can_be_pulled(src)))
@@ -337,6 +366,18 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+
+		//Share diseases that are spread by touch
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				M.ContactContractDisease(D)
+
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				ContactContractDisease(D)
+
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -344,6 +385,9 @@
 			M.LAssailant = null
 		else
 			M.LAssailant = usr
+
+/mob/proc/can_resist()
+	return FALSE		//overridden in living.dm
 
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -364,18 +408,14 @@
 		setDir(D)
 		spintime -= speed
 
-/mob/verb/stop_pulling()
+/mob/stop_pulling()
+	..()
+	update_pull_hud_icon()
+
+/mob/verb/stop_pulling1()
 	set name = "Stop Pulling"
 	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
-		pulling = null
-		grab_state = 0
-		update_pull_hud_icon()
+	stop_pulling()
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -387,7 +427,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())
@@ -397,18 +437,6 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
-
-
-/*
-/mob/verb/dump_source()
-
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]\n", t)
-		//Foreach goto(26)
-	src << browse(master)
-	return
-*/
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -435,7 +463,7 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if (CONFIG_GET(flag/norespawn))
 		return
 	if ((stat != DEAD || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
@@ -515,7 +543,7 @@
 		if(Adjacent(usr))
 			show_inv(usr)
 		else
-			usr << browse(null,"window=mob\ref[src]")
+			usr << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
@@ -622,8 +650,9 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -645,8 +674,6 @@
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(client.moving)
 		return 0
 	if(world.time < client.move_delay)
 		return 0
@@ -737,10 +764,6 @@
 			mob_spell_list -= S
 			qdel(S)
 
-//override to avoid rotating pixel_xy on mobs
-/mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
@@ -757,14 +780,14 @@
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)//post buckling
-		var/height = M.get_mob_buckling_height(src)
-		M.pixel_y = initial(M.pixel_y) + height
-		if(M.layer < layer)
-			M.layer = layer + 0.1
-	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+	var/height = M.get_mob_buckling_height(src)
+	M.pixel_y = initial(M.pixel_y) + height
+	if(M.layer < layer)
+		M.layer = layer + 0.1
+
+/mob/post_unbuckle_mob(mob/living/M)
+	M.layer = initial(M.layer)
+	M.pixel_y = initial(M.pixel_y)
 
 //returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)
@@ -803,17 +826,17 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
 		var/list/faction_target = target.faction.Copy()
-		if(!("\ref[src]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
-			faction_src -= "\ref[src]" //if we don't do this, we'll never have an exact match.
-		if(!("\ref[target]" in faction_src))
-			faction_target -= "\ref[target]" //same thing here.
+		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+		if(!("[REF(target)]" in faction_src))
+			faction_target -= "[REF(target)]" //same thing here.
 		return faction_check(faction_src, faction_target, TRUE)
 	return faction_check(faction, target.faction, FALSE)
 
@@ -902,9 +925,9 @@
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
-				GLOB.living_mob_list += src
+				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.living_mob_list -= src
+				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
@@ -939,21 +962,30 @@
 /mob/proc/get_idcard()
 	return
 
+/mob/proc/get_static_viruses() //used when creating blood and other infective objects
+	if(!LAZYLEN(viruses))
+		return
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/D in viruses)
+		var/static_virus = D.Copy()
+		diseases += static_virus
+	return diseases
+
+
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Gib"] = "?_src_=vars;[HrefToken()];gib=\ref[src]"
-	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=\ref[src]"
-	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=\ref[src]"
-	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=\ref[src]"
-	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=\ref[src]"
-	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=\ref[src]"
-	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=\ref[src]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=\ref[src]"
-	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=\ref[src]"
-	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=\ref[src]"
-	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=\ref[src]"
-	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=\ref[src]"
+	.["Gib"] = "?_src_=vars;[HrefToken()];gib=[REF(src)]"
+	.["Give Spell"] = "?_src_=vars;[HrefToken()];give_spell=[REF(src)]"
+	.["Remove Spell"] = "?_src_=vars;[HrefToken()];remove_spell=[REF(src)]"
+	.["Give Disease"] = "?_src_=vars;[HrefToken()];give_disease=[REF(src)]"
+	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
+	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
+	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
+	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
+	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
+	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;[HrefToken()];offer_control=[REF(src)]"
 
 /mob/vv_get_var(var_name)
 	switch(var_name)

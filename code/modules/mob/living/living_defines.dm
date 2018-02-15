@@ -5,6 +5,10 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 
+	var/resize = 1 //Badminnery resize
+	var/lastattacker = null
+	var/lastattackerckey = null
+
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -15,17 +19,20 @@
 	var/toxloss = 0		//Toxic damage caused by being poisoned or radiated
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 
+	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
+	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+
+	var/list/status_traits = list()
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
@@ -68,7 +75,16 @@
 	var/blood_volume = 0 //how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 
+	var/see_override = 0 //0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
+
 	var/list/status_effects //a list of all status effects the mob has
+	var/druggy = 0
+
+	//Speech
+	var/stuttering = 0
+	var/slurring = 0
+	var/cultslurring = 0
+	var/derpspeech = 0
 
 	var/list/implants = null
 
@@ -77,3 +93,12 @@
 	var/datum/language/selected_default_language
 
 	var/last_words	//used for database logging
+
+	var/list/obj/effect/proc_holder/abilities = list()
+
+	var/registered_z
+	var/can_be_held = FALSE	//whether this can be picked up and held.
+
+	var/radiation = 0 //If the mob is irradiated.
+	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
+	var/losebreath = 0

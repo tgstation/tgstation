@@ -22,7 +22,9 @@
 	splat_type = /obj/effect/decal/cleanable/tomato_smudge
 	filling_color = "#FF6347"
 	bitesize_mod = 2
-	foodtype = VEGETABLES
+	foodtype = FRUIT
+	grind_results = list("ketchup" = 0)
+	juice_results = list("tomatojuice" = 0)
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -43,8 +45,9 @@
 	icon_state = "bloodtomato"
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
-	origin_tech = "biotech=5"
-	foodtype = VEGETABLES | GROSS
+	foodtype = FRUIT | GROSS
+	grind_results = list("ketchup" = 0, "blood" = 0)
+
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
@@ -89,7 +92,6 @@
 	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	origin_tech = "biotech=4;bluespace=5"
 
 
 // Killer Tomato
@@ -116,7 +118,6 @@
 	icon_state = "killertomato"
 	var/awakening = 0
 	filling_color = "#FF0000"
-	origin_tech = "biotech=4;combat=5"
 
 /obj/item/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)

@@ -24,6 +24,7 @@
 	filling_color = "#FF4500"
 	bitesize = 100 // Always eat the apple in one bite
 	foodtype = FRUIT
+	juice_results = list("applejuice" = 0)
 
 // Posioned Apple
 /obj/item/seeds/apple/poisoned
@@ -56,4 +57,3 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	filling_color = "#FFD700"
-	origin_tech = "biotech=4;materials=5"

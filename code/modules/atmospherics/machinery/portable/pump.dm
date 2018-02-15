@@ -1,6 +1,6 @@
 #define PUMP_OUT "out"
 #define PUMP_IN "in"
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 30)
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
 
@@ -41,17 +41,17 @@
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
 	if(!on)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
 	if(direction == PUMP_OUT) // Hook up the internal pump.
-		pump.AIR1 = holding ? holding.air_contents : air_contents
-		pump.AIR2 = holding ? air_contents : T.return_air()
+		pump.airs[1] = holding ? holding.air_contents : air_contents
+		pump.airs[2] = holding ? air_contents : T.return_air()
 	else
-		pump.AIR1 = holding ? air_contents : T.return_air()
-		pump.AIR2 = holding ? holding.air_contents : air_contents
+		pump.airs[1] = holding ? air_contents : T.return_air()
+		pump.airs[2] = holding ? holding.air_contents : air_contents
 
 	pump.process_atmos() // Pump gas.
 	if(!holding)
@@ -99,8 +99,8 @@
 		if("power")
 			on = !on
 			if(on && !holding)
-				var/plasma = air_contents.gases["plasma"]
-				var/n2o = air_contents.gases["n2o"]
+				var/plasma = air_contents.gases[/datum/gas/plasma]
+				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
 				if(n2o || plasma)
 					var/area/A = get_area(src)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][ADMIN_JMP(src)]")
@@ -131,11 +131,11 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				pump.target_pressure = Clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				pump.target_pressure = CLAMP(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)
-				holding.loc = get_turf(src)
+				holding.forceMove(drop_location())
 				holding = null
 				. = TRUE
 	update_icon()

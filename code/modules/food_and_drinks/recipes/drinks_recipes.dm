@@ -441,7 +441,7 @@
 	name = "Chocolate Pudding"
 	id = "chocolatepudding"
 	results = list("chocolatepudding" = 20)
-	required_reagents = list("cocoa" = 5, "milk" = 5, "eggyolk" = 5)
+	required_reagents = list("chocolate_milk" = 10, "eggyolk" = 5)
 
 /datum/chemical_reaction/vanillapudding
 	name = "Vanilla Pudding"
@@ -548,3 +548,11 @@
 	id = "eggnog"
 	results = list("eggnog" = 15)
 	required_reagents = list("rum" = 5, "cream" = 5, "eggyolk" = 5)
+
+/datum/chemical_reaction/narsour
+	name = "Nar'sour"
+	id = "narsour"
+	results = list("narsour" = 1) 
+	required_reagents = list("blood" = 1, "lemonjuice" = 1, "demonsblood" = 1)
+	mix_message = "The mixture develops a sinister glow."
+	mix_sound = 'sound/effects/singlebeat.ogg'

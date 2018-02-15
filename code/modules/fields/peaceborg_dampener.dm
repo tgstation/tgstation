@@ -5,6 +5,7 @@
 	name = "\improper Hyperkinetic Dampener Field"
 	setup_edge_turfs = TRUE
 	setup_field_turfs = TRUE
+	requires_processing = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
@@ -21,13 +22,11 @@
 	use_host_turf = TRUE
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/New()
-	START_PROCESSING(SSfields, src)
 	tracked = list()
 	staging = list()
 	..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
-	STOP_PROCESSING(SSfields, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
@@ -43,7 +42,7 @@
 		if(R.has_buckled_mobs())
 			for(var/mob/living/L in R.buckled_mobs)
 				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>")	//I know it's bad.
-				L.Knockdown(60)
+				L.Knockdown(10)
 				R.unbuckle_mob(L)
 				do_sparks(5, 0, L)
 	..()

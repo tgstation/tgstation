@@ -32,13 +32,30 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
+	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 
-/obj/machinery/door/New()
+/obj/machinery/door/examine(mob/user)
 	..()
-	if(density)
-		layer = CLOSED_DOOR_LAYER //Above most items if closed
-	else
-		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
+	if(red_alert_access)
+		if(GLOB.security_level >= SEC_LEVEL_RED)
+			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
+		else
+			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
+	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+
+/obj/machinery/door/check_access(access)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
+
+/obj/machinery/door/check_access_list(list/access_list)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
+
+/obj/machinery/door/Initialize()
+	. = ..()
+	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(1)
 	GLOB.airlocks += src
@@ -48,6 +65,12 @@
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+
+/obj/machinery/door/proc/set_init_door_layer()
+	if(density)
+		layer = closingLayer
+	else
+		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -59,11 +82,8 @@
 		spark_system = null
 	return ..()
 
-//process()
-	//return
-
 /obj/machinery/door/CollidedWith(atom/movable/AM)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -79,7 +99,7 @@
 			bumpopen(M)
 			return
 
-	if(istype(AM, /obj/mecha))
+	if(ismecha(AM))
 		var/obj/mecha/mecha = AM
 		if(density)
 			if(mecha.occupant)
@@ -95,11 +115,11 @@
 
 /obj/machinery/door/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 	return !density
 
@@ -110,7 +130,7 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density && !emagged)
+	if(density && !(obj_flags & EMAGGED))
 		if(allowed(user))
 			open()
 		else
@@ -132,7 +152,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
@@ -194,7 +214,7 @@
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(40/severity))
+	if(prob(severity*10 - 20))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
@@ -238,7 +258,7 @@
 	sleep(5)
 	density = FALSE
 	sleep(5)
-	layer = OPEN_DOOR_LAYER
+	layer = initial(layer)
 	update_icon()
 	set_opacity(0)
 	operating = FALSE
@@ -251,8 +271,8 @@
 
 /obj/machinery/door/proc/close()
 	if(density)
-		return 1
-	if(operating)
+		return TRUE
+	if(operating || welded)
 		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
@@ -260,6 +280,7 @@
 				if(autoclose)
 					addtimer(CALLBACK(src, .proc/autoclose), 60)
 				return
+
 	operating = TRUE
 
 	do_animate("closing")

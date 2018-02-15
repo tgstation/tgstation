@@ -11,7 +11,7 @@
 	opacity = 0
 	anchored = TRUE
 	density = FALSE
-	layer = WALL_OBJ_LAYER
+	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = 0
@@ -23,6 +23,51 @@
 	/turf/open/chasm,
 	/turf/open/lava))
 
+/obj/effect/particle_effect/foam/firefighting
+	name = "firefighting foam"
+	lifetime = 20 //doesn't last as long as normal foam
+	amount = 0 //no spread
+	var/absorbed_plasma = 0
+
+/obj/effect/particle_effect/foam/firefighting/MakeSlippery()
+	return
+
+/obj/effect/particle_effect/foam/firefighting/process()
+	..()
+
+	var/turf/open/T = get_turf(src)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && istype(T) && T.air)
+		qdel(hotspot)
+		var/datum/gas_mixture/G = T.air
+		var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
+		G.gases[/datum/gas/plasma][MOLES] -= plas_amt
+		absorbed_plasma += plas_amt
+		if(G.temperature > T20C)
+			G.temperature = max(G.temperature/2,T20C)
+		G.garbage_collect()
+		T.air_update_turf()
+
+/obj/effect/particle_effect/foam/firefighting/kill_foam()
+	STOP_PROCESSING(SSfastprocess, src)
+
+	if(absorbed_plasma)
+		var/obj/effect/decal/cleanable/plasma/P = (locate(/obj/effect/decal/cleanable/plasma) in get_turf(src))
+		if(!P)
+			P = new(loc)
+		P.reagents.add_reagent("stable_plasma", absorbed_plasma)
+
+	flick("[icon_state]-disolve", src)
+	QDEL_IN(src, 5)
+
+/obj/effect/particle_effect/foam/firefighting/foam_mob(mob/living/L)
+	if(!istype(L))
+		return
+	L.adjust_fire_stacks(-2)
+	L.ExtinguishMob()
+
+/obj/effect/particle_effect/foam/firefighting/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
@@ -43,6 +88,8 @@
 	name = "resin foam"
 	metal = RESIN_FOAM
 
+/obj/effect/particle_effect/foam/long_life
+	lifetime = 150
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
@@ -76,7 +123,7 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.ChangeTurf(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open/floor/plating/foam)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
@@ -170,6 +217,9 @@
 	effect_type = /obj/effect/particle_effect/foam/smart
 
 
+/datum/effect_system/foam_spread/long
+	effect_type = /obj/effect/particle_effect/foam/long_life
+
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new /obj()
@@ -196,16 +246,12 @@
 	metal = metaltype
 
 /datum/effect_system/foam_spread/start()
-	var/obj/effect/particle_effect/foam/foundfoam = locate() in location
-	if(foundfoam)//If there was already foam where we start, we add our foaminess to it.
-		foundfoam.amount += amount
-	else
-		var/obj/effect/particle_effect/foam/F = new effect_type(location)
-		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
-		F.amount = amount
-		F.metal = metal
+	var/obj/effect/particle_effect/foam/F = new effect_type(location)
+	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
+	F.amount = amount
+	F.metal = metal
 
 
 //////////////////////////////////////////////////////////
@@ -216,6 +262,7 @@
 	density = TRUE
 	opacity = 1 	// changed in New()
 	anchored = TRUE
+	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
@@ -235,7 +282,7 @@
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
@@ -259,13 +306,12 @@
 
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
-	name = "ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	name = "\improper ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120
 	max_integrity = 10
-	layer = EDGED_TURF_LAYER
 
 /obj/structure/foamedmetal/resin/Initialize()
 	. = ..()
@@ -279,8 +325,9 @@
 				qdel(H)
 			var/list/G_gases = G.gases
 			for(var/I in G_gases)
-				if(I != "o2" && I != "n2")
-					G.gases[I][MOLES] = 0
+				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
+					continue
+				G_gases[I][MOLES] = 0
 			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
@@ -294,7 +341,7 @@
 			Item.extinguish()
 
 /obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
 	. = ..()
 

@@ -7,6 +7,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = TRUE
+	layer = BELOW_OPEN_DOOR_LAYER
 	var/operating = FALSE	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -16,7 +17,7 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -103,7 +104,7 @@
 		return
 	if(!operating)
 		return
-	use_power(100)
+	use_power(6)
 	affecting = loc.contents - src		// moved items will be all in loc
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
@@ -117,9 +118,7 @@
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(QDELETED(src))
-				return //prevent multiple decontructs
+		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
 				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 				C.id = id
@@ -129,7 +128,7 @@
 
 	else if(istype(I, /obj/item/wrench))
 		if(!(stat & BROKEN))
-			playsound(loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
@@ -141,8 +140,7 @@
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
 	else if(user.a_intent != INTENT_HARM)
-		if(user.drop_item())
-			I.loc = src.loc
+		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
 
@@ -179,12 +177,6 @@
 	if(C)
 		C.set_operable(stepdir, id, op)
 
-/*
-/obj/machinery/conveyor/verb/destroy()
-	set src in view()
-	src.broken()
-*/
-
 /obj/machinery/conveyor/power_change()
 	..()
 	update()
@@ -208,7 +200,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = TRUE
-	speed_process = 1
+	speed_process = TRUE
 
 
 
@@ -295,7 +287,7 @@
 
 /obj/item/conveyor_construct
 	icon = 'icons/obj/recycling.dmi'
-	icon_state = "conveyor0"
+	icon_state = "conveyor_construct"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
 	w_class = WEIGHT_CLASS_BULKY

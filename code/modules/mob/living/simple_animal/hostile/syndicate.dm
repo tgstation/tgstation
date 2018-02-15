@@ -8,6 +8,11 @@
 
 
 ///////////////Base mob////////////
+/obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
+	set_luminosity = 2
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_RED
+
 
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
@@ -36,7 +41,7 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
 	del_on_death = 1
@@ -52,9 +57,15 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
+	light_color = LIGHT_COLOR_RED
 	status_flags = 0
 	maxHealth = 170
 	health = 170
+	spacewalk = TRUE
+
+/mob/living/simple_animal/hostile/syndicate/melee/Initialize()
+	. = ..()
+	set_light(2)
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -74,9 +85,16 @@
 	name = "Syndicate Commando"
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
+	var/obj/effect/light_emitter/red_energy_sword/sord
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
-	return 1
+/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
+	. = ..()
+	sord = new(src)
+	set_light(4)
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/Destroy()
+	QDEL_NULL(sord)
+	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
 	icon_state = "syndicatemeleestormtrooper"
@@ -106,10 +124,12 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+	spacewalk = TRUE
 	loot = list(/obj/effect/gibspawner/human)
 
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
-	return 1
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
+	. = ..()
+	set_light(4)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
 	icon_state = "syndicaterangedstormtrooper"
@@ -149,7 +169,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
@@ -157,6 +177,6 @@
 	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"

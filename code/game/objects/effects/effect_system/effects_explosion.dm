@@ -13,13 +13,11 @@
 
 /datum/effect_system/expl_particles/start()
 	for(var/i in 1 to number)
-		spawn(0)
-			var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
-			var/direct = pick(GLOB.alldirs)
-			var/steps_amt = pick(1;25,2;50,3,4;200)
-			for(var/j in 1 to steps_amt)
-				sleep(1)
-				step(expl,direct)
+		var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
+		var/direct = pick(GLOB.alldirs)
+		var/steps_amt = pick(1;25,2;50,3,4;200)
+		for(var/j in 1 to steps_amt)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, expl, direct), j)
 
 /obj/effect/explosion
 	name = "fire"
@@ -51,9 +49,10 @@
 
 /datum/effect_system/explosion/smoke
 
+/datum/effect_system/explosion/smoke/proc/create_smoke()
+	var/datum/effect_system/smoke_spread/S = new
+	S.set_up(2, location)
+	S.start()
 /datum/effect_system/explosion/smoke/start()
 	..()
-	spawn(5)
-		var/datum/effect_system/smoke_spread/S = new
-		S.set_up(2, location)
-		S.start()
+	addtimer(CALLBACK(src, .proc/create_smoke), 5)

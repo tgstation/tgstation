@@ -14,18 +14,18 @@
 	. = FALSE
 	if (intel < 0)
 		return
-	if (intel <= config.ipintel_rating_bad)
-		if (world.realtime < cacherealtime+(config.ipintel_save_good*60*60*10))
+	if (intel <= CONFIG_GET(number/ipintel_rating_bad))
+		if (world.realtime < cacherealtime + (CONFIG_GET(number/ipintel_save_good) * 60 * 60 * 10))
 			return TRUE
 	else
-		if (world.realtime < cacherealtime+(config.ipintel_save_bad*60*60*10))
+		if (world.realtime < cacherealtime + (CONFIG_GET(number/ipintel_save_bad) * 60 * 60 * 10))
 			return TRUE
 
 /proc/get_ip_intel(ip, bypasscache = FALSE, updatecache = TRUE)
 	var/datum/ipintel/res = new()
 	res.ip = ip
 	. = res
-	if (!ip || !config.ipintel_email || !SSipintel.enabled)
+	if (!ip || !CONFIG_GET(string/ipintel_email) || !SSipintel.enabled)
 		return
 	if (!bypasscache)
 		var/datum/ipintel/cachedintel = SSipintel.cache[ip]
@@ -34,19 +34,20 @@
 			return cachedintel
 
 		if(SSdbcore.Connect())
+			var/rating_bad = CONFIG_GET(number/ipintel_rating_bad)
 			var/datum/DBQuery/query_get_ip_intel = SSdbcore.NewQuery({"
 				SELECT date, intel, TIMESTAMPDIFF(MINUTE,date,NOW())
 				FROM [format_table_name("ipintel")]
 				WHERE
 					ip = INET_ATON('[ip]')
 					AND ((
-							intel < [config.ipintel_rating_bad]
+							intel < [rating_bad]
 							AND
-							date + INTERVAL [config.ipintel_save_good] HOUR > NOW()
+							date + INTERVAL [CONFIG_GET(number/ipintel_save_good)] HOUR > NOW()
 						) OR (
-							intel >= [config.ipintel_rating_bad]
+							intel >= [rating_bad]
 							AND
-							date + INTERVAL [config.ipintel_save_bad] HOUR > NOW()
+							date + INTERVAL [CONFIG_GET(number/ipintel_save_bad)] HOUR > NOW()
 					))
 				"})
 			if(!query_get_ip_intel.Execute())
@@ -77,7 +78,7 @@
 	if (!SSipintel.enabled)
 		return
 
-	var/list/http[] = world.Export("http://[config.ipintel_domain]/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json&flags=f")
+	var/list/http[] = world.Export("http://[CONFIG_GET(string/ipintel_domain)]/check.php?ip=[ip]&contact=[CONFIG_GET(string/ipintel_email)]&format=json&flags=f")
 
 	if (http)
 		var/status = text2num(http["STATUS"])

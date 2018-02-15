@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -82,14 +82,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "o" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell";
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
@@ -195,7 +195,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "F" = (
-/turf/closed/wall/mineral/titanium,
 /obj/structure/table,
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/regular{
@@ -204,10 +203,6 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"G" = (
-/turf/closed/wall/mineral/titanium,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "H" = (
@@ -215,14 +210,16 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "I" = (
-/obj/machinery/door/airlock/glass_command{
+/obj/machinery/door/airlock/command/glass{
 	name = "Escape Shuttle Cockpit";
 	req_access_txt = "19"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "J" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "K" = (
@@ -245,16 +242,21 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/closed/wall/mineral/titanium,
-/obj/machinery/computer/security,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "O" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "P" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Q" = (
@@ -268,7 +270,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "S" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "T" = (
@@ -481,7 +485,7 @@ b
 B
 b
 b
-G
+b
 b
 b
 b

@@ -5,15 +5,19 @@
 	. = ..()
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
+	GLOB.carbon_list += src
 
 /mob/living/carbon/Destroy()
+	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(stomach_contents)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
-	return ..()
+	GLOB.carbon_list -= src
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
@@ -34,7 +38,7 @@
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
+						A.forceMove(drop_location())
 						stomach_contents.Remove(A)
 					src.gib()
 
@@ -108,7 +112,8 @@
 			take_bodypart_damage(10)
 			victim.Knockdown(20)
 			Knockdown(20)
-			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
+			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
+				"<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
 
@@ -152,6 +157,8 @@
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
+				if(has_trait(TRAIT_PACIFISM))
+					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
@@ -162,6 +169,10 @@
 	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
 		dropItemToGround(I)
+
+		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
+			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
+			return
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -182,30 +193,30 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
+	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
+	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
 
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
+	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
 	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
-		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+		dat += "<BR><A href='?src=[REF(src)];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[slot_legcuffed]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
-	onclose(user, "mob\ref[src]")
+	user << browse(dat, "window=mob[REF(src)];size=325x500")
+	onclose(user, "mob[REF(src)]")
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -222,7 +233,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -291,11 +302,14 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.item_flags & BEING_REMOVED)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
-	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -312,6 +326,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.item_flags &= ~BEING_REMOVED
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -323,7 +338,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -336,7 +351,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.loc = loc
+			W.forceMove(drop_location())
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -350,20 +365,13 @@
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
+		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		if(I == handcuffed)
-			handcuffed = null
-			update_handcuffed()
-			return
-		else if(I == legcuffed)
-			legcuffed = null
-			update_inv_legcuffed()
-			return
-		return TRUE
+		return
 
 	else
 		if(I == handcuffed)
-			handcuffed.loc = loc
+			handcuffed.forceMove(drop_location())
 			handcuffed.dropped(src)
 			handcuffed = null
 			if(buckled && buckled.buckle_requires_restraints)
@@ -371,7 +379,7 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			legcuffed.loc = loc
+			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
@@ -394,7 +402,7 @@
 	dropItemToGround(I)
 
 	var/modifier = 0
-	if(disabilities & CLUMSY)
+	if(has_trait(TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
@@ -414,23 +422,6 @@
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
-
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
 
 /mob/living/carbon/Stat()
 	..()
@@ -520,7 +511,7 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
-		become_husk()
+		become_husk("burn")
 	med_hud_set_health()
 
 /mob/living/carbon/update_sight()
@@ -534,7 +525,7 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		update_tint()
 	else
@@ -591,7 +582,7 @@
 	if(wear_mask)
 		. += wear_mask.tint
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		. += E.tint
 
@@ -729,7 +720,7 @@
 		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_FULLCRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_FAKEDEATH)) || health <= HEALTH_THRESHOLD_FULLCRIT)
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 		else
@@ -763,7 +754,7 @@
 		B.damaged_brain = 0
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+		if(D.severity != VIRUS_SEVERITY_POSITIVE)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -774,14 +765,15 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
+	cure_all_traumas(TRUE, TRUE)
 	..()
-	// heal ears after healing disabilities, since ears check DEAF disability
+	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
 	restoreEars()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.changeling))
+	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
@@ -793,7 +785,7 @@
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)
-			O.loc = get_turf(src)
+			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
@@ -854,7 +846,12 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
-	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
-	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
-	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"
+	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"
+	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
+	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
+	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
+	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
+	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"
+
+/mob/living/carbon/can_resist()
+	return bodyparts.len > 2 && ..()

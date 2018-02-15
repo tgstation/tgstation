@@ -16,7 +16,7 @@
 "ae" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -55,8 +55,7 @@
 /area/ruin/space/djstation)
 "an" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -66,16 +65,13 @@
 /area/ruin/space/djstation)
 "ao" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
 	dir = 0;
@@ -86,23 +82,16 @@
 /area/ruin/space/djstation)
 "aq" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/storage/box/lights/mixed,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ar" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -180,7 +169,7 @@
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/djstation)
 "aG" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -201,7 +190,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "aJ" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -290,7 +279,7 @@
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "ba" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/djstation)
@@ -311,9 +300,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/rack{
-	dir = 4
-	},
+/obj/structure/rack,
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plasteel/cafeteria,
@@ -343,11 +330,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "bh" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -366,7 +349,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 aa

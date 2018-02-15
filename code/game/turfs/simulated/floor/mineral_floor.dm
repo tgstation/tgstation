@@ -129,10 +129,10 @@
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/AM)
+/turf/open/floor/mineral/bananium/Entered(var/mob/living/L)
 	.=..()
 	if(!.)
-		if(istype(AM))
+		if(istype(L))
 			squeek()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
@@ -206,7 +206,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(get_turf(src), 3, 3, 1, 0)
+			radiation_pulse(src, 10)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time

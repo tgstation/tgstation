@@ -12,6 +12,10 @@
 	slot_flags = SLOT_BELT
 	resistance_flags = FLAMMABLE
 
+/obj/item/clipboard/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS//the clipboard's clip is very strong. industrial duty. can kill a man easily.
+
 /obj/item/clipboard/Initialize()
 	update_icon()
 	. = ..()
@@ -46,19 +50,19 @@
 /obj/item/clipboard/attack_self(mob/user)
 	var/dat = "<title>Clipboard</title>"
 	if(haspen)
-		dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];pen=1'>Remove Pen</A><BR><HR>"
 	else
-		dat += "<A href='?src=\ref[src];addpen=1'>Add Pen</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];addpen=1'>Add Pen</A><BR><HR>"
 
 	//The topmost paper. You can't organise contents directly in byond, so this is what we're stuck with.	-Pete
 	if(toppaper)
 		var/obj/item/paper/P = toppaper
-		dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR><HR>"
+		dat += "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A> - <A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A><BR><HR>"
 
 		for(P in src)
 			if(P == toppaper)
 				continue
-			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
+			dat += "<A href='?src=[REF(src)];write=[REF(P)]'>Write</A> <A href='?src=[REF(src)];remove=[REF(P)]'>Remove</A> <A href='?src=[REF(src)];top=[REF(P)]'>Move to top</A> - <A href='?src=[REF(src)];read=[REF(P)]'>[P.name]</A><BR>"
 	user << browse(dat, "window=clipboard")
 	onclose(user, "clipboard")
 	add_fingerprint(usr)
@@ -73,7 +77,7 @@
 
 		if(href_list["pen"])
 			if(haspen)
-				haspen.loc = usr.loc
+				haspen.forceMove(usr.loc)
 				usr.put_in_hands(haspen)
 				haspen = null
 
@@ -96,7 +100,7 @@
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
 			if(istype(P) && P.loc == src)
-				P.loc = usr.loc
+				P.forceMove(usr.loc)
 				usr.put_in_hands(P)
 				if(P == toppaper)
 					toppaper = null

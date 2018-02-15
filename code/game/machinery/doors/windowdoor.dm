@@ -21,8 +21,8 @@
 	var/cable = 2
 	var/list/debris = list()
 
-/obj/machinery/door/window/New(loc, set_dir)
-	..()
+/obj/machinery/door/window/Initialize(mapload, set_dir)
+	. = ..()
 	if(set_dir)
 		setDir(set_dir)
 	if(src.req_access && src.req_access.len)
@@ -62,7 +62,7 @@
 	if( operating || !src.density )
 		return
 	if (!( ismob(AM) ))
-		if(istype(AM, /obj/mecha))
+		if(ismecha(AM))
 			var/obj/mecha/mecha = AM
 			if(mecha.occupant && src.allowed(mecha.occupant))
 				open_and_close()
@@ -90,7 +90,7 @@
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
@@ -118,7 +118,7 @@
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -132,7 +132,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	if(!src.operating) //in case of emag
 		operating = TRUE
@@ -157,7 +157,7 @@
 		if(!hasPower())
 			return 0
 	if(forced < 2)
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			return 0
 	operating = TRUE
 	do_animate("closing")
@@ -192,7 +192,8 @@
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/ratvar_act()
-	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	var/obj/machinery/door/window/clockwork/C = new(loc, dir)
+	C.name = name
 	qdel(src)
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -205,8 +206,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
-	if(!operating && density && !emagged)
-		emagged = TRUE
+	if(!operating && density && !(obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[src.base_state]spark", src)
 		playsound(src, "sparks", 75, 1)
@@ -226,17 +227,16 @@
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			panel_open = !panel_open
 			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/crowbar))
 			if(panel_open && !density && !operating)
-				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
-				if(do_after(user,40*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 40, volume=50))
 					if(panel_open && !density && !operating && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
@@ -257,7 +257,7 @@
 						WA.update_icon()
 						WA.created_name = src.name
 
-						if(emagged)
+						if(obj_flags & EMAGGED)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
@@ -275,7 +275,7 @@
 						else
 							ae = electronics
 							electronics = null
-							ae.loc = src.loc
+							ae.forceMove(drop_location())
 
 						qdel(src)
 				return
@@ -328,8 +328,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/made_glow = FALSE
 
-/obj/machinery/door/window/clockwork/New(loc, set_dir)
-	..()
+/obj/machinery/door/window/clockwork/Initialize(mapload, set_dir)
+	. = ..()
 	for(var/i in 1 to 2)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)

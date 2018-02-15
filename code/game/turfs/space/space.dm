@@ -14,6 +14,7 @@
 
 	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -43,6 +44,8 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -66,7 +69,7 @@
 	return
 
 /turf/open/space/proc/update_starlight()
-	if(config.starlight)
+	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
@@ -115,7 +118,7 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				ChangeTurf(/turf/open/floor/plating)
+				PlaceOnTop(/turf/open/floor/plating)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
@@ -127,15 +130,20 @@
 		return
 
 	if(destination_z)
+		var/old_z = A.z
 		A.x = destination_x
 		A.y = destination_y
 		A.z = destination_z
+		if (old_z != destination_z)
+			A.onTransitZ(old_z, destination_z)
 
 		if(isliving(A))
 			var/mob/living/L = A
-			if(L.pulling)
+			var/atom/movable/AM = L.pulling
+			if(AM)
 				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.loc = T
+				AM.forceMove(T)
+				L.start_pulling(AM)
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
@@ -176,14 +184,15 @@
 			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 			if(L)
 				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-			else return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
 	return FALSE
 
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 
@@ -195,4 +204,3 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
-

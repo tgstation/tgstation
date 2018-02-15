@@ -4,7 +4,7 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
@@ -20,7 +20,7 @@
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
-	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology"
+	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
@@ -98,7 +98,7 @@
 				I.flags_1 &= ~NODROP_1
 		if(camera)
 			camera.remove_target_ui()
-			camera.loc = user
+			camera.forceMove(user)
 		teleport_now.UpdateButtonIcon()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
@@ -207,7 +207,7 @@
 		cooldown = world.time + cooldowntime
 		activating = 0
 
-/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
+/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
 	if(activated && (!teleporting || force))
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
@@ -252,6 +252,12 @@
 	var/obj/screen/chronos_target/target_ui = null
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
+/obj/effect/chronos_cam/singularity_act()
+	return
+
+/obj/effect/chronos_cam/singularity_pull()
+	return
+
 /obj/effect/chronos_cam/proc/create_target_ui()
 	if(holder && holder.client && chronosuit)
 		if(target_ui)
@@ -265,29 +271,29 @@
 		target_ui = null
 
 /obj/effect/chronos_cam/relaymove(var/mob/user, direction)
-	if(holder)
-		if(user == holder)
-			if(loc == user)
-				loc = get_turf(user)
-			if(user.client && user.client.eye != src)
-				src.loc = get_turf(user)
-				user.reset_perspective(src)
-				user.set_machine(src)
-			var/atom/step = get_step(src, direction)
-			if(step)
-				if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
-					if(!src.Move(step))
-						src.loc = step
-				else
-					src.loc = step
-				if((x == holder.x) && (y == holder.y) && (z == holder.z))
-					remove_target_ui()
-					loc = user
-				else if(!target_ui)
-					create_target_ui()
-				phase_time = world.time + phase_time_length
-	else
+	if(!holder)
 		qdel(src)
+		return
+	if(user == holder)
+		if(loc == user)
+			forceMove(get_turf(user))
+		if(user.client && user.client.eye != src)
+			src.forceMove(user.drop_location())
+			user.reset_perspective(src)
+			user.set_machine(src)
+		var/atom/step = get_step(src, direction)
+		if(step)
+			if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
+				if(!src.Move(step))
+					src.forceMove(step)
+			else
+				src.forceMove(step)
+			if((x == holder.x) && (y == holder.y) && (z == holder.z))
+				remove_target_ui()
+				forceMove(user)
+			else if(!target_ui)
+				create_target_ui()
+			phase_time = world.time + phase_time_length
 
 /obj/effect/chronos_cam/check_eye(mob/user)
 	if(user != holder)

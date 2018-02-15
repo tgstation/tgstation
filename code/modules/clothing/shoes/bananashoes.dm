@@ -34,7 +34,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]</span>")
+	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	GET_COMPONENT(bananium, /datum/component/material_container)

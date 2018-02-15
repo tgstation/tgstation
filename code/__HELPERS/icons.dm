@@ -178,7 +178,7 @@ mob
 			// Send the icon to src's local cache
 			src<<browse_rsc(I, iconName)
 			// Update the label to show it
-			winset(src,"imageLabel","image='\ref[I]'");
+			winset(src,"imageLabel","image='[REF(I)]'");
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
@@ -308,7 +308,8 @@ world
  */
 
 /proc/ReadRGB(rgb)
-	if(!rgb) return
+	if(!rgb)
+		return
 
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
@@ -317,19 +318,27 @@ world
 	var/digits=0
 	for(i=start, i<=length(rgb), ++i)
 		ch = text2ascii(rgb, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102) break
+		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
+			break
 		++digits
-		if(digits == 8) break
+		if(digits == 8)
+			break
 
 	var/single = digits < 6
-	if(digits != 3 && digits != 4 && digits != 6 && digits != 8) return
-	if(digits == 4 || digits == 8) usealpha = 1
+	if(digits != 3 && digits != 4 && digits != 6 && digits != 8)
+		return
+	if(digits == 4 || digits == 8)
+		usealpha = 1
 	for(i=start, digits>0, ++i)
 		ch = text2ascii(rgb, i)
-		if(ch >= 48 && ch <= 57) ch -= 48
-		else if(ch >= 65 && ch <= 70) ch -= 55
-		else if(ch >= 97 && ch <= 102) ch -= 87
-		else break
+		if(ch >= 48 && ch <= 57)
+			ch -= 48
+		else if(ch >= 65 && ch <= 70)
+			ch -= 55
+		else if(ch >= 97 && ch <= 102)
+			ch -= 87
+		else
+			break
 		--digits
 		switch(which)
 			if(0)
@@ -337,69 +346,91 @@ world
 				if(single)
 					r |= r << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(1)
 				g = (g << 4) | ch
 				if(single)
 					g |= g << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(2)
 				b = (b << 4) | ch
 				if(single)
 					b |= b << 4
 					++which
-				else if(!(digits & 1)) ++which
+				else if(!(digits & 1))
+					++which
 			if(3)
 				alpha = (alpha << 4) | ch
-				if(single) alpha |= alpha << 4
+				if(single)
+					alpha |= alpha << 4
 
 	. = list(r, g, b)
-	if(usealpha) . += alpha
+	if(usealpha)
+		. += alpha
 
 /proc/ReadHSV(hsv)
-	if(!hsv) return
+	if(!hsv)
+		return
 
 	// interpret the HSV or HSVA value
 	var/i=1,start=1
-	if(text2ascii(hsv) == 35) ++start // skip opening #
+	if(text2ascii(hsv) == 35)
+		++start // skip opening #
 	var/ch,which=0,hue=0,sat=0,val=0,alpha=0,usealpha
 	var/digits=0
 	for(i=start, i<=length(hsv), ++i)
 		ch = text2ascii(hsv, i)
-		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102) break
+		if(ch < 48 || (ch > 57 && ch < 65) || (ch > 70 && ch < 97) || ch > 102)
+			break
 		++digits
-		if(digits == 9) break
-	if(digits > 7) usealpha = 1
-	if(digits <= 4) ++which
-	if(digits <= 2) ++which
+		if(digits == 9)
+			break
+	if(digits > 7)
+		usealpha = 1
+	if(digits <= 4)
+		++which
+	if(digits <= 2)
+		++which
 	for(i=start, digits>0, ++i)
 		ch = text2ascii(hsv, i)
-		if(ch >= 48 && ch <= 57) ch -= 48
-		else if(ch >= 65 && ch <= 70) ch -= 55
-		else if(ch >= 97 && ch <= 102) ch -= 87
-		else break
+		if(ch >= 48 && ch <= 57)
+			ch -= 48
+		else if(ch >= 65 && ch <= 70)
+			ch -= 55
+		else if(ch >= 97 && ch <= 102)
+			ch -= 87
+		else
+			break
 		--digits
 		switch(which)
 			if(0)
 				hue = (hue << 4) | ch
-				if(digits == (usealpha ? 6 : 4)) ++which
+				if(digits == (usealpha ? 6 : 4))
+					++which
 			if(1)
 				sat = (sat << 4) | ch
-				if(digits == (usealpha ? 4 : 2)) ++which
+				if(digits == (usealpha ? 4 : 2))
+					++which
 			if(2)
 				val = (val << 4) | ch
-				if(digits == (usealpha ? 2 : 0)) ++which
+				if(digits == (usealpha ? 2 : 0))
+					++which
 			if(3)
 				alpha = (alpha << 4) | ch
 
 	. = list(hue, sat, val)
-	if(usealpha) . += alpha
+	if(usealpha)
+		. += alpha
 
 /proc/HSVtoRGB(hsv)
-	if(!hsv) return "#000000"
+	if(!hsv)
+		return "#000000"
 	var/list/HSV = ReadHSV(hsv)
-	if(!HSV) return "#000000"
+	if(!HSV)
+		return "#000000"
 
 	var/hue = HSV[1]
 	var/sat = HSV[2]
@@ -407,27 +438,30 @@ world
 
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
-	if(hue >= 0x5fa) hue -= 0x5fa
+	if(hue >= 0x5fa)
+		hue -= 0x5fa
 
 	var/hi,mid,lo,r,g,b
 	hi = val
 	lo = round((255 - sat) * val / 255, 1)
 	mid = lo + round(abs(round(hue, 510) - hue) * (hi - lo) / 255, 1)
 	if(hue >= 765)
-		if(hue >= 1275)      {r=hi;  g=lo;  b=mid}
+		if(hue >= 1275) {r=hi;  g=lo;  b=mid}
 		else if(hue >= 1020) {r=mid; g=lo;  b=hi }
-		else                 {r=lo;  g=mid; b=hi }
+		else {r=lo;  g=mid; b=hi }
 	else
-		if(hue >= 510)       {r=lo;  g=hi;  b=mid}
-		else if(hue >= 255)  {r=mid; g=hi;  b=lo }
-		else                 {r=hi;  g=mid; b=lo }
+		if(hue >= 510) {r=lo;  g=hi;  b=mid}
+		else if(hue >= 255) {r=mid; g=hi;  b=lo }
+		else {r=hi;  g=mid; b=lo }
 
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
 /proc/RGBtoHSV(rgb)
-	if(!rgb) return "#0000000"
+	if(!rgb)
+		return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
-	if(!RGB) return "#0000000"
+	if(!RGB)
+		return "#0000000"
 
 	var/r = RGB[1]
 	var/g = RGB[2]
@@ -456,15 +490,22 @@ world
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
 /proc/hsv(hue, sat, val, alpha)
-	if(hue < 0 || hue >= 1536) hue %= 1536
-	if(hue < 0) hue += 1536
+	if(hue < 0 || hue >= 1536)
+		hue %= 1536
+	if(hue < 0)
+		hue += 1536
 	if((hue & 0xFF) == 0xFF)
 		++hue
-		if(hue >= 1536) hue = 0
-	if(sat < 0) sat = 0
-	if(sat > 255) sat = 255
-	if(val < 0) val = 0
-	if(val > 255) val = 255
+		if(hue >= 1536)
+			hue = 0
+	if(sat < 0)
+		sat = 0
+	if(sat > 255)
+		sat = 255
+	if(val < 0)
+		val = 0
+	if(val > 255)
+		val = 255
 	. = "#"
 	. += TO_HEX_DIGIT(hue >> 8)
 	. += TO_HEX_DIGIT(hue >> 4)
@@ -474,8 +515,10 @@ world
 	. += TO_HEX_DIGIT(val >> 4)
 	. += TO_HEX_DIGIT(val)
 	if(!isnull(alpha))
-		if(alpha < 0) alpha = 0
-		if(alpha > 255) alpha = 255
+		if(alpha < 0)
+			alpha = 0
+		if(alpha > 255)
+			alpha = 255
 		. += TO_HEX_DIGIT(alpha >> 4)
 		. += TO_HEX_DIGIT(alpha)
 
@@ -493,32 +536,44 @@ world
 	var/list/HSV2 = ReadHSV(hsv2)
 
 	// add missing alpha if needed
-	if(HSV1.len < HSV2.len) HSV1 += 255
-	else if(HSV2.len < HSV1.len) HSV2 += 255
+	if(HSV1.len < HSV2.len)
+		HSV1 += 255
+	else if(HSV2.len < HSV1.len)
+		HSV2 += 255
 	var/usealpha = HSV1.len > 3
 
 	// normalize hsv values in case anything is screwy
-	if(HSV1[1] > 1536) HSV1[1] %= 1536
-	if(HSV2[1] > 1536) HSV2[1] %= 1536
-	if(HSV1[1] < 0) HSV1[1] += 1536
-	if(HSV2[1] < 0) HSV2[1] += 1536
+	if(HSV1[1] > 1536)
+		HSV1[1] %= 1536
+	if(HSV2[1] > 1536)
+		HSV2[1] %= 1536
+	if(HSV1[1] < 0)
+		HSV1[1] += 1536
+	if(HSV2[1] < 0)
+		HSV2[1] += 1536
 	if(!HSV1[3]) {HSV1[1] = 0; HSV1[2] = 0}
 	if(!HSV2[3]) {HSV2[1] = 0; HSV2[2] = 0}
 
 	// no value for one color means don't change saturation
-	if(!HSV1[3]) HSV1[2] = HSV2[2]
-	if(!HSV2[3]) HSV2[2] = HSV1[2]
+	if(!HSV1[3])
+		HSV1[2] = HSV2[2]
+	if(!HSV2[3])
+		HSV2[2] = HSV1[2]
 	// no saturation for one color means don't change hues
-	if(!HSV1[2]) HSV1[1] = HSV2[1]
-	if(!HSV2[2]) HSV2[1] = HSV1[1]
+	if(!HSV1[2])
+		HSV1[1] = HSV2[1]
+	if(!HSV2[2])
+		HSV2[1] = HSV1[1]
 
 	// Compress hues into easier-to-manage range
 	HSV1[1] -= HSV1[1] >> 8
 	HSV2[1] -= HSV2[1] >> 8
 
 	var/hue_diff = HSV2[1] - HSV1[1]
-	if(hue_diff > 765) hue_diff -= 1530
-	else if(hue_diff <= -765) hue_diff += 1530
+	if(hue_diff > 765)
+		hue_diff -= 1530
+	else if(hue_diff <= -765)
+		hue_diff += 1530
 
 	var/hue = round(HSV1[1] + hue_diff * amount, 1)
 	var/sat = round(HSV1[2] + (HSV2[2] - HSV1[2]) * amount, 1)
@@ -526,8 +581,10 @@ world
 	var/alpha = usealpha ? round(HSV1[4] + (HSV2[4] - HSV1[4]) * amount, 1) : null
 
 	// normalize hue
-	if(hue < 0 || hue >= 1530) hue %= 1530
-	if(hue < 0) hue += 1530
+	if(hue < 0 || hue >= 1530)
+		hue %= 1530
+	if(hue < 0)
+		hue += 1530
 	// decompress hue
 	hue += round(hue / 255)
 
@@ -547,8 +604,10 @@ world
 	var/list/RGB2 = ReadRGB(rgb2)
 
 	// add missing alpha if needed
-	if(RGB1.len < RGB2.len) RGB1 += 255
-	else if(RGB2.len < RGB1.len) RGB2 += 255
+	if(RGB1.len < RGB2.len)
+		RGB1 += 255
+	else if(RGB2.len < RGB1.len)
+		RGB2 += 255
 	var/usealpha = RGB1.len > 3
 
 	var/r = round(RGB1[1] + (RGB2[1] - RGB1[1]) * amount, 1)
@@ -563,15 +622,18 @@ world
 
 /proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
-	if(hue < 0 || hue >= 1536) hue %= 1536
-	if(hue < 0) hue += 1536
+	if(hue < 0 || hue >= 1536)
+		hue %= 1536
+	if(hue < 0)
+		hue += 1536
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
 	return hue / (1530/360)
 
 /proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
-	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
+	if(angle < 0 || angle >= 360)
+		angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
 	// Decompress hue
 	hue += round(hue / 255)
@@ -583,18 +645,23 @@ world
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
-	if(HSV[1] >= 1536) HSV[1] %= 1536
-	if(HSV[1] < 0) HSV[1] += 1536
+	if(HSV[1] >= 1536)
+		HSV[1] %= 1536
+	if(HSV[1] < 0)
+		HSV[1] += 1536
 
 	// Compress hue into easier-to-manage range
 	HSV[1] -= HSV[1] >> 8
 
-	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
+	if(angle < 0 || angle >= 360)
+		angle -= 360 * round(angle / 360)
 	HSV[1] = round(HSV[1] + angle * (1530/360), 1)
 
 	// normalize hue
-	if(HSV[1] < 0 || HSV[1] >= 1530) HSV[1] %= 1530
-	if(HSV[1] < 0) HSV[1] += 1530
+	if(HSV[1] < 0 || HSV[1] >= 1530)
+		HSV[1] %= 1530
+	if(HSV[1] < 0)
+		HSV[1] += 1530
 	// decompress hue
 	HSV[1] += round(HSV[1] / 255)
 
@@ -614,8 +681,10 @@ world
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	var/tone_gray = TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11
 
-	if(gray <= tone_gray) return BlendRGB("#000000", tone, gray/(tone_gray || 1))
-	else return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
+	if(gray <= tone_gray)
+		return BlendRGB("#000000", tone, gray/(tone_gray || 1))
+	else
+		return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
 
 //Used in the OLD chem colour mixing algorithm
@@ -645,7 +714,7 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 	if(!A)
@@ -653,6 +722,16 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha <= 0)
 		return flat
 	var/noIcon = FALSE
+
+	if(start)
+		if(!defdir)
+			defdir = A.dir
+		if(!deficon)
+			deficon = A.icon
+		if(!defstate)
+			defstate = A.icon_state
+		if(!defblend)
+			defblend = A.blend_mode
 
 	var/curicon
 	if(A.icon)
@@ -676,10 +755,31 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(A.dir != 2)
-		curdir = A.dir
-	else
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
+	
+	//These should use the parent's direction (most likely)
+	if(!A.dir || A.dir == SOUTH)
 		curdir = defdir
+	else
+		curdir = A.dir
+
+	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
+	if(curdir != SOUTH)
+		var/icon/test_icon 
+		var/directionals_exist = FALSE
+		var/list/dirs_to_check = GLOB.cardinals - SOUTH
+		outer:
+			for(var/possible_dir in dirs_to_check)
+				test_icon = icon(curicon,curstate,possible_dir,frame=1)
+				for(var/x in 1 to world.icon_size)
+					for(var/y in 1 to world.icon_size)
+						if(!isnull(test_icon.GetPixel(x,y)))
+							directionals_exist = TRUE
+							break outer
+		if(!directionals_exist)
+			base_icon_dir = SOUTH
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -692,7 +792,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -713,9 +813,13 @@ The _flatIcons list is a cache for generated icon files.
 				curIndex++ //Try the next layer
 				continue
 			var/image/I = current
+			if(I.plane != FLOAT_PLANE && I.plane != A.plane)
+				curIndex++
+				continue
 			currentLayer = I.layer
 			if(currentLayer<0) // Special case for FLY_LAYER
-				if(currentLayer <= -1000) return flat
+				if(currentLayer <= -1000)
+					return flat
 				if(pSet == 0) // Underlay
 					currentLayer = A.layer+currentLayer/1000
 				else // Overlay
@@ -743,10 +847,16 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/icon/add // Icon of overlay being added
 
-		// Current dimensions of flattened icon
-	var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
-		// Dimensions of overlay being added
-	var/{addX1;addX2;addY1;addY2}
+	// Current dimensions of flattened icon
+	var/flatX1=1
+	var/flatX2=flat.Width()
+	var/flatY1=1
+	var/flatY2=flat.Height()
+	// Dimensions of overlay being added
+	var/addX1
+	var/addX2
+	var/addY1
+	var/addY2
 
 	for(var/V in layers)
 		var/image/I = V
@@ -755,9 +865,9 @@ The _flatIcons list is a cache for generated icon files.
 
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
-			add = icon(I.icon, I.icon_state, I.dir)
+			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
@@ -779,7 +889,13 @@ The _flatIcons list is a cache for generated icon files.
 	if(A.alpha < 255)
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
-	return icon(flat, "", SOUTH)
+	if(no_anim)
+		//Clean up repeated frames
+		var/icon/cleaned = new /icon()
+		cleaned.Insert(flat, "", SOUTH, 1, 0)
+		return cleaned
+	else
+		return icon(flat, "", SOUTH)
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
@@ -795,8 +911,7 @@ The _flatIcons list is a cache for generated icon files.
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
 	//Now we need to culculate overlays+underlays and add them together to form an image for a mask.
-	//var/icon/alpha_mask = getFlatIcon(src)//Accurate but SLOW. Not designed for running each tick. Could have other uses I guess.
-	var/icon/alpha_mask = getIconMask(src)//Which is why I created that proc. Also a little slow since it's blending a bunch of icons together but good enough.
+	var/icon/alpha_mask = getIconMask(src)//getFlatIcon(src) is accurate but SLOW. Not designed for running each tick. This is also a little slow since it's blending a bunch of icons together but good enough.
 	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
@@ -880,7 +995,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!GLOB.friendly_animal_types.len)
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable) == 2)
+			if(initial(SA.gold_core_spawnable) == FRIENDLY_SPAWN)
 				GLOB.friendly_animal_types += SA
 
 
@@ -936,23 +1051,26 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(J)
 			J.equip(body, TRUE, FALSE)
 
-		SSoverlays.Flush()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
 		body.setDir(NORTH)
+		COMPILE_OVERLAYS(body)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
 		body.setDir(SOUTH)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
 		body.setDir(WEST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
 		body.setDir(EAST)
+		COMPILE_OVERLAYS(body)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
@@ -968,9 +1086,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /image/proc/setDir(newdir)
 	dir = newdir
 
-#define FROZEN_RED_COLOR "#2E5E69"
-#define FROZEN_GREEN_COLOR "#60A2A8"
-#define FROZEN_BLUE_COLOR "#A1AFB1"
+GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0,0,0)))
 
 /obj/proc/make_frozen_visual()
 	// Used to make the frozen item visuals for Freon.
@@ -978,7 +1094,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		return
 	if(!(flags_2 & FROZEN_2))
 		name = "frozen [name]"
-		add_atom_colour(list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)), TEMPORARY_COLOUR_PRIORITY)
+		add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
 		flags_2 |= FROZEN_2
 
@@ -986,13 +1102,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /obj/proc/make_unfrozen()
 	if(flags_2 & FROZEN_2)
 		name = replacetext(name, "frozen ", "")
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, list(FROZEN_RED_COLOR, FROZEN_GREEN_COLOR, FROZEN_BLUE_COLOR, rgb(0,0,0)))
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 		alpha += 25
 		flags_2 &= ~FROZEN_2
-
-#undef FROZEN_RED_COLOR
-#undef FROZEN_GREEN_COLOR
-#undef FROZEN_BLUE_COLOR
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
@@ -1076,7 +1188,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+	var/key = "[istype(A.icon, /icon) ? "[REF(A.icon)]" : A.icon]:[A.icon_state]"
 
 
 	if (!bicon_cache[key]) // Doesn't exist, make it.

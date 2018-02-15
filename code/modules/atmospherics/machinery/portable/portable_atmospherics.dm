@@ -45,20 +45,22 @@
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != get_turf(src))
-		return 0
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
+	var/datum/pipeline/connected_port_parent = connected_port.parents[1]
 	connected_port_parent.reconcile_air()
 
 	anchored = TRUE //Prevent movement
-	return 1
+	pixel_x = new_port.pixel_x
+	pixel_y = new_port.pixel_y
+	return TRUE
 
 /obj/machinery/portable_atmospherics/Move()
 	. = ..()
@@ -67,11 +69,13 @@
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
-	return 1
+	pixel_x = 0
+	pixel_y = 0
+	return TRUE
 
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents
@@ -80,16 +84,15 @@
 	if(istype(W, /obj/item/tank))
 		if(!(stat & BROKEN))
 			var/obj/item/tank/T = W
-			if(holding || !user.drop_item())
+			if(holding || !user.transferItemToLoc(T, src))
 				return
-			T.loc = src
 			holding = T
 			update_icon()
 	else if(istype(W, /obj/item/wrench))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
@@ -104,7 +107,7 @@
 				if(!connect(possible_port))
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \

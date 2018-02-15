@@ -4,6 +4,8 @@
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "closed"
 	var/id = 1
+	layer = BLASTDOOR_LAYER
+	closingLayer = CLOSED_BLASTDOOR_LAYER
 	sub_door = TRUE
 	explosion_block = 3
 	heat_proof = TRUE
@@ -49,8 +51,10 @@
 	switch(animation)
 		if("opening")
 			flick("opening", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
 		if("closing")
 			flick("closing", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
 
 /obj/machinery/door/poddoor/update_icon()
 	if(density)

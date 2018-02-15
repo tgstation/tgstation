@@ -21,6 +21,7 @@
 	window_name = "Automatic Security Unit v2.6"
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	path_image_color = "#FF0000"
 
 	var/lastfired = 0
 	var/shot_delay = 15
@@ -40,6 +41,8 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
 	var/shoot_sound = 'sound/weapons/taser.ogg'
+	var/cell_type = /obj/item/stock_parts/cell
+	var/vest_type = /obj/item/clothing/suit/armor/vest
 
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
@@ -103,7 +106,7 @@ Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
-"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
 		if(!lasercolor)
@@ -116,12 +119,12 @@ Operating Mode: []<BR>
 Report Arrests[]<BR>
 Auto Patrol[]"},
 
-"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+"<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+"<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	return dat
 
@@ -160,7 +163,7 @@ Auto Patrol[]"},
 		final = final|JUDGE_RECORDCHECK
 	if(weaponscheck)
 		final = final|JUDGE_WEAPONCHECK
-	if(emagged)
+	if(emagged == 2)
 		final = final|JUDGE_EMAGGED
 	//ED209's ignore monkeys
 	final = final|JUDGE_IGNOREMONKEYS
@@ -364,31 +367,32 @@ Auto Patrol[]"},
 			continue
 
 /mob/living/simple_animal/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(slot_item && slot_item.needs_permit)
+	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
 		return 1
 	return 0
 
 /mob/living/simple_animal/bot/ed209/explode()
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	var/obj/item/ed209_assembly/Sa = new /obj/item/ed209_assembly(Tsec)
+	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
+	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
-		var/obj/item/gun/energy/e_gun/advtaser/G = new /obj/item/gun/energy/e_gun/advtaser(Tsec)
+		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
-		var/obj/item/gun/energy/laser/bluetag/G = new /obj/item/gun/energy/laser/bluetag(Tsec)
+		var/obj/item/gun/energy/laser/bluetag/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "r")
-		var/obj/item/gun/energy/laser/redtag/G = new /obj/item/gun/energy/laser/redtag(Tsec)
+		var/obj/item/gun/energy/laser/redtag/G = new (Tsec)
 		G.cell.charge = 0
 		G.update_icon()
 
@@ -401,7 +405,7 @@ Auto Patrol[]"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				drop_part(vest_type, Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")
@@ -444,9 +448,7 @@ Auto Patrol[]"},
 
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
-	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, src)
 	A.fire()
 
 /mob/living/simple_animal/bot/ed209/attack_alien(mob/living/carbon/alien/user)

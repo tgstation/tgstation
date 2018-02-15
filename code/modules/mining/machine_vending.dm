@@ -8,54 +8,56 @@
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor
+	var/icon_deny = "mining-deny"
 	var/obj/item/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
-		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
-		new /datum/data/mining_equipment("10 Marker Beacons",	/obj/item/stack/marker_beacon/ten,										100),
-		new /datum/data/mining_equipment("30 Marker Beacons",	/obj/item/stack/marker_beacon/thirty,									300),
-		new /datum/data/mining_equipment("Whiskey",				/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
-		new /datum/data/mining_equipment("Absinthe",			/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium,100),
-		new /datum/data/mining_equipment("Cigar",				/obj/item/clothing/mask/cigarette/cigar/havana,							150),
-		new /datum/data/mining_equipment("Soap",				/obj/item/soap/nanotrasen,										200),
-		new /datum/data/mining_equipment("Laser Pointer",		/obj/item/device/laser_pointer,											300),
-		new /datum/data/mining_equipment("Alien Toy",			/obj/item/clothing/mask/facehugger/toy,									300),
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,							800),
-		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/hivelordstabilizer,									400),
-		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core,													400),
-		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/survivalcapsule,										400),
-		new /datum/data/mining_equipment("GAR Meson Scanners",	/obj/item/clothing/glasses/meson/gar,									500),
-		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/storage/belt/mining,									500),
-		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/reagent_containers/hypospray/medipen/survival,			500),
-		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/storage/firstaid/brute,								600),
-		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker,								600),
-		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
-		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/twohanded/required/kinetic_crusher,						750),
-		new /datum/data/mining_equipment("Kinetic Accelerator",	/obj/item/gun/energy/kinetic_accelerator,						750),
-		new /datum/data/mining_equipment("Resonator",			/obj/item/resonator,												800),
-		new /datum/data/mining_equipment("Fulton Pack",			/obj/item/extraction_pack,										1000),
-		new /datum/data/mining_equipment("Lazarus Injector",	/obj/item/lazarus_injector,										1000),
-		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/pickaxe/silver,										1000),
-		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/tank/jetpack/suit,										2000),
-		new /datum/data/mining_equipment("Space Cash",			/obj/item/stack/spacecash/c1000,										2000),
-		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,							2000),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/pickaxe/diamond,										2000),
-		new /datum/data/mining_equipment("Super Resonator",		/obj/item/resonator/upgraded,									2500),
-		new /datum/data/mining_equipment("Luxury Shelter Capsule",	/obj/item/survivalcapsule/luxury,							3000),
-		new /datum/data/mining_equipment("KA White Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer,								100),
-		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,				150),
-		new /datum/data/mining_equipment("KA Super Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod,								250),
-		new /datum/data/mining_equipment("KA Hyper Chassis",	/obj/item/borg/upgrade/modkit/chassis_mod/orange,						300),
-		new /datum/data/mining_equipment("KA Range Increase",	/obj/item/borg/upgrade/modkit/range,									1000),
-		new /datum/data/mining_equipment("KA Damage Increase",	/obj/item/borg/upgrade/modkit/damage,									1000),
-		new /datum/data/mining_equipment("KA Cooldown Decrease", /obj/item/borg/upgrade/modkit/cooldown,									1000),
-		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
-		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/card/mining_point_card,								500),
-		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
-		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
-		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_ugprade/health,								400),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade", /obj/item/device/mine_bot_ugprade/cooldown,								600),
-		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
-		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
+		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
+		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
+		new /datum/data/mining_equipment("30 Marker Beacons",			/obj/item/stack/marker_beacon/thirty,								300),
+		new /datum/data/mining_equipment("Whiskey",						/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
+		new /datum/data/mining_equipment("Absinthe",					/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium,	100),
+		new /datum/data/mining_equipment("Cigar",						/obj/item/clothing/mask/cigarette/cigar/havana,						150),
+		new /datum/data/mining_equipment("Soap",						/obj/item/soap/nanotrasen,											200),
+		new /datum/data/mining_equipment("Laser Pointer",				/obj/item/device/laser_pointer,										300),
+		new /datum/data/mining_equipment("Alien Toy",					/obj/item/clothing/mask/facehugger/toy,								300),
+		new /datum/data/mining_equipment("Advanced Scanner",			/obj/item/device/t_scanner/adv_mining_scanner,						800),
+		new /datum/data/mining_equipment("Stabilizing Serum",			/obj/item/hivelordstabilizer,										400),
+		new /datum/data/mining_equipment("Fulton Beacon",				/obj/item/fulton_core,												400),
+		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
+		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
+		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
+		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
+		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			500),
+		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
+		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
+		new /datum/data/mining_equipment("Jaunter",						/obj/item/device/wormhole_jaunter,									750),
+		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/twohanded/required/kinetic_crusher,						750),
+		new /datum/data/mining_equipment("Kinetic Accelerator",			/obj/item/gun/energy/kinetic_accelerator,							750),
+		new /datum/data/mining_equipment("Resonator",					/obj/item/resonator,												800),
+		new /datum/data/mining_equipment("Fulton Pack",					/obj/item/extraction_pack,											1000),
+		new /datum/data/mining_equipment("Lazarus Injector",			/obj/item/lazarus_injector,											1000),
+		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
+		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining_conscript,				1000),
+		new /datum/data/mining_equipment("Jetpack Upgrade",				/obj/item/tank/jetpack/suit,										2000),
+		new /datum/data/mining_equipment("Space Cash",					/obj/item/stack/spacecash/c1000,									2000),
+		new /datum/data/mining_equipment("Mining Hardsuit",				/obj/item/clothing/suit/space/hardsuit/mining,						2000),
+		new /datum/data/mining_equipment("Diamond Pickaxe",				/obj/item/pickaxe/diamond,											2000),
+		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
+		new /datum/data/mining_equipment("Jump Boots",					/obj/item/clothing/shoes/bhop,										2500),
+		new /datum/data/mining_equipment("Luxury Shelter Capsule",		/obj/item/survivalcapsule/luxury,									3000),
+		new /datum/data/mining_equipment("Mining Drone",				/mob/living/simple_animal/hostile/mining_drone,						800),
+		new /datum/data/mining_equipment("Drone Melee Upgrade",			/obj/item/device/mine_bot_upgrade,									400),
+		new /datum/data/mining_equipment("Drone Health Upgrade",		/obj/item/device/mine_bot_upgrade/health,							400),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade",		/obj/item/device/mine_bot_upgrade/cooldown,							600),
+		new /datum/data/mining_equipment("Drone AI Upgrade",			/obj/item/slimepotion/slime/sentience/mining,						1000),
+		new /datum/data/mining_equipment("KA White Tracer Rounds",		/obj/item/borg/upgrade/modkit/tracer,								100),
+		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,					150),
+		new /datum/data/mining_equipment("KA Super Chassis",			/obj/item/borg/upgrade/modkit/chassis_mod,							250),
+		new /datum/data/mining_equipment("KA Hyper Chassis",			/obj/item/borg/upgrade/modkit/chassis_mod/orange,					300),
+		new /datum/data/mining_equipment("KA Range Increase",			/obj/item/borg/upgrade/modkit/range,								1000),
+		new /datum/data/mining_equipment("KA Damage Increase",			/obj/item/borg/upgrade/modkit/damage,								1000),
+		new /datum/data/mining_equipment("KA Cooldown Decrease",		/obj/item/borg/upgrade/modkit/cooldown,								1000),
+		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000)
 		)
 
 /datum/data/mining_equipment
@@ -88,13 +90,13 @@
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=[REF(src)];choice=eject'>Eject ID.</A><br>"
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
+		dat += "No ID inserted.  <A href='?src=[REF(src)];choice=insert'>Insert ID.</A><br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
-		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
+		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
@@ -108,30 +110,38 @@
 	if(href_list["choice"])
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
-				inserted_id.loc = loc
+				to_chat(usr, "<span class='notice'>You eject the ID from [src]'s card slot.</span>")
+				inserted_id.forceMove(loc)
 				inserted_id.verb_pickup()
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
 			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
-				if(!usr.drop_item())
+				if(!usr.transferItemToLoc(I, src))
 					return
-				I.loc = src
 				inserted_id = I
-			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
+			else
+				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
+				flick(icon_deny, src)
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
 			if (!prize || !(prize in prize_list))
+				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+				flick(icon_deny, src)
 				return
 			if(prize.cost > inserted_id.mining_points)
+				to_chat(usr, "<span class='warning'>Error: Insufficent points for [prize.equipment_name]!</span>")
+				flick(icon_deny, src)
 			else
 				inserted_id.mining_points -= prize.cost
+				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 				new prize.equipment_path(src.loc)
-				SSblackbox.add_details("mining_equipment_bought",
-					"[src.type]|[prize.equipment_path]")
-				// Add src.type to keep track of free golem purchases
-				// separately.
+				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
+		else
+			to_chat(usr, "<span class='warning'>Error: Please insert a valid ID!</span>")
+			flick(icon_deny, src)
 	updateUsrDialog()
 	return
 
@@ -142,10 +152,10 @@
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
-			if(!usr.drop_item())
+			if(!usr.transferItemToLoc(C, src))
 				return
-			C.loc = src
 			inserted_id = C
+			to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
 			interact(user)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
@@ -182,7 +192,7 @@
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(loc)
 
-	SSblackbox.add_details("mining_voucher_redeemed", selection)
+	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -201,15 +211,15 @@
 	. = ..()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
-		new /datum/data/mining_equipment("Extra Id",       			/obj/item/card/id/mining, 				                   	250),
-		new /datum/data/mining_equipment("Science Goggles",       	/obj/item/clothing/glasses/science, 				                   	250),
-		new /datum/data/mining_equipment("Monkey Cube",				/obj/item/reagent_containers/food/snacks/monkeycube,        		300),
-		new /datum/data/mining_equipment("Toolbelt",				/obj/item/storage/belt/utility,	    							350),
-		new /datum/data/mining_equipment("Sulphuric Acid",			/obj/item/reagent_containers/glass/beaker/sulphuric,        		500),
-		new /datum/data/mining_equipment("Grey Slime Extract",		/obj/item/slime_extract/grey,				       		           		1000),
-		new /datum/data/mining_equipment("Modification Kit",    	/obj/item/borg/upgrade/modkit/trigger_guard, 		                	1700),
-		new /datum/data/mining_equipment("The Liberator's Legacy",  /obj/item/storage/box/rndboards,      			      			2000),
-		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 500)
+		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
+		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
+		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
+		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
+		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
+		new /datum/data/mining_equipment("Sulphuric Acid",				/obj/item/reagent_containers/glass/beaker/sulphuric,        	500),
+		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),
+		new /datum/data/mining_equipment("Modification Kit",    		/obj/item/borg/upgrade/modkit/trigger_guard,					1700),
+		new /datum/data/mining_equipment("The Liberator's Legacy",  	/obj/item/storage/box/rndboards,								2000)
 		)
 
 /**********************Mining Equipment Vendor Items**************************/
@@ -267,8 +277,8 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/New()
-	..()
+/obj/item/storage/backpack/duffelbag/mining_conscript/Initialize()
+	. = ..()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)

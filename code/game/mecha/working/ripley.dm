@@ -26,7 +26,7 @@
 	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
-			for(var/obj/item/ore/ore in range(1, src))
+			for(var/obj/item/stack/ore/ore in range(1, src))
 				if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
 					ore.forceMove(ore_box)
 
@@ -34,7 +34,7 @@
 	for(var/i=1, i <= hides, i++)
 		new /obj/item/stack/sheet/animalhide/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
-		A.forceMove(loc)
+		A.forceMove(drop_location())
 		step_rand(A)
 	cargo.Cut()
 	return ..()
@@ -80,11 +80,10 @@
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
 
-/obj/mecha/working/ripley/deathripley/New()
-	..()
+/obj/mecha/working/ripley/deathripley/Initialize()
+	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
 	ME.attach(src)
-	return
 
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
@@ -94,7 +93,7 @@
 /obj/mecha/working/ripley/mining/Initialize()
 	. = ..()
 	if(cell)
-		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
+		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
 		if(prob(15)) //Possible diamond drill... Feeling lucky?
 			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
@@ -129,10 +128,10 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
-			src.occupant_message("<span class='notice'>You unload [O].</span>")
-			O.forceMove(loc)
-			src.cargo -= O
-			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			occupant_message("<span class='notice'>You unload [O].</span>")
+			O.forceMove(drop_location())
+			cargo -= O
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
 	return
 
 
@@ -141,7 +140,7 @@
 		var/obj/O = X
 		if(prob(30/severity))
 			cargo -= O
-			O.forceMove(loc)
+			O.forceMove(drop_location())
 	. = ..()
 
 /obj/mecha/working/ripley/get_stats_part()
@@ -149,7 +148,7 @@
 	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
 	if(cargo.len)
 		for(var/obj/O in cargo)
-			output += "<a href='?src=\ref[src];drop_from_cargo=\ref[O]'>Unload</a> : [O]<br>"
+			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
 	else
 		output += "Nothing"
 	output += "</div>"
@@ -173,7 +172,7 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
 		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
-		O.loc = loc
+		O.forceMove(drop_location())
 		cargo -= O
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.

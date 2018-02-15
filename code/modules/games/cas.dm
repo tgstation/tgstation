@@ -27,7 +27,8 @@
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
-/obj/item/toy/cards/deck/cas/New()
+/obj/item/toy/cards/deck/cas/Initialize()
+	. = ..()
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
@@ -52,7 +53,6 @@
 		P.card_icon = "cas_white"
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
-	..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
@@ -104,18 +104,20 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
+	..()
 	if (flipped)
 		to_chat(user, "<span class='notice'>The card is face down.</span>")
 	else if (blank)
 		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
 	else
 		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
+	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(!usr.canUseTopic(src,1))
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		name = "CAS card"
@@ -125,7 +127,7 @@
 	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
-	if(!user.canUseTopic(src,1))
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	Flip()
 

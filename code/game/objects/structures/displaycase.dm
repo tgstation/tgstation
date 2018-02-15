@@ -73,30 +73,6 @@
 		alarmed.burglaralert(src)
 		playsound(src, 'sound/effects/alert.ogg', 50, 1)
 
-/*
-
-*/
-
-/obj/structure/displaycase/proc/is_directional(atom/A)
-	try
-		getFlatIcon(A,defdir=4)
-	catch
-		return 0
-	return 1
-
-/obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
-	//Get flatIcon even if dir is mismatched for directionless icons
-	//SLOW
-	var/icon/I
-	if(is_directional(A))
-		I = getFlatIcon(A)
-	else
-		var/old_dir = A.dir
-		A.setDir(2)
-		I = getFlatIcon(A)
-		A.setDir(old_dir)
-	return I
-
 /obj/structure/displaycase/update_icon()
 	var/icon/I
 	if(open)
@@ -106,7 +82,7 @@
 	if(broken)
 		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
-		var/icon/S = get_flat_icon_directional(showpiece)
+		var/icon/S = getFlatIcon(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
 	src.icon = I
@@ -115,18 +91,18 @@
 /obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
-			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
+			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weldingtool/WT = W
-		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
+		if(obj_integrity < max_integrity)
+			if(!W.tool_start_check(user, amount=5))
+				return
+
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, WT.usesound, 40, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40, amount=5, volume=50))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -140,9 +116,9 @@
 				to_chat(user, "<span class='notice'>You remove the destroyed case</span>")
 				qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>")
-			if(do_after(user, 20*W.toolspeed, target = src))
-				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
+			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src].</span>")
+			if(W.use_tool(src, user, 20))
+				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
 		if(user.transferItemToLoc(W, src))
@@ -192,7 +168,7 @@
 	anchored = TRUE
 	density = FALSE
 	name = "display case chassis"
-	desc = "wooden base of display case"
+	desc = "The wooden base of a display case."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
 	var/obj/item/electronics/airlock/electronics
@@ -201,15 +177,15 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/electronics/airlock))
 		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
@@ -224,7 +200,7 @@
 			G.use(10)
 			var/obj/structure/displaycase/display = new(src.loc)
 			if(electronics)
-				electronics.loc = display
+				electronics.forceMove(display)
 				display.electronics = electronics
 				if(electronics.one_access)
 					display.req_one_access = electronics.accesses

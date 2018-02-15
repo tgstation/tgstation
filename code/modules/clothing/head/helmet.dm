@@ -10,19 +10,31 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	resistance_flags = 0
+	resistance_flags = NONE
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
-
-/obj/item/clothing/head/helmet/Initialize()
-	. = ..()
-
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
+
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
+	if(issignaler(I))
+		var/obj/item/device/assembly/signaler/S = I
+		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
+			return
+
+		if(S.secured)
+			qdel(S)
+			var/obj/item/bot_assembly/secbot/A = new
+			user.put_in_hands(A)
+			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
+			qdel(src)
+			return
+	return ..()
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
@@ -271,7 +283,7 @@
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
-				S.loc = get_turf(user)
+				S.forceMove(user.drop_location())
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()
@@ -281,7 +293,7 @@
 				qdel(THL)
 			return
 
-	..()
+	return ..()
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"

@@ -62,9 +62,8 @@
 		to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
 		return
 
-	if(!user.drop_item())
+	if(!user.transferItemToLoc(I, src))
 		return
-	I.loc = src
 	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 	update_icon()
 

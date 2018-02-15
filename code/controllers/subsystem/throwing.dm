@@ -3,7 +3,7 @@
 
 SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
-	priority = 25
+	priority = FIRE_PRIORITY_THROWING
 	wait = 1
 	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
@@ -57,11 +57,18 @@ SUBSYSTEM_DEF(throwing)
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
+	var/paused = FALSE
+	var/delayed_time = 0
+	var/last_move = 0
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
 		finalize()
+		return
+
+	if(paused)
+		delayed_time += world.time - last_move
 		return
 
 	if (dist_travelled && hitcheck()) //to catch sneaky things moving on our tile while we slept
@@ -70,8 +77,10 @@ SUBSYSTEM_DEF(throwing)
 
 	var/atom/step
 
+	last_move = world.time
+
 	//calculate how many tiles to move, making up for any missed ticks.
-	var/tilestomove = Ceiling(min(((((world.time+world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
+	var/tilestomove = CEILING(min(((((world.time+world.tick_lag) - start_time + delayed_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait), 1)
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc))
 			finalize()

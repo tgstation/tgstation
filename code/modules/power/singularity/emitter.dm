@@ -1,6 +1,6 @@
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 
@@ -33,7 +33,7 @@
 	// The following 3 vars are mostly for the prototype
 	var/manual = FALSE
 	var/charge = 0
-	var/atom/target
+	var/last_projectile_params
 
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
@@ -75,28 +75,15 @@
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
-/obj/machinery/power/emitter/verb/rotate()
-	set name = "Rotate"
-	set category = "Object"
-	set src in oview(1)
+/obj/machinery/power/emitter/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-	if (src.anchored)
-		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
-		return 0
-	src.setDir(turn(src.dir, 270))
-	return 1
-
-/obj/machinery/power/emitter/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(!in_range(src, user))
-		return
-	else
-		rotate()
+/obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
+	if (anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -137,7 +124,7 @@
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
+		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/M)
@@ -152,11 +139,6 @@
 
 
 /obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
-//	add_load(1000)
-/*	if((severity == 1)&&prob(1)&&prob(1))
-		if(src.active)
-			src.active = 0
-			src.use_power = IDLE_POWER_USE	*/
 	return 1
 
 
@@ -185,7 +167,7 @@
 			charge+=5
 		if(!check_delay() || manual == TRUE)
 			return FALSE
-		fire_beam(target)
+		fire_beam()
 
 /obj/machinery/power/emitter/proc/check_delay()
 	if((src.last_shot + src.fire_delay) <= world.time)
@@ -201,46 +183,18 @@
 		add_load(active_power_usage)
 		fire_beam()
 
-/obj/machinery/power/emitter/proc/fire_beam(atom/targeted_atom, mob/user)
-	var/turf/targets_from = get_turf(src)
-	if(targeted_atom && (targeted_atom == user || targeted_atom == targets_from || targeted_atom == src))
-		return
-	var/obj/item/projectile/P = new projectile_type(targets_from)
-	playsound(src.loc, projectile_sound, 50, 1)
+/obj/machinery/power/emitter/proc/fire_beam(mob/user)
+	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	playsound(get_turf(src), projectile_sound, 50, 1)
 	if(prob(35))
 		sparks.start()
-	switch(dir)
-		if(NORTH)
-			P.yo = 20
-			P.xo = 0
-		if(NORTHEAST)
-			P.yo = 20
-			P.xo = 20
-		if(EAST)
-			P.yo = 0
-			P.xo = 20
-		if(SOUTHEAST)
-			P.yo = -20
-			P.xo = 20
-		if(WEST)
-			P.yo = 0
-			P.xo = -20
-		if(SOUTHWEST)
-			P.yo = -20
-			P.xo = -20
-		if(NORTHWEST)
-			P.yo = 20
-			P.xo = -20
-		else // Any other
-			P.yo = -20
-			P.xo = 0
-	if(target)
-		P.yo = targeted_atom.y - targets_from.y
-		P.xo = targeted_atom.x - targets_from.x
-		P.current = targets_from
-		P.starting = targets_from
-		P.firer = src
-		P.original = targeted_atom
+	P.firer = user? user : src
+	if(last_projectile_params)
+		P.p_x = last_projectile_params[2]
+		P.p_y = last_projectile_params[3]
+		P.fire(last_projectile_params[1])
+	else
+		P.fire(dir2angle(dir))
 	if(!manual)
 		last_shot = world.time
 		if(shot_number < 3)
@@ -249,20 +203,20 @@
 		else
 			fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			shot_number = 0
-		if(!target)
-			P.setDir(src.dir)
-			P.starting = loc
-		else
-			if(QDELETED(target))
-				target = null
 	P.fire()
 	return P
 
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
-	if(state == EM_WELDED)
+	if(active)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
+		return FAILED_UNFASTEN
+
+	else if(state == EM_WELDED)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
+
 	return ..()
 
 /obj/machinery/power/emitter/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
@@ -273,46 +227,53 @@
 		else
 			state = EM_UNSECURED
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
-		if(active)
-			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
-			return
-		default_unfasten_wrench(user, W, 0)
-		return
+/obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 0)
+	return TRUE
 
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(active)
-			to_chat(user, "Turn \the [src] off first.")
-			return
-		switch(state)
-			if(EM_UNSECURED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-			if(EM_SECURED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_WELDED
-						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-						connect_to_network()
-			if(EM_WELDED)
-				if(WT.remove_fuel(0,user))
-					playsound(loc, WT.usesound, 50, 1)
-					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
-						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-						"<span class='italics'>You hear welding.</span>")
-					if(do_after(user,20*W.toolspeed, target = src) && WT.isOn())
-						state = EM_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-						disconnect_from_network()
-		return
+/obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
+	if(active)
+		to_chat(user, "Turn \the [src] off first.")
+		return TRUE
 
-	if(W.GetID())
-		if(emagged)
+	switch(state)
+		if(EM_UNSECURED)
+			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+		if(EM_SECURED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50))
+				state = EM_WELDED
+				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+				connect_to_network()
+		if(EM_WELDED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
+			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50))
+				state = EM_SECURED
+				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+				disconnect_from_network()
+
+	return TRUE
+
+/obj/machinery/power/emitter/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/I)
+	default_deconstruction_screwdriver(user, "emitter_open", "emitter", I)
+	return TRUE
+
+
+/obj/machinery/power/emitter/attackby(obj/item/I, mob/user, params)
+	if(I.GetID())
+		if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
@@ -325,31 +286,22 @@
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
-	if(is_wire_tool(W) && panel_open)
+	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
-		return
-
-	if(exchange_parts(user, W))
-		return
-
-	if(default_pry_open(W))
-		return
-
-	if(default_deconstruction_crowbar(W))
+	else if(exchange_parts(user, I))
 		return
 
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	locked = FALSE
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	if(user)
-		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype
@@ -374,7 +326,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	auto.Remove(buckled_mob)
 	. = ..()
 
@@ -449,7 +401,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON_1
 	var/delay = 0
 
-/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user)
+/obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	..()
 	var/obj/machinery/power/emitter/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
@@ -488,10 +440,11 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
+	E.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, clickparams)
+
 	if(E.charge >= 10 && world.time > delay)
 		E.charge -= 10
-		E.target = targeted_atom
-		E.fire_beam(targeted_atom, user)
+		E.fire_beam(user)
 		delay = world.time + 10
 	else if (E.charge < 10)
 		playsound(get_turf(user),'sound/machines/buzz-sigh.ogg', 50, 1)

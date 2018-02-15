@@ -179,6 +179,10 @@
 				underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
 		underlays = U
 
+		// Drop posters which were previously placed on this wall.
+		for(var/obj/structure/sign/poster/P in src)
+			P.roll_and_drop(src)
+
 
 /proc/cardinal_smooth(atom/A, adjacencies)
 	//NW CORNER
@@ -262,6 +266,13 @@
 	var/turf/target_turf = get_step(source, direction)
 	if(!target_turf)
 		return NULLTURF_BORDER
+
+	var/area/target_area = get_area(target_turf)
+	var/area/source_area = get_area(source)
+	if(source_area.canSmoothWithAreas && !is_type_in_typecache(target_area, source_area.canSmoothWithAreas))
+		return null
+	if(target_area.canSmoothWithAreas && !is_type_in_typecache(source_area, target_area.canSmoothWithAreas))
+		return null
 
 	if(source.canSmoothWith)
 		var/atom/A

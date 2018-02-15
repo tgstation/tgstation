@@ -12,7 +12,6 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL = 500)
-	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/latches = "single_latch"
@@ -101,7 +100,6 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
-	origin_tech = "combat=2;syndicate=1;engineering=2"
 	silent = 1
 	force = 15
 	throwforce = 18
@@ -151,6 +149,10 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
+
+/obj/item/storage/toolbox/brass/prefilled/servant
+	slot_flags = SLOT_BELT
+	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab

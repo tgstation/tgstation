@@ -3,5 +3,3 @@
 	..()
 	regenerate_icons()
 	show_laws(0)
-	if(mind)
-		SSticker.mode.remove_revolutionary(mind)

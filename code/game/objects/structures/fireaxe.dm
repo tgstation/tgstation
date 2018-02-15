@@ -25,13 +25,13 @@
 	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weldingtool/WT = I
-		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
+		if(obj_integrity < max_integrity)
+			if(!I.tool_start_check(user, amount=2))
+				return
+
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, WT.usesound, 40, 1)
-			if(do_after(user, 40*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -53,10 +53,9 @@
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
-			F.forceMove(src)
 			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return

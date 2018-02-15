@@ -27,8 +27,6 @@
 	healable = 0
 	gender = NEUTER
 
-	nutrition = 700
-
 	see_in_dark = 8
 
 	verb_say = "blorbles"
@@ -93,6 +91,13 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
+	nutrition = 700
+
+/mob/living/simple_animal/slime/Destroy()
+	for (var/A in actions)
+		var/datum/action/AC = A
+		AC.Remove(src)
+	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -146,7 +151,10 @@
 	if(health <= 0) // if damaged, the slime moves twice as slow
 		. *= 2
 
-	. += config.slime_delay
+	var/static/config_slime_delay
+	if(isnull(config_slime_delay))
+		config_slime_delay = CONFIG_GET(number/slime_delay)
+	. += config_slime_delay
 
 /mob/living/simple_animal/slime/ObjCollide(obj/O)
 	if(!client && powerlevel > 0)
@@ -234,7 +242,7 @@
 		if(M == src)
 			return
 		if(buckled)
-			Feedstop(silent=1)
+			Feedstop(silent = TRUE)
 			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
 			return
 		attacked += 5
@@ -392,7 +400,7 @@
 	if(Target)
 		Target = null
 	if(buckled)
-		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
+		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
 	SStun = world.time + rand(20,60)
 	spawn(0)

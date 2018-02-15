@@ -80,8 +80,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	if(c.can_use())
-		majorChunkChange(c, 0)
+	majorChunkChange(c, 0)
 
 // Add a camera to a chunk.
 
@@ -94,8 +93,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
 	if(c.can_use())
 		majorChunkChange(c, 1)
-	//else
-	//	majorChunkChange(c, 0)
 
 // Never access this proc directly!!!!
 // This will update the chunk and all the surrounding chunks.
@@ -114,9 +111,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/y1 = max(0, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-
-		//to_chat(world, "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]")
-
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				if(chunkGenerated(x, y, T.z))
@@ -152,13 +146,3 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))
-
-// Debug verb for VVing the chunk that the turf is in.
-/*
-/turf/verb/view_chunk()
-	set src in world
-
-	if(cameranet.chunkGenerated(x, y, z))
-		var/datum/camerachunk/chunk = cameranet.getCameraChunk(x, y, z)
-		usr.client.debug_variables(chunk)
-*/

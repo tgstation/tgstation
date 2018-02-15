@@ -11,12 +11,14 @@
  *		Candle Box
  *		Cigarette Box
  *		Cigar Case
+ *		Heart Shaped Box w/ Chocolates
  */
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
 	name = "donut box"
+	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -26,10 +28,9 @@
 	for(var/i = 1 to storage_slots)
 		new spawn_type(src)
 
-/obj/item/storage/fancy/update_icon(itemremoved = 0)
+/obj/item/storage/fancy/update_icon()
 	if(fancy_open)
-		var/total_contents = src.contents.len - itemremoved
-		icon_state = "[icon_type]box[total_contents]"
+		icon_state = "[icon_type]box[contents.len]"
 	else
 		icon_state = "[icon_type]box"
 
@@ -37,9 +38,9 @@
 	..()
 	if(fancy_open)
 		if(contents.len == 1)
-			to_chat(user, "There is one [src.icon_type] left.")
+			to_chat(user, "There is one [icon_type] left.")
 		else
-			to_chat(user, "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
+			to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	fancy_open = !fancy_open
@@ -84,6 +85,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
+	desc = "A carton for containing eggs."
 	storage_slots = 12
 	can_hold = list(/obj/item/reagent_containers/food/snacks/egg)
 	spawn_type = /obj/item/reagent_containers/food/snacks/egg
@@ -125,13 +127,21 @@
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.get_active_held_item())
+/obj/item/storage/fancy/cigarettes/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
+
+/obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	for(var/obj/item/lighter/lighter in src)
-		remove_from_storage(lighter, user.loc)
-		user.put_in_active_hand(lighter)
-		break
+	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	if(W && contents.len > 0)
+		remove_from_storage(W, user)
+		user.put_in_hands(W)
+		contents -= W
+		to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+	else
+		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/storage/fancy/cigarettes/update_icon()
 	if(fancy_open || !contents.len)
@@ -271,3 +281,19 @@
 	name = "\improper premium havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
+
+/*
+ * Heart Shaped Box w/ Chocolates
+ */
+
+/obj/item/storage/fancy/heart_box
+	name = "heart-shaped box"
+	desc = "A heart-shaped box for holding tiny chocolates."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "heartbox"
+	icon_type = "heart"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	storage_slots = 8
+	can_hold = list(/obj/item/reagent_containers/food/snacks/tinychocolate)
+	spawn_type = /obj/item/reagent_containers/food/snacks/tinychocolate

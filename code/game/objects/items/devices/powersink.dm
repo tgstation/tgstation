@@ -13,7 +13,6 @@
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
-	origin_tech = "powerstorage=5;syndicate=5"
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding
@@ -138,7 +137,7 @@
 	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
 			admins_warned = TRUE
-			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
+			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)

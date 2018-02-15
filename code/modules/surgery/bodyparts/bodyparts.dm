@@ -1,7 +1,7 @@
 
 /obj/item/bodypart
 	name = "limb"
-	desc = "why is it detached..."
+	desc = "Why is it detached..."
 	force = 3
 	throwforce = 3
 	icon = 'icons/mob/human_parts.dmi'
@@ -11,6 +11,8 @@
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
+	var/aux_zone // used for hands
+	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/brutestate = 0
@@ -108,8 +110,9 @@
 /obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
-	brute	= max(brute * config.damage_multiplier,0)
-	burn	= max(burn * config.damage_multiplier,0)
+	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
+	brute = max(brute * dmg_mlt, 0)
+	burn = max(burn * dmg_mlt, 0)
 
 
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
@@ -216,7 +219,7 @@
 		C = owner
 		no_update = 0
 
-	if(C.disabilities & HUSK)
+	if(C.has_trait(TRAIT_HUSK))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -296,6 +299,7 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/aux
 	. += limb
 
 	if(animal_origin)
@@ -330,6 +334,9 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+		if(aux_zone)
+			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += aux
 
 	else
 		limb.icon = icon
@@ -344,6 +351,8 @@
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
+			if(aux_zone)
+				aux.color = "#[draw_color]"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
@@ -406,6 +415,8 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+	aux_zone = "l_hand"
+	aux_layer = HANDS_PART_LAYER
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -440,6 +451,8 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+	aux_zone = "r_hand"
+	aux_layer = HANDS_PART_LAYER
 	held_index = 2
 	px_x = 6
 	px_y = 0
@@ -538,15 +551,3 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
-
-
-/////////////////////////////////////////////////////////////////////////
-
-/obj/item/severedtail
-	name = "tail"
-	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
-		pleased with themselves."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "severedtail"
-	color = "#161"
-	var/markings = "Smooth"

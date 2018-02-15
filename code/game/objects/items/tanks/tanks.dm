@@ -11,6 +11,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
+	materials = list(MAT_METAL = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 80, acid = 30)
 	var/datum/gas_mixture/air_contents = null
@@ -31,7 +32,7 @@
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
-		if(!H.getorganslot("breathing_tube"))
+		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
 				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return
@@ -71,7 +72,8 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user))
-		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
+		if (icon == src)
+			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
 	to_chat(user, "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>")
@@ -123,7 +125,7 @@
 			H.dropItemToGround(W)
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
-		H.status_flags |= DISFIGURED
+		H.add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)
@@ -177,7 +179,7 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "reset")
-				pressure = TANK_DEFAULT_RELEASE_PRESSURE
+				pressure = initial(distribute_pressure)
 				. = TRUE
 			else if(pressure == "min")
 				pressure = TANK_MIN_RELEASE_PRESSURE
@@ -193,7 +195,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				distribute_pressure = Clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
+				distribute_pressure = CLAMP(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
 	return air_contents.remove(amount)
@@ -232,11 +234,12 @@
 		return 0
 
 	var/pressure = air_contents.return_pressure()
+	var/temperature = air_contents.return_pressure()
+
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/device/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-		//to_chat(world, "\blue[x],[y] tank is exploding: [pressure] kPa")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
 		air_contents.react()
@@ -245,7 +248,6 @@
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
-		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc, /obj/item/device/transfer_valve))
@@ -253,8 +255,7 @@
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE)
-		//to_chat(world, "\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]")
+	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)
@@ -266,7 +267,6 @@
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
-		//to_chat(world, "\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]")
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

@@ -25,7 +25,6 @@
 	var/clean_on_move = FALSE
 
 	var/did_feedback = FALSE
-	var/feedback_key
 
 	var/hat_offset = -3
 
@@ -34,8 +33,8 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/robot_module/New()
-	..()
+/obj/item/robot_module/Initialize()
+	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
 		basic_modules += I
@@ -113,10 +112,6 @@
 		if(S && S.source)
 			S.materials = list()
 			S.is_cyborg = 1
-
-	if(istype(I, /obj/item/restraints/handcuffs/cable))
-		var/obj/item/restraints/handcuffs/cable/C = I
-		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
 
 	if(I.loc != src)
 		I.forceMove(src)
@@ -227,8 +222,7 @@
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
-	if(feedback_key && !did_feedback)
-		SSblackbox.inc(feedback_key, 1)
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.module)
 
 /obj/item/robot_module/standard
 	name = "Standard"
@@ -245,16 +239,15 @@
 		/obj/item/extinguisher,
 		/obj/item/pickaxe,
 		/obj/item/device/t_scanner/adv_mining_scanner,
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
-	feedback_key = "cyborg_standard"
 	hat_offset = -3
 
 /obj/item/robot_module/medical
@@ -282,10 +275,9 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
-	feedback_key = "cyborg_medical"
 	can_be_pushed = FALSE
 	hat_offset = 3
 
@@ -305,8 +297,10 @@
 		/obj/item/device/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter/cyborg,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/device/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
 		/obj/item/stack/sheet/rglass/cyborg,
@@ -319,7 +313,6 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
-	feedback_key = "cyborg_engineering"
 	magpulsing = TRUE
 	hat_offset = INFINITY // No hats
 
@@ -327,16 +320,15 @@
 	name = "Security"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
-	feedback_key = "cyborg_security"
 	can_be_pushed = FALSE
 	hat_offset = 3
 
@@ -370,10 +362,9 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
-	feedback_key = "cyborg_peacekeeper"
 	can_be_pushed = FALSE
 	hat_offset = -2
 
@@ -402,7 +393,6 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
-	feedback_key = "cyborg_janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
 
@@ -430,6 +420,37 @@
 	if(CL)
 		CL.reagents.add_reagent("lube", 2 * coeff)
 
+/obj/item/robot_module/clown
+	name = "Clown"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/device/instrument/bikehorn,
+		/obj/item/stamp/clown,
+		/obj/item/bikehorn,
+		/obj/item/bikehorn/airhorn,
+		/obj/item/paint/anycolor,
+		/obj/item/soap/nanotrasen,
+		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
+		/obj/item/razor,					//killbait material
+		/obj/item/lipstick/purple,
+		/obj/item/reagent_containers/spray/waterflower/cyborg,
+		/obj/item/borg/cyborghug/peacekeeper,
+		/obj/item/borg/lollipop/clown,
+		/obj/item/picket_sign/cyborg,
+		/obj/item/reagent_containers/borghypo/clown,
+		/obj/item/extinguisher/mini)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/clown/hacked,
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	moduleselect_icon = "service"
+	cyborg_base_icon = "clown"
+	hat_offset = -2
+
 /obj/item/robot_module/butler
 	name = "Service"
 	basic_modules = list(
@@ -454,7 +475,6 @@
 		/obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
 	special_light_key = "service"
-	feedback_key = "cyborg_service"
 	hat_offset = 0
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
@@ -503,11 +523,10 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
-	feedback_key = "cyborg_miner"
 	hat_offset = 0
 
 /obj/item/robot_module/syndicate
@@ -523,11 +542,21 @@
 
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	hat_offset = 3
+
+/obj/item/robot_module/syndicate/rebuild_modules()
+	..()
+	var/mob/living/silicon/robot/Syndi = loc
+	Syndi.faction  -= "silicon" //ai turrets
+
+/obj/item/robot_module/syndicate/remove_module(obj/item/I, delete_after)
+	..()
+	var/mob/living/silicon/robot/Syndi = loc
+	Syndi.faction += "silicon" //ai is your bff now!
 
 /obj/item/robot_module/syndicate_medical
 	name = "Syndicate Medical"
@@ -540,17 +569,20 @@
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,
+		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/gun/medbeam)
+		/obj/item/gun/medbeam,
+		/obj/item/organ_storage)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

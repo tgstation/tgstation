@@ -12,7 +12,7 @@
 
 /obj/item/holo/esword
 	name = "holographic energy sword"
-	desc = "May the force be with you. Sorta"
+	desc = "May the force be with you. Sorta."
 	icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -25,13 +25,13 @@
 	armour_penetration = 50
 	var/active = 0
 
-/obj/item/holo/esword/green/New()
-	..()
+/obj/item/holo/esword/green/Initialize()
+	. = ..()
 	item_color = "green"
 
 
-/obj/item/holo/esword/red/New()
-	..()
+/obj/item/holo/esword/red/Initialize()
+	. = ..()
 	item_color = "red"
 
 /obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -42,9 +42,9 @@
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
 
-/obj/item/holo/esword/New()
+/obj/item/holo/esword/Initialize()
+	. = ..()
 	item_color = pick("red","blue","green","purple")
-	..()
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
@@ -104,7 +104,7 @@
 
 /obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(get_dist(src,user)<2)
-		if(user.drop_item(src))
+		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
 /obj/structure/holohoop/attack_hand(mob/user)
@@ -113,7 +113,7 @@
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
-		L.loc = src.loc
+		L.forceMove(loc)
 		L.Knockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
@@ -154,7 +154,7 @@
 	power_channel = ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user as mob)
-	to_chat(user, "The station AI is not to interact with these devices")
+	to_chat(user, "The station AI is not to interact with these devices.")
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user as mob)
@@ -211,9 +211,7 @@
 /obj/machinery/conveyor/holodeck
 
 /obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(user.drop_item())
-		I.loc = src.loc
-	else
+	if(!user.transferItemToLoc(I, drop_location()))
 		return ..()
 
 /obj/item/paper/fluff/holodeck/trek_diploma
@@ -222,4 +220,4 @@
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping."
+	info = "Bruises sustained in the holodeck can be healed simply by sleeping."

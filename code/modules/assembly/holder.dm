@@ -23,7 +23,7 @@
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
-	SSblackbox.add_details("assembly_made","[initial(A.name)]-[initial(A2.name)]")
+	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))
@@ -68,11 +68,10 @@
 		a_right.on_found(finder)
 
 /obj/item/device/assembly_holder/Move()
-	..()
+	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
-	return
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
@@ -88,10 +87,10 @@
 			return 0
 		if(a_left)
 			a_left.holder = null
-			a_left.loc = T
+			a_left.forceMove(T)
 		if(a_right)
 			a_right.holder = null
-			a_right.loc = T
+			a_right.forceMove(T)
 		qdel(src)
 	else
 		..()

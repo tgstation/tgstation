@@ -12,7 +12,7 @@
 
 	volume = 1000
 	var/filled = 0.5
-	var/gas_type = ""
+	var/gas_type
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
@@ -41,10 +41,14 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
+		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
+		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
+		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
+		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
 
@@ -59,60 +63,78 @@
 	name = "n2 canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
-	gas_type = "n2"
+	gas_type = /datum/gas/nitrogen
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "o2 canister"
 	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
-	gas_type = "o2"
+	gas_type = /datum/gas/oxygen
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "co2 canister"
 	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
-	gas_type = "co2"
+	gas_type = /datum/gas/carbon_dioxide
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
-	gas_type = "plasma"
-
-/obj/machinery/portable_atmospherics/canister/agent_b
-	name = "agent b canister"
-	desc = "Oxygen Agent B. You're not quite sure what it does."
-	gas_type = "agent_b"
+	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
-	name = "BZ canister"
+	name = "\improper BZ canister"
 	desc = "BZ, a powerful hallucinogenic nerve agent."
 	icon_state = "purple"
-	gas_type = "bz"
+	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
-	gas_type = "n2o"
+	gas_type = /datum/gas/nitrous_oxide
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
 
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "freon canister"
-	desc = "Freon. Great for the atmosphere!"
+/obj/machinery/portable_atmospherics/canister/tritium
+	name = "tritium canister"
+	desc = "Tritium. Inhalation might cause irradiation."
+	icon_state = "green"
+	gas_type = /datum/gas/tritium
+
+/obj/machinery/portable_atmospherics/canister/nob
+	name = "hyper-noblium canister"
+	desc = "Hyper-Noblium. More noble than all other gases."
 	icon_state = "freon"
-	gas_type = "freon"
-	starter_temp = 120
+	gas_type = /datum/gas/hypernoblium
+
+/obj/machinery/portable_atmospherics/canister/nitryl
+	name = "nitryl canister"
+	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+	icon_state = "brown"
+	gas_type = /datum/gas/nitryl
+
+/obj/machinery/portable_atmospherics/canister/stimulum
+	name = "stimulum canister"
+	desc = "Stimulum. High energy gas, high energy people."
+	icon_state = "darkpurple"
+	gas_type = /datum/gas/stimulum
+
+/obj/machinery/portable_atmospherics/canister/pluoxium
+	name = "pluoxium canister"
+	desc = "Pluoxium. Like oxygen, but more bang for your buck."
+	icon_state = "darkblue"
+	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
 	desc = "Water Vapor. We get it, you vape."
 	icon_state = "water_vapor"
-	gas_type = "water_vapor"
+	gas_type = /datum/gas/water_vapor
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
@@ -148,7 +170,7 @@
 	name = "prototype canister"
 	desc = "A prototype canister for a prototype bike, what could go wrong?"
 	icon_state = "proto"
-	gas_type = "o2"
+	gas_type = /datum/gas/oxygen
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
@@ -181,9 +203,9 @@
 		if(starter_temp)
 			air_contents.temperature = starter_temp
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add_gases("o2","n2")
-	air_contents.gases["o2"][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases["n2"][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 #define HOLDING 1
 #define CONNECTED 2
@@ -195,7 +217,7 @@
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		icon_state = "[initial(icon_state)]-1"
+		icon_state = "[icon_state]-1"
 		return
 
 	var/last_update = update
@@ -256,24 +278,23 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(stat & BROKEN)
-			if(!WT.remove_fuel(0, user))
-				return
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(do_after(user, 30, target = src))
-				deconstruct(TRUE)
-		else
-			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+	if(stat & BROKEN)
+		if(!I.tool_start_check(user, amount=0))
+			return TRUE
+		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
+		if(I.use_tool(src, user, 30, volume=50))
+			deconstruct(TRUE)
 	else
-		return ..()
+		to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
+
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
-	if((flags_1 & BROKEN) || (flags_1 & NODECONSTRUCT_1))
+	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
 	canister_break()
 
@@ -302,13 +323,13 @@
 		valve_open = !valve_open
 		timing = FALSE
 	if(!valve_open)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
-	pump.AIR1 = air_contents
-	pump.AIR2 = holding ? holding.air_contents : T.return_air()
+	pump.airs[1] = air_contents
+	pump.airs[2] = holding ? holding.air_contents : T.return_air()
 	pump.target_pressure = release_pressure
 
 	pump.process_atmos() // Pump gas.
@@ -361,7 +382,7 @@
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
 					name = initial(replacement.name)
-					desc = initial(replacement.name)
+					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 		if("restricted")
 			restricted = !restricted
@@ -389,7 +410,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
+				release_pressure = CLAMP(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
@@ -402,7 +423,7 @@
 						var/gas = air_contents.gases[id]
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
-						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_PLASMA_VISIBLE)) //if moles_visible is undefined, default to plasma visibility
+						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
 
 					if(danger.len)
@@ -433,7 +454,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

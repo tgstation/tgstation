@@ -27,8 +27,8 @@
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
 
-	aSignal.frequency = rand(1200, 1599)
-	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+	aSignal.frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
+	if(ISMULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 	if(new_lifespan)
@@ -67,7 +67,7 @@
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
 	for(var/atom/movable/O in src)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 
 	qdel(src)
 
@@ -86,7 +86,6 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -132,7 +131,6 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -181,7 +179,6 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -221,12 +218,14 @@
 			var/y_distance = TO.y - FROM.y
 			var/x_distance = TO.x - FROM.x
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-				if(istype(A, /obj/item/device/radio/beacon)) continue // don't teleport beacons because that's just insanely stupid
-				if(A.anchored) continue
+				if(istype(A, /obj/item/device/radio/beacon))
+					continue // don't teleport beacons because that's just insanely stupid
+				if(A.anchored)
+					continue
 
 				var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-					A.loc = newloc
+					A.forceMove(newloc)
 
 				spawn()
 					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
@@ -253,7 +252,6 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -289,7 +287,6 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

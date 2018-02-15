@@ -9,6 +9,9 @@
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
+/proc/moth_name()
+	return "[pick(GLOB.moth_names)]"
+
 /proc/church_name()
 	var/static/church_name
 	if (church_name)
@@ -57,8 +60,9 @@ GLOBAL_VAR(command_name)
 /proc/station_name()
 	if(!GLOB.station_name)
 		var/newname
-		if(config && config.station_name)
-			newname = config.station_name
+		var/config_station_name = CONFIG_GET(string/stationname)
+		if(config_station_name)
+			newname = config_station_name
 		else
 			newname = new_station_name()
 
@@ -69,8 +73,9 @@ GLOBAL_VAR(command_name)
 /proc/set_station_name(newname)
 	GLOB.station_name = newname
 
-	if(config && config.server_name)
-		world.name = "[config.server_name][config.server_name==GLOB.station_name ? "" : ": [GLOB.station_name]"]"
+	var/config_server_name = CONFIG_GET(string/servername)
+	if(config_server_name)
+		world.name = "[config_server_name][config_server_name == GLOB.station_name ? "" : ": [GLOB.station_name]"]"
 	else
 		world.name = GLOB.station_name
 
@@ -119,10 +124,6 @@ GLOBAL_VAR(command_name)
 	return new_station_name
 
 /proc/syndicate_name()
-	var/static/syndicate_name
-	if (syndicate_name)
-		return syndicate_name
-
 	var/name = ""
 
 	// Prefix
@@ -145,7 +146,6 @@ GLOBAL_VAR(command_name)
 		name += pick("-", "*", "")
 		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
-	syndicate_name = name
 	return name
 
 

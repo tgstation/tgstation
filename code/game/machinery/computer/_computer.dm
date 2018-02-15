@@ -22,7 +22,7 @@
 	if(!QDELETED(C))
 		qdel(circuit)
 		circuit = C
-		C.loc = null
+		C.moveToNullspace()
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
@@ -69,14 +69,13 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver) && circuit && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, I.usesound, 50, 1)
-		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
+/obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
+	if(circuit && !(flags_1&NODECONSTRUCT_1))
+		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
+		if(I.use_tool(src, user, 20, volume=50))
 			deconstruct(TRUE, user)
-	else
-		return ..()
+	return TRUE
+
 
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -111,15 +110,16 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			A.dir = dir
 			A.circuit = circuit
 			A.anchored = TRUE
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-				new /obj/item/shard(src.loc)
-				new /obj/item/shard(src.loc)
+					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				new /obj/item/shard(drop_location())
+				new /obj/item/shard(drop_location())
 				A.state = 3
 				A.icon_state = "3"
 			else

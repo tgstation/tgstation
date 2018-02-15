@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -36,22 +36,22 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/computer/card,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aj" = (
 /obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "al" = (
 /obj/structure/table,
@@ -90,25 +90,29 @@
 /turf/open/floor/plasteel/darkpurple,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "at" = (
 /obj/structure/chair/office/light{
 	icon_state = "officechair_white";
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "au" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "av" = (
 /turf/open/floor/plasteel/darkyellow,
@@ -128,7 +132,9 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/computer/med_data,
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkblue,
 /area/shuttle/escape)
 "aA" = (
@@ -141,17 +147,17 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aC" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aE" = (
 /turf/open/floor/plasteel/darkyellow/side{
@@ -159,11 +165,15 @@
 	},
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aG" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkblue,
 /area/shuttle/escape)
 "aH" = (
@@ -189,7 +199,9 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aM" = (
@@ -206,13 +218,13 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aP" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -232,11 +244,11 @@
 /turf/open/floor/plasteel/darkred,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair,
@@ -387,7 +399,7 @@
 	},
 /area/shuttle/escape)
 "bn" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -411,7 +423,7 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bq" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -428,7 +440,6 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /obj/machinery/light{
@@ -443,7 +454,6 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -451,7 +461,6 @@
 "bu" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /obj/structure/closet,
@@ -542,6 +551,7 @@
 	name = "Cere emergency shuttle";
 	port_direction = 4;
 	preferred_direction = 2;
+	timid = 1;
 	width = 42
 	},
 /turf/open/floor/plating,
@@ -685,7 +695,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -707,7 +717,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "ce" = (
-/obj/machinery/door/airlock/glass_medical{
+/obj/machinery/door/airlock/medical/glass{
 	name = "Emergency Shuttle Medbay"
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -780,7 +790,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -791,7 +800,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,
@@ -869,8 +877,8 @@
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/AMinus,
 /obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
@@ -917,7 +925,9 @@
 	},
 /area/shuttle/escape)
 "cH" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cI" = (
@@ -974,7 +984,7 @@
 	},
 /area/shuttle/escape)
 "cP" = (
-/obj/machinery/door/airlock/glass_engineering{
+/obj/machinery/door/airlock/engineering/glass{
 	name = "Engine Room";
 	req_one_access_txt = "10;24"
 	},
@@ -1097,7 +1107,7 @@
 	},
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -1119,7 +1129,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/enginesafety{
+/obj/structure/sign/warning/enginesafety{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -1192,6 +1202,12 @@
 "dz" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dA" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1998,7 +2014,7 @@ ab
 ab
 bb
 bj
-bo
+dA
 bu
 bD
 bD

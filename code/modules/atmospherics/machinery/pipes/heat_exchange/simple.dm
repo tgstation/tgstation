@@ -2,12 +2,15 @@
 	icon_state = "intact"
 
 	name = "pipe"
-	desc = "A one meter section of heat-exchanging pipe"
+	desc = "A one meter section of heat-exchanging pipe."
 
 	dir = SOUTH
 	initialize_directions_he = SOUTH|NORTH
 
 	device_type = BINARY
+
+	construction_type = /obj/item/pipe/binary/bendable
+	pipe_state = "he"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
 	if(dir in GLOB.diagonals)

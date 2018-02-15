@@ -15,17 +15,15 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	origin_tech = "combat=1"
-	needs_permit = 1
-	unique_rename = 0
+	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
-	var/suppressed = 0					//whether or not a message is displayed when fired
-	var/can_suppress = 0
-	var/can_unsuppress = 1
+	var/suppressed = null					//whether or not a message is displayed when fired
+	var/can_suppress = FALSE
+	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
-	var/clumsy_check = 1
+	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
@@ -78,38 +76,35 @@
 	..()
 	var/obj/item/gun/G = locate(/obj/item/gun) in contents
 	if(G)
-		G.loc = loc
-		qdel(G.pin)
-		G.pin = null
+		G.forceMove(loc)
+		QDEL_NULL(G.pin)
 		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
 	..()
 	if(pin)
-		to_chat(user, "It has [pin] installed.")
+		to_chat(user, "It has \a [pin] installed.")
 	else
 		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
-	if(zoomable && user.get_active_held_item() != src)
-		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands
+	if(zoomed && user.get_active_held_item() != src)
+		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
-	return 0
-
+	return FALSE
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/gun/proc/can_shoot()
-	return 1
-
+	return TRUE
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(src, "gun_dry_fire", 30, 1)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -157,14 +152,14 @@
 			return
 
 
-	//Exclude lasertag guns from the CLUMSY check.
+	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.disabilities & CLUMSY && prob(40))
+			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
-				user.drop_item()
+				process_fire(user, user, FALSE, params, shot_leg)
+				user.dropItemToGround(src, TRUE)
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
@@ -182,9 +177,9 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, 1, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target,user,1,params, null, bonus_spread)
+	process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -195,19 +190,52 @@
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user) || pin.emagged)
-			return 1
+		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
+			return TRUE
 		else
 			pin.auth_fail(user)
-			return 0
+			return FALSE
 	else
 		to_chat(user, "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>")
-	return 0
+	return FALSE
 
 /obj/item/gun/proc/recharge_newshot()
 	return
 
-/obj/item/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+/obj/item/gun/proc/process_burst(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+	if(!user || !firing_burst)
+		firing_burst = FALSE
+		return FALSE
+	if(!issilicon(user))
+		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
+			firing_burst = FALSE
+			return FALSE
+	if(chambered && chambered.BB)
+		if(randomspread)
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+		else //Smart spread
+			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
+
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
+			shoot_with_empty_chamber(user)
+			firing_burst = FALSE
+			return FALSE
+		else
+			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+				shoot_live_shot(user, 1, target, message)
+			else
+				shoot_live_shot(user, 0, target, message)
+			if (iteration >= burst_size)
+				firing_burst = FALSE
+	else
+		shoot_with_empty_chamber(user)
+		firing_burst = FALSE
+		return FALSE
+	process_chamber()
+	update_icon()
+	return TRUE
+
+/obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -221,34 +249,9 @@
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
-		firing_burst = 1
+		firing_burst = TRUE
 		for(var/i = 1 to burst_size)
-			if(!user)
-				break
-			if(!issilicon(user))
-				if( i>1 && !(user.is_holding(src))) //for burst firing
-					break
-			if(chambered && chambered.BB)
-				if(randomspread)
-					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-				else //Smart spread
-					sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
-
-				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
-					shoot_with_empty_chamber(user)
-					break
-				else
-					if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-						shoot_live_shot(user, 1, target, message)
-					else
-						shoot_live_shot(user, 0, target, message)
-			else
-				shoot_with_empty_chamber(user)
-				break
-			process_chamber()
-			update_icon()
-			sleep(fire_delay)
-		firing_burst = 0
+			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
 		if(chambered)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -265,14 +268,16 @@
 			return
 		process_chamber()
 		update_icon()
-		semicd = 1
-		spawn(fire_delay)
-			semicd = 0
+		semicd = TRUE
+		addtimer(CALLBACK(src, .proc/reset_semicd), fire_delay)
 
 	if(user)
 		user.update_inv_hands()
-	SSblackbox.add_details("gun_fired","[src.type]")
-	return 1
+	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+	return TRUE
+
+/obj/item/gun/proc/reset_semicd()
+	semicd = FALSE
 
 /obj/item/gun/update_icon()
 	..()
@@ -392,7 +397,8 @@
 
 /obj/item/gun/dropped(mob/user)
 	..()
-	zoom(user,FALSE)
+	if(zoomed)
+		zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
 	if(alight)
@@ -412,7 +418,7 @@
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
-	semicd = 1
+	semicd = TRUE
 
 	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
@@ -420,17 +426,17 @@
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = 0
+		semicd = FALSE
 		return
 
-	semicd = 0
+	semicd = FALSE
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, 1, params)
+	process_fire(target, user, TRUE, params)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
@@ -490,7 +496,7 @@
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.change_view(world.view)
+		user.client.change_view(CONFIG_GET(string/default_view))
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed

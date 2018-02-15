@@ -12,6 +12,7 @@
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
+	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -54,7 +55,7 @@
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/vehicle/atv,
+	contains = list(/obj/vehicle/ridden/atv,
 					/obj/item/key,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
@@ -824,8 +825,8 @@
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
 	cost = 3500
-	contains = list(/obj/item/reagent_containers/blood/empty,
-					/obj/item/reagent_containers/blood/empty,
+	contains = list(/obj/item/reagent_containers/blood,
+					/obj/item/reagent_containers/blood,
 					/obj/item/reagent_containers/blood/APlus,
 					/obj/item/reagent_containers/blood/AMinus,
 					/obj/item/reagent_containers/blood/BPlus,
@@ -863,6 +864,14 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
+
+/datum/supply_pack/science/bz
+	name = "BZ canister"
+	cost = 4000
+	access = ACCESS_TOX_STORAGE
+	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
+	crate_name = "BZ canister crate"
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -937,32 +946,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/bz_canister
-	name = "BZ Canister"
-	cost = 2000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
-	crate_name = "bz canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(ACCESS_RD, ACCESS_ATMOSPHERICS)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
-/datum/supply_pack/science/research
-	name = "Machine Prototype Crate"
-	cost = 8000
-	access = ACCESS_RESEARCH
-	contains = list(/obj/item/device/machineprototype)
-	crate_name = "machine prototype crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
 /datum/supply_pack/science/tablets
 	name = "Tablet Crate"
 	cost = 5000
@@ -1005,8 +988,32 @@
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable)
+					/obj/item/pizzabox/vegetable,
+					/obj/item/pizzabox/pineapple)
 	crate_name = "pizza crate"
+	var/static/anomalous_box_provided = FALSE
+
+/datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
+	. = ..()
+	if(!anomalous_box_provided)
+		for(var/obj/item/pizzabox/P in C)
+			if(prob(1)) //1% chance for each box, so 4% total chance per order
+				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
+				fourfiveeight.boxtag = P.boxtag
+				qdel(P)
+				anomalous_box_provided = TRUE
+				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				if(prob(50))
+					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+				else
+					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
+				break
+
+/datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
+	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
+	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
+	considered <b>\[REDACTED\]</b> and returned at your leisure. Note that objects the anomaly produces are specifically attuned exactly to the individual opening the anomaly; regardless \
+	of species, the individual will find the object edible and it will taste great according to their personal definitions, which vary significantly based on person and species.")
 
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
@@ -1059,6 +1066,14 @@
 	cost = 2500
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
+
+/datum/supply_pack/organic/critter/snake
+    name = "Snake Crate"
+    cost = 3000
+    contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake)
+    crate_name = "snake crate"
 
 /datum/supply_pack/organic/critter/chick
 	name = "Chicken Crate"
@@ -1220,7 +1235,8 @@
 					/obj/item/vending_refill/boozeomat,
 					/obj/item/vending_refill/coffee,
 					/obj/item/vending_refill/coffee,
-					/obj/item/vending_refill/coffee)
+					/obj/item/vending_refill/coffee,
+					/obj/item/book/action_granting/drink_fling)
 	crate_name = "bartending supply crate"
 
 /datum/supply_pack/organic/vending/snack
@@ -1246,6 +1262,14 @@
 					/obj/item/vending_refill/cigarette,
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
+
+/datum/supply_pack/organic/vending/games
+	name = "Games Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games,
+					/obj/item/vending_refill/games)
+	crate_name = "games supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Materials ///////////////////////////////////////
@@ -1613,7 +1637,7 @@
 					/obj/item/device/instrument/trombone,
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
-					/obj/structure/piano)
+					/obj/structure/piano/unanchored)
 	name = "Big band instrument collection"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"

@@ -4,6 +4,11 @@
 // #define EAST 4
 // #define WEST 8
 
+#define TEXT_NORTH			"[NORTH]"
+#define TEXT_SOUTH			"[SOUTH]"
+#define TEXT_EAST			"[EAST]"
+#define TEXT_WEST			"[WEST]"
+
 //These get to go at the top, because they're special
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
@@ -53,8 +58,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
@@ -83,8 +89,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
+#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
 #define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
+#define UNDER_SHOES_LAYER			SHOES_LAYER+1
 #define UNDER_EARS_LAYER			EARS_LAYER+1
 #define UNDER_SUIT_LAYER			SUIT_LAYER+1
 #define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
@@ -109,8 +116,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
+#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
 #define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
+#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
 #define ABOVE_EARS_LAYER			EARS_LAYER-1
 #define ABOVE_SUIT_LAYER			SUIT_LAYER-1
 #define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1
@@ -199,6 +207,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
+#define BLOOD_LOSS_IN_SPREAD		20
 #define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
@@ -282,6 +291,12 @@ GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 
 
 GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
+
+//pda fonts
+#define MONO		"Monospaced"
+#define VT			"VT323"
+#define ORBITRON	"Orbitron"
+#define SHARE		"Share Tech Mono"
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
@@ -453,4 +468,51 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Dummy mob reserve slots
 #define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
+
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+
+#define SYRINGE_DRAW 0
+#define SYRINGE_INJECT 1
+
+//gold slime core spawning
+#define NO_SPAWN 0
+#define HOSTILE_SPAWN 1
+#define FRIENDLY_SPAWN 2
+
+//slime core activation type
+#define SLIME_ACTIVATE_MINOR 1
+#define SLIME_ACTIVATE_MAJOR 2
+
+#define LUMINESCENT_DEFAULT_GLOW 2
+
+#define RIDING_OFFSET_ALL "ALL"
+
+//stack recipe placement check types
+#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
+
+//text files
+#define BRAIN_DAMAGE_FILE "traumas.json"
+
+//Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+#define SUMMON_GUNS "guns"
+#define SUMMON_MAGIC "magic"
+
+//Run the world with this parameter to enable a single run though of the game setup and tear down process with unit tests in between
+#define TEST_RUN_PARAMETER "test-run"
+//Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+//Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
+#define NO_INIT_PARAMETER "no-init"
+
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")

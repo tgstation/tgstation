@@ -10,7 +10,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()
@@ -18,7 +18,7 @@
 	if (machine)
 		machine.CONSOLE = src
 	else
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 
@@ -69,24 +69,24 @@
 	var/on = FALSE
 	var/selected_material = MAT_METAL
 	var/selected_alloy = null
-	var/datum/research/files
+	var/datum/techweb/stored_research
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), INFINITY)
-	files = new /datum/research/smelter(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
-	QDEL_NULL(files)
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/ore) && AM.loc == get_step(src, input_dir))
+	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
@@ -106,28 +106,28 @@
 		if (selected_material == mat_id)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=\ref[CONSOLE];material=[mat_id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];material=[mat_id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"
 	dat += "<b>Smelt Alloys</b><br>"
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		dat += "<span class=\"res_name\">[D.name] "
 		if (selected_alloy == D.id)
 			dat += " <i>Smelting</i>"
 		else
-			dat += " <A href='?src=\ref[CONSOLE];alloy=[D.id]'><b>Not Smelting</b></A> "
+			dat += " <A href='?src=[REF(CONSOLE)];alloy=[D.id]'><b>Not Smelting</b></A> "
 		dat += "<br>"
 
 	dat += "<br><br>"
 	//On or off
 	dat += "Machine is currently "
 	if (on)
-		dat += "<A href='?src=\ref[CONSOLE];set_on=off'>On</A> "
+		dat += "<A href='?src=[REF(CONSOLE)];set_on=off'>On</A> "
 	else
-		dat += "<A href='?src=\ref[CONSOLE];set_on=on'>Off</A> "
+		dat += "<A href='?src=[REF(CONSOLE)];set_on=on'>Off</A> "
 
 	return dat
 
@@ -143,27 +143,6 @@
 		if(CONSOLE)
 			CONSOLE.updateUsrDialog()
 
-
-			//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
-			//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
-			//Even in the dark year of 2016, where /tg/ is dead, Urist still hasn't finished this -Bawhoppennn
-			/*if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
-				if (ore_uranium >= 2 && ore_diamond >= 1)
-					ore_uranium -= 2
-					ore_diamond -= 1
-					generate_mineral(/obj/item/stack/sheet/mineral/adamantine)
-				else
-					on = FALSE
-				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
-				if (ore_silver >= 1 && ore_plasma >= 3)
-					ore_silver -= 1
-					ore_plasma -= 3
-					generate_mineral(/obj/item/stack/sheet/mineral/mythril)
-				else
-					on = FALSE
-				continue*/
-
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/datum/material/mat = materials.materials[selected_material]
@@ -177,7 +156,7 @@
 
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy()
-	var/datum/design/alloy = files.FindDesignByID(selected_alloy) //check if it's a valid design
+	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
 	if(!alloy)
 		on = FALSE
 		return
@@ -195,7 +174,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = SMELT_AMOUNT
 
@@ -206,7 +185,7 @@
 		var/datum/material/smelter_mat  = materials.materials[mat_id]
 
 		if(!M || !smelter_mat)
-			return 0
+			return FALSE
 
 		build_amount = min(build_amount, round(smelter_mat.amount / M))
 

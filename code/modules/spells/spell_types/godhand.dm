@@ -49,8 +49,14 @@
 /obj/item/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
+	for(var/mob/living/L in view(src, 7))
+		if(L != user)
+			L.flash_act(affect_silicon = FALSE)
 	M.gib()
 	..()
 
@@ -67,6 +73,9 @@
 		return
 	if(user.lying || user.handcuffed)
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
 		return
 	var/mob/living/M = target
 	M.Stun(40)

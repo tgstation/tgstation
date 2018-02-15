@@ -1,36 +1,8 @@
-
-//Visibility Flags
-#define HIDDEN_SCANNER	1
-#define HIDDEN_PANDEMIC	2
-
-//Disease Flags
-#define CURABLE		1
-#define CAN_CARRY	2
-#define CAN_RESIST	4
-
-//Spread Flags
-#define SPECIAL 1
-#define NON_CONTAGIOUS 2
-#define BLOOD 4
-#define CONTACT_FEET 8
-#define CONTACT_HANDS 16
-#define CONTACT_GENERAL 32
-#define AIRBORNE 64
-
-
-//Severity Defines
-#define NONTHREAT	"No threat"
-#define MINOR		"Minor"
-#define MEDIUM		"Medium"
-#define HARMFUL		"Harmful"
-#define DANGEROUS 	"Dangerous!"
-#define BIOHAZARD	"BIOHAZARD THREAT!"
-
 /datum/disease
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = AIRBORNE
+	var/spread_flags = VIRUS_SPREAD_AIRBORNE | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
 
 	//Fluff
 	var/form = "Virus"
@@ -54,10 +26,12 @@
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
-	var/severity =	NONTHREAT
+	var/severity = VIRUS_SEVERITY_POSITIVE
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
+	var/list/infectable_hosts = list(SPECIES_ORGANIC) //if the disease can spread on organics, synthetics, or undead
+	var/process_dead = FALSE //if this ticks while the host is dead
 
 /datum/disease/Destroy()
 	affected_mob = null
@@ -86,33 +60,30 @@
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
-		return 0
+		return FALSE
 
 	. = cures.len
 	for(var/C_id in cures)
 		if(!affected_mob.reagents.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
-		return 0
+		return FALSE
 
-
+//Airborne spreading
 /datum/disease/proc/spread(force_spread = 0)
 	if(!affected_mob)
 		return
 
-	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
+	if(!(spread_flags & VIRUS_SPREAD_AIRBORNE) && !force_spread)
 		return
 
 	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
-	var/spread_range = 1
+	var/spread_range = 2
 
 	if(force_spread)
 		spread_range = force_spread
-
-	if(spread_flags & AIRBORNE)
-		spread_range++
 
 	var/turf/T = affected_mob.loc
 	if(istype(T))
@@ -121,7 +92,7 @@
 			if(V)
 				while(TRUE)
 					if(V == T)
-						C.ContractDisease(src)
+						C.AirborneContractDisease(src)
 						break
 					var/turf/Temp = get_step_towards(V, T)
 					if(!CANATMOSPASS(V, Temp))
@@ -129,18 +100,19 @@
 					V = Temp
 
 
-/datum/disease/proc/cure()
+/datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(disease_flags & CAN_RESIST)
-			if(!(type in affected_mob.resistances))
-				affected_mob.resistances += type
+			var/id = GetDiseaseID()
+			if(add_resistance && !(id in affected_mob.resistances))
+				affected_mob.resistances += id
 		remove_virus()
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/disease/proc/Copy()
@@ -148,15 +120,12 @@
 	D.strain_data = strain_data.Copy()
 	return D
 
+/datum/disease/proc/after_add()
+	return
+
 
 /datum/disease/proc/GetDiseaseID()
-	return type
-
-
-/datum/disease/proc/IsSpreadByTouch()
-	if(spread_flags & CONTACT_FEET || spread_flags & CONTACT_HANDS || spread_flags & CONTACT_GENERAL)
-		return 1
-	return 0
+	return "[type]"
 
 //don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()

@@ -7,9 +7,12 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2"
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+
+/obj/item/device/paicard/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!</span>")
+	return OXYLOSS
 
 /obj/item/device/paicard/Initialize()
 	SSpai.pai_card_list += src
@@ -29,30 +32,30 @@
 	var/dat = "<TT><B>Personal AI Device</B><BR>"
 	if(pai)
 		if(!pai.master_dna || !pai.master)
-			dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"
+			dat += "<a href='byond://?src=[REF(src)];setdna=1'>Imprint Master DNA</a><br>"
 		dat += "Installed Personality: [pai.name]<br>"
 		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
 		for(var/slaws in pai.laws.supplied)
 			dat += "Additional directives: <br>[slaws]<br>"
-		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
+		dat += "<a href='byond://?src=[REF(src)];setlaws=1'>Configure Directives</a><br>"
 		dat += "<br>"
 		dat += "<h3>Device Settings</h3><br>"
 		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=[REF(src)];wires=[WIRE_TX]'>[(pai.radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=[REF(src)];wires=[WIRE_RX]'>[(pai.radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
-				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
-		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
+				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		dat += "No personality installed.<br>"
 		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
-		dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];request=1'>\[View available personalities\]</a><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -128,16 +131,26 @@
 	if(pai)
 		src.cut_overlays()
 		switch(emotion)
-			if(1) src.add_overlay("pai-happy")
-			if(2) src.add_overlay("pai-cat")
-			if(3) src.add_overlay("pai-extremely-happy")
-			if(4) src.add_overlay("pai-face")
-			if(5) src.add_overlay("pai-laugh")
-			if(6) src.add_overlay("pai-off")
-			if(7) src.add_overlay("pai-sad")
-			if(8) src.add_overlay("pai-angry")
-			if(9) src.add_overlay("pai-what")
-			if(10) src.add_overlay("pai-null")
+			if(1)
+				src.add_overlay("pai-happy")
+			if(2)
+				src.add_overlay("pai-cat")
+			if(3)
+				src.add_overlay("pai-extremely-happy")
+			if(4)
+				src.add_overlay("pai-face")
+			if(5)
+				src.add_overlay("pai-laugh")
+			if(6)
+				src.add_overlay("pai-off")
+			if(7)
+				src.add_overlay("pai-sad")
+			if(8)
+				src.add_overlay("pai-angry")
+			if(9)
+				src.add_overlay("pai-what")
+			if(10)
+				src.add_overlay("pai-null")
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

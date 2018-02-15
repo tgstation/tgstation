@@ -9,16 +9,13 @@
 	power = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "ac" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -30,12 +27,9 @@
 	power = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless,
@@ -47,13 +41,10 @@
 	power = 1
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -64,7 +55,6 @@
 	power = 1
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating/airless,
@@ -86,8 +76,6 @@
 "ak" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -192,8 +180,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aD" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/highsecurity{
@@ -211,30 +197,21 @@
 	power = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "aF" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
@@ -242,8 +219,6 @@
 "aG" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/gun/energy/floragun,
@@ -253,18 +228,17 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aH" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/space/has_grav/abandonedzoo)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8;
+	pixel_y = 1
+	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
@@ -278,17 +252,12 @@
 	power = 1
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -298,7 +267,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aL" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -306,8 +275,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aM" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
@@ -338,7 +305,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -358,8 +325,7 @@
 	pixel_x = -24
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/structure/rack,
 /obj/item/melee/baton/cattleprod,
@@ -370,13 +336,9 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/rack,
@@ -463,8 +425,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bc" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
@@ -472,8 +432,6 @@
 "bd" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
@@ -491,8 +449,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -542,7 +498,9 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bl" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -568,19 +526,13 @@
 	power = 1
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
@@ -594,7 +546,7 @@
 	},
 /area/ruin/space/has_grav/abandonedzoo)
 "bq" = (
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil/cut/red,
 /obj/item/stack/tile/plasteel{
 	pixel_x = 3;
 	pixel_y = -4
@@ -606,8 +558,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
@@ -616,17 +566,12 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bs" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/shieldwallgen,
@@ -634,7 +579,6 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bt" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/shieldwallgen,
@@ -660,16 +604,14 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "by" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 6
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/abandonedzoo)
 "bz" = (
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 9
 	},
 /obj/machinery/light{
 	dir = 8
@@ -680,7 +622,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bA" = (
 /obj/structure/table/reinforced,
-/obj/machinery/juicer,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -729,7 +671,7 @@
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "bL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -756,7 +698,7 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bQ" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -764,8 +706,6 @@
 	power = 1
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable,
@@ -777,11 +717,9 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/space/nearstation)
 "bS" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable,
@@ -810,9 +748,11 @@
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
+"KN" = (
+/turf/template_noop,
+/area/space/nearstation)
 
 (1,1,1) = {"
-aa
 ab
 ag
 ag
@@ -834,7 +774,6 @@ ab
 aa
 "}
 (2,1,1) = {"
-aa
 ac
 ah
 ai
@@ -856,7 +795,6 @@ ac
 aa
 "}
 (3,1,1) = {"
-aa
 ac
 ah
 ap
@@ -878,7 +816,6 @@ ac
 aa
 "}
 (4,1,1) = {"
-aa
 ac
 ai
 ah
@@ -900,7 +837,6 @@ ac
 aa
 "}
 (5,1,1) = {"
-aa
 ac
 aj
 ai
@@ -922,7 +858,6 @@ ac
 aa
 "}
 (6,1,1) = {"
-aa
 ad
 ak
 ak
@@ -947,7 +882,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -966,7 +900,6 @@ bR
 aa
 "}
 (8,1,1) = {"
-aa
 aa
 aa
 aa
@@ -991,7 +924,6 @@ aa
 aa
 aa
 aa
-aa
 ag
 ay
 aH
@@ -1010,7 +942,6 @@ aa
 aa
 "}
 (10,1,1) = {"
-aa
 aa
 aa
 aa
@@ -1035,7 +966,6 @@ aa
 aa
 aa
 aa
-aa
 ag
 az
 aI
@@ -1057,7 +987,6 @@ aa
 aa
 aa
 aa
-aa
 at
 at
 aF
@@ -1076,7 +1005,6 @@ aa
 aa
 "}
 (13,1,1) = {"
-aa
 ae
 ak
 ak
@@ -1098,7 +1026,6 @@ bS
 aa
 "}
 (14,1,1) = {"
-aa
 ac
 al
 an
@@ -1120,7 +1047,6 @@ ac
 aa
 "}
 (15,1,1) = {"
-aa
 ac
 am
 am
@@ -1142,7 +1068,6 @@ bT
 aa
 "}
 (16,1,1) = {"
-aa
 ac
 an
 aq
@@ -1164,7 +1089,6 @@ bU
 bW
 "}
 (17,1,1) = {"
-aa
 ac
 ao
 an
@@ -1186,7 +1110,6 @@ bP
 aa
 "}
 (18,1,1) = {"
-aa
 af
 ak
 ak
@@ -1204,7 +1127,7 @@ ag
 ag
 bN
 bP
-aa
+KN
 aa
 "}
 (19,1,1) = {"
@@ -1225,29 +1148,6 @@ aa
 aa
 aa
 aa
-aa
 bV
-aa
-"}
-(20,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 "}

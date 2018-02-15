@@ -21,18 +21,16 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
 		if(state == PLASTIC_FLAPS_NORMAL)
-			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 100*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 100, volume=100))
 				if(state != PLASTIC_FLAPS_NORMAL)
 					return
 				state = PLASTIC_FLAPS_DETACHED
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
 		else if(state == PLASTIC_FLAPS_DETACHED)
-			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40, volume=100))
 				if(state != PLASTIC_FLAPS_DETACHED)
 					return
 				state = PLASTIC_FLAPS_NORMAL
@@ -40,9 +38,8 @@
 				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
 	else if(istype(W, /obj/item/wirecutters))
 		if(state == PLASTIC_FLAPS_DETACHED)
-			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
-			if(do_after(user, 50*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 50, volume=100))
 				if(state != PLASTIC_FLAPS_DETACHED)
 					return
 				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
@@ -64,7 +61,7 @@
 	return 1 //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
 	var/obj/structure/bed/B = A
@@ -76,7 +73,7 @@
 		if(C.move_delay)
 			return 0
 
-	if(istype(A, /obj/mecha))
+	if(ismecha(A))
 		return 0
 
 

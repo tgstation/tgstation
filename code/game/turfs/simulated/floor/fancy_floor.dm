@@ -8,9 +8,14 @@
  */
 
 /turf/open/floor/wood
+	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+
+/turf/open/floor/wood/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
 
 /turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -34,7 +39,7 @@
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	var/is_screwdriver = istype(C, /obj/item/screwdriver)
-	playsound(src, C.usesound, 80, 1)
+	C.play_tool_sound(src, 80)
 	return remove_tile(user, silent, make_tile = is_screwdriver)
 
 /turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
@@ -42,16 +47,16 @@
 		broken = 0
 		burnt = 0
 		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the broken planks.</span>")
+			to_chat(user, "<span class='notice'>You remove the broken planks.</span>")
 	else
 		if(make_tile)
 			if(user && !silent)
-				to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
+				to_chat(user, "<span class='notice'>You unscrew the planks.</span>")
 			if(floor_tile)
 				new floor_tile(src)
 		else
 			if(user && !silent)
-				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
+				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
 
 /turf/open/floor/wood/cold
@@ -67,7 +72,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
-	var/ore_type = /obj/item/ore/glass
+	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 
 /turf/open/floor/grass/Initialize()
@@ -76,9 +81,8 @@
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/shovel) && params)
-		new ore_type(src)
-		new ore_type(src) //Make some sand if you shovel grass
-		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [src.turfverb] [src].</span>")
+		new ore_type(src, 2)
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
 	if(..())
@@ -104,7 +108,7 @@
 	name = "volcanic floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	ore_type = /obj/item/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0
 
@@ -117,11 +121,11 @@
 
 /turf/open/floor/grass/fakebasalt //Heart is not a real planeteer power
 	name = "aesthetic volcanic flooring"
-	desc = "Safely recreated turf for your hellplanet-scaping"
+	desc = "Safely recreated turf for your hellplanet-scaping."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	floor_tile = /obj/item/stack/tile/basalt
-	ore_type = /obj/item/ore/glass/basalt
+	ore_type = /obj/item/stack/ore/glass/basalt
 	turfverb = "dig up"
 	slowdown = 0
 
@@ -142,6 +146,10 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
+
+/turf/open/floor/carpet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
@@ -174,11 +182,11 @@
 			A.narsie_act()
 
 /turf/open/floor/carpet/break_tile()
-	broken = 1
+	broken = TRUE
 	update_icon()
 
 /turf/open/floor/carpet/burn_tile()
-	burnt = 1
+	burnt = TRUE
 	update_icon()
 
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

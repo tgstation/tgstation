@@ -1,12 +1,3 @@
-// dummy generator object for testing
-
-/*/obj/machinery/power/generator/verb/set_amount(var/g as num)
-	set src in view(1)
-
-	gen_amount = g
-
-*/
-
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
@@ -82,24 +73,16 @@
 		return
 
 	if(powernet)
-		//to_chat(world, "cold_circ and hot_circ pass")
-
 		var/datum/gas_mixture/cold_air = cold_circ.return_transfer_air()
 		var/datum/gas_mixture/hot_air = hot_circ.return_transfer_air()
 
-		//to_chat(world, "hot_air = [hot_air]; cold_air = [cold_air];")
-
 		if(cold_air && hot_air)
 
-			//to_chat(world, "hot_air = [hot_air] temperature = [hot_air.temperature]; cold_air = [cold_air] temperature = [hot_air.temperature];")
-
-			//to_chat(world, "coldair and hotair pass")
 			var/cold_air_heat_capacity = cold_air.heat_capacity()
 			var/hot_air_heat_capacity = hot_air.heat_capacity()
 
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
-			//to_chat(world, "delta_temperature = [delta_temperature]; cold_air_heat_capacity = [cold_air_heat_capacity]; hot_air_heat_capacity = [hot_air_heat_capacity]")
 
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				var/efficiency = 0.65
@@ -109,22 +92,18 @@
 				var/heat = energy_transfer*(1-efficiency)
 				lastgen += energy_transfer*efficiency
 
-				//to_chat(world, "lastgen = [lastgen]; heat = [heat]; delta_temperature = [delta_temperature]; hot_air_heat_capacity = [hot_air_heat_capacity]; cold_air_heat_capacity = [cold_air_heat_capacity];")
-
 				hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
 				cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
-
-				//to_chat(world, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 
 				//add_avail(lastgen) This is done in process now
 		// update icon overlays only if displayed level has changed
 
 		if(hot_air)
-			var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
+			var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
 			hot_circ_air1.merge(hot_air)
 
 		if(cold_air)
-			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
+			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
 			cold_circ_air1.merge(cold_air)
 
 		update_icon()
@@ -155,10 +134,10 @@
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"
 	else if(cold_circ && hot_circ)
-		var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
-		var/datum/gas_mixture/cold_circ_air2 = cold_circ.AIR2
-		var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
-		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
+		var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
+		var/datum/gas_mixture/cold_circ_air2 = cold_circ.airs[2]
+		var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
+		var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
 
 		t += "<div class='statusDisplay'>"
 
@@ -178,7 +157,7 @@
 	else
 		t += "<span class='bad'>Unable to locate all parts!</span>"
 	if(include_link)
-		t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+		t += "<BR><A href='?src=[REF(src)];close=1'>Close</A>"
 
 	return t
 

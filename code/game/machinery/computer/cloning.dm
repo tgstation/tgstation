@@ -72,6 +72,7 @@
 			continue	//how though?
 
 		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
+			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 			records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
@@ -83,10 +84,10 @@
 	var/obj/machinery/dna_scannernew/scannerf = null
 
 	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
 		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 
 		// If found and operational, return the scanner
 		if (!isnull(scannerf) && scannerf.is_operational())
@@ -98,10 +99,9 @@
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = null
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/direction in GLOB.cardinals)
 
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
+		podf = locate(/obj/machinery/clonepod, get_step(src, direction))
 		if (!isnull(podf) && podf.is_operational())
 			AttachCloner(podf)
 
@@ -117,9 +117,8 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			if(!user.drop_item())
+			if (!user.transferItemToLoc(W,src))
 				return
-			W.loc = src
 			src.diskette = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -139,7 +138,7 @@
 			AttachCloner(pod)
 		else
 			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -159,13 +158,13 @@
 	updatemodules(TRUE)
 
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a>"
+	dat += "<a href='byond://?src=[REF(src)];refresh=1'>Refresh</a>"
 
 	if(scanner && HasEfficientPod() && scanner.scan_level > 2)
 		if(!autoprocess)
-			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Autoprocess</a>"
+			dat += "<a href='byond://?src=[REF(src)];task=autoprocess'>Autoprocess</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Stop autoprocess</a>"
+			dat += "<a href='byond://?src=[REF(src)];task=stopautoprocess'>Stop autoprocess</a>"
 	else
 		dat += "<span class='linkOff'>Autoprocess</span>"
 	dat += "<h3>Cloning Pod Status</h3>"
@@ -176,7 +175,7 @@
 			// Modules
 			if (isnull(src.scanner) || !LAZYLEN(pods))
 				dat += "<h3>Modules</h3>"
-				//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
+				//dat += "<a href='byond://?src=[REF(src)];relmodules=1'>Reload Modules</a>"
 				if (isnull(src.scanner))
 					dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
 				if (!LAZYLEN(pods))
@@ -201,36 +200,36 @@
 				dat += "</div>"
 
 				if(scanner_occupant)
-					dat += "<a href='byond://?src=\ref[src];scan=1'>Start Scan</a>"
-					dat += "<br><a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
+					dat += "<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>"
+					dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
 				else
 					dat += "<span class='linkOff'>Start Scan</span>"
 
 			// Database
 			dat += "<h3>Database Functions</h3>"
 			if (src.records.len && src.records.len > 0)
-				dat += "<a href='byond://?src=\ref[src];menu=2'>View Records ([src.records.len])</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];menu=2'>View Records ([src.records.len])</a><br>"
 			else
 				dat += "<span class='linkOff'>View Records (0)</span><br>"
 			if (src.diskette)
-				dat += "<a href='byond://?src=\ref[src];disk=eject'>Eject Disk</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];disk=eject'>Eject Disk</a><br>"
 
 
 
 		if(2)
 			dat += "<h3>Current records</h3>"
-			dat += "<a href='byond://?src=\ref[src];menu=1'><< Back</a><br><br>"
+			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
 			for(var/datum/data/record/R in records)
-				dat += "<h4>[R.fields["name"]]</h4>Scan ID [R.fields["id"]] <a href='byond://?src=\ref[src];view_rec=[R.fields["id"]]'>View Record</a>"
+				dat += "<h4>[R.fields["name"]]</h4>Scan ID [R.fields["id"]] <a href='byond://?src=[REF(src)];view_rec=[R.fields["id"]]'>View Record</a>"
 		if(3)
 			dat += "<h3>Selected Record</h3>"
-			dat += "<a href='byond://?src=\ref[src];menu=2'><< Back</a><br>"
+			dat += "<a href='byond://?src=[REF(src)];menu=2'><< Back</a><br>"
 
 			if (!src.active_record)
 				dat += "<font class='bad'>Record not found.</font>"
 			else
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
-				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=\ref[src];clone=[active_record.fields["id"]]'>Clone</a><br>"
+				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
 				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
 
@@ -254,12 +253,12 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
-					dat += "<br /><a href='byond://?src=\ref[src];disk=load'>Load from Disk</a>"
+					dat += "<br /><a href='byond://?src=[REF(src)];disk=load'>Load from Disk</a>"
 
-					dat += "<br /><a href='byond://?src=\ref[src];disk=save'>Save to Disk</a>"
+					dat += "<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>"
 					dat += "</div>"
 
-				dat += "<font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font>"
+				dat += "<font size=1><a href='byond://?src=[REF(src)];del_rec=1'>Delete Record</a></font>"
 
 		if(4)
 			if (!src.active_record)
@@ -267,8 +266,8 @@
 			dat = "[src.temp]<br>"
 			dat += "<h3>Confirm Record Deletion</h3>"
 
-			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
-			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Cancel</a></b>"
+			dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Scan card to confirm.</a></b><br>"
+			dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
 
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
@@ -373,7 +372,7 @@
 
 			if("eject")
 				if(src.diskette)
-					src.diskette.loc = src.loc
+					src.diskette.forceMove(drop_location())
 					src.diskette = null
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			if("save")
@@ -404,7 +403,7 @@
 			else if(!pod)
 				temp = "<font class='bad'>No Clonepods available.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(!config.revival_cloning)
+			else if(!CONFIG_GET(flag/revival_cloning))
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.occupant)
@@ -436,7 +435,7 @@
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
-	if(iscarbon(mob_occupant))
+	if(ishuman(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 	if(isbrain(mob_occupant))
@@ -451,7 +450,7 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if((mob_occupant.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
+	if((mob_occupant.has_trait(TRAIT_NOCLONE)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
@@ -471,7 +470,7 @@
 		// species datums
 		R.fields["mrace"] = dna.species
 	else
-		var/datum/species/rando_race = pick(config.roundstart_races)
+		var/datum/species/rando_race = pick(GLOB.roundstart_races)
 		R.fields["mrace"] = rando_race.type
 
 	R.fields["ckey"] = mob_occupant.ckey
@@ -485,7 +484,7 @@
 	R.fields["factions"] = mob_occupant.faction
 
 	if (!isnull(mob_occupant.mind)) //Save that mind so traitors can continue traitoring after cloning.
-		R.fields["mind"] = "\ref[mob_occupant.mind]"
+		R.fields["mind"] = "[REF(mob_occupant.mind)]"
 
    //Add an implant if needed
 	var/obj/item/implant/health/imp
@@ -495,7 +494,7 @@
 	if(!imp)
 		imp = new /obj/item/implant/health(mob_occupant)
 		imp.implant(mob_occupant)
-	R.fields["imp"] = "\ref[imp]"
+	R.fields["imp"] = "[REF(imp)]"
 
 	src.records += R
 	scantemp = "Subject successfully scanned."

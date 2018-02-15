@@ -13,7 +13,7 @@
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
@@ -53,7 +53,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -88,8 +88,8 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
-/obj/item/disk/data/New()
-	..()
+/obj/item/disk/data/Initialize()
+	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")
 
@@ -162,11 +162,6 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	if(clonemind.changeling)
-		var/obj/item/organ/brain/B = H.getorganslot("brain")
-		B.vital = FALSE
-		B.decoy_override = TRUE
-
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
@@ -229,9 +224,9 @@
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
-
+			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
 			 //Slowly get that clone healed and finished.
-			mob_occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
+			mob_occupant.adjustCloneLoss(-((speed_coeff / 2) * dmg_mult))
 			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
 			progress += (100 - MINIMUM_HEAL_LEVEL)
@@ -249,7 +244,7 @@
 					BP.attach_limb(mob_occupant)
 
 			//Premature clones may have brain damage.
-			mob_occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
+			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
 
 			check_brine()
 
@@ -304,7 +299,7 @@
 			comp.AttachCloner(src)
 		else
 			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant
@@ -439,14 +434,17 @@
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
+
 	// brain function, they also have no limbs or internal organs.
-	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
-	for(var/zone in zones)
-		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		if(BP)
-			BP.drop_limb()
-			BP.forceMove(src)
-			unattached_flesh += BP
+
+	if(!NODISMEMBER in H.dna.species.species_traits)
+		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		for(var/zone in zones)
+			var/obj/item/bodypart/BP = H.get_bodypart(zone)
+			if(BP)
+				BP.drop_limb()
+				BP.forceMove(src)
+				unattached_flesh += BP
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o

@@ -21,7 +21,8 @@
 	)
 
 /datum/debugFileOutput/proc/error(fileName, message, client/C)
-	if (!fileName || !message) return 0
+	if (!fileName || !message)
+		return 0
 
 	if (!(fileName in src.validFiles))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' is not a valid path.")
@@ -36,7 +37,8 @@
 	return 1
 
 /datum/debugFileOutput/proc/clear(fileName)
-	if (!fileName) return 0
+	if (!fileName)
+		return 0
 
 	if (!fexists("[src.directory]/[fileName].[src.ext]"))
 		throw EXCEPTION("Debug log file '[fileName].[src.ext]' does not exist.")

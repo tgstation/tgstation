@@ -21,6 +21,11 @@
 	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = TRUE
 
+/obj/item/device/modular_computer/laptop/examine(mob/user)
+	..()
+	if(screen_on)
+		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
+
 /obj/item/device/modular_computer/laptop/Initialize()
 	. = ..()
 

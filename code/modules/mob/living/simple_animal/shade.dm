@@ -1,13 +1,14 @@
 /mob/living/simple_animal/shade
 	name = "Shade"
 	real_name = "Shade"
-	desc = "A bound spirit"
+	desc = "A bound spirit."
 	gender = PLURAL
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
 	maxHealth = 50
 	health = 50
+	spacewalk = TRUE
 	healable = 0
 	speak_emote = list("hisses")
 	emote_hear = list("wails.","screeches.")
@@ -40,9 +41,6 @@
 		return 0
 	return ..()
 
-/mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
-	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
-
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M))
 		var/mob/living/simple_animal/hostile/construct/C = M
@@ -63,4 +61,4 @@
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("SHADE", src, user)
 	else
-		..()
+		. = ..()

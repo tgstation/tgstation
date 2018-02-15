@@ -8,8 +8,8 @@
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 
-/obj/item/grown/New(newloc, var/obj/item/seeds/new_seed = null)
-	..()
+/obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
+	. = ..()
 	create_reagents(50)
 
 	if(new_seed)
@@ -28,7 +28,7 @@
 
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)
-		transform *= TransformUsingVariable(seed.potency, 100, 0.5)
+		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
 
 
@@ -62,3 +62,7 @@
 
 /obj/item/grown/microwave_act(obj/machine/microwave/M)
 	return
+
+/obj/item/grown/on_grind()
+	for(var/i in 1 to grind_results.len)
+		grind_results[grind_results[i]] = round(seed.potency)

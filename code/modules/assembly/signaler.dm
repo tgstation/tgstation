@@ -6,14 +6,26 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
-	var/code = 30
-	var/frequency = 1457
+	var/code = DEFAULT_SIGNALER_CODE
+	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
+	var/suicider = null
+
+/obj/item/device/assembly/signaler/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	user.transferItemToLoc(src, user, TRUE)
+	suicider = user
+	return MANUAL_SUICIDE
+
+/obj/item/device/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing them instantly!</span>")
+	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
+	user.death(0)
 
 /obj/item/device/assembly/signaler/New()
 	..()
@@ -39,28 +51,24 @@
 /obj/item/device/assembly/signaler/interact(mob/user, flag1)
 	if(is_secured(user))
 		var/t1 = "-------"
-	//	if ((src.b_stat && !( flag1 )))
-	//		t1 = text("-------<BR>\nGreen Wire: []<BR>\nRed Wire:   []<BR>\nBlue Wire:  []<BR>\n", (src.wires & 4 ? text("<A href='?src=\ref[];wires=4'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=4'>Mend Wire</A>", src)), (src.wires & 2 ? text("<A href='?src=\ref[];wires=2'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=2'>Mend Wire</A>", src)), (src.wires & 1 ? text("<A href='?src=\ref[];wires=1'>Cut Wire</A>", src) : text("<A href='?src=\ref[];wires=1'>Mend Wire</A>", src)))
-	//	else
-	//		t1 = "-------"	Speaker: [src.listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 		var/dat = {"
 <TT>
 
-<A href='byond://?src=\ref[src];send=1'>Send Signal</A><BR>
+<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
 <B>Frequency/Code</B> for signaler:<BR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
+<A href='byond://?src=[REF(src)];freq=-10'>-</A>
+<A href='byond://?src=[REF(src)];freq=-2'>-</A>
 [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=2'>+</A>
+<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
 
 Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A>
+<A href='byond://?src=[REF(src)];code=-5'>-</A>
+<A href='byond://?src=[REF(src)];code=-1'>-</A>
 [src.code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];code=1'>+</A>
+<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
 [t1]
 </TT>"}
 		user << browse(dat, "window=radio")
@@ -78,7 +86,7 @@ Code:
 
 	if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
-		if(new_frequency < 1200 || new_frequency > 1600)
+		if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
 			new_frequency = sanitize_frequency(new_frequency)
 		set_frequency(new_frequency)
 
@@ -107,12 +115,10 @@ Code:
 	..()
 
 /obj/item/device/assembly/signaler/proc/signal()
-	if(!radio_connection) return
+	if(!radio_connection)
+		return
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = "ACTIVATE"
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
@@ -122,38 +128,25 @@ Code:
 
 
 	return
-/*
-		for(var/obj/item/device/assembly/signaler/S in world)
-			if(!S)
-				continue
-			if(S == src)
-				continue
-			if((S.frequency == src.frequency) && (S.code == src.code))
-				spawn(0)
-					if(S)
-						S.pulse(0)
-		return 0*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
 		return 0
+	if(suicider)
+		manual_suicide(suicider)
 	pulse(1)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 	return
 
 
 /obj/item/device/assembly/signaler/proc/set_frequency(new_frequency)
-	if(!SSradio)
-		sleep(20)
-	if(!SSradio)
-		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
 // Embedded signaller used in grenade construction.
@@ -173,7 +166,8 @@ Code:
 	return "The radio receiver is [on?"on":"off"]."
 
 /obj/item/device/assembly/signaler/reciever/receive_signal(datum/signal/signal)
-	if(!on) return
+	if(!on)
+		return
 	return ..(signal)
 
 
@@ -189,7 +183,7 @@ Code:
 /obj/item/device/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
@@ -198,7 +192,6 @@ Code:
 	return
 
 /obj/item/device/assembly/signaler/cyborg
-	origin_tech = null
 
 /obj/item/device/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
 	return

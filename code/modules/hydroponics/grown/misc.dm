@@ -1,7 +1,7 @@
 // Starthistle
 /obj/item/seeds/starthistle
 	name = "pack of starthistle seeds"
-	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots"
+	desc = "A robust species of weed that often springs up in-between the cracks of spaceship parking lots."
 	icon_state = "seed-starthistle"
 	species = "starthistle"
 	plantname = "Starthistle"
@@ -108,7 +108,6 @@
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	origin_tech = "combat=6"
 	trash = /obj/item/gun/ballistic/revolver
 	bitesize_mod = 2
 	foodtype = FRUIT

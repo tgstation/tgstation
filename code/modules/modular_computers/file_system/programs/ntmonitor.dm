@@ -15,22 +15,22 @@
 	switch(action)
 		if("resetIDS")
 			. = 1
-			if(GLOB.ntnet_global)
-				GLOB.ntnet_global.resetIDS()
+			if(SSnetworks.station_network)
+				SSnetworks.station_network.resetIDS()
 			return 1
 		if("toggleIDS")
 			. = 1
-			if(GLOB.ntnet_global)
-				GLOB.ntnet_global.toggleIDS()
+			if(SSnetworks.station_network)
+				SSnetworks.station_network.toggleIDS()
 			return 1
 		if("toggleWireless")
 			. = 1
-			if(!GLOB.ntnet_global)
+			if(!SSnetworks.station_network)
 				return 1
 
 			// NTNet is disabled. Enabling can be done without user prompt
-			if(GLOB.ntnet_global.setting_disabled)
-				GLOB.ntnet_global.setting_disabled = 0
+			if(SSnetworks.station_network.setting_disabled)
+				SSnetworks.station_network.setting_disabled = 0
 				return 1
 
 			// NTNet is enabled and user is about to shut it down. Let's ask them if they really want to do it, as wirelessly connected computers won't connect without NTNet being enabled (which may prevent people from turning it back on)
@@ -39,43 +39,43 @@
 				return 1
 			var/response = alert(user, "Really disable NTNet wireless? If your computer is connected wirelessly you won't be able to turn it back on! This will affect all connected wireless devices.", "NTNet shutdown", "Yes", "No")
 			if(response == "Yes")
-				GLOB.ntnet_global.setting_disabled = 1
+				SSnetworks.station_network.setting_disabled = 1
 			return 1
 		if("purgelogs")
 			. = 1
-			if(GLOB.ntnet_global)
-				GLOB.ntnet_global.purge_logs()
+			if(SSnetworks.station_network)
+				SSnetworks.station_network.purge_logs()
 		if("updatemaxlogs")
 			. = 1
 			var/mob/user = usr
 			var/logcount = text2num(input(user,"Enter amount of logs to keep in memory ([MIN_NTNET_LOGS]-[MAX_NTNET_LOGS]):"))
-			if(GLOB.ntnet_global)
-				GLOB.ntnet_global.update_max_log_count(logcount)
+			if(SSnetworks.station_network)
+				SSnetworks.station_network.update_max_log_count(logcount)
 		if("toggle_function")
 			. = 1
-			if(!GLOB.ntnet_global)
+			if(!SSnetworks.station_network)
 				return 1
-			GLOB.ntnet_global.toggle_function(text2num(params["id"]))
+			SSnetworks.station_network.toggle_function(text2num(params["id"]))
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
-	if(!GLOB.ntnet_global)
+	if(!SSnetworks.station_network)
 		return
 	var/list/data = get_header_data()
 
-	data["ntnetstatus"] = GLOB.ntnet_global.check_function()
-	data["ntnetrelays"] = GLOB.ntnet_global.relays.len
-	data["idsstatus"] = GLOB.ntnet_global.intrusion_detection_enabled
-	data["idsalarm"] = GLOB.ntnet_global.intrusion_detection_alarm
+	data["ntnetstatus"] = SSnetworks.station_network.check_function()
+	data["ntnetrelays"] = SSnetworks.station_network.relays.len
+	data["idsstatus"] = SSnetworks.station_network.intrusion_detection_enabled
+	data["idsalarm"] = SSnetworks.station_network.intrusion_detection_alarm
 
-	data["config_softwaredownload"] = GLOB.ntnet_global.setting_softwaredownload
-	data["config_peertopeer"] = GLOB.ntnet_global.setting_peertopeer
-	data["config_communication"] = GLOB.ntnet_global.setting_communication
-	data["config_systemcontrol"] = GLOB.ntnet_global.setting_systemcontrol
+	data["config_softwaredownload"] = SSnetworks.station_network.setting_softwaredownload
+	data["config_peertopeer"] = SSnetworks.station_network.setting_peertopeer
+	data["config_communication"] = SSnetworks.station_network.setting_communication
+	data["config_systemcontrol"] = SSnetworks.station_network.setting_systemcontrol
 
 	data["ntnetlogs"] = list()
 
-	for(var/i in GLOB.ntnet_global.logs)
+	for(var/i in SSnetworks.station_network.logs)
 		data["ntnetlogs"] += list(list("entry" = i))
-	data["ntnetmaxlogs"] = GLOB.ntnet_global.setting_maxlogcount
+	data["ntnetmaxlogs"] = SSnetworks.station_network.setting_maxlogcount
 
 	return data

@@ -1,9 +1,8 @@
 /obj/item/gun/ballistic/automatic
-	origin_tech = "combat=4;materials=2"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/alarmed = 0
 	var/select = 1
-	can_suppress = 1
+	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
@@ -20,7 +19,6 @@
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
-	cut_overlays()
 	if(!select)
 		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
@@ -89,12 +87,14 @@
 	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
-	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
+	can_bayonet = TRUE
+	knife_x_offset = 26
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -110,7 +110,7 @@
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	icon_state = "c20r[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/wt550
 	name = "security auto rifle"
@@ -119,19 +119,21 @@
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
+	can_bayonet = TRUE
+	knife_x_offset = 25
+	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
-	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
+	icon_state = "wt550[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
-	origin_tech = "combat=4;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
 
@@ -140,10 +142,9 @@
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
 	item_state = "m90"
-	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
@@ -214,23 +215,21 @@
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 4
 	fire_delay = 1
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
-	desc = "A robust assault rile used by Nanotrasen fighting forces."
+	desc = "A robust assault rifle used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=4"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
 
@@ -243,10 +242,9 @@
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
-	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/gunshot.ogg'
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -281,12 +279,11 @@
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	var/cover_open = FALSE
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -312,7 +309,7 @@
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEILING(get_ammo(0)/12.5, 1)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
 	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
 
 
@@ -333,7 +330,7 @@
 	else if(cover_open && magazine)
 		//drop the mag
 		magazine.update_icon()
-		magazine.loc = get_turf(src.loc)
+		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		magazine = null
 		update_icon()
@@ -361,12 +358,12 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	burst_size = 1
-	origin_tech = "combat=7"
-	can_unsuppress = 1
-	can_suppress = 1
+	can_unsuppress = TRUE
+	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
-	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
+	zoom_out_amt = 13
 	slot_flags = SLOT_BACK
 	actions_types = list()
 
@@ -382,22 +379,20 @@
 	name = "syndicate sniper rifle"
 	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
 
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus
 	name = "Surplus Rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
-	origin_tech = "combat=3;materials=2"
 	icon_state = "surplus"
 	item_state = "moistnugget"
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30
 	burst_size = 1
-	can_unsuppress = 1
-	can_suppress = 1
+	can_unsuppress = TRUE
+	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = SLOT_BACK
 	actions_types = list()
@@ -418,13 +413,13 @@
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 0
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
-	casing_ejector = 0
+	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/automatic/laser/update_icon()
 	..()
-	icon_state = "oldrifle[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
+	icon_state = "oldrifle[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
 	return

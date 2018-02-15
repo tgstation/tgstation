@@ -1,7 +1,3 @@
-//Easter start
-/datum/holiday/easter/greet()
-	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
-
 /datum/round_event_control/easter
 	name = "Easter Eggselence"
 	holidayID = EASTER
@@ -10,7 +6,7 @@
 	max_occurrences = 1
 	earliest_start = 0
 
-/datum/round_event/easter/announce()
+/datum/round_event/easter/announce(fake)
 	priority_announce(pick("Hip-hop into Easter!","Find some Bunny's stash!","Today is National 'Hunt a Wabbit' Day.","Be kind, give Chocolate Eggs!"))
 
 
@@ -21,7 +17,7 @@
 	weight = 5
 	max_occurrences = 10
 
-/datum/round_event/rabbitrelease/announce()
+/datum/round_event/rabbitrelease/announce(fake)
 	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/ai/aliens.ogg')
 
 
@@ -89,7 +85,7 @@
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
 	item_state = "bunnyhead"
-	desc = "Considerably more cute than 'Frank'"
+	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -109,8 +105,8 @@
 /obj/item/reagent_containers/food/snacks/egg/loaded
 	containsPrize = TRUE
 
-/obj/item/reagent_containers/food/snacks/egg/loaded/New()
-	..()
+/obj/item/reagent_containers/food/snacks/egg/loaded/Initialize()
+	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 	item_color = "[eggcolor]"
@@ -135,7 +131,7 @@
 /obj/item/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		to_chat(user, "<span class='notice'>You unwrap the [src] and find a prize inside!</span>")
+		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)

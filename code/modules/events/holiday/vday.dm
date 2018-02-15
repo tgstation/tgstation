@@ -14,11 +14,11 @@
 
 /datum/round_event/valentines/start()
 	..()
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		H.put_in_hands(new /obj/item/valentine)
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		new /obj/item/reagent_containers/food/snacks/candyheart(b)
-
+		new /obj/item/storage/fancy/heart_box(b)
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
@@ -45,23 +45,24 @@
 			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
 			var/datum/objective/martyr/normiesgetout = new
 			normiesgetout.owner = L.mind
-			SSticker.mode.traitors |= L.mind
+			L.mind.special_role = "heartbreaker"
 			L.mind.objectives += normiesgetout
+			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
-
-	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
-
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
 	protect_objective.owner = lover.mind
 	protect_objective.target = date.mind
 	protect_objective.explanation_text = "Protect [date.real_name], your date."
 	lover.mind.objectives += protect_objective
+
+	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
+
 	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
 
-/datum/round_event/valentines/announce()
+/datum/round_event/valentines/announce(fake)
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
 
 /obj/item/valentine
@@ -124,7 +125,14 @@
 	               "You're the vomit to my flyperson.",
 	               "You must be liquid dark matter, because you're pulling me closer.",
 	               "Not even sorium can drive me away from you.",
-	               "Wanna make like a borg and do some heavy petting?" )
+	               "Wanna make like a borg and do some heavy petting?",
+	               "Are you powering the station? Because you super matter to me.",
+	               "I wish science could make me a bag of holding you.",
+	               "Let's call the emergency CUDDLE.",
+	               "I must be tripping on BZ, because I saw an angel walk by.",
+	               "Wanna empty out my tool storage?",
+	               "Did you visit the medbay after you fell from heaven?",
+	               "Are you wearing space pants? Wanna not be?" )
 
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
@@ -174,8 +182,9 @@
                 "A heart-shaped candy that reads: WAG MY TAIL",
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
-                "A heart-shaped candy that reads: DOMINATOR",
-                "A heart-shaped candy that reads: GET TESLA'D",
-                "A heart-shaped candy that reads: COCK CULT",
-                "A heart-shaped candy that reads: PET ME")
+                "A heart-shaped candy that reads: BOX OF HUGS",
+                "A heart-shaped candy that reads: REEBE MINE",
+                "A heart-shaped candy that reads: PET ME",
+                "A heart-shaped candy that reads: TO THE DORMS",
+                "A heart-shaped candy that reads: DIS MEMBER")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

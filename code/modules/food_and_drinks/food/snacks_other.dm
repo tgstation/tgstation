@@ -28,6 +28,7 @@
 	filling_color = "#FF1493"
 	tastes = list("watermelon" = 1)
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 5)
 
 /obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -66,8 +67,8 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/popcorn/New()
-	..()
+/obj/item/reagent_containers/food/snacks/popcorn/Initialize()
+	. = ..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
@@ -151,7 +152,7 @@
 
 /obj/item/reagent_containers/food/snacks/mint
 	name = "mint"
-	desc = "it is only wafer thin."
+	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate
@@ -188,6 +189,24 @@
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/spiderling
+	name = "spiderling"
+	desc = "It's slightly twitching in your hand. Ew..."
+	icon_state = "spiderling"
+	list_reagents = list("nutriment" = 1, "toxin" = 4)
+	filling_color = "#00800"
+	tastes = list("cobwebs" = 1, "guts" = 2)
+	foodtype = MEAT | TOXIC
+
+/obj/item/reagent_containers/food/snacks/spiderlollipop
+	name = "spider lollipop"
+	desc = "Still gross, but at least it has a mountain of sugar on it."
+	icon_state = "spiderlollipop"
+	list_reagents = list("nutriment" = 1, "toxin" = 1, "iron" = 10, "sugar" = 5, "omnizine" = 2) //lollipop, but vitamins = toxins
+	filling_color = "#00800"
+	tastes = list("cobwebs" = 1, "sugar" = 2)
+	foodtype = JUNKFOOD | SUGAR
+
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
@@ -211,7 +230,7 @@
 
 /obj/item/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
-	desc = "A festive chocolate orange"
+	desc = "A festive chocolate orange."
 	icon_state = "chocoorange"
 	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 1)
@@ -362,7 +381,7 @@
 	foodtype = VEGETABLES | FRIED | DAIRY
 
 /obj/item/reagent_containers/food/snacks/cubannachos
-	name = "cuban nachos"
+	name = "Cuban nachos"
 	desc = "That's some dangerously spicy nachos."
 	icon_state = "cubannachos"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
@@ -429,8 +448,8 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
+	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 
@@ -448,8 +467,8 @@
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
@@ -469,15 +488,15 @@
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/gumball/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/New()
-	..()
+/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
@@ -533,3 +552,20 @@
 	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/pineappleslice
+	name = "pineapple slice"
+	desc = "A sliced piece of juicy pineapple."
+	icon_state = "pineapple_slice"
+	filling_color = "#F6CB0B"
+	tastes = list("pineapple" = 1)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/snacks/tinychocolate
+	name = "chocolate"
+	desc = "A tiny and sweet chocolate."
+	icon_state = "tiny_chocolate"
+	list_reagents = list("nutriment" = 1, "sugar" = 1, "cocoa" = 1)
+	filling_color = "#A0522D"
+	tastes = list("chocolate" = 1)
+	foodtype = JUNKFOOD | SUGAR

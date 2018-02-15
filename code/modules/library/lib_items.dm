@@ -14,6 +14,7 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
+	desc = "A great place for storing knowledge."
 	anchored = FALSE
 	density = TRUE
 	opacity = 0
@@ -22,6 +23,21 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+
+
+/obj/structure/bookcase/examine(mob/user)
+	..()
+	if(!anchored)
+		to_chat(user, "<span class='notice'>The <i>bolts</i> on the bottom are unsecured.</span>")
+	if(anchored)
+		to_chat(user, "<span class='notice'>It's secured in place with <b>bolts</b>.</span>")
+	switch(state)
+		if(0)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the back panel.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>There's space inside for a <i>wooden</i> shelf.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
 
 
 /obj/structure/bookcase/Initialize(mapload)
@@ -33,7 +49,7 @@
 	anchored = TRUE
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/book))
-			I.loc = src
+			I.forceMove(src)
 	update_icon()
 
 
@@ -41,14 +57,12 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
 			if(istype(I, /obj/item/crowbar))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
 
@@ -61,16 +75,15 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
 				state = 0
 
 		if(2)
 			if(is_type_in_list(I, allowed_books))
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(I, src))
 					return
-				I.loc = src
 				update_icon()
 			else if(istype(I, /obj/item/storage/bag/books))
 				var/obj/item/storage/bag/books/B = I
@@ -84,14 +97,14 @@
 				if(!newname)
 					return
 				else
-					name = ("bookcase ([sanitize(newname)])")
+					name = "bookcase ([sanitize(newname)])"
 			else if(istype(I, /obj/item/crowbar))
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
-					playsound(loc, I.usesound, 100, 1)
+					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
-					new /obj/item/stack/sheet/mineral/wood(loc, 2)
+					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -108,7 +121,7 @@
 				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
-				choice.loc = get_turf(src)
+				choice.forceMove(drop_location())
 			update_icon()
 
 
@@ -129,8 +142,8 @@
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/Initialize()
+	. = ..()
 	new /obj/item/book/manual/medical_cloning(src)
 	update_icon()
 
@@ -138,8 +151,8 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/Initialize()
+	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
@@ -152,8 +165,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/Initialize()
+	. = ..()
 	new /obj/item/book/manual/research_and_development(src)
 	update_icon()
 
@@ -165,6 +178,7 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -273,7 +287,7 @@
 				user.put_in_hands(B)
 				return
 			else
-				B.loc = src.loc
+				B.forceMove(drop_location())
 				qdel(src)
 				return
 		return
@@ -288,6 +302,7 @@
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
+	desc = "A fabulous tool if you need to scan a barcode."
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY

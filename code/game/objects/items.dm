@@ -26,6 +26,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	max_integrity = 200
 
+	obj_flags = NONE
+	var/item_flags = NONE
+
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
@@ -49,47 +52,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
-	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
-	var/obj/item/device/uplink/hidden_uplink = null
 	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
-	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
-	var/emagged = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
-	var/suittoggled = FALSE
-	var/hooded = 0
-
 	var/mob/thrownby = null
 
-	/obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	//So items can have custom embedd values
-	//Because customisation is king
-	var/embed_chance = EMBED_CHANCE
-	var/embedded_fall_chance = EMBEDDED_ITEM_FALLOUT
-	var/embedded_pain_chance = EMBEDDED_PAIN_CHANCE
-	var/embedded_pain_multiplier = EMBEDDED_PAIN_MULTIPLIER  //The coefficient of multiplication for the damage this item does while embedded (this*w_class)
-	var/embedded_fall_pain_multiplier = EMBEDDED_FALL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when falling out of a limb (this*w_class)
-	var/embedded_impact_pain_multiplier = EMBEDDED_IMPACT_PAIN_MULTIPLIER //The coefficient of multiplication for the damage this item does when first embedded (this*w_class)
-	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
-	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
+	var/datum/embedding_behavior/embedding
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
+
+	var/tool_behaviour = NONE
 	var/toolspeed = 1
 
 	var/block_chance = 0
@@ -107,13 +95,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 	//Tooltip vars
-	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
 	var/tip_timer
-	var/force_string_override
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
+
+	//Grinder vars
+	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
 	if (!materials)
@@ -127,13 +117,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		rpg_loot = new(src)
 
 	if(force_string)
-		force_string_override = TRUE
+		item_flags |= FORCE_STRING_OVERRIDE
 
 	if(!hitsound)
 		if(damtype == "fire")
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
+
+	if (!embedding)
+		embedding = getEmbeddingBehavior()
+	else if (islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+	else if (!istype(embedding, /datum/embedding_behavior))
+		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
 
 /obj/item/Destroy()
 	flags_1 &= ~DROPDEL_1	//prevent reqdels
@@ -192,35 +189,47 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
-	if(user.research_scanner) //Mob has a research scanner active.
-		var/msg = "*--------* <BR>"
+	if(!user.research_scanner)
+		return
 
-		if(origin_tech)
-			msg += "<span class='notice'>Testing potentials:</span><BR>"
-			var/list/techlvls = params2list(origin_tech)
-			for(var/T in techlvls) //This needs to use the better names.
-				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-		else
-			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+	// Research prospects, including boostable nodes and point values.
+	// Deliver to a console to know whether the boosts have already been used.
+	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
+	var/sep = ""
+	var/list/boostable_nodes = techweb_item_boost_check(src)
+	if (boostable_nodes)
+		for(var/id in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			research_msg += sep
+			research_msg += node.display_name
+			sep = ", "
+	var/points = techweb_item_point_check(src)
+	if (points)
+		research_msg += sep
+		research_msg += "[points] points"
+		sep = ", "
 
+	if (!sep) // nothing was shown
+		research_msg += "None"
 
-		if(materials.len)
-			msg += "<span class='notice'>Extractable materials:<BR>"
-			for(var/mat in materials)
-				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
-		else
-			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
-		msg += "*--------*"
-		to_chat(user, msg)
+	// Extractable materials. Only shows the names, not the amounts.
+	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
+	if (materials.len)
+		sep = ""
+		for(var/mat in materials)
+			research_msg += sep
+			research_msg += CallMaterialName(mat)
+			sep = ", "
+	else
+		research_msg += "None"
+	research_msg += "."
+	to_chat(user, research_msg.Join())
 
-/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+/obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return 1
 	ui_interact(user)
 
 /obj/item/ui_act(action, params)
@@ -274,7 +283,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
-
 /obj/item/attack_paw(mob/user)
 	if(!user)
 		return
@@ -319,6 +327,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
+// added one, fuck the police
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
 		var/obj/item/storage/S = W
@@ -338,14 +347,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					var/datum/progressbar/progress = new(user, len, loc)
 
 					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-						sleep(1)
+						stoplag(1)
 
 					qdel(progress)
 
 					to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
+					return
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
+				return
+	return ..()
 
 /obj/item/proc/handle_mass_pickup(obj/item/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
 	for(var/obj/item/I in things)
@@ -369,6 +381,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	progress.update(progress.goal - things.len)
 	return FALSE
 
+/obj/item/proc/GetDeconstructableContents()
+	return GetAllContents() - src
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -381,16 +396,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
+	SendSignal(COMSIG_ITEM_DROPPED, user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL_1 & flags_1)
 		qdel(src)
-	in_inventory = FALSE
+	item_flags &= ~IN_INVENTORY
+	SendSignal(COMSIG_ITEM_DROPPED,user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	in_inventory = TRUE
+	item_flags |= IN_INVENTORY
 	return
 
 
@@ -412,11 +429,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SendSignal(COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
-	in_inventory = TRUE
+	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
+	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -510,46 +529,33 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
 	if(eyes.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.disabilities & (NEARSIGHT | BLIND)))
-			if(M.become_nearsighted())
-				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		if(!(M.has_trait(TRAIT_BLIND) || M.has_trait(TRAIT_NEARSIGHT)))
+			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
 			if(M.stat != DEAD)
-				if(M.drop_item())
+				if(M.drop_all_held_items())
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Knockdown(40)
 		if (prob(eyes.eye_damage - 10 + 1))
-			if(M.become_blind())
-				to_chat(M, "<span class='danger'>You go blind!</span>")
-
-/obj/item/clean_blood()
-	. = ..()
-	if(.)
-		if(initial(icon) && initial(icon_state))
-			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
-			if(blood_splatter_icon)
-				cut_overlay(blood_splatter_icon)
-
-/obj/item/clothing/gloves/clean_blood()
-	. = ..()
-	if(.)
-		transfer_blood = 0
+			M.become_blind(EYE_DAMAGE)
+			to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FOUR)
 		throw_at(S,14,3, spin=0)
-	else return
+	else
+		return
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))
@@ -571,7 +577,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	throw_speed = initial(throw_speed) //explosions change this.
-	in_inventory = FALSE
+	item_flags &= ~IN_INVENTORY
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
@@ -584,6 +590,36 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
+/obj/item/proc/update_slot_icon()
+	if(!ismob(loc))
+		return
+	var/mob/owner = loc
+	var/flags = slot_flags
+	if(flags & SLOT_OCLOTHING)
+		owner.update_inv_wear_suit()
+	if(flags & SLOT_ICLOTHING)
+		owner.update_inv_w_uniform()
+	if(flags & SLOT_GLOVES)
+		owner.update_inv_gloves()
+	if(flags & SLOT_EYES)
+		owner.update_inv_glasses()
+	if(flags & SLOT_EARS)
+		owner.update_inv_ears()
+	if(flags & SLOT_MASK)
+		owner.update_inv_wear_mask()
+	if(flags & SLOT_HEAD)
+		owner.update_inv_head()
+	if(flags & SLOT_FEET)
+		owner.update_inv_shoes()
+	if(flags & SLOT_ID)
+		owner.update_inv_wear_id()
+	if(flags & SLOT_BELT)
+		owner.update_inv_belt()
+	if(flags & SLOT_BACK)
+		owner.update_inv_back()
+	if(flags & SLOT_NECK)
+		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
 	return heat
@@ -662,6 +698,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
 
+/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+	return TRUE
+
+ //Called BEFORE the object is ground up - use this to change grind results based on conditions
+ //Use "return -1" to prevent the grinding from occurring
+/obj/item/proc/on_grind()
+
+/obj/item/proc/on_juice()
+
 /obj/item/proc/set_force_string()
 	switch(force)
 		if(0 to 4)
@@ -681,15 +726,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	last_force_string_check = force
 
 /obj/item/proc/openTip(location, control, params, user)
-	if(last_force_string_check != force && !force_string_override)
+	if(last_force_string_check != force && !(item_flags & FORCE_STRING_OVERRIDE))
 		set_force_string()
-	if(!force_string_override)
+	if(!(item_flags & FORCE_STRING_OVERRIDE))
 		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
 	else
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if(in_inventory && usr.client.prefs.enable_tips)
+	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips)
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
@@ -698,3 +743,71 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+
+// Called when a mob tries to use the item as a tool.
+// Handles most checks.
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
+	// Run the start check here so we wouldn't have to call it manually.
+	if(!delay && !tool_start_check(user, amount))
+		return
+
+	delay *= toolspeed
+
+	// Play tool sound at the beginning of tool usage.
+	play_tool_sound(target, volume)
+
+	if(delay)
+		// Create a callback with checks that would be called every tick by do_after.
+		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+
+		if(ismob(target))
+			if(!do_mob(user, target, delay, extra_checks=tool_check))
+				return
+
+		else
+			if(!do_after(user, delay, target=target, extra_checks=tool_check))
+				return
+	else
+		// Invoke the extra checks once, just in case.
+		if(extra_checks && !extra_checks.Invoke())
+			return
+
+	// Use tool's fuel, stack sheets or charges if amount is set.
+	if(amount && !use(amount))
+		return
+
+	// Play tool sound at the end of tool usage,
+	// but only if the delay between the beginning and the end is not too small
+	if(delay >= MIN_TOOL_SOUND_DELAY)
+		play_tool_sound(target, volume)
+
+	return TRUE
+
+// Called before use_tool if there is a delay, or by use_tool if there isn't.
+// Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
+/obj/item/proc/tool_start_check(mob/living/user, amount=0)
+	return tool_use_check(user, amount)
+
+// A check called by tool_start_check once, and by use_tool on every tick of delay.
+/obj/item/proc/tool_use_check(mob/living/user, amount)
+	return !amount
+
+// Generic use proc. Depending on the item, it uses up fuel, charges, sheets, etc.
+// Returns TRUE on success, FALSE on failure.
+/obj/item/proc/use(used)
+	return !used
+
+// Plays item's usesound, if any.
+/obj/item/proc/play_tool_sound(atom/target, volume=50)
+	if(target && usesound && volume)
+		var/played_sound = usesound
+
+		if(islist(usesound))
+			played_sound = pick(usesound)
+
+		playsound(target, played_sound, volume, 1)
+
+// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())

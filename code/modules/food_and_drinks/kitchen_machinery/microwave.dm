@@ -15,6 +15,7 @@
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
+	var/datum/looping_sound/microwave/soundloop
 
 //Microwaving doesn't use recipes, instead it calls the microwave_act of the objects. For food, this creates something based on the food's cooked_type
 
@@ -25,6 +26,7 @@
 /obj/machinery/microwave/Initialize()
 	. = ..()
 	create_reagents(100)
+	soundloop = new(list(src), FALSE)
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -60,7 +62,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -71,7 +73,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -79,7 +81,7 @@
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
 				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER_1
+				src.container_type = OPENCONTAINER
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -96,7 +98,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
+			src.container_type = OPENCONTAINER
 			src.updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
@@ -117,7 +119,7 @@
 			src.dirty = 0 // It's clean!
 			src.broken = 0 // just to be sure
 			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER_1
+			src.container_type = OPENCONTAINER
 
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
@@ -142,11 +144,10 @@
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 
-			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -166,6 +167,10 @@
 		return
 	user.set_machine(src)
 	interact(user)
+
+/obj/machinery/microwave/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE) && !(operating || broken > 0 || panel_open || !anchored || dirty == 100))
+		cook()
 
 /*******************
 *   Microwave Menu
@@ -198,8 +203,8 @@
 			dat += "The microwave is empty.</div>"
 		else
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
-		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
-		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
+		dat += "<A href='?src=[REF(src)];action=cook'>Turn on</A>"
+		dat += "<A href='?src=[REF(src)];action=dispose'>Eject ingredients</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
@@ -267,6 +272,7 @@
 
 /obj/machinery/microwave/proc/start()
 	visible_message("The microwave turns on.", "<span class='italics'>You hear a microwave humming.</span>")
+	soundloop.start()
 	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
@@ -275,14 +281,14 @@
 	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/stop()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
 	for (var/obj/O in contents)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
 
@@ -291,7 +297,6 @@
 	icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 	visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	dirty = 100 // Make it dirty so it can't be used util cleaned
 	icon_state = "mwbloody" // Make it look dirty too
@@ -301,6 +306,7 @@
 		if(prob(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
+	soundloop.stop()
 
 /obj/machinery/microwave/proc/broke()
 	var/datum/effect_system/spark_spread/s = new
@@ -312,6 +318,7 @@
 	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
+	soundloop.stop()
 
 /obj/machinery/microwave/Topic(href, href_list)
 	if(..() || panel_open)

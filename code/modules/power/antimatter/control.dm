@@ -159,14 +159,14 @@
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
 		if(!anchored)
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
@@ -260,17 +260,15 @@
 			if(AMS.processing)
 				AMS.shutdown_core()
 			AMS.control_unit = null
-			spawn(10)
-				AMS.controllerscan()
+			addtimer(CALLBACK(AMS, /obj/machinery/am_shielding.proc/controllerscan), 10)
 		linked_shielding = list()
-
 	else
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			AMS.update_icon()
-	spawn(20)
-		shield_icon_delay = 0
-	return
+	addtimer(CALLBACK(src, .proc/reset_shield_icon_delay), 20)
 
+/obj/machinery/power/am_control_unit/proc/reset_shield_icon_delay()
+	shield_icon_delay = 0
 
 /obj/machinery/power/am_control_unit/proc/check_core_stability()
 	if(stored_core_stability_delay || linked_cores.len <= 0)
@@ -280,10 +278,10 @@
 	for(var/obj/machinery/am_shielding/AMS in linked_cores)
 		stored_core_stability += AMS.stability
 	stored_core_stability/=linked_cores.len
-	spawn(40)
-		stored_core_stability_delay = 0
-	return
+	addtimer(CALLBACK(src, .proc/reset_stored_core_stability_delay), 40)
 
+/obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
+	stored_core_stability_delay = 0
 
 /obj/machinery/power/am_control_unit/interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
@@ -295,28 +293,28 @@
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
+	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>Refresh</A><BR>"
+	dat += "<A href='?src=[REF(src)];refreshicons=1'>Force Shielding Update</A><BR><BR>"
 	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
-	dat += "<A href='?src=\ref[src];togglestatus=1'>Toggle Status</A><BR>"
+	dat += "<A href='?src=[REF(src)];togglestatus=1'>Toggle Status</A><BR>"
 
 	dat += "Stability: [stability]%<BR>"
 	dat += "Reactor parts: [linked_shielding.len]<BR>"//TODO: perhaps add some sort of stability check
 	dat += "Cores: [linked_cores.len]<BR><BR>"
 	dat += "-Current Efficiency: [reported_core_efficiency]<BR>"
-	dat += "-Average Stability: [stored_core_stability] <A href='?src=\ref[src];refreshstability=1'>(update)</A><BR>"
+	dat += "-Average Stability: [stored_core_stability] <A href='?src=[REF(src)];refreshstability=1'>(update)</A><BR>"
 	dat += "Last Produced: [DisplayPower(stored_power)]<BR>"
 
 	dat += "Fuel: "
 	if(!fueljar)
 		dat += "<BR>No fuel receptacle detected."
 	else
-		dat += "<A href='?src=\ref[src];ejectjar=1'>Eject</A><BR>"
+		dat += "<A href='?src=[REF(src)];ejectjar=1'>Eject</A><BR>"
 		dat += "- [fueljar.fuel]/[fueljar.fuel_max] Units<BR>"
 
 		dat += "- Injecting: [fuel_injection] units<BR>"
-		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
+		dat += "- <A href='?src=[REF(src)];strengthdown=1'>--</A>|<A href='?src=[REF(src)];strengthup=1'>++</A><BR><BR>"
 
 
 	user << browse(dat, "window=AMcontrol;size=420x500")
@@ -341,7 +339,7 @@
 
 	if(href_list["ejectjar"])
 		if(fueljar)
-			fueljar.loc = src.loc
+			fueljar.forceMove(drop_location())
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it

@@ -32,7 +32,7 @@
 
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"
-	desc = "Generates cannon pulse. Needs to be linked with a fusor. "
+	desc = "Generates cannon pulse. Needs to be linked with a fusor."
 	icon_state = "power_box"
 
 /obj/machinery/bsa/back/attackby(obj/item/W, mob/user, params)
@@ -126,7 +126,6 @@
 	desc = "Long range bluespace artillery."
 	icon = 'icons/obj/lavaland/cannon.dmi'
 	icon_state = "orbital_cannon1"
-	unsecuring_tool = null
 	var/static/mutable_appearance/top_layer
 	var/ex_power = 3
 	var/power_used_per_shot = 2000000 //enough to kil standard apc - todo : make this use wires instead and scale explosion power with it
@@ -263,8 +262,7 @@
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()
 	if(istype(target, /area))
-		var/area/A = target
-		return A.name
+		return get_area_name(target, TRUE)
 	else if(istype(target, /obj/item/device/gps))
 		var/obj/item/device/gps/G = target
 		return G.gpstag

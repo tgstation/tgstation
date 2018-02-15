@@ -1,10 +1,9 @@
 /obj/item/grenade/syndieminibomb
-	desc = "A syndicate manufactured explosive used to sow destruction and chaos"
+	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	item_state = "flashbang"
-	origin_tech = "materials=3;magnets=4;syndicate=3"
 
 
 /obj/item/grenade/syndieminibomb/prime()
@@ -16,7 +15,6 @@
 	name = "HE Grenade"
 	desc = "A compact shrapnel grenade meant to devestate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
 	icon_state = "concussion"
-	origin_tech = "materials=3;magnets=4;syndicate=2"
 
 /obj/item/grenade/syndieminibomb/concussion/prime()
 	update_mob()
@@ -35,13 +33,13 @@
 	icon_state = "bluefrag"
 	item_state = "flashbang"
 	var/freeze_range = 4
-	var/rad_damage = 35
+	var/rad_damage = 350
 	var/stamina_damage = 30
 
 /obj/item/grenade/gluon/prime()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
-	radiation_pulse(loc,freeze_range,freeze_range+1,rad_damage)
+	radiation_pulse(src, rad_damage)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isfloorturf(T))
 			var/turf/open/floor/F = T

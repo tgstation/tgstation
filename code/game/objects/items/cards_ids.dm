@@ -19,6 +19,10 @@
 
 	var/list/files = list()
 
+/obj/item/card/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/card/data
 	name = "data disk"
 	desc = "A disk of data."
@@ -55,15 +59,14 @@
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	origin_tech = "magnets=2;syndicate=2"
 	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_MAT_REDEMPTION_2
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
-	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
 
 /obj/item/card/emag/attack()
@@ -74,6 +77,18 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+
+/obj/item/card/emagfake
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/emagfake/afterattack()
+	. = ..()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 
 /obj/item/card/id
 	name = "identification card"
@@ -106,10 +121,11 @@
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
+		add_fingerprint(user)
+		return
 
 /obj/item/card/id/examine(mob/user)
 	..()
@@ -145,6 +161,12 @@ update_label("John Doe", "Clowny")
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
+/obj/item/card/id/silver/reaper
+	name = "Thirteen's ID Card (Reaper)"
+	access = list(ACCESS_MAINT_TUNNELS)
+	assignment = "Reaper"
+	registered_name = "Thirteen"
+
 /obj/item/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
@@ -156,7 +178,6 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	origin_tech = "syndicate=1"
 	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
 
 /obj/item/card/id/syndicate/Initialize()
@@ -180,14 +201,14 @@ update_label("John Doe", "Clowny")
 	if(isliving(user) && user.mind)
 		if(user.mind.special_role || anyone)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
+				var/t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 					if (t)
 						alert("Invalid name.")
 					return
 				registered_name = t
 
-				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
+				var/u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
 				if(!u)
 					registered_name = ""
 					return
@@ -199,6 +220,10 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/syndicate/anyone
 	anyone = TRUE
+
+/obj/item/card/id/syndicate/nuke_leader
+	name = "lead agent card"
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
@@ -224,7 +249,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/centcom
 	name = "\improper CentCom ID"
-	desc = "An ID straight from Cent. Com."
+	desc = "An ID straight from Central Command."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -235,7 +260,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
-	desc = "A ERT ID card"
+	desc = "An ERT ID card."
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
@@ -351,6 +376,6 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
-	desc = "Special ID card to allow access to APCs"
+	desc = "Special ID card to allow access to APCs."
 	icon_state = "centcom"
 	access = list(ACCESS_ENGINE_EQUIP)

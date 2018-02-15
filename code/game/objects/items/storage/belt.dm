@@ -4,10 +4,16 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+
+/obj/item/storage/belt/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins belting themselves with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/storage/belt/update_icon()
 	cut_overlays()
@@ -37,6 +43,7 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves
@@ -87,6 +94,16 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
+
+/obj/item/storage/belt/utility/servant/PopulateContents()
+	new /obj/item/screwdriver/brass(src)
+	new /obj/item/wirecutters/brass(src)
+	new /obj/item/wrench/brass(src)
+	new /obj/item/crowbar/brass(src)
+	new /obj/item/weldingtool/experimental/brass(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src, 30, "yellow")
+
 
 
 
@@ -215,7 +232,7 @@
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
-		/obj/item/ore,
+		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
@@ -240,7 +257,7 @@
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
-	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
+	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
 	storage_slots = 6
@@ -494,7 +511,7 @@
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]

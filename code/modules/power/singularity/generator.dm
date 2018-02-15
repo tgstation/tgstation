@@ -32,7 +32,7 @@
 	if(energy > 0)
 		if(energy >= 200)
 			var/turf/T = get_turf(src)
-			SSblackbox.add_details("engine_started","[src.type]")
+			SSblackbox.record_feedback("tally", "engine_started", 1, type)
 			var/obj/singularity/S = new creation_type(T, 50)
 			transfer_fingerprints_to(S)
 			qdel(src)

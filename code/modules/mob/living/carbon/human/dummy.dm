@@ -14,7 +14,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
-	QDEL_LIST(contents)
+	delete_equipment()
 	cut_overlays(TRUE)
 
 //Inefficient pooling/caching way.

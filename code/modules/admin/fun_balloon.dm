@@ -51,15 +51,15 @@
 		bodies += M
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, "pAI", null, FALSE, 100, bodies)
-	while(candidates.len && bodies.len)
-		var/mob/dead/observer/ghost = pick_n_take(candidates)
+	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
+	while(LAZYLEN(candidates) && LAZYLEN(bodies))
+		var/client/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
 		to_chat(body, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(ghost)] has taken control of ([key_name_admin(body)])")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(0)
-		body.key = ghost.key
+		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
@@ -95,7 +95,7 @@
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
-			SM.loc = get_ranged_target_turf(SM, new_dir, rand(3,15))
+			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
 			break
 	qdel(src)
 
@@ -104,32 +104,38 @@
 
 /obj/effect/shuttle_build
 	name = "shuttle_build"
-	desc = "Some assembly required"
+	desc = "Some assembly required."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
 
 /obj/effect/shuttle_build/New()
-	SSshuttle.emergency.dock(SSshuttle.getDock("emergency_home"))
+	SSshuttle.emergency.initiate_docking(SSshuttle.getDock("emergency_home"))
 	qdel(src)
 
 //Arena
 
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
-	var/list/warp_points = list()
+	var/list/warp_points
 
+/obj/effect/forcefield/arena_shuttle/Initialize()
+	. = ..()
+	warp_points = get_area_turfs(/area/shuttle/escape)
+	for(var/thing in warp_points)
+		CHECK_TICK
+		var/turf/T = thing
+		if(istype(T.loc, /area/shuttle/escape/backup))
+			warp_points -= T
+			continue
+		for(var/atom/movable/TAM in T)
+			if(TAM.density && TAM.anchored)
+				warp_points -= T
+				break
 
 /obj/effect/forcefield/arena_shuttle/CollidedWith(atom/movable/AM)
 	if(!isliving(AM))
 		return
-	if(!warp_points.len)
-		warp_points = get_area_turfs(/area/shuttle/escape)
-		for(var/turf/T in warp_points)
-			for(var/atom/movable/TAM in T)
-				if(TAM.density && TAM.anchored)
-					warp_points -= T
-					break
 
 	var/mob/living/L = AM
 	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))

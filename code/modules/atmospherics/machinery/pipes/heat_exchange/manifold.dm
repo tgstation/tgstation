@@ -3,12 +3,15 @@
 	icon_state = "manifold"
 
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 
 	dir = SOUTH
 	initialize_directions_he = EAST|NORTH|WEST
 
 	device_type = TRINARY
+
+	construction_type = /obj/item/pipe/trinary
+	pipe_state = "he_manifold"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
 	switch(dir)
@@ -29,20 +32,23 @@
 	cut_overlays()
 
 	//Add non-broken pieces
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, NODE_I)))
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, nodes[i])))
 
 //4-way manifold
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 	icon_state = "manifold4w"
 
 	name = "4-way pipe manifold"
-	desc = "A manifold composed of heat-exchanging pipes"
+	desc = "A manifold composed of heat-exchanging pipes."
 
 	initialize_directions_he = NORTH|SOUTH|EAST|WEST
 
 	device_type = QUATERNARY
+
+	construction_type = /obj/item/pipe/quaternary
+	pipe_state = "he_manifold4w"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/SetInitDirections()
 	initialize_directions_he = initial(initialize_directions_he)
@@ -55,6 +61,6 @@
 	cut_overlays()
 
 	//Add non-broken pieces
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, NODE_I)))
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/heat.dmi', "manifold_intact[invis]", get_dir(src, nodes[i])))

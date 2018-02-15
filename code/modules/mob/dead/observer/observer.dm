@@ -30,7 +30,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
+	var/health_scan = FALSE //Are health scans currently enabled?
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -58,7 +59,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	verbs += list(
 		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu)
+		/mob/dead/observer/proc/open_spawners_menu,
+		/mob/dead/observer/proc/view_gas)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -105,9 +107,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
+			T = SSmapping.get_station_center()
 
-	loc = T
+	forceMove(T)
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
@@ -286,10 +288,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/oldloc = loc
 
 	if(NewLoc)
-		loc = NewLoc
+		forceMove(NewLoc)
 		update_parallax_contents()
 	else
-		loc = get_turf(src) //Get out of closets and such as a ghost
+		forceMove(get_turf(src))  //Get out of closets and such as a ghost
 		if((direct & NORTH) && y < world.maxy)
 			y++
 		else if((direct & SOUTH) && y > 1)
@@ -303,15 +305,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_active()
 	return 0
-
-/mob/dead/observer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(SSticker.HasRoundStarted())
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -327,7 +320,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.change_view(world.view)
+	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
@@ -338,7 +331,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(message)
 		to_chat(src, "<span class='ghostalert'>[message]</span>")
 		if(source)
-			var/obj/screen/alert/A = throw_alert("\ref[source]_notify_cloning", /obj/screen/alert/notify_cloning)
+			var/obj/screen/alert/A = throw_alert("[REF(source)]_notify_cloning", /obj/screen/alert/notify_cloning)
 			if(A)
 				if(client && client.prefs && client.prefs.UI_style)
 					A.icon = ui_style2icon(client.prefs.UI_style)
@@ -350,7 +343,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.add_overlay(source)
 				source.layer = old_layer
 				source.plane = old_plane
-	to_chat(src, "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>")
+	to_chat(src, "<span class='ghostalert'><a href=?src=[REF(src)];reenter=1>(Click to re-enter)</a></span>")
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
@@ -378,8 +371,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
-	usr.loc = pick(L)
+	usr.forceMove(pick(L))
 	update_parallax_contents()
+
+/mob/dead/observer/proc/view_gas()
+	set category = "Ghost"
+	set name = "View Gases"
+	set desc= "View the atmospheric conditions in a location"
+
+	var/turf/loc = get_turf(src)
+	show_air_status_to(loc, usr)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -452,7 +453,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
+				A.forceMove(T)
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
@@ -463,29 +464,30 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range."
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == world.view)
+	if(client.view == CONFIG_GET(string/default_view))
 		var/list/views = list()
-		for(var/i in 1 to max_view)
+		for(var/i in 7 to max_view)
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(Clamp(new_view, 1, max_view))
+			client.change_view(CLAMP(new_view, 7, max_view))
 	else
-		client.change_view(world.view)
+		client.change_view(CONFIG_GET(string/default_view))
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.change_view(Clamp(client.view + input, 1, max_view))
+		client.rescale_view(input, 15, (max_view*2)+1)
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
 	set name = "Boo!"
 	set desc= "Scare your crew members because of boredom!"
 
-	if(bootime > world.time) return
+	if(bootime > world.time)
+		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L)
 		L.flicker()
@@ -572,7 +574,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Take over the body of a mindless creature!"
 
 	var/list/possessible = list()
-	for(var/mob/living/L in GLOB.living_mob_list)
+	for(var/mob/living/L in GLOB.alive_mob_list)
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
@@ -585,6 +587,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
+	if(istype (target, /mob/living/simple_animal/hostile/spawner))
+		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
+		return 0
+
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -595,14 +601,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	target.faction = list("neutral")
 	return 1
-
-/proc/show_server_hop_transfer_screen(expected_key)
-	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
-			break
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -625,7 +623,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
-	if(!usr || !over) return
+	if(!usr || !over)
+		return
 	if (isobserver(usr) && usr.client.holder && isliving(over))
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
@@ -681,6 +680,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
 
+/mob/dead/observer/verb/toggle_health_scan()
+	set name = "Toggle Health Scan"
+	set desc = "Toggles whether you health-scan living beings on click"
+	set category = "Ghost"
+
+	if(health_scan) //remove old huds
+		to_chat(src, "<span class='notice'>Health scan disabled.</span>")
+		health_scan = FALSE
+	else
+		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
+		health_scan = TRUE
+
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"
 	set desc = "Sets your deadchat name and ghost appearance to your \
@@ -709,10 +720,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_icon()
 
-/mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
-	if(check_rights(R_ADMIN, 0))
-		return 1
-	return
+/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
 	return 1

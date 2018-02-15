@@ -25,8 +25,11 @@
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
+	path_image_color = "#DDDDFF"
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
+	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/firstaid = /obj/item/storage/firstaid
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/mob/living/carbon/patient = null
 	var/mob/living/carbon/oldpatient = null
@@ -136,37 +139,37 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>Medical Unit Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 	dat += "Beaker: "
 	if(reagent_glass)
-		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
+		dat += "<A href='?src=[REF(src)];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
 	if(!locked || issilicon(user) || IsAdminGhost(user))
 		dat += "<TT>Healing Threshold: "
-		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
+		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
+		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
 		dat += "[heal_threshold] "
-		dat += "<a href='?src=\ref[src];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=\ref[src];adj_threshold=10'>++</a>"
+		dat += "<a href='?src=[REF(src)];adj_threshold=5'>+</a> "
+		dat += "<a href='?src=[REF(src)];adj_threshold=10'>++</a>"
 		dat += "</TT><br>"
 
 		dat += "<TT>Injection Level: "
-		dat += "<a href='?src=\ref[src];adj_inject=-5'>-</a> "
+		dat += "<a href='?src=[REF(src)];adj_inject=-5'>-</a> "
 		dat += "[injection_amount] "
-		dat += "<a href='?src=\ref[src];adj_inject=5'>+</a> "
+		dat += "<a href='?src=[REF(src)];adj_inject=5'>+</a> "
 		dat += "</TT><br>"
 
 		dat += "Reagent Source: "
-		dat += "<a href='?src=\ref[src];use_beaker=1'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
+		dat += "<a href='?src=[REF(src)];use_beaker=1'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
-		dat += "Treat Viral Infections: <a href='?src=\ref[src];virus=1'>[treat_virus ? "Yes" : "No"]</a><br>"
-		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
-		dat += "Critical Patient Alerts: <a href='?src=\ref[src];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
-		dat += "Patrol Station: <a href='?src=\ref[src];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
-		dat += "Stationary Mode: <a href='?src=\ref[src];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
+		dat += "Treat Viral Infections: <a href='?src=[REF(src)];virus=1'>[treat_virus ? "Yes" : "No"]</a><br>"
+		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=[REF(src)];togglevoice=[1]'>Toggle</a><br>"
+		dat += "Critical Patient Alerts: <a href='?src=[REF(src)];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
+		dat += "Patrol Station: <a href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
+		dat += "Stationary Mode: <a href='?src=[REF(src)];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
 
 	return dat
 
@@ -194,7 +197,7 @@
 		use_beaker = !use_beaker
 
 	else if(href_list["eject"] && (!isnull(reagent_glass)))
-		reagent_glass.loc = get_turf(src)
+		reagent_glass.forceMove(drop_location())
 		reagent_glass = null
 
 	else if(href_list["togglevoice"])
@@ -223,10 +226,9 @@
 		if(!isnull(reagent_glass))
 			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
 
-		W.loc = src
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
@@ -341,14 +343,22 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
-		return 0 //welp too late for them!
+	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
+		return FALSE	//welp too late for them!
+
+	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
+		return FALSE
 
 	if(C.suiciding)
-		return 0 //Kevorkian school of robotic medical assistants.
+		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
-		return 1
+		return TRUE
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
+			return FALSE // Skip over them if they have no exposed flesh.
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
@@ -357,31 +367,31 @@
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
 			if(!C.reagents.has_reagent(R.id))
-				return 1
+				return TRUE
 
 	//They're injured enough for it!
 	if((!C.reagents.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
-		return 1 //If they're already medicated don't bother!
+		return TRUE //If they're already medicated don't bother!
 
 	if((!C.reagents.has_reagent(treatment_oxy_avoid)) && (C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
-		return 1
+		return TRUE
 
 	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
-		return 1
+		return TRUE
 
 	if((!C.reagents.has_reagent(treatment_tox_avoid)) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
-		return 1
+		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
 		for(var/thing in C.viruses)
 			var/datum/disease/D = thing
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
-			&& D.severity != NONTHREAT \
-			&& (D.stage > 1 || (D.spread_flags & AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
-				return 1 //STOP DISEASE FOREVER
+			&& D.severity != VIRUS_SEVERITY_POSITIVE \
+			&& (D.stage > 1 || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))) // medibot can't detect a virus in its initial stage unless it spreads airborne.
+				return TRUE //STOP DISEASE FOREVER
 
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A))
@@ -408,7 +418,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
+	if(C.stat == DEAD || (C.has_trait(TRAIT_FAKEDEATH)))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -429,8 +439,8 @@
 				var/datum/disease/D = thing
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
-					if(D.severity != NONTHREAT)      //virus is harmful
-						if((D.stage > 1) || (D.spread_flags & AIRBORNE))
+					if(D.severity != VIRUS_SEVERITY_POSITIVE)      //virus is harmful
+						if((D.stage > 1) || (D.spread_flags & VIRUS_SPREAD_AIRBORNE))
 							virus = 1
 
 			if(!reagent_id && (virus))
@@ -476,7 +486,7 @@
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
-		var/failed = FALSE;
+		var/failed = FALSE
 		if(do_mob(src, patient, 30))	//Is C == patient? This is so confusing
 			if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
@@ -505,29 +515,26 @@
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
 	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
-		return 0
+		return FALSE
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
 	if(current_volume + injection_amount > R.overdose_threshold)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 
-	new /obj/item/storage/firstaid(Tsec)
-
+	drop_part(firstaid, Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-
-	new /obj/item/device/healthanalyzer(Tsec)
+	drop_part(healthanalyzer, Tsec)
 
 	if(reagent_glass)
-		reagent_glass.loc = Tsec
-		reagent_glass = null
+		drop_part(reagent_glass, Tsec)
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
@@ -543,4 +550,4 @@
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)

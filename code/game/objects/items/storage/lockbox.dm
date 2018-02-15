@@ -123,11 +123,17 @@
 	icon_broken = "medalbox+b"
 	can_hold = list(/obj/item/clothing/accessory/medal)
 
-/obj/item/storage/lockbox/medal/AltClick()
-	if(!locked)
-		open = (open ? FALSE : TRUE)
-		update_icon()
+/obj/item/storage/lockbox/medal/examine(mob/user)
 	..()
+	if(!locked)
+		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+
+/obj/item/storage/lockbox/medal/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		if(!locked)
+			open = (open ? FALSE : TRUE)
+			update_icon()
+		..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -171,6 +177,14 @@
 /obj/item/storage/lockbox/medal/sec/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/silver/security(src)
+
+/obj/item/storage/lockbox/medal/cargo
+	name = "cargo award box"
+	desc = "A locked box used to store awards to be given to members of the cargo department."
+	req_access = list(ACCESS_QM)
+
+/obj/item/storage/lockbox/medal/cargo/PopulateContents()
+		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"

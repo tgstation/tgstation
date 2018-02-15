@@ -18,7 +18,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "af" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -31,7 +31,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ah" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -59,8 +59,6 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "an" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
@@ -73,7 +71,6 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
@@ -87,7 +84,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "aq" = (
-/turf/open/floor/engine,
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "ar" = (
@@ -107,8 +103,6 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "au" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -214,8 +208,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aN" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -290,7 +283,7 @@
 "aY" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aZ" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -301,8 +294,7 @@
 "bb" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -310,13 +302,9 @@
 /obj/structure/table,
 /obj/item/stock_parts/cell/hyper,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
@@ -324,7 +312,6 @@
 "bd" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
@@ -376,7 +363,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "bk" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -422,7 +409,7 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/glowshroom/single,
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/blood/old{
@@ -467,8 +454,6 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bs" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -512,7 +497,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "by" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
 	name = "Security Checkpoint";
 	req_access_txt = "63"
@@ -610,7 +595,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bM" = (
-/obj/machinery/computer,
+/obj/machinery/computer{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bN" = (
@@ -691,7 +678,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -736,13 +722,9 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bZ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
@@ -756,7 +738,6 @@
 	pixel_y = 2
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
@@ -790,8 +771,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -837,8 +816,6 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cj" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
@@ -851,7 +828,6 @@
 	pixel_y = -24
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
@@ -892,8 +868,6 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cp" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
@@ -901,8 +875,6 @@
 "cq" = (
 /obj/structure/barricade/wooden,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -914,24 +886,18 @@
 	},
 /obj/structure/barricade/wooden,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cs" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ct" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
@@ -963,13 +929,9 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
@@ -981,21 +943,17 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cy" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
 	name = "checkpoint security doors"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
@@ -1003,8 +961,6 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cz" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1016,16 +972,12 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost)
 "cB" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
@@ -1036,7 +988,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -1056,7 +1008,7 @@
 	icon_state = "trails_1";
 	dir = 10
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -1100,20 +1052,15 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cH" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cI" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/janitorialcart,
@@ -1126,8 +1073,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/item/mop,
@@ -1145,8 +1090,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1163,8 +1106,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1177,8 +1118,6 @@
 	},
 /obj/structure/glowshroom/single,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1190,13 +1129,9 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -1356,8 +1291,6 @@
 	},
 /obj/machinery/light,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
@@ -1374,8 +1307,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
@@ -1397,8 +1328,6 @@
 	name = "pried-open airlock"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -1418,8 +1347,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
@@ -1448,7 +1375,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	name = "Miss Tiggles"
 	},
 /turf/open/floor/plasteel,
@@ -1515,8 +1442,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1639,8 +1564,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1725,8 +1648,6 @@
 	name = "gelatinous floor"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1777,8 +1698,6 @@
 	dir = 9
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1790,7 +1709,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -1808,7 +1726,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -1890,8 +1807,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dY" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/turf_decal/delivery,
@@ -1947,8 +1863,6 @@
 	name = "dried blood trail"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
@@ -1968,7 +1882,7 @@
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";
 	name = "gelatinous floor"
 	},
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
@@ -1997,8 +1911,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ek" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/cardboard/fifty,
 /obj/effect/turf_decal/delivery,
@@ -2012,9 +1925,7 @@
 	pixel_x = 24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -2046,8 +1957,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eq" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar,
 /turf/open/floor/plasteel,
@@ -2072,8 +1982,6 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eu" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -2120,8 +2028,6 @@
 	dir = 5
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -2135,8 +2041,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eB" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/paicard,
 /obj/machinery/light,
@@ -2186,8 +2091,6 @@
 	dir = 10
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
@@ -2204,8 +2107,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -2217,8 +2118,6 @@
 	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -2246,16 +2145,10 @@ aa
 aa
 aa
 aa
-aa
-aa
 ad
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -2278,8 +2171,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 aA
 aA
 aA
@@ -2304,17 +2195,11 @@ ad
 ad
 aa
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa
 "}
 (3,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2349,14 +2234,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (4,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2391,14 +2270,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (5,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2433,14 +2306,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (6,1,1) = {"
-aa
-aa
 aa
 ad
 ad
@@ -2475,14 +2342,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (7,1,1) = {"
-aa
-aa
 aa
 ab
 ab
@@ -2517,14 +2378,8 @@ ad
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (8,1,1) = {"
-aa
-aa
 aa
 ab
 af
@@ -2559,14 +2414,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (9,1,1) = {"
-aa
-aa
 ab
 ab
 ab
@@ -2601,14 +2450,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (10,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2643,14 +2486,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (11,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2685,14 +2522,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (12,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2727,14 +2558,8 @@ aC
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (13,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2769,14 +2594,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (14,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2811,14 +2630,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (15,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2853,14 +2666,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (16,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2895,14 +2702,8 @@ aC
 aC
 ad
 aa
-aa
-aa
-aa
-aa
 "}
 (17,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2937,14 +2738,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (18,1,1) = {"
-aa
-aa
 ac
 ae
 ag
@@ -2979,14 +2774,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (19,1,1) = {"
-aa
-aa
 ab
 ab
 ab
@@ -3021,14 +2810,8 @@ aC
 aC
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (20,1,1) = {"
-aa
-aa
 aa
 ab
 ah
@@ -3063,14 +2846,8 @@ aC
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (21,1,1) = {"
-aa
-aa
 aa
 ab
 ab
@@ -3105,14 +2882,8 @@ aC
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (22,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3147,14 +2918,8 @@ ad
 ad
 ad
 ad
-aa
-aa
-aa
-aa
 "}
 (23,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3189,14 +2954,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (24,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3231,14 +2990,8 @@ ad
 ad
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (25,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3273,14 +3026,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (26,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3315,14 +3062,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (27,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3357,14 +3098,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (28,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3399,14 +3134,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (29,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3441,14 +3170,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (30,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3483,14 +3206,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (31,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3525,14 +3242,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (32,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3567,14 +3278,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (33,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3609,14 +3314,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (34,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3651,14 +3350,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (35,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3693,14 +3386,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (36,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3735,14 +3422,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (37,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3777,14 +3458,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (38,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3819,14 +3494,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (39,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3861,14 +3530,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
 "}
 (40,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -3892,10 +3555,6 @@ cm
 aa
 ad
 ad
-aa
-aa
-aa
-aa
 aa
 aa
 aa

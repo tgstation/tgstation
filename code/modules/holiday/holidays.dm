@@ -8,6 +8,9 @@
 	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
 	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
+	var/current_year = 0
+	var/year_offset = 0
+	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -33,7 +36,7 @@
 	if(!end_month)
 		end_month = begin_month
 	if(begin_week && begin_weekday)
-		if(begin_week == ww && begin_weekday == ddd)
+		if(begin_week == ww && begin_weekday == ddd && begin_month == mm)
 			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
@@ -172,11 +175,13 @@
 	name = "Labor Day"
 	begin_day = 1
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/head/hardhat
 
 /datum/holiday/firefighter
 	name = "Firefighter's Day"
 	begin_day = 4
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/head/hardhat/red
 
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
@@ -190,6 +195,7 @@
 	name = "Doctor's Day"
 	begin_day = 1
 	begin_month = JULY
+	drone_hat = /obj/item/clothing/head/nursehat
 
 /datum/holiday/UFO
 	name = "UFO Day"
@@ -221,6 +227,7 @@
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
 	begin_month = SEPTEMBER
+	drone_hat = /obj/item/clothing/head/pirate
 
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
@@ -272,7 +279,7 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 30
+	begin_day = 28
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
@@ -321,6 +328,7 @@
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
+	drone_hat = /obj/item/clothing/head/that //This is the closest we can get to a pilgrim's hat
 
 /datum/holiday/thanksgiving/canada
 	name = "Thanksgiving in Canada"
@@ -384,21 +392,35 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
 	begin_month = DECEMBER
+	drone_hat = /obj/item/clothing/mask/rat/tribal
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 22
 	begin_month = DECEMBER
-	end_day = 25
+	end_day = 27
+	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/xmas/celebrate()
+	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+
+/datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
+		Monitor.icon_state = "entertainment_xmas"
+
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
+
 
 /datum/holiday/festive_season
 	name = FESTIVE_SEASON
 	begin_day = 1
 	begin_month = DECEMBER
 	end_day = 31
+	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
@@ -421,54 +443,17 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter
 	name = EASTER
+	drone_hat = /obj/item/clothing/head/rabbitears
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
-// Easter's celebration day is as snowflakey as Uhangi's code
-
 	if(!begin_month)
+		current_year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/easterResults = EasterDate(current_year+year_offset)
 
-		var/yy_string = "[yy]"
-// year = days after March 22that Easter falls on that year.
-// For 2015 Easter is on April 5th, so 2015 = 14 since the 5th is 14 days past the 22nd
-// If it's 2040 and this is still in use, invent a time machine and teach me a better way to do this. Also tell us about HL3.
-		var/list/easters = list(
-		"15" = 14,\
-		"16" = 6,\
-		"17" = 25,\
-		"18" = 10,\
-		"19" = 30,\
-		"20" = 22,\
-		"21" = 13,\
-		"22" = 26,\
-		"23" = 18,\
-		"24" = 9,\
-		"25" = 29,\
-		"26" = 14,\
-		"27" = 6,\
-		"28" = 25,\
-		"29" = 10,\
-		"30" = 30,\
-		"31" = 23,\
-		"32" = 6,\
-		"33" = 26,\
-		"34" = 18,\
-		"35" = 3,\
-		"36" = 22,\
-		"37" = 14,\
-		"38" = 34,\
-		"39" = 19,\
-		"40" = 9,\
-		)
-
-		begin_day = easters[yy_string]
-		if(begin_day <= 9)
-			begin_day += 22
-			begin_month = MARCH
-		else
-			begin_day -= 9
-			begin_month = APRIL
+		begin_day = easterResults["day"]
+		begin_month = easterResults["month"]
 
 		end_day = begin_day + days_extra
 		end_month = begin_month
@@ -485,10 +470,15 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()
 
 /datum/holiday/easter/celebrate()
 	GLOB.maintenance_loot += list(
 		/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/storage/bag/easterbasket = 15)
+
+/datum/holiday/easter/greet()
+	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
+
+/datum/holiday/easter/getStationPrefix()
+	return pick("Fluffy","Bunny","Easter","Egg")

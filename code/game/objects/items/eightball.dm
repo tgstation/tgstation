@@ -38,9 +38,13 @@
 
 /obj/item/toy/eightball/Initialize(mapload)
 	. = ..()
-	if(prob(1))
-		new /obj/item/toy/eightball/haunted(get_turf(src))
+	if(MakeHaunted())
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/toy/eightball/proc/MakeHaunted()
+	. = prob(1)
+	if(.)
+		new /obj/item/toy/eightball/haunted(loc)
 
 /obj/item/toy/eightball/attack_self(mob/user)
 	if(shaking)
@@ -105,6 +109,9 @@
 	GLOB.poi_list -= src
 	. = ..()
 
+/obj/item/toy/eightball/haunted/MakeHaunted()
+	return FALSE
+
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
 		to_chat(user, "<span class='warning'>[src] is not currently being shaken.</span>")
@@ -118,7 +125,7 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=\ref[src];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK)
+	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=[REF(src)];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK)
 
 /obj/item/toy/eightball/haunted/Topic(href, href_list)
 	if(href_list["interact"])

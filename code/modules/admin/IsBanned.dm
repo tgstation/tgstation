@@ -6,8 +6,10 @@
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
 #define STICKYBAN_MAX_ADMIN_MATCHES 2
 
-/world/IsBanned(key,address,computer_id)
+/world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
 	if (!key || !address || !computer_id)
+		if(real_bans_only)
+			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
@@ -16,11 +18,11 @@
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
 	var/ckey = ckey(key)
-	if((ckey in GLOB.admin_datums) || (ckey in GLOB.deadmins))
+	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = 1
 
 	//Whitelist
-	if(config.usewhitelist)
+	if(CONFIG_GET(flag/usewhitelist))
 		if(!check_whitelist(ckey(key)))
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass the whitelist")
@@ -31,20 +33,21 @@
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
 	//Guest Checking
-	if(IsGuestKey(key))
-		if (!GLOB.guests_allowed)
+	if(!real_bans_only && IsGuestKey(key))
+		if (CONFIG_GET(flag/guest_ban))
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
-		if (config.panic_bunker && SSdbcore && SSdbcore.IsConnected())
+		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
 			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
-	if(config.extreme_popcap && living_player_count() >= config.extreme_popcap && !admin)
+	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
+	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
 		log_access("Failed Login: [key] - Population cap reached")
-		return list("reason"="popcap", "desc"= "\nReason: [config.extreme_popcap_message]")
+		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
 
-	if(config.ban_legacy_system)
+	if(CONFIG_GET(flag/ban_legacy_system))
 
 		//Ban Checking
 		. = CheckBan( ckey(key), computer_id, address )
@@ -159,8 +162,8 @@
 
 				world.SetConfig("ban", bannedckey, null)
 
-				log_game("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
-				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
+				log_game("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
+				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)

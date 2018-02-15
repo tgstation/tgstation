@@ -17,7 +17,7 @@
 	maxHealth = 250
 	max_mobs = 3
 	spawn_time = 300 //30 seconds default
-	mob_type = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -28,10 +28,10 @@
 	var/obj/effect/light_emitter/tendril/emitted_light
 
 /mob/living/simple_animal/hostile/spawner/lavaland/goliath
-	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/legion
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	. = ..()
@@ -39,7 +39,7 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
-			M.ChangeTurf(M.turf_type,FALSE,FALSE,TRUE)
+			M.ChangeTurf(M.turf_type, null, CHANGETURF_IGNORE_AIR)
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
@@ -50,12 +50,12 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_living_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(global.medal_hub && global.medal_pass && global.medals_enabled)
+		if(MedalsAvailable())
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue
@@ -71,7 +71,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = BELOW_OBJ_LAYER
+	layer = TABLE_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
@@ -97,5 +97,5 @@
 	visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 	for(var/turf/T in range(2,src))
 		if(!T.density)
-			T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
+			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland)
 	qdel(src)

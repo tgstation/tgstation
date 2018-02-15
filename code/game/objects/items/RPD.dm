@@ -1,124 +1,174 @@
-
-
 /*
 CONTAINS:
 RPD
 */
-#define PIPE_BINARY		0
-#define PIPE_BENDABLE	1
-#define PIPE_TRINARY	2
-#define PIPE_TRIN_M		3
-#define PIPE_UNARY		4
-#define PIPE_QUAD		5
 
 #define PAINT_MODE -2
 #define EATING_MODE -1
 #define ATMOS_MODE 0
 #define METER_MODE 1
 #define DISPOSALS_MODE 2
+#define TRANSIT_MODE 3
 
-#define CATEGORY_ATMOS 0
-#define CATEGORY_DISPOSALS 1
 
-/datum/pipe_info
-	var/id=-1
-	var/categoryId = CATEGORY_ATMOS
-	var/dir=SOUTH
-	var/dirtype = PIPE_BENDABLE
-	var/icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
-	var/icon_state=""
-	var/selected=0
-
-/datum/pipe_info/New(pid,direction,dt)
-	src.id=pid
-	src.icon_state=GLOB.pipeID2State["[pid]"]
-	src.dir = direction
-	src.dirtype=dt
-
-/datum/pipe_info/proc/Render(dispenser,label)
-	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
-
-/datum/pipe_info/meter
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
-	icon_state = "meterX"
-
-/datum/pipe_info/meter/New()
-	return
-
-/datum/pipe_info/meter/Render(dispenser,label)
-	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=[dirtype]'>[label]</a></li>" //hardcoding is no
-
-GLOBAL_LIST_INIT(disposalpipeID2State, list(
-	"pipe-s",
-	"pipe-c",
-	"pipe-j1",
-	"pipe-j2",
-	"pipe-y",
-	"pipe-t",
-	"disposal",
-	"outlet",
-	"intake",
-	"pipe-j1s",
-	"pipe-j2s"))
-
-/datum/pipe_info/disposal
-	categoryId = CATEGORY_DISPOSALS
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
-	icon_state = "meterX"
-
-/datum/pipe_info/disposal/New(var/pid,var/dt)
-	src.id=pid
-	src.icon_state=GLOB.disposalpipeID2State[pid+1]
-	src.dir = SOUTH
-	src.dirtype=dt
-	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
-		icon_state = "con[icon_state]"
-
-/datum/pipe_info/disposal/Render(dispenser,label)
-	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[dirtype]'>[label]</a></li>" //avoid hardcoding.
-
-//find these defines in code\game\machinery\pipe\consruction.dm
-GLOBAL_LIST_INIT(RPD_recipes, list(
-	"Regular Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BENDABLE),
-		//"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
-		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
-		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
-		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
-		"4-Way Manifold" = new /datum/pipe_info(PIPE_4WAYMANIFOLD,		1, PIPE_QUAD),
+GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
+	"Pipes" = list(
+		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple),
+		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold),
+		new /datum/pipe_info/pipe("Manual Valve",		/obj/machinery/atmospherics/components/binary/valve),
+		new /datum/pipe_info/pipe("Digital Valve",		/obj/machinery/atmospherics/components/binary/valve/digital),
+		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w),
+		new /datum/pipe_info/pipe("Layer Manifold",		/obj/machinery/atmospherics/pipe/layer_manifold),
 	),
-	"Devices"=list(
-		"Connector"      = new /datum/pipe_info(PIPE_CONNECTOR,			1, PIPE_UNARY),
-		"Unary Vent"     = new /datum/pipe_info(PIPE_UVENT,				1, PIPE_UNARY),
-		"Gas Pump"       = new /datum/pipe_info(PIPE_PUMP,				1, PIPE_UNARY),
-		"Passive Gate"   = new /datum/pipe_info(PIPE_PASSIVE_GATE,		1, PIPE_UNARY),
-		"Volume Pump"    = new /datum/pipe_info(PIPE_VOLUME_PUMP,		1, PIPE_UNARY),
-		"Scrubber"       = new /datum/pipe_info(PIPE_SCRUBBER,			1, PIPE_UNARY),
-		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
-		"Meter"          = new /datum/pipe_info/meter(),
-		"Gas Filter"     = new /datum/pipe_info(PIPE_GAS_FILTER,		1, PIPE_TRIN_M),
-		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
+	"Devices" = list(
+		new /datum/pipe_info/pipe("Connector",			/obj/machinery/atmospherics/components/unary/portables_connector),
+		new /datum/pipe_info/pipe("Unary Vent",			/obj/machinery/atmospherics/components/unary/vent_pump),
+		new /datum/pipe_info/pipe("Gas Pump",			/obj/machinery/atmospherics/components/binary/pump),
+		new /datum/pipe_info/pipe("Passive Gate",		/obj/machinery/atmospherics/components/binary/passive_gate),
+		new /datum/pipe_info/pipe("Volume Pump",		/obj/machinery/atmospherics/components/binary/volume_pump),
+		new /datum/pipe_info/pipe("Scrubber",			/obj/machinery/atmospherics/components/unary/vent_scrubber),
+		new /datum/pipe_info/pipe("Injector",			/obj/machinery/atmospherics/components/unary/outlet_injector),
+		new /datum/pipe_info/meter("Meter"),
+		new /datum/pipe_info/pipe("Gas Filter",			/obj/machinery/atmospherics/components/trinary/filter),
+		new /datum/pipe_info/pipe("Gas Mixer",			/obj/machinery/atmospherics/components/trinary/mixer),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
-		//"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
-		"Manifold"       = new /datum/pipe_info(PIPE_HE_MANIFOLD, 		1, PIPE_TRINARY),
-		"4-Way Manifold" = new /datum/pipe_info(PIPE_HE_4WAYMANIFOLD,	1, PIPE_QUAD),
-		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
-		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
-	),
-	"Disposal Pipes" = list(
-		"Pipe"          = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
-		"Bent Pipe"     = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_TRINARY),
-		"Junction"      = new /datum/pipe_info/disposal(DISP_JUNCTION,		PIPE_TRINARY),
-		"Y-Junction"    = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
-		"Trunk"         = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_TRINARY),
-		"Bin"           = new /datum/pipe_info/disposal(DISP_END_BIN,		PIPE_QUAD),
-		"Outlet"        = new /datum/pipe_info/disposal(DISP_END_OUTLET,	PIPE_UNARY),
-		"Chute"         = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
-		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
+		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/heat_exchanging/simple),
+		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/heat_exchanging/manifold),
+		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w),
+		new /datum/pipe_info/pipe("Junction",			/obj/machinery/atmospherics/pipe/heat_exchanging/junction),
+		new /datum/pipe_info/pipe("Heat Exchanger",		/obj/machinery/atmospherics/components/unary/heat_exchanger),
 	)
 ))
+
+GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
+	"Disposal Pipes" = list(
+		new /datum/pipe_info/disposal("Pipe",			/obj/structure/disposalpipe/segment, PIPE_BENDABLE),
+		new /datum/pipe_info/disposal("Junction",		/obj/structure/disposalpipe/junction, PIPE_TRIN_M),
+		new /datum/pipe_info/disposal("Y-Junction",		/obj/structure/disposalpipe/junction/yjunction),
+		new /datum/pipe_info/disposal("Sort Junction",	/obj/structure/disposalpipe/sorting/mail, PIPE_TRIN_M),
+		new /datum/pipe_info/disposal("Trunk",			/obj/structure/disposalpipe/trunk),
+		new /datum/pipe_info/disposal("Bin",			/obj/machinery/disposal/bin, PIPE_ONEDIR),
+		new /datum/pipe_info/disposal("Outlet",			/obj/structure/disposaloutlet),
+		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/deliveryChute),
+	)
+))
+
+GLOBAL_LIST_INIT(transit_tube_recipes, list(
+	"Transit Tubes" = list(
+		new /datum/pipe_info/transit("Straight Tube",				/obj/structure/c_transit_tube, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Straight Tube with Crossing",	/obj/structure/c_transit_tube/crossing, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Curved Tube",					/obj/structure/c_transit_tube/curved, PIPE_UNARY_FLIPPABLE),
+		new /datum/pipe_info/transit("Diagonal Tube",				/obj/structure/c_transit_tube/diagonal, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Diagonal Tube with Crossing",	/obj/structure/c_transit_tube/diagonal/crossing, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Junction",					/obj/structure/c_transit_tube/junction, PIPE_UNARY_FLIPPABLE),
+	),
+	"Station Equipment" = list(
+		new /datum/pipe_info/transit("Through Tube Station",		/obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Terminus Tube Station",		/obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
+		new /datum/pipe_info/transit("Transit Tube Pod",			/obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
+	)
+))
+
+
+/datum/pipe_info
+	var/name
+	var/icon_state
+	var/id = -1
+	var/dirtype = PIPE_BENDABLE
+
+/datum/pipe_info/proc/Render(dispenser)
+	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
+
+	// Stationary pipe dispensers don't allow you to pre-select pipe directions.
+	// This makes it impossble to spawn bent versions of bendable pipes.
+	// We add a "Bent" pipe type with a preset diagonal direction to work around it.
+	if(istype(dispenser, /obj/machinery/pipedispenser) && (dirtype == PIPE_BENDABLE || dirtype == /obj/item/pipe/binary/bendable))
+		dat += "<li><a href='?src=[REF(dispenser)]&[Params()]&dir=[NORTHEAST]'>Bent [name]</a></li>"
+
+	return dat
+
+/datum/pipe_info/proc/Params()
+	return ""
+
+/datum/pipe_info/proc/get_preview(selected_dir)
+	var/list/dirs
+	switch(dirtype)
+		if(PIPE_STRAIGHT, PIPE_BENDABLE)
+			dirs = list("[NORTH]" = "Vertical", "[EAST]" = "Horizontal")
+			if(dirtype == PIPE_BENDABLE)
+				dirs += list("[NORTHWEST]" = "West to North", "[NORTHEAST]" = "North to East",
+							 "[SOUTHWEST]" = "South to West", "[SOUTHEAST]" = "East to South")
+		if(PIPE_TRINARY, PIPE_TRIN_M)
+			dirs = list("[NORTH]" = "West South East", "[EAST]" = "North West South",
+						"[SOUTH]" = "East North West", "[WEST]" = "South East North")
+			if(dirtype == PIPE_TRIN_M)
+				dirs += list("[SOUTHEAST]" = "West South East", "[NORTHEAST]" = "North West South",
+							 "[NORTHWEST]" = "East North West", "[SOUTHWEST]" = "South East North")
+		if(PIPE_UNARY)
+			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West")
+		if(PIPE_ONEDIR)
+			dirs = list("[SOUTH]" = name)
+		if(PIPE_UNARY_FLIPPABLE)
+			dirs = list("[NORTH]" = "North", "[NORTHEAST]" = "North Flipped", "[EAST]" = "East", "[SOUTHEAST]" = "East Flipped",
+						"[SOUTH]" = "South", "[SOUTHWEST]" = "South Flipped", "[WEST]" = "West", "[NORTHWEST]" = "West Flipped")
+
+
+	var/list/rows = list()
+	var/list/row = list("previews" = list())
+	var/i = 0
+	for(var/dir in dirs)
+		var/numdir = text2num(dir)
+		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (numdir in GLOB.diagonals)
+		row["previews"] += list(list("selected" = (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
+		if(i++ || dirtype == PIPE_ONEDIR)
+			rows += list(row)
+			row = list("previews" = list())
+			i = 0
+
+	return rows
+
+/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path)
+	name = label
+	id = path
+	icon_state = initial(path.pipe_state)
+	var/obj/item/pipe/c = initial(path.construction_type)
+	dirtype = initial(c.RPD_type)
+
+/datum/pipe_info/pipe/Params()
+	return "makepipe=[id]&type=[dirtype]"
+
+/datum/pipe_info/meter
+	icon_state = "meterX"
+	dirtype = PIPE_ONEDIR
+
+/datum/pipe_info/meter/New(label)
+	name = label
+
+/datum/pipe_info/meter/Params()
+	return "makemeter=[id]&type=[dirtype]"
+
+/datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
+	name = label
+	id = path
+
+	icon_state = initial(path.icon_state)
+	if(ispath(path, /obj/structure/disposalpipe))
+		icon_state = "con[icon_state]"
+
+	dirtype = dt
+
+/datum/pipe_info/disposal/Params()
+	return "dmake=[id]&type=[dirtype]"
+
+/datum/pipe_info/transit/New(label, obj/path, dt=PIPE_UNARY)
+	name = label
+	id = path
+	dirtype = dt
+	icon_state = initial(path.icon_state)
+	if(dt == PIPE_UNARY_FLIPPABLE)
+		icon_state = "[icon_state]_preview"
+
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
 	desc = "A device used to rapidly pipe things."
@@ -131,33 +181,34 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
-	origin_tech = "engineering=4;materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/p_type = PIPE_SIMPLE
-	var/p_conntype = PIPE_BENDABLE
-	var/p_dir = 1
-	var/p_flipped = 0
-	var/p_class = ATMOS_MODE
-	var/list/paint_colors = list(
-		"grey"		= rgb(255,255,255),
-		"red"		= rgb(255,0,0),
-		"blue"		= rgb(0,0,255),
-		"cyan"		= rgb(0,256,249),
-		"green"		= rgb(30,255,0),
-		"yellow"	= rgb(255,198,0),
-		"purple"	= rgb(130,43,255)
-	)
-	var/paint_color="grey"
-	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
+	var/mode = ATMOS_MODE
+	var/p_dir = NORTH
+	var/p_flipped = FALSE
+	var/paint_color="Grey"
+	var/screen = ATMOS_MODE //Starts on the atmos tab.
+	var/piping_layer = PIPING_LAYER_DEFAULT
+	var/datum/pipe_info/recipe
+	var/static/datum/pipe_info/first_atmos
+	var/static/datum/pipe_info/first_disposal
+	var/static/datum/pipe_info/first_transit
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+	if(!first_atmos)
+		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]
+	if(!first_disposal)
+		first_disposal = GLOB.disposal_pipe_recipes[GLOB.disposal_pipe_recipes[1]][1]
+	if(!first_transit)
+		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
+
+	recipe = first_atmos
 
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
@@ -165,7 +216,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/attack_self(mob/user)
-	show_menu(user)
+	ui_interact(user)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -173,379 +224,125 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
-/obj/item/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
-	var/selected=" class=\"imglink\""
-	if(_dir == p_dir)
-		selected=" class=\"imglink selected\""
-	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
+/obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/icon_states/multiple_icons/pipes)
+		assets.send(user)
 
-/obj/item/pipe_dispenser/proc/show_menu(mob/user)
-	if(!user || !src)
-		return 0
-	var/dat = {"<h2>Type</h2>
-<b>Utilities:</b>
-<ul>"}
-	if(p_class != EATING_MODE)
-		dat += "<li><a href='?src=\ref[src];eatpipes=1;type=-1'>Eat Pipes</a></li>"
-	else
-		dat += "<li><span class='linkOn'>Eat Pipes</span></li>"
-	if(p_class != PAINT_MODE)
-		dat += "<li><a href='?src=\ref[src];paintpipes=1;type=-1'>Paint Pipes</a></li>"
-	else
-		dat += "<li><span class='linkOn'>Paint Pipes</span></li>"
-	dat += "</ul>"
+		ui = new(user, src, ui_key, "rpd", name, 300, 550, master_ui, state)
+		ui.open()
 
-	dat += "<b>Category:</b><ul>"
-	if(screen == CATEGORY_ATMOS)
-		dat += "<span class='linkOn'>Atmospherics</span> <A href='?src=\ref[src];screen=[CATEGORY_DISPOSALS];dmake=0;type=0'>Disposals</A><BR>"
-	else if(screen == CATEGORY_DISPOSALS)
-		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=0;dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
-	dat += "</ul>"
+/obj/item/pipe_dispenser/ui_data(mob/user)
+	var/list/data = list(
+		"mode" = mode,
+		"screen" = screen,
+		"piping_layer" = piping_layer,
+		"preview_rows" = recipe.get_preview(p_dir),
+		"categories" = list(),
+		"paint_colors" = list()
+	)
 
-	var/icon/preview=null
-	var/datbuild = ""
-	for(var/category in GLOB.RPD_recipes)
-		var/list/cat = GLOB.RPD_recipes[category]
-		for(var/label in cat)
-			var/datum/pipe_info/I = cat[label]
-			var/found=0
-			if(I.id == p_type)
-				if((p_class == ATMOS_MODE || p_class == METER_MODE) && (I.type == /datum/pipe_info || I.type == /datum/pipe_info/meter))
-					found=1
-				else if(p_class == DISPOSALS_MODE && I.type==/datum/pipe_info/disposal)
-					found=1
-			if(found)
-				preview=new /icon(I.icon,I.icon_state)
-			if(screen == I.categoryId)
-				if(I.id == p_type && p_class >= 0)
-					datbuild += "<span class='linkOn'>[label]</span>"
-				else
-					datbuild += I.Render(src,label)
+	var/list/recipes
+	switch(screen)
+		if(ATMOS_MODE)
+			recipes = GLOB.atmos_pipe_recipes
+		if(DISPOSALS_MODE)
+			recipes = GLOB.disposal_pipe_recipes
+		if(TRANSIT_MODE)
+			recipes = GLOB.transit_tube_recipes
+	for(var/c in recipes)
+		var/list/cat = recipes[c]
+		var/list/r = list()
+		for(var/i in 1 to cat.len)
+			var/datum/pipe_info/info = cat[i]
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe)))
+		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
-		if(length(datbuild) > 0)
-			dat += "<b>[category]:</b><ul>"
-			dat += datbuild
-			datbuild = ""
-		dat += "</ul>"
+	data["paint_colors"] = list()
+	for(var/c in GLOB.pipe_paint_colors)
+		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
 
-	var/color_css=""
-	var/color_picker=""
-	for(var/color_name in paint_colors)
-		var/color=paint_colors[color_name]
-		color_css += {"
-			a.color.[color_name] {
-				color: [color];
-			}
-			a.color.[color_name]:hover {
-				border:1px solid [color];
-			}
-			a.color.[color_name].selected {
-				background-color: [color];
-			}
-		"}
-		var/selected=""
-		if(color_name==paint_color)
-			selected = " selected"
-		color_picker += {"<a class="color [color_name][selected]" href="?src=\ref[src];set_color=[color_name]">&bull;</a>"}
+	return data
 
-	var/dirsel="<h2>Direction</h2>"
-	switch(p_conntype)
-		if(-1)
-			if(p_class==PAINT_MODE)
-				dirsel = "<h2>Color</h2>[color_picker]"
-			else
-				dirsel = ""
-
-		if(PIPE_BINARY) // Straight, N-S, W-E
-			if(preview)
-				user << browse_rsc(new /icon(preview, dir=NORTH), "vertical.png")
-				user << browse_rsc(new /icon(preview, dir=EAST), "horizontal.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(1,"vertical.png","Vertical")
-				dirsel += render_dir_img(4,"horizontal.png","Horizontal")
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
-		</p>
-				"}
-
-		if(PIPE_BENDABLE) // Bent, N-W, N-E etc
-			if(preview)
-				user << browse_rsc(new /icon(preview, dir=NORTH), "vertical.png")
-				user << browse_rsc(new /icon(preview, dir=EAST), "horizontal.png")
-				user << browse_rsc(new /icon(preview, dir=NORTHWEST),  "nw.png")
-				user << browse_rsc(new /icon(preview, dir=NORTHEAST),  "ne.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTHWEST),  "sw.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTHEAST),  "se.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(1,"vertical.png","Vertical")
-				dirsel += render_dir_img(4,"horizontal.png","Horizontal")
-				dirsel += "<br />"
-				dirsel += render_dir_img(9,"nw.png","West to North")
-				dirsel += render_dir_img(5,"ne.png","North to East")
-				dirsel += "<br />"
-				dirsel += render_dir_img(10,"sw.png","South to West")
-				dirsel += render_dir_img(6,"se.png","East to South")
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=9; flipped=0" title="West to North">&#9565;</a>
-			<a href="?src=\ref[src];setdir=5; flipped=0" title="North to East">&#9562;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=10; flipped=0" title="South to West">&#9559;</a>
-			<a href="?src=\ref[src];setdir=6; flipped=0" title="East to South">&#9556;</a>
-		</p>
-				"}
-		if(PIPE_TRINARY) // Manifold
-			if(preview)
-				user << browse_rsc(new /icon(preview, dir=NORTH), "s.png")
-				user << browse_rsc(new /icon(preview, dir=EAST),  "w.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTH), "n.png")
-				user << browse_rsc(new /icon(preview, dir=WEST),  "e.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(1,"s.png","West South East")
-				dirsel += render_dir_img(4,"w.png","North West South")
-				dirsel += "<br />"
-				dirsel += render_dir_img(2,"n.png","East North West")
-				dirsel += render_dir_img(8,"e.png","South East North")
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
-		</p>
-				"}
-		if(PIPE_TRIN_M) // Mirrored ones
-			if(preview)
-				user << browse_rsc(new /icon(preview, dir=NORTH), "s.png")
-				user << browse_rsc(new /icon(preview, dir=EAST),  "w.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTH), "n.png")
-				user << browse_rsc(new /icon(preview, dir=WEST),  "e.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTHEAST), "sm.png") //each mirror icon is 45 anticlockwise from it's real direction
-				user << browse_rsc(new /icon(preview, dir=NORTHEAST),  "wm.png")
-				user << browse_rsc(new /icon(preview, dir=NORTHWEST), "nm.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTHWEST),  "em.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(1,"s.png","West South East")
-				dirsel += render_dir_img(4,"w.png","North West South")
-				dirsel += "<br />"
-				dirsel += render_dir_img(2,"n.png","East North West")
-				dirsel += render_dir_img(8,"e.png","South East North")
-				dirsel += "<br />"
-				dirsel += render_dir_img(6,"sm.png","West South East", 1)
-				dirsel += render_dir_img(5,"wm.png","North West South", 1)
-				dirsel += "<br />"
-				dirsel += render_dir_img(9,"nm.png","East North West", 1)
-				dirsel += render_dir_img(10,"em.png","South East North", 1)
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=6; flipped=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=5; flipped=1" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=9; flipped=1" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=10; flipped=1" title="South, East, North">&#9568;</a>
-		</p>
-				"}
-		if(PIPE_UNARY) // Stuff with four directions - includes pumps etc.
-			if(preview)
-				user << browse_rsc(new /icon(preview, dir=NORTH), "n.png")
-				user << browse_rsc(new /icon(preview, dir=EAST),  "e.png")
-				user << browse_rsc(new /icon(preview, dir=SOUTH), "s.png")
-				user << browse_rsc(new /icon(preview, dir=WEST),  "w.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(NORTH,"n.png","North")
-				dirsel += render_dir_img(EAST, "e.png","East")
-				dirsel += render_dir_img(SOUTH,"s.png","South")
-				dirsel += render_dir_img(WEST, "w.png","West")
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=[NORTH]; flipped=0" title="North">&uarr;</a>
-			<a href="?src=\ref[src];setdir=[EAST]; flipped=0" title="East">&rarr;</a>
-			<a href="?src=\ref[src];setdir=[SOUTH]; flipped=0" title="South">&darr;</a>
-			<a href="?src=\ref[src];setdir=[WEST]; flipped=0" title="West">&larr;</a>
-		</p>
-					"}
-		if(PIPE_QUAD) // Single icon_state (eg 4-way manifolds)
-			if(preview)
-				user << browse_rsc(new /icon(preview), "pipe.png")
-
-				dirsel += "<p>"
-				dirsel += render_dir_img(1,"pipe.png","Pipe")
-				dirsel += "</p>"
-			else
-				dirsel+={"
-		<p>
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="Pipe">&#8597;</a>
-		</p>
-				"}
-
-
-	var/datsytle = {"
-<style type="text/css">
-	a.imglink {
-		padding: none;
-		text-decoration:none;
-		border-style:none;
-		background:none;
-		margin: 1px;
-	}
-
-	a.imglink:hover {
-		background:none;
-		color:none;
-	}
-
-	a.imglink.selected img {
-		border: 1px solid #24722e;
-		background: #2f943c;
-	}
-
-	a img {
-		border: 1px solid #161616;
-		background: #40628a;
-	}
-
-	a.color {
-		padding: 5px 10px;
-		font-size: large;
-		font-weight: bold;
-		border: 1px solid #161616;
-	}
-
-	a.selected img,
-		a:hover {
-			background: #0066cc;
-			color: #ffffff;
-		}
-		[color_css]
-</style>"}
-
-	dat = datsytle + dirsel + dat
-
-	var/datum/browser/popup = new(user, "pipedispenser", name, 300, 550)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/item/pipe_dispenser/Topic(href, href_list)
-	if(!usr.canUseTopic(src))
-		usr << browse(null, "window=pipedispenser")
+/obj/item/pipe_dispenser/ui_act(action, params)
+	if(..())
 		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(href_list["screen"])
-		screen = text2num(href_list["screen"])
-		show_menu(usr)
-
-	if(href_list["setdir"])
-		p_dir= text2num(href_list["setdir"])
-		p_flipped = text2num(href_list["flipped"])
-		show_menu(usr)
-
-	if(href_list["eatpipes"])
-		p_class = EATING_MODE
-		p_conntype=-1
-		p_dir=1
-		src.spark_system.start()
+	if(!usr.canUseTopic(src))
+		return
+	var/playeffect = TRUE
+	switch(action)
+		if("color")
+			paint_color = params["paint_color"]
+		if("mode")
+			mode = text2num(params["mode"])
+		if("screen")
+			if(mode == screen)
+				mode = text2num(params["screen"])
+			screen = text2num(params["screen"])
+			switch(screen)
+				if(DISPOSALS_MODE)
+					recipe = first_disposal
+				if(ATMOS_MODE)
+					recipe = first_atmos
+				if(TRANSIT_MODE)
+					recipe = first_transit
+			p_dir = NORTH
+			playeffect = FALSE
+		if("piping_layer")
+			piping_layer = text2num(params["piping_layer"])
+			playeffect = FALSE
+		if("pipe_type")
+			var/static/list/recipes
+			if(!recipes)
+				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
+			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
+			p_dir = NORTH
+		if("setdir")
+			p_dir = text2dir(params["dir"])
+			p_flipped = text2num(params["flipped"])
+			playeffect = FALSE
+	if(playeffect)
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
-	if(href_list["paintpipes"])
-		p_class = PAINT_MODE
-		p_conntype = -1
-		p_dir = 1
-		src.spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
-	if(href_list["set_color"])
-		paint_color = href_list["set_color"]
-		src.spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
-	if(href_list["makepipe"])
-		p_type = text2path(href_list["makepipe"])
-		p_dir = text2num(href_list["dir"])
-		p_conntype = text2num(href_list["type"])
-		p_class = ATMOS_MODE
-		src.spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
-	if(href_list["makemeter"])
-		p_class = METER_MODE
-		p_conntype = -1
-		p_dir = 1
-		src.spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
-	if(href_list["dmake"])
-		p_type = text2num(href_list["dmake"])
-		p_conntype = text2num(href_list["type"])
-		p_dir = 1
-		p_class = DISPOSALS_MODE
-		src.spark_system.start()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-		show_menu(usr)
-
 
 /obj/item/pipe_dispenser/pre_attackby(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
-	//make sure what we're clicking is valid for the current mode
-	var/is_paintable = (p_class == PAINT_MODE && istype(A, /obj/machinery/atmospherics/pipe))
-	var/is_consumable = (p_class == EATING_MODE && (istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
-	var/can_make_pipe = ((p_class == ATMOS_MODE || p_class == METER_MODE || p_class == DISPOSALS_MODE) && isturf(A))
-
-	if(!is_paintable && !is_consumable && !can_make_pipe)
-		return ..()
-
 	//So that changing the menu settings doesn't affect the pipes already being built.
-	var/queued_p_type = p_type
+	var/temp_piping_layer = piping_layer
+	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
+	// clicking on an existing component puts the new one on the same layer
+	if ((mode == ATMOS_MODE || mode == METER_MODE) && istype(A, /obj/machinery/atmospherics))
+		var/obj/machinery/atmospherics/AM = A
+		temp_piping_layer = AM.piping_layer
+		A = get_turf(user)
+
+	//make sure what we're clicking is valid for the current mode
+	var/static/list/make_pipe_whitelist
+	if(!make_pipe_whitelist)
+		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe))
+	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
+
 	. = FALSE
-	switch(p_class) //if we've gotten this var, the target is valid
+	switch(mode) //if we've gotten this var, the target is valid
 		if(PAINT_MODE) //Paint pipes
+			if(!istype(A, /obj/machinery/atmospherics/pipe))
+				return ..()
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-			P.pipe_color = paint_colors[paint_color]
+			P.paint(GLOB.pipe_paint_colors[paint_color])
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-			P.update_node_icon()
 			return
 
 		if(EATING_MODE) //Eating pipes
+			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod)))
+				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
@@ -553,30 +350,48 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				qdel(A)
 
 		if(ATMOS_MODE) //Making pipes
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				var/obj/item/pipe/P = new (A, pipe_type=queued_p_type, dir=queued_p_dir)
-				P.flipped = queued_p_flipped
+
+				var/obj/machinery/atmospherics/path = queued_p_type
+				var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+
+				var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
+
+				if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
+					var/obj/item/pipe/trinary/flippable/F = P
+					F.flipped = queued_p_flipped
+
 				P.update()
 				P.add_fingerprint(usr)
+				P.setPipingLayer(temp_piping_layer)
+				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 		if(METER_MODE) //Making pipe meters
+			if(!can_make_pipe)
+				return ..()
 			to_chat(user, "<span class='notice'>You start building a meter...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 2, target = A))
 				activate()
-				new /obj/item/pipe_meter(A)
+				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
+				PM.setAttachLayer(temp_piping_layer)
 
 		if(DISPOSALS_MODE) //Making disposals pipes
+			if(!can_make_pipe)
+				return ..()
+			A = get_turf(A)
 			if(isclosedturf(A))
 				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			if(do_after(user, 4, target = A))
-				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
+				var/obj/structure/disposalconstruct/C = new (A, queued_p_type, queued_p_dir, queued_p_flipped)
 
 				if(!C.can_place())
 					to_chat(user, "<span class='warning'>There's not enough room to build that here!</span>")
@@ -589,6 +404,31 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 				C.update_icon()
 				return
 
+		if(TRANSIT_MODE) //Making transit tubes
+			if(!can_make_pipe)
+				return ..()
+			A = get_turf(A)
+			if(isclosedturf(A))
+				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+				return
+			to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, 4, target = A))
+				activate()
+				if(queued_p_type == /obj/structure/c_transit_tube_pod)
+					var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
+					pod.add_fingerprint(usr)
+				else
+					var/obj/structure/c_transit_tube/tube = new queued_p_type(A)
+					tube.dir = queued_p_dir
+
+					if(queued_p_flipped)
+						tube.dir = turn(queued_p_dir, 45)
+						tube.simple_rotate_flip()
+
+					tube.add_fingerprint(usr)
+				return
+
 		else
 			return ..()
 
@@ -596,16 +436,8 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
-#undef PIPE_BINARY
-#undef PIPE_BENT
-#undef PIPE_TRINARY
-#undef PIPE_TRIN_M
-#undef PIPE_UNARY
-#undef PIPE_QUAD
 #undef PAINT_MODE
 #undef EATING_MODE
 #undef ATMOS_MODE
 #undef METER_MODE
 #undef DISPOSALS_MODE
-#undef CATEGORY_ATMOS
-#undef CATEGORY_DISPOSALS

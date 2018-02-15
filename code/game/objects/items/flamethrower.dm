@@ -13,7 +13,6 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
@@ -136,15 +135,16 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && !user.incapacitated() && Adjacent(user))
+	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
 	..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \the [ptank] attached. Alt-click to remove it.</span>")
+		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -201,8 +201,8 @@
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
-	if(air_transfer.gases["plasma"])
-		air_transfer.gases["plasma"][MOLES] *= 5
+	if(air_transfer.gases[/datum/gas/plasma])
+		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
@@ -233,7 +233,7 @@
 /obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)

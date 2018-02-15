@@ -95,8 +95,7 @@
 		var/json_file = file("data/npc_saves/snpc.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
+		var/list/json = json_decode(file2text(json_file))
 		knownStrings = json["knownStrings"]
 	if(isnull(knownStrings))
 		knownStrings = list()
@@ -220,7 +219,7 @@
 				if(prob(25))
 					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
 					T.makeTraitor(cType)
-				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+				T.forceMove(pick(get_area_turfs(T.job2area(T.myjob))))
 			if(choice == "Custom")
 				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
 				if(cjob)
@@ -257,7 +256,7 @@
 				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
 				if(doTele)
 					if(doTele == "Yes")
-						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+						T.forceMove(pick(get_area_turfs(T.job2area(T.myjob))))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/card/id(src)
@@ -340,7 +339,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 75
 	else if(TRAITS & TRAIT_DUMB)
-		disabilities |= CLUMSY
+		add_trait(TRAIT_CLUMSY, GENETIC_MUTATION)
 		smartness = 25
 
 	if(TRAITS & TRAIT_MEAN)
@@ -507,7 +506,7 @@
 	var/list/slots = list ("left pocket" = slot_l_store,"right pocket" = slot_r_store,"left hand" = slot_hands,"right hand" = slot_hands)
 	if(hands)
 		slots = list ("left hand" = slot_hands,"right hand" = slot_hands)
-	G.loc = src
+	G.forceMove(src)
 	if(G.force && G.force > best_force)
 		best_force = G.force
 	equip_in_one_of_slots(G, slots)
@@ -658,7 +657,7 @@
 						insert_into_backpack()
 			//---------FASHION
 			if(istype(TARGET, /obj/item/clothing))
-				drop_item()
+				temporarilyRemoveItemFromInventory(TARGET, TRUE)
 				dressup(TARGET)
 				update_hands = 1
 				if(MYPDA in src.loc || MYID in src.loc)
@@ -668,7 +667,7 @@
 						equip_to_appropriate_slot(MYID)
 		//THIEVING SKILLS END
 		//-------------TOUCH ME
-		if(istype(TARGET, /obj/structure))
+		if(isstructure(TARGET))
 			var/obj/structure/STR = TARGET
 			if(main_hand)
 				var/obj/item/W = main_hand
@@ -754,7 +753,6 @@
 		timeout++
 
 /mob/living/carbon/human/interactive/proc/getGoodPath(target,var/maxtries=512)
-	set background = 1
 	var/turf/end = get_turf(target)
 
 	var/turf/current = get_turf(src)
@@ -780,7 +778,6 @@
 	return path
 
 /mob/living/carbon/human/interactive/proc/walk2derpless(target)
-	set background = 1
 	if(!target)
 		return 0
 
@@ -829,7 +826,7 @@
 		return pick(/area/hallway, /area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
-	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
+	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/lighting_object, /obj/structure/cable, /obj/machinery/atmospherics)
 	var/list/L = target
 	for(var/atom/A in target) // added a bunch of "junk" that clogs up the general find procs
 		if(is_type_in_list(A,filtered_targets))
@@ -932,7 +929,7 @@
 /mob/living/carbon/human/interactive/proc/npcDrop(var/obj/item/A,var/blacklist = 0)
 	if(blacklist)
 		blacklistItems += A
-	A.loc = get_turf(src) // drop item works inconsistently
+	A.forceMove(drop_location()) // drop item works inconsistently
 	enforce_hands()
 	update_icons()
 
@@ -957,7 +954,7 @@
 							retal_target = traitorTarget
 						else
 							var/obj/item/I = traitorTarget
-							I.loc = get_turf(traitorTarget) // pull it outta them
+							I.forceMove(get_turf(I)) // pull it outta them
 					else
 						take_to_slot(traitorTarget)
 				if(SNPC_MARTYR)
@@ -1316,7 +1313,7 @@
 					customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], grabbing various foodstuffs from [SF] and sticking them in it's mouth!")
 					for(var/obj/item/A in SF.contents)
 						if(prob(smartness/2))
-							A.loc = src
+							A.forceMove(src)
 
 
 		if(foundCustom)
@@ -1399,7 +1396,7 @@
 				if(!Adjacent(toGrab))
 					tryWalk(toGrab)
 				else
-					toGrab.loc = src
+					toGrab.forceMove(src)
 
 		if(finishedList.len > 0)
 			var/obj/structure/table/reinforced/RT
@@ -1564,7 +1561,7 @@
 										var/obj/item/W = main_hand
 										W.attack(TARGET,src)
 							else
-								G.loc = get_turf(src) // drop item works inconsistently
+								G.forceMove(drop_location()) // drop item works inconsistently
 								enforce_hands()
 								update_icons()
 				else

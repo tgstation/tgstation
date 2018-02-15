@@ -8,7 +8,6 @@
 	throw_range = 7
 	force = 4
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=2;biotech=3"
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -41,8 +40,9 @@
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
 
-	if(!S) return 0
-	S.loc = user.loc
+	if(!S)
+		return 0
+	S.forceMove(user.loc)
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
@@ -74,20 +74,18 @@
 	icon_state = "syringe_pistol"
 	item_state = "gun" //Smaller inhand
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2 //Also very weak because it's smaller
-	suppressed = 1 //Softer fire sound
-	can_unsuppress = 0 //Permanently silenced
-	
+	suppressed = TRUE //Softer fire sound
+	can_unsuppress = FALSE //Permanently silenced
+
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"
 	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
-	origin_tech = "combat=2;syndicate=2;biotech=3"
-	
+
 /obj/item/gun/syringe/dna/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/dnainjector(src)
-	
+
 /obj/item/gun/syringe/dna/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A

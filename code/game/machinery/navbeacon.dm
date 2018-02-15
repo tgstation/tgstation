@@ -15,7 +15,7 @@
 
 	var/open = FALSE		// true if cover is open
 	var/locked = TRUE		// true if controls are locked
-	var/freq = 1445		// radio frequency
+	var/freq = FREQ_NAV_BEACON
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
@@ -139,14 +139,14 @@ Transponder Codes:<UL>"}
 <i>(swipe card to lock controls)</i><BR>
 
 <HR>
-Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "None"]</A><BR>
+Location: <A href='byond://?src=[REF(src)];locedit=1'>[location ? location : "None"]</A><BR>
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += "	<A href='byond://?src=\ref[src];edit=1;code=[key]'>Edit</A>"
-			t += "	<A href='byond://?src=\ref[src];delete=1;code=[key]'>Delete</A><BR>"
-		t += "	<A href='byond://?src=\ref[src];add=1;'>Add New</A><BR>"
+			t += "	<A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
+			t += "	<A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
+		t += "	<A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
 		t+= "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)

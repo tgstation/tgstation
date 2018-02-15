@@ -4,7 +4,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
-	desc = "Goes great with Robust Coffee."
+	desc = "Goes great with robust coffee."
 	icon_state = "donut1"
 	bitesize = 5
 	bonus_reagents = list("sugar" = 1)
@@ -303,7 +303,7 @@
 
 /obj/item/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
-	desc = "The best of both cookie and oat"
+	desc = "The best of both cookie and oat."
 	icon_state = "oatmealcookie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
@@ -333,7 +333,7 @@
 
 /obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
-	desc = "Blue cherries inside a delicious cupcake"
+	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
@@ -391,7 +391,7 @@
 		name = "stack of pancakes"
 	else
 		name = initial(name)
-	if(contents.len < our_overlays.len)
+	if(contents.len < LAZYLEN(our_overlays))
 		cut_overlay(our_overlays[our_overlays.len])
 
 /obj/item/reagent_containers/food/snacks/pancakes/examine(mob/user)

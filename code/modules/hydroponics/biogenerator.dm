@@ -1,7 +1,7 @@
 /obj/machinery/biogenerator
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
-	icon = 'icons/obj/biogenerator.dmi'
+	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
 	anchored = TRUE
@@ -15,13 +15,13 @@
 	var/efficiency = 0
 	var/productivity = 0
 	var/max_items = 40
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
-	files = new /datum/research/biogenerator(src)
+	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
 	create_reagents(1000)
 
 /obj/machinery/biogenerator/Destroy()
@@ -53,7 +53,7 @@
 	productivity = P
 	max_items = max_storage
 
-/obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
+/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
 /obj/machinery/biogenerator/update_icon()
@@ -78,7 +78,7 @@
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 		if(beaker)
 			var/obj/item/reagent_containers/glass/B = beaker
-			B.loc = loc
+			B.forceMove(drop_location())
 			beaker = null
 		update_icon()
 		return
@@ -95,9 +95,8 @@
 			if(beaker)
 				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
 			else
-				if(!user.drop_item())
+				if(!user.transferItemToLoc(O, src))
 					return
-				O.loc = src
 				beaker = O
 				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
 				update_icon()
@@ -125,7 +124,7 @@
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
 			else
 				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
-		return 1 //no afterattack
+		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
 		var/i = 0
@@ -136,7 +135,7 @@
 		else
 			if(user.transferItemToLoc(O, src))
 				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
-		return 1 //no afterattack
+		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
@@ -146,9 +145,9 @@
 		if(do_after(user, 10, target = src))
 			for(var/B in D.blueprints)
 				if(B)
-					files.AddDesign2Known(B)
+					stored_research.add_design(B)
 		processing = FALSE
-		return 1
+		return TRUE
 	else
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
@@ -177,24 +176,24 @@
 			var/categories = show_categories.Copy()
 			for(var/V in categories)
 				categories[V] = list()
-			for(var/V in files.known_designs)
-				var/datum/design/D = files.known_designs[V]
+			for(var/V in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[V]
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D
 
 			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
-			dat += "<A href='?src=\ref[src];activate=1'>Activate</A><A href='?src=\ref[src];detach=1'>Detach Container</A>"
+			dat += "<A href='?src=[REF(src)];activate=1'>Activate</A><A href='?src=[REF(src)];detach=1'>Detach Container</A>"
 			for(var/cat in categories)
 				dat += "<h3>[cat]:</h3>"
 				dat += "<div class='statusDisplay'>"
 				for(var/V in categories[cat])
 					var/datum/design/D = V
-					dat += "[D.name]: <A href='?src=\ref[src];create=\ref[D];amount=1'>Make</A>"
+					dat += "[D.name]: <A href='?src=[REF(src)];create=[REF(D)];amount=1'>Make</A>"
 					if(cat in timesFiveCategories)
-						dat += "<A href='?src=\ref[src];create=\ref[D];amount=5'>x5</A>"
+						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
-						dat += "<A href='?src=\ref[src];create=\ref[D];amount=10'>x10</A>"
+						dat += "<A href='?src=[REF(src)];create=[REF(D)];amount=10'>x10</A>"
 					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
 				dat += "</div>"
 		else
@@ -238,16 +237,16 @@
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = 1)
 	if(materials.len != 1 || materials[1] != MAT_BIOMASS)
-		return 0
+		return FALSE
 	if (materials[MAT_BIOMASS]*multiplier/efficiency > points)
 		menustat = "nopoints"
-		return 0
+		return FALSE
 	else
 		if(remove_points)
 			points -= materials[MAT_BIOMASS]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
-		return 1
+		return TRUE
 
 /obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
 	var/sum_reagents = 0
@@ -257,19 +256,19 @@
 
 	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
 	if(!beaker || !loc)
-		return 0
+		return FALSE
 
 	if(ispath(D.build_path, /obj/item/stack))
 		if(!check_container_volume(D.make_reagents, amount))
-			return 0
+			return FALSE
 		if(!check_cost(D.materials, amount))
-			return 0
+			return FALSE
 
 		var/obj/item/stack/product = new D.build_path(loc)
 		product.amount = amount
@@ -295,7 +294,7 @@
 
 /obj/machinery/biogenerator/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

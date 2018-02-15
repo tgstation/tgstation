@@ -27,7 +27,8 @@ LINEN BINS
 		..()
 
 /obj/item/bedsheet/attack_self(mob/user)
-	user.drop_item()
+	if(!user.dropItemToGround(src))
+		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
 		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
@@ -222,18 +223,26 @@ LINEN BINS
 	item_color = "ian"
 	dream_messages = list("a dog", "a corgi", "woof", "bark", "arf")
 
+/obj/item/bedsheet/cosmos
+	name = "cosmic space bedsheet"
+	desc = "Made from the dreams of those who wonder at the stars."
+	icon_state = "sheetcosmos"
+	item_color = "cosmos"
+	dream_messages = list("the infinite cosmos", "Hans Zimmer music", "a flight through space", "the galaxy", "being fabulous", "shooting stars")
+	light_power = 2
+	light_range = 1.4
 
 /obj/item/bedsheet/random
-	icon_state = "sheetrainbow"
+	icon_state = "random_bedsheet"
 	item_color = "rainbow"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
 /obj/item/bedsheet/random/Initialize()
-	. = INITIALIZE_HINT_QDEL
 	..()
 	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -275,18 +284,16 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.loc = src
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 		update_icon()
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return
-		I.loc = src
 		hidden = I
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
@@ -310,13 +317,13 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.loc = user.loc
+		B.forceMove(drop_location())
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.loc = user.loc
+			hidden.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
@@ -334,12 +341,12 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.loc = loc
+		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.loc = loc
+			hidden.forceMove(drop_location())
 			hidden = null
 
 

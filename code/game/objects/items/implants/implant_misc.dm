@@ -1,8 +1,7 @@
 /obj/item/implant/weapons_auth
 	name = "firearms authentication implant"
-	desc = "Lets you shoot your guns"
+	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	origin_tech = "magnets=2;programming=7;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/implant/weapons_auth/get_data()
@@ -18,7 +17,6 @@
 	name = "adrenal implant"
 	desc = "Removes all stuns."
 	icon_state = "adrenal"
-	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
 
 /obj/item/implant/adrenalin/get_data()
@@ -53,7 +51,6 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
-	origin_tech = "biotech=3;magnets=4;syndicate=1"
 	uses = 3
 
 /obj/item/implant/emp/activate()
@@ -80,3 +77,52 @@
 		if (!healthstring)
 			healthstring = "ERROR"
 		return healthstring
+
+/obj/item/implant/radio
+	name = "internal radio implant"
+	activated = TRUE
+	var/obj/item/device/radio/radio
+	var/radio_key
+	var/subspace_transmission = FALSE
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
+
+/obj/item/implant/radio/activate()
+	// needs to be GLOB.deep_inventory_state otherwise it won't open
+	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
+
+/obj/item/implant/radio/Initialize(mapload)
+	. = ..()
+
+	radio = new(src)
+	// almost like an internal headset, but without the
+	// "must be in ears to hear" restriction.
+	radio.name = "internal radio"
+	radio.subspace_transmission = subspace_transmission
+	radio.canhear_range = 0
+	if(radio_key)
+		radio.keyslot = new radio_key
+	radio.recalculateChannels()
+
+/obj/item/implant/radio/mining
+	radio_key = /obj/item/device/encryptionkey/headset_cargo
+
+/obj/item/implant/radio/syndicate
+	desc = "Are you there God? It's me, Syndicate Comms Agent."
+	radio_key = /obj/item/device/encryptionkey/syndicate
+	subspace_transmission = TRUE
+
+/obj/item/implant/radio/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Internal Radio Implant<BR>
+				<b>Life:</b> 24 hours<BR>
+				<b>Implant Details:</b> Allows user to use an internal radio, useful if user expects equipment loss, or cannot equip conventional radios."}
+	return dat
+
+/obj/item/implanter/radio
+	name = "implanter (internal radio)"
+	imp_type = /obj/item/implant/radio
+
+/obj/item/implanter/radio/syndicate
+	name = "implanter (internal syndicate radio)"
+	imp_type = /obj/item/implant/radio/syndicate

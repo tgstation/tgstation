@@ -9,7 +9,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
-	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
@@ -121,7 +121,7 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	targetTemperature = Clamp(targetTemperature,
+	targetTemperature = CLAMP(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 		settableTemperatureMedian + settableTemperatureRange)
 
@@ -140,18 +140,13 @@
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 				return
-			else
-				// insert cell
-				var/obj/item/stock_parts/cell/C = usr.get_active_held_item()
-				if(istype(C))
-					if(!user.drop_item())
-						return
-					cell = C
-					C.loc = src
-					C.add_fingerprint(usr)
+			else if(!user.transferItemToLoc(I, src))
+				return
+			cell = I
+			I.add_fingerprint(usr)
 
-					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
-					SStgui.update_uis(src)
+			user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
+			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
@@ -228,12 +223,12 @@
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = Clamp(round(target),
+				targetTemperature = CLAMP(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")
 			if(panel_open && cell)
-				cell.loc = get_turf(src)
+				cell.forceMove(drop_location())
 				cell = null
 				. = TRUE
 

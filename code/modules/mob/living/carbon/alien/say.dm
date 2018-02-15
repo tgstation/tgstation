@@ -1,7 +1,8 @@
 /mob/living/proc/alien_talk(message, shown_name = real_name)
 	log_talk(src,"[key_name(src)] : [message]",LOGSAY)
 	message = trim(message)
-	if(!message) return
+	if(!message)
+		return
 
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"

@@ -1,5 +1,5 @@
 /obj/structure/grille
-	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
+	desc = "A flimsy framework of metal rods."
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
@@ -17,6 +17,35 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
+/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
+
+/obj/structure/grille/update_icon()
+	if(QDELETED(src) || broken)
+		return
+
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
+
+	if(smooth)
+		queue_smooth(src)
+
+	if(ratio > 50)
+		return
+	icon_state = "grille50_[rand(0,3)]"
+
+/obj/structure/grille/examine(mob/user)
+	..()
+	if(anchored)
+		to_chat(user, "<span class='notice'>It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.</span>")
+	if(!anchored)
+		to_chat(user, "<span class='notice'>The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.</span>")
+
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
@@ -24,7 +53,8 @@
 		if(RCD_WINDOWGRILLE)
 			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			else
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)
@@ -55,6 +85,10 @@
 	var/mob/M = AM
 	shock(M, 70)
 
+/obj/structure/grille/attack_animal(mob/user)
+	. = ..()
+	if(!shock(user, 70))
+		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)
@@ -84,7 +118,7 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
@@ -96,18 +130,18 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
+		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/wirecutters))
 		if(!shock(user, 100))
-			playsound(src, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruct()
 	else if((istype(W, /obj/item/screwdriver)) && (isturf(loc) || anchored))
 		if(!shock(user, 90))
-			playsound(src, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] [src].</span>", \
 								 "<span class='notice'>You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor.</span>")
@@ -149,6 +183,10 @@
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
+				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
+					WD = new/obj/structure/window/shuttle(drop_location())
+				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
+					WD = new/obj/structure/window/plastitanium(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)

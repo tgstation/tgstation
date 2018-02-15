@@ -49,9 +49,8 @@
 		else if(!uses)
 			to_chat(user, "<span class='notice'>[src] has already been used up.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.forceMove(src)
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
 	else if(istype(I, /obj/item/screwdriver))
@@ -61,7 +60,7 @@
 			var/turf/open/floorloc = get_turf(user)
 			floorloc.contents += contents
 			to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
-			playsound(get_turf(user), I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			storedorgan = null
 			if(uses != INFINITE)
 				uses--

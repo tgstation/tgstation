@@ -64,13 +64,11 @@
 
 /obj/item/paper/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/paper/talisman)) //Talismans cannot be read
-		if(!iscultist(user) && !user.stat)
-			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
@@ -79,7 +77,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		to_chat(user, "<span class='notice'>It is too far away.</span>")
+		to_chat(user, "<span class='warning'>You're too far away to read it!</span>")
 
 
 /obj/item/paper/verb/rename()
@@ -91,7 +89,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.disabilities & CLUMSY && prob(25))
+		if(H.has_trait(TRAIT_CLUMSY) && prob(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -101,18 +99,21 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+
 /obj/item/paper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
+/obj/item/paper/proc/reset_spamflag()
+	spam_flag = FALSE
+
 /obj/item/paper/attack_self(mob/user)
 	user.examinate(src)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		if(spam_flag == 0)
-			spam_flag = 1
+		if(!spam_flag)
+			spam_flag = TRUE
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
-			spawn(20)
-				spam_flag = 0
+			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
 
 /obj/item/paper/attack_ai(mob/living/silicon/ai/user)
@@ -170,8 +171,8 @@
 /obj/item/paper/proc/updateinfolinks()
 	info_links = info
 	for(var/i in 1 to min(fields, 15))
-		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=[REF(src)];write=[i]'>write</A></font>", 1)
+	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=[REF(src)];write=end'>write</A></font>"
 
 
 /obj/item/paper/proc/clearpaper()
@@ -187,47 +188,15 @@
 	if(length(t) < 1)		//No input means nothing needs to be parsed
 		return
 
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
-
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\n", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
-	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
+	t = parsemarkdown(t, user, iscrayon)
 
 	if(!iscrayon)
-		t = replacetext(t, "\[*\]", "<li>")
-		t = replacetext(t, "\[hr\]", "<HR>")
-		t = replacetext(t, "\[small\]", "<font size = \"1\">")
-		t = replacetext(t, "\[/small\]", "</font>")
-		t = replacetext(t, "\[list\]", "<ul>")
-		t = replacetext(t, "\[/list\]", "</ul>")
-
 		t = "<font face=\"[P.font]\" color=[P.colour]>[t]</font>"
-	else // If it is a crayon, and he still tries to use these, make them empty!
+	else
 		var/obj/item/toy/crayon/C = P
-		t = replacetext(t, "\[*\]", "")
-		t = replacetext(t, "\[hr\]", "")
-		t = replacetext(t, "\[small\]", "")
-		t = replacetext(t, "\[/small\]", "")
-		t = replacetext(t, "\[list\]", "")
-		t = replacetext(t, "\[/list\]", "")
-
 		t = "<font face=\"[CRAYON_FONT]\" color=[C.paint_color]><b>[t]</b></font>"
 
-//	t = replacetext(t, "#", "") // Junk converted to nothing!
-
-//Count the fields
+	// Count the fields
 	var/laststart = 1
 	while(1)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
@@ -253,22 +222,23 @@
 /obj/item/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
+		You can use backslash (\\) to escape special characters.<br>
+		<br>
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
-		\[br\] : Creates a linebreak.<br>
-		\[center\] - \[/center\] : Centers the text.<br>
-		\[b\] - \[/b\] : Makes the text <b>bold</b>.<br>
-		\[i\] - \[/i\] : Makes the text <i>italic</i>.<br>
-		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
-		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
-		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
-		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
+		# text : Defines a header.<br>
+		|text| : Centers the text.<br>
+		**text** : Makes the text <b>bold</b>.<br>
+		*text* : Makes the text <i>italic</i>.<br>
+		^text^ : Increases the <font size = \"4\">size</font> of the text.<br>
+		%s : Inserts a signature of your name in a foolproof way.<br>
+		%f : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
-		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
-		\[list\] - \[/list\] : A list.<br>
-		\[*\] : A dot used for lists.<br>
-		\[hr\] : Adds a horizontal rule.
+		((text)) : Decreases the <font size = \"1\">size</font> of the text.<br>
+		* item : An unordered list item.<br>
+		&nbsp;&nbsp;* item: An unordered list child item.<br>
+		--- : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
 
 
@@ -303,7 +273,7 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
 
 
@@ -318,13 +288,10 @@
 
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
-			return
-		if(istype(src, /obj/item/paper/talisman/))
-			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
 	else if(istype(P, /obj/item/stamp))
@@ -343,7 +310,7 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
-		if(user.disabilities & CLUMSY && prob(10))
+		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
@@ -400,4 +367,3 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
-

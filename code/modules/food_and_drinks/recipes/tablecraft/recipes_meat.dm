@@ -33,7 +33,7 @@
 	name = "Lizard tail kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/severedtail = 1
+		/obj/item/organ/tail/lizard = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/kebab/tail
 	subcategory = CAT_MEAT
@@ -169,4 +169,31 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pigblanket
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/ratkebab
+	name = "Rat Kebab"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/reagent_containers/food/snacks/deadmouse = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/kebab/rat
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/doubleratkebab
+	name = "Double Rat Kebab"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/reagent_containers/food/snacks/deadmouse = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/kebab/rat/double
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/ricepork
+	name = "Rice and pork"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/salad/ricepork
 	subcategory = CAT_MEAT

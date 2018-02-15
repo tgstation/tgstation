@@ -16,7 +16,7 @@
 	result = /obj/item/gun
 	reqs = list(/obj/item/gun = 1)
 	parts = list(/obj/item/gun = 1)
-	tools = list(/obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wirecutters)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -80,7 +80,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/device/assembly/igniter = 1,
-				/obj/item/ore/bluespace_crystal = 1)
+				/obj/item/stack/ore/bluespace_crystal = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -91,13 +91,13 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/sheet/metal = 6)
 	time = 20//15 faster than crafting them by hand!
-	category= CAT_WEAPON
+	category= CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/organ/tail/lizard = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPONRY
@@ -106,7 +106,7 @@
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
-	reqs = list(/obj/item/severedtail = 1,
+	reqs = list(/obj/item/organ/tail/lizard = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
@@ -134,7 +134,7 @@
 				/obj/item/gun/energy/e_gun/advtaser = 1,
 				/obj/item/stock_parts/cell = 1,
 				/obj/item/device/assembly/prox_sensor = 1)
-	tools = list(/obj/item/weldingtool, /obj/item/screwdriver)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	time = 60
 	category = CAT_ROBOT
 
@@ -146,7 +146,7 @@
 				/obj/item/melee/baton = 1,
 				/obj/item/device/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
-	tools = list(/obj/item/weldingtool)
+	tools = list(TOOL_WELDER)
 	time = 60
 	category = CAT_ROBOT
 
@@ -179,11 +179,20 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/honkbot
+	name = "Honkbot"
+	result = /mob/living/simple_animal/bot/honkbot
+	reqs = list(/obj/item/storage/box/clown = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/device/assembly/prox_sensor = 1,
+				/obj/item/bikehorn/ = 1)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/wrench)
+	tools = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 4,
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
@@ -199,7 +208,7 @@
 				/obj/item/stack/rods = 1)
 	parts = list(/obj/item/device/assembly/igniter = 1,
 				/obj/item/weldingtool = 1)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 10
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -210,7 +219,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/rcd_ammo = 1,
 				/obj/item/stock_parts/manipulator = 2)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -221,7 +230,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/stock_parts/capacitor/adv = 2,
 				/obj/item/stock_parts/micro_laser/ultra = 1)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -230,7 +239,7 @@
 	name = "Dragonsbreath Shell"
 	result = /obj/item/ammo_casing/shotgun/dragonsbreath
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1, /datum/reagent/phosphorus = 5)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -242,7 +251,7 @@
 				/datum/reagent/glycerol = 5,
 				/datum/reagent/toxin/acid = 5,
 				/datum/reagent/toxin/acid/fluacid = 5)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -253,7 +262,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/stock_parts/micro_laser/ultra = 1,
 				/obj/item/stock_parts/subspace/crystal = 1)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -265,7 +274,7 @@
 				/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
 				/datum/reagent/fuel = 10)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -276,7 +285,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/stock_parts/capacitor/adv = 1,
 				/obj/item/stock_parts/micro_laser/high = 1)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -288,7 +297,7 @@
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
-	tools = list(/obj/item/screwdriver)
+	tools = list(TOOL_SCREWDRIVER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -299,7 +308,7 @@
 	reqs = list(/obj/item/circular_saw = 1,
 				/obj/item/stack/cable_coil = 3,
 				/obj/item/stack/sheet/plasteel = 5)
-	tools = list(/obj/item/weldingtool)
+	tools = list(TOOL_WELDER)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -327,7 +336,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
-	reqs = list(/obj/item/severedtail = 1)
+	reqs = list(/obj/item/organ/tail/lizard = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/lizardhat_alternate
@@ -347,7 +356,7 @@
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
-	result = /obj/vehicle/scooter/skateboard
+	result = /obj/vehicle/ridden/scooter/skateboard
 	time = 60
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
@@ -355,7 +364,7 @@
 
 /datum/crafting_recipe/scooter
 	name = "Scooter"
-	result = /obj/vehicle/scooter
+	result = /obj/vehicle/ridden/scooter
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
@@ -412,6 +421,11 @@
 	result = /obj/structure/curtain
 	category = CAT_MISC
 
+/datum/crafting_recipe/extendohand
+	name = "Extendo-Hand"
+	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	result = /obj/item/extendohand
+	category = CAT_MISC
 
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
@@ -533,6 +547,26 @@
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/headpike
+	name = "Spike Head (Glass Spear)"
+	time = 65
+	reqs = list(/obj/item/twohanded/spear = 1,
+				/obj/item/bodypart/head = 1)
+	parts = list(/obj/item/bodypart/head = 1,
+			/obj/item/twohanded/spear = 1)
+	result = /obj/structure/headpike
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/headpikebone
+	name = "Spike Head (Bone Spear)"
+	time = 65
+	reqs = list(/obj/item/twohanded/bonespear = 1,
+				/obj/item/bodypart/head = 1)
+	parts = list(/obj/item/bodypart/head = 1,
+			/obj/item/twohanded/bonespear = 1)
+	result = /obj/structure/headpike/bone
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
 	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
@@ -555,7 +589,7 @@
 	name = "Makeshift Rapid Cable Layer"
 	result = /obj/item/twohanded/rcl/ghetto
 	time = 40
-	tools = list(/obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/metal = 15)
 	category = CAT_MISC
 

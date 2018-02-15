@@ -6,7 +6,7 @@
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
-/obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA)
+/obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA, list/datum/disease/diseases)
 	. = ..()
 
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
@@ -24,21 +24,21 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(loc)
+				gib = new gibType(loc, diseases)
 				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
 				if(MobDNA)
-					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
+
 				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
-					gib.blood_DNA["Non-human DNA"] = "A+"
+					gib.add_blood_DNA(list("Non-human DNA" = "A+"))
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
 						gib.streak(directions)
 
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 

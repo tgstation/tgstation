@@ -8,10 +8,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=2"
 
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
+	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/device/toner/ink = null
 
@@ -21,7 +21,7 @@
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
-/obj/item/airlock_painter/proc/use(mob/user)
+/obj/item/airlock_painter/proc/use_paint(mob/user)
 	if(can_use(user))
 		ink.charges--
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
@@ -43,7 +43,7 @@
 		return 1
 
 /obj/item/airlock_painter/suicide_act(mob/user)
-	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
+	var/obj/item/organ/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
 		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -120,7 +120,7 @@
 /obj/item/airlock_painter/attack_self(mob/user)
 	if(ink)
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		ink.loc = user.loc
+		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
 		ink = null

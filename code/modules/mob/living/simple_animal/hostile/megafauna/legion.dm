@@ -21,6 +21,7 @@ Difficulty: Medium
 	name = "Legion"
 	health = 800
 	maxHealth = 800
+	spacewalk = TRUE
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
@@ -128,7 +129,7 @@ Difficulty: Medium
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
-		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_list)
+		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in GLOB.mob_living_list)
 			if(other != src)
 				last_legion = FALSE
 				break
@@ -138,9 +139,6 @@ Difficulty: Medium
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
-
-/mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
-	return 1
 
 /obj/item/device/gps/internal/legion
 	icon_state = null
@@ -164,6 +162,7 @@ Difficulty: Medium
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
+	var/static/list/excluded_areas = list(/area/reebe/city_of_cogs)
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
@@ -171,14 +170,18 @@ Difficulty: Medium
 		return
 
 	var/area/user_area = get_area(user)
+	var/turf/user_turf = get_turf(user)
+	if(!user_area || !user_turf || (user_area.type in excluded_areas))
+		to_chat(user, "<span class='warning'>Something is preventing you from using the staff here.</span>")
+		return
 	var/datum/weather/A
-	for(var/V in SSweather.existing_weather)
+	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
-		if(W.target_z == user.z && W.area_type == user_area.type)
+		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
 			A = W
 			break
-	if(A)
 
+	if(A)
 		if(A.stage != END_STAGE)
 			if(A.stage == WIND_DOWN_STAGE)
 				to_chat(user, "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>")
@@ -189,10 +192,9 @@ Difficulty: Medium
 			A.wind_down()
 			return
 	else
-		A = new storm_type
+		A = new storm_type(list(user_turf.z))
 		A.name = "staff storm"
 		A.area_type = user_area.type
-		A.target_z = user.z
 		A.telegraph_duration = 100
 		A.end_duration = 100
 

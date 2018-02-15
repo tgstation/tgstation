@@ -15,7 +15,8 @@
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
-			if(prob(10)) step(M, pick(GLOB.cardinals))
+			if(prob(10))
+				step(M, pick(GLOB.cardinals))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
@@ -98,7 +99,7 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM)
+	M.adjustBrainLoss(3*REM)
 	M.adjustToxLoss(5*REM, 0)
 	M.adjustBruteLoss(5*REM, 0)
 	..()
@@ -165,6 +166,18 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
+/datum/reagent/drug/methamphetamine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+
+/datum/reagent/drug/methamphetamine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	..()
+
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
@@ -173,7 +186,6 @@
 	M.AdjustKnockdown(-40, 0)
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-2, 0)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
 	M.adjustBrainLoss(0.25)
 	if(prob(5))
@@ -189,9 +201,7 @@
 		M.emote("laugh")
 	if(prob(33))
 		M.visible_message("<span class='danger'>[M]'s hands flip out and flail everywhere!</span>")
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 	..()
 	M.adjustToxLoss(1, 0)
 	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
@@ -235,21 +245,31 @@
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
-	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
+	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
 
+/datum/reagent/drug/bath_salts/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_STUNIMMUNE, id)
+		L.add_trait(TRAIT_SLEEPIMMUNE, id)
+
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_STUNIMMUNE, id)
+		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-60, 0)
-	M.AdjustKnockdown(-60, 0)
-	M.AdjustUnconscious(-60, 0)
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
@@ -268,9 +288,7 @@
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	if(prob(33))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.drop_item()
+		M.drop_all_held_items()
 	..()
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
@@ -325,7 +343,7 @@
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	id = "aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
+	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 

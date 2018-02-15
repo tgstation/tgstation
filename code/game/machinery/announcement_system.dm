@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/screwdriver))
-		playsound(src.loc, P.usesound, 50, 1)
+		P.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
@@ -101,20 +101,24 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 //config stuff
 
 /obj/machinery/announcement_system/interact(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
 
-	var/contents = "Arrival Announcement:  <A href='?src=\ref[src];ArrivalT-Topic=1'>([(arrivalToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br><br>\n"
-	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
+	var/contents = "Arrival Announcement:  <A href='?src=[REF(src)];ArrivalT-Topic=1'>([(arrivalToggle ? "On" : "Off")])</a><br>\n<A href='?src=[REF(src)];ArrivalTopic=1'>[arrival]</a><br><br>\n"
+	contents += "Departmental Head Announcement:  <A href='?src=[REF(src)];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=[REF(src)];NewheadTopic=1'>[newhead]</a><br><br>\n"
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
 	popup.set_content(contents)
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
+	if(!usr.canUseTopic(src, !issilicon(usr)))
+		return
 	if(stat & BROKEN)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -122,13 +126,13 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
+		if(!usr.canUseTopic(src, !issilicon(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
+		if(!usr.canUseTopic(src, !issilicon(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -147,7 +151,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = attack_ai(user)
 
 /obj/machinery/announcement_system/attack_ai(mob/user)
-	if(!issilicon(user) && !IsAdminGhost(user))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
@@ -167,7 +171,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	..(severity)
 
 /obj/machinery/announcement_system/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	act_up()

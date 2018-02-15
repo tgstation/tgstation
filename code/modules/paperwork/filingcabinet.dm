@@ -36,7 +36,7 @@
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
-				I.loc = src
+				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -47,18 +47,16 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
-		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 	else if(istype(P, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
-		playsound(loc, P.usesound, 50, 1)
-		if(do_after(user, 20, target = src))
+		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
@@ -77,7 +75,7 @@
 	var/i
 	for(i=contents.len, i>=1, i--)
 		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
+		dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 	dat += "</table></center>"
 	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
@@ -91,7 +89,7 @@
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
-			I.loc = loc
+			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
 			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
@@ -102,7 +100,6 @@
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
 		if(istype(P) && P.loc == src && in_range(src, usr))
 			usr.put_in_hands(P)
@@ -186,9 +183,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
-/obj/structure/filingcabinet/employment/New()
+/obj/structure/filingcabinet/employment/Initialize()
+	. = ..()
 	GLOB.employmentCabinets += src
-	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
 	GLOB.employmentCabinets -= src
@@ -218,4 +215,4 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
+		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")

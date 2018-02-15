@@ -110,7 +110,7 @@
 
 	if(usr.incapacitated())
 		return 1
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud && hud.mymob && slot_id)
@@ -167,7 +167,7 @@
 		return 1
 	if(usr.incapacitated() || isobserver(usr))
 		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud.mymob.active_hand_index == held_index)
@@ -196,7 +196,8 @@
 	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
-	usr.drop_item_v()
+	if(usr.stat == CONSCIOUS)
+		usr.dropItemToGround(usr.get_active_held_item())
 
 /obj/screen/act_intent
 	name = "intent"
@@ -250,7 +251,7 @@
 		to_chat(C, "<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
-		if(!C.getorganslot("breathing_tube"))
+		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1
@@ -264,26 +265,26 @@
 
 		var/obj/item/I = C.is_holding_item_of_type(/obj/item/tank)
 		if(I)
-			to_chat(C, "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
+			to_chat(C, "<span class='notice'>You are now running on internals from [I] in your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
 			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.s_store] on your [H.wear_suit.name].</span>")
 				H.internal = H.s_store
 			else if(istype(H.belt, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.belt] on your belt.</span>")
 				H.internal = H.belt
 			else if(istype(H.l_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.l_store] in your left pocket.</span>")
 				H.internal = H.l_store
 			else if(istype(H.r_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
 		//Separate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/tank))
-			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
+			to_chat(C, "<span class='notice'>You are now running on internals from [C.back] on your back.</span>")
 			C.internal = C.back
 
 		if(C.internal)
@@ -324,7 +325,8 @@
 	usr.stop_pulling()
 
 /obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob) return
+	if(!mymob)
+		return
 	if(mymob.pulling)
 		icon_state = "pull"
 	else
@@ -350,7 +352,7 @@
 		return 1
 	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
 		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
@@ -485,11 +487,6 @@
 	icon = 'icons/mob/screen_cyborg.dmi'
 	screen_loc = ui_borg_health
 
-/obj/screen/healths/deity
-	name = "Nexus Health"
-	icon_state = "deity_nexus"
-	screen_loc = ui_deityhealth
-
 /obj/screen/healths/blob
 	name = "blob health"
 	icon_state = "block"
@@ -542,14 +539,16 @@
 	screen_loc = ui_healthdoll
 
 /obj/screen/splash
-	icon = 'config/title_screens/images/blank.png'
+	icon = 'icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
+/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
+	. = ..()
+
 	holder = C
 
 	if(!visible)
@@ -565,8 +564,6 @@
 		icon = SStitle.previous_icon
 
 	holder.screen += src
-
-	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
 	if(QDELETED(src))

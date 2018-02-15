@@ -14,7 +14,6 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -61,7 +60,7 @@
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
-		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
 			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
@@ -71,7 +70,6 @@
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
-	origin_tech = "engineering=3;bluespace=4"
 	template_id = "shelter_beta"
 
 //Pod objects
@@ -94,46 +92,19 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
+
+/obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE
 	glass = TRUE
-	var/expected_dir = SOUTH //we visually turn when shuttle rotated, but need to not turn for any other reason
-
-/obj/machinery/door/airlock/survival_pod/setDir(direction)
-	direction = expected_dir
-	..()
-
-/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-	..()
-
-/obj/machinery/door/airlock/survival_pod/vertical
-	dir = EAST
-	expected_dir = EAST
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	base_name = "pod airlock"
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
-	anchored = TRUE
-	state = 1
-	mineral = "glass"
-	material = "glass"
-	var/expected_dir = SOUTH
-
-/obj/structure/door_assembly/door_assembly_pod/setDir(direction)
-	direction = expected_dir
-	..()
-
-/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
-	expected_dir = angle2dir(rotation+dir2angle(dir))
-	..()
-
-/obj/structure/door_assembly/door_assembly_pod/vertical
-	dir = EAST
-	expected_dir = EAST
+	glass_type = /obj/machinery/door/airlock/survival_pod/glass
 
 //Windoor
 /obj/machinery/door/window/survival_pod
@@ -167,16 +138,16 @@
 	density = TRUE
 	pixel_y = -32
 
-/obj/item/device/gps/computer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
-						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20*W.toolspeed, target = src))
-			new /obj/item/device/gps(loc)
-			qdel(src)
-		return
-	return ..()
+/obj/item/device/gps/computer/wrench_act(mob/living/user, obj/item/I)
+	if(flags_1 & NODECONSTRUCT_1)
+		return TRUE
+
+	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
+		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+	if(I.use_tool(src, user, 20, volume=50))
+		new /obj/item/device/gps(loc)
+		qdel(src)
+	return TRUE
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
@@ -243,14 +214,15 @@
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)
 
-/obj/structure/fans/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
-						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20*W.toolspeed, target = src))
-			deconstruct()
-			return ..()
+/obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
+	if(flags_1 & NODECONSTRUCT_1)
+		return TRUE
+
+	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
+		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+	if(I.use_tool(src, user, 20, volume=50))
+		deconstruct()
+	return TRUE
 
 /obj/structure/fans/tiny
 	name = "tiny fan"
@@ -307,7 +279,7 @@
 						/obj/item/melee/supermatter_sword,
 						/obj/item/shield/changeling,
 						/obj/item/lava_staff,
-						/obj/item/dash/energy_katana,
+						/obj/item/energy_katana,
 						/obj/item/hierophant_club,
 						/obj/item/his_grace,
 						/obj/item/gun/ballistic/minigun,

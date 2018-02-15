@@ -5,9 +5,8 @@
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/stock_parts/cell/emproof
-	needs_permit = 0
-	unique_rename = 1
-	origin_tech = "combat=3;powerstorage=3;engineering=3"
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
 	can_flashlight = 1
 	flight_x_offset = 15
@@ -17,8 +16,8 @@
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 	can_bayonet = TRUE
-	knife_x_offset = 15
-	knife_y_offset = 13
+	knife_x_offset = 20
+	knife_y_offset = 12
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -32,19 +31,19 @@
 		to_chat(user, "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.")
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
-			to_chat(user, "<span class='notice'>There is a [M.name] mod installed, using <b>[M.cost]%</b> capacity.</span>")
+			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
 
-/obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/crowbar))
+/obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/crowbar))
 		if(modkits.len)
 			to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
-			playsound(loc, A.usesound, 100, 1)
+			I.play_tool_sound(src, 100)
 			for(var/obj/item/borg/upgrade/modkit/M in modkits)
 				M.uninstall(src)
 		else
 			to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
-	else if(istype(A, /obj/item/borg/upgrade/modkit))
-		var/obj/item/borg/upgrade/modkit/MK = A
+	else if(istype(I, /obj/item/borg/upgrade/modkit))
+		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
 		..()
@@ -88,7 +87,7 @@
 
 /obj/item/gun/energy/kinetic_accelerator/dropped()
 	. = ..()
-	if(!holds_charge)
+	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
 		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
@@ -98,10 +97,13 @@
 		empty()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/empty()
-	cell.use(cell.charge)
+	if(cell)
+		cell.use(cell.charge)
 	update_icon()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/attempt_reload(recharge_time)
+	if(!cell)
+		return
 	if(overheat)
 		return
 	if(!recharge_time)
@@ -126,7 +128,6 @@
 
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
 	cell.give(cell.maxcharge)
-	recharge_newshot(1)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
@@ -214,7 +215,6 @@
 	desc = "An upgrade for kinetic accelerators."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
-	origin_tech = "programming=2;materials=2;magnets=4"
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
 	module_type = /obj/item/robot_module/miner
@@ -537,4 +537,4 @@
 	desc = "Causes kinetic accelerator bolts to have an adjustable-colored tracer trail and explosion. Use in-hand to change color."
 
 /obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
-	bolt_color = input(user,"Choose Color") as color
+	bolt_color = input(user,"","Choose Color",bolt_color) as color|null

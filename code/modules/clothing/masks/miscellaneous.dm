@@ -40,6 +40,63 @@
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 
+/obj/item/clothing/mask/fakemoustache/italian
+	name = "italian moustache"
+	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
+
+/obj/item/clothing/mask/fakemoustache/italian/speechModification(message)
+	if(copytext(message, 1, 2) != "*")
+		message = " [message] "
+		message = replacetext(message," mom "," mamma ")
+		message = replacetext(message," dad "," pappa ")
+		message = replacetext(message," baby ",pick(" bambino "," little sausage roll "))
+		message = replacetext(message,"spicy","a-spicy")
+		message = replacetext(message,"I'm","I'm-a")
+		message = replacetext(message," friend "," enemy-a ")
+		message = replacetext(message," enemy "," friend-a ")
+		message = replacetext(message,"traitor","mafioso")
+		message = replacetext(message," operative "," greek ")
+		message = replacetext(message," op "," greek ")
+		message = replacetext(message," ops "," greeks")
+		message = replacetext(message," operative "," greek")
+		message = replacetext(message," operatives "," greeks")
+		message = replacetext(message," nuke"," spiciest-a meatball")
+		message = replacetext(message," good"," molto bene")
+		message = replacetext(message," why"," for-a what reason")
+		message = replacetext(message," my "," my-a ")
+		message = replacetext(message,"it's","it's-a")
+		message = replacetext(message," bad"," molto male")
+		message = replacetext(message," sing "," sing-a ")
+		message = replacetext(message," cook "," cook-a ")
+		message = replacetext(message," want "," want-a ")
+		message = replacetext(message," what's "," what's-a ")
+		message = replacetext(message," shitcurity"," carabinieri")
+		message = replacetext(message," shitsec"," carabinieri")
+		message = replacetext(message," and "," and-a ")
+		message = replacetext(message," am "," am-a ")
+		message = replacetext(message," assistant "," goombah ")
+		message = replacetext(message," greytide "," curvisti ")
+		message = replacetext(message," greytider "," curvisti ")
+		message = replacetext(message," captain "," capitano ")
+		message = replacetext(message," sec "," polizia ")
+		message = replacetext(message," security "," polizia ")
+		message = replacetext(message,"cheese",pick("parmesano","gorgonzola"))
+		message = replacetext(message," meat",pick(" pepperoni"," prosciutto"))
+		message = replacetext(message,"who's","who's-a")
+		message = replacetext(message,"hello",pick("ciao","buongiorno"))
+		message = replacetext(message," bye ",pick(" ciao "," arrivederci "))
+		message = replacetext(message,"thing","thing-a")
+		message = replacetext(message,"whose","whose-a")
+		message = replacetext(message,"thanks","grazie")
+		message = replacetext(message," wine"," vino")
+		message = replacetext(message,"could","could-a")
+		message = replacetext(message," use"," use-a")
+		message = replacetext(message," make"," make-a")
+		message = replacetext(message,"spaghetti", "SPAGHETT")
+		if(prob(3))
+			message += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
+	return trim(message)
+
 /obj/item/clothing/mask/joy
 	name = "joy mask"
 	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
@@ -77,6 +134,41 @@
 	if(voicechange)
 		message = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 	return message
+
+///frog mask - reeee!!
+obj/item/clothing/mask/frog
+	name = "frog mask"
+	desc = "An ancient mask carved in the shape of a frog.<br> Sanity is like gravity, all it needs is a push."
+	icon_state = "frog"
+	item_state = "frog"
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL
+	var/voicechange = TRUE
+
+/obj/item/clothing/mask/frog/attack_self(mob/user)
+	voicechange = !voicechange
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
+
+/obj/item/clothing/mask/frog/speechModification(message) //whenever you speak
+	if(voicechange)
+		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
+			message = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
+		else
+			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
+	return message
+
+obj/item/clothing/mask/frog/cursed
+	flags_1 = NODROP_1 //reee!!
+
+/obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
+	return //no voicebox to alter.
+
+/obj/item/clothing/mask/frog/cursed/equipped(mob/user, slot)
+	var/mob/living/carbon/C = user
+	if(C.wear_mask == src)
+		to_chat(user, "<span class='warning'><B>[src] was cursed! Ree!!</B></span>")
+	return ..()
+
 
 /obj/item/clothing/mask/cowmask
 	name = "Cowface"

@@ -1,6 +1,5 @@
 /mob/living/carbon/monkey
 	name = "monkey"
-	voice_name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -11,7 +10,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
-	unique_name = 1
+	unique_name = TRUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 
@@ -62,7 +61,11 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-	return . + config.monkey_delay
+
+	var/static/config_monkey_delay
+	if(isnull(config_monkey_delay))
+		config_monkey_delay = CONFIG_GET(number/monkey_delay)
+	. += config_monkey_delay
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -70,9 +73,10 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+			if(changeling)
+				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
+				stat("Absorbed DNA", changeling.absorbedcount)
 	return
 
 
@@ -84,13 +88,15 @@
 
 
 /mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
-	return 0
+	if(mind && is_monkey(mind))
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
@@ -136,7 +142,7 @@
 	return protection
 
 /mob/living/carbon/monkey/IsVocal()
-	if(!getorganslot("lungs"))
+	if(!getorganslot(ORGAN_SLOT_LUNGS))
 		return 0
 	return 1
 

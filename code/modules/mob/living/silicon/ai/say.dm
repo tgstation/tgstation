@@ -7,7 +7,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
+		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -15,7 +15,7 @@
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
 /mob/living/silicon/ai/IsVocal()
-	return !config.silent_ai
+	return !CONFIG_GET(flag/silent_ai)
 
 /mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
 	if(incapacitated())
@@ -30,15 +30,6 @@
 		return MODE_HOLOPAD
 	else
 		return ..()
-
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
-	. = ..()
-	if(.)
-		return .
-
-	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message, language)
-		return 1
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
@@ -85,7 +76,7 @@
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -97,7 +88,7 @@
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>")
+		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
 	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
@@ -138,14 +129,6 @@
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
-/*
-	for(var/mob/M in player_list)
-		if(M.client)
-			var/turf/T = get_turf(M)
-			var/turf/our_turf = get_turf(src)
-			if(T.z == our_turf.z)
-				to_chat(M, "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>")
-*/
 
 
 /proc/play_vox_word(word, z_level, mob/only_listener)

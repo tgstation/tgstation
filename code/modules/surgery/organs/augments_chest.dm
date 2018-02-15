@@ -1,20 +1,19 @@
 /obj/item/organ/cyberimp/chest
 	name = "cybernetic torso implant"
-	desc = "implants for the organs in your torso"
+	desc = "Implants for the organs in your torso."
 	icon_state = "chest_implant"
 	implant_overlay = "chest_implant_overlay"
 	zone = "chest"
 
 /obj/item/organ/cyberimp/chest/nutriment
 	name = "Nutriment pump implant"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
-	slot = "stomach"
-	origin_tech = "materials=2;powerstorage=2;biotech=2"
+	slot = ORGAN_SLOT_STOMACH
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
@@ -24,8 +23,10 @@
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.nutrition += 50
-		sleep(50)
-		synthesizing = FALSE
+		addtimer(CALLBACK(src, .proc/synth_cool), 50)
+
+/obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
+	synthesizing = FALSE
 
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
@@ -41,15 +42,13 @@
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
-	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
-	origin_tech = "materials=5;programming=4;biotech=4"
-	slot = "heartdrive"
+	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = 0
 	var/cooldown = 0
@@ -61,7 +60,7 @@
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
-			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [revive_cost/10] seconds.</span>")
+			to_chat(owner, "<span class='notice'>Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)].</span>")
 		return
 
 	if(cooldown > world.time)
@@ -117,10 +116,9 @@
 /obj/item/organ/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
 	desc = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
-	Unlike regular jetpack, this device has no stabilization system."
-	slot = "thrusters"
+	Unlike regular jetpacks, this device has no stabilization system."
+	slot = ORGAN_SLOT_THRUSTERS
 	icon_state = "imp_jetpack"
-	origin_tech = "materials=4;magnets=4;biotech=4;engineering=5"
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
@@ -136,13 +134,13 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
 	if(on)
-		toggle(silent=1)
+		toggle(silent = TRUE)
 	..()
 
 /obj/item/organ/cyberimp/chest/thrusters/ui_action_click()
 	toggle()
 
-/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent=0)
+/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
 	if(!on)
 		if(crit_fail)
 			if(!silent)
@@ -198,6 +196,6 @@
 		else
 			T.assume_air(removed)
 
-	toggle(silent=1)
+	toggle(silent = TRUE)
 	return 0
 

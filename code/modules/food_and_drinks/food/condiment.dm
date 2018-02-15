@@ -10,22 +10,26 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "emptycondiment"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change() to change names, descs and sprites.
+	//Possible_states has the reagent id as key and a list of, in order, the icon_state, the name and the desc as values. Used in the on_reagent_change(changetype) to change names, descs and sprites.
 	var/list/possible_states = list(
 	 "ketchup" = list("ketchup", "ketchup bottle", "You feel more American already."),
 	 "capsaicin" = list("hotsauce", "hotsauce bottle", "You can almost TASTE the stomach ulcers now!"),
 	 "enzyme" = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
 	 "soysauce" = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
-	 "frostoil" = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in it's passage"),
+	 "frostoil" = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in its passage"),
 	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
 	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
+
+/obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
+	return OXYLOSS
 
 /obj/item/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
@@ -45,7 +49,7 @@
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
-		add_logs(user, M, "fed", reagentlist(src))
+		add_logs(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
@@ -54,7 +58,8 @@
 	return 1
 
 /obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
@@ -69,7 +74,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
-	else if(target.is_open_container() || istype(target, /obj/item/reagent_containers/food/snacks))
+	else if(target.is_drainable() || istype(target, /obj/item/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
@@ -79,7 +84,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
-/obj/item/reagent_containers/food/condiment/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
 	if(!possible_states.len)
 		return
 	if(reagents.reagent_list.len > 0)
@@ -125,7 +130,7 @@
 	list_reagents = list("sodiumchloride" = 20)
 	possible_states = list()
 
-/obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change(changetype)
 	if(reagents.reagent_list.len == 0)
 		icon_state = "emptyshaker"
 	else
@@ -163,7 +168,7 @@
 	list_reagents = list("blackpepper" = 20)
 	possible_states = list()
 
-/obj/item/reagent_containers/food/condiment/peppermill/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/peppermill/on_reagent_change(changetype)
 	if(reagents.reagent_list.len == 0)
 		icon_state = "emptyshaker"
 	else
@@ -225,7 +230,7 @@
 
 /obj/item/reagent_containers/food/condiment/pack
 	name = "condiment pack"
-	desc = "A small plastic pack with condiments to put on your food"
+	desc = "A small plastic pack with condiments to put on your food."
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
@@ -236,7 +241,8 @@
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(istype(target, /obj/item/reagent_containers/food/snacks))
@@ -253,7 +259,7 @@
 			src.reagents.trans_to(target, amount_per_transfer_from_this)
 			qdel(src)
 
-/obj/item/reagent_containers/food/condiment/pack/on_reagent_change()
+/obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
 	if(reagents.reagent_list.len > 0)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)

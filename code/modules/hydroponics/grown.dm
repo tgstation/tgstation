@@ -15,11 +15,11 @@
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
-	origin_tech = "biotech=1"
+	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 
-/obj/item/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
-	tastes = list(name = 1) // apples taste of apple, silly.
-	..()
+/obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	tastes = list("[name]" = 1) // apples taste of apple, silly.
 	if(new_seed)
 		seed = new_seed.Copy()
 	else if(ispath(seed))
@@ -35,9 +35,9 @@
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_new(src, newloc)
+			T.on_new(src, loc)
 		seed.prepare_result(src)
-		transform *= TransformUsingVariable(seed.potency, 100, 0.5) //Makes the resulting produce's sprite larger or smaller based on potency!
+		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 		add_juice()
 
 
@@ -137,6 +137,28 @@
 		trash = null
 		return
 	return ..()
+
+/obj/item/reagent_containers/food/snacks/grown/grind_requirements()
+	if(dry_grind && !dry)
+		to_chat(usr, "<span class='warning'>[src] needs to be dry before it can be ground up!</span>")
+		return
+	return TRUE
+
+/obj/item/reagent_containers/food/snacks/grown/on_grind()
+	var/nutriment = reagents.get_reagent_amount("nutriment")
+	if(grind_results&&grind_results.len)
+		for(var/i in 1 to grind_results.len)
+			grind_results[grind_results[i]] = nutriment
+		reagents.del_reagent("nutriment")
+		reagents.del_reagent("vitamin")
+
+/obj/item/reagent_containers/food/snacks/grown/on_juice()
+	var/nutriment = reagents.get_reagent_amount("nutriment")
+	if(juice_results&&juice_results.len)
+		for(var/i in 1 to juice_results.len)
+			juice_results[juice_results[i]] = nutriment
+		reagents.del_reagent("nutriment")
+		reagents.del_reagent("vitamin")
 
 // For item-containing growns such as eggy or gatfruit
 /obj/item/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
