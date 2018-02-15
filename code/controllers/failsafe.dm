@@ -56,7 +56,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 						if(4,5)
 							--defcon
 						if(3)
-							message_admins("<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.</span>")
+							message_admins2("<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.</span>")
 							--defcon
 						if(2)
 							to_chat(GLOB.admins, "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>")

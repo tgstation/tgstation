@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(ticker)
 			if(GLOB.secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					admin_log("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.", message_admins = TRUE)
 				else
 					mode = smode
 
@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(ticker)
 			SSjob.ResetOccupations()
 			return 0
 	else
-		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
+		testing("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
 	if(hide_mode)

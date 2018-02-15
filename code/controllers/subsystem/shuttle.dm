@@ -187,8 +187,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/total = GLOB.joined_player_list.len
 
 	if(alive / total <= threshold)
-		var/msg = "Automatically dispatching shuttle due to crew death."
-		message_admins(msg)
+		message_admins2("Automatically dispatching shuttle due to crew death.")
 		log_game("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
 		emergencyNoRecall = TRUE
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
@@ -275,7 +274,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins2("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
@@ -307,8 +306,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())
 		emergency.cancel(get_area(user))
-		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		admin_log("%1% has recalled the shuttle.", user, message_admins = TRUE)
 		var/area/A = get_area(user)
 		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 		return 1
@@ -355,8 +353,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, set_coefficient = 2.5)
-			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
-			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+			admin_log("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.", message_admins = TRUE)
 
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE

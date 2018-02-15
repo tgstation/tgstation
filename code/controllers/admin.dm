@@ -31,7 +31,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			class = "unknown"
 
 	usr.client.debug_variables(target)
-	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
+	message_admins2("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
 
 // Debug verbs.
@@ -50,4 +50,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			new /datum/controller/failsafe()
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
 
-	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
+	admin_log("%1% has restarted the [controller] controller.", usr, message_admins = TRUE, update_tickets = FALSE)

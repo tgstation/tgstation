@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if (!pickedmap)
 		return
 	var/datum/map_config/VM = global.config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.map_name]")
+	admin_log("Randomly rotating map to [VM.map_name]", message_admins = TRUE)
 	. = changemap(VM)
 	if (. && VM.map_name != config.map_name)
 		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
-		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
+		admin_log("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!", message_admins = TRUE)
 		return
 
 	next_map_config = VM

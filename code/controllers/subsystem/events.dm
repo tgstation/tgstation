@@ -196,7 +196,7 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
+	message_admins2("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
 

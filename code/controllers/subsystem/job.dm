@@ -561,7 +561,7 @@ SUBSYSTEM_DEF(job)
 			SendToAtom(M, arrivals_turfs[1], FALSE)
 		else
 			var/msg = "Unable to send mob [M] to late join!"
-			message_admins(msg)
+			message_admins2(msg)
 			CRASH(msg)
 
 

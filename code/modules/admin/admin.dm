@@ -1,6 +1,6 @@
 
 ////////////////////////////////
-/proc/message_admins(msg)
+/proc/message_admins2(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 

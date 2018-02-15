@@ -40,9 +40,7 @@
 	if(!can_see(A))
 		if(isturf(A)) //On unmodified clients clicking the static overlay clicks the turf underneath
 			return //So there's no point messaging admins
-		message_admins("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))"
-		log_admin(message)
+		var/message = admin_log("%1% might be running a modified client! (failed can_see on AI click of %2%)", message_admins = TRUE)
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
 			send2irc_adminless_only("NOCHEAT", message)
