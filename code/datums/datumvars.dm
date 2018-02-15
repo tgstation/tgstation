@@ -995,6 +995,39 @@
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
 
+		else if(href_list["brainwash"])
+			if(!check_rights(R_FUN))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["brainwash"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/objectives = list()
+			do
+				var/objective = stripped_input(usr, "Add an objective, or leave empty to finish.", "Brainwashing", null, MAX_MESSAGE_LEN)
+				if(objective)
+					objectives += objective
+			while(alert(usr,"Add another objective?","More Brainwashing","Yes","No") == "Yes")
+
+			if(alert(usr,"Confirm Brainwashing?","Are you sure?","Yes","No") == "No")
+				return
+
+			if(!LAZYLEN(objectives))
+				return
+
+			if(!usr)
+				return
+
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			brainwash(C, objectives)
+
+			href_list["datumrefresh"] = href_list["brainwash"]
+
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))
 				return

@@ -12,8 +12,17 @@
 			M.objectives += objective
 		B.greet()
 	else
-		B = new(directives)
+		B = new()
+		for(var/O in directives)
+			var/datum/objective/brainwashing/objective = new(O)
+			B.objectives += objective
 		M.add_antag_datum(B)
+
+	var/begin_message = "<span class='deadsay'><b>[L]</b> has been brainwashed with the following objectives: "
+	var/obj_message = english_list(directives)
+	var/end_message = "</b>.</span>"
+	var/rendered = begin_message + obj_message + end_message
+	deadchat_broadcast(rendered, follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_REGULAR)
 
 /datum/antagonist/brainwashed
 	name = "Brainwashed Victim"
@@ -23,20 +32,12 @@
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
 
-/datum/antagonist/brainwashed/New(list/directives)
-	..()
-	for(var/O in directives)
-		var/datum/objective/brainwashing/objective = new(O)
-		objectives += objective
-
 /datum/antagonist/brainwashed/on_gain()
-	for(var/O in objectives)
-		owner.objectives += O
+	owner.objectives |= objectives
 	. = ..()
 
 /datum/antagonist/brainwashed/on_removal()
-	for(var/O in objectives)
-		owner.objectives -= O
+	owner.objectives -= objectives
 	. = ..()
 
 /datum/antagonist/brainwashed/greet()

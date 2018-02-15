@@ -12,7 +12,7 @@
 				/datum/surgery_step/ground_nerves,
 				/datum/surgery_step/close)
 	possible_locs = list("chest")
-	bioware_target = "nerves"
+	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/ground_nerves
 	name = "ground nerves"

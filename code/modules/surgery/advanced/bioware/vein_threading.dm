@@ -12,7 +12,7 @@
 				/datum/surgery_step/thread_veins,
 				/datum/surgery_step/close)
 	possible_locs = list("chest")
-	bioware_target = "circulation"
+	bioware_target = BIOWARE_CIRCULATION
 
 /datum/surgery_step/thread_veins
 	name = "thread veins"

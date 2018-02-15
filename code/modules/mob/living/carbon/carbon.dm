@@ -846,6 +846,7 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
+	.["Brainwash"] = "?_src_=vars;[HrefToken()];brainwash=[REF(src)]"
 	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"
 	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
 	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
