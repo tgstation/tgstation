@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace slime extracts now have a new chemical reaction with water, which create slime radio potions. When applied to a simple animal, that mob gains an internal radio."
