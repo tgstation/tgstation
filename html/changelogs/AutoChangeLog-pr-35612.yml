@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Chasms no longer eat shuttle docking ports, rendering them unusable and unresponsive"

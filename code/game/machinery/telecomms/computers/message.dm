@@ -118,7 +118,8 @@
 			else
 				for(var/n = ++i; n <= optioncount; n++)
 					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
-			if(issilicon(usr) && is_special_character(usr))
+			var/mob/living/silicon/S = usr
+			if(istype(S) && S.hack_software)
 				//Malf/Traitor AIs can bruteforce into the system to gain the Key.
 				dat += "<dd><A href='?src=[REF(src)];hack=1'><i><font color='Red'>*&@#. Bruteforce Key</font></i></font></a><br></dd>"
 			else
@@ -338,7 +339,8 @@
 
 		//Hack the Console to get the password
 		if (href_list["hack"])
-			if(issilicon(usr) && is_special_character(usr))
+			var/mob/living/silicon/S = usr
+			if(istype(S) && S.hack_software)
 				hacking = TRUE
 				screen = 2
 				//Time it takes to bruteforce is dependant on the password length.
