@@ -84,6 +84,9 @@
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
 	var/inserted = insert_item(I, stack_amt = requested_amount)
+	///
+	to_chat(world, "DEBUG: Inserted [inserted]. [parent.type]")
+	///
 	if(inserted)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
