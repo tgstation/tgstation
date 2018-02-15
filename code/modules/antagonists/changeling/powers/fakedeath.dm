@@ -6,6 +6,7 @@
 	dna_cost = 0
 	req_dna = 1
 	req_stat = DEAD
+	ignores_fakedeath = FALSE
 	var/revive_ready = FALSE
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
@@ -35,6 +36,7 @@
 		name = "Reviving Stasis"
 		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
 		button_icon_state = "fake_death"
+		ignores_fakedeath = FALSE
 		return TRUE
 
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
@@ -54,10 +56,11 @@
 		if(C && C.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 			to_chat(user, "<span class='notice'>Click the Regenerative Stasis button again to revive.</span>")
-			name = "Revive"//TODO: test this, i think it may not work
+			name = "Revive"
 			desc = "We arise once more."
 			button_icon_state = "revive"
 			revive_ready = TRUE
+			ignores_fakedeath = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
 	if(user.has_trait(TRAIT_FAKEDEATH, "changeling"))
