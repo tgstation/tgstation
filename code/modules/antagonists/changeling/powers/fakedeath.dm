@@ -36,6 +36,8 @@
 		name = "Reviving Stasis"
 		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
 		button_icon_state = "fake_death"
+		UpdateButtonIcon()
+		chemical_cost = 15
 		ignores_fakedeath = FALSE
 		return TRUE
 
@@ -55,10 +57,11 @@
 		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
-			to_chat(user, "<span class='notice'>Click the Regenerative Stasis button again to revive.</span>")
 			name = "Revive"
 			desc = "We arise once more."
 			button_icon_state = "revive"
+			UpdateButtonIcon()
+			chemical_cost = 0
 			revive_ready = TRUE
 			ignores_fakedeath = TRUE
 
