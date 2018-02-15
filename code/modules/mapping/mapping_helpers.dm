@@ -107,16 +107,16 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAPPING WARNING, [src] spawned outside of mapload!")
+		log_world("### MAP WARNING, [src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.cyclelinkeddir)
-			log_world("### MAPPING WARNING, [src] at [COORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+			log_world("### MAP WARNING, [src] at [COORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
 		else
 			airlock.cyclelinkeddir = dir
 	else
-		log_world("### MAPPING WARNING, [src] failed to find an airlock at [COORD(src)]")		
+		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")		
 
 
 /obj/effect/mapping_helpers/airlock/locked
@@ -126,16 +126,16 @@
 /obj/effect/mapping_helpers/airlock/locked/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		log_world("### MAPPING WARNING, [src] spawned outside of mapload!")
+		log_world("### MAP WARNING, [src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(airlock)
 		if(airlock.locked)
-			log_world("### MAPPING WARNING, [src] at [COORD(src)] tried to bolt [airlock] but it's already locked!")
+			log_world("### MAP WARNING, [src] at [COORD(src)] tried to bolt [airlock] but it's already locked!")
 		else
 			airlock.locked = TRUE
 	else
-		log_world("### MAPPING WARNING, [src] failed to find an airlock at [COORD(src)]")
+		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")
 
 
 //needs to do its thing before spawn_rivers() is called

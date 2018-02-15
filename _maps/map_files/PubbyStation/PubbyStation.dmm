@@ -19846,9 +19846,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "aYd" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/machinery/door/airlock{
 	name = "Kitchen";
 	req_access_txt = "0";
@@ -30438,6 +30435,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bxF" = (
@@ -30475,6 +30475,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -35534,6 +35537,7 @@
 	req_access_txt = "8";
 	req_one_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
 /area/science/mixing)
 "bIM" = (
@@ -36526,6 +36530,9 @@
 	req_access_txt = "8";
 	req_one_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bLg" = (
@@ -36857,7 +36864,6 @@
 "bLX" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics";
 	req_access_txt = "24"
@@ -38139,7 +38145,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -38149,7 +38154,6 @@
 	name = "Chapel";
 	opacity = 1
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -39609,9 +39613,6 @@
 	req_access_txt = "24"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSR" = (
@@ -41449,18 +41450,12 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bWX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Chapel";
 	opacity = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -47125,9 +47120,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "cpe" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/machinery/door/airlock{
 	name = "Bar Access";
 	req_access_txt = "25"

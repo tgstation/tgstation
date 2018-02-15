@@ -14981,9 +14981,6 @@
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "aLu" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Auxillary Base Construction";
 	req_access_txt = "0";
@@ -54480,6 +54477,15 @@
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"khB" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
 "knx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
@@ -90444,7 +90450,7 @@ aaa
 aaa
 aaa
 ahn
-anE
+khB
 ahn
 ahn
 ahn
