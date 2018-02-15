@@ -530,7 +530,7 @@
 			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh.",
 			"The shuttle's transponder is emitting the encoded message 'FEAR THE OLD BLOOD' in lieu of its assigned identification signal.")
 		var/message = pick_n_take(curses)
-		message += "<br>The shuttle will be delayed by three minutes."
+		message += " The shuttle will be delayed by three minutes."
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
 
