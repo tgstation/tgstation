@@ -83,6 +83,8 @@ Buildable meters
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	name = "[initial(fakeA.name)] fitting"
 	icon_state = initial(fakeA.pipe_state)
+	if(ispath(pipe_type,/obj/machinery/atmospherics/pipe/heat_exchanging))
+		resistance_flags |= FIRE_PROOF | LAVA_PROOF
 
 /obj/item/pipe/verb/flip()
 	set category = "Object"
