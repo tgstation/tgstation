@@ -52,7 +52,7 @@ Chaplain
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"
-		if("cthulu")
+		if("cthulhu")
 			B.name = "The Necronomicon"
 		if("islam")
 			B.name = "Quran"

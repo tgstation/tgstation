@@ -19,7 +19,7 @@
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
 	name = "clamp bleeders"
-	implements = list(/obj/item/hemostat = 100, /obj/item/wirecutters = 60, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(/obj/item/hemostat = 100, TOOL_WIRECUTTER = 60, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
 	time = 24
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -35,7 +35,7 @@
 //retract skin
 /datum/surgery_step/retract_skin
 	name = "retract skin"
-	implements = list(/obj/item/retractor = 100, /obj/item/screwdriver = 45, /obj/item/wirecutters = 35)
+	implements = list(/obj/item/retractor = 100, TOOL_SCREWDRIVER = 45, TOOL_WIRECUTTER = 35)
 	time = 24
 
 /datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -47,35 +47,19 @@
 //close incision
 /datum/surgery_step/close
 	name = "mend incision"
-	implements = list(/obj/item/cautery = 100, /obj/item/gun/energy/laser = 90, /obj/item/weldingtool = 70,
-		/obj/item/lighter = 45, /obj/item/match = 20)
+	implements = list(/obj/item/cautery = 100, /obj/item/gun/energy/laser = 90, TOOL_WELDER = 70,
+		/obj/item = 30) // 30% success with any hot item.
 	time = 24
 
 /datum/surgery_step/close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].",
 		"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
 
-
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/cautery))
-		return 1
+	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
+		return tool.is_hot()
 
-	if(istype(tool, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = tool
-		if(WT.isOn())
-			return 1
-
-	else if(istype(tool, /obj/item/lighter))
-		var/obj/item/lighter/L = tool
-		if(L.lit)
-			return 1
-
-	else if(istype(tool, /obj/item/match))
-		var/obj/item/match/M = tool
-		if(M.lit)
-			return 1
-
-	return 0
+	return TRUE
 
 /datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
@@ -105,7 +89,7 @@
 //drill bone
 /datum/surgery_step/drill
 	name = "drill bone"
-	implements = list(/obj/item/surgicaldrill = 100, /obj/item/pickaxe/drill = 60, /obj/item/mecha_parts/mecha_equipment/drill = 60, /obj/item/screwdriver = 20)
+	implements = list(/obj/item/surgicaldrill = 100, /obj/item/pickaxe/drill = 60, /obj/item/mecha_parts/mecha_equipment/drill = 60, TOOL_SCREWDRIVER = 20)
 	time = 30
 
 /datum/surgery_step/drill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

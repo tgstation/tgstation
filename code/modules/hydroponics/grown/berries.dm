@@ -27,6 +27,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	juice_results = list("berryjuice" = 0)
+	tastes = list("berry" = 1)
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -43,11 +44,12 @@
 /obj/item/reagent_containers/food/snacks/grown/berries/poison
 	seed = /obj/item/seeds/berry/poison
 	name = "bunch of poison-berries"
-	desc = "Taste so good, you could die!"
+	desc = "Taste so good, you might die!"
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
 	foodtype = FRUIT | TOXIC
 	juice_results = list("poisonberryjuice" = 0)
+	tastes = list("poison-berry" = 1)
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -66,10 +68,11 @@
 /obj/item/reagent_containers/food/snacks/grown/berries/death
 	seed = /obj/item/seeds/berry/death
 	name = "bunch of death-berries"
-	desc = "Taste so good, you could die!"
+	desc = "Taste so good, you will die!"
 	icon_state = "deathberrypile"
 	filling_color = "#708090"
 	foodtype = FRUIT | TOXIC
+	tastes = list("death-berry" = 1)
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -93,6 +96,7 @@
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
 	foodtype = FRUIT
+	tastes = list("glow-berry" = 1)
 
 // Cherries
 /obj/item/seeds/cherry
@@ -124,6 +128,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	grind_results = list("cherryjelly" = 0)
+	tastes = list("cherry" = 1)
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
@@ -146,6 +151,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	grind_results = list("bluecherryjelly" = 0)
+	tastes = list("blue cherry" = 1)
 
 // Grapes
 /obj/item/seeds/grape
@@ -178,6 +184,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	juice_results = list("grapejuice" = 0)
+	tastes = list("grape" = 1)
 
 // Green Grapes
 /obj/item/seeds/grape/green
@@ -196,3 +203,4 @@
 	name = "bunch of green grapes"
 	icon_state = "greengrapes"
 	filling_color = "#7FFF00"
+	tastes = list("green grape" = 1)

@@ -530,14 +530,14 @@
 "bb" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
-	faction = "pirate"
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "bc" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 6;
-	faction = "pirate"
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)

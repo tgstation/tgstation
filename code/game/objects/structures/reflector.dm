@@ -81,7 +81,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
-		playsound(src, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(istype(W, /obj/item/wrench))

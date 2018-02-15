@@ -41,10 +41,9 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>You smash through the girder!</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 
@@ -167,7 +166,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype)
+		if(S.sheettype && S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
@@ -356,11 +355,10 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>Your jackhammer smashes through the girder!</span>")
 		var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 2)
 		transfer_fingerprints_to(R)
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
