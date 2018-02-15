@@ -39,7 +39,7 @@
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	var/is_screwdriver = istype(C, /obj/item/screwdriver)
-	playsound(src, C.usesound, 80, 1)
+	C.play_tool_sound(src, 80)
 	return remove_tile(user, silent, make_tile = is_screwdriver)
 
 /turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)

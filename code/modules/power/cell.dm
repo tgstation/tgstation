@@ -158,6 +158,10 @@
 		return 0
 
 /* Cell variants*/
+/obj/item/stock_parts/cell/empty/Initialize()
+	. = ..()
+	charge = 0
+
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
@@ -168,6 +172,7 @@
 /obj/item/stock_parts/cell/crap/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
@@ -191,6 +196,7 @@
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -224,6 +230,7 @@
 /obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
@@ -236,6 +243,7 @@
 /obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
@@ -248,6 +256,7 @@
 /obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/bluespace
 	name = "bluespace power cell"
@@ -261,6 +270,7 @@
 /obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
@@ -314,6 +324,7 @@
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/emproof/emp_act(severity)
 	return

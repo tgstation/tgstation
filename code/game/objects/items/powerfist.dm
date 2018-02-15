@@ -44,7 +44,7 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 	else if(istype(W, /obj/item/screwdriver))
 		if(tank)

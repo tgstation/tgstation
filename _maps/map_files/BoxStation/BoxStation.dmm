@@ -17558,7 +17558,7 @@
 /area/crew_quarters/kitchen)
 "aSP" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/crew_quarters/kitchen)
 "aSQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -24115,7 +24115,7 @@
 /area/science/robotics/mechbay)
 "bjQ" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bjR" = (
 /obj/structure/table/glass,
@@ -38329,7 +38329,6 @@
 /area/science/misc_lab)
 "bQY" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer/upgraded,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 2;
@@ -38337,6 +38336,7 @@
 	network = list("RD");
 	pixel_y = 28
 	},
+/obj/item/device/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bQZ" = (
@@ -42858,7 +42858,6 @@
 /area/science/circuit)
 "cbZ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer/upgraded,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 1;
@@ -42866,6 +42865,7 @@
 	network = list("RD");
 	pixel_y = -28
 	},
+/obj/item/device/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "cca" = (
@@ -49336,7 +49336,8 @@
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -49572,7 +49573,8 @@
 	icon_state = "control_standby";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -49597,7 +49599,8 @@
 	icon_state = "control_standby";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/darkblue/corner{
@@ -49887,7 +49890,8 @@
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;
-	req_access = list(65)
+	req_access = null;
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)

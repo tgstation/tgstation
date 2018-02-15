@@ -74,7 +74,7 @@
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
-	var/silent = 0
+	var/silent = FALSE
 	var/hit_slowdown = 0
 	var/brightness_power = 5
 	var/slowdown = 0
@@ -185,6 +185,8 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+	if(be_close && !in_range(M, src))
+		return FALSE
 	return TRUE
 
 /mob/proc/makePAI(delold)

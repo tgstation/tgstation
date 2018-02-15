@@ -20622,7 +20622,7 @@
 /area/hydroponics)
 "aZZ" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/crew_quarters/kitchen)
 "baa" = (
 /obj/structure/disposalpipe/segment,
@@ -26739,7 +26739,7 @@
 /area/medical/chemistry)
 "bpX" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
-/turf/open/floor/plasteel/dark,
+/turf/closed/wall,
 /area/medical/chemistry)
 "bpY" = (
 /turf/closed/wall,
@@ -47575,7 +47575,8 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Crematorium";
 	opacity = 1;
-	req_access = list(27)
+	req_access = null;
+	req_access_txt = "27"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,

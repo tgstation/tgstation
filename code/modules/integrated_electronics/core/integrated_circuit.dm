@@ -68,7 +68,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(assembly)
 		return assembly.check_interactivity(user)
 	else
-		return user.canUseTopic(src,be_close = TRUE)
+		return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
@@ -120,7 +120,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return
 
 	var/window_height = 350
-	var/window_width = 600
+	var/window_width = 655
 
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
@@ -135,7 +135,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>"
+	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
 		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"
