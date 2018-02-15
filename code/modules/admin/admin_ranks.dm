@@ -66,8 +66,6 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
-		if("mentor")
-			flag = R_MENTOR
 		if("poll")
 			flag = R_POLL
 		if("varedit")
@@ -160,10 +158,8 @@ GLOBAL_PROTECT(admin_ranks)
 			previous_rights = R.rights
 	else
 		if(!SSdbcore.Connect())
-			if(CONFIG_GET(flag/sql_enabled))
-				var/msg = "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
-				log_world(msg)
-				WRITE_FILE(GLOB.world_game_log, msg)
+			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return

@@ -28,6 +28,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_NEW
 
 	load_admins()
+	hippie_initialize() // hippie - loads mentor and other stuff. Due to mentors, it has to be after load_admins().
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()

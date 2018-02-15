@@ -19,7 +19,7 @@
 	var/admin = 0
 	var/ckey = ckey(key)
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
-		admin = !CkeyIsMentor(ckey) // hippie - added a check to prevent mentors from ban evading
+		admin = 1
 
 	//Whitelist
 	if(CONFIG_GET(flag/usewhitelist))

@@ -206,7 +206,7 @@
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
-		if(user.client && check_rights_for(user.client, R_ADMIN))
+		if(user.client && user.client.holder)
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
 				toggle_all_ctf(user)

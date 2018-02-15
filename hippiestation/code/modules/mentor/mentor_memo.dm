@@ -1,7 +1,8 @@
 /client/proc/mentor_memo()
 	set name = "Mentor Memos"
 	set category = "Server"
-	if(!check_rights(0))	return
+	if(!check_rights(0))
+		return
 	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
@@ -13,7 +14,8 @@
 /client/proc/show_mentor_memo()
 	set name = "Show Memos"
 	set category = "Mentor"
-	if(!check_rights_for(src, R_MENTOR))	return
+	if(!is_mentor())
+		return
 	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
@@ -25,7 +27,7 @@
 	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 	switch(task)
 		if("Write")
 			var/datum/DBQuery/query_memocheck = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")] WHERE ckey = '[sql_ckey]'")

@@ -22,6 +22,8 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
+	hippieTopic(href, href_list) // hippie
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -43,6 +45,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+
 		if(!M)
 			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
 			return
@@ -168,10 +171,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a revenant.")
-			if("shadowling")
-				hippie_makeShadowling(src)
-			if("vampire")
-				hippie_makeVampire(src)
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -1212,7 +1211,7 @@
 		if(!ismob(M))
 			return
 
-		if(M.client && check_rights_for(M.client, R_ADMIN))
+		if(M.client && M.client.holder)
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
