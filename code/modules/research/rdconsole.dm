@@ -830,11 +830,17 @@ doesn't have toxins access.
 	if(ls["back_screen"])
 		back = text2num(ls["back_screen"])
 	if(ls["build"]) //Causes the Protolathe to build something.
+		if(QDELETED(linked_lathe))
+			say("No Protolathe Linked!")
+			return
 		if(linked_lathe.busy)
 			say("Warning: Protolathe busy!")
 		else
 			linked_lathe.user_try_print_id(ls["build"], ls["amount"])
 	if(ls["imprint"])
+		if(QDELETED(linked_imprinter))
+			say("No Circuit Imprinter Linked!")
+			return
 		if(linked_imprinter.busy)
 			say("Warning: Imprinter busy!")
 		else
@@ -844,12 +850,21 @@ doesn't have toxins access.
 	if(ls["disconnect"]) //The R&D console disconnects with a specific device.
 		switch(ls["disconnect"])
 			if("destroy")
+				if(QDELETED(linked_destroy))
+					say("No Deconstructive Analyzer Linked!")
+					return
 				linked_destroy.linked_console = null
 				linked_destroy = null
 			if("lathe")
+				if(QDELETED(linked_lathe))
+					say("No Protolathe Linked!")
+					return
 				linked_lathe.linked_console = null
 				linked_lathe = null
 			if("imprinter")
+				if(QDELETED(linked_imprinter))
+					say("No Circuit Imprinter Linked!")
+					return
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 	if(ls["eject_design"]) //Eject the design disk.
@@ -861,20 +876,41 @@ doesn't have toxins access.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
+		if(QDELETED(linked_destroy))
+			say("No Deconstructive Analyzer Linked!")
+			return
 		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
 	//Protolathe Materials
-	if(ls["disposeP"] && linked_lathe)  //Causes the protolathe to dispose of a single reagent (all of it)
+	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
+		if(QDELETED(linked_lathe))
+			say("No Protolathe Linked!")
+			return
 		linked_lathe.reagents.del_reagent(ls["disposeP"])
-	if(ls["disposeallP"] && linked_lathe) //Causes the protolathe to dispose of all it's reagents.
+	if(ls["disposeallP"]) //Causes the protolathe to dispose of all it's reagents.
+		if(QDELETED(linked_lathe))
+			say("No Protolathe Linked!")
+			return
 		linked_lathe.reagents.clear_reagents()
-	if(ls["ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
+	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
+		if(QDELETED(linked_lathe))
+			say("No Protolathe Linked!")
+			return
 		linked_lathe.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
 	//Circuit Imprinter Materials
-	if(ls["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
+		if(QDELETED(linked_imprinter))
+			say("No Circuit Imprinter Linked!")
+			return
 		linked_imprinter.reagents.del_reagent(ls["disposeI"])
-	if(ls["disposeallI"] && linked_imprinter) //Causes the circuit imprinter to dispose of all it's reagents.
+	if(ls["disposeallI"]) //Causes the circuit imprinter to dispose of all it's reagents.
+		if(QDELETED(linked_imprinter))
+			say("No Circuit Imprinter Linked!")
+			return
 		linked_imprinter.reagents.clear_reagents()
-	if(ls["imprinter_ejectsheet"] && linked_imprinter) //Causes the imprinter to eject a sheet of material
+	if(ls["imprinter_ejectsheet"]) //Causes the imprinter to eject a sheet of material
+		if(QDELETED(linked_imprinter))
+			say("No Circuit Imprinter Linked!")
+			return
 		linked_imprinter.materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["imprinter_ejectsheet"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
@@ -885,25 +921,32 @@ doesn't have toxins access.
 			return			//Nope!
 		research_node(ls["research_node"], usr)
 	if(ls["clear_tech"]) //Erase la on the technology disk.
-		if(t_disk)
-			qdel(t_disk.stored_research)
-			t_disk.stored_research = new
+		if(QDELETED(t_disk))
+			say("No Technology Disk Inserted!")
+			return
+		qdel(t_disk.stored_research)
+		t_disk.stored_research = new
 		say("Wiping technology disk.")
 	if(ls["copy_tech"]) //Copy some technology la from the research holder to the disk.
+		if(QDELETED(t_disk))
+			say("No Technology Disk Inserted!")
+			return
 		stored_research.copy_research_to(t_disk.stored_research)
 		screen = RDSCREEN_TECHDISK
 		say("Downloading to technology disk.")
 	if(ls["clear_design"]) //Erases la on the design disk.
-		if(d_disk)
-			var/n = text2num(ls["clear_design"])
-			if(!n)
-				for(var/i in 1 to d_disk.max_blueprints)
-					d_disk.blueprints[i] = null
-					say("Wiping design disk.")
-			else
-				var/datum/design/D = d_disk.blueprints[n]
-				say("Wiping design [D.name] from design disk.")
-				d_disk.blueprints[n] = null
+		if(QDELETED(d_disk))
+			say("No Design Disk Inserted!")
+			return
+		var/n = text2num(ls["clear_design"])
+		if(!n)
+			for(var/i in 1 to d_disk.max_blueprints)
+				d_disk.blueprints[i] = null
+				say("Wiping design disk.")
+		else
+			var/datum/design/D = d_disk.blueprints[n]
+			say("Wiping design [D.name] from design disk.")
+			d_disk.blueprints[n] = null
 	if(ls["search"]) //Search for designs with name matching pattern
 		searchstring = ls["to_search"]
 		searchtype = ls["type"]
@@ -913,10 +956,15 @@ doesn't have toxins access.
 		else
 			screen = RDSCREEN_IMPRINTER_SEARCH
 	if(ls["updt_tech"]) //Uple the research holder with information from the technology disk.
-		say("Uploading Technology Disk.")
-		if(t_disk)
-			t_disk.stored_research.copy_research_to(stored_research)
+		if(QDELETED(t_disk))
+			say("No Technology Disk Inserted!")
+			return
+		say("Uploading technology disk.")
+		t_disk.stored_research.copy_research_to(stored_research)
 	if(ls["copy_design"]) //Copy design la from the research holder to the design disk.
+		if(QDELETED(d_disk))
+			say("No Design Disk Inserted!")
+			return
 		var/slot = text2num(ls["copy_design"])
 		var/datum/design/D = stored_research.researched_designs[ls["copy_design_ID"]]
 		if(D)
@@ -936,7 +984,10 @@ doesn't have toxins access.
 			d_disk.blueprints[slot] = D
 		screen = RDSCREEN_DESIGNDISK
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
-		if(linked_destroy && linked_destroy.busy)
+		if(QDELETED(linked_destroy))
+			say("No Deconstructive Analyzer Linked!")
+			return
+		if(linked_destroy.busy)
 			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
 		else if(linked_destroy.loaded_item)
 			linked_destroy.unload_item()
@@ -948,14 +999,16 @@ doesn't have toxins access.
 		selected_design = SSresearch.techweb_designs[ls["view_design"]]
 		screen = RDSCREEN_TECHWEB_DESIGNVIEW
 	if(ls["updt_design"]) //Uples the research holder with design la from the design disk.
-		if(d_disk)
-			var/n = text2num(ls["updt_design"])
-			if(!n)
-				for(var/D in d_disk.blueprints)
-					if(D)
-						stored_research.add_design(D)
-			else
-				stored_research.add_design(d_disk.blueprints[n])
+		if(QDELETED(d_disk))
+			say("No design disk found.")
+			return
+		var/n = text2num(ls["updt_design"])
+		if(!n)
+			for(var/D in d_disk.blueprints)
+				if(D)
+					stored_research.add_design(D)
+		else
+			stored_research.add_design(d_disk.blueprints[n])
 
 	updateUsrDialog()
 
@@ -1004,14 +1057,14 @@ doesn't have toxins access.
 /obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
 	var/amount = 50
 	if(buildtype == IMPRINTER)
-		if(!linked_imprinter)
+		if(QDELETED(linked_imprinter))
 			return FALSE
 		for(var/M in D.materials + D.reagents_list)
 			amount = min(amount, linked_imprinter.check_mat(D, M))
 			if(amount < 1)
 				return FALSE
 	else if(buildtype == PROTOLATHE)
-		if(!linked_lathe)
+		if(QDELETED(linked_lathe))
 			return FALSE
 		for(var/M in D.materials + D.reagents_list)
 			amount = min(amount, linked_lathe.check_mat(D, M))
