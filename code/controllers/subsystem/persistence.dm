@@ -191,12 +191,11 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/SetUpFrames(list/frames)
 	for(var/A in GLOB.persist_frames)
-		var/obj/item/wallframe/picture/persist/F = A
+		var/obj/structure/sign/picture_frame/persist/F = A
 		var/frame_data = pick_n_take(frames)
 		if(!islist(frames))
 			continue
 		var/list/chosen_frame = frame_data
-
 		if(!chosen_frame || isemptylist(chosen_frame)) //Malformed
 			continue
 		if(chosen_frame["type"] == "photo")
@@ -207,12 +206,12 @@ SUBSYSTEM_DEF(persistence)
 			ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 			P.icon = ic
 			P.img = icon(file(chosen_frame["file"]))
-			F.displayed = P
+			F.framed = P
 		else
 			var/obj/item/canvas/C = new(F)
 			C.icon = icon(file(chosen_frame["file"]))
+			F.framed = C
 		F.desc = chosen_frame["description"]
-		F.author = chosen_frame["author"]
 		F.update_icon()
 
 
@@ -291,22 +290,21 @@ SUBSYSTEM_DEF(persistence)
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
 
-/datum/controller/subsystem/persistence/proc/SaveFrame(obj/item/wallframe/picture/persist/F)
+/datum/controller/subsystem/persistence/proc/SaveFrame(obj/structure/sign/picture_frame/persist/F)
 	var/list/data = list()
 	var/icon/art
-	if(istype(F.displayed, /obj/item/photo))
-		var/obj/item/photo/P = F.displayed
+	if(istype(F.framed, /obj/item/photo))
+		var/obj/item/photo/P = F.framed
 		art = P.img
 		data["type"] = "photo"
 	else
-		var/obj/item/canvas/C = F.displayed
+		var/obj/item/canvas/C = F.framed
 		art = getFlatIcon(C)
 		data["type"] = "canvas"
 	var/photo_file = copytext(md5("\icon[art]"), 1, 6)
 	if(!fexists("data/npc_saves/photos/[photo_file].png"))
 		fcopy(art, "data/npc_saves/photos/[photo_file].png")
 		data["file"] = "data/npc_saves/photos/[photo_file].png"
-		data["author"] = F.author
 		data["description"] = F.desc
 		saved_frames += list(data)
 

@@ -123,7 +123,7 @@
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
 	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
-	warcry = "No wounds cannot be healed!"
+	warcry = "If it bleeds, we can heal it!"
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE

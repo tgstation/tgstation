@@ -566,11 +566,9 @@
 	user.examinate(src)
 
 /obj/item/wallframe/picture/examine(mob/user)
-	if(displayed && istype(displayed, /obj/item/photo))
-		var/obj/item/photo/I = displayed
-		I.show(user)
-	else
-		..()
+	var/obj/item/photo/I = displayed
+	I.show(user)
+	..()
 
 /obj/item/wallframe/picture/update_icon()
 	cut_overlays()
@@ -586,35 +584,6 @@
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		I.forceMove(PF)
-
-
-
-/obj/item/wallframe/picture/persist
-	name = "durable picture frame"
-	var/author
-
-
-/obj/item/wallframe/picture/persist/Initialize()
-	. = ..()
-	GLOB.persist_frames += src
-
-/obj/item/wallframe/picture/persist/Destroy()
-	GLOB.persist_frames -= src
-	return ..()
-
-/obj/item/wallframe/picture/persist/display(obj/item/I, mob/user)
-	. = ..()
-	author = user.real_name
-	var/note = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Frame Plaque")
-	if(note)
-		if(user.Adjacent(src))
-			desc = note
-			to_chat(user, "You update the frame's plaque.")
-		else
-			to_chat(user, "You are too far to set the plaque's text.")
-	SSpersistence.SaveFrame(src)
-
-
 
 /obj/structure/sign/picture_frame
 	name = "picture frame"
@@ -645,18 +614,20 @@
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct()
 		return
-
-	else if(istype(I, /obj/item/photo))
+	else if(istype(I, /obj/item/photo) || istype(I, /obj/item/canvas))
 		if(!framed)
-			var/obj/item/photo/P = I
-			if(!user.transferItemToLoc(P, src))
-				return
-			framed = P
-			update_icon()
+			display(I, user)
 		else
-			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
-
+			to_chat(user, "<span class=notice>\The [src] already has an attached artwork, you need a <b>crowbar</b> to remove it.</span>")
 	..()
+
+/obj/structure/sign/picture_frame/crowbar_act(mob/living/user, obj/item/crowbar)
+	if(crowbar.use_tool(src, user, 50, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You unsecure the [framed].</span>")
+		framed.forceMove(loc)
+		framed = null
+		update_icon()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
@@ -678,3 +649,34 @@
 			I.forceMove(F)
 		F.update_icon()
 	qdel(src)
+
+/obj/structure/sign/picture_frame/proc/display(obj/item/I, mob/user)
+	if(!user.transferItemToLoc(I, src))
+		return
+	framed = I
+	update_icon()
+
+
+/obj/structure/sign/picture_frame/persist
+	name = "durable picture frame"
+
+/obj/structure/sign/picture_frame/persist/Initialize()
+	. = ..()
+	GLOB.persist_frames += src
+
+/obj/structure/sign/picture_frame/persist/Destroy()
+	GLOB.persist_frames -= src
+	return ..()
+
+/obj/structure/sign/picture_frame/persist/display(obj/item/I, mob/user)
+	. = ..()
+	var/note = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Frame Plaque")
+	if(note)
+		if(user.Adjacent(src))
+			desc = note + "<br>This masterpiece was created by [user.real_name]."
+			to_chat(user, "You update the frame's plaque.")
+		else
+			to_chat(user, "You are too far to set the plaque's text.")
+	SSpersistence.SaveFrame(src)
+
+

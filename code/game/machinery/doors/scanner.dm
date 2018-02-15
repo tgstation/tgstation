@@ -152,7 +152,6 @@
 	name = "Greytopia spawner"
 	var/datum/map_template/shelter/grey/template
 	var/static/spawned = FALSE
-	dir = 4
 
 /obj/effect/landmark/greytopia/Initialize()
 	. = ..()

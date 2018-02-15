@@ -376,10 +376,20 @@
 /area/greytopia)
 "U" = (
 /obj/machinery/scannerright{
-	step_x = -6;
-	pixel_x = -4
+	step_x = -4;
+	pixel_x = -3
 	},
 /turf/closed/wall/r_wall,
+/area/greytopia)
+"V" = (
+/obj/structure/sign/poster/contraband/grey_tide,
+/turf/closed/wall/r_wall,
+/area/greytopia)
+"W" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/plating{
+	luminosity = 2
+	},
 /area/greytopia)
 "X" = (
 /obj/machinery/scannerleft{
@@ -418,7 +428,7 @@ a
 "}
 (3,1,1) = {"
 b
-b
+V
 f
 q
 y
@@ -489,7 +499,7 @@ T
 (8,1,1) = {"
 b
 c
-k
+l
 k
 k
 B
@@ -502,8 +512,8 @@ a
 "}
 (9,1,1) = {"
 b
-b
-l
+V
+W
 k
 v
 C
