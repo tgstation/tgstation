@@ -35,7 +35,7 @@
 "aI" = (/obj/machinery/modular_computer/console/preset/research{dir = 4},/turf/open/floor/plasteel/neutral,/area/shuttle/bearcat/bridge)
 "aJ" = (/obj/machinery/light{dir = 8},/obj/structure/table/reinforced,/obj/structure/window/plasma/reinforced/spawner/east,/obj/structure/window/plasma/reinforced/spawner/north,/obj/item/kitchen/knife/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/turf/open/floor/wood,/area/shuttle/bearcat/captain)
 "aK" = (/turf/open/floor/wood,/area/shuttle/bearcat/captain)
-"aL" = (/obj/machinery/power/apc{areastring = "/area/shuttle/bearcat/captain"; locked = 1; name = "Captain's Quarters APC"; pixel_y = -26; req_access_txt = "204"},/obj/structure/cable/yellow,/obj/structure/table/wood,/obj/item/disk/fakenucleardisk{desc = "Better keep this safe."; name = "nuclear authentication disk"},/turf/open/floor/wood,/area/shuttle/bearcat/captain)
+"aL" = (/obj/machinery/power/apc{areastring = "/area/shuttle/bearcat/captain"; locked = 1; name = "Captain's Quarters APC"; pixel_y = -26; req_access_txt = "204"},/obj/structure/cable/yellow,/obj/structure/table/wood,/turf/open/floor/wood,/area/shuttle/bearcat/captain)
 "aM" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/bearcat/dockingbay)
 "aN" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{name = "scrubbers pipe l1"; piping_layer = 1; pixel_x = -5; pixel_y = -5},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable/yellow{icon_state = "1-2"},/obj/machinery/door/airlock/hatch{name = "Brdige"; req_access_txt = "203"},/turf/open/floor/plasteel/neutral,/area/shuttle/bearcat/dockingbay)
 "aO" = (/turf/closed/wall/mineral/plastitanium/overspace,/area/shuttle/bearcat/dockingbay)
