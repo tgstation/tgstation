@@ -116,7 +116,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/proc/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 5, "Gold Slime", HOSTILE_SPAWN), 50)
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Gold Slime", HOSTILE_SPAWN), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser
 	name = "Slime Crit Lesser"
@@ -125,7 +125,7 @@
 
 /datum/chemical_reaction/slime/slimemobspawn/lesser/summon_mobs(datum/reagents/holder, turf/T)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 3, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral"), 50)
+	addtimer(CALLBACK(src, .proc/chemical_mob_spawn, holder, 1, "Lesser Gold Slime", HOSTILE_SPAWN, "neutral"), 50)
 
 /datum/chemical_reaction/slime/slimemobspawn/friendly
 	name = "Slime Crit Friendly"
