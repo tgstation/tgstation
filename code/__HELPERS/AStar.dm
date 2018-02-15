@@ -75,10 +75,10 @@ Actual Adjacent procs :
 
 //wrapper that returns an empty list if A* failed to find a path
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
-	var/l = SSpathfinder.getfree()
+	var/l = SSpathfinder.getfree(caller)
 	while(!l)
 		stoplag(3)
-		l = SSpathfinder.getfree()
+		l = SSpathfinder.getfree(caller)
 	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 
 	SSpathfinder.found(l)
