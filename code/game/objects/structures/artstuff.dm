@@ -53,6 +53,7 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 	icon_state = "11x11"
 	resistance_flags = FLAMMABLE
 	var/whichGlobalBackup = 1 //List index
+	var/scribble // artist's note
 
 /obj/item/canvas/nineteenXnineteen
 	icon_state = "19x19"
@@ -77,7 +78,22 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		GLOB.globalBlankCanvases[whichGlobalBackup] = I
 		. = I
 
+/obj/item/canvas/examine(mob/user)
+	..()
+	if(in_range(src, user))
+		show(user)
+	else
+		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this canvas!</span>")
 
+/obj/item/canvas/proc/show(mob/user)
+	var/icon/img = getFlatIcon(src)
+	user << browse_rsc(img, "tmp_photo.png")
+	user << browse("<html><head><title>[name]</title></head>" \
+		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
+		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+	onclose(user, "[name]")
 
 //One pixel increments
 /obj/item/canvas/attackby(obj/item/I, mob/user, params)

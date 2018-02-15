@@ -199,19 +199,20 @@ SUBSYSTEM_DEF(persistence)
 
 		if(!chosen_frame || isemptylist(chosen_frame)) //Malformed
 			continue
-
-		var/icon/picimg = icon(chosen_frame["file"])
-		var/obj/item/photo/P = new/obj/item/photo(F.loc)
-		var/icon/small_img = picimg
-		var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
-		small_img.Scale(8, 8)
-		ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-		P.icon = ic
-		P.img = picimg
+		if(chosen_frame["type"] == "photo")
+			var/icon/small_img = icon(file(chosen_frame["file"]))
+			var/obj/item/photo/P = new(F)
+			var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
+			small_img.Scale(8, 8)
+			ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+			P.icon = ic
+			P.img = icon(file(chosen_frame["file"]))
+			F.displayed = P
+		else
+			var/obj/item/canvas/C = new(F)
+			C.icon = icon(file(chosen_frame["file"]))
 		F.desc = chosen_frame["description"]
 		F.author = chosen_frame["author"]
-		F.displayed = P
-		F.after_attach(P)
 		F.update_icon()
 
 
@@ -291,19 +292,23 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies += list(data)
 
 /datum/controller/subsystem/persistence/proc/SaveFrame(obj/item/wallframe/picture/persist/F)
-	if(F.displayed)
-		var/list/data = list()
+	var/list/data = list()
+	var/icon/art
+	if(istype(F.displayed, /obj/item/photo))
 		var/obj/item/photo/P = F.displayed
-		var/icon/art = P.img
-		var/photo_file = copytext(md5("\icon[art]"), 1, 6)
-		if(!fexists("data/npc_saves/photos/[photo_file].png"))
-			var/icon/clean = new /icon()
-			clean.Insert(art, "", SOUTH, 1, 0)
-			fcopy(clean, "data/npc_saves/photos/[photo_file].png")
-			data["file"] = "data/npc_saves/photos/[photo_file].png"
-			data["author"] = F.author
-			data["description"] = F.desc
-			saved_frames += list(data)
+		art = P.img
+		data["type"] = "photo"
+	else
+		var/obj/item/canvas/C = F.displayed
+		art = getFlatIcon(C)
+		data["type"] = "canvas"
+	var/photo_file = copytext(md5("\icon[art]"), 1, 6)
+	if(!fexists("data/npc_saves/photos/[photo_file].png"))
+		fcopy(art, "data/npc_saves/photos/[photo_file].png")
+		data["file"] = "data/npc_saves/photos/[photo_file].png"
+		data["author"] = F.author
+		data["description"] = F.desc
+		saved_frames += list(data)
 
 /datum/controller/subsystem/persistence/proc/CollectRoundtype()
 	saved_modes[3] = saved_modes[2]

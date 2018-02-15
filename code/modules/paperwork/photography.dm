@@ -63,7 +63,6 @@
 
 /obj/item/photo/examine(mob/user)
 	..()
-
 	if(in_range(src, user))
 		show(user)
 	else
@@ -613,8 +612,7 @@
 			to_chat(user, "You update the frame's plaque.")
 		else
 			to_chat(user, "You are too far to set the plaque's text.")
-	if(istype(displayed, /obj/item/photo))
-		SSpersistence.SaveFrame(src)
+	SSpersistence.SaveFrame(src)
 
 
 
