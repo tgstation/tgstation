@@ -19,6 +19,8 @@
 		if(R.radio)
 			R.radio.talk_into(src, message, , get_spans(), language)
 			return ITALICS | REDUCE_RANGE
+	else
+		return ..()
 
 /mob/living/brain/lingcheck()
 	return LINGHIVE_NONE
