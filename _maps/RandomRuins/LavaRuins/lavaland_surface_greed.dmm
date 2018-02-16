@@ -77,7 +77,7 @@
 /area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
-/obj/item/ore/gold,
+/obj/item/stack/ore/gold,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "q" = (
@@ -120,10 +120,6 @@
 "w" = (
 /obj/item/storage/bag/money,
 /obj/machinery/light/small,
-/turf/open/floor/engine/cult,
-/area/ruin/powered/greed)
-"z" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "J" = (
@@ -323,7 +319,7 @@ h
 l
 m
 m
-z
+m
 l
 m
 v

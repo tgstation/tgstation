@@ -69,10 +69,6 @@
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
 	assets.send(user)
 
-	if(istype(src, /obj/item/paper/talisman)) //Talismans cannot be read
-		if(!iscultist(user) && !user.stat)
-			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
-			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
@@ -248,7 +244,8 @@
 
 /obj/item/paper/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	var/literate = usr.is_literate()
+	if(!usr.canUseTopic(src, BE_CLOSE, literate))
 		return
 
 	if(href_list["help"])
@@ -257,7 +254,7 @@
 	if(href_list["write"])
 		var/id = href_list["write"]
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
-		if(!t)
+		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
@@ -296,9 +293,6 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
-			return
-		if(istype(src, /obj/item/paper/talisman/))
-			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
 			return
 
 	else if(istype(P, /obj/item/stamp))

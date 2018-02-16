@@ -471,6 +471,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list("copper" = 2) //2 copper per cable in the coil
+	usesound = 'sound/items/deconstruct.ogg'
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -740,13 +741,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 // Misc.
 /////////////////////////////
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
-	amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	update_icon()
-
 /obj/item/stack/cable_coil/red
 	item_color = "red"
 	color = "#ff0000"
@@ -782,5 +776,53 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	item_color = null
 	color = "#ffffff"
 
+
 /obj/item/stack/cable_coil/random/five
 	amount = 5
+
+/obj/item/stack/cable_coil/cut
+	amount = null
+	icon_state = "coil2"
+
+/obj/item/stack/cable_coil/cut/Initialize(mapload)
+	. = ..()
+	if(!amount)
+		amount = rand(1,2)
+	pixel_x = rand(-2,2)
+	pixel_y = rand(-2,2)
+	update_icon()
+
+/obj/item/stack/cable_coil/cut/red
+	item_color = "red"
+	color = "#ff0000"
+
+/obj/item/stack/cable_coil/cut/yellow
+	item_color = "yellow"
+	color = "#ffff00"
+
+/obj/item/stack/cable_coil/cut/blue
+	item_color = "blue"
+	color = "#1919c8"
+
+/obj/item/stack/cable_coil/cut/green
+	item_color = "green"
+	color = "#00aa00"
+
+/obj/item/stack/cable_coil/cut/pink
+	item_color = "pink"
+	color = "#ff3ccd"
+
+/obj/item/stack/cable_coil/cut/orange
+	item_color = "orange"
+	color = "#ff8000"
+
+/obj/item/stack/cable_coil/cut/cyan
+	item_color = "cyan"
+	color = "#00ffff"
+
+/obj/item/stack/cable_coil/cut/white
+	item_color = "white"
+
+/obj/item/stack/cable_coil/cut/random
+	item_color = null
+	color = "#ffffff"

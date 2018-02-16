@@ -910,8 +910,19 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
 
+	var/list/da_list = list()
+	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
+		var/mob/living/L = I
+		da_list[L.real_name] = L
+
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+
+	choice = da_list[choice]
+
+	if(!choice)
+		used = FALSE
+		return
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
 		used = FALSE
@@ -920,26 +931,25 @@
 		to_chat(user, "You feel like writing your own name into a cursed death warrant would be unwise.")
 		used = FALSE
 		return
-	else
 
-		var/mob/living/L = choice
+	var/mob/living/L = choice
 
-		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+	message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
 
-		var/datum/objective/survive/survive = new
-		survive.owner = L.mind
-		L.mind.objectives += survive
-		add_logs(user, L, "took out a blood contract on", src)
-		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
-		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-		var/obj/effect/mine/pickup/bloodbath/B = new(L)
-		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
+	var/datum/objective/survive/survive = new
+	survive.owner = L.mind
+	L.mind.objectives += survive
+	add_logs(user, L, "took out a blood contract on", src)
+	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
+	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
+	var/obj/effect/mine/pickup/bloodbath/B = new(L)
+	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
 
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H == L)
-				continue
-			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
-			H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H == L)
+			continue
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
+		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
 

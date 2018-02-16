@@ -179,7 +179,9 @@ function set_labels($payload, $labels, $remove) {
 
 	$tags = array_merge($labels, $existing);
 	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
+	if($remove) {
+		$tags = array_diff($tags, $remove);
+	}
 
 	$final = array();
 	foreach($tags as $t)
@@ -208,8 +210,10 @@ function tag_pr($payload, $opened) {
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
-		if(strpos(strtolower($title), 'revert') !== FALSE || strpos(strtolower($title), 'removes') !== FALSE)
-			$tags[] = 'Revert/Removal';
+		if(strpos(strtolower($title), 'revert') !== FALSE)
+			$tags[] = 'Revert';
+		if(strpos(strtolower($title), 'removes') !== FALSE)
+			$tags[] = 'Removal';
 	}
 
 	$remove = array();
@@ -452,6 +456,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$label_values = array(
 		'Fix' => 2,
 		'Refactor' => 2,
+		'CI/Tests' => 3,
 		'Code Improvement' => 1,
 		'Grammar and Formatting' => 1,
 		'Priority: High' => 4,
@@ -659,7 +664,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'sounddel':
 				if($item != 'removed an old sound thingy') {
 					$tags[] = 'Sound';
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				}
 				break;
@@ -675,7 +680,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'dels':
 			case 'rscdel':
 				if($item != 'Removed old things') {
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
 				}
 				break;
@@ -688,7 +693,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'imagedel':
 				if($item != 'deleted some icons and images') {
 					$tags[] = 'Sprites';
-					$tags[] = 'Revert/Removal';
+					$tags[] = 'Removal';
 					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
 				}
 				break;

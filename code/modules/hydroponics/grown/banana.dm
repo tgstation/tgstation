@@ -108,6 +108,7 @@
 	item_state = "bluespace_peel"
 	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
+	tastes = list("banana" = 1)
 
 /obj/item/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace

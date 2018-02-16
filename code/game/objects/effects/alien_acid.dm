@@ -1,16 +1,7 @@
-/* Alien shit!
- * Contains:
- *		effect/acid
- */
-
-
-/*
- * Acid
- */
 /obj/effect/acid
 	gender = PLURAL
 	name = "acid"
-	desc = "Burbling corrossive stuff."
+	desc = "Burbling corrosive stuff."
 	icon_state = "acid"
 	density = FALSE
 	opacity = 0
@@ -20,8 +11,8 @@
 	var/turf/target
 
 
-/obj/effect/acid/New(loc, acid_pwr, acid_amt)
-	..(loc)
+/obj/effect/acid/Initialize(mapload, acid_pwr, acid_amt)
+	. = ..()
 
 	target = get_turf(src)
 

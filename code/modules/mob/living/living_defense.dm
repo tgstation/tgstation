@@ -303,6 +303,8 @@
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
+	if(has_trait(TRAIT_SHOCKIMMUNE))
+		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
 			adjustFireLoss(shock_damage)

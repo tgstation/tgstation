@@ -11,6 +11,7 @@
  *		Candle Box
  *		Cigarette Box
  *		Cigar Case
+ *		Heart Shaped Box w/ Chocolates
  */
 
 /obj/item/storage/fancy
@@ -79,11 +80,13 @@
 
 /obj/item/storage/fancy/egg_box
 	icon = 'icons/obj/food/containers.dmi'
+	item_state = "eggbox"
 	icon_state = "eggbox"
 	icon_type = "egg"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
+	desc = "A carton for containing eggs."
 	storage_slots = 12
 	can_hold = list(/obj/item/reagent_containers/food/snacks/egg)
 	spawn_type = /obj/item/reagent_containers/food/snacks/egg
@@ -129,8 +132,8 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to extract contents.</span>")
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	if(user.stat || user.restrained())
+/obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(W && contents.len > 0)
@@ -279,3 +282,20 @@
 	name = "\improper premium havanian cigar case"
 	desc = "A case of classy Havanian cigars."
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar/havana
+
+/*
+ * Heart Shaped Box w/ Chocolates
+ */
+
+/obj/item/storage/fancy/heart_box
+	name = "heart-shaped box"
+	desc = "A heart-shaped box for holding tiny chocolates."
+	icon = 'icons/obj/food/containers.dmi'
+	item_state = "chocolatebox"
+	icon_state = "chocolatebox"
+	icon_type = "chocolate"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	storage_slots = 8
+	can_hold = list(/obj/item/reagent_containers/food/snacks/tinychocolate)
+	spawn_type = /obj/item/reagent_containers/food/snacks/tinychocolate

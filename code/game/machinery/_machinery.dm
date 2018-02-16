@@ -108,13 +108,13 @@ Class Procs:
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -184,7 +184,7 @@ Class Procs:
 				continue
 			if(isliving(AM))
 				var/mob/living/L = am
-				if(L.buckled)
+				if(L.buckled || L.mob_size >= MOB_SIZE_LARGE)
 					continue
 			target = am
 
@@ -290,18 +290,17 @@ Class Procs:
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
 
-/obj/machinery/proc/default_pry_open(obj/item/crowbar/C)
-	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && istype(C)
+/obj/machinery/proc/default_pry_open(obj/item/I)
+	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
-		playsound(loc, C.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
-		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel) &&  !(flags_1 & NODECONSTRUCT_1)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
+	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
-		playsound(loc, C.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
@@ -337,9 +336,9 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver/S)
-	if(istype(S) &&  !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, S.usesound, 50, 1)
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
+		I.play_tool_sound(src, 50)
 		if(!panel_open)
 			panel_open = TRUE
 			icon_state = icon_state_open
@@ -351,9 +350,9 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench/W)
-	if(panel_open && istype(W))
-		playsound(loc, W.usesound, 50, 1)
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
+	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
+		I.play_tool_sound(src, 50)
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
@@ -365,20 +364,20 @@ Class Procs:
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(istype(W) && !(flags_1 & NODECONSTRUCT_1))
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
 		if(time)
 			to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>")
-		playsound(loc, W.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			anchored = !anchored
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -457,21 +456,6 @@ Class Procs:
 /obj/machinery/proc/on_deconstruction()
 	return
 
-// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
-			return TRUE
-		else
-			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
-	else
-		return FALSE
-
-// Hook for html_interface module to unset the active machine when the window is closed by the player.
-/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src)
-		hclient.client.mob.unset_machine()
-
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
@@ -479,7 +463,7 @@ Class Procs:
 /obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
 	if(prob(85) && explosive)
-		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
+		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(prob(50))
 		emp_act(EMP_LIGHT)
 	else

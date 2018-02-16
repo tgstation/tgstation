@@ -124,39 +124,28 @@
 		. = ..()
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
-	if(isobj(O) && proximity)
-		if(O.obj_flags & UNIQUE_RENAME)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-
-				if(penchoice == "Rename")
-					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-					var/oldname = O.name
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						if(oldname == input)
-							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
-							return
-						else
-							O.name = input
-							to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
-							return
-					else
-						to_chat(user, "You are too far away!")
-
-				if(penchoice == "Change description")
-					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						O.desc = input
-						to_chat(user, "You have successfully changed \the [O.name]'s description.")
-						return
-					else
-						to_chat(user, "You are too far away!")
-			else
-				to_chat(user, "You are too far away!")
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-	else
-		return
+			if(oldname == input)
+				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+			else
+				O.name = input
+				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "You have successfully changed \the [O.name]'s description.")
 
 /*
  * Sleepypens
@@ -196,7 +185,7 @@
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
-		embed_chance = initial(embed_chance)
+		embedding = embedding.setRating(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
@@ -206,7 +195,7 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embed_chance = 100 //rule of cool
+		embedding = embedding.setRating(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")

@@ -187,7 +187,7 @@
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
-				if(M.probability)
+				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
 				else
 					mode_false_report_weight[M.config_tag] = 1
@@ -236,9 +236,10 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new ("_maps/[data].json")
+				currentmap = load_map_config("_maps/[data].json")
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
+					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")

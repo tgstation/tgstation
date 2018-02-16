@@ -1,8 +1,9 @@
 /obj/effect/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = MID_LANDMARK_LAYER
 	invisibility = INVISIBILITY_ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -16,10 +17,10 @@
 /obj/effect/landmark/singularity_pull()
 	return
 
+INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/New()
-	..()
-	tag = text("landmark*[]", name)
+/obj/effect/landmark/Initialize()
+	. = ..()
 	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()
@@ -31,6 +32,7 @@
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
+	layer = MOB_LAYER
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
 
@@ -184,6 +186,12 @@
 	name = "AI"
 	icon_state = "AI"
 	delete_after_roundstart = FALSE
+	var/primary_ai = TRUE
+
+/obj/effect/landmark/start/ai/secondary
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "ai_spawn"
+	primary_ai = FALSE
 
 
 //Department Security spawns
@@ -214,6 +222,8 @@
 
 /obj/effect/landmark/start/wizard
 	name = "wizard"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "wiznerd_spawn"
 
 /obj/effect/landmark/start/wizard/Initialize()
 	..()
@@ -222,6 +232,8 @@
 
 /obj/effect/landmark/start/nukeop
 	name = "nukeop"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
 
 /obj/effect/landmark/start/nukeop/Initialize()
 	..()
@@ -230,6 +242,8 @@
 
 /obj/effect/landmark/start/nukeop_leader
 	name = "nukeop leader"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_leader_spawn"
 
 /obj/effect/landmark/start/nukeop_leader/Initialize()
 	..()
@@ -259,22 +273,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 // carp.
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
+	icon_state = "carp_spawn"
 
 // observer-start.
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
-
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-
-// triple ais.
-/obj/effect/landmark/tripai
-	name = "tripai"
+	icon_state = "observer_start"
 
 // xenos.
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
+	icon_state = "xeno_spawn"
 
 /obj/effect/landmark/xeno_spawn/Initialize(mapload)
 	..()
@@ -284,6 +293,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 // blobs.
 /obj/effect/landmark/blobstart
 	name = "blobstart"
+	icon_state = "blob_start"
 
 /obj/effect/landmark/blobstart/Initialize(mapload)
 	..()
@@ -292,6 +302,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/secequipment
 	name = "secequipment"
+	icon_state = "secequipment"
 
 /obj/effect/landmark/secequipment/Initialize(mapload)
 	..()
@@ -300,6 +311,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/prisonwarp
 	name = "prisonwarp"
+	icon_state = "prisonwarp"
 
 /obj/effect/landmark/prisonwarp/Initialize(mapload)
 	..()
@@ -308,6 +320,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/ert_spawn
 	name = "Emergencyresponseteam"
+	icon_state = "ert_spawn"
 
 /obj/effect/landmark/ert_spawn/Initialize(mapload)
 	..()
@@ -316,6 +329,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
+	icon_state = "holding_facility"
 
 /obj/effect/landmark/holding_facility/Initialize(mapload)
 	..()
@@ -324,6 +338,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/observe
 	name = "tdomeobserve"
+	icon_state = "tdome_observer"
 
 /obj/effect/landmark/thunderdome/observe/Initialize(mapload)
 	..()
@@ -332,6 +347,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/one
 	name = "tdome1"
+	icon_state = "tdome_t1"
 
 /obj/effect/landmark/thunderdome/one/Initialize(mapload)
 	..()
@@ -340,6 +356,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/two
 	name = "tdome2"
+	icon_state = "tdome_t2"
 
 /obj/effect/landmark/thunderdome/two/Initialize(mapload)
 	..()
@@ -348,6 +365,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/thunderdome/admin
 	name = "tdomeadmin"
+	icon_state = "tdome_admin"
 
 /obj/effect/landmark/thunderdome/admin/Initialize(mapload)
 	..()
@@ -357,6 +375,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 //Servant spawn locations
 /obj/effect/landmark/servant_of_ratvar
 	name = "servant of ratvar spawn"
+	icon_state = "clockwork_orange"
+	layer = MOB_LAYER
 
 /obj/effect/landmark/servant_of_ratvar/Initialize(mapload)
 	..()
@@ -366,7 +386,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 //City of Cogs entrances
 /obj/effect/landmark/city_of_cogs
 	name = "city of cogs entrance"
-	icon_state = "x4"
+	icon_state = "city_of_cogs"
 
 /obj/effect/landmark/city_of_cogs/Initialize(mapload)
 	..()
@@ -376,7 +396,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 //generic event spawns
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
-	icon_state = "x4"
+	icon_state = "generic_event"
+	layer = HIGH_LANDMARK_LAYER
 
 
 /obj/effect/landmark/event_spawn/New()

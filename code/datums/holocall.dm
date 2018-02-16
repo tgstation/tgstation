@@ -202,10 +202,18 @@
 	var/list/entries = list()
 	var/language = /datum/language/common //Initial language, can be changed by HOLORECORD_LANGUAGE entries
 
+/datum/holorecord/proc/set_caller_image(mob/user)
+	var/olddir = user.dir
+	user.setDir(SOUTH)
+	caller_image = getFlatIcon(user)
+	user.setDir(olddir)
+
 /obj/item/disk/holodisk
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
+	obj_flags = UNIQUE_RENAME
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -219,6 +227,22 @@
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)
 	return ..()
+
+/obj/item/disk/holodisk/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/disk/holodisk))
+		var/obj/item/disk/holodisk/holodiskOriginal = W
+		if (holodiskOriginal.record)
+			if (!record)
+				record = new
+			record.caller_name = holodiskOriginal.record.caller_name
+			record.caller_image = holodiskOriginal.record.caller_image
+			record.entries = holodiskOriginal.record.entries.Copy()
+			record.language = holodiskOriginal.record.language
+			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			name = holodiskOriginal.name
+		else
+			to_chat(user, "[holodiskOriginal] has no record on it!")
+	..()
 
 /obj/item/disk/holodisk/proc/build_record()
 	record = new
@@ -260,7 +284,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-
+		
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman
@@ -306,8 +330,20 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
+
 /datum/preset_holoimage/gorilla
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
+
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown

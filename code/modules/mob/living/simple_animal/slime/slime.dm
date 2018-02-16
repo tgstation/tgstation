@@ -27,8 +27,6 @@
 	healable = 0
 	gender = NEUTER
 
-	nutrition = 700
-
 	see_in_dark = 8
 
 	verb_say = "blorbles"
@@ -93,6 +91,7 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
+	nutrition = 700
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -243,7 +242,7 @@
 		if(M == src)
 			return
 		if(buckled)
-			Feedstop(silent=1)
+			Feedstop(silent = TRUE)
 			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
 			return
 		attacked += 5
@@ -401,7 +400,7 @@
 	if(Target)
 		Target = null
 	if(buckled)
-		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
+		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
 	SStun = world.time + rand(20,60)
 	spawn(0)

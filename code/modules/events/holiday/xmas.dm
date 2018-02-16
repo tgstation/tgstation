@@ -37,10 +37,11 @@
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
+	layer = FLY_LAYER
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
@@ -74,10 +75,9 @@
 /datum/round_event/santa/start()
 	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/Z = pick(candidates)
+		var/client/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
-		santa.key = Z.key
-		qdel(Z)
+		santa.key = C.key
 
 		santa.equipOutfit(/datum/outfit/santa)
 		santa.update_icons()

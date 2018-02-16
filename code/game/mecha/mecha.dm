@@ -34,7 +34,7 @@
 	var/overload_step_energy_drain_min = 100
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/stock_parts/cell/cell
 	var/state = 0
@@ -215,7 +215,7 @@
 		step_energy_drain = normal_step_energy_drain
 		qdel(SM)
 	if(CP)
-		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
+		armor = armor.modifyRating(energy = (CP.rating * 10)) //Each level of capacitor protects the mech against emp by 10%
 		qdel(CP)
 
 ////////////////////////

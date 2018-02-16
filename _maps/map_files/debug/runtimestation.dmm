@@ -20,10 +20,6 @@
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"ag" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -184,6 +180,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aD" = (
@@ -316,6 +315,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aV" = (
@@ -341,6 +343,9 @@
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
@@ -1303,15 +1308,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"dV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera/autoname,
-/turf/open/floor/plasteel/blue/side{
-	dir = 1
-	},
-/area/hallway/primary/central)
 "dW" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname,
@@ -1348,6 +1344,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"pI" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"Qt" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"WT" = (
+/obj/machinery/door/airlock,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aa
@@ -2507,7 +2527,7 @@ bI
 cf
 cq
 bu
-dV
+dU
 bE
 bE
 cN
@@ -2768,7 +2788,7 @@ ad
 ad
 aj
 aj
-aC
+WT
 aj
 aj
 aj
@@ -3478,7 +3498,7 @@ by
 by
 cn
 by
-cn
+Qt
 by
 cn
 by
@@ -3586,7 +3606,7 @@ ad
 ad
 ad
 by
-cn
+pI
 by
 ad
 ad

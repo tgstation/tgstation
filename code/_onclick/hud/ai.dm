@@ -54,7 +54,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	GLOB.crewmonitor.show(AI)
+	GLOB.crewmonitor.show(AI,AI)
 
 /obj/screen/ai/crew_manifest
 	name = "Crew Manifest"
@@ -162,7 +162,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/S = usr
-	S.sensor_mode()
+	S.toggle_sensors()
 
 
 /datum/hud/ai

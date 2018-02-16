@@ -15,7 +15,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 
 
 // The message server itself.
@@ -43,6 +43,12 @@
 	if (!decryptkey)
 		decryptkey = GenerateKey()
 	pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+
+/obj/machinery/telecomms/message_server/Destroy()
+	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
+		if(monitor.linkedServer && monitor.linkedServer == src)
+			monitor.linkedServer = null
+	. = ..()
 
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
@@ -77,11 +83,6 @@
 		icon_state = "server-off"
 	else
 		icon_state = "server-on"
-
-
-// Repath for maps
-/obj/machinery/message_server
-	parent_type = /obj/machinery/telecomms/message_server
 
 
 // PDA signal datum

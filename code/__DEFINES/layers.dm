@@ -34,15 +34,18 @@
 #define HIGH_SIGIL_LAYER 2.56
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
-#define SHUTTER_LAYER 2.65 //Prevents shutters from being placed above doors. It's overridden by /obj/machinery/door/New() & poddoor/shutters/New()
+#define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
+#define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
+#define CLOSED_BLASTDOOR_LAYER 3.05
 #define CLOSED_DOOR_LAYER 3.1
 #define CLOSED_FIREDOOR_LAYER 3.11
+#define SHUTTER_LAYER 3.12 // HERE BE DRAGONS
 #define ABOVE_OBJ_LAYER 3.2
 #define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
@@ -62,9 +65,13 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
+#define LOW_LANDMARK_LAYER 9
+#define MID_LANDMARK_LAYER 9.1
+#define HIGH_LANDMARK_LAYER 9.2
 #define AREA_LAYER 10
 #define MASSIVE_OBJ_LAYER 11
 #define POINT_LAYER 12

@@ -12,11 +12,11 @@
 	
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
-	
+
 /datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	//throw if no rotation direction is specificed ?
 
 	src.rotation_flags = rotation_flags
@@ -25,7 +25,7 @@
 		src.can_user_rotate = can_user_rotate
 	else
 		src.can_user_rotate = CALLBACK(src,.proc/default_can_user_rotate)
-	
+
 	if(can_be_rotated)
 		src.can_be_rotated = can_be_rotated
 	else
@@ -63,10 +63,10 @@
 	if(rotation_flags & ROTATION_ALTCLICK)
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/datum/component/simple_rotation/proc/HandRot(mob/user, rotation)
-	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
+/datum/component/simple_rotation/proc/HandRot(mob/user, rotation = default_rotation_direction)
+	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
 		return
-	BaseRot(user,default_rotation_direction)
+	BaseRot(user, rotation)
 
 /datum/component/simple_rotation/proc/WrenchRot(obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
@@ -89,8 +89,7 @@
 	after_rotation.Invoke(user,rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.Adjacent(parent) || user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERY))
 		return FALSE
 	return TRUE
 

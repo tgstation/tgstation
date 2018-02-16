@@ -105,22 +105,33 @@
 
 /datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
-		return 1
+		return TRUE
 	var/list/possible_tools = list()
+	var/list/present_qualities = list()
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
+				if(SI.tool_behaviour)
+					present_qualities.Add(SI.tool_behaviour)
+
 		possible_tools += I.type
+
+		if(I.tool_behaviour)
+			present_qualities.Add(I.tool_behaviour)
+
 	possible_tools += contents
 
 	main_loop:
 		for(var/A in R.tools)
-			for(var/I in possible_tools)
-				if(ispath(I,A))
-					continue main_loop
-			return 0
-	return 1
+			if(A in present_qualities)
+				continue
+			else
+				for(var/I in possible_tools)
+					if(ispath(I, A))
+						continue main_loop
+			return FALSE
+	return TRUE
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
@@ -401,8 +412,7 @@
 	data["catalyst_text"] = catalyst_text
 
 	for(var/a in R.tools)
-		var/atom/A = a //cheat-typecast
-		tool_text += " [R.tools[A]] [initial(A.name)],"
+		tool_text += " [a],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 
