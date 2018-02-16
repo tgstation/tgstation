@@ -90,7 +90,6 @@
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
 	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERY))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	return TRUE
 

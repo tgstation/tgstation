@@ -171,7 +171,7 @@
 		blobber.update_icons()
 		blobber.adjustHealth(blobber.maxHealth * 0.5)
 		blob_mobs += blobber
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
 		SEND_SOUND(blobber, sound('sound/effects/blobattack.ogg'))
 		SEND_SOUND(blobber, sound('sound/effects/attackblob.ogg'))
