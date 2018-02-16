@@ -614,7 +614,6 @@
 	dwidth = 14;
 	height = 18;
 	name = "CentCom Raven Battlecruiser";
-	timid = 1;
 	width = 32
 	},
 /obj/machinery/door/airlock/hatch,
