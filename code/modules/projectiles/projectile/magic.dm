@@ -134,8 +134,8 @@
 
 		if("robot")
 			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/syndicate,
-							/mob/living/silicon/robot/syndicate/medical,
+							/mob/living/silicon/robot/modules/syndicate,
+							/mob/living/silicon/robot/modules/syndicate/medical,
 							200;/mob/living/simple_animal/drone/polymorphed)				
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -200,7 +200,7 @@
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
 				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
-				new_mob = hooman(M.loc)
+				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
