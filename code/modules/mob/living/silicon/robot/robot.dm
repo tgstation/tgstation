@@ -955,6 +955,7 @@
 	if (hasExpanded)
 		resize = 0.5
 		hasExpanded = FALSE
+		update_transform()
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
