@@ -9,12 +9,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		if(!I.item)
 			continue
 		if(I.include_modes.len)
-			if(!gamemode && SSticker && SSticker.mode && !(SSticker.mode.type in I.include_modes))
+			if(!gamemode && SSticker.mode && !(SSticker.mode.type in I.include_modes))
 				continue
 			if(gamemode && !(gamemode in I.include_modes))
 				continue
 		if(I.exclude_modes.len)
-			if(!gamemode && SSticker && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
+			if(!gamemode && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
 				continue
 			if(gamemode && (gamemode in I.exclude_modes))
 				continue
