@@ -25,10 +25,10 @@
 			numspawned--
 
 	for(var/loop in 1 to again)
-		new /obj/item/grenade/clusterbuster/segment(loc, src)//Creates 'segments' that launches a few more payloads
+		new /obj/item/grenade/clusterbuster/segment(drop_location(), src)//Creates 'segments' that launches a few more payloads
 
-	new payload_spawner(loc, payload, numspawned)//Launches payload
-	playsound(loc, prime_sound, 75, 1, -3)
+	new payload_spawner(drop_location(), payload, numspawned)//Launches payload
+	playsound(src, prime_sound, 75, 1, -3)
 	qdel(src)
 
 //////////////////////
@@ -42,7 +42,7 @@
 	base_state = "clusterbang_segment"
 
 /obj/item/grenade/clusterbuster/segment/Initialize(mapload, obj/item/grenade/clusterbuster/base)
-	..()
+	. = ..()
 	if(base)
 		name = "[base.name] segment"
 		base_state = "[base.base_state]_segment"
@@ -58,21 +58,25 @@
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/grenade/clusterbuster/segment/prime()
-	new payload_spawner(loc, payload, rand(min_spawned,max_spawned))
-	playsound(loc, prime_sound, 75, 1, -3)
+	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
+	playsound(src, prime_sound, 75, 1, -3)
 	qdel(src)
 
 //////////////////////////////////
 //The payload spawner effect
 /////////////////////////////////
 /obj/effect/payload_spawner/Initialize(mapload, type, numspawned)
+	..()
+	spawn_payload(type, numspawned)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/payload_spawner/proc/spawn_payload(type, numspawned)
 	for(var/loop in 1 to numspawned)
 		var/obj/item/grenade/P = new type(loc)
 		if(istype(P))
 			P.active = TRUE
-			addtimer(CALLBACK(P, /obj/item/grenade./proc/prime), rand(15,60))
+			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
 		walk_away(P,loc,rand(1,4))
-	qdel(src)
 
 /obj/effect/payload_spawner/random_slime
 	var/volatile = FALSE
@@ -86,14 +90,13 @@
 		if(!QDELETED(src))
 			reagents.add_reagent(pick_n_take(slime_chems),5) //Add them in random order so we get all effects
 
-/obj/effect/payload_spawner/random_slime/Initialize(mapload, type, numspawned) //type is unused here
+/obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/P = new chosen(loc)
 		if(volatile)
-			addtimer(CALLBACK(P, /obj/item/slime_extract./proc/activate_slime), rand(15,60))
+			addtimer(CALLBACK(P, /obj/item/slime_extract/proc/activate_slime), rand(15,60))
 		walk_away(P,loc,rand(1,4))
-	qdel(src)
 
 //////////////////////////////////
 //Custom payload clusterbusters
