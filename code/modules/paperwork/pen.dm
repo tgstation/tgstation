@@ -124,39 +124,28 @@
 		. = ..()
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
-	if(isobj(O) && proximity)
-		if(O.obj_flags & UNIQUE_RENAME)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-			if(!QDELETED(O) && user.canUseTopic(O, BE_CLOSE))
-
-				if(penchoice == "Rename")
-					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-					var/oldname = O.name
-					if(!QDELETED(O) && user.canUseTopic(O, BE_CLOSE))
-						if(oldname == input)
-							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
-							return
-						else
-							O.name = input
-							to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
-							return
-					else
-						to_chat(user, "You are too far away!")
-
-				if(penchoice == "Change description")
-					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-					if(!QDELETED(O) && user.canUseTopic(O, BE_CLOSE))
-						O.desc = input
-						to_chat(user, "You have successfully changed \the [O.name]'s description.")
-						return
-					else
-						to_chat(user, "You are too far away!")
-			else
-				to_chat(user, "You are too far away!")
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-	else
-		return
+			if(oldname == input)
+				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+			else
+				O.name = input
+				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "You have successfully changed \the [O.name]'s description.")
 
 /*
  * Sleepypens
