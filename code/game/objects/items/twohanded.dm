@@ -234,6 +234,10 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/twohanded/fireaxe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 80, hitsound) //axes are not known for being precision butchering tools
+
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
@@ -470,6 +474,10 @@
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(explosive)
@@ -581,10 +589,12 @@
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
-	if(hitsound == "swing_hit")
+	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
+		AddComponent(/datum/component/butchering, 30, 100, 0, hitsound) //VRRRR
 	else
 		hitsound = "swing_hit"
+		qdel(GetComponent(/datum/component/butchering)) //hard to butcher with a chainsaw that isn't on
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()
@@ -732,6 +742,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/twohanded/vibro_weapon/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

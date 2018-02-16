@@ -37,9 +37,11 @@
 				icon_state = "sword[item_color]"
 			START_PROCESSING(SSobj, src)
 			set_light(brightness_on)
+			AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 		else
 			STOP_PROCESSING(SSobj, src)
 			set_light(0)
+			qdel(GetComponent(/datum/component/butchering))
 
 /obj/item/melee/transforming/energy/is_hot()
 	return active * heat
