@@ -1310,7 +1310,7 @@
 	reagent_state = LIQUID
 	color = "#BEF7D8" // palish blue white
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	overdose_threshold = 15 // low overdose treshold due to low and random metabolism rate
+	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
 	taste_description = "salt" // it actually does taste salty
 	var/overdose_progress = 0 // to track overdose progress
 
@@ -1360,12 +1360,11 @@
 				M.emote("moan")
 				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(M, "You're knocked out from the exhaustion!") // at this point you will eventually die unless you get charcoal
-			M.Sleeping(100, 0, 1)
-			M.adjustOxyLoss(1.5*REM, 0)
-			M.adjustStaminaLoss(1.5*REM, 0)
-		if(82 to INFINITY)i
-			M.Sleeping(100, 0, 1)
+			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+		if(82 to INFINITY)
+			M.Sleeping(100, 0, TRUE)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
