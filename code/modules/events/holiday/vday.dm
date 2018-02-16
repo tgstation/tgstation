@@ -33,34 +33,19 @@
 
 
 			forge_valentines_objective(L, date)
-
 			forge_valentines_objective(date, L)
 
 			if(valentines.len && prob(4))
 				var/mob/living/notgoodenough = pick_n_take(valentines)
 				forge_valentines_objective(notgoodenough, date)
-
-
 		else
-			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
-			var/datum/objective/martyr/normiesgetout = new
-			normiesgetout.owner = L.mind
-			L.mind.special_role = "heartbreaker"
-			L.mind.objectives += normiesgetout
-			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
+			L.mind.add_antag_datum(/datum/antagonist/heartbreaker)
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
 	lover.mind.special_role = "valentine"
-	var/datum/objective/protect/protect_objective = new /datum/objective/protect
-	protect_objective.owner = lover.mind
-	protect_objective.target = date.mind
-	protect_objective.explanation_text = "Protect [date.real_name], your date."
-	lover.mind.objectives += protect_objective
-
-	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
-
-	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
-
+	var/datum/antagonist/valentine/V = new
+	V.date = date.mind
+	lover.mind.add_antag_datum(V) //These really should be teams but i can't be assed to incorporate third wheels right now
 
 /datum/round_event/valentines/announce(fake)
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
