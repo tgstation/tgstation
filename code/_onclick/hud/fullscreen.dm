@@ -3,23 +3,24 @@
 	var/list/screens = list()
 
 /mob/proc/overlay_fullscreen(category, type, severity)
-	var/obj/screen/fullscreen/screen
-	if(screens[category])
-		screen = screens[category]
-		if(screen.type != type)
-			clear_fullscreen(category, FALSE)
-			return .()
-		else if(!severity || severity == screen.severity)
-			return null
-	else
-		screen = new type()
+	var/obj/screen/fullscreen/screen = screens[category]
+	if (!screen || screen.type != type)
+		// needs to be recreated
+		clear_fullscreen(category, FALSE)
+		screens[category] = screen = new type()
+	else if ((!severity || severity == screen.severity) && (!client || screen.screen_loc != "CENTER-7,CENTER-7" || screen.view == client.view))
+		// doesn't need to be updated
+		return screen
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
-
-	screens[category] = screen
-	if(client && stat != DEAD)
+	if (client && screen.should_show_to(src))
 		client.screen += screen
+		if (screen.screen_loc == "CENTER-7,CENTER-7" && screen.view != client.view)
+			var/list/actualview = getviewsize(client.view)
+			screen.view = client.view
+			screen.transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
+
 	return screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
@@ -52,9 +53,14 @@
 			client.screen -= screens[category]
 
 /mob/proc/reload_fullscreen()
-	if(client && stat != DEAD) //dead mob do not see any of the fullscreen overlays that he has.
+	if(client)
+		var/obj/screen/fullscreen/screen
 		for(var/category in screens)
-			client.screen |= screens[category]
+			screen = screens[category]
+			if(screen.should_show_to(src))
+				client.screen |= screen
+			else
+				client.screen -= screen
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'
@@ -62,8 +68,15 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/view = 7
 	var/severity = 0
+	var/show_when_dead = FALSE
+
+/obj/screen/fullscreen/proc/should_show_to(mob/mymob)
+	if(!show_when_dead && mymob.stat == DEAD)
+		return FALSE
+	return TRUE
 
 /obj/screen/fullscreen/Destroy()
 	severity = 0
@@ -84,9 +97,18 @@
 	layer = CRIT_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/crit/vision
+	icon_state = "oxydamageoverlay"
+	layer = BLIND_LAYER
+
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
+
+/obj/screen/fullscreen/curse
+	icon_state = "curse"
+	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/impaired
@@ -126,3 +148,30 @@
 
 /obj/screen/fullscreen/color_vision/blue
 	color = "#0000ff"
+
+/obj/screen/fullscreen/lighting_backdrop
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "flash"
+	transform = matrix(200, 0, 0, 0, 200, 0)
+	plane = LIGHTING_PLANE
+	blend_mode = BLEND_OVERLAY
+	show_when_dead = TRUE
+
+//Provides darkness to the back of the lighting plane
+/obj/screen/fullscreen/lighting_backdrop/lit
+	invisibility = INVISIBILITY_LIGHTING
+	layer = BACKGROUND_LAYER+21
+	color = "#000"
+	show_when_dead = TRUE
+
+//Provides whiteness in case you don't see lights so everything is still visible
+/obj/screen/fullscreen/lighting_backdrop/unlit
+	layer = BACKGROUND_LAYER+20
+	show_when_dead = TRUE
+
+/obj/screen/fullscreen/see_through_darkness
+	icon_state = "nightvision"
+	plane = LIGHTING_PLANE
+	layer = LIGHTING_LAYER
+	blend_mode = BLEND_ADD
+	show_when_dead = TRUE

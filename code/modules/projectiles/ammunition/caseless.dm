@@ -4,10 +4,11 @@
 /obj/item/ammo_casing/caseless
 	desc = "A caseless bullet casing."
 	firing_effect_type = null
+	heavy_metal = FALSE
 
 /obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
-		loc = null
+		moveToNullspace()
 		return 1
 	else
 		return 0
@@ -44,8 +45,8 @@
  	caliber = "laser"
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
- 	fire_sound = 'sound/weapons/Laser.ogg'
- 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
+ 	fire_sound = 'sound/weapons/laser.ogg'
+ 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak
@@ -55,7 +56,7 @@
 
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
+	desc = "It's nerf or nothing! Ages 8 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
@@ -66,25 +67,25 @@
 	..()
 	if (modified)
 		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
+		desc = "It's nerf or nothing! ... Although, this one doesn't look too safe."
 		if(BB)
 			BB.icon_state = "foamdart_empty"
 	else
 		icon_state = initial(icon_state)
-		desc = "Its nerf or nothing! Ages 8 and up."
+		desc = "It's nerf or nothing! Ages 8 and up."
 		if(BB)
 			BB.icon_state = initial(BB.icon_state)
 
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
-	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
+	if (istype(A, /obj/item/screwdriver) && !modified)
 		modified = 1
 		FD.modified = 1
 		FD.damage_type = BRUTE
-		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
+		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
 		update_icon()
-	else if (istype(A, /obj/item/weapon/pen))
+	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)
 				if(!user.transferItemToLoc(A, FD))
@@ -92,11 +93,11 @@
 				FD.pen = A
 				FD.damage = 5
 				FD.nodamage = 0
-				user << "<span class='notice'>You insert [A] into [src].</span>"
+				to_chat(user, "<span class='notice'>You insert [A] into [src].</span>")
 			else
-				user << "<span class='warning'>There's already something in [src].</span>"
+				to_chat(user, "<span class='warning'>There's already something in [src].</span>")
 		else
-			user << "<span class='warning'>The safety cap prevents you from inserting [A] into [src].</span>"
+			to_chat(user, "<span class='warning'>The safety cap prevents you from inserting [A] into [src].</span>")
 	else
 		return ..()
 
@@ -106,7 +107,7 @@
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)
 		user.put_in_hands(FD.pen)
-		user << "<span class='notice'>You remove [FD.pen] from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove [FD.pen] from [src].</span>")
 		FD.pen = null
 
 /obj/item/ammo_casing/caseless/foam_dart/riot
@@ -114,12 +115,3 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
-
-/obj/item/ammo_casing/caseless/arrow
-	name = "arrow"
-	desc = "Stab, stab, stab."
-	icon_state = "arrow"
-	force = 10
-	sharpness = IS_SHARP
-	projectile_type = /obj/item/projectile/bullet/reusable/arrow
-	caliber = "arrow"

@@ -1,16 +1,15 @@
 <ui-display>
 	<ui-section label='State'>
-		{{#if data.mode == 0}}
-			<span class='bad'>Off</span>
+		{{#if data.full_pressure}}
+			<span class='good'>Ready</span>
 		{{else}}
-			{{#if data.mode == -1}}
+			{{#if data.panel_open}}
 				<span class='bad'>Power Disabled</span>
-
 			{{else}}
-				{{#if data.mode == 1}}
+				{{#if data.pressure_charging}}
 					<span class='average'>Pressurizing</span>
 				{{else}}
-					<span class='good'>Ready</span>
+					<span class='bad'>Off</span>
 				{{/if}}
 			{{/if}}
 		{{/if}}
@@ -21,7 +20,7 @@
     <ui-section label='Handle'>
         <ui-button 
 			icon='{{data.flush ? "toggle-on" : "toggle-off" }}' 
-			state='{{data.isai || data.mode == -1 ? 'disabled' : null}}' 
+			state='{{data.isai || data.panel_open ? 'disabled' : null}}' 
 			action='{{data.flush ? "handle-0" : "handle-1" }}'>
 				{{data.flush ? "Disengage" : "Engage" }}</ui-button>
     </ui-section>
@@ -29,6 +28,6 @@
 		<ui-button icon='sign-out' state='{{data.isai  ? 'disabled' : null}}' action='eject'>Eject Contents</ui-button><br/>
 	</ui-section>
 	<ui-section label='Power'>
-		<ui-button icon='power-off' state='{{data.mode == -1 ? 'disabled' : null}}' action='{{data.mode ? "pump-0" : "pump-1" }}' style='{{data.mode ? "selected" : null }}'></ui-button><br/>
+		<ui-button icon='power-off' state='{{data.panel_open ? 'disabled' : null}}' action='{{data.pressure_charging ? "pump-0" : "pump-1" }}' style='{{data.pressure_charging ? "selected" : null }}'></ui-button><br/>
 	</ui-section>
 </ui-display>

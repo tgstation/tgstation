@@ -3,9 +3,9 @@
 	desc = "A large delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
-	density = 1
+	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/giftwrapped = 0
+	var/giftwrapped = FALSE
 	var/sortTag = 0
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -27,15 +27,20 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(sortTag != O.currTag)
-			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
+			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
@@ -44,29 +49,29 @@
 		var/obj/item/stack/wrapping_paper/WP = W
 		if(WP.use(3))
 			user.visible_message("[user] wraps the package in festive paper!")
-			giftwrapped = 1
+			giftwrapped = TRUE
 			icon_state = "gift[icon_state]"
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 	else
 		return ..()
 
 /obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
-	if(istype(loc, /atom/movable))
+	if(ismovableatom(loc))
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist(user, O)
 		return
-	user << "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>"
+	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing to rip the wrapping around it.</span>")
 	if(do_after(user, 50, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
 			return
-		user << "<span class='notice'>You successfully removed [O]'s wrapping !</span>"
-		O.loc = loc
+		to_chat(user, "<span class='notice'>You successfully removed [O]'s wrapping !</span>")
+		O.forceMove(loc)
 		playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		qdel(src)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			user << "<span class='warning'>You fail to remove [O]'s wrapping!</span>"
+			to_chat(user, "<span class='warning'>You fail to remove [O]'s wrapping!</span>")
 
 
 /obj/item/smallDelivery
@@ -108,15 +113,20 @@
 		var/obj/item/device/destTagger/O = W
 
 		if(sortTag != O.currTag)
-			var/tag = uppertext(TAGGERLOCATIONS[O.currTag])
-			user << "<span class='notice'>*[tag]*</span>"
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
+			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sortTag = O.currTag
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
-	else if(istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(!str || !length(str))
-			user << "<span class='warning'>Invalid text!</span>"
+			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
 		user.visible_message("[user] labels [src] as [str].")
 		name = "[name] ([str])"
@@ -128,7 +138,7 @@
 			giftwrapped = 1
 			user.visible_message("[user] wraps the package in festive paper!")
 		else
-			user << "<span class='warning'>You need more paper!</span>"
+			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
 
 /obj/item/device/destTagger
@@ -144,20 +154,31 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
-	flags = CONDUCT
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
+
+/obj/item/device/destTagger/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if (islizard(user))
+		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
+	else
+		to_chat(user, "<span class='notice'>*HEAVEN*</span>")
+	playsound(src, 'sound/machines/twobeep.ogg', 100, 1)
+	return BRUTELOSS
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[i]'>[TAGGERLOCATIONS[i]]</a></td>"
+	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
+		dat += "<td><a href='?src=[REF(src)];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
 
 		if(i%4==0)
 			dat += "</tr><tr>"
 
-	dat += "</tr></table><br>Current Selection: [currTag ? TAGGERLOCATIONS[currTag] : "None"]</tt>"
+	dat += "</tr></table><br>Current Selection: [currTag ? GLOB.TAGGERLOCATIONS[currTag] : "None"]</tt>"
 
 	user << browse(dat, "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")

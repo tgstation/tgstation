@@ -35,7 +35,7 @@
 	return ..()
 
 /datum/forced_movement/process()
-	if(qdeleted(victim) || !victim.loc || qdeleted(target) || !target.loc)
+	if(QDELETED(victim) || !victim.loc || QDELETED(target) || !target.loc)
 		qdel(src)
 		return
 	var/steps_to_take = round(steps_per_tick * (world.time - last_processed))
@@ -82,9 +82,9 @@
 
 	. = . && (vic.loc != tar.loc)
 
-/mob/Bump(atom/A)
+/mob/Collide(atom/A)
 	. = ..()
-	if(force_moving && force_moving.allow_climbing && istype(A,/obj/structure))
+	if(force_moving && force_moving.allow_climbing && isstructure(A))
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)

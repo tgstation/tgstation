@@ -18,7 +18,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
 	materials = list(MAT_METAL=1750, MAT_GLASS=400)
-//	var/up = 0
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 60)
@@ -63,7 +62,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	hitsound = 'sound/items/Welder.ogg'
+	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -96,12 +95,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 
 /*
  * Pumpkin head
@@ -125,17 +124,22 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	color = "#999999"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
-/obj/item/clothing/head/kitty/equipped(mob/user, slot)
-	if(user && slot == slot_head)
+/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == slot_head)
 		update_icon(user)
+		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
 
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
-	if(istype(user))
+	if(ishuman(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+
+/obj/item/clothing/head/kitty/genuine
+	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
 
 
 /obj/item/clothing/head/hardhat/reindeer
@@ -147,6 +151,7 @@
 	flags_inv = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 1 //luminosity when on
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
 
@@ -171,3 +176,45 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+
+
+/obj/item/clothing/head/wig
+	name = "wig"
+	desc = "A bunch of hair without a head attached."
+	icon_state = ""
+	item_state = "pwig"
+	flags_inv = HIDEHAIR
+	var/hair_style = "Very Long Hair"
+	var/hair_color = "#000"
+
+/obj/item/clothing/head/wig/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/wig/update_icon()
+	cut_overlays()
+	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+	if(!S)
+		icon_state = "pwig"
+	else
+		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		add_overlay(M)
+
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
+	. = list()
+	if(!isinhands)
+		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+		if(!S)
+			return
+		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		. += M
+
+/obj/item/clothing/head/wig/random/Initialize(mapload)
+	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
+	hair_color = "#[random_short_color()]"
+	. = ..()

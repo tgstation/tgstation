@@ -27,7 +27,7 @@
 
 	faction = list("mimic")
 	move_to_delay = 9
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
@@ -36,16 +36,16 @@
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
 	wander = 0
-	var/attempt_open = 0
+	var/attempt_open = FALSE
 
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)	//eat shit
 		for(var/obj/item/I in loc)
-			I.loc = src
+			I.forceMove(src)
 
-/mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
+/mob/living/simple_animal/hostile/mimic/crate/DestroyPathToTarget()
 	..()
 	if(prob(90))
 		icon_state = "[initial(icon_state)]open"
@@ -66,11 +66,16 @@
 	. = ..()
 	if(.)
 		icon_state = initial(icon_state)
+		if(prob(15) && iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.Knockdown(40)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/crate/proc/trigger()
 	if(!attempt_open)
 		visible_message("<b>[src]</b> starts to move!")
-		attempt_open = 1
+		attempt_open = TRUE
 
 /mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	trigger()
@@ -84,22 +89,10 @@
 	var/obj/structure/closet/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/obj/O in src)
-		O.loc = C
+		O.forceMove(C)
 	..()
 
-/mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		if(prob(15))
-			C.Weaken(2)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
-
-
-
-var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/cable, /obj/structure/window)
+GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/cable, /obj/structure/window))
 
 /mob/living/simple_animal/hostile/mimic/copy
 	health = 100
@@ -107,11 +100,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
-	var/image/googly_eyes = null
-	gold_core_spawnable = 0
+	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
+	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, obj/copy, mob/living/creator, destroy_original = 0)
-	..(loc)
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
+	. = ..()
 	CopyObject(copy, creator, destroy_original)
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
@@ -123,7 +116,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/death()
 	for(var/atom/movable/M in src)
-		M.loc = get_turf(src)
+		M.forceMove(get_turf(src))
 	..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
@@ -134,32 +127,31 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if(owner != creator)
 		LoseTarget()
 		creator = owner
-		faction |= "\ref[owner]"
+		faction |= "[REF(owner)]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
-	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
 		return 1
 	return 0
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
-		O.loc = src
+		O.forceMove(src)
 		name = O.name
 		desc = O.desc
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
-		overlays = O.overlays
-		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
+		copy_overlays(O)
 		add_overlay(googly_eyes)
-		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
+		if(isstructure(O) || ismachinery(O))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
 			if(O.density && O.anchored)
 				knockdown_people = 1
 				melee_damage_lower *= 2
 				melee_damage_upper *= 2
-		else if(istype(O, /obj/item))
+		else if(isitem(O))
 			var/obj/item/I = O
 			health = 15 * I.w_class
 			melee_damage_lower = 2 + I.force
@@ -168,7 +160,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(user)
 			creator = user
-			faction += "\ref[creator]" // very unique
+			faction += "[REF(creator)]" // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1
@@ -178,19 +170,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		..()
 
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
-	..()
-	if(knockdown_people)
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(prob(15))
-				C.Weaken(2)
-				C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-						"<span class='userdanger'>\The [src] knocks you down!</span>")
-
-/mob/living/simple_animal/hostile/mimic/copy/Aggro()
-	..()
-	googly_eyes.setDir(get_dir(src,target))
-
+	. = ..()
+	if(knockdown_people && . && prob(15) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.Knockdown(40)
+		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+				"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
 	speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
@@ -209,34 +194,34 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged
-	var/obj/item/weapon/gun/TrueGun = null
-	var/obj/item/weapon/gun/magic/Zapstick
-	var/obj/item/weapon/gun/ballistic/Pewgun
-	var/obj/item/weapon/gun/energy/Zapgun
+	var/obj/item/gun/TrueGun = null
+	var/obj/item/gun/magic/Zapstick
+	var/obj/item/gun/ballistic/Pewgun
+	var/obj/item/gun/energy/Zapgun
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/CopyObject(obj/O, mob/living/creator, destroy_original = 0)
 	if(..())
 		emote_see = list("aims menacingly")
 		obj_damage = 0
-		environment_smash = 0 //needed? seems weird for them to do so
+		environment_smash = ENVIRONMENT_SMASH_NONE //needed? seems weird for them to do so
 		ranged = 1
 		retreat_distance = 1 //just enough to shoot
 		minimum_distance = 6
-		var/obj/item/weapon/gun/G = O
+		var/obj/item/gun/G = O
 		melee_damage_upper = G.force
 		melee_damage_lower = G.force - max(0, (G.force / 2))
 		move_to_delay = 2 * G.w_class + 1
 		projectilesound = G.fire_sound
 		TrueGun = G
-		if(istype(G, /obj/item/weapon/gun/magic))
+		if(istype(G, /obj/item/gun/magic))
 			Zapstick = G
 			var/obj/item/ammo_casing/magic/M = Zapstick.ammo_type
 			projectiletype = initial(M.projectile_type)
-		if(istype(G, /obj/item/weapon/gun/ballistic))
+		if(istype(G, /obj/item/gun/ballistic))
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
 			casingtype = initial(M.ammo_type)
-		if(istype(G, /obj/item/weapon/gun/energy))
+		if(istype(G, /obj/item/gun/energy))
 			Zapgun = G
 			var/selectfiresetting = Zapgun.select
 			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[selectfiresetting]
@@ -244,10 +229,10 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
-		if(Zapgun.power_supply)
+		if(Zapgun.cell)
 			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
-			if(Zapgun.power_supply.charge >= shot.e_cost)
-				Zapgun.power_supply.use(shot.e_cost)
+			if(Zapgun.cell.charge >= shot.e_cost)
+				Zapgun.cell.use(shot.e_cost)
 				Zapgun.update_icon()
 				..()
 	else if(Zapstick)
@@ -264,15 +249,15 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 				..()
 			else
 				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
-			Pewgun.chambered.loc = loc //rip revolver immersions, blame shotgun snowflake procs
+			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
 				Pewgun.chambered = Pewgun.magazine.get_round(0)
-				Pewgun.chambered.loc = Pewgun
+				Pewgun.chambered.forceMove(Pewgun)
 			Pewgun.update_icon()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
 			Pewgun.chambered = Pewgun.magazine.get_round(0)
-			Pewgun.chambered.loc = Pewgun
+			Pewgun.chambered.forceMove(Pewgun)
 			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
 	else
 		ranged = 0 //BANZAIIII

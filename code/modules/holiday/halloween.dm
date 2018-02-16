@@ -8,16 +8,16 @@
 /datum/recipe/sugarcookie/spookyskull
 	reagents = list("flour" = 5, "sugar" = 5, "milk" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
 	reagents = list("flour" = 5, "sugar" = 5, "coffee" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/egg,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
 
 //////////////////////////////
 //Spookoween trapped closets//
@@ -123,14 +123,14 @@
 	health = 1e6
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
 
-/mob/living/simple_animal/shade/howling_ghost/New()
-	..()
+/mob/living/simple_animal/shade/howling_ghost/Initialize()
+	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
 	status_flags |= GODMODE
@@ -146,7 +146,7 @@
 		timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
-	loc = get_step(src, direction)
+	forceMove(get_step(src, direction))
 	setDir(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
@@ -171,7 +171,7 @@
 /mob/living/simple_animal/shade/howling_ghost/adjustHealth()
 	. = 0
 
-/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
 
 
@@ -193,8 +193,8 @@
 	unsuitable_atmos_damage = 0
 	var/timer
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/New()
-	..()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/Initialize()
+	. = ..()
 	timer = rand(5,15)
 	status_flags = (status_flags | GODMODE)
 	return
@@ -220,7 +220,7 @@
 		timer = rand(5,15)
 		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), 300, 1)
 		spawn(12)
-			loc = M.loc
+			forceMove(M.loc)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
 	stalk(target)
@@ -234,7 +234,7 @@
 		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/weapon/nullrod))
+	if(istype(O, /obj/item/nullrod))
 		if(prob(5))
 			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
 			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', 300, 1)
@@ -255,12 +255,12 @@
 	name = "Candy Corn Crossbow"
 	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
 	category = "Holiday"
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/halloween
+	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	surplus = 0
 
 /datum/uplink_item/device_tools/emag/hack_o_lantern
 	name = "Hack-o'-Lantern"
 	desc = "An emag fitted to support the Halloween season. Candle not included."
 	category = "Holiday"
-	item = /obj/item/weapon/card/emag/halloween
+	item = /obj/item/card/emag/halloween
 	surplus = 0

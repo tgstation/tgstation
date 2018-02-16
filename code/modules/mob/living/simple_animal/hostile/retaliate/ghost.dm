@@ -23,44 +23,41 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("weeps")
 	deathmessage = "wails, disintegrating into a pile of ectoplasm!"
-	loot = list(/obj/item/weapon/ectoplasm)
+	loot = list(/obj/item/ectoplasm)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	movement_type = FLYING
 	pressure_resistance = 300
-	gold_core_spawnable = 0 //too spooky for science
+	gold_core_spawnable = NO_SPAWN //too spooky for science
 	var/ghost_hair_style
 	var/ghost_hair_color
-	var/image/ghost_hair = null
+	var/mutable_appearance/ghost_hair
 	var/ghost_facial_hair_style
 	var/ghost_facial_hair_color
-	var/image/ghost_facial_hair = null
+	var/mutable_appearance/ghost_facial_hair
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/hostile/retaliate/ghost/New()
-	..()
-	if(!random)
-		give_hair()
-	else
+/mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
+	. = ..()
+	give_hair()
+	set_light(1, 2) // same glowing as visible player ghosts
+	if(random)
 		switch(rand(0,1))
 			if(0)
-				name = "ghost of [pick(first_names_male)] [pick(last_names)]"
+				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			if(1)
-				name = "ghost of [pick(first_names_female)] [pick(last_names)]"
-		give_hair()
+				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
 
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
 	if(ghost_hair_style != null)
-		ghost_hair = image('icons/mob/human_face.dmi', "hair_[ghost_hair_style]")
-		ghost_hair.layer = -HAIR_LAYER
+		ghost_hair = mutable_appearance('icons/mob/human_face.dmi', "hair_[ghost_hair_style]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
 	if(ghost_facial_hair_style != null)
-		ghost_facial_hair = image('icons/mob/human_face.dmi', "facial_[ghost_facial_hair_style]")
-		ghost_facial_hair.layer = -HAIR_LAYER
+		ghost_facial_hair = mutable_appearance('icons/mob/human_face.dmi', "facial_[ghost_facial_hair_style]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)

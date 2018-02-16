@@ -6,7 +6,7 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -67,10 +67,10 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
-	allowed = list(/obj/item/weapon/teleportation_scroll)
+	allowed = list(/obj/item/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/wizrobe/red
@@ -149,7 +149,7 @@
 	name = "papier-mache robe" // no non-latin characters!
 	desc = "A robe held together by various bits of clear-tape and paste."
 	icon_state = "wizard-paper"
-	item_state = "wizrobe"
+	item_state = "wizard-paper"
 	var/robe_charge = TRUE
 	actions_types = list(/datum/action/item_action/stickmen)
 
@@ -165,18 +165,18 @@
 	if(!isliving(usr))
 		return
 	if(!robe_charge)
-		usr << "<span class='warning'>\The robe's internal magic supply is still recharging!</span>"
+		to_chat(usr, "<span class='warning'>\The robe's internal magic supply is still recharging!</span>")
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!")
-	playsound(src.loc, 'sound/magic/Summon_Magic.ogg', 50, 1, 1)
+	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, 1, 1)
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
 	var/list/factions = usr.faction
 	M.faction = factions
 	src.robe_charge = FALSE
 	sleep(30)
 	src.robe_charge = TRUE
-	usr << "<span class='notice'>\The robe hums, its internal magic supply restored.</span>"
+	to_chat(usr, "<span class='notice'>\The robe hums, its internal magic supply restored.</span>")
 
 
 //Shielded Armour
@@ -221,8 +221,8 @@
 /obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user)
 	..()
 	if(!istype(W))
-		user << "<span class='warning'>The rune can only be used on battlemage armour!</span>"
+		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
 	W.current_charges += 8
-	user <<"<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>"
+	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")
 	qdel(src)

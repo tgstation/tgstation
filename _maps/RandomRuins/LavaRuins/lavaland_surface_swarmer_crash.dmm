@@ -6,33 +6,23 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/template_noop)
 "c" = (
-/turf/closed/wall/mineral/plastitanium{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
 "d" = (
-/turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+	dir = 4
 	},
 /turf/template_noop,
 /area/ruin/unpowered)
 "f" = (
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
-/turf/open/floor/mineral/plastitanium/brig{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
-a
 a
 a
 a
@@ -52,7 +42,6 @@ a
 a
 a
 a
-a
 b
 b
 b
@@ -66,7 +55,6 @@ a
 a
 "}
 (3,1,1) = {"
-a
 a
 a
 b
@@ -83,7 +71,6 @@ a
 a
 "}
 (4,1,1) = {"
-a
 b
 b
 b
@@ -100,7 +87,6 @@ a
 a
 "}
 (5,1,1) = {"
-a
 b
 b
 b
@@ -118,7 +104,6 @@ a
 "}
 (6,1,1) = {"
 a
-a
 b
 b
 b
@@ -135,7 +120,6 @@ a
 "}
 (7,1,1) = {"
 a
-a
 b
 b
 b
@@ -151,7 +135,6 @@ b
 a
 "}
 (8,1,1) = {"
-a
 a
 b
 b
@@ -170,7 +153,6 @@ a
 (9,1,1) = {"
 a
 a
-a
 b
 a
 c
@@ -185,7 +167,6 @@ b
 b
 "}
 (10,1,1) = {"
-a
 a
 a
 b
@@ -204,7 +185,6 @@ b
 (11,1,1) = {"
 a
 a
-a
 b
 b
 a
@@ -219,7 +199,6 @@ b
 a
 "}
 (12,1,1) = {"
-a
 a
 a
 a
@@ -240,7 +219,6 @@ a
 a
 a
 a
-a
 c
 c
 e
@@ -257,7 +235,6 @@ a
 a
 a
 a
-a
 c
 e
 a
@@ -265,23 +242,6 @@ a
 a
 e
 c
-a
-a
-a
-"}
-(15,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 a
 a
 a

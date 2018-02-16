@@ -7,25 +7,24 @@
 
 
 
-/*-------TODOOOOOOOOOO--------*/ //fuck yooooooooooooou
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
-	O.mouse_opacity = 2
-	if(istype(O,/obj/item/borg/sight))
+	O.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	if(istype(O, /obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()
-	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
-		var/obj/item/weapon/storage/bag/tray/T = O
+	else if(istype(O, /obj/item/storage/bag/tray/))
+		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
 	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
 
-	if(DROPDEL & O.flags)
-		O.flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL in our modules, but better safe than runtiming horribly
+	if(O.flags_1 & DROPDEL_1)
+		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
 
 	O.dropped(src)
 
@@ -48,7 +47,7 @@
 	if(!(O in module.modules))
 		return
 	if(activated(O))
-		src << "<span class='warning'>That module is already activated.</span>"
+		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
 	if(!held_items[1])
 		held_items[1] = O
@@ -63,7 +62,7 @@
 		O.screen_loc = inv3.screen_loc
 		. = TRUE
 	else
-		src << "<span class='warning'>You need to disable a module first!</span>"
+		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
 		O.equipped(src, slot_hands)
 		O.mouse_opacity = initial(O.mouse_opacity)
@@ -176,7 +175,8 @@
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/proc/toggle_module(module) //Module is 1-3
-	if(module < 1 || module > 3) return
+	if(module < 1 || module > 3)
+		return
 
 	if(module_selected(module))
 		deselect_module(module)

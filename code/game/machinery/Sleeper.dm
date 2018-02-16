@@ -1,6 +1,6 @@
 /obj/machinery/sleep_console
 	name = "sleeper console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
 	anchored = TRUE
@@ -8,11 +8,12 @@
 /obj/machinery/sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
+	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -25,31 +26,19 @@
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
+	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
-/obj/machinery/sleeper/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
-	B.apply_default_parts(src)
+/obj/machinery/sleeper/Initialize()
+	. = ..()
 	update_icon()
 	reset_chem_buttons()
 
-/obj/item/weapon/circuitboard/machine/sleeper
-	name = "Sleeper (Machine Board)"
-	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
-
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
 	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
@@ -79,8 +68,9 @@
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
-		if(occupant && occupant.stat != DEAD)
-			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant && mob_occupant.stat != DEAD)
+			to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(is_operational() && occupant)
@@ -106,11 +96,11 @@
 		return
 	return ..()
 
-/obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+/obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
-	if(controls_inside && state == notcontained_state)
-		state = default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
+	if(controls_inside && state == GLOB.notcontained_state)
+		state = GLOB.default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -124,31 +114,46 @@
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
-		var/datum/reagent/R = chemical_reagents_list[chem]
+		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
-	if(occupant)
-		data["occupant"]["name"] = occupant.name
-		data["occupant"]["stat"] = occupant.stat
-		data["occupant"]["health"] = occupant.health
-		data["occupant"]["maxHealth"] = occupant.maxHealth
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
+		data["occupant"]["name"] = mob_occupant.name
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
+		data["occupant"]["health"] = mob_occupant.health
+		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
-		data["occupant"]["bruteLoss"] = occupant.getBruteLoss()
-		data["occupant"]["oxyLoss"] = occupant.getOxyLoss()
-		data["occupant"]["toxLoss"] = occupant.getToxLoss()
-		data["occupant"]["fireLoss"] = occupant.getFireLoss()
-		data["occupant"]["cloneLoss"] = occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = occupant.getBrainLoss()
+		data["occupant"]["bruteLoss"] = mob_occupant.getBruteLoss()
+		data["occupant"]["oxyLoss"] = mob_occupant.getOxyLoss()
+		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
+		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
+		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
 		data["occupant"]["reagents"] = list()
 		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in occupant.reagents.reagent_list)
+			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
 	if(..())
 		return
+	var/mob/living/mob_occupant = occupant
+
 	switch(action)
 		if("door")
 			if(state_open)
@@ -158,18 +163,18 @@
 			. = TRUE
 		if("inject")
 			var/chem = params["chem"]
-			if(!is_operational() || !occupant)
+			if(!is_operational() || !mob_occupant)
 				return
-			if(occupant.health < min_health && chem != "epinephrine")
+			if(mob_occupant.health < min_health && chem != "epinephrine")
 				return
 			if(inject_chem(chem))
 				. = TRUE
 				if(scrambled_chems && prob(5))
-					usr << "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>"
+					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	user << "<span class='warning'>You scramble the sleepers user interface!</span>"
+	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
@@ -177,10 +182,11 @@
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
-	if(!occupant)
+	var/mob/living/mob_occupant = occupant
+	if(!mob_occupant)
 		return
-	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/occ_health = occupant.health > min_health || chem == "epinephrine"
+	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
+	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
@@ -200,6 +206,21 @@
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
+/obj/machinery/sleeper/clockwork
+	name = "soothing sleeper"
+	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
+	icon_state = "sleeper_clockwork"
+	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
+	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
+
+/obj/machinery/sleeper/clockwork/process()
+	if(occupant && isliving(occupant))
+		var/mob/living/L = occupant
+		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
+			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)
+			L.adjustBruteLoss(-1)
+			L.adjustFireLoss(-1)
+			L.adjustOxyLoss(-5)
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"

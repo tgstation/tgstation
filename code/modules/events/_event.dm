@@ -15,7 +15,7 @@
 	var/max_occurrences = 20	//The maximum number of times this event can occur (naturally), it can still be forced.
 								//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID = ""			//string which should be in the SSevents.holidays list if you wish this event to be holiday-specific
+	var/holidayID = ""			//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = 0
 
@@ -25,11 +25,12 @@
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
 
+	var/triggering	//admin cancellation
+
 /datum/round_event_control/New()
-	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = Ceiling(earliest_start * config.events_min_time_mul)
-		min_players = Ceiling(min_players * config.events_min_players_mul)
+		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
+		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
 	wizardevent = 1
@@ -39,9 +40,9 @@
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(earliest_start >= world.time)
+	if(earliest_start >= world.time-SSticker.round_start_time)
 		return FALSE
-	if(wizardevent != SSevent.wizardmode)
+	if(wizardevent != SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -49,33 +50,70 @@
 		return FALSE
 	if(gamemode_whitelist.len && !(gamemode in gamemode_whitelist))
 		return FALSE
-	if(holidayID && (!SSevent.holidays || !SSevent.holidays[holidayID]))
+	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
 	return TRUE
 
-/datum/round_event_control/proc/runEvent()
-	if(!ispath(typepath,/datum/round_event))
-		return PROCESS_KILL
+/datum/round_event_control/proc/preRunEvent()
+	if(!ispath(typepath, /datum/round_event))
+		return EVENT_CANT_RUN
+
+	triggering = TRUE
+	if (alertadmins)
+		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(100)
+		var/gamemode = SSticker.mode.config_tag
+		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
+		if(!canSpawnEvent(players_amt, gamemode))
+			message_admins("Second pre-condition check for [name] failed, skipping...")
+			return EVENT_INTERRUPTED
+
+	if(!triggering)
+		return EVENT_CANCELLED	//admin cancelled
+	triggering = FALSE
+	return EVENT_READY
+
+/datum/round_event_control/Topic(href, href_list)
+	..()
+	if(href_list["cancel"])
+		if(!triggering)
+			to_chat(usr, "<span class='admin'>You are too late to cancel that event</span>")
+			return
+		triggering = FALSE
+		message_admins("[key_name_admin(usr)] cancelled event [name].")
+		log_admin_private("[key_name(usr)] cancelled event [name].")
+		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
+
+/datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	feedback_add_details("event_ran","[E]")
+	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
+	if(random)
+		if(alertadmins)
+			deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
+		log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
+
+//Special admins setup
+/datum/round_event_control/proc/admin_setup()
+	return
 
 /datum/round_event	//NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/fakeable = TRUE		//Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -96,7 +134,7 @@
 //Called when the tick is equal to the announceWhen variable.
 //Allows you to announce before starting or vice versa.
 //Only called once.
-/datum/round_event/proc/announce()
+/datum/round_event/proc/announce(fake)
 	return
 
 //Called on or after the tick counter is equal to startWhen.
@@ -124,19 +162,28 @@
 		return
 
 	if(activeFor == startWhen)
+		processing = FALSE
 		start()
+		processing = TRUE
 
 	if(activeFor == announceWhen)
-		announce()
+		processing = FALSE
+		announce(FALSE)
+		processing = TRUE
 
 	if(startWhen < activeFor && activeFor < endWhen)
+		processing = FALSE
 		tick()
+		processing = TRUE
 
 	if(activeFor == endWhen)
+		processing = FALSE
 		end()
+		processing = TRUE
 
 	// Everything is done, let's clean up.
 	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
+		processing = FALSE
 		kill()
 
 	activeFor++
@@ -146,12 +193,12 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/round_event/proc/kill()
-	SSevent.running -= src
+	SSevents.running -= src
 
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New(my_processing = TRUE)
 	setup()
 	processing = my_processing
-	SSevent.running += src
+	SSevents.running += src
 	return ..()

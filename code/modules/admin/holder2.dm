@@ -1,12 +1,20 @@
-var/list/admin_datums = list()
+GLOBAL_LIST_EMPTY(admin_datums)
+GLOBAL_PROTECT(admin_datums)
+
+GLOBAL_VAR_INIT(href_token, GenerateToken())
+GLOBAL_PROTECT(href_token)
 
 /datum/admins
 	var/datum/admin_rank/rank
 
+	var/target
+	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
 	var/client/owner	= null
 	var/fakekey			= null
 
 	var/datum/marked_datum
+
+	var/spamcooldown = 0
 
 	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
 	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
@@ -14,35 +22,113 @@ var/list/admin_datums = list()
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
 	var/admin_signature
 
-/datum/admins/New(datum/admin_rank/R, ckey)
+	var/href_token
+
+	var/deadmined
+
+/datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		if (!target) //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
+			QDEL_IN(src, 0)
+			CRASH("Admin proc call creation of admin datum")
+		return
 	if(!ckey)
-		spawn(0)
-			del(src)
+		QDEL_IN(src, 0)
 		throw EXCEPTION("Admin datum created without a ckey")
 		return
 	if(!istype(R))
-		spawn(0)
-			del(src)
+		QDEL_IN(src, 0)
 		throw EXCEPTION("Admin datum created without a rank")
 		return
+	target = ckey
+	name = "[ckey]'s admin datum ([R])"
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
-	admin_datums[ckey] = src
+	href_token = GenerateToken()
+	if(R.rights & R_DEBUG) //grant profile access
+		world.SetConfig("APP/admin", ckey, "role=admin")
+	//only admins with +ADMIN start admined
+	if (force_active || (R.rights & R_AUTOLOGIN))
+		activate()
+	else
+		deactivate()
+
+/datum/admins/Destroy()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return QDEL_HINT_LETMELIVE
+	. = ..()
+
+/datum/admins/proc/activate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
+	GLOB.deadmins -= target
+	GLOB.admin_datums[target] = src
+	deadmined = FALSE
+	if (GLOB.directory[target])
+		associate(GLOB.directory[target])	//find the client for a ckey if they are connected and associate them with us
+
+
+/datum/admins/proc/deactivate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
+	GLOB.deadmins[target] = src
+	GLOB.admin_datums -= target
+	deadmined = TRUE
+	var/client/C
+	if ((C = owner) || (C = GLOB.directory[target]))
+		disassociate()
+		C.verbs += /client/proc/readmin
 
 /datum/admins/proc/associate(client/C)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
+
 	if(istype(C))
+		if(C.ckey != target)
+			var/msg = " has attempted to associate with [target]'s admin datum"
+			message_admins("[key_name_admin(C)][msg]")
+			log_admin("[key_name(C)][msg]")
+			return
+		if (deadmined)
+			activate()
 		owner = C
 		owner.holder = src
-		owner.add_admin_verbs()	//TODO
+		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
 		owner.verbs -= /client/proc/readmin
-		admins |= C
+		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
 	if(owner)
-		admins -= owner
+		GLOB.admins -= owner
 		owner.remove_admin_verbs()
 		owner.holder = null
 		owner = null
+
+/datum/admins/proc/check_for_rights(rights_required)
+	if(rights_required && !(rights_required & rank.rights))
+		return 0
+	return 1
+
 
 /datum/admins/proc/check_if_greater_rights_than_holder(datum/admins/other)
 	if(!other)
@@ -66,8 +152,9 @@ if it doesn't return 1 and show_msg=1 it will prints a message explaining why th
 generally it would be used like so:
 
 /proc/admin_proc()
-	if(!check_rights(R_ADMIN)) return
-	world << "you have enough rights!"
+	if(!check_rights(R_ADMIN))
+		return
+	to_chat(world, "you have enough rights!")
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -78,7 +165,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return 1
 		else
 			if(show_msg)
-				usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
+				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution
@@ -92,8 +179,28 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
-	if(subject && subject.holder && subject.holder.rank)
-		if(rights_required && !(rights_required & subject.holder.rank.rights))
-			return 0
-		return 1
+	if(subject && subject.holder)
+		return subject.holder.check_for_rights(rights_required)
 	return 0
+
+/proc/GenerateToken()
+	. = ""
+	for(var/I in 1 to 32)
+		. += "[rand(10)]"
+
+/proc/RawHrefToken(forceGlobal = FALSE)
+	var/tok = GLOB.href_token
+	if(!forceGlobal && usr)
+		var/client/C = usr.client
+		if(!C)
+			CRASH("No client for HrefToken()!")
+		var/datum/admins/holder = C.holder
+		if(holder)
+			tok = holder.href_token
+	return tok
+
+/proc/HrefToken(forceGlobal = FALSE)
+	return "admin_token=[RawHrefToken(forceGlobal)]"
+
+/proc/HrefTokenFormField(forceGlobal = FALSE)
+	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"

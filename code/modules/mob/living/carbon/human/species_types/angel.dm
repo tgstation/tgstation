@@ -2,7 +2,7 @@
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
@@ -18,10 +18,9 @@
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
-	if(ishuman(H)&& !fly)
+	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
-
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
@@ -47,10 +46,10 @@
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.stunned || H.weakened)
+	if(H.stat || H.IsStun() || H.IsKnockdown())
 		return 0
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-		H << "Your suit blocks your wings from extending!"
+		to_chat(H, "Your suit blocks your wings from extending!")
 		return 0
 	var/turf/T = get_turf(H)
 	if(!T)
@@ -58,14 +57,15 @@
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
-		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
+		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
 		return 0
 	else
 		return 1
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "flight"
 
 /datum/action/innate/flight/Activate()
@@ -73,11 +73,11 @@
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
 		if(H.movement_type & FLYING)
-			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -87,7 +87,7 @@
 	if(H.buckled)
 		buckled_obj = H.buckled
 
-	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
@@ -125,15 +125,15 @@
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
-		speedmod = -1
+		speedmod = -0.35
 		H.movement_type |= FLYING
-		override_float = 1
+		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
 		H.movement_type &= ~FLYING
-		override_float = 0
+		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

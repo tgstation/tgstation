@@ -10,25 +10,31 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
+	var/use_static = TRUE
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
 /mob/camera/aiEye/proc/setLoc(T)
-
 	if(ai)
 		if(!isturf(ai.loc))
 			return
 		T = get_turf(T)
-		loc = T
-		cameranet.visibility(src)
+		if (T)
+			forceMove(T)
+		else
+			moveToNullspace() // ????
+		if(use_static)
+			GLOB.cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai)
+			H.move_hologram(ai, T)
+		if(ai.camera_light_on)
+			ai.light_cameras()
 
 /mob/camera/aiEye/Move()
 	return 0
@@ -37,6 +43,11 @@
 	if(ai)
 		return ai.client
 	return null
+
+/mob/camera/aiEye/proc/RemoveImages()
+	if(use_static)
+		for(var/datum/camerachunk/chunk in visibleCameraChunks)
+			chunk.remove(src)
 
 /mob/camera/aiEye/Destroy()
 	ai = null
@@ -75,11 +86,6 @@
 	if(!user.tracking)
 		user.cameraFollow = null
 
-	//user.unset_machine() //Uncomment this if it causes problems.
-	//user.lightNearbyCamera()
-	if(user.camera_light_on)
-		user.light_cameras()
-
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
 
@@ -87,8 +93,8 @@
 	cameraFollow = null
 	unset_machine()
 
-	if(!eyeobj || !eyeobj.loc || qdeleted(eyeobj))
-		src << "ERROR: Eyeobj not found. Creating new eye..."
+	if(!eyeobj || !eyeobj.loc || QDELETED(eyeobj))
+		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		eyeobj = new(loc)
 		eyeobj.ai = src
 		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
@@ -99,11 +105,11 @@
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 
-	if(usr.stat == 2)
-		return //won't work if dead
+	if(incapacitated())
+		return
 	acceleration = !acceleration
-	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
+	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/camera/aiEye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))
-		ai.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
+		ai.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)

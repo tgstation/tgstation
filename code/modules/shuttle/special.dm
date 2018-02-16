@@ -10,11 +10,11 @@
 	icon = 'icons/obj/machines/magic_emitter.dmi'
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
+	active = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
-	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -55,17 +55,15 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
-	desc = "Whether you're sleeping or waking, it's going to be \
-		quite chaotic."
-	obj_integrity = 1000
+	desc = "Whether you're sleeping or waking, it's going to be quite chaotic."
 	max_integrity = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
-	flags = NODECONSTRUCT
+	flags_1 = NODECONSTRUCT_1
 
-/obj/structure/table/abductor/wabbajack/New()
+/obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -104,7 +102,7 @@
 	// Existing sleepers
 	for(var/i in found)
 		var/mob/living/L = i
-		L.SetSleeping(10)
+		L.SetSleeping(200)
 
 	// Missing sleepers
 	for(var/i in sleepers - found)
@@ -126,9 +124,7 @@
 
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
-		sleeper << "<span class='revennotice'>While you slumber, you have \
-			the strangest dream, like you can see yourself from the outside.\
-			</span>"
+		to_chat(sleeper, "<span class='revennotice'>While you slumber, you have the strangest dream, like you can see yourself from the outside.</span>")
 		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
@@ -144,37 +140,36 @@
 	name = "Bardrone"
 	desc = "A barkeeping drone, an indestructible robot built to tend bars."
 	seeStatic = FALSE
+	hacked = TRUE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	languages_spoken = ALL
-	languages_understood = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/drone/snowflake/bardrone/New()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
+	access_card.access |= ACCESS_CENT_BAR
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
 	status_flags = GODMODE
-	languages_spoken = ALL
-	languages_understood = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/New()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
-	access_card = new /obj/item/weapon/card/id(src)
+	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
-	access_card.flags |= NODROP
+	access_card.access |= ACCESS_CENT_BAR
+	access_card.flags_1 |= NODROP_1
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -186,8 +181,7 @@
 
 /obj/structure/table/wood/bar
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	flags = NODECONSTRUCT
-	obj_integrity = 1000
+	flags_1 = NODECONSTRUCT_1
 	max_integrity = 1000
 	var/boot_dir = 1
 
@@ -196,15 +190,11 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Weaken(2)
+		M.Knockdown(40)
 		M.throw_at(throwtarget, 5, 1,src)
-		M << "<span class='notice'>No climbing on the bar please.</span>"
+		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
-
-/obj/structure/table/wood/bar/shuttleRotate(rotation)
-	. = ..()
-	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
@@ -213,6 +203,76 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	var/obj/item/card/id/ID = user.get_idcard()
+	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
+
+//Luxury Shuttle Blockers
+
+/obj/effect/forcefield/luxury_shuttle
+	var/threshold = 500
+	var/static/list/approved_passengers = list()
+	var/static/list/check_times = list()
+
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
+	if(mover in approved_passengers)
+		return TRUE
+
+	if(!isliving(mover)) //No stowaways
+		return FALSE
+
+	return FALSE
+
+
+#define LUXURY_MESSAGE_COOLDOWN 100
+/obj/effect/forcefield/luxury_shuttle/CollidedWith(atom/movable/AM)
+	if(!isliving(AM))
+		return ..()
+
+	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
+		return ..()
+
+	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
+
+	var/total_cash = 0
+	var/list/counted_money = list()
+
+	for(var/obj/item/coin/C in AM.GetAllContents())
+		total_cash += C.value
+		counted_money += C
+		if(total_cash >= threshold)
+			break
+	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
+		total_cash += S.value * S.amount
+		counted_money += S
+		if(total_cash >= threshold)
+			break
+
+	if(total_cash >= threshold)
+		for(var/obj/I in counted_money)
+			qdel(I)
+
+		to_chat(AM, "Thank you for your payment! Please enjoy your flight.")
+		approved_passengers += AM
+		check_times -= AM
+		return
+	else
+		to_chat(AM, "<span class='warning'>You don't have enough money to enter the main shuttle. You'll have to fly coach.</span>")
+		return ..()
+
+/mob/living/simple_animal/hostile/bear/fightpit
+	name = "fight pit bear"
+	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
+	environment_smash = ENVIRONMENT_SMASH_NONE
+
+/obj/effect/decal/hammerandsickle
+	name = "hammer and sickle"
+	desc = "Communism powerful force."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "communist"
+	layer = ABOVE_OPEN_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.

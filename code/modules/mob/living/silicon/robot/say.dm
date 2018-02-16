@@ -1,2 +1,2 @@
 /mob/living/silicon/robot/IsVocal()
-	return !config.silent_borg
+	return !CONFIG_GET(flag/silent_borg)

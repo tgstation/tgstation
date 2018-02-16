@@ -26,23 +26,16 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	if(dextrous)
-		var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+		var/msg = "<span class='info'>*---------*\nThis is [icon2html(src)] \a <b>[src]</b>!\n"
 		msg += "[desc]\n"
 
 		for(var/obj/item/I in held_items)
-			if(!(I.flags & ABSTRACT))
-				if(I.blood_DNA)
-					msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-				else
-					msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
-
-		if(internal_storage && !(internal_storage.flags&ABSTRACT))
-			if(internal_storage.blood_DNA)
-				msg += "<span class='warning'>It is holding \icon[internal_storage] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
-			else
-				msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
+			if(!(I.flags_1 & ABSTRACT_1))
+				msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+		if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+			msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 		msg += "*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 	else
 		..()
 
@@ -84,7 +77,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBackSlot()
 	return slot_generic_dextrous_storage

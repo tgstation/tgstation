@@ -26,10 +26,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		user << "<span class='warning'>It's already lit!</span>"
+		to_chat(user, "<span class='warning'>It's already lit!</span>")
 		return FALSE
 	if(!fuel_added)
-		user << "<span class='warning'>[src] needs some fuel to burn!</span>"
+		to_chat(user, "<span class='warning'>[src] needs some fuel to burn!</span>")
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -38,13 +38,12 @@
 		return TRUE
 
 /obj/structure/fireplace/attackby(obj/item/T, mob/user)
-	if(istype(T,/obj/item/stack/sheet/mineral/wood))
+	if(istype(T, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/wood = T
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			user << "<span class='warning'>You can't fit any more of [T] in \
-				[src]!</span>"
+			to_chat(user, "<span class='warning'>You can't fit any more of [T] in [src]!</span>")
 			return
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
@@ -52,14 +51,14 @@
 		user.visible_message("<span class='notice'>[user] tosses some \
 			wood into [src].</span>", "<span class='notice'>You add \
 			some fuel to [src].</span>")
-	else if(istype(T, /obj/item/weapon/paper_bin))
-		var/obj/item/weapon/paper_bin/paper_bin = T
+	else if(istype(T, /obj/item/paper_bin))
+		var/obj/item/paper_bin/paper_bin = T
 		user.visible_message("<span class='notice'>[user] throws [T] into \
 			[src].</span>", "<span class='notice'>You add [T] to [src].\
 			</span>")
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
-	else if(istype(T, /obj/item/weapon/paper))
+	else if(istype(T, /obj/item/paper))
 		user.visible_message("<span class='notice'>[user] throws [T] into \
 			[src].</span>", "<span class='notice'>You throw [T] into [src].\
 			</span>")
@@ -88,20 +87,20 @@
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
-		SetLuminosity(0)
+		set_light(0)
 		return
 
 	switch(burn_time_remaining())
 		if(0 to 500)
-			SetLuminosity(1)
+			set_light(1)
 		if(500 to 1000)
-			SetLuminosity(2)
+			set_light(2)
 		if(1000 to 1500)
-			SetLuminosity(3)
+			set_light(3)
 		if(1500 to 2000)
-			SetLuminosity(4)
+			set_light(4)
 		if(2000 to MAXIMUM_BURN_TIMER)
-			SetLuminosity(6)
+			set_light(6)
 
 /obj/structure/fireplace/process()
 	if(!lit)
@@ -130,7 +129,7 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = Clamp(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)

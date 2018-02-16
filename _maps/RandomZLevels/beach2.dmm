@@ -51,7 +51,8 @@
 /area/awaymission/beach)
 "ak" = (
 /obj/machinery/gateway,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "al" = (
 /obj/machinery/gateway{
@@ -71,10 +72,12 @@
 /area/awaymission/beach)
 "ao" = (
 /obj/machinery/telecomms/relay/preset/mining,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "ap" = (
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aq" = (
 /turf/closed/wall/mineral/sandstone,
@@ -86,40 +89,32 @@
 "as" = (
 /obj/structure/dresser{
 	density = 0;
-	pixel_x = 0;
 	pixel_y = 18
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "at" = (
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "au" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "av" = (
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aw" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "ax" = (
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /obj/structure/bed,
 /obj/machinery/button/door{
 	id = "loveshack";
@@ -128,9 +123,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "ay" = (
 /obj/effect/overlay/palmtree_r,
@@ -141,15 +134,14 @@
 /obj/structure/mineral_door/wood{
 	name = "toilet"
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aA" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/structure/table/wood,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aB" = (
 /obj/effect/overlay/coconut,
@@ -170,9 +162,7 @@
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aF" = (
 /obj/machinery/button/door{
@@ -182,9 +172,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aG" = (
 /obj/machinery/button/door{
@@ -194,9 +182,7 @@
 	pixel_x = 24;
 	specialfunctions = 4
 	},
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aH" = (
 /obj/machinery/door/airlock/sandstone{
@@ -216,89 +202,70 @@
 /obj/structure/bedsheetbin{
 	pixel_y = -6
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aK" = (
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aL" = (
 /obj/structure/closet/athletic_mixed,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aM" = (
 /obj/structure/closet/gmcloset,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aN" = (
 /obj/structure/closet/secure_closet/bar,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aO" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/barman_recipes,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/book/manual/barman_recipes,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/shaker,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aQ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/beer,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aR" = (
 /obj/structure/table/wood,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/beer,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aS" = (
 /obj/effect/mob_spawn/human/bartender/alive,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aT" = (
 /obj/machinery/vending/boozeomat,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aU" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aV" = (
 /obj/machinery/vending/cola,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aW" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aX" = (
 /obj/structure/mineral_door/wood{
@@ -308,30 +275,22 @@
 /area/awaymission/beach)
 "aY" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/ale,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/ale,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "aZ" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "ba" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "bb" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime,
-/turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/beach/sand
-	},
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "bc" = (
 /obj/item/toy/beach_ball,
@@ -339,12 +298,12 @@
 /area/awaymission/beach)
 "bd" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
-/obj/item/weapon/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "be" = (
@@ -358,27 +317,29 @@
 /area/awaymission/beach)
 "bf" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bg" = (
 /obj/structure/sign/barsign{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/sandy,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bh" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bi" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bj" = (
@@ -390,23 +351,23 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bl" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime,
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bm" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb,
+/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bn" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist,
+/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bo" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bp" = (
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
+/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bq" = (
@@ -421,6 +382,10 @@
 /area/awaymission/beach)
 "bt" = (
 /turf/open/floor/plating/beach/water,
+/area/awaymission/beach)
+"bu" = (
+/obj/effect/baseturf_helper/beach/sand,
+/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 
 (1,1,1) = {"
@@ -43438,7 +43403,7 @@ ab
 ab
 ab
 ab
-ac
+bu
 ac
 ac
 ac

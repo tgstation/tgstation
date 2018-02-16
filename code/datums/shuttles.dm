@@ -21,6 +21,10 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
+//Whatever special stuff you want
+/datum/map_template/shuttle/proc/on_bought()
+	return
+
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
@@ -36,6 +40,28 @@
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"
 
+/datum/map_template/shuttle/labour
+	port_id = "labour"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/mining
+	port_id = "mining"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/cargo
+	port_id = "cargo"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/arrival
+	port_id = "arrival"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/infiltrator
+	port_id = "infiltrator"
+	can_be_bought = FALSE
+
+
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/airless
@@ -44,6 +70,16 @@
 	description = "Save money by building your own shuttle! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Interior and atmosphere not included."
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
+
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 10 minutes only
+	return world.time - SSticker.round_start_time < 6000
+
+/datum/map_template/shuttle/emergency/airless/on_bought()
+	//enable buying engines from cargo
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
+	P.special_enabled = TRUE
+
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -59,9 +95,16 @@
 	Has medical facilities."
 	credit_cost = 5000
 
+/datum/map_template/shuttle/emergency/russiafightpit
+	suffix = "russiafightpit"
+	name = "Mother Russia Bleeds"
+	description = "Dis is a high-quality shuttle, da. Many seats, lots of space, all equipment! Even includes entertainment! Such as lots to drink, and a fighting arena for drunk crew to have fun! If arena not fun enough, simply press button of releasing bears. Do not worry, bears trained not to break out of fighting pit, so totally safe so long as nobody stupid or drunk enough to leave door open. Try not to let asimov babycons ruin fun!"
+	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
+	credit_cost = 5000 // While the shuttle is rusted and poorly maintained, trained bears are costly.
+
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
-	name = "An Asteroid With Engines Strapped To It"
+	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
@@ -72,6 +115,25 @@
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/discoinferno
+	suffix = "discoinferno"
+	name = "Disco Inferno"
+	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
+	admin_notes = "Flaming hot."
+	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/arena
+	suffix = "arena"
+	name = "The Arena"
+	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
+	admin_notes = "RIP AND TEAR."
+	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/arena/prerequisites_met()
+	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -99,12 +161,11 @@
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
 	name = "Secure Transport Vessel 5 (STV5)"
-	description = "Well, looks like Centcomm only had this ship in the area, they probably weren't expecting you to need evac for a while. \
+	description = "Well, looks like CentCom only had this ship in the area, they probably weren't expecting you to need evac for a while. \
 	Probably best if you don't rifle around in whatever equipment they were transporting. I hope you're friendly with your coworkers, because there is very little space in this thing.\n\
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -116,7 +177,7 @@
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = 1000
-	description = "Despite it's namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
+	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
@@ -138,17 +199,24 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cere
+	suffix = "cere"
+	name = "Cere Station Emergency Shuttle"
+	description = "The large, beefed-up version of the box-standard shuttle. Includes an expanded brig, fully stocked medbay, enhanced cargo storage with mech chargers, \
+		an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
+
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
 	name = "Hyperfractal Gigashuttle"
 	description = "\"I dunno, this seems kinda needlessly complicated.\"\n\
-	\"This shuttle has very a very high safety record, according to Centcom Officer Cadet Yins.\"\n\
+	\"This shuttle has very a very high safety record, according to CentCom Officer Cadet Yins.\"\n\
 	\"Are you sure?\"\n\
 	\"Yes, it has a safety record of N-A-N, which is apparently larger than 100%.\""
 	admin_notes = "Supermatter that spawns on shuttle is special anchored 'hugbox' supermatter that cannot take damage and does not take in or emit gas. \
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
+	credit_cost = 100000
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -160,8 +228,8 @@
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
-	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
-	credit_cost = 3000
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
+	credit_cost = 500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -172,10 +240,16 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = 15000
 
+/datum/map_template/shuttle/emergency/omega
+	suffix = "omega"
+	name = "Omegastation Emergency Shuttle"
+	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
+	credit_cost = 1000
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
-	description = "Standard issue Box/Metastation Centcom ferry."
+	description = "Standard issue Box/Metastation CentCom ferry."
 
 /datum/map_template/shuttle/ferry/meat
 	suffix = "meat"
@@ -194,17 +268,31 @@
 	Fulfilling needs you didn't even know you had. We've got EVERYTHING, and something else!"
 	admin_notes = "Currently larger than ferry docking port on Box, will not hit anything, but must be force docked. Trader and ERT bodyguards are not included."
 
+/datum/map_template/shuttle/ferry/fancy
+	suffix = "fancy"
+	name = "fancy transport ferry"
+	description = "At some point, someone upgraded the ferry to have fancier flooring... and less seats."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "NT Medical Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "NT Recovery White-ship"
+	name = "NT Recovery Whiteship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
 	name = "NT White UFO"
+
+/datum/map_template/shuttle/whiteship/cere
+	suffix = "cere"
+	name = "NT Construction Vessel"
+
+/datum/map_template/shuttle/whiteship/delta
+	suffix = "delta"
+	name = "Unnamed NT Vessel"
+	admin_notes = "The Delta whiteship doesn't have a name, apparently."
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
@@ -220,3 +308,50 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = 7500
+
+/datum/map_template/shuttle/emergency/raven
+	suffix = "raven"
+	name = "CentCom Raven Battlecruiser"
+	description = "The CentCom Raven Battlecruiser is currently docked at the CentCom ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The CentCom Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range CentCom Medical Bay."
+	admin_notes = "The long way home"
+	credit_cost = 12500
+
+/datum/map_template/shuttle/arrival/box
+	suffix = "box"
+	name = "arrival shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/box
+	suffix = "box"
+	name = "cargo ferry (Box)"
+
+/datum/map_template/shuttle/mining/box
+	suffix = "box"
+	name = "mining shuttle (Box)"
+
+/datum/map_template/shuttle/labour/box
+	suffix = "box"
+	name = "labour shuttle (Box)"
+
+/datum/map_template/shuttle/infiltrator/basic
+	suffix = "basic"
+	name = "basic syndicate infiltrator"
+
+/datum/map_template/shuttle/cargo/delta
+	suffix = "delta"
+	name = "cargo ferry (Delta)"
+
+/datum/map_template/shuttle/mining/delta
+	suffix = "delta"
+	name = "mining shuttle (Delta)"
+
+/datum/map_template/shuttle/labour/delta
+	suffix = "delta"
+	name = "labour shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/delta
+	suffix = "delta"
+	name = "arrival shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/pubby
+	suffix = "pubby"
+	name = "arrival shuttle (Pubby)"

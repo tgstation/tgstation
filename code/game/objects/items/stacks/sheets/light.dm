@@ -9,12 +9,13 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	max_amount = 60
+	grind_results = list("silicon" = 20, "copper" = 5)
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 
-	if(istype(O,/obj/item/weapon/wirecutters))
+	if(istype(O, /obj/item/wirecutters))
 		var/obj/item/stack/cable_coil/CC = new (user.loc)
 		CC.amount = 5
 		CC.add_fingerprint(user)
@@ -29,9 +30,9 @@
 		if (M.use(1))
 			use(1)
 			var/obj/item/L = new /obj/item/stack/tile/light(user.loc)
-			user << "<span class='notice'>You make a light tile.</span>"
+			to_chat(user, "<span class='notice'>You make a light tile.</span>")
 			L.add_fingerprint(user)
 		else
-			user << "<span class='warning'>You need one metal sheet to finish the light tile!</span>"
+			to_chat(user, "<span class='warning'>You need one metal sheet to finish the light tile!</span>")
 	else
 		return ..()

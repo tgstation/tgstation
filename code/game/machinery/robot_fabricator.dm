@@ -2,39 +2,37 @@
 	name = "robotic fabricator"
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/metal_amount = 0
-	var/operating = 0
+	var/operating = FALSE
 	var/obj/item/being_built = null
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user, params)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/living/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
-		if (src.metal_amount < 150000)
-			var/count = 0
-			src.add_overlay("fab-load-metal")
-			spawn(15)
-				if(O)
-					if(!O:amount)
-						return
-					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000*/
-						O:amount--
-						count++
-
-					if (O:amount < 1)
-						qdel(O)
-
-					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
-					src.overlays -= "fab-load-metal"
-					updateDialog()
+		if (metal_amount < 150000)
+			add_overlay("fab-load-metal")
+			addtimer(CALLBACK(src, .proc/FinishLoadingMetal, O, user), 15)
 		else
-			user << "\The [src] is full."
+			to_chat(user, "\The [src] is full.")
 	else
 		return ..()
+
+/obj/machinery/robotic_fabricator/proc/FinishLoadingMetal(obj/item/stack/sheet/metal/M, mob/living/user)
+	cut_overlay("fab-load-metal")
+	if(QDELETED(M) || QDELETED(user))
+		return
+	var/count = 0
+	while(metal_amount < 150000 && !QDELETED(M))
+		metal_amount += M.materials[MAT_METAL]
+		M.use(1)
+		count++
+
+	to_chat(user, "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
+	updateDialog()
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())
@@ -60,13 +58,13 @@ Please wait until completion...</TT><BR>
 		dat = {"
 <B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
 <BR>
-<A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=3'>Left Leg (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=4'>Right Leg (25,000 cc metal).<BR>
-<A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
+<A href='?src=[REF(src)];make=1'>Left Arm (25,000 cc metal.)<BR>
+<A href='?src=[REF(src)];make=2'>Right Arm (25,000 cc metal.)<BR>
+<A href='?src=[REF(src)];make=3'>Left Leg (25,000 cc metal.)<BR>
+<A href='?src=[REF(src)];make=4'>Right Leg (25,000 cc metal).<BR>
+<A href='?src=[REF(src)];make=5'>Chest (50,000 cc metal).<BR>
+<A href='?src=[REF(src)];make=6'>Head (50,000 cc metal).<BR>
+<A href='?src=[REF(src)];make=7'>Robot Frame (75,000 cc metal).<BR>
 "}
 
 	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=robot_fabricator")
@@ -127,8 +125,8 @@ Please wait until completion...</TT><BR>
 			var/building = text2path(build_type)
 			if (!isnull(building))
 				if (src.metal_amount >= build_cost)
-					src.operating = 1
-					src.use_power = 2
+					operating = TRUE
+					src.use_power = ACTIVE_POWER_USE
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
 
@@ -139,11 +137,11 @@ Please wait until completion...</TT><BR>
 
 					spawn (build_time)
 						if (!isnull(src.being_built))
-							src.being_built.loc = get_turf(src)
+							src.being_built.forceMove(drop_location())
 							src.being_built = null
-						src.use_power = 1
-						src.operating = 0
-						src.overlays -= "fab-active"
+						src.use_power = IDLE_POWER_USE
+						operating = FALSE
+						cut_overlay("fab-active")
 		return
 
 	updateUsrDialog()

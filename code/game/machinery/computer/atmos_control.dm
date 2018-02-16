@@ -6,12 +6,12 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
-	anchored = 1
+	anchored = TRUE
 
 	var/on = TRUE
 
 	var/id_tag
-	var/frequency = 1441
+	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/air_sensor/update_icon()
@@ -19,18 +19,16 @@
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
-		var/datum/signal/signal = new
 		var/datum/gas_mixture/air_sample = return_air()
 
-		signal.transmission_method = 1 //radio signal
-		signal.data = list(
+		var/datum/signal/signal = new(list(
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = air_sample.return_pressure(),
 			"temperature" = air_sample.temperature,
 			"gases" = list()
-		)
+		))
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
 			for(var/gas_id in air_sample.gases)
@@ -46,14 +44,13 @@
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
-	..()
+	. = ..()
 	SSair.atmos_machinery += src
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -61,13 +58,13 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/computer/atmos_control
-	name = "Atmospherics Monitoring"
+	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control
+	circuit = /obj/item/circuitboard/computer/atmos_control
 
-	var/frequency = 1441
+	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
 		"n2_sensor" = "Nitrogen Tank",
 		"o2_sensor" = "Oxygen Tank",
@@ -82,17 +79,18 @@
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
+	light_color = LIGHT_COLOR_CYAN
+
 /obj/machinery/computer/atmos_control/Initialize()
-	..()
+	. = ..()
 	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_control", name, 400, 925, master_ui, state)
@@ -117,7 +115,7 @@
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["id_tag"]
@@ -138,8 +136,8 @@
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
-	frequency = 1441
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_control/tank
+	frequency = FREQ_ATMOS_STORAGE
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
 	var/list/output_info
@@ -147,7 +145,7 @@
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
@@ -156,7 +154,7 @@
 		var/list/text = splittext(U.id, "_")
 		IO |= text[1]
 	if(!IO.len)
-		user << "<span class='alert'>No machinery detected.</span>"
+		to_chat(user, "<span class='alert'>No machinery detected.</span>")
 	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
 	if(src)
 		src.input_tag = "[S]_in"
@@ -174,8 +172,8 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_control", name, 500, 305, master_ui, state)
@@ -194,10 +192,7 @@
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
-	var/datum/signal/signal = new
-	signal.transmission_method = 1
-	signal.source = src
-	signal.data = list("sigtype" = "command")
+	var/datum/signal/signal = new(list("sigtype" = "command"))
 	switch(action)
 		if("reconnect")
 			reconnect(usr)
@@ -209,15 +204,15 @@
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = input("New target pressure:", name, output_info["internal"]) as num|null
+			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
 			if(!isnull(target) && !..())
-				target =  Clamp(target, 0, 50 * ONE_ATMOSPHERE)
+				target =  CLAMP(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption)
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]

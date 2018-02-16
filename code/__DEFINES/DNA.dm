@@ -23,7 +23,8 @@
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
-#define UNINTELLIGABLE		"Unintelligable"
+#define STONER		"Stoner"
+#define UNINTELLIGIBLE		"Unintelligible"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
@@ -69,7 +70,7 @@
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
 
-#define DNA_STRUC_ENZYMES_BLOCKS	19
+#define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -113,3 +114,35 @@
 #define EASYLIMBATTACHMENT 23
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define NO_UNDERWEAR	26
+#define NOLIVER			27
+#define NOSTOMACH		28
+#define NO_DNA_COPY     29
+#define DRINKSBLOOD		30
+#define SPECIES_ORGANIC 31
+#define SPECIES_INORGANIC 32
+#define SPECIES_UNDEAD  33
+#define SPECIES_ROBOTIC 34
+#define NOEYES			35
+
+#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_APPENDIX "appendix"
+#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
+#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
+#define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
+#define ORGAN_SLOT_EARS "ears"
+#define ORGAN_SLOT_EYES "eye_sight"
+#define ORGAN_SLOT_LUNGS "lungs"
+#define ORGAN_SLOT_HEART "heart"
+#define ORGAN_SLOT_ZOMBIE "zombie_infection"
+#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_HUD "eye_hud"
+#define ORGAN_SLOT_LIVER "liver"
+#define ORGAN_SLOT_TONGUE "tongue"
+#define ORGAN_SLOT_VOICE "vocal_cords"
+#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
+#define ORGAN_SLOT_HEART_AID "heartdrive"
+#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
+#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_TAIL "tail"

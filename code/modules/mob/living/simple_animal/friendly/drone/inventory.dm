@@ -40,7 +40,7 @@
 			return head
 		if(slot_generic_dextrous_storage)
 			return internal_storage
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
@@ -58,7 +58,7 @@
 		I.pulledby.stop_pulling()
 
 	I.screen_loc = null // will get moved if inventory is visible
-	I.loc = src
+	I.forceMove(src)
 	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 
@@ -70,7 +70,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 			return
 
 	//Call back for item being equipped to drone

@@ -20,7 +20,7 @@ Acts like a normal vent, but has an input AND output.
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 0
+	var/on = FALSE
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
@@ -32,18 +32,25 @@ Acts like a normal vent, but has an input AND output.
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
 
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "dpvent_map_on"
+
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 	air1.volume = 1000
 	air2.volume = 1000
 
@@ -52,7 +59,7 @@ Acts like a normal vent, but has an input AND output.
 	if(showpipe)
 		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap"))
 
-	if(!on || stat & (NOPOWER|BROKEN))
+	if(!on || !is_operational())
 		icon_state = "vent_off"
 		return
 
@@ -65,9 +72,9 @@ Acts like a normal vent, but has an input AND output.
 	..()
 
 	if(!on)
-		return FALSE
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+		return
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -87,12 +94,12 @@ Acts like a normal vent, but has an input AND output.
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 				//Removed can be null if there is no atmosphere in air1
 				if(!removed)
-					return FALSE
+					return
 
 				loc.assume_air(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent1 = PARENT1
+				var/datum/pipeline/parent1 = parents[1]
 				parent1.update = 1
 
 	else //external -> output
@@ -110,15 +117,13 @@ Acts like a normal vent, but has an input AND output.
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				//removed can be null if there is no air in the location
 				if(!removed)
-					return FALSE
+					return
 
 				air2.merge(removed)
 				air_update_turf()
 
-				var/datum/pipeline/parent2 = PARENT2
+				var/datum/pipeline/parent2 = parents[2]
 				parent2.update = 1
-
-	return TRUE
 
 	//Radio remote control
 
@@ -130,13 +135,9 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "ADVP",
 		"power" = on,
@@ -146,10 +147,8 @@ Acts like a normal vent, but has an input AND output.
 		"output" = output_pressure_max,
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
-	)
+	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-	return 1
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
@@ -158,9 +157,9 @@ Acts like a normal vent, but has an input AND output.
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -182,19 +181,18 @@ Acts like a normal vent, but has an input AND output.
 		pump_direction = 1
 
 	if("set_input_pressure" in signal.data)
-		input_pressure_min = Clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
+		input_pressure_min = CLAMP(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_output_pressure" in signal.data)
-		output_pressure_max = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		output_pressure_max = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("set_external_pressure" in signal.data)
-		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+		external_pressure_bound = CLAMP(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if("status" in signal.data)
 		spawn(2)
 			broadcast_status()
 		return //do not update_icon
-	//if(signal.data["tag"])
 	spawn(2)
 		broadcast_status()
 	update_icon()

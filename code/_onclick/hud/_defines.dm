@@ -21,10 +21,8 @@
 #define ui_inventory "WEST:6,SOUTH:5"
 
 //Middle left indicators
-#define ui_lingchemdisplay "WEST:6,CENTER-1:15"
+#define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
-#define ui_crafting	"12:-10,1:5"
-#define ui_building "12:-10,1:21"
 
 #define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
@@ -61,16 +59,16 @@
 #define ui_borg_store "CENTER+2:16,SOUTH:5"			//borgs
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"		//borgs
 #define ui_borg_album "CENTER+4:21,SOUTH:5"			//borgs
-#define ui_borg_talk_wheel "CENTER+4:21,SOUTH+1:5"	//borgs
+#define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"	//borgs
 
-#define ui_monkey_head "CENTER-4:13,SOUTH:5"	//monkey
-#define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_neck "CENTER-2:15,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-1:16,SOUTH:5"	//monkey
+#define ui_monkey_head "CENTER-5:13,SOUTH:5"	//monkey
+#define ui_monkey_mask "CENTER-4:14,SOUTH:5"	//monkey
+#define ui_monkey_neck "CENTER-3:15,SOUTH:5"	//monkey
+#define ui_monkey_back "CENTER-2:16,SOUTH:5"	//monkey
 
 #define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
-#define ui_alien_talk_wheel "EAST-3:26,SOUTH:5" //alien
+#define ui_alien_language_menu "EAST-3:26,SOUTH:5" //alien
 
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"     //maintenance drones
 #define ui_drone_pull "CENTER+2:2,SOUTH:5"      //maintenance drones
@@ -84,6 +82,9 @@
 #define ui_acti "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
+#define ui_crafting	"EAST-4:22,SOUTH:5"
+#define ui_building "EAST-4:22,SOUTH:21"
+#define ui_language_menu "EAST-4:6,SOUTH:21"
 
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
@@ -103,12 +104,17 @@
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
 
-//borgs and aliens
-#define ui_alien_nightvision "EAST-1:28,CENTER:17"
+//borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.
-#define ui_alien_health "EAST-1:28,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
-#define ui_alienplasmadisplay "EAST-1:28,CENTER-2:15"
-#define ui_alien_queen_finder "EAST-1:28,CENTER-3:15"
+
+//aliens
+#define ui_alien_health "EAST,CENTER-1:15"	//aliens have the health display where humans have the pressure damage indicator.
+#define ui_alienplasmadisplay "EAST,CENTER-2:15"
+#define ui_alien_queen_finder "EAST,CENTER-3:15"
+
+//constructs
+#define ui_construct_pull "EAST,CENTER-2:15"
+#define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans
 
 // AI
 
@@ -148,9 +154,3 @@
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
 #define ui_ghost_pai "SOUTH: 6, CENTER+2:24"
-
-//Hand of God, god
-
-#define ui_deityhealth "EAST-1:28,CENTER-2:13"
-#define ui_deitypower	"EAST-1:28,CENTER-1:15"
-#define ui_deityfollowers "EAST-1:28,CENTER:17"

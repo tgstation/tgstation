@@ -40,49 +40,42 @@
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
-		return 0
+		return FALSE
 	if(!ishuman(loc))
-		return 0 //Only works while worn
+		return FALSE	//Only works while worn
 
 	var/mob/living/carbon/human/H = loc
 
 	var/obj/item/clothing/suit/space/space_ninja/suit = H.wear_suit
 	if(!istype(suit))
-		return 0
+		return FALSE
 	if(isturf(A))
-		return 0
+		return FALSE
 
 	if(!proximity)
-		return 0
+		return FALSE
 
 	A.add_fingerprint(H)
 
-	draining = 1
-	var/drained = A.ninjadrain_act(suit,H,src)
-	draining = 0
+	draining = TRUE
+	. = A.ninjadrain_act(suit,H,src)
+	draining = FALSE
 
-	if(isnum(drained)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
-		if(drained)
-			H << "<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>"
+	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
+		if(.)
+			to_chat(H, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
 		else
-			H << "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>"
+			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
-		drained = 0 //as to not cancel attack_hand()
-
-	return drained
+		. = FALSE	//as to not cancel attack_hand()
 
 
-/obj/item/clothing/gloves/space_ninja/proc/toggled()
-	set name = "Toggle Interaction"
-	set desc = "Toggles special interaction on or off."
-	set category = "Ninja Equip"
-
+/obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc
-	U << "You <b>[candrain?"disable":"enable"]</b> special interaction."
+	to_chat(U, "You <b>[candrain?"disable":"enable"]</b> special interaction.")
 	candrain=!candrain
-
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
-	if(flags & NODROP)
-		user << "The energy drain mechanism is: <B>[candrain?"active":"inactive"]</B>."
+	if(flags_1 & NODROP_1)
+		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")

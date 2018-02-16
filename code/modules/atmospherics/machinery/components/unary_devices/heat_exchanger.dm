@@ -3,22 +3,24 @@
 	icon_state = "he_intact"
 
 	name = "heat exchanger"
-	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
+	desc = "Exchanges heat between two input gases. Set up for fast heat transfer."
 
-	can_unwrench = 1
+	can_unwrench = TRUE
+
+	layer = LOW_OBJ_LAYER
 
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
+	pipe_state = "heunary"
+
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
-	if(NODE1)
+	if(nodes[1])
 		icon_state = "he_intact"
-		var/obj/machinery/atmospherics/node = NODE1
+		var/obj/machinery/atmospherics/node = nodes[1]
 		add_atom_colour(node.color, FIXED_COLOUR_PRIORITY)
 	else
 		icon_state = "he_exposed"
-
-	return
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
 	if(!partner)
@@ -34,17 +36,14 @@
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	..()
-	if(!partner)
-		return 0
-
-	if(SSair.times_fired <= update_cycle)
-		return 0
+	if(!partner || SSair.times_fired <= update_cycle)
+		return
 
 	update_cycle = SSair.times_fired
 	partner.update_cycle = SSair.times_fired
 
-	var/datum/gas_mixture/air_contents = AIR1
-	var/datum/gas_mixture/partner_air_contents = partner.AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/partner_air_contents = partner.airs[1]
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
@@ -65,5 +64,3 @@
 
 	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
 		partner.update_parents()
-
-	return 1

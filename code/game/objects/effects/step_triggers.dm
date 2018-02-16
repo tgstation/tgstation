@@ -5,7 +5,7 @@
 	var/stopper = 1 // stops throwers
 	var/mobs_only = FALSE
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
@@ -16,9 +16,16 @@
 		return
 	if(isobserver(H) && !affect_ghosts)
 		return
-	if(!istype(H, /mob) && mobs_only)
+	if(!ismob(H) && mobs_only)
 		return
 	Trigger(H)
+
+
+/obj/effect/step_trigger/singularity_act()
+	return
+
+/obj/effect/step_trigger/singularity_pull()
+	return
 
 /* Sends a message to mob when triggered*/
 
@@ -29,7 +36,7 @@
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
-		M << "<span class='info'>[message]</span>"
+		to_chat(M, "<span class='info'>[message]</span>")
 		if(once)
 			qdel(src)
 
@@ -45,7 +52,7 @@
 	var/list/affecting = list()
 
 /obj/effect/step_trigger/thrower/Trigger(atom/A)
-	if(!A || !istype(A, /atom/movable))
+	if(!A || !ismovableatom(A))
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
@@ -110,9 +117,8 @@
 /obj/effect/step_trigger/teleporter/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 
-		A.x = teleport_x
-		A.y = teleport_y
-		A.z = teleport_z
+		var/turf/T = locate(teleport_x, teleport_y, teleport_z)
+		A.forceMove(T)
 
 /* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
 
@@ -125,9 +131,9 @@
 	if(teleport_x && teleport_y && teleport_z)
 		if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 
-			A.x = rand(teleport_x, teleport_x_offset)
-			A.y = rand(teleport_y, teleport_y_offset)
-			A.z = rand(teleport_z, teleport_z_offset)
+			var/turf/T = locate(rand(teleport_x, teleport_x_offset), rand(teleport_y, teleport_y_offset), rand(teleport_z, teleport_z_offset))
+			if (T)
+				A.forceMove(T)
 
 /* Fancy teleporter, creates sparks and smokes when used */
 
@@ -183,11 +189,11 @@
 	if(!T)
 		return
 
-	if(triggerer_only)
-		A.playsound_local(T, sound, volume, freq_vary)
+	if(triggerer_only && ismob(A))
+		var/mob/B = A
+		B.playsound_local(T, sound, volume, freq_vary)
 	else
 		playsound(T, sound, volume, freq_vary, extra_range)
 
 	if(happens_once)
 		qdel(src)
-

@@ -2,7 +2,6 @@
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
-	origin_tech = "magnets=1;programming=2"
 	attachable = 1
 	var/id = null
 	var/can_change_id = 0
@@ -11,23 +10,16 @@
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
 	if(id)
-		user << "<span class='notice'>Its channel ID is '[id]'.</span>"
-
+		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 /obj/item/device/assembly/control/activate()
 	cooldown = 1
 	var/openclose
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
 			if(openclose == null)
 				openclose = M.density
-			spawn(0)
-				if(M)
-					if(openclose)
-						M.open()
-					else
-						M.close()
-				return
+			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	sleep(10)
 	cooldown = 0
 
@@ -49,7 +41,7 @@
 	cooldown = 1
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
-	for(var/obj/machinery/door/airlock/D in airlocks)
+	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
@@ -84,23 +76,21 @@
 
 /obj/item/device/assembly/control/massdriver/activate()
 	cooldown = 1
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
-			spawn( 0 )
-				M.open()
+			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/open)
 
 	sleep(10)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
 	sleep(60)
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
-			spawn( 0 )
-				M.close()
+			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/close)
 
 	sleep(10)
 	cooldown = 0
@@ -112,12 +102,11 @@
 
 /obj/item/device/assembly/control/igniter/activate()
 	cooldown = 1
-	for(var/obj/machinery/sparker/M in machines)
+	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
-			spawn( 0 )
-				M.ignite()
+			INVOKE_ASYNC(M, /obj/machinery/sparker.proc/ignite)
 
-	for(var/obj/machinery/igniter/M in machines)
+	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
 			M.use_power(50)
 			M.on = !M.on
@@ -133,10 +122,9 @@
 
 /obj/item/device/assembly/control/flasher/activate()
 	cooldown = 1
-	for(var/obj/machinery/flasher/M in machines)
+	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
-			spawn(0)
-				M.flash()
+			INVOKE_ASYNC(M, /obj/machinery/flasher.proc/flash)
 
 	sleep(50)
 	cooldown = 0
@@ -148,7 +136,7 @@
 
 /obj/item/device/assembly/control/crematorium/activate()
 	cooldown = 1
-	for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
+	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
 			C.cremate(usr)
 

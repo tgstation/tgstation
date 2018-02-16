@@ -6,7 +6,7 @@
 	name = "exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
-	equip_cooldown = 30
+	equip_cooldown = 15
 	energy_drain = 10
 	force = 15
 
@@ -35,7 +35,7 @@
 				else
 					drill_mob(target, chassis.occupant)
 			else
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	return
@@ -44,7 +44,7 @@
 	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
 		if(drill.do_after_cooldown(src))//To slow down how fast mechs can drill through the station
 			drill.log_message("Drilled through [src]")
-			ex_act(3)
+			ex_act(EXPLODE_LIGHT)
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
 
@@ -58,18 +58,17 @@
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_dug()
+			for(var/I in GetComponents(/datum/component/archaeology))
+				var/datum/component/archaeology/archy = I
+				archy.gets_dug()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
-		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-		if(ore_box)
-			for(var/obj/item/weapon/ore/ore in range(1, chassis))
-				if(get_dir(chassis,ore)&chassis.dir)
-					ore.Move(ore_box)
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment && istype(chassis, /obj/mecha/working/ripley))
+		var/obj/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
+		R.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
 	if(..())
@@ -81,16 +80,17 @@
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.apply_damage(drill_damage, BRUTE, "chest")
-	else if(target.stat == DEAD && target.butcher_results)
-		target.harvest(chassis) // Butcher the mob with our drill.
+	if(target.stat == DEAD)
+		add_logs(user, target, "gibbed", name)
+		if(target.butcher_results)
+			target.harvest(chassis)//Butcher the mob with our drill.
+		else
+			target.gib()
 	else
 		target.take_bodypart_damage(drill_damage)
 
 	if(target)
-		target.Paralyse(10)
+		target.Unconscious(200)
 		target.updatehealth()
 
 
@@ -98,8 +98,7 @@
 	name = "diamond-tipped exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
-	origin_tech = "materials=4;engineering=4"
-	equip_cooldown = 20
+	equip_cooldown = 10
 	force = 15
 
 
@@ -108,36 +107,20 @@
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
 	selectable = 0
-	equip_cooldown = 30
-	var/scanning = 0
+	equip_cooldown = 15
+	var/scanning_time = 0
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
-	..()
-	M.occupant_sight_flags |= SEE_TURFS
-	if(M.occupant)
-		M.occupant.update_sight()
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
-	chassis.occupant_sight_flags &= ~SEE_TURFS
-	if(chassis.occupant)
-		chassis.occupant.update_sight()
-	return ..()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
-		STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
-	if(scanning)
-		return
-	if(istype(loc,/obj/mecha/working))
+	if(istype(loc, /obj/mecha/working) && scanning_time <= world.time)
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/L = list(mecha.occupant)
-		scanning = 1
-		mineral_scan_pulse(L,get_turf(loc))
-		spawn(equip_cooldown)
-			scanning = 0
+		scanning_time = world.time + equip_cooldown
+		mineral_scan_pulse(get_turf(src))

@@ -4,14 +4,16 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-/obj/machinery/r_n_d/circuit_imprinter
-	name = "Circuit Imprinter"
+/obj/machinery/rnd/circuit_imprinter
+	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
 	container_type = OPENCONTAINER
+	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
-	var/datum/material_container/materials
 	var/efficiency_coeff
+
+	var/datum/component/material_container/materials	//Store for hyper speed!
 
 	var/list/categories = list(
 								"AI Modules",
@@ -27,48 +29,38 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
-	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL))
+/obj/machinery/rnd/circuit_imprinter/Initialize()
+	materials = AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE), 0,
+		FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	materials.precise_insertion = TRUE
 	create_reagents(0)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
-	B.apply_default_parts(src)
-
-/obj/machinery/r_n_d/circuit_imprinter/Destroy()
-	qdel(materials)
+	RefreshParts()
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/circuit_imprinter
-	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
-	origin_tech = "engineering=2;programming=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2)
-
-/obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
+/obj/machinery/rnd/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		materials.max_amount += M.rating * 75000
 
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/structure/blob/B)
+/obj/machinery/rnd/circuit_imprinter/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
@@ -76,45 +68,58 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+/obj/machinery/rnd/circuit_imprinter/on_deconstruction()
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
 
 
-/obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
+/obj/machinery/rnd/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/circuit_imprinter/proc/user_try_print_id(id)
+	if((!linked_console && requires_console) || !id)
+		return FALSE
+	var/datum/design/D = (linked_console || requires_console)? linked_console.stored_research.researched_designs[id] : get_techweb_design_by_id(id)
+	if(!istype(D))
+		return FALSE
 
-	if(istype(O,/obj/item/stack/sheet))
-		. = 1
-		if(!is_insertion_ready(user))
-			return
-		var/sheet_material = materials.get_item_material_amount(O)
-		if(!sheet_material)
-			return
+	var/power = 1000
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5)
+	power = max(4000, power)
+	use_power(power)
 
-		if(!materials.has_space(sheet_material))
-			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
-			return 1
+	var/list/efficient_mats = list()
+	for(var/MAT in D.materials)
+		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
 
-		var/obj/item/stack/sheet/stack = O
-		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-		if(!in_range(src, stack) || !user.Adjacent(src))
-			return
-		var/amount_inserted = materials.insert_stack(O,amount)
-		if(!amount_inserted)
-			return 1
-		else
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
-		updateUsrDialog()
+	if(!materials.has_materials(efficient_mats))
+		say("Not enough materials to complete prototype.")
+		return FALSE
+	for(var/R in D.reagents_list)
+		if(!reagents.has_reagent(R, D.reagents_list[R]/efficiency_coeff))
+			say("Not enough reagents to complete prototype.")
+			return FALSE
 
-	else if(user.a_intent != INTENT_HARM)
-		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
-		return 1
-	else
-		return 0
+	busy = TRUE
+	flick("circuit_imprinter_ani", src)
+	materials.use_amount(efficient_mats)
+	for(var/R in D.reagents_list)
+		reagents.remove_reagent(R, D.reagents_list[R]/efficiency_coeff)
+
+	var/P = D.build_path
+	addtimer(CALLBACK(src, .proc/reset_busy), 16)
+	addtimer(CALLBACK(src, .proc/do_print, P, efficient_mats, D.dangerous_construction), 16)
+	return TRUE
+
+/obj/machinery/rnd/circuit_imprinter/proc/do_print(path, list/matlist, notify_admins)
+	if(notify_admins && usr)
+		investigate_log("[key_name(usr)] built [path] at a circuit imprinter.", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [path] at a circuit imprinter.")
+	var/obj/item/I = new path(get_turf(src))
+	I.materials = matlist.Copy()
+	SSblackbox.record_feedback("nested tally", "circuit_printed", 1, list("[type]", "[path]"))

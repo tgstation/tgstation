@@ -3,7 +3,7 @@
 	desc = "We're leaving together\n\
 		But still it's farewell\n\
 		And maybe we'll come back\n\
-		To earth, who can tell?"
+		To Earth, who can tell?"
 
 	var/displayed_text
 	var/atom/attached_to
@@ -20,11 +20,11 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	user << "This countdown is displaying: [displayed_text]"
+	to_chat(user, "This countdown is displaying: [displayed_text].")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	loc = get_turf(A)
+	forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)
@@ -42,7 +42,7 @@
 	return
 
 /obj/effect/countdown/process()
-	if(!attached_to || qdeleted(attached_to))
+	if(!attached_to || QDELETED(attached_to))
 		qdel(src)
 	forceMove(get_turf(attached_to))
 	var/new_val = get_value()
@@ -97,21 +97,6 @@
 		var/completion = round(C.get_completion())
 		return completion
 
-/obj/effect/countdown/dominator
-	name = "dominator countdown"
-	text_size = 1
-	color = "#ff00ff" // Overwritten when the dominator starts
-
-/obj/effect/countdown/dominator/get_value()
-	var/obj/machinery/dominator/D = attached_to
-	if(!istype(D))
-		return
-	else if(D.gang && D.gang.is_dominating)
-		var/timer = D.gang.domination_time_remaining()
-		return timer
-	else
-		return "OFFLINE"
-
 /obj/effect/countdown/clockworkgate
 	name = "gateway countdown"
 	text_size = 1
@@ -123,18 +108,18 @@
 	if(!istype(G))
 		return
 	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_text(FALSE)]</div>"
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	text_size = 1
-	color = "#ED84F4"
+	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_shard/S = attached_to
 	if(!istype(S))
 		return
-	return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[round((S.damage / S.explosion_point) * 100)]</div>"
+	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"
@@ -169,3 +154,9 @@
 	else
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
+
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return

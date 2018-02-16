@@ -10,7 +10,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 */
 
 
-//Needs to return the amount drained from the atom, if no drain on a power object, return 0, otherwise, return a define.
+//Needs to return the amount drained from the atom, if no drain on a power object, return FALSE, otherwise, return a define.
 /atom/proc/ninjadrain_act()
 	return INVALID_DRAIN
 
@@ -50,10 +50,11 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			else
 				break
 
-		if(!emagged)
+		if(!(obj_flags & EMAGGED))
 			flick("apc-spark", G)
-			emagged = 1
-			locked = 0
+			playsound(loc, "sparks", 50, 1)
+			obj_flags |= EMAGGED
+			locked = FALSE
 			update_icon()
 
 
@@ -96,7 +97,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 
 //CELL//
-/obj/item/weapon/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/item/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
@@ -111,8 +112,13 @@ They *could* go in their appropriate files, but this is supposed to be modular
 				S.cell.charge += charge
 			charge = 0
 			corrupt()
-			updateicon()
+			update_icon()
 
+/obj/machinery/proc/AI_notify_hack()
+	var/turf/location = get_turf(src)
+	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+		to_chat(AI, alertstr)
 
 //RDCONSOLE//
 /obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
@@ -121,58 +127,31 @@ They *could* go in their appropriate files, but this is supposed to be modular
 
 	. = DRAIN_RD_HACK_FAILED
 
-	H << "<span class='notice'>Hacking \the [src]...</span>"
-	spawn(0)
-		var/turf/location = get_turf(H)
-		for(var/mob/living/silicon/ai/AI in player_list)
-			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
+	AI_notify_hack()
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
-	H << "<span class='notice'>Data analyzed. Process finished.</span>"
-
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
+	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 //RD SERVER//
 //Shamelessly copypasted from above, since these two used to be the same proc, but with MANY colon operators
-/obj/machinery/r_n_d/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
+/obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/S, mob/living/carbon/human/H, obj/item/clothing/gloves/space_ninja/G)
 	if(!S || !H || !G)
 		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
 
-	H << "<span class='notice'>Hacking \the [src]...</span>"
-	spawn(0)
-		var/turf/location = get_turf(H)
-		for(var/mob/living/silicon/ai/AI in player_list)
-			AI << "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>."
+	to_chat(H, "<span class='notice'>Hacking \the [src]...</span>")
+	AI_notify_hack()
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
-	H << "<span class='notice'>Data analyzed. Process finished.</span>"
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
+	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 
 //WIRE//
@@ -247,7 +226,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 	var/drain = 0 //Drain amount
 	. = 0
 
-	src << "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>"
+	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
 	if(cell && cell.charge)
 		while(G.candrain && cell.charge > 0 && !maxcapacity)

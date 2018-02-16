@@ -42,7 +42,7 @@
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/kitchen/knife,
+/obj/item/kitchen/knife,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "j" = (
@@ -50,7 +50,6 @@
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/vending/boozeomat,
@@ -66,20 +65,18 @@
 /area/shuttle/escape)
 "n" = (
 /obj/structure/chair/comfy/teal{
-	tag = "icon-comfychair (WEST)";
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "o" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday,
+/obj/item/reagent_containers/food/snacks/store/cake/birthday,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "q" = (
@@ -88,10 +85,10 @@
 /area/shuttle/escape)
 "r" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "s" = (
@@ -106,7 +103,6 @@
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -120,28 +116,26 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/mob_spawn/human/corpse,
-/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday,
+/obj/item/reagent_containers/food/snacks/cakeslice/birthday,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "x" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
-/obj/item/weapon/paper{
-	info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
-	},
+/obj/item/bedsheet/red,
+/obj/item/paper/fluff/shuttles/daniel,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "y" = (
-/obj/item/weapon/twohanded/required/kirbyplants,
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "z" = (
 /obj/structure/table/wood,
-/obj/item/weapon/papercutter,
+/obj/item/papercutter,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "A" = (
@@ -152,8 +146,8 @@
 "B" = (
 /obj/machinery/light,
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "C" = (
@@ -161,7 +155,9 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "D" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "E" = (

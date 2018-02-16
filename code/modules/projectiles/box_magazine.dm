@@ -4,9 +4,11 @@
 	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	materials = list(MAT_METAL=30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
@@ -20,8 +22,8 @@
 	var/multiload = 1
 	var/start_empty = 0
 
-/obj/item/ammo_box/New()
-	..()
+/obj/item/ammo_box/Initialize()
+	. = ..()
 	if(!start_empty)
 		for(var/i = 1, i <= max_ammo, i++)
 			stored_ammo += new ammo_type(src)
@@ -63,7 +65,7 @@
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return 1
 
-/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = 0, replace_spent = 0)
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
@@ -79,13 +81,13 @@
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
-			user.drop_item()
-			AC.forceMove(src)
+			user.transferItemToLoc(AC, src, TRUE)
 			num_loaded++
 
 	if(num_loaded)
 		if(!silent)
-			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+			playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 
@@ -94,8 +96,10 @@
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
-		user.put_in_hands(A)
-		user << "<span class='notice'>You remove a round from \the [src]!</span>"
+		if(!user.put_in_hands(A))
+			A.bounce_away(FALSE, NONE)
+		playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
+		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()

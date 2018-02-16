@@ -1,14 +1,17 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
-	icon_state = "cold_map"
+	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	icon_state = "freezer"
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
 	anchored = TRUE
-	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
+	layer = OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/thermomachine
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -17,56 +20,16 @@
 	var/heat_capacity = 0
 	var/interactive = TRUE // So mapmakers can disable interaction.
 
-/obj/machinery/atmospherics/components/unary/thermomachine/New()
-	..()
+/obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
+	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine
-	name = "Thermomachine (Machine Board)"
-	desc = "You can use a screwdriver to switch between heater and freezer."
-	origin_tech = "programming=3;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/micro_laser = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
-	..()
-	if(prob(50))
-		name = "Freezer (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-	else
-		name = "Heater (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
-
-/obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
-	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	var/obj/item/weapon/circuitboard/machine/heater = /obj/item/weapon/circuitboard/machine/thermomachine/heater
-	var/obj/item/weapon/circuitboard/machine/newtype
-
-	if(istype(I, /obj/item/weapon/screwdriver))
-		var/new_setting = "Heater"
-		playsound(src.loc, I.usesound, 50, 1)
-		if(build_path == initial(heater.build_path))
-			newtype = freezer
-			new_setting = "Freezer"
-		else
-			newtype = heater
-		name = initial(newtype.name)
-		build_path = initial(newtype.build_path)
-		user << "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>"
-	else
-		return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
 	..(dir,dir)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
@@ -77,7 +40,6 @@
 		icon_state = icon_state_on
 	else
 		icon_state = initial(icon_state)
-	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -86,9 +48,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
-	if(!on || !NODE1)
+	if(!on || !nodes[1])
 		return
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = heat_capacity + air_heat_capacity
@@ -122,18 +84,18 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(!..())
 		return 0
 	SetInitDirections()
-	var/obj/machinery/atmospherics/node = NODE1
+	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		node.disconnect(src)
-		NODE1 = null
-	nullifyPipenet(PARENT1)
+		nodes[1] = null
+	nullifyPipenet(parents[1])
 
 	atmosinit()
-	node = NODE1
+	node = nodes[1]
 	if(node)
 		node.atmosinit()
 		node.addMember(src)
@@ -145,8 +107,8 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "thermomachine", name, 400, 240, master_ui, state)
@@ -161,26 +123,28 @@
 	data["target"] = target_temperature
 	data["initial"] = initial(target_temperature)
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 	data["temperature"] = air1.temperature
 	data["pressure"] = air1.return_pressure()
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
+
 	if(..())
 		return
+
 	switch(action)
 		if("power")
 			on = !on
-			use_power = 1 + on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
 				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
+				if(!isnull(target))
 					. = TRUE
 			else if(adjust)
 				target = target_temperature + adjust
@@ -189,56 +153,39 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target, min_temperature, max_temperature)
-				investigate_log("was set to [target_temperature] K by [key_name(usr)]", "atmos")
+				target_temperature = CLAMP(target, min_temperature, max_temperature)
+				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
+
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
-	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer"
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
 	min_temperature = 170
-
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/freezer(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/freezer
-	name = "Freezer (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
-	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
 	max_temperature = 140
 	min_temperature = T20C
-
-/obj/machinery/atmospherics/components/unary/thermomachine/heater/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/thermomachine/heater(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/thermomachine/heater
-	name = "Heater (Machine Board)"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
 	max_temperature = T20C + (initial(max_temperature) * L)

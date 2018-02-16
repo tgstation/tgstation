@@ -83,14 +83,15 @@
 
 //sometimes we want to ignore that we don't have the required amount of legs.
 /mob/proc/get_leg_ignore()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/larva/get_leg_ignore()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/get_leg_ignore()
-	if(movement_type & FLYING)
-		return 1
+	if((movement_type & FLYING) || floating)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/get_missing_limbs()
 	return list()
@@ -117,7 +118,7 @@
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
-			I.loc = T
+			I.forceMove(T)
 
 	clear_alert("embeddedobject")
 

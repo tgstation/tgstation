@@ -6,35 +6,33 @@
 /obj/structure/closet/syndicate/personal
 	desc = "It's a personal storage unit for operative gear."
 
-/obj/structure/closet/syndicate/personal/New()
+/obj/structure/closet/syndicate/personal/PopulateContents()
 	..()
 	new /obj/item/clothing/under/syndicate(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/device/radio/headset/syndicate(src)
 	new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/weapon/storage/belt/military(src)
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/storage/belt/military(src)
+	new /obj/item/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
 	return
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."
 
-/obj/structure/closet/syndicate/nuclear/New()
-	..()
-	contents = list()
+/obj/structure/closet/syndicate/nuclear/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_box/magazine/m10mm(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/storage/box/teargas(src)
+	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
 
-/obj/structure/closet/syndicate/resources/New()
+/obj/structure/closet/syndicate/resources/PopulateContents()
 	..()
 	var/common_min = 30 //Minimum amount of minerals in the stack for common minerals
 	var/common_max = 50 //Maximum amount of HONK in the stack for HONK common minerals
@@ -46,7 +44,7 @@
 
 	//Sad trombone
 	if(pickednum == 1)
-		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+		var/obj/item/paper/P = new /obj/item/paper(src)
 		P.name = "\improper IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
@@ -92,16 +90,14 @@
 
 	//Jetpack (You hit the jackpot!)
 	if(pickednum == 50)
-		new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+		new /obj/item/tank/jetpack/carbondioxide(src)
 
 	return
 
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
 
-/obj/structure/closet/syndicate/resources/everything/New()
-	..()
-	contents = list()
+/obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
 	/obj/item/stack/sheet/metal,
 	/obj/item/stack/sheet/glass,

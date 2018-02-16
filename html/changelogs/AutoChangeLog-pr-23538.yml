@@ -1,5 +1,0 @@
-author: "Sweaterkittens and Joan"
-delete-after: True
-changes: 
-  - rscadd: "Ocular Wardens will now provide auditory feedback when they acquire targets and deal damage."
-  - soundadd: "adds ocularwarden-target.ogg, ocularwarden-dot1.ogg and ocularwarden-dot2.ogg to the game sound files."

@@ -1,18 +1,16 @@
-var/global/file_uid = 0
-
 /datum/computer_file
 	var/filename = "NewFile" 								// Placeholder. No spacebars
 	var/filetype = "XXX" 									// File full names are [filename].[filetype] so like NewFile.XXX in this case
 	var/size = 1											// File size in GQ. Integers only!
-	var/obj/item/weapon/computer_hardware/hard_drive/holder	// Holder that contains this file.
+	var/obj/item/computer_hardware/hard_drive/holder	// Holder that contains this file.
 	var/unsendable = 0										// Whether the file may be sent to someone via NTNet transfer or other means.
 	var/undeletable = 0										// Whether the file may be deleted. Setting to 1 prevents deletion/renaming/etc.
 	var/uid													// UID of this file
+	var/static/file_uid = 0
 
 /datum/computer_file/New()
 	..()
-	uid = file_uid
-	file_uid++
+	uid = file_uid++
 
 /datum/computer_file/Destroy()
 	if(!holder)
@@ -23,7 +21,7 @@ var/global/file_uid = 0
 	if(holder.holder && holder.holder.active_program == src)
 		holder.holder.kill_program(forced = TRUE)
 	holder = null
-	..()
+	return ..()
 
 // Returns independent copy of this file.
 /datum/computer_file/proc/clone(rename = 0)

@@ -6,7 +6,7 @@
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
 
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
@@ -20,7 +20,7 @@
 			current_surgery = S
 
 	if(!current_surgery)
-		var/list/all_surgeries = surgeries_list.Copy()
+		var/list/all_surgeries = GLOB.surgeries_list.Copy()
 		var/list/available_surgeries = list()
 
 		for(var/datum/surgery/S in all_surgeries)
@@ -29,7 +29,9 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+					continue
+				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
@@ -54,7 +56,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					return
 			else if(C && S.requires_bodypart)
 				return
@@ -68,25 +70,33 @@
 
 				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
 			else
-				user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
+				to_chat(user, "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>")
 
 	else if(!current_surgery.step_in_progress)
-		if(current_surgery.status == 1)
-			M.surgeries -= current_surgery
-			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-			qdel(current_surgery)
-		else if(istype(user.get_inactive_held_item(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
-			M.surgeries -= current_surgery
-			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-			qdel(current_surgery)
-		else if(current_surgery.can_cancel)
-			user << "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>"
+		attempt_cancel_surgery(current_surgery, I, M, user)
 
 	return 1
 
-
+/proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
+	var/selected_zone = user.zone_selected
+	if(S.status == 1)
+		M.surgeries -= S
+		user.visible_message("[user] removes [I] from [M]'s [parse_zone(selected_zone)].", \
+			"<span class='notice'>You remove [I] from [M]'s [parse_zone(selected_zone)].</span>")
+		qdel(S)
+	else if(S.can_cancel)
+		var/close_tool_type = /obj/item/cautery
+		var/obj/item/close_tool = user.get_inactive_held_item()
+		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
+		if(is_robotic)
+			close_tool_type = /obj/item/screwdriver
+		if(istype(close_tool, close_tool_type) || iscyborg(user))
+			M.surgeries -= S
+			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
+				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
+			qdel(S)
+		else
+			to_chat(user, "<span class='warning'>You need to hold a [is_robotic ? "screwdriver" : "cautery"] in your inactive hand to stop [M]'s surgery!</span>")
 
 /proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)

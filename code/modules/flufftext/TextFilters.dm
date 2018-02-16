@@ -1,14 +1,14 @@
 
 
 //is this shit even used at all
-/proc/NewStutter(phrase,stunned)
+/proc/NewStutter(phrase,stun)
 	phrase = html_decode(phrase)
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 
 	var/list/unstuttered_words = split_phrase.Copy()
 	var/i = rand(1,3)
-	if(stunned) i = split_phrase.len
+	if(stun) i = split_phrase.len
 	for(,i > 0,i--) //Pick a few words to stutter on.
 
 		if (!unstuttered_words.len)
@@ -41,8 +41,10 @@
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
 /proc/Ellipsis(original_msg, chance = 50, keep_words)
-	if(chance <= 0) return "..."
-	if(chance >= 100) return original_msg
+	if(chance <= 0)
+		return "..."
+	if(chance >= 100)
+		return original_msg
 
 	var/list
 		words = splittext(original_msg," ")

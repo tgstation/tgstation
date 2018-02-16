@@ -1,6 +1,6 @@
 /mob/living/silicon/pai/say(msg)
 	if(silent)
-		src << "<span class='warning'>Communication circuits remain unitialized.</span>"
+		to_chat(src, "<span class='warning'>Communication circuits remain unitialized.</span>")
 	else
 		..(msg)
 

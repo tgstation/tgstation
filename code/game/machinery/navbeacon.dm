@@ -9,38 +9,37 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = 1
-	obj_integrity = 500
+	anchored = TRUE
 	max_integrity = 500
 	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 
-	var/open = 0		// true if cover is open
-	var/locked = 1		// true if controls are locked
-	var/freq = 1445		// radio frequency
+	var/open = FALSE		// true if cover is open
+	var/locked = TRUE		// true if controls are locked
+	var/freq = FREQ_NAV_BEACON
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(access_engine, access_robotics)
+	req_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
-/obj/machinery/navbeacon/New()
-	..()
+/obj/machinery/navbeacon/Initialize()
+	. = ..()
 
 	set_codes()
 
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		if(!navbeacons["[z]"])
-			navbeacons["[z]"] = list()
-		navbeacons["[z]"] += src //Register with the patrol list!
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
-		deliverybeacons += src
-		deliverybeacontags += location
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	deliverybeacons -= src
+	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
 	return ..()
 
 // set the transponder codes assoc list from codes_txt
@@ -83,23 +82,23 @@
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
 
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/screwdriver))
 		open = !open
 
 		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
 
 		updateicon()
 
-	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/device/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
+				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				to_chat(user, "<span class='danger'>Access denied.</span>")
 			updateDialog()
 		else
-			user << "<span class='warning'>You must open the cover first!</span>"
+			to_chat(user, "<span class='warning'>You must open the cover first!</span>")
 	else
 		return ..()
 
@@ -118,7 +117,7 @@
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
-		user << "<span class='warning'>The beacon's control cover is closed!</span>"
+		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
 		return
 
 
@@ -140,14 +139,14 @@ Transponder Codes:<UL>"}
 <i>(swipe card to lock controls)</i><BR>
 
 <HR>
-Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "None"]</A><BR>
+Location: <A href='byond://?src=[REF(src)];locedit=1'>[location ? location : "None"]</A><BR>
 Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += "	<A href='byond://?src=\ref[src];edit=1;code=[key]'>Edit</A>"
-			t += "	<A href='byond://?src=\ref[src];delete=1;code=[key]'>Delete</A><BR>"
-		t += "	<A href='byond://?src=\ref[src];add=1;'>Add New</A><BR>"
+			t += "	<A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
+			t += "	<A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
+		t += "	<A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
 		t+= "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)

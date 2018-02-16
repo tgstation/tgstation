@@ -17,29 +17,35 @@
 	melee_damage_upper = 3
 	attacktext = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speak_emote = list("states")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
-/mob/living/simple_animal/hostile/hivebot/New()
-	..()
+/mob/living/simple_animal/hostile/hivebot/Initialize()
+	. = ..()
 	deathmessage = "[src] blows apart!"
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "hivebot"
 	desc = "A smallish robot, this one is armed!"
+	icon_state = "ranged"
+	icon_living = "ranged"
+	icon_dead = "ranged"
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/rapid
+	icon_state = "ranged"
+	icon_living = "ranged"
+	icon_dead = "ranged"
 	ranged = 1
 	rapid = 1
 	retreat_distance = 5
@@ -47,13 +53,14 @@
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "strong hivebot"
+	icon_state = "strong"
+	icon_living = "strong"
+	icon_dead = "strong"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
 	maxHealth = 80
 	ranged = 1
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..(1)

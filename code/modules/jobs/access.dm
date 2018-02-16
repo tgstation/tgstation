@@ -1,108 +1,10 @@
 
-
-/var/const/access_security = 1 // Security equipment
-/var/const/access_brig = 2 // Brig timers and permabrig
-/var/const/access_armory = 3
-/var/const/access_forensics_lockers= 4
-/var/const/access_medical = 5
-/var/const/access_morgue = 6
-/var/const/access_tox = 7
-/var/const/access_tox_storage = 8
-/var/const/access_genetics = 9
-/var/const/access_engine = 10
-/var/const/access_engine_equip= 11
-/var/const/access_maint_tunnels = 12
-/var/const/access_external_airlocks = 13
-/var/const/access_emergency_storage = 14
-/var/const/access_change_ids = 15
-/var/const/access_ai_upload = 16
-/var/const/access_teleporter = 17
-/var/const/access_eva = 18
-/var/const/access_heads = 19
-/var/const/access_captain = 20
-/var/const/access_all_personal_lockers = 21
-/var/const/access_chapel_office = 22
-/var/const/access_tech_storage = 23
-/var/const/access_atmospherics = 24
-/var/const/access_bar = 25
-/var/const/access_janitor = 26
-/var/const/access_crematorium = 27
-/var/const/access_kitchen = 28
-/var/const/access_robotics = 29
-/var/const/access_rd = 30
-/var/const/access_cargo = 31
-/var/const/access_construction = 32
-/var/const/access_chemistry = 33
-/var/const/access_cargo_bot = 34
-/var/const/access_hydroponics = 35
-/var/const/access_manufacturing = 36
-/var/const/access_library = 37
-/var/const/access_lawyer = 38
-/var/const/access_virology = 39
-/var/const/access_cmo = 40
-/var/const/access_qm = 41
-/var/const/access_court = 42
-/var/const/access_surgery = 45
-/var/const/access_theatre = 46
-/var/const/access_research = 47
-/var/const/access_mining = 48
-/var/const/access_mining_office = 49 //not in use
-/var/const/access_mailsorting = 50
-/var/const/access_mint = 51
-/var/const/access_mint_vault = 52
-/var/const/access_heads_vault = 53
-/var/const/access_mining_station = 54
-/var/const/access_xenobiology = 55
-/var/const/access_ce = 56
-/var/const/access_hop = 57
-/var/const/access_hos = 58
-/var/const/access_RC_announce = 59 //Request console announcements
-/var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
-/var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
-/var/const/access_gateway = 62
-/var/const/access_sec_doors = 63 // Security front doors
-/var/const/access_mineral_storeroom = 64
-/var/const/access_minisat = 65
-/var/const/access_weapons = 66 //Weapon authorization for secbots
-/var/const/access_network = 67
-/var/const/access_cloning = 68 //Cloning room
-
-	//BEGIN CENTCOM ACCESS
-	/*Should leave plenty of room if we need to add more access levels.
-/var/const/Mostly for admin fun times.*/
-/var/const/access_cent_general = 101//General facilities.
-/var/const/access_cent_thunder = 102//Thunderdome.
-/var/const/access_cent_specops = 103//Special Ops.
-/var/const/access_cent_medical = 104//Medical/Research
-/var/const/access_cent_living = 105//Living quarters.
-/var/const/access_cent_storage = 106//Generic storage areas.
-/var/const/access_cent_teleporter = 107//Teleporter.
-/var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
-/var/const/access_cent_bar = 110 // The non-existent Centcom Bar
-
-	//The Syndicate
-/var/const/access_syndicate = 150//General Syndicate Access
-/var/const/access_syndicate_leader = 151//Nuke Op Leader Access
-
-	//Away Missions or Ruins
-	/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
-	or a 2000 year-old temple? */
-/var/const/access_away_general = 200//General facilities.
-/var/const/access_away_maint = 201//Away maintenance
-/var/const/access_away_med = 202//Away medical
-/var/const/access_away_sec = 203//Away security
-/var/const/access_away_engine = 204//Away engineering
-/var/const/access_away_generic1 = 205//Away generic access
-/var/const/access_away_generic2 = 206
-/var/const/access_away_generic3 = 207
-/var/const/access_away_generic4 = 208
-
 /obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
+/obj/var/req_access_txt = "0" as text
 /obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/req_one_access_txt = "0" as text
 
-//returns 1 if this mob has sufficient access to use this object
+//returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
@@ -136,26 +38,27 @@
 /obj/item/proc/GetID()
 	return null
 
+/obj/proc/text2access(access_text)
+	. = list()
+	if(!access_text)
+		return
+	var/list/split = splittext(access_text,";")
+	for(var/x in split)
+		var/n = text2num(x)
+		if(n)
+			. += n
+
 //Call this before using req_access or req_one_access directly
 /obj/proc/gen_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
-	if(!src.req_access)
-		src.req_access = list()
-		if(src.req_access_txt)
-			var/list/req_access_str = splittext(req_access_txt,";")
-			for(var/x in req_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_access += n
-
-	if(!src.req_one_access)
-		src.req_one_access = list()
-		if(src.req_one_access_txt)
-			var/list/req_one_access_str = splittext(req_one_access_txt,";")
-			for(var/x in req_one_access_str)
-				var/n = text2num(x)
-				if(n)
-					req_one_access += n
+	if(!req_access)
+		req_access = list()
+		for(var/a in text2access(req_access_txt))
+			req_access += a
+	if(!req_one_access)
+		req_one_access = list()
+		for(var/b in text2access(req_one_access_txt))
+			req_one_access += b
 
 /obj/proc/check_access(obj/item/I)
 	gen_access()
@@ -203,24 +106,24 @@
 /proc/get_centcom_access(job)
 	switch(job)
 		if("VIP Guest")
-			return list(access_cent_general)
+			return list(ACCESS_CENT_GENERAL)
 		if("Custodian")
-			return list(access_cent_general, access_cent_living, access_cent_storage)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("Thunderdome Overseer")
-			return list(access_cent_general, access_cent_thunder)
-		if("Centcom Official")
-			return list(access_cent_general, access_cent_living)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER)
+		if("CentCom Official")
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
 		if("Medical Officer")
-			return list(access_cent_general, access_cent_living, access_cent_medical)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL)
 		if("Death Commando")
-			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("Research Officer")
-			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_teleporter, access_cent_storage)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE)
 		if("Special Ops Officer")
-			return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_living, access_cent_storage)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("Admiral")
 			return get_all_centcom_access()
-		if("Centcom Commander")
+		if("CentCom Commander")
 			return get_all_centcom_access()
 		if("Emergency Response Team Commander")
 			return get_ert_access("commander")
@@ -230,57 +133,57 @@
 			return get_ert_access("eng")
 		if("Medical Response Officer")
 			return get_ert_access("med")
-		if("Centcom Bartender")
-			return list(access_cent_general, access_cent_living, access_cent_bar)
+		if("CentCom Bartender")
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
 
 /proc/get_all_accesses()
-	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
-	            access_medical, access_genetics, access_morgue, access_rd,
-	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
-	            access_external_airlocks, access_change_ids, access_ai_upload,
-	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
-	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
-	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
-	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network, access_cloning)
+	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT,
+	            ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
+	            ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
+	            ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
+	            ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
+	            ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
+	            ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION,
+	            ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY,
+	            ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
+	            ACCESS_HEADS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_RC_ANNOUNCE,
+	            ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_CLONING)
 
 /proc/get_all_centcom_access()
-	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
+	return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE, ACCESS_CENT_TELEPORTER, ACCESS_CENT_CAPTAIN)
 
 /proc/get_ert_access(class)
 	switch(class)
 		if("commander")
 			return get_all_centcom_access()
 		if("sec")
-			return list(access_cent_general, access_cent_specops, access_cent_living)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING)
 		if("eng")
-			return list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
 		if("med")
-			return list(access_cent_general, access_cent_specops, access_cent_medical, access_cent_living)
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING)
 
 /proc/get_all_syndicate_access()
-	return list(access_syndicate, access_syndicate)
+	return list(ACCESS_SYNDICATE, ACCESS_SYNDICATE)
 
 /proc/get_region_accesses(code)
 	switch(code)
 		if(0)
 			return get_all_accesses()
 		if(1) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
+			return list(ACCESS_KITCHEN,ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
 		if(2) //security
-			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
+			return list(ACCESS_SEC_DOORS, ACCESS_WEAPONS, ACCESS_SECURITY, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT, ACCESS_HOS)
 		if(3) //medbay
-			return list(access_medical, access_genetics, access_cloning, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+			return list(ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_SURGERY, ACCESS_CMO)
 		if(4) //research
-			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd, access_network)
+			return list(ACCESS_RESEARCH, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_GENETICS, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_MINISAT, ACCESS_RD, ACCESS_NETWORK)
 		if(5) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
+			return list(ACCESS_CONSTRUCTION, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_TECH_STORAGE, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT, ACCESS_MINISAT, ACCESS_CE)
 		if(6) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
+			return list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_CARGO, ACCESS_QM)
 		if(7) //command
-			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
+			return list(ACCESS_HEADS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_HEADS_VAULT, ACCESS_HOP, ACCESS_CAPTAIN)
 
 /proc/get_region_accesses_name(code)
 	switch(code)
@@ -303,163 +206,163 @@
 
 /proc/get_access_desc(A)
 	switch(A)
-		if(access_cargo)
+		if(ACCESS_CARGO)
 			return "Cargo Bay"
-		if(access_cargo_bot)
+		if(ACCESS_CARGO_BOT)
 			return "Delivery Chutes"
-		if(access_security)
+		if(ACCESS_SECURITY)
 			return "Security"
-		if(access_brig)
+		if(ACCESS_BRIG)
 			return "Holding Cells"
-		if(access_court)
+		if(ACCESS_COURT)
 			return "Courtroom"
-		if(access_forensics_lockers)
+		if(ACCESS_FORENSICS_LOCKERS)
 			return "Forensics"
-		if(access_medical)
+		if(ACCESS_MEDICAL)
 			return "Medical"
-		if(access_genetics)
+		if(ACCESS_GENETICS)
 			return "Genetics Lab"
-		if(access_morgue)
+		if(ACCESS_MORGUE)
 			return "Morgue"
-		if(access_tox)
+		if(ACCESS_TOX)
 			return "R&D Lab"
-		if(access_tox_storage)
+		if(ACCESS_TOX_STORAGE)
 			return "Toxins Lab"
-		if(access_chemistry)
+		if(ACCESS_CHEMISTRY)
 			return "Chemistry Lab"
-		if(access_rd)
+		if(ACCESS_RD)
 			return "RD Office"
-		if(access_bar)
+		if(ACCESS_BAR)
 			return "Bar"
-		if(access_janitor)
+		if(ACCESS_JANITOR)
 			return "Custodial Closet"
-		if(access_engine)
+		if(ACCESS_ENGINE)
 			return "Engineering"
-		if(access_engine_equip)
+		if(ACCESS_ENGINE_EQUIP)
 			return "Power Equipment"
-		if(access_maint_tunnels)
+		if(ACCESS_MAINT_TUNNELS)
 			return "Maintenance"
-		if(access_external_airlocks)
+		if(ACCESS_EXTERNAL_AIRLOCKS)
 			return "External Airlocks"
-		if(access_emergency_storage)
+		if(ACCESS_EMERGENCY_STORAGE)
 			return "Emergency Storage"
-		if(access_change_ids)
+		if(ACCESS_CHANGE_IDS)
 			return "ID Console"
-		if(access_ai_upload)
+		if(ACCESS_AI_UPLOAD)
 			return "AI Chambers"
-		if(access_teleporter)
+		if(ACCESS_TELEPORTER)
 			return "Teleporter"
-		if(access_eva)
+		if(ACCESS_EVA)
 			return "EVA"
-		if(access_heads)
+		if(ACCESS_HEADS)
 			return "Bridge"
-		if(access_captain)
+		if(ACCESS_CAPTAIN)
 			return "Captain"
-		if(access_all_personal_lockers)
+		if(ACCESS_ALL_PERSONAL_LOCKERS)
 			return "Personal Lockers"
-		if(access_chapel_office)
+		if(ACCESS_CHAPEL_OFFICE)
 			return "Chapel Office"
-		if(access_tech_storage)
+		if(ACCESS_TECH_STORAGE)
 			return "Technical Storage"
-		if(access_atmospherics)
+		if(ACCESS_ATMOSPHERICS)
 			return "Atmospherics"
-		if(access_crematorium)
+		if(ACCESS_CREMATORIUM)
 			return "Crematorium"
-		if(access_armory)
+		if(ACCESS_ARMORY)
 			return "Armory"
-		if(access_construction)
+		if(ACCESS_CONSTRUCTION)
 			return "Construction"
-		if(access_kitchen)
+		if(ACCESS_KITCHEN)
 			return "Kitchen"
-		if(access_hydroponics)
+		if(ACCESS_HYDROPONICS)
 			return "Hydroponics"
-		if(access_library)
+		if(ACCESS_LIBRARY)
 			return "Library"
-		if(access_lawyer)
+		if(ACCESS_LAWYER)
 			return "Law Office"
-		if(access_robotics)
+		if(ACCESS_ROBOTICS)
 			return "Robotics"
-		if(access_virology)
+		if(ACCESS_VIROLOGY)
 			return "Virology"
-		if(access_cmo)
+		if(ACCESS_CMO)
 			return "CMO Office"
-		if(access_qm)
+		if(ACCESS_QM)
 			return "Quartermaster"
-		if(access_surgery)
+		if(ACCESS_SURGERY)
 			return "Surgery"
-		if(access_theatre)
+		if(ACCESS_THEATRE)
 			return "Theatre"
-		if(access_manufacturing)
+		if(ACCESS_MANUFACTURING)
 			return "Manufacturing"
-		if(access_research)
+		if(ACCESS_RESEARCH)
 			return "Science"
-		if(access_mining)
+		if(ACCESS_MINING)
 			return "Mining"
-		if(access_mining_office)
+		if(ACCESS_MINING_OFFICE)
 			return "Mining Office"
-		if(access_mailsorting)
+		if(ACCESS_MAILSORTING)
 			return "Cargo Office"
-		if(access_mint)
+		if(ACCESS_MINT)
 			return "Mint"
-		if(access_mint_vault)
+		if(ACCESS_MINT_VAULT)
 			return "Mint Vault"
-		if(access_heads_vault)
+		if(ACCESS_HEADS_VAULT)
 			return "Main Vault"
-		if(access_mining_station)
+		if(ACCESS_MINING_STATION)
 			return "Mining EVA"
-		if(access_xenobiology)
+		if(ACCESS_XENOBIOLOGY)
 			return "Xenobiology Lab"
-		if(access_hop)
+		if(ACCESS_HOP)
 			return "HoP Office"
-		if(access_hos)
+		if(ACCESS_HOS)
 			return "HoS Office"
-		if(access_ce)
+		if(ACCESS_CE)
 			return "CE Office"
-		if(access_RC_announce)
+		if(ACCESS_RC_ANNOUNCE)
 			return "RC Announcements"
-		if(access_keycard_auth)
+		if(ACCESS_KEYCARD_AUTH)
 			return "Keycode Auth."
-		if(access_tcomsat)
+		if(ACCESS_TCOMSAT)
 			return "Telecommunications"
-		if(access_gateway)
+		if(ACCESS_GATEWAY)
 			return "Gateway"
-		if(access_sec_doors)
+		if(ACCESS_SEC_DOORS)
 			return "Brig"
-		if(access_mineral_storeroom)
+		if(ACCESS_MINERAL_STOREROOM)
 			return "Mineral Storage"
-		if(access_minisat)
+		if(ACCESS_MINISAT)
 			return "AI Satellite"
-		if(access_weapons)
+		if(ACCESS_WEAPONS)
 			return "Weapon Permit"
-		if(access_network)
+		if(ACCESS_NETWORK)
 			return "Network Access"
-		if(access_cloning)
+		if(ACCESS_CLONING)
 			return "Cloning Room"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
-		if(access_cent_general)
+		if(ACCESS_CENT_GENERAL)
 			return "Code Grey"
-		if(access_cent_thunder)
+		if(ACCESS_CENT_THUNDER)
 			return "Code Yellow"
-		if(access_cent_storage)
+		if(ACCESS_CENT_STORAGE)
 			return "Code Orange"
-		if(access_cent_living)
+		if(ACCESS_CENT_LIVING)
 			return "Code Green"
-		if(access_cent_medical)
+		if(ACCESS_CENT_MEDICAL)
 			return "Code White"
-		if(access_cent_teleporter)
+		if(ACCESS_CENT_TELEPORTER)
 			return "Code Blue"
-		if(access_cent_specops)
+		if(ACCESS_CENT_SPECOPS)
 			return "Code Black"
-		if(access_cent_captain)
+		if(ACCESS_CENT_CAPTAIN)
 			return "Code Gold"
-		if(access_cent_bar)
+		if(ACCESS_CENT_BAR)
 			return "Code Scotch"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer")
 
@@ -467,15 +370,15 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","CentCom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","CentCom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
-	var/obj/item/weapon/card/id/I = GetID()
+	var/obj/item/card/id/I = GetID()
 	if(!I)
 		return
 	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
 		return jobName
-	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
-		return "Centcom"
+	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a CentCom job
+		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply
