@@ -22,6 +22,8 @@
 
 	immunity_type = "acid" // temp
 
+	barometer_predictable = TRUE
+
 
 /datum/weather/acid_rain/weather_act(mob/living/L)
 	var/resist = L.getarmor(null, "acid")

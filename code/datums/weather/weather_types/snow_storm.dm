@@ -20,6 +20,8 @@
 
 	immunity_type = "snow"
 
+	barometer_predictable = TRUE
+
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
 	L.bodytemperature -=(rand(5,15))
