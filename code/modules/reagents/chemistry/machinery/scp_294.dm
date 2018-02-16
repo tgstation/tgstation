@@ -24,6 +24,11 @@
 	. = ..()
 	GLOB.poi_list += src
 	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_MOB_LAYER)
+	update_icon()
+	
+
+/obj/machinery/chem_dispenser/scp_294/update_icon()
+	cut_overlays()
 	add_overlay(top_overlay)
 
 /obj/machinery/chem_dispenser/scp_294/Destroy()
