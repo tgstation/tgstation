@@ -20,7 +20,7 @@
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
-	networks = list("SS13")
+	networks = list("ss13")
 	circuit = /obj/item/circuitboard/computer/xenobiology
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new

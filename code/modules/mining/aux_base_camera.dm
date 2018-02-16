@@ -29,7 +29,7 @@
 /obj/machinery/computer/camera_advanced/base_construction
 	name = "base construction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
-	networks = list("SS13")
+	networks = list("ss13")
 	var/obj/item/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
