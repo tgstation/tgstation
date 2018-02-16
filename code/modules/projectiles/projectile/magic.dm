@@ -196,7 +196,7 @@
 			new_mob = new path(M.loc)
 
 		if("humanoid")
-			if(prob(50)
+			if(prob(50))
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
 				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
