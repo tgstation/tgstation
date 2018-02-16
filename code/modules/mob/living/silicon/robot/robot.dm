@@ -77,6 +77,7 @@
 
 	var/list/upgrades = list()
 
+	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
 	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
@@ -950,6 +951,10 @@
 	shown_robot_modules = FALSE
 	if(hud_used)
 		hud_used.update_robot_modules_display()
+
+	if (hasExpanded)
+		resize = 0.5
+		hasExpanded = FALSE
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
