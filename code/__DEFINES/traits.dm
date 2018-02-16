@@ -20,7 +20,20 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
-
+#define TRAIT_RESISTHEAT		"resist_heat"
+#define TRAIT_RESISTCOLD		"resist_cold"
+#define TRAIT_RESISTPRESSURE	"resist_pressure"
+#define TRAIT_RADIMMUNE			"rad_immunity"
+#define TRAIT_VIRUSIMMUNE		"virus_immunity"
+#define TRAIT_PIERCEIMMUNE		"pierce_immunity"
+#define TRAIT_NODISMEMBER		"dismember_immunity"
+#define TRAIT_NOFIRE			"nonflammable"
+#define TRAIT_NOGUNS			"no_guns"
+#define TRAIT_NOHUNGER			"no_hunger"
+#define TRAIT_EASYDISMEMBER		"easy_dismember"
+#define TRAIT_LIMBATTACHMENT 	"limb_attach"
+#define TRAIT_TOXINLOVER		"toxinlover"
+#define TRAIT_NOBREATH			"no_breath"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -31,6 +44,7 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_TRAIT "trauma"
+#define SPECIES_TRAIT "species"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"

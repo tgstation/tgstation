@@ -340,12 +340,9 @@
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.dna && H.dna.species)
-				if(NODISMEMBER in H.dna.species.species_traits)
-					return ..()		//ATTACK!
 		var/mob/living/carbon/C = target
+		if(C.has_trait(TRAIT_NODISMEMBER))
+			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0
 		for(var/X in C.bodyparts)

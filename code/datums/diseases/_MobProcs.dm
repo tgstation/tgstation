@@ -133,13 +133,9 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D)
 	if(internal)
 		return
-	..()
-
-/mob/living/carbon/human/AirborneContractDisease(datum/disease/D)
-	if(dna && (NOBREATH in dna.species.species_traits))
+	if(has_trait(TRAIT_NOBREATH))
 		return
 	..()
-
 
 //Proc to use when you 100% want to infect someone, as long as they aren't immune
 /mob/proc/ForceContractDisease(datum/disease/D)
@@ -151,7 +147,7 @@
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 
 	if(dna)
-		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 		var/can_infect = FALSE
