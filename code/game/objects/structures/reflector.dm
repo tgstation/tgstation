@@ -72,6 +72,7 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
+	P.range = initial(P.range)
 	return -1
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
