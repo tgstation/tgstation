@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Emagging meteor shield satellites now shows you a message."
-  - spellcheck: "Fixed a typo when emagging RnD servers."
