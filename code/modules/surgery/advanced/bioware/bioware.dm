@@ -6,7 +6,7 @@
 	var/mob/living/carbon/human/owner
 	var/desc = "If you see this something's wrong, warn a coder."
 	var/active = FALSE
-	var/mod_type = "generic"
+	var/mod_type = BIOWARE_GENERIC
 
 /datum/bioware/New(mob/living/carbon/human/_owner)
 	owner = _owner

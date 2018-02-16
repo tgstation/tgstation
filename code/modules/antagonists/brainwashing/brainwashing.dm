@@ -28,7 +28,7 @@
 	name = "Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
 	roundend_category = "brainwashed victims"
-	show_in_antagpanel = FALSE
+	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
 
@@ -53,6 +53,32 @@
 	to_chat(owner, "<span class='warning'>Your mind suddenly clears...</span>")
 	to_chat(owner, "<big><span class='warning'><b>You feel the weight of the Directives disappear! You no longer have to obey them.</b></span></big>")
 	owner.announce_objectives()
+
+/datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
+	var/mob/living/carbon/C = new_owner.current
+	if(!istype(C))
+		return
+	var/list/objectives = list()
+	do
+		var/objective = stripped_input(admin, "Add an objective, or leave empty to finish.", "Brainwashing", null, MAX_MESSAGE_LEN)
+		if(objective)
+			objectives += objective
+	while(alert(admin,"Add another objective?","More Brainwashing","Yes","No") == "Yes")
+
+	if(alert(admin,"Confirm Brainwashing?","Are you sure?","Yes","No") == "No")
+		return
+
+	if(!LAZYLEN(objectives))
+		return
+
+	if(QDELETED(C))
+		to_chat(admin, "Mob doesn't exist anymore")
+		return
+
+	brainwash(C, objectives)
+	var/obj_list = english_list(objectives)
+	message_admins("[key_name_admin(admin)] has brainwashed [key_name_admin(C)] with the following objectives: [obj_list].")
+	log_admin("[key_name(admin)] has brainwashed [key_name(C)] with the following objectives: [obj_list].")
 
 /datum/objective/brainwashing
 	completed = TRUE

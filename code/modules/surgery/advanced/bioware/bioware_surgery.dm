@@ -1,6 +1,6 @@
 /datum/surgery/advanced/bioware
 	name = "enhancement surgery"
-	var/bioware_target = "generic"
+	var/bioware_target = BIOWARE_GENERIC
 
 /datum/surgery/advanced/bioware/can_start(mob/user, mob/living/carbon/human/target)
 	if(!..())

@@ -69,6 +69,7 @@
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
 
 //Surgery Defines
+#define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
 
