@@ -311,7 +311,7 @@
 		var/mob/living/L = loc
 		if(istype(L))
 			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
-			L.dropItemToGround(src)
+			L.temporarilyRemoveItemFromInventory(src,TRUE)
 		else
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
 			snap_back()
@@ -368,7 +368,7 @@
 /obj/item/twohanded/shockpaddles/proc/snap_back()
 	if(!defib)
 		return
-	defib.on = 0
+	defib.on = FALSE
 	forceMove(defib)
 	defib.update_icon()
 
