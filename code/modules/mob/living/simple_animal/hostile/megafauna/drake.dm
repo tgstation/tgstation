@@ -1,10 +1,9 @@
-#define MEDAL_PREFIX "Drake"
-
 #define DRAKE_SWOOP_HEIGHT 270 //how high up drakes go, in pixels
 #define DRAKE_SWOOP_DIRECTION_CHANGE_RANGE 5 //the range our x has to be within to not change the direction we slam from
 
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
+
 /*
 
 ASH DRAKE
@@ -58,7 +57,7 @@ Difficulty: Medium
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/swoop_cooldown = 0
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'

@@ -90,24 +90,14 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.special_role == "survivalist")
+		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 			return
 
 	if(prob(GLOB.summon_guns_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		SSticker.mode.traitors += H.mind
 
-		var/datum/objective/steal_five_of_type/summon_guns/guns = new
-		guns.owner = H.mind
-		H.mind.objectives += guns
-		H.mind.special_role = "survivalist"
-		H.mind.add_antag_datum(/datum/antagonist/auto_custom)
-		to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
-
-		var/datum/objective/survive/survive = new
-		survive.owner = H.mind
-		H.mind.objectives += survive
+		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
 		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
-		H.mind.announce_objectives()
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
@@ -122,22 +112,12 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.special_role == "survivalist")
+		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 			return
 
 	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		var/datum/objective/steal_five_of_type/summon_magic/magic = new
-		magic.owner = H.mind
-		H.mind.objectives += magic
-		H.mind.special_role = "amateur magician"
-		H.mind.add_antag_datum(/datum/antagonist/auto_custom)
-		to_chat(H, "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>")
-
-		var/datum/objective/survive/survive = new
-		survive.owner = H.mind
-		H.mind.objectives += survive
+		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
 		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
-		H.mind.announce_objectives()
 
 	var/magic_type = pick(GLOB.summoned_magic)
 	var/lucky = FALSE
