@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!chosen_frame || isemptylist(chosen_frame)) //Malformed
 			continue
 		if(chosen_frame["type"] == "photo")
-			var/icon/small_img = icon(file(chosen_frame["file"]))
+			var/icon/small_img = icon(chosen_frame["file"])
 			var/obj/item/photo/P = new(F)
 			var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
 			small_img.Scale(8, 8)

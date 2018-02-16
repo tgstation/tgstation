@@ -603,8 +603,7 @@
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
-	else
-		..()
+	..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
