@@ -152,7 +152,11 @@
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 			
 		if("xeno")
-			var/Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
+		var/Xe
+			if(M.ckey)
+				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
+			else
+				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
 			new Xe(M.loc)
 			
 		if("animal")
@@ -175,6 +179,7 @@
 								/mob/living/simple_animal/hostile/stickman,
 								/mob/living/simple_animal/hostile/stickman/dog,
 								/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+								/mob/living/simple_animal/hostile/gorilla,
 								/***********************pets and "nice" animals***********************/
 								/mob/living/simple_animal/parrot,
 								/mob/living/simple_animal/pet/dog/corgi,
