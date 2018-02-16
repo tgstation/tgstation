@@ -218,3 +218,17 @@
 			/obj/item/toy/plush/carpplushie,
 			/obj/item/toy/plush/bubbleplush
 			)
+
+/obj/effect/spawner/lootdrop/instruments
+	name = "single musical instrument spawner"
+	loot = list(
+			/obj/item/device/instrument/violin,
+			/obj/item/device/instrument/guitar,
+			/obj/item/device/instrument/glockenspiel,
+			/obj/item/device/instrument/accordion,
+			/obj/item/device/instrument/saxophone,
+			/obj/item/device/instrument/trombone,
+			/obj/item/device/instrument/recorder,
+			/obj/item/device/instrument/harmonica,
+			/obj/structure/piano/unanchored
+			)

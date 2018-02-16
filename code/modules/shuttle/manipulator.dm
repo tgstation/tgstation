@@ -298,15 +298,13 @@
 
 /obj/machinery/shuttle_hologram //Basically a prop version
 	name = "shuttle hologram"
-	desc = "I shall be telling this with a sigh\n\
-		Somewhere ages and ages hence:\n\
-		Two roads diverged in a wood, and I,\n\
-		I took the one less traveled by,\n\
-		And that has made all the difference."
+	desc = "A hologram of the cargo shuttle."
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 	anchored = TRUE
 	density = TRUE
+	light_power = 2
+	light_range = 4
 
 /obj/machinery/shuttle_hologram/Initialize()
 	. = ..()

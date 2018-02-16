@@ -511,8 +511,15 @@
 	layer = 0
 	on = TRUE
 	anchored = TRUE
-	var/range = null
+	var/range = null //Used by the dance machine
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+
+/obj/item/device/flashlight/spotlight/dark
+	name = "sinister aura"
+	desc = "A chill runs down your spine, you shouldn't be here."
+	brightness_on = 4
+	light_power = -5
 
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"

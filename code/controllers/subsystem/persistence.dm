@@ -276,6 +276,8 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectFrames()
+	for(var/F in GLOB.persist_frames)
+		SaveFrame(F)
 	var/json_file = file("data/npc_saves/frames.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_frames
@@ -291,6 +293,8 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies += list(data)
 
 /datum/controller/subsystem/persistence/proc/SaveFrame(obj/structure/sign/picture_frame/persist/F)
+	if(!F.framed)
+		return
 	var/list/data = list()
 	var/icon/art
 	if(istype(F.framed, /obj/item/photo))

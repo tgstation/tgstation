@@ -677,6 +677,5 @@
 			to_chat(user, "You update the frame's plaque.")
 		else
 			to_chat(user, "You are too far to set the plaque's text.")
-	SSpersistence.SaveFrame(src)
 
 

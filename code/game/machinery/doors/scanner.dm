@@ -173,10 +173,10 @@
 			template = SSmapping.shelter_templates["shelter_grey"]
 		else
 			template = SSmapping.shelter_templates["shelter_supplies"]
-	if(!template)
-		throw EXCEPTION("Shelter template (shelter_grey) not found!")
-		qdel(src)
-		return
-	template.load(get_turf(src), centered = TRUE, orientation = dir)
-	spawned = TRUE
+		if(!template)
+			throw EXCEPTION("Shelter template (shelter_grey) not found!")
+			qdel(src)
+			return
+		template.load(get_turf(src), centered = TRUE, orientation = dir)
+		spawned = TRUE
 	qdel(src)
