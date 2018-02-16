@@ -74,10 +74,24 @@
 		walk_away(P,loc,rand(1,4))
 	qdel(src)
 
+/obj/effect/payload_spawner/random_slime
+	var/volatile = FALSE
+
+/obj/effect/payload_spawner/random_slime/volatile
+	volatile = TRUE
+
+/obj/item/slime_extract/proc/activate_slime()
+	var/list/slime_chems = list("plasma","water","blood")
+	for(var/i in 1 to slime_chems.len)
+		if(!QDELETED(src))
+			reagents.add_reagent(pick_n_take(slime_chems),5) //Add them in random order so we get all effects
+
 /obj/effect/payload_spawner/random_slime/Initialize(mapload, type, numspawned) //type is unused here
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/P = new chosen(loc)
+		if(volatile)
+			addtimer(CALLBACK(P, /obj/item/slime_extract./proc/activate_slime), rand(15,60))
 		walk_away(P,loc,rand(1,4))
 	qdel(src)
 
@@ -155,3 +169,6 @@
 	base_state = "slimebang"
 	payload_spawner = /obj/effect/payload_spawner/random_slime
 	prime_sound = 'sound/effects/bubbles.ogg'
+
+/obj/item/grenade/clusterbuster/slime/volatile
+	payload_spawner = /obj/effect/payload_spawner/random_slime/volatile
