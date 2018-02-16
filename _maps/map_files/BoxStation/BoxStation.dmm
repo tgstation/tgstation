@@ -38586,6 +38586,9 @@
 /obj/machinery/vending/wallmed{
 	pixel_x = 23
 	},
+/obj/item/device/flashlight/flare/torch{
+	on = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -39280,6 +39283,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
+/obj/effect/spawner/lootdrop/plushies,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bSv" = (
@@ -42971,11 +42975,12 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cbv" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
-	name = "Research Delivery access";
-	req_access_txt = "12"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cbw" = (
@@ -54281,8 +54286,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cTI" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
-	req_access_txt = "12"
+/obj/machinery/door/airlock/maintenance{
+	abandoned = 1;
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -54436,9 +54443,10 @@
 "dVA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/medical{
-	security_level = 2
+	name = "Medbay Special Storage";
+	req_access_txt = "5"
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel/dark,
 /area/maintenance/aft)
 "dXg" = (
 /obj/structure/cable{
@@ -54534,6 +54542,7 @@
 /area/space/nearstation)
 "eTh" = (
 /obj/item/device/camera_film,
+/obj/structure/closet/cardboard,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "eVL" = (
@@ -55389,9 +55398,8 @@
 "lBJ" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/twenty,
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = 4;
-	pixel_y = -3
+/obj/item/stack/sheet/glass{
+	amount = 20
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
@@ -55601,11 +55609,6 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "nDG" = (
-/obj/machinery/button/door{
-	id = "cargobreak";
-	name = "Viewing Shutters";
-	pixel_x = 24
-	},
 /obj/structure/table/wood/fancy,
 /obj/machinery/computer/stockexchange,
 /turf/open/floor/wood,
@@ -56212,9 +56215,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance/abandoned{
-	name = "maintenance access";
-	req_access_txt = "12"
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "8;12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -56603,6 +56606,7 @@
 /area/medical/virology)
 "yaD" = (
 /obj/effect/spawner/lootdrop/aimodule_neutral,
+/obj/item/device/mmi,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ybg" = (
@@ -77369,7 +77373,7 @@ ckv
 bHE
 bHE
 odR
-waL
+bHE
 bHE
 bLv
 bLv

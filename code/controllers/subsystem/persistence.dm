@@ -297,20 +297,28 @@ SUBSYSTEM_DEF(persistence)
 		return
 	var/list/data = list()
 	var/icon/art
+	var/photo_file
 	if(istype(F.framed, /obj/item/photo))
 		var/obj/item/photo/P = F.framed
 		art = P.img
 		data["type"] = "photo"
+		photo_file = copytext(md5("\icon[art]"), 1, 6)
+		if(!fexists("data/npc_saves/photos/[photo_file].png"))
+			var/icon/clean = new /icon()
+			clean.Insert(art, "", SOUTH, 1, 0)
+			fcopy(clean, "data/npc_saves/photos/[photo_file].png")
+
 	else
 		var/obj/item/canvas/C = F.framed
 		art = getFlatIcon(C)
 		data["type"] = "canvas"
-	var/photo_file = copytext(md5("\icon[art]"), 1, 6)
-	if(!fexists("data/npc_saves/photos/[photo_file].png"))
-		fcopy(art, "data/npc_saves/photos/[photo_file].png")
-		data["file"] = "data/npc_saves/photos/[photo_file].png"
-		data["description"] = F.desc
-		saved_frames += list(data)
+		photo_file = copytext(md5("\icon[art]"), 1, 6)
+		if(!fexists("data/npc_saves/photos/[photo_file].png"))
+			fcopy(art, "data/npc_saves/photos/[photo_file].png")
+	data["file"] = "data/npc_saves/photos/[photo_file].png"
+	data["description"] = F.desc
+	saved_frames += list(data)
+
 
 /datum/controller/subsystem/persistence/proc/CollectRoundtype()
 	saved_modes[3] = saved_modes[2]

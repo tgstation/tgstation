@@ -113,8 +113,8 @@
 
 /obj/machinery/door/password/voice/greytopia/Initialize()
 	. = ..()
-	password = pick("greytide","condom","rules","everything","toolbox")
-	desc = "An imposing door with a message etched into its surface: 'Utter the word to complete the phrase:'<br>"
+	password = pick("greytide","condom","rules","toolbox")
+	desc = "An imposing door with a message etched into its surface: 'Utter the word to complete the saying:'<br>"
 	switch(password)
 		if("greytide")
 			desc += "<b>________ worldwide!!</b>"
@@ -122,8 +122,6 @@
 			desc += "<b>Captain is a ______!!</b>"
 		if("rules")
 			desc += "<b>No captain, No _____!!</b>"
-		if("everything")
-			desc += "<b>Nothing is true, _________ is permitted.</b>"
 		if("toolbox")
 			desc += "<b>There isn't a problem you can't solve with a _______ to the head.</b>"
 
@@ -162,21 +160,20 @@
 
 /obj/effect/landmark/greytopia/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, /obj/effect/landmark/greytopia.proc/latespawn), 600)
+	if(prob(9) && !spawned)
+		spawned = TRUE
+		addtimer(CALLBACK(src, /obj/effect/landmark/greytopia.proc/latespawn), 600)
+	else
+		return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/greytopia/proc/latespawn()
-	if(spawned)
+	if(prob(40))
+		template = SSmapping.shelter_templates["shelter_grey"]
+	else
+		template = SSmapping.shelter_templates["shelter_supplies"]
+	if(!template)
+		throw EXCEPTION("Shelter template (shelter_grey) not found!")
 		qdel(src)
 		return
-	if(prob(9))
-		if(prob(40))
-			template = SSmapping.shelter_templates["shelter_grey"]
-		else
-			template = SSmapping.shelter_templates["shelter_supplies"]
-		if(!template)
-			throw EXCEPTION("Shelter template (shelter_grey) not found!")
-			qdel(src)
-			return
-		template.load(get_turf(src), centered = TRUE, orientation = dir)
-		spawned = TRUE
+	template.load(get_turf(src), centered = TRUE, orientation = dir)
 	qdel(src)

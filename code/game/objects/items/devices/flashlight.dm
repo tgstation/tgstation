@@ -519,7 +519,7 @@
 	name = "sinister aura"
 	desc = "A chill runs down your spine, you shouldn't be here."
 	brightness_on = 4
-	light_power = -5
+	flashlight_power = -5
 
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"
