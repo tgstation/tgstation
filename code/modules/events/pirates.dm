@@ -6,7 +6,7 @@
 	weight = 8
 	max_occurrences = 1
 	min_players = 10
-	earliest_start = 30 MINUTES
+	earliest_start = 10000 //20mins
 	gamemode_blacklist = list("nuclear")
 
 /datum/round_event/pirates
