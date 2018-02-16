@@ -523,6 +523,7 @@
 		"on signal sent" = IC_PINTYPE_PULSE_OUT,
 		"on signal received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
@@ -608,6 +609,7 @@
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_per_use = 50
 	var/datum/ntnet_connection/exonet = null
 

@@ -248,6 +248,7 @@
 	outputs = list()
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 0 // Raises to 20 when on.
 	var/obj/machinery/camera/camera
 	var/updating = FALSE

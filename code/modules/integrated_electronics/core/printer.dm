@@ -205,6 +205,8 @@
 							to_chat(usr, "<span class='notice'>It uses advanced component designs.</span>")
 						else
 							to_chat(usr, "<span class='warning'>It uses unknown component designs. Printer upgrade is required to proceed.</span>")
+					if(program["unsupported_circuit"])
+						to_chat(usr, "<span class='warning'>This program uses components not supported by the specified assembly. Please change the assembly type in the save file to a supported one.</span>")
 					to_chat(usr, "<span class='notice'>Used space: [program["used_space"]]/[program["max_space"]].</span>")
 					to_chat(usr, "<span class='notice'>Complexity: [program["complexity"]]/[program["max_complexity"]].</span>")
 					to_chat(usr, "<span class='notice'>Metal cost: [program["metal_cost"]].</span>")
@@ -215,6 +217,8 @@
 
 				if(program["requires_upgrades"] && !upgraded)
 					to_chat(usr, "<span class='warning'>This program uses unknown component designs. Printer upgrade is required to proceed.</span>")
+				if(program["unsupported_circuit"])
+					to_chat(usr, "<span class='warning'>This program uses components not supported by the specified assembly. Please change the assembly type in the save file to a supported one.</span>")
 				else
 					var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 					if(materials.use_amount_type(program["metal_cost"], MAT_METAL))

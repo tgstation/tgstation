@@ -202,7 +202,7 @@
 // Returns assembly (type: list) if the save is valid.
 // Returns error code (type: text) if loading has failed.
 // The following parameters area calculated during validation and added to the returned save list:
-// "requires_upgrades", "metal_cost", "complexity", "max_complexity", "used_space", "max_space"
+// "requires_upgrades", "unsupported_circuit", "metal_cost", "complexity", "max_complexity", "used_space", "max_space"
 /datum/controller/subsystem/processing/circuit/proc/validate_electronic_assembly(program)
 	var/list/blocks = json_decode(program)
 	if(!blocks)
@@ -272,6 +272,10 @@
 		// Check if the assembly requires printer upgrades
 		if(!(component.spawn_flags & IC_SPAWN_DEFAULT))
 			blocks["requires_upgrades"] = TRUE
+
+		// Check if the assembly supports the circucit
+		if((component.action_flags & assembly.allowed_circuit_action_flags) != component.action_flags)
+			blocks["unsupported_circuit"] = TRUE
 
 
 	// Check complexity and space limitations
