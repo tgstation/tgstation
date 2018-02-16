@@ -699,9 +699,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "closed";
-	locked = 1;
 	name = "Gateway";
 	req_access_txt = "150"
 	},
@@ -1023,11 +1022,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cr" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Dormitories"
 	},
 /obj/item/stack/rods,
@@ -1336,12 +1335,12 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cT" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	id_tag = "awaydorm4";
-	locked = 1;
 	name = "Dorm 1";
 	opacity = 0
 	},
@@ -1650,14 +1649,15 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "du" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
@@ -1810,13 +1810,16 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2595,11 +2598,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Xenobiology Lab";
 	opacity = 0;
 	req_access_txt = "201"
@@ -3727,11 +3730,11 @@
 /area/awaymission/moonoutpost19/research)
 "hD" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Research Director's Office";
 	opacity = 0;
 	req_access_txt = "201";
@@ -4009,6 +4012,7 @@
 	req_access_txt = "201";
 	req_one_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -6103,12 +6107,18 @@
 "mL" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mM" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6614,10 +6624,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nO" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
-	icon_state = "closed";
 	id_tag = "awaydorm3";
-	locked = 1;
 	name = "Dorm 3"
 	},
 /turf/open/floor/plasteel{
@@ -6811,6 +6820,45 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space)
+"vV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"zZ" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"Mm" = (
+/obj/machinery/door/airlock/medical{
+	id_tag = "";
+	name = "Research Division";
+	req_access_txt = "201";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"Wf" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
 
 (1,1,1) = {"
 aa
@@ -36266,10 +36314,10 @@ jG
 lF
 lF
 no
-mM
+zZ
 nA
 nK
-mM
+Wf
 dM
 ba
 ba
@@ -36510,7 +36558,7 @@ hN
 ie
 hj
 hj
-ie
+Mm
 jy
 jU
 jE
@@ -36523,10 +36571,10 @@ mN
 mg
 mg
 mg
-mM
+zZ
 lM
 lN
-mM
+Wf
 dM
 ba
 ba
@@ -41661,7 +41709,7 @@ hI
 hJ
 hI
 hI
-mM
+vV
 hI
 hI
 nJ
