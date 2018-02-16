@@ -43,7 +43,7 @@
 				butchering.Butcher(user, src)
 			return 1
 		else if(I.is_sharp()) //give sharp objects butchering functionality, for consistency
-			I.AddComponent(/datum/component/butchering)
+			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
 			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
 			return
 	return I.attack(src, user)
