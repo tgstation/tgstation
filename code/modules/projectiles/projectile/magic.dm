@@ -180,7 +180,6 @@
 							/mob/living/simple_animal/hostile/stickman/dog,
 							/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 							/mob/living/simple_animal/hostile/gorilla,
-							/***********************pets and "nice" animals***********************/
 							/mob/living/simple_animal/parrot,
 							/mob/living/simple_animal/pet/dog/corgi,
 							/mob/living/simple_animal/crab,
@@ -200,7 +199,7 @@
 			if(prob(50)
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
-				var/hooman = pick(subtypesof(/mob/living/carbon/human/species)
+				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
 				new_mob = hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
