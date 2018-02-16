@@ -67,12 +67,10 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-#define PULSE_MEDAL "Jackpot"
-
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
-		UnlockMedal(PULSE_MEDAL,usr.client)
+		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
@@ -82,7 +80,6 @@
 	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 	prize.forceMove(get_turf(src))
-#undef PULSE_MEDAL
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)
