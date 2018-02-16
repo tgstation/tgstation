@@ -422,7 +422,7 @@
 	var/image/holder = hud_list[DIAG_CIRCUIT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))|hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
 		holder.icon_state = null
 	else
 		holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
@@ -431,7 +431,7 @@
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))|hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
 		holder.icon_state = null
 	else if(battery)
 		var/chargelvl = battery.charge/battery.maxcharge
@@ -443,7 +443,7 @@
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))|hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
 		holder.icon_state = null
 	else if(!battery)
 		holder.icon_state = "hudoffline"
@@ -458,7 +458,7 @@
 	var/image/holder = hud_list[DIAG_TRACK_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))|hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
 		holder.icon_state = null
 	else if(long_range_circuits)
 		holder.icon_state = "hudtracking"
