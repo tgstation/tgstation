@@ -122,7 +122,7 @@
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
-			playsound(I, I.usesound, 50, TRUE)
+			I.play_tool_sound(src)
 			stuffed = FALSE
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")

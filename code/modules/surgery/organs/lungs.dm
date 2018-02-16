@@ -282,7 +282,6 @@
 			H.reagents.add_reagent("nitryl_gas",1)
 
 		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
-		gas_breathed = 0
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
 		if (gas_breathed > gas_stimulation_min)
@@ -360,6 +359,7 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
+	synthetic = TRUE
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	owner.losebreath = 20

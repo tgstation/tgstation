@@ -448,9 +448,9 @@
 /area/shuttle/pirate)
 "bg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
 	id_tag = "piratevault";
-	locked = 1;
 	name = "Vault"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -648,9 +648,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bF" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "pirateportexternal";
-	locked = 1
+	id_tag = "pirateportexternal"
 	},
 /obj/docking_port/mobile/pirate{
 	callTime = 100;
@@ -675,6 +675,9 @@
 	name = "Deep Space";
 	width = 23
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bG" = (
@@ -683,6 +686,9 @@
 "bH" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bI" = (
@@ -707,7 +713,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(152)
+	req_access = null;
+	req_access_txt = "152"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
@@ -817,6 +824,9 @@
 /area/shuttle/pirate)
 "bU" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bV" = (
@@ -824,11 +834,14 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bW" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "piratestarboardexternal";
-	locked = 1
+	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
@@ -902,13 +915,6 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"cf" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 1;
-	faction = "pirate"
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1706,10 +1712,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	heat_proof = 1;
 	id_tag = "pirateturbinebolt";
-	locked = 1;
 	name = "Turbine Access"
 	},
 /turf/open/floor/engine,
@@ -1787,6 +1793,13 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
+"dV" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 1;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 
 (1,1,1) = {"
 aa
@@ -1802,7 +1815,7 @@ aj
 aj
 bF
 aj
-cf
+dV
 aj
 aj
 aj
@@ -2322,7 +2335,7 @@ aj
 aj
 bW
 aj
-cf
+dV
 aj
 aj
 aj

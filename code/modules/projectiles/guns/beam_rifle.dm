@@ -75,6 +75,7 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
+	var/datum/component/mobhook
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -91,7 +92,7 @@
 	set_user(user)
 	. = ..()
 
-/obj/item/gun/energy/beam_rifle/dropped()
+/obj/item/gun/energy/beam_rifle/dropped(mob/user)
 	set_user()
 	. = ..()
 
@@ -142,18 +143,20 @@
 		return
 	zooming = TRUE
 
-/obj/item/gun/energy/beam_rifle/proc/stop_zooming()
+/obj/item/gun/energy/beam_rifle/proc/stop_zooming(mob/user)
 	if(zooming)
 		zooming = FALSE
-		reset_zooming()
+		reset_zooming(user)
 
-/obj/item/gun/energy/beam_rifle/proc/reset_zooming()
-	if(!check_user(FALSE))
-		return
+/obj/item/gun/energy/beam_rifle/proc/reset_zooming(mob/user)
+	if(!user)
+		user = current_user
+	if(!user || !user.client)
+		return FALSE
 	zoom_animating = 0
-	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.change_view(CONFIG_GET(string/default_view))
+	user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -187,6 +190,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
+	QDEL_NULL(mobhook)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
@@ -256,7 +260,7 @@
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
 
-/obj/item/gun/energy/beam_rifle/on_mob_move()
+/obj/item/gun/energy/beam_rifle/proc/on_mob_move()
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
@@ -271,23 +275,25 @@
 	zooming_angle = lastangle
 	start_zooming()
 
-/obj/item/gun/energy/beam_rifle/proc/stop_aiming()
+/obj/item/gun/energy/beam_rifle/proc/stop_aiming(mob/user)
 	set waitfor = FALSE
 	aiming_time_left = aiming_time
 	aiming = FALSE
 	QDEL_LIST(current_tracers)
-	stop_zooming()
+	stop_zooming(user)
 
 /obj/item/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
-	stop_aiming()
+	stop_aiming(current_user)
+	QDEL_NULL(mobhook)
 	if(istype(current_user))
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
 		current_user = null
 	if(istype(user))
 		current_user = user
 		LAZYADD(current_user.mousemove_intercept_objects, src)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)

@@ -23,15 +23,19 @@ SUBSYSTEM_DEF(mapping)
 	var/loading_ruins = FALSE
 
 	// Z-manager stuff
+	var/station_start  // should only be used for maploading-related tasks
+	var/space_levels_so_far = 0
 	var/list/z_list
 	var/datum/space_level/transit
+	var/datum/space_level/empty_space
+	var/dmm_suite/loader
 
 /datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
-		config = new(FORCE_MAP)
+		config = load_map_config(FORCE_MAP)
 #else
-		config = new(error_if_missing = FALSE)
+		config = load_map_config(error_if_missing = FALSE)
 #endif
 	return ..()
 
@@ -39,16 +43,20 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
+	loader = new
 	loadWorld()
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
 #ifndef LOWMEMORYMODE
-	// Create space levels
-	for(var/I in 1 to ZLEVEL_SPACE_RUIN_COUNT)
-		add_new_zlevel("Empty Area [2 + I]", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE))
-	add_new_zlevel("Empty Area [3 + ZLEVEL_SPACE_RUIN_COUNT]", CROSSLINKED, list())  // no ruins
-	transit = add_new_zlevel("Transit", UNAFFECTED, list(ZTRAIT_TRANSIT = TRUE))
+	// Create space ruin levels
+	while (space_levels_so_far < ZLEVEL_SPACE_RUIN_COUNT)
+		++space_levels_so_far
+		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+	// and one level with no ruins
+	empty_space = add_new_zlevel("Empty Area [1 + space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+	// and the transit level
+	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
 	createRandomZlevel()
@@ -71,6 +79,7 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
+	QDEL_NULL(loader)
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -108,32 +117,77 @@ SUBSYSTEM_DEF(mapping)
 
 	z_list = SSmapping.z_list
 
-/datum/controller/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
-	var/static/dmm_suite/loader
-	if(!loader)
-		loader = new
-	if(!loader.load_map(file(filename), 0, 0, forceLevel, no_changeturf = TRUE))
-		errorList |= filename
-	if(last)
-		QDEL_NULL(loader)
-
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits)
+	var/start_time = REALTIMEOFDAY
+
+	if (!islist(files))  // handle single-level maps
+		files = list(files)
+
+	// check that the total z count of all maps matches the list of traits
+	var/total_z = 0
+	for (var/file in files)
+		var/full_path = "_maps/[path]/[file]"
+		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+		files[file] = total_z  // save the start Z of this file
+		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
+
+	if (!length(traits))  // null or empty - default
+		for (var/i in 1 to total_z)
+			traits += list(default_traits)
+	else if (total_z != traits.len)  // mismatch
+		INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [total_z] z-levels in [path]!")
+		if (total_z < traits.len)  // ignore extra traits
+			traits.Cut(total_z + 1)
+		while (total_z > traits.len)  // fall back to defaults on extra levels
+			traits += list(default_traits)
+
+	// preload the relevant space_level datums
+	var/start_z = world.maxz + 1
+	var/i = 0
+	for (var/level in traits)
+		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level)
+		++i
+
+	// load the maps
+	for (var/file in files)
+		var/full_path = "_maps/[path]/[file]"
+		if(!loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE))
+			errorList |= full_path
+
+	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
 
-	var/start_time = REALTIMEOFDAY
-
-	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
+	// ensure we have space_level datums for compiled-in maps
 	InitializeDefaultZLevels()
-	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
+
+	// load the station
+	station_start = world.maxz + 1
+	INIT_ANNOUNCE("Loading [config.map_name]...")
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
 
-	if(config.minetype != "lavaland")
-		INIT_ANNOUNCE("WARNING: A map without lavaland set as its minetype was loaded! This is being ignored! Update the maploader code!")
+#ifndef LOWMEMORYMODE
+	// TODO: remove this when the DB is prepared for the z-levels getting reordered
+	while (world.maxz < (5 - 1) && space_levels_so_far < ZLEVEL_SPACE_RUIN_COUNT)
+		++space_levels_so_far
+		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+
+	// load mining
+	if(config.minetype == "lavaland")
+		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+	else if (!isnull(config.minetype))
+		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+
+	// load Reebe
+	LoadGroup(FailedZs, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE)
+#endif
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
@@ -209,7 +263,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
-		next_map_config = new(default_to_box = TRUE)
+		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
 		return
 

@@ -303,12 +303,10 @@
 			if(!open)
 				to_chat(user, "<span class='warning'>Unable to repair with the maintenance panel closed!</span>")
 				return
-			var/obj/item/weldingtool/WT = W
-			if(WT.remove_fuel(0, user))
+
+			if(W.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
 				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 		else
 			if(W.force) //if force is non-zero
 				do_sparks(5, TRUE, src)

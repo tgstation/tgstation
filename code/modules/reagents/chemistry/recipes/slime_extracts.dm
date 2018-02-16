@@ -501,8 +501,19 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
+	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
 	BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
+	..()
+
+/datum/chemical_reaction/slime/slimeradio
+	name = "Slime Radio"
+	id = "m_radio"
+	required_reagents = list("water" = 1)
+	required_container = /obj/item/slime_extract/bluespace
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/slimepotion/slimeradio(get_turf(holder.my_atom))
 	..()
 
 //Cerulean

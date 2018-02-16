@@ -23,33 +23,46 @@
 		set_desc(steps.len)
 	return
 
-/datum/construction/proc/action(atom/used_atom,mob/user)
+/datum/construction/proc/action(obj/item/I, mob/user)
 	return
 
-/datum/construction/proc/check_step(atom/used_atom,mob/user) //check last step only
-	var/valid_step = is_right_key(used_atom)
+/datum/construction/proc/check_step(obj/item/I, mob/user) //check last step only
+	var/valid_step = is_right_key(I)
 	if(valid_step)
-		if(custom_action(valid_step, used_atom, user))
+		if(custom_action(valid_step, I, user))
 			next_step()
 			return 1
 	return 0
 
-/datum/construction/proc/is_right_key(atom/used_atom) // returns current step num if used_atom is of the right type.
+/datum/construction/proc/is_right_key(obj/item/I) // returns current step num if I is of the right type.
 	var/list/L = steps[steps.len]
-	if(istype(used_atom, L["key"]))
+	if(check_used_item(I, L["key"]))
 		return steps.len
 	return 0
 
-/datum/construction/proc/custom_action(step, used_atom, user)
+/datum/construction/proc/check_used_item(obj/item/I, key)
+	if(!key)
+		return FALSE
+
+	if(ispath(key) && istype(I, key))
+		return TRUE
+
+	else if(I.tool_behaviour == key)
+		return TRUE
+
+	return FALSE
+
+
+/datum/construction/proc/custom_action(step, obj/item/I, user)
 	return 1
 
-/datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
+/datum/construction/proc/check_all_steps(obj/item/I, mob/user) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
-		var/list/L = steps[i];
-		if(istype(used_atom, L["key"]))
-			if(custom_action(i, used_atom, user))
-				steps[i]=null;//stupid byond list from list removal...
-				listclearnulls(steps);
+		var/list/L = steps[i]
+		if(check_used_item(I, L["key"]))
+			if(custom_action(i, I, user))
+				steps[i] = null//stupid byond list from list removal...
+				listclearnulls(steps)
 				if(!steps.len)
 					spawn_result()
 				return 1
@@ -76,6 +89,9 @@
 	holder.desc = step["desc"]
 	return
 
+/datum/construction/proc/drop_location()
+	return holder.drop_location()
+
 /datum/construction/reversible
 	var/index
 
@@ -92,21 +108,21 @@
 		set_desc(index)
 	return
 
-/datum/construction/reversible/is_right_key(atom/used_atom) // returns index step
+/datum/construction/reversible/is_right_key(obj/item/I) // returns index step
 	var/list/L = steps[index]
-	if(istype(used_atom, L["key"]))
+	if(check_used_item(I, L["key"]))
 		return FORWARD //to the first step -> forward
-	else if(L["backkey"] && istype(used_atom, L["backkey"]))
+	else if(check_used_item(I, L["backkey"]))
 		return BACKWARD //to the last step -> backwards
-	return 0
+	return FALSE
 
-/datum/construction/reversible/check_step(atom/used_atom,mob/user)
-	var/diff = is_right_key(used_atom)
+/datum/construction/reversible/check_step(obj/item/I, mob/user)
+	var/diff = is_right_key(I)
 	if(diff)
-		if(custom_action(index, diff, used_atom, user))
+		if(custom_action(index, diff, I, user))
 			update_index(diff)
 			return 1
 	return 0
 
-/datum/construction/reversible/custom_action(index, diff, used_atom, user)
+/datum/construction/reversible/custom_action(index, diff, obj/item/I, user)
 	return 1

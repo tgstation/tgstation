@@ -14,7 +14,7 @@
 
 	resistance_flags = FIRE_PROOF
 
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
 	integrity_failure = 50
 	var/list/network = list("SS13")
@@ -139,7 +139,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(panel_open)
@@ -367,19 +367,16 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(obj/item/weldingtool/WT, mob/living/user)
+/obj/machinery/camera/proc/weld(obj/item/weldingtool/W, mob/living/user)
 	if(busy)
 		return FALSE
-	if(!WT.remove_fuel(0, user))
+	if(!W.tool_start_check(user, amount=0))
 		return FALSE
 
 	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	playsound(src.loc, WT.usesound, 50, 1)
 	busy = TRUE
-	if(do_after(user, 100*WT.toolspeed, target = src))
+	if(W.use_tool(src, user, 100, volume=50))
 		busy = FALSE
-		if(!WT.isOn())
-			return FALSE
 		return TRUE
 	busy = FALSE
 	return FALSE

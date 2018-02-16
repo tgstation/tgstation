@@ -43,7 +43,7 @@
 		update_icon()
 		return
 	if(nadeassembly && istype(I, /obj/item/wirecutters))
-		playsound(src, I.usesound, 20, 1)
+		I.play_tool_sound(src, 20)
 		nadeassembly.forceMove(get_turf(src))
 		nadeassembly.master = null
 		nadeassembly = null
