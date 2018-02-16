@@ -1,7 +1,9 @@
 /datum/round_event_control/devil
 	name = "Create Devil"
 	typepath = /datum/round_event/ghost_role/devil
-	max_occurrences = 0
+	max_occurrences = 1
+	earliest_start = 5000 //10min
+	min_players = 15
 
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0

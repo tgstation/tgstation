@@ -6,7 +6,7 @@
 	weight = 4
 	min_players = 15
 	max_occurrences = 3
-	earliest_start = 25 MINUTES
+	earliest_start = 12500 //25mins
 
 /datum/round_event/meteor_wave
 	startWhen		= 6
