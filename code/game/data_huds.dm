@@ -452,7 +452,7 @@
 	else if(combat_circuits) //has a circuit that can harm people
 		holder.icon_state = "hudwarn"
 	else //Bot is on and not dangerous
-		holder.icon_state = "hudstat"
+		holder.icon_state = prefered_hud_icon
 
 /obj/item/device/electronic_assembly/proc/diag_hud_set_circuittracking(hide = FALSE)
 	var/image/holder = hud_list[DIAG_TRACK_HUD]
