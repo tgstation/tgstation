@@ -62,8 +62,8 @@
 					to_chat(H, "You already used this contract!")
 					return
 				used = TRUE
-				var/client/C = pick(candidates)
-				spawn_antag(C, get_turf(src), href_list["school"],H.mind)
+				var/mob/dead/observer/C = pick(candidates)
+				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -218,8 +218,8 @@
 		if(used)
 			return
 		used = TRUE
-		var/client/C = pick(candidates)
-		spawn_antag(C, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/C = pick(candidates)
+		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
