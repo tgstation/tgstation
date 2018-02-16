@@ -75,7 +75,7 @@
 /datum/round_event/santa/start()
 	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 		santa.key = C.key
 
