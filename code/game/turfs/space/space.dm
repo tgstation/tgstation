@@ -132,8 +132,6 @@
 	if(destination_z && destination_x && destination_y)
 		var/old_z = A.z
 		A.forceMove(locate(destination_x, destination_y, destination_z))
-		if (old_z != destination_z)
-			A.onTransitZ(old_z, destination_z)
 
 		if(isliving(A))
 			var/mob/living/L = A
