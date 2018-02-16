@@ -5,7 +5,6 @@
 
 	min_players = 15
 	max_occurrences = 1
-	earliest_start = 7500 //15mins
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21

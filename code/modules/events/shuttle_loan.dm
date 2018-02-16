@@ -10,7 +10,7 @@
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
-	earliest_start = 7500 //15mins
+	earliest_start = 4000
 
 /datum/round_event/shuttle_loan
 	announceWhen = 1

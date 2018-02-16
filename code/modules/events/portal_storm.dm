@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 2
 	min_players = 15
-	earliest_start = 15000 //30mins
+	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
