@@ -184,7 +184,7 @@
 				PDA.toff = TRUE
 		if(disable_sensors)
 			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
-			var/obj/item/clothing/under/C = locate(/obj/item/clothing/under) in H
+			var/obj/item/clothing/under/C = H.wear_suit
 			if(C)
 				C.sensor_mode = NO_SENSORS
 
