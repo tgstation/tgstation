@@ -182,20 +182,13 @@
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
+
 		if("robot")
-			var/robot = pick("cyborg","syndiborg","drone")
-			switch(robot)
-				if("cyborg")
-					new_mob = new /mob/living/silicon/robot(M.loc)
-				if("syndiborg")
-					var/path
-					if(prob(50))
-						path = /mob/living/silicon/robot/syndicate
-					else
-						path = /mob/living/silicon/robot/syndicate/medical
-					new_mob = new path(M.loc)
-				if("drone")
-					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
+			var/robot = pick(200;/mob/living/silicon/robot,
+							/mob/living/silicon/robot/syndicate,
+							/mob/living/silicon/robot/syndicate/medical,
+							200;/mob/living/simple_animal/drone/polymorphed)				
+			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
@@ -205,103 +198,62 @@
 				Robot.clear_inherent_laws()
 				Robot.clear_zeroth_law(0)
 				Robot.connected_ai = null
+		
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
+			
 		if("xeno")
-			if(prob(50))
-				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-			else
-				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-
+			var/Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
+			new Xe(M.loc)
+			
 		if("animal")
-			var/path
-			if(prob(50))
-				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
-				switch(beast)
-					if("carp")
-						path = /mob/living/simple_animal/hostile/carp
-					if("bear")
-						path = /mob/living/simple_animal/hostile/bear
-					if("mushroom")
-						path = /mob/living/simple_animal/hostile/mushroom
-					if("statue")
-						path = /mob/living/simple_animal/hostile/statue
-					if("bat")
-						path = /mob/living/simple_animal/hostile/retaliate/bat
-					if("goat")
-						path = /mob/living/simple_animal/hostile/retaliate/goat
-					if("killertomato")
-						path = /mob/living/simple_animal/hostile/killertomato
-					if("spiderbase")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider
-					if("spiderhunter")
-						path = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
-					if("blobbernaut")
-						path = /mob/living/simple_animal/hostile/blob/blobbernaut/independent
-					if("magicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged
-					if("chaosmagicarp")
-						path = /mob/living/simple_animal/hostile/carp/ranged/chaos
-					if("watcher")
-						path = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
-					if("goliath")
-						path = /mob/living/simple_animal/hostile/asteroid/goliath/beast
-					if("headcrab")
-						path = /mob/living/simple_animal/hostile/headcrab
-					if("morph")
-						path = /mob/living/simple_animal/hostile/morph
-					if("stickman")
-						path = /mob/living/simple_animal/hostile/stickman
-					if("stickdog")
-						path = /mob/living/simple_animal/hostile/stickman/dog
-					if("lesserdragon")
-						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
-			else
-				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
-				switch(animal)
-					if("parrot")
-						path = /mob/living/simple_animal/parrot
-					if("corgi")
-						path = /mob/living/simple_animal/pet/dog/corgi
-					if("crab")
-						path = /mob/living/simple_animal/crab
-					if("pug")
-						path = /mob/living/simple_animal/pet/dog/pug
-					if("cat")
-						path = /mob/living/simple_animal/pet/cat
-					if("mouse")
-						path = /mob/living/simple_animal/mouse
-					if("chicken")
-						path = /mob/living/simple_animal/chicken
-					if("cow")
-						path = /mob/living/simple_animal/cow
-					if("lizard")
-						path = /mob/living/simple_animal/hostile/lizard
-					if("fox")
-						path = /mob/living/simple_animal/pet/fox
-					if("butterfly")
-						path = /mob/living/simple_animal/butterfly
-					if("cak")
-						path = /mob/living/simple_animal/pet/cat/cak
-					if("chick")
-						path = /mob/living/simple_animal/chick
-
+				var/path = pick(/mob/living/simple_animal/hostile/carp,
+								/mob/living/simple_animal/hostile/bear,
+								/mob/living/simple_animal/hostile/mushroom,
+								/mob/living/simple_animal/hostile/statue,
+								/mob/living/simple_animal/hostile/retaliate/bat,
+								/mob/living/simple_animal/hostile/retaliate/goat,
+								/mob/living/simple_animal/hostile/killertomato,
+								/mob/living/simple_animal/hostile/poison/giant_spider,
+								/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
+								/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+								/mob/living/simple_animal/hostile/carp/ranged,
+								/mob/living/simple_animal/hostile/carp/ranged/chaos,
+								/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+								/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+								/mob/living/simple_animal/hostile/headcrab,
+								/mob/living/simple_animal/hostile/morph,
+								/mob/living/simple_animal/hostile/stickman,
+								/mob/living/simple_animal/hostile/stickman/dog,
+								/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+								/***********************pets and "nice" animals***********************/
+								/mob/living/simple_animal/parrot,
+								/mob/living/simple_animal/pet/dog/corgi,
+								/mob/living/simple_animal/crab,
+								/mob/living/simple_animal/pet/dog/pug,
+								/mob/living/simple_animal/pet/cat,
+								/mob/living/simple_animal/mouse,
+								/mob/living/simple_animal/chicken,
+								/mob/living/simple_animal/cow,
+								/mob/living/simple_animal/hostile/lizard,
+								/mob/living/simple_animal/pet/fox,
+								/mob/living/simple_animal/butterfly,
+								/mob/living/simple_animal/pet/cat/cak,
+								/mob/living/simple_animal/chick)
+			
 			new_mob = new path(M.loc)
 
 		if("humanoid")
-			new_mob = new /mob/living/carbon/human(M.loc)
+			if(prob(50)
+				new_mob = new /mob/living/carbon/human(M.loc)
+			else
+				var/hooman = pick(subtypesof(/mob/living/carbon/human/species)
+				new_mob = hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
 
 			var/mob/living/carbon/human/H = new_mob
-			if(prob(50))
-				var/list/all_species = list()
-				for(var/speciestype in subtypesof(/datum/species))
-					var/datum/species/S = new speciestype()
-					if(!S.dangerous_existence)
-						all_species += speciestype
-				H.set_species(pick(all_species), icon_update=0)
 			H.update_body()
 			H.update_hair()
 			H.update_body_parts()
