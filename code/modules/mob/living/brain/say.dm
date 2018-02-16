@@ -14,7 +14,7 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/brain/radio(message, message_mode, list/spans, language)
-	if(message_mode && istype(container, /obj/item/device/mmi))
+	if(message_mode == MODE_HEADSET && istype(container, /obj/item/device/mmi))
 		var/obj/item/device/mmi/R = container
 		if(R.radio)
 			R.radio.talk_into(src, message, , get_spans(), language)
