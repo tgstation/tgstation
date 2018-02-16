@@ -139,11 +139,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/crowbar))
-		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
+
+/turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
+	return intact ? pry_tile(I, user) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -156,8 +157,8 @@
 		return
 	P.attackby(T, user, params)
 
-/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	playsound(src, C.usesound, 80, 1)
+/turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
+	I.play_tool_sound(src, 80)
 	return remove_tile(user, silent)
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)

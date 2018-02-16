@@ -57,7 +57,7 @@
   * This allows modules/datums to have the UI attached to them,
   * and be a part of another object.
  **/
-/datum/proc/ui_host()
+/datum/proc/ui_host(mob/user)
 	return src // Default src.
 
  /**
