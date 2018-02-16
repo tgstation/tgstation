@@ -226,10 +226,7 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && in_range(user,src))
-		if(user.incapacitated())
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-			return
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
 
 /obj/proc/reskin_obj(mob/M)
