@@ -50,11 +50,13 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
-	while (space_levels_so_far < ZLEVEL_SPACE_RUIN_COUNT)
+	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 	// and one level with no ruins
-	empty_space = add_new_zlevel("Empty Area [1 + space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+	for (var/i in 1 to config.space_empty_levels)
+		++space_levels_so_far
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 	// and the transit level
 	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
@@ -175,7 +177,7 @@ SUBSYSTEM_DEF(mapping)
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	while (world.maxz < (5 - 1) && space_levels_so_far < ZLEVEL_SPACE_RUIN_COUNT)
+	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
