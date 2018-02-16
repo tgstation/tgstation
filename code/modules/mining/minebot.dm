@@ -74,7 +74,7 @@
 			to_chat(user, "<span class='warning'>[t_He] look[t_s] slightly dented.</span>")
 		else
 			to_chat(user, "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>")
-	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[min(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
+	to_chat(user, "<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n\
 	Field repairs can be done with a welder.")
 	if(stored_gun && stored_gun.max_mod_capacity)
 		to_chat(user, "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining.")
