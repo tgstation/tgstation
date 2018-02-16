@@ -144,13 +144,20 @@
 		the galactic kleptocracy and all who serve it."
 	mappath = "_maps/templates/greytopia.dmm"
 
-/datum/map_template/shelter/grey/New()
+/datum/map_template/shelter/greytopia/New()
 	..()
 	blacklisted_turfs = list()
 
+/datum/map_template/shelter/greytopia/supplies
+	name = "Supply Pod"
+	shelter_id = "shelter_supplies"
+	description = "There are rumors of a forgotten storage facility, \
+		not found on any map, that contains a wealth of survival provisions."
+	mappath = "_maps/templates/storagepod.dmm"
+
 /obj/effect/landmark/greytopia
 	name = "Greytopia spawner"
-	var/datum/map_template/shelter/grey/template
+	var/datum/map_template/shelter/greytopia/template
 	var/static/spawned = FALSE
 
 /obj/effect/landmark/greytopia/Initialize()
@@ -161,12 +168,15 @@
 	if(spawned)
 		qdel(src)
 		return
-	template = SSmapping.shelter_templates["shelter_grey"]
+	if(prob(9))
+		if(prob(40))
+			template = SSmapping.shelter_templates["shelter_grey"]
+		else
+			template = SSmapping.shelter_templates["shelter_supplies"]
 	if(!template)
 		throw EXCEPTION("Shelter template (shelter_grey) not found!")
 		qdel(src)
 		return
-	if(prob(100))
-		template.load(get_turf(src), centered = TRUE, orientation = dir)
-		//spawned = TRUE
-	//qdel(src)
+	template.load(get_turf(src), centered = TRUE, orientation = dir)
+	spawned = TRUE
+	qdel(src)

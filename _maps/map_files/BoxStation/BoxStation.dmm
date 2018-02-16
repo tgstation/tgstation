@@ -39467,10 +39467,9 @@
 /area/hallway/primary/aft)
 "bSS" = (
 /obj/structure/headpike/bone,
-/obj/item/clothing/head/helmet/skull{
-	pixel_x = 1;
-	pixel_y = 9;
-	pixel_z = 1
+/obj/item/stack/sheet/bone{
+	pixel_y = -2;
+	amount = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 6
@@ -53726,7 +53725,7 @@
 "cIK" = (
 /obj/machinery/door/airlock/research{
 	abandoned = 1;
-	req_access = "55";
+	req_access = "47";
 	security_level = 2
 	},
 /obj/structure/barricade/wooden/snowed{
@@ -54495,12 +54494,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "eJJ" = (
-/obj/structure/table/wood/bar,
 /obj/effect/spawner/lootdrop/gambling,
 /obj/structure/glowshroom/shadowshroom{
 	light_power = 4;
 	light_range = 2
 	},
+/obj/structure/table/wood/poker,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "eRe" = (
@@ -54838,6 +54837,18 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/pod,
 /obj/item/bedsheet/purple,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"hBR" = (
+/obj/structure/glowshroom/shadowshroom{
+	light_power = 4;
+	light_range = 2
+	},
+/obj/item/device/flashlight/spotlight{
+	light_power = -5;
+	light_range = 4;
+	name = "dark aura"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "hWx" = (
@@ -55500,7 +55511,6 @@
 /turf/open/floor/carpet,
 /area/maintenance/port/aft)
 "nto" = (
-/obj/structure/table/wood/bar,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 4;
 	name = "4maintenance loot spawner"
@@ -55509,6 +55519,7 @@
 	light_power = 4;
 	light_range = 2
 	},
+/obj/structure/table/wood/poker,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nxv" = (
@@ -55593,6 +55604,13 @@
 "oaV" = (
 /turf/open/floor/plasteel/dark,
 /area/maintenance/aft)
+"odR" = (
+/obj/machinery/door/airlock/glass_large{
+	name = "maintenance shaft";
+	req_access = 12
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "ofu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/cardboard/metal,
@@ -55990,12 +56008,12 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
 "syq" = (
-/obj/structure/table/wood/bar,
 /obj/item/briefcase_launchpad,
 /obj/structure/glowshroom/shadowshroom{
 	light_power = 4;
 	light_range = 2
 	},
+/obj/structure/table/wood/poker,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sBW" = (
@@ -56334,11 +56352,11 @@
 /turf/open/floor/wood,
 /area/library/abandoned)
 "wdX" = (
-/obj/structure/table/wood/bar,
 /obj/structure/glowshroom/shadowshroom{
 	light_power = 4;
 	light_range = 2
 	},
+/obj/structure/table/wood/poker,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "wgh" = (
@@ -75485,7 +75503,7 @@ bLv
 bHE
 bHE
 bHE
-uUB
+bLv
 uUB
 jqS
 qaP
@@ -77274,7 +77292,7 @@ bHE
 ckv
 bHE
 bHE
-bHE
+odR
 waL
 bHE
 bLv
@@ -100826,7 +100844,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aae
 aaf
 aaf
 aaa
@@ -104164,7 +104182,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -105200,7 +105218,7 @@ aaa
 aaa
 aaa
 aaa
-wsQ
+aaa
 aaa
 aaa
 aaa
@@ -105457,7 +105475,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wsQ
 aaa
 aaa
 aaa
@@ -108100,7 +108118,7 @@ cOe
 cNW
 ufE
 ufE
-ufE
+hBR
 ufE
 gqw
 cOe
