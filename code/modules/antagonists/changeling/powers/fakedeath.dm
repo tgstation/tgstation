@@ -6,7 +6,7 @@
 	dna_cost = 0
 	req_dna = 1
 	req_stat = DEAD
-	ignores_fakedeath = FALSE
+	ignores_fakedeath = TRUE
 	var/revive_ready = FALSE
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
@@ -14,7 +14,11 @@
 	if(revive_ready)
 		if((user.stat != DEAD) && !(user.has_trait(TRAIT_FAKEDEATH)))//if they get cloned or something dont give them a free full heal
 			revive_ready = FALSE
-			name = "Reviving Stasis - We fall into a stasis, allowing us to regenerate and trick our enemies."
+			name = "Reviving Stasis"
+			desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+			button_icon_state = "fake_death"
+			UpdateButtonIcon()
+			chemical_cost = 15
 			return FALSE
 		user.cure_fakedeath("changeling")
 		user.revive(full_heal = 1)
@@ -38,7 +42,6 @@
 		button_icon_state = "fake_death"
 		UpdateButtonIcon()
 		chemical_cost = 15
-		ignores_fakedeath = FALSE
 		return TRUE
 
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
@@ -63,7 +66,6 @@
 			UpdateButtonIcon()
 			chemical_cost = 0
 			revive_ready = TRUE
-			ignores_fakedeath = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
 	if(user.has_trait(TRAIT_FAKEDEATH, "changeling"))
