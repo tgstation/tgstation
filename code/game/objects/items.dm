@@ -734,7 +734,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips)
+	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips && !QDELETED(src))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
@@ -799,9 +799,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return !used
 
 // Plays item's usesound, if any.
-/obj/item/proc/play_tool_sound(atom/target, volume)
+/obj/item/proc/play_tool_sound(atom/target, volume=50)
 	if(target && usesound && volume)
-		playsound(target, usesound, volume, 1)
+		var/played_sound = usesound
+
+		if(islist(usesound))
+			played_sound = pick(usesound)
+
+		playsound(target, played_sound, volume, 1)
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)

@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
 	grind_results = list("silicon" = 20)
@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
 	grind_results = list("silicon" = 20, "iron" = 10)
@@ -181,6 +181,41 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	recipes = GLOB.prglass_recipes
 	return ..()
 
+GLOBAL_LIST_INIT(titaniumglass_recipes, list(
+	new/datum/stack_recipe("shuttle window", /obj/structure/window/shuttle/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	))
+
+/obj/item/stack/sheet/titaniumglass
+	name = "titanium glass"
+	desc = "A glass sheet made out of a titanium-silicate alloy."
+	singular_name = "titanium glass sheet"
+	icon_state = "sheet-titaniumglass"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/titaniumglass
+
+/obj/item/stack/sheet/titaniumglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.titaniumglass_recipes
+	return ..()
+
+GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	))
+
+/obj/item/stack/sheet/plastitaniumglass
+	name = "plastitanium glass"
+	desc = "A glass sheet made out of a plasma-titanium-silicate alloy."
+	singular_name = "plastitanium glass sheet"
+	icon_state = "sheet-plastitaniumglass"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_PLASMA=MINERAL_MATERIAL_AMOUNT, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	resistance_flags = ACID_PROOF
+	merge_type = /obj/item/stack/sheet/plastitaniumglass
+
+/obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.plastitaniumglass_recipes
+	return ..()
 
 /obj/item/shard
 	name = "shard"

@@ -39,8 +39,7 @@
 	dir = 2;
 	dwidth = 9;
 	name = "NES Port";
-	width = 19;
-	timid = 1
+	width = 19
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)

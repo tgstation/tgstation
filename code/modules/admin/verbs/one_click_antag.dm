@@ -286,26 +286,22 @@
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
 		newmob.key = chosen_candidate.key
-		newmob.mind.assigned_role = "CentCom Official"
-		newmob.equipOutfit(/datum/outfit/centcom_official)
+		
 
-		//Assign antag status and the mission
+		//Job
+		newmob.mind.assigned_role = "CentCom Official"
 		newmob.mind.special_role = "official"
 
+		//Mission
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
-		newmob.mind.objectives += missionobj
 
-		newmob.mind.add_antag_datum(/datum/antagonist/auto_custom)
+		var/datum/antagonist/official/O = new
+		O.mission = missionobj
 
-		if(CONFIG_GET(flag/enforce_human_authority))
-			newmob.set_species(/datum/species/human)
-
-		//Greet the official
-		to_chat(newmob, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")
-		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
+		newmob.mind.add_antag_datum(O)
 
 		//Logging and cleanup
 		message_admins("CentCom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
