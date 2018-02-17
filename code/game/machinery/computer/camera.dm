@@ -13,9 +13,9 @@
 
 /obj/machinery/computer/security/Initialize()
 	. = ..()
-	if(LAZYLEN(network))
-		for(var/i in network)
-			i = lowertext(i)
+	for(var/i in network)
+		network -= i
+		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )

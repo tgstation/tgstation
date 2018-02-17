@@ -44,9 +44,9 @@
 
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
-	if(LAZYLEN(network))
-		for(var/i in network)
-			i = lowertext(i)
+	for(var/i in network)
+		network -= i
+		network += lowertext(i)
 	if(CA)
 		assembly = CA
 	else
