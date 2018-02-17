@@ -244,18 +244,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
-		if(istype(C))
-			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
-				extinguish()
-				to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					C.update_damage_overlays()
-				return
-		else
+		var/can_handle_hot = FALSE
+		if(!istype(C))
+			can_handle_hot = TRUE
+		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
+			can_handle_hot = TRUE
+		else if(RESISTHOT in C.dna.species.species_traits)
+			can_handle_hot = TRUE
+
+		if(can_handle_hot)
 			extinguish()
+			to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
+			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+				C.update_damage_overlays()
+			return
 
 	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
