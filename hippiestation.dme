@@ -2465,6 +2465,7 @@
 #include "hippiestation\code\datums\components\spell_catalyst.dm"
 #include "hippiestation\code\datums\diseases\_MobProcs.dm"
 #include "hippiestation\code\datums\diseases\fluxitus.dm"
+#include "hippiestation\code\datums\martial\armstrong.dm"
 #include "hippiestation\code\datums\martial\cqc.dm"
 #include "hippiestation\code\datums\martial\krav_maga.dm"
 #include "hippiestation\code\datums\martial\plasma_fist.dm"
