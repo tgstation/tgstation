@@ -9,7 +9,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	can_hold = list(/obj/item/stock_parts)
+	can_hold = list(/obj/item/stock_parts, /obj/item/reagent_containers/glass/beaker)
 	storage_slots = 50
 	use_to_pickup = 1
 	allow_quick_gather = 1
