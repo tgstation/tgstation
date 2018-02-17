@@ -135,6 +135,10 @@
 	wet = TURF_WET_PERMAFROST
 	attachment_holes = FALSE
 
+/turf/open/floor/plating/ice/Initialize()
+	. = ..()
+	UpdateSlip()
+
 /turf/open/floor/plating/ice/HandleWet()
 	if(wet == TURF_WET_ICE)
 		return
