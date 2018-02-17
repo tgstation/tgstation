@@ -389,12 +389,8 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-<<<<<<< HEAD
-		var/client/C = pick(candidates)
-		revenant.client = C
-=======
+		
 		var/mob/dead/observer/C = pick(candidates)
->>>>>>> a5bcb83ea7... Some antag fixes. (#35690)
 		key_of_revenant = C.key
 		if(!key_of_revenant)
 			qdel(revenant)
