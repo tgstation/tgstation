@@ -157,7 +157,7 @@
 				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
 			else
 				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
-			new_mov = new Xe(M.loc)
+			new_mob = new Xe(M.loc)
 			
 		if("animal")
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
