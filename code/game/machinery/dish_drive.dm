@@ -20,6 +20,7 @@
 		/obj/item/broken_bottle)
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
+	var/transmit_enabled = TRUE
 
 /obj/machinery/dish_drive/Initialize()
 	. = ..()
@@ -72,9 +73,10 @@
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction
+		transmit_enabled = board.transmit
 
 /obj/machinery/dish_drive/process()
-	if(time_since_dishes <= world.time)
+	if(time_since_dishes <= world.time && transmit_enabled)
 		do_the_dishes()
 	if(!suction_enabled)
 		return
