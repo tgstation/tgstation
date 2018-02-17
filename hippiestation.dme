@@ -2474,6 +2474,7 @@
 #include "hippiestation\code\datums\components\material_container.dm"
 #include "hippiestation\code\datums\components\spell_catalyst.dm"
 #include "hippiestation\code\datums\diseases\_MobProcs.dm"
+#include "hippiestation\code\datums\diseases\cluwnification.dm"
 #include "hippiestation\code\datums\diseases\fluxitus.dm"
 #include "hippiestation\code\datums\martial\cqc.dm"
 #include "hippiestation\code\datums\martial\krav_maga.dm"
