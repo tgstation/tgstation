@@ -181,6 +181,7 @@
 	id = "sparky"
 	results = list("sparky" = 6, "radgoop" = 4)
 	required_reagents = list("uranium" = 4, "carbon" = 2)
+	required_temp = 400
 	radioactivity_required = 10
 
 /datum/chemical_reaction/over_reactible/impvolt
