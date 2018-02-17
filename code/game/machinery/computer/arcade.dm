@@ -67,7 +67,7 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend()
+/obj/machinery/computer/arcade/proc/prizevend(user)
   GET_COMPONENT_FROM(mood, /datum/component/mood, user)
   if(mood)
     mood.add_event("arcade", /datum/mood_event/arcade)
