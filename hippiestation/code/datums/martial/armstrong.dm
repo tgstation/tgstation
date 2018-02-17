@@ -400,6 +400,16 @@
 		var/mob/living/carbon/human/H = user
 		H.visible_message("<span class='warning'>[H] stares at the scroll like an idiot!</span>", "<span class='userdanger'>You despereately try to decypher the soggy scroll and fail miserably!</span>")
 
+/obj/item/paper/armstrong_tutorial
+	name = "paper - 'HOW TO NOT SUCK'"
+	info = "Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
+	Don't spam one attack. Cycle rapidly through intents or try to use combos as much as possible to capitalize on both brute damage and stamina damage.<br> \
+	To cycle intents, push F or G. To directly select an intent, press 1, 2, 3, or 4. <br>\
+	You can't pull people. At all. Don't try to. Punch people as hard as you can, as fast as you can. Once you start to level up, you won't need to pull people any way.<br> \
+	You can't use guns either. Guns are for pussies and fishpeople.<br> \
+	<b>Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Punch dead bodies if you have to. Get some experience, or else you're woefully underpowered.<br> \
+	If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
+
 /datum/martial_art/armstrong/proc/do_level_up()
 	switch(current_level)
 		if(2)

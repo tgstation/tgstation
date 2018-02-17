@@ -324,3 +324,9 @@
 	item = /obj/item/ammo_box/buckshotbox
 	cost = 13 // the math has been done, I assure you.
 	surplus = 25 // let's maybe not have players waste 13 TC on ammo every time they get a crate
+
+/datum/uplink_item/dangerous/armstrong
+	name = "Armstrong Style Kit"
+	desc = "A kit with the necessary equipment to become an excellent martial artist, and terrible parent!"
+	item = /obj/item/storage/box/syndie_kit/armstrong
+	cost = 14
