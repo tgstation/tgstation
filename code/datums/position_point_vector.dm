@@ -129,9 +129,6 @@
 /datum/point/proc/return_py()
 	return MODULUS(y, world.icon_size) - 16 - 1
 
-/datum/point/proc/mapcheck()
-	return FALSE	//Space's Enter() proc does this for us.
-
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
 	var/iteration = 0
@@ -191,8 +188,6 @@
 	iteration++
 	x += mpx * 1
 	y += mpy * 1
-	if(mapcheck())
-		on_z_change()
 
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()
