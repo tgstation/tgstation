@@ -15495,6 +15495,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/mob/living/simple_animal/pet/cat/clown,
 /turf/open/floor/plasteel/red,
 /area/hippie/clown)
 "aIl" = (
