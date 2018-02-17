@@ -25,7 +25,7 @@
 	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[key_name_admin(stranger_backseat)] became [key_name_admin(owner)]'s split personality.")
@@ -183,7 +183,7 @@
 	set waitfor = FALSE
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s brainwashed mind?", null, null, null, 75, stranger_backseat)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
 	else
 		qdel(src)

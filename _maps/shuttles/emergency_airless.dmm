@@ -37,7 +37,6 @@
 	name = "Shuttle Under Construction";
 	port_direction = 4;
 	preferred_direction = 2;
-	timid = 1;
 	width = 30
 	},
 /turf/open/floor/plating/airless,

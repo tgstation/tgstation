@@ -149,6 +149,10 @@
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
+
+/turf/open/space/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
 /turf/open/space/handle_slip()
 	return
 

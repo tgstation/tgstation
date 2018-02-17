@@ -9,7 +9,6 @@
 	var/required_container = null // the exact container path required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
 
-	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
