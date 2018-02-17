@@ -62,7 +62,7 @@
 		log_text = "Set to 0"
 		SSpersistence.antag_rep.Remove(C.ckey)
 	else
-		var/prompt = "Please enter the amount of reputation to " + operation + ":"
+		var/prompt = "Please enter the amount of reputation to [operation]:"
 
 		if(operation == "set")
 			prompt = "Please enter the new reputation value:"
@@ -75,16 +75,17 @@
 		var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 
 		if(operation == "set")
-			log_text = "Set to " + num2text(msg)
+			log_text = "Set to [num2text(msg)]"
 			SSpersistence.antag_rep[C.ckey] = max(0, min(msg, ANTAG_REP_MAXIMUM))
 		else if(operation == "add")
-			log_text = "Added " + num2text(msg)
+			log_text = "Added [num2text(msg)]"
 			SSpersistence.antag_rep[C.ckey] = min(SSpersistence.antag_rep[C.ckey]+msg, ANTAG_REP_MAXIMUM)
 		else if(operation == "subtract")
-			log_text = "Subtracted " + num2text(msg)
+			log_text = "Subtracted [num2text(msg)]"
 			SSpersistence.antag_rep[C.ckey] = max(SSpersistence.antag_rep[C.ckey]-msg, 0)
 		else
-			WARNING("Invalid operation for antag rep modification: " + operation + " by user " + key_name(usr))
+			to_chat(src, "Invalid operation for antag rep modification: [operation] by user [key_name(usr)]")
+			return
 
 		if(SSpersistence.antag_rep[C.ckey] <= 0)
 			SSpersistence.antag_rep.Remove(C.ckey)
