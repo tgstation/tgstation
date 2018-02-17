@@ -129,6 +129,10 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = IS_SHARP
 
+/obj/item/broken_bottle/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 200, 55)
+
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."

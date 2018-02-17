@@ -100,10 +100,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/nullrod/claymore/Initialize()
-	. = ..()
-	AddComponent(/datum/component/butchering)
-
 /obj/item/nullrod/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
@@ -370,7 +366,7 @@
 
 /obj/item/nullrod/armblade/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 80, 70, 0)
+	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"

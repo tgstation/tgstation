@@ -105,6 +105,10 @@
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
+/obj/item/shovel/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
+
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging their own grave!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use_tool(user, user, 30, volume=50))

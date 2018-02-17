@@ -44,6 +44,10 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/melee/synthetic_arm_blade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+
 /obj/item/melee/sabre
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
@@ -62,6 +66,10 @@
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
+
+/obj/item/melee/sabre/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

@@ -570,6 +570,10 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
 
+/obj/item/twohanded/required/chainsaw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', FALSE)
+
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -588,10 +592,11 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
 
 	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
-		AddComponent(/datum/component/butchering, 30, 100, 0, hitsound) //VRRRR
 	else
 		hitsound = "swing_hit"
 		qdel(GetComponent(/datum/component/butchering)) //hard to butcher with a chainsaw that isn't on

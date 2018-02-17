@@ -162,7 +162,7 @@
 //Weapon
 
 /obj/item/light_eater
-	name = "light eater"
+	name = "light eater" //as opposed to heavy eater
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	force = 25
@@ -172,6 +172,10 @@
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+
+/obj/item/light_eater/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)

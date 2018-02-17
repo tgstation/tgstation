@@ -1,14 +1,21 @@
 /datum/component/butchering
-	var/speed //time in deciseconds taken to butcher something
-	var/effectiveness //percentage effectiveness; numbers above 100 yield extra drops
-	var/bonus_modifier //percentage increase to bonus item chance
-	var/butcher_sound //sound played when butchering
+	var/speed = 80 //time in deciseconds taken to butcher something
+	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
+	var/bonus_modifier = 0 //percentage increase to bonus item chance
+	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
+	var/butchering_enabled = TRUE
 
-/datum/component/butchering/Initialize(_speed = 80, _effectiveness = 100, _bonus_modifier = 0, _butcher_sound = 'sound/weapons/slice.ogg')
-	speed = _speed
-	effectiveness = _effectiveness
-	bonus_modifier = _bonus_modifier
-	butcher_sound = _butcher_sound
+/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled)
+	if(_speed)
+		speed = _speed
+	if(_effectiveness)
+		effectiveness = _effectiveness
+	if(_bonus_modifier)
+		bonus_modifier = _bonus_modifier
+	if(_butcher_sound)
+		butcher_sound = _butcher_sound
+	if(disabled)
+		butchering_enabled = FALSE
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/turf/T = meat.drop_location()
