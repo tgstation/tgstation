@@ -1207,3 +1207,71 @@
 /datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
 	. = ..()
 	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
+	reagent_state = LIQUID
+	color = "#BEF7D8" // palish blue white
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
+	taste_description = "salt" // it actually does taste salty
+	var/overdose_progress = 0 // to track overdose progress
+
+/datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_SLEEPIMMUNE, id)
+	..()
+
+/datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	..()
+
+/datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
+	if(!overdosed) // We do not want any effects on OD
+		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
+		M.AdjustStun(-5, 0)
+		M.AdjustKnockdown(-5, 0)
+		M.AdjustUnconscious(-5, 0)
+		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.Jitter(1)
+		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
+		. = 1
+	..()
+
+/datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
+
+/datum/reagent/medicine/modafinil/overdose_process(mob/living/M)
+	overdose_progress++
+	switch(overdose_progress)
+		if(1 to 40)
+			M.jitteriness = min(M.jitteriness+1, 10)
+			M.stuttering = min(M.stuttering+1, 10)
+			M.Dizzy(5)
+			if(prob(50))
+				M.losebreath++
+		if(41 to 80)
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+			M.jitteriness = min(M.jitteriness+1, 20)
+			M.stuttering = min(M.stuttering+1, 20)
+			M.Dizzy(10)
+			if(prob(50))
+				M.losebreath++
+			if(prob(20))
+				to_chat(M, "You have a sudden fit!")
+				M.emote("moan")
+				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+		if(81)
+			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+		if(82 to INFINITY)
+			M.Sleeping(100, 0, TRUE)
+			M.adjustOxyLoss(1.5*REM, 0)
+			M.adjustStaminaLoss(1.5*REM, 0)
+	..()
+	. = 1
+  
