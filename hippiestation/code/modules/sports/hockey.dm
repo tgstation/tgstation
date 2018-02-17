@@ -258,7 +258,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	flags_1 = THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
-	armor = list(melee = 70, bullet = 45, laser = 80, energy = 45, bomb = 75, bio = 0, rad = 30, fire = 80, acid = 100)
+	armor = list("melee" = 70, "bullet" = 45, "laser" = 80, "energy" = 45, "bomb" = 75, "bio" = 0, "rad" = 30, "fire" = 80, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/hippie/hockey/equipped(mob/user, slot)
@@ -294,7 +294,7 @@
 	desc = "A combat helmet used by Ka-Nada extreme environment teams. Protects you from the elements as well as your opponents."
 	icon_state = "hockey_helmet"
 	item_state = "hockey_helmet"
-	armor = list(melee = 80, bullet = 40, laser = 80,energy = 45, bomb = 50, bio = 10, rad = 0, fire = 80, acid = 100)
+	armor = list("melee" = 80, "bullet" = 40, "laser" = 80,"energy" = 45, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 80, "acid" = 100)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	flags_1 = STOPSPRESSUREDMAGE_1 | NODROP_1

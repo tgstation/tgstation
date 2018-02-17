@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	max_integrity = 200
 	integrity_failure = 50
 	var/screen = 0
@@ -1040,13 +1040,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/newspaper/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		if(scribble_page == curr_page)
 			to_chat(user, "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
 		else
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if (!in_range(src, usr) && loc != usr)
+			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			scribble_page = curr_page
 			scribble = s

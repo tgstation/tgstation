@@ -36,7 +36,7 @@
 	name = "Impure Superhol"
 	id = "impalco"
 	results = list("impalco" = 5)
-	required_reagents = list("ausium" = 2, "ethanol" = 3,"methamphetamine" = 2)
+	required_reagents = list("aus" = 2, "ethanol" = 3,"methamphetamine" = 2)
 	pressure_required = 5
 
 /datum/chemical_reaction/alco

@@ -26,6 +26,7 @@
 	filling_color = "#FFD700"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	tastes = list("cocoa" = 1)
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -46,3 +47,4 @@
 	icon_state = "vanillapod"
 	filling_color = "#FFD700"
 	foodtype = FRUIT
+	tastes = list("vanilla" = 1)

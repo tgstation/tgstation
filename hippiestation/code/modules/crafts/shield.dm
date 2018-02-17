@@ -13,7 +13,7 @@
 	materials = list(MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 45
-	armor = list(melee = 50, bullet = 40, laser = 30, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 50, "bullet" = 40, "laser" = 30, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/damage_received = 0 //Amount of damage the shield has received
 	var/max_damage = 60 //Amount of max damage the trayshield can withstand
 
