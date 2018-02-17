@@ -549,7 +549,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgery_necrotic_revival
-	name = "Vein Threading Surgery Disk"
+	name = "Necrotic Revival Surgery Disk"
 	desc = "A disk containing the instructions for a Necrotic Revival surgery."
 	id = "surgery_zombie"
 	build_type = PROTOLATHE
