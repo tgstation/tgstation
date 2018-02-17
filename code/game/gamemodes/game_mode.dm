@@ -321,7 +321,7 @@
 
 		if(current <= antag_select)
 			var/subtract = min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
-			var/start = SSpersistence.antag_rep[p_ckey]
+			// var/start = SSpersistence.antag_rep[p_ckey]
 			SSpersistence.antag_rep[p_ckey] = max(0, SSpersistence.antag_rep[p_ckey] - subtract)
 			// WARNING("Player [mind.key] won spending [subtract] tickets from starting value [start]")
 
