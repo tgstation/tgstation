@@ -35,6 +35,7 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
+	var/ui_screen = "home"
 
  /**
   * public
@@ -216,7 +217,7 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
-			"screen"	= src_object.ui_screen,
+			"screen"	= ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
@@ -277,7 +278,7 @@
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
-				src_object.ui_screen = params["screen"]
+				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
@@ -299,7 +300,7 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/tgui/process(force = 0)
-	var/datum/host = src_object.ui_host()
+	var/datum/host = src_object.ui_host(user)
 	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
 		return

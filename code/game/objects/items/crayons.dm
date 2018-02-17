@@ -145,7 +145,7 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(has_cap)
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
@@ -221,7 +221,7 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"Choose Color") as color
+				paint_color = input(usr,"","Choose Color",paint_color) as color|null
 				. = TRUE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",

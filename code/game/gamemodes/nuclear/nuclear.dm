@@ -52,7 +52,7 @@
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antagonists(/datum/antagonist/nukeop))
+	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
@@ -154,7 +154,7 @@
 	W.implant(H)
 	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
-	H.faction |= "syndicate"
+	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
 
 /datum/outfit/syndicate/full

@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
 	var/turf/locked_location
@@ -41,10 +41,12 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	toggletracking(user)
 
 /obj/item/device/gps/proc/toggletracking(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, "It's busted!")

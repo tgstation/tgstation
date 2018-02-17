@@ -6,7 +6,7 @@
 /obj/item/circular_saw,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Aft)
@@ -16,7 +16,7 @@
 "ag" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
@@ -46,7 +46,7 @@
 "am" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "an" = (
 /obj/structure/window/reinforced,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -65,9 +65,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Midship)
 "ar" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -524,7 +523,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
@@ -786,7 +785,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
@@ -1054,7 +1053,7 @@
 	dir = 1;
 	locked = 0;
 	pixel_y = 28;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
@@ -1784,15 +1783,13 @@
 	},
 /area/awaymission/BMPship/Midship)
 "fY" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "fZ" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -1860,7 +1857,7 @@
 "gl" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
@@ -2200,6 +2197,13 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/BMPship/Fore)
+"vh" = (
+/turf/template_noop,
+/area/space/nearstation)
+"EQ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/awaymission/BMPship/Midship)
 
 (1,1,1) = {"
 aa
@@ -3589,7 +3593,7 @@ aa
 aa
 am
 aa
-am
+EQ
 aq
 gt
 aq
@@ -3638,8 +3642,8 @@ aa
 aa
 am
 aa
-aa
-am
+vh
+EQ
 gt
 at
 ha
@@ -3689,7 +3693,7 @@ aa
 aa
 aa
 am
-am
+EQ
 gL
 hg
 ha

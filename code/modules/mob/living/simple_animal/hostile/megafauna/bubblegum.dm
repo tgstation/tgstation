@@ -1,5 +1,3 @@
-#define MEDAL_PREFIX "Bubblegum"
-
 /*
 
 BUBBLEGUM
@@ -14,7 +12,7 @@ If it fails to warp to a target, it may summon up to 6 slaughterlings from the b
 If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood.
 At half health, it will either charge three times or warp, then charge, instead of doing a single charge.
 
-When Bubblegum dies, it leaves behind a chest that can contain three things:
+When Bubblegum dies, it leaves behind a H.E.C.K. mining suit as well as a chest that can contain three things:
  1. A bottle that, when activated, drives everyone nearby into a frenzy
  2. A contract that marks for death the chosen target
  3. A spellblade that can slice off limbs at range
@@ -25,7 +23,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum
 	name = "bubblegum"
-	desc = "In what passes for a heirarchy among slaughter demons, this one is king."
+	desc = "In what passes for a hierarchy among slaughter demons, this one is king."
 	health = 2500
 	maxHealth = 2500
 	attacktext = "rends"
@@ -48,7 +46,7 @@ Difficulty: Hard
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'

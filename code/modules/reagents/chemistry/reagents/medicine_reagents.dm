@@ -32,7 +32,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "badmins"
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
@@ -41,16 +41,16 @@
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0)
+	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.remove_all_disabilities()
+	M.remove_all_traits()
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
 	M.SetStun(0, 0)
 	M.SetUnconscious(0, 0)
-	M.silent = 0
+	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0
@@ -134,9 +134,9 @@
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
 		M.adjustFireLoss(-power, 0)
-		M.adjustToxLoss(-power, 0)
+		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
-		M.status_flags &= ~DISFIGURED
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
@@ -152,9 +152,38 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
-		M.status_flags &= ~DISFIGURED
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
+	..()
+
+/datum/reagent/medicine/pyroxadone
+	name = "Pyroxadone"
+	id = "pyroxadone"
+	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
+	color = "#f7832a"
+	taste_description = "spicy jelly"
+
+/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
+	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		var/power = 0
+		switch(M.bodytemperature)
+			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+				power = 2
+			if(400 to 460)
+				power = 3
+			else
+				power = 5
+		if(M.on_fire)
+			power *= 2
+
+		M.adjustOxyLoss(-2 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-1.5 * power, 0)
+		M.adjustToxLoss(-power, 0, TRUE)
+		M.adjustCloneLoss(-power, 0)
+		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		. = 1
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -169,7 +198,7 @@
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_bodypart_damage(1,1, 0)
-	M.status_flags &= ~DISFIGURED
+	M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
 	. = 1
 
@@ -518,8 +547,19 @@
 	overdose_threshold = 45
 	addiction_threshold = 30
 
+/datum/reagent/medicine/ephedrine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/ephedrine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -587,8 +627,19 @@
 	overdose_threshold = 30
 	addiction_threshold = 25
 
+/datum/reagent/medicine/morphine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/morphine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	..()
+
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/M)
-	M.status_flags |= IGNORESLOWDOWN
 	switch(current_cycle)
 		if(11)
 			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
@@ -652,14 +703,14 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
+	if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
+	else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
@@ -750,7 +801,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.has_disability(DISABILITY_NOCLONE)) && !M.hellbound)
+		if(!M.suiciding && !(M.has_trait(TRAIT_NOCLONE)) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
@@ -829,8 +880,19 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
+/datum/reagent/medicine/stimulants/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/medicine/stimulants/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
 	if(M.health < 50 && M.health > 0)
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
@@ -979,6 +1041,22 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/regen_jelly
+	name = "Regenerative Jelly"
+	id = "regen_jelly"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy."
+	reagent_state = LIQUID
+	color = "#91D865"
+	taste_description = "jelly"
+
+/datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustFireLoss(-1.5*REM, 0)
+	M.adjustOxyLoss(-1.5*REM, 0)
+	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+	. = 1
+	..()
+
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
 	id = "syndicate_nanites"
@@ -1050,7 +1128,7 @@
 	description = "It's mining magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
-	can_synth = 0
+	can_synth = FALSE
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
 	M.heal_bodypart_damage(5,5, 0)
@@ -1092,8 +1170,19 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
+/datum/reagent/medicine/changelingAdrenaline2/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+
+/datum/reagent/medicine/changelingAdrenaline2/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	..()
+
 /datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
@@ -1105,3 +1194,84 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/muscle_stimulant
+	name = "Muscle Stimulant"
+	id = "muscle_stimulant"
+	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
+
+/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+	. = ..()
+	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+	. = ..()
+	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+
+/datum/reagent/medicine/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
+	reagent_state = LIQUID
+	color = "#BEF7D8" // palish blue white
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
+	taste_description = "salt" // it actually does taste salty
+	var/overdose_progress = 0 // to track overdose progress
+
+/datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_SLEEPIMMUNE, id)
+	..()
+
+/datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	..()
+
+/datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
+	if(!overdosed) // We do not want any effects on OD
+		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
+		M.AdjustStun(-5, 0)
+		M.AdjustKnockdown(-5, 0)
+		M.AdjustUnconscious(-5, 0)
+		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.Jitter(1)
+		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
+		. = 1
+	..()
+
+/datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
+
+/datum/reagent/medicine/modafinil/overdose_process(mob/living/M)
+	overdose_progress++
+	switch(overdose_progress)
+		if(1 to 40)
+			M.jitteriness = min(M.jitteriness+1, 10)
+			M.stuttering = min(M.stuttering+1, 10)
+			M.Dizzy(5)
+			if(prob(50))
+				M.losebreath++
+		if(41 to 80)
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+			M.jitteriness = min(M.jitteriness+1, 20)
+			M.stuttering = min(M.stuttering+1, 20)
+			M.Dizzy(10)
+			if(prob(50))
+				M.losebreath++
+			if(prob(20))
+				to_chat(M, "You have a sudden fit!")
+				M.emote("moan")
+				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+		if(81)
+			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+		if(82 to INFINITY)
+			M.Sleeping(100, 0, TRUE)
+			M.adjustOxyLoss(1.5*REM, 0)
+			M.adjustStaminaLoss(1.5*REM, 0)
+	..()
+	. = 1
+  

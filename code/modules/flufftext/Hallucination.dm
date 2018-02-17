@@ -239,10 +239,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		xeno = new(pump.loc,target)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
+		xeno.throw_at(target,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
+		xeno.throw_at(pump,7,1, xeno, FALSE, TRUE)
 		sleep(10)
 		var/xeno_name = xeno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
@@ -573,7 +573,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/obj/item/gun/energy/kinetic_accelerator/crossbow, /obj/item/melee/transforming/energy/sword/saber,\
 	/obj/item/storage/box/syndicate, /obj/item/storage/box/emps,\
 	/obj/item/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/chameleon, /obj/item/card/id/syndicate,\
+	/obj/item/clothing/shoes/chameleon/noslip, /obj/item/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
 	/obj/item/storage/toolbox/syndicate, /obj/item/aiModule,\
@@ -1114,7 +1114,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
 	target.SetKnockdown(0)
-	target.silent = 0
+	target.silent = FALSE
 	qdel(src)
 
 /datum/hallucination/fire

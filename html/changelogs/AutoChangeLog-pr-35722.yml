@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "After an incident where a very eager roboticist kept expanding a borg's size leading to a structural collapse of the entire station proper safety limitations have been implemented."

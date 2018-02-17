@@ -58,8 +58,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
 #define EARS_LAYER				15
 #define SUIT_LAYER				14
 #define GLASSES_LAYER			13
@@ -88,8 +89,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
+#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
 #define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
+#define UNDER_SHOES_LAYER			SHOES_LAYER+1
 #define UNDER_EARS_LAYER			EARS_LAYER+1
 #define UNDER_SUIT_LAYER			SUIT_LAYER+1
 #define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
@@ -114,8 +116,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
+#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
 #define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
+#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
 #define ABOVE_EARS_LAYER			EARS_LAYER-1
 #define ABOVE_SUIT_LAYER			SUIT_LAYER-1
 #define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1
@@ -370,20 +373,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-// Medal names
-#define BOSS_KILL_MEDAL "Killer"
-#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
-
-// Score names
-#define LEGION_SCORE "Legion Killed"
-#define COLOSSUS_SCORE "Colossus Killed"
-#define BUBBLEGUM_SCORE "Bubblegum Killed"
-#define DRAKE_SCORE "Drakes Killed"
-#define BIRD_SCORE "Hierophants Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
-#define BOSS_SCORE "Bosses Killed"
-#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
-
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
 
@@ -491,6 +480,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define RIDING_OFFSET_ALL "ALL"
 
+//stack recipe placement check types
+#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
+
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
 
@@ -507,3 +500,5 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")

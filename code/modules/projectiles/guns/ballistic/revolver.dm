@@ -89,7 +89,7 @@
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "detective",
 						"Leopard Spots" = "detective_leopard",
 						"Black Panther" = "detective_panther",
@@ -107,35 +107,34 @@
 			return 0
 	..()
 
-/obj/item/gun/ballistic/revolver/detective/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/screwdriver))
-		if(magazine.caliber == "38")
-			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
+/obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
+	if(magazine.caliber == "38")
+		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//you know the drill
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
 			if(magazine.ammo_count())
-				afterattack(user, user)	//you know the drill
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-				return
-			if(do_after(user, 30*A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					to_chat(user, "<span class='warning'>You can't modify it!</span>")
-					return
-				magazine.caliber = "357"
-				desc = "The barrel and chamber assembly seems to have been modified."
-				to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
-		else
-			to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
+				return TRUE
+			magazine.caliber = "357"
+			desc = "The barrel and chamber assembly seems to have been modified."
+			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+	else
+		to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
+		if(magazine.ammo_count())
+			afterattack(user, user)	//and again
+			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+			return TRUE
+		if(I.use_tool(src, user, 30))
 			if(magazine.ammo_count())
-				afterattack(user, user)	//and again
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return
-			if(do_after(user, 30*A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					to_chat(user, "<span class='warning'>You can't modify it!</span>")
-					return
-				magazine.caliber = "38"
-				desc = initial(desc)
-				to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
+			magazine.caliber = "38"
+			desc = initial(desc)
+			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
+	return TRUE
 
 
 /obj/item/gun/ballistic/revolver/mateba
@@ -261,7 +260,7 @@
 	slot_flags = SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun-d",
 						"Ash" = "dshotgun-f",
@@ -307,7 +306,6 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_rename = FALSE
 	unique_reskin = null
 	var/slung = FALSE
 
@@ -349,9 +347,9 @@
 	clumsy_check = 0
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
-	if((user.has_disability(DISABILITY_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
+	if((user.has_trait(TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))
 		return ..()
-	if(process_fire(user, user, 0, zone_override = "head"))
+	if(process_fire(user, user, FALSE, null, "head"))
 		user.visible_message("<span class='warning'>[user] somehow manages to shoot [user.p_them()]self in the face!</span>", "<span class='userdanger'>You somehow shoot yourself in the face! How the hell?!</span>")
 		user.emote("scream")
 		user.drop_all_held_items()

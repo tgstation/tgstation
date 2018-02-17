@@ -40,7 +40,10 @@
 // Jim (Status) FLW PM TP
 /datum/antagonist/proc/antag_listing_entry()
 	var/list/parts = list()
-	parts += antag_listing_name()
+	if(show_name_in_check_antagonists)
+		parts += "[antag_listing_name()]([name])"
+	else
+		parts += antag_listing_name()
 	parts += antag_listing_status()
 	parts += antag_listing_commands()
 	return "<tr><td>[parts.Join("</td><td>")]</td></tr>"

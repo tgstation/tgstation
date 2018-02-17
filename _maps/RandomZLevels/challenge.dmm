@@ -242,7 +242,7 @@
 "aX" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/plating/airless,
@@ -384,7 +384,7 @@
 "bq" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/plating,
@@ -899,12 +899,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
-"cQ" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/circuit,
-/area/awaymission/challenge/end)
 "cR" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -928,12 +922,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/awaymission/challenge/end)
-"cU" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cV" = (
 /obj/machinery/gateway{

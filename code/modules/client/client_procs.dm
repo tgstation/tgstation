@@ -3,6 +3,12 @@
 	////////////
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
+GLOBAL_LIST_INIT(blacklisted_builds, list(
+	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	
+	))
+
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
 #define SECOND_COUNT	2
@@ -225,7 +231,18 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-
+	#if DM_VERSION >= 512
+	if (num2text(byond_build) in GLOB.blacklisted_builds)
+		log_access("Failed login: blacklisted byond version")
+		to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
+		to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]].</span>")
+		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
+		if(connecting_admin)
+			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
+		else 
+			qdel(src)
+			return
+	#endif
 	if(SSinput.initialized)
 		set_macros()
 
@@ -519,7 +536,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
+			
+			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 
@@ -561,7 +582,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			cidcheck[ckey] = computer_id
 			tokens[ckey] = cid_check_reconnect()
 
-			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			
+			//we sleep after telling the client to reconnect, so if we still exist something is up
+			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+			
 			qdel(src)
 			return TRUE
 

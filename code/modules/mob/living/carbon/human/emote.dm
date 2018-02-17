@@ -74,6 +74,8 @@
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
 	. = ..()
+	if(!.)
+		return
 	var/mob/living/carbon/human/H = user
 	if(!H.is_wagging_tail())
 		H.startTailWag()
@@ -81,19 +83,19 @@
 		H.endTailWag()
 
 /mob/living/carbon/human/proc/is_wagging_tail()
-	return (dna && dna.species && ("waggingtail_lizard" in dna.species.mutant_bodyparts || "waggingtail_human" in dna.species.mutant_bodyparts))
+	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None")))
+	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)))
 		return TRUE
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts))
+	if(H.is_wagging_tail())
 		. = null
 
 //Don't know where else to put this, it's basically an emote

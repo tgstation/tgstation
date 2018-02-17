@@ -1,18 +1,11 @@
-/datum
-	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast = null
-
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	switch(var_name)
-		if ("vars")
-			return FALSE
-		if ("var_edited")
-			return FALSE
-	var_edited = TRUE
+	if(var_name == NAMEOF(src, vars))
+		return FALSE
 	vars[var_name] = var_value
+	datum_flags |= DF_VAR_EDITED
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
@@ -109,7 +102,7 @@
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
-	if(!islist && D.var_edited)
+	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
 	var/list/dropdownoptions = list()
@@ -440,6 +433,12 @@
 		else
 			item = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
 
+	else if (name in GLOB.bitfields)
+		var/list/flags = list()
+		for (var/i in GLOB.bitfields[name])
+			if (value & GLOB.bitfields[name][i])
+				flags += i
+			item = "[VV_HTML_ENCODE(name)] = [VV_HTML_ENCODE(jointext(flags, ", "))]"
 	else
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
 
@@ -460,7 +459,7 @@
 		src.debug_variables(DAT)
 
 	else if(href_list["mob_player_panel"])
-		if(!check_rights(0))
+		if(!check_rights(NONE))
 			return
 
 		var/mob/M = locate(href_list["mob_player_panel"]) in GLOB.mob_list
@@ -484,7 +483,7 @@
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["mark_object"])
-		if(!check_rights(0))
+		if(!check_rights(NONE))
 			return
 
 		var/datum/D = locate(href_list["mark_object"])
@@ -496,7 +495,7 @@
 		href_list["datumrefresh"] = href_list["mark_object"]
 
 	else if(href_list["proc_call"])
-		if(!check_rights(0))
+		if(!check_rights(NONE))
 			return
 
 		var/T = locate(href_list["proc_call"])
@@ -520,7 +519,7 @@
 		usr.client.object_say(locate(href_list["osay"]))
 
 	else if(href_list["regenerateicons"])
-		if(!check_rights(0))
+		if(!check_rights(NONE))
 			return
 
 		var/mob/M = locate(href_list["regenerateicons"]) in GLOB.mob_list
@@ -557,7 +556,7 @@
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 
 		if(href_list["rename"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
@@ -574,7 +573,7 @@
 			href_list["datumrefresh"] = href_list["rename"]
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/D = locate(href_list["datumedit"])
@@ -585,7 +584,7 @@
 			modify_variables(D, href_list["varnameedit"], 1)
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/D = locate(href_list["datumchange"])
@@ -596,7 +595,7 @@
 			modify_variables(D, href_list["varnamechange"], 0)
 
 		else if(href_list["varnamemass"] && href_list["datummass"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/datum/D = locate(href_list["datummass"])
@@ -705,7 +704,7 @@
 			message_admins("[key_name_admin(src)] modified list's contents: SHUFFLE")
 
 		else if(href_list["give_spell"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["give_spell"]) in GLOB.mob_list
@@ -717,7 +716,7 @@
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["remove_spell"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["remove_spell"]) in GLOB.mob_list
@@ -729,7 +728,7 @@
 			href_list["datumrefresh"] = href_list["remove_spell"]
 
 		else if(href_list["give_disease"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["give_disease"]) in GLOB.mob_list
@@ -764,7 +763,7 @@
 			href_list["datumrefresh"] = href_list["build_mode"]
 
 		else if(href_list["drop_everything"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["drop_everything"]) in GLOB.mob_list
@@ -776,7 +775,7 @@
 				usr.client.cmd_admin_drop_everything(M)
 
 		else if(href_list["direct_control"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["direct_control"]) in GLOB.mob_list
@@ -788,7 +787,7 @@
 				usr.client.cmd_assume_direct_control(M)
 
 		else if(href_list["offer_control"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/M = locate(href_list["offer_control"]) in GLOB.mob_list
@@ -796,6 +795,41 @@
 				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 			offer_control(M)
+
+		else if (href_list["modarmor"])
+			if(!check_rights(NONE))
+				return
+
+			var/obj/O = locate(href_list["modarmor"])
+			if(!istype(O))
+				to_chat(usr, "This can only be used on instances of type /obj")
+				return
+
+			var/list/pickerlist = list()
+			var/list/armorlist = O.armor.getList()
+
+			for (var/i in armorlist)
+				pickerlist += list(list("value" = armorlist[i], "name" = i))
+
+			var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [O]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, Type = "text", values = pickerlist)
+
+			if (islist(result))
+				if (result["button"] == 2) // If the user pressed the cancel button
+					return
+				// text2num conveniently returns a null on invalid values
+				O.armor = O.armor.setRating(melee = text2num(result["values"]["melee"]),\
+			                  bullet = text2num(result["values"]["bullet"]),\
+			                  laser = text2num(result["values"]["laser"]),\
+			                  energy = text2num(result["values"]["energy"]),\
+			                  bomb = text2num(result["values"]["bomb"]),\
+			                  bio = text2num(result["values"]["bio"]),\
+			                  rad = text2num(result["values"]["rad"]),\
+			                  fire = text2num(result["values"]["fire"]),\
+			                  acid = text2num(result["values"]["acid"]))
+				log_admin("[key_name(usr)] modified the armor on [O] ([O.type]) to melee: [O.armor.melee], bullet: [O.armor.bullet], laser: [O.armor.laser], energy: [O.armor.energy], bomb: [O.armor.bomb], bio: [O.armor.bio], rad: [O.armor.rad], fire: [O.armor.fire], acid: [O.armor.acid]")
+				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [O] ([O.type]) to melee: [O.armor.melee], bullet: [O.armor.bullet], laser: [O.armor.laser], energy: [O.armor.energy], bomb: [O.armor.bomb], bio: [O.armor.bio], rad: [O.armor.rad], fire: [O.armor.fire], acid: [O.armor.acid]</span>")
+			else
+				return
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))
@@ -844,7 +878,7 @@
 					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 		else if(href_list["addreagent"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/atom/A = locate(href_list["addreagent"])
@@ -904,8 +938,37 @@
 			src.cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
 
+		else if(href_list["modtransform"])
+			if(!check_rights(R_DEBUG))
+				return
+
+			var/atom/A = locate(href_list["modtransform"])
+			if(!istype(A))
+				to_chat(usr, "This can only be done to atoms.")
+				return
+
+			var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+			var/matrix/M = A.transform
+			switch(result)
+				if("Scale")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Scale(x,y)
+				if("Translate")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Translate(x,y)
+				if("Rotate")
+					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+					if(!isnull(angle))
+						A.transform = M.Turn(angle)
+			
+			href_list["datumrefresh"] = href_list["modtransform"]
+
 		else if(href_list["rotatedatum"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/atom/A = locate(href_list["rotatedatum"])
@@ -921,7 +984,7 @@
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/living/carbon/C = locate(href_list["editorgans"]) in GLOB.mob_list
@@ -933,7 +996,7 @@
 			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["givetrauma"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/living/carbon/C = locate(href_list["givetrauma"]) in GLOB.mob_list
@@ -956,7 +1019,7 @@
 			href_list["datumrefresh"] = href_list["givetrauma"]
 
 		else if(href_list["curetraumas"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/living/carbon/C = locate(href_list["curetraumas"]) in GLOB.mob_list
@@ -969,7 +1032,7 @@
 			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/living/carbon/C = locate(href_list["hallucinate"]) in GLOB.mob_list
@@ -1182,7 +1245,7 @@
 				admin_ticket_log(H, msg)
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
-			if(!check_rights(0))
+			if(!check_rights(NONE))
 				return
 
 			var/mob/living/L = locate(href_list["mobToDamage"]) in GLOB.mob_list
@@ -1222,4 +1285,3 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
-

@@ -7,7 +7,7 @@
 	icon_state = "dispenser"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
-	interact_offline = 1
+	interact_offline = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
@@ -82,12 +82,12 @@
 		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>[src] has no functional safeties to emag.</span>")
 		return
 	to_chat(user, "<span class='notice'>You short out [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -182,6 +182,8 @@
 		if("eject")
 			if(beaker)
 				beaker.forceMove(drop_location())
+				if(Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				cut_overlays()
 				. = TRUE

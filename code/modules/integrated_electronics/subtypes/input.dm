@@ -105,7 +105,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/adv_med_scanner
-	name = "integrated advanced medical analyser"
+	name = "integrated adv. medical analyser"
 	desc = "A very small version of the medbot's medical analyser. This allows the machine to know how healthy someone is. \
 	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
 	icon_state = "medscan_adv"
@@ -142,6 +142,11 @@
 
 	push_data()
 	activate_pin(2)
+
+//please delete at a later date after people stop using the old named circuit
+/obj/item/integrated_circuit/input/adv_med_scanner/old
+	name = "integrated advanced medical analyser"
+	spawn_flags = 0
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
@@ -752,7 +757,7 @@
 	activate_pin(1)
 	return TRUE
 
-/obj/item/integrated_circuit/input/objscaner
+/obj/item/integrated_circuit/input/obj_scanner
 	name = "scanner"
 	desc = "Scans and obtains a reference for any objects you use on the assembly."
 	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to it's location. \
@@ -765,7 +770,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user,intent)
+/obj/item/integrated_circuit/input/obj_scanner/attackby_react(var/atom/A,var/mob/user,intent)
 	if(intent!=INTENT_HELP)
 		return FALSE
 	if(!check_then_do_work())
@@ -846,8 +851,8 @@
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
-	name = "NTnet scaner"
-	desc = "This can return NTnet IDs of a component inside the given object, if there are any."
+	name = "NTNet scanner"
+	desc = "This can return NTNet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
@@ -860,22 +865,24 @@
 	power_draw_per_use = 1
 
 /obj/item/integrated_circuit/input/ntnetsc/do_work()
-
 	var/atom/AM = get_pin_data_as_type(IC_INPUT, 1, /atom)
-	var/list/processing_list = list(AM)
-	var/datum/component/ntnet_interface/net = null
-	set_pin_data(IC_OUTPUT, 1, null)
-	while(processing_list.len && !net)
-		var/atom/A = processing_list[1]
-		processing_list.Cut(1, 2)
-		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
-		net = A.GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/net
+
+	if(AM)
+		var/list/processing_list = list(AM)
+		while(processing_list.len && !net)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+			//This is also why we don't need to check against assembled as we go along
+			processing_list += A.contents
+			net = A.GetComponent(/datum/component/ntnet_interface)
+
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
 		activate_pin(2)
 	else
+		set_pin_data(IC_OUTPUT, 1, null)
 		activate_pin(3)
 	push_data()
 	return

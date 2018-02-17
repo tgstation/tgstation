@@ -62,8 +62,7 @@
 	dwidth = 3;
 	height = 5;
 	name = "Secure Transport Vessel 5";
-	width = 14;
-	timid = 1
+	width = 14
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
