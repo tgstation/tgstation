@@ -397,7 +397,7 @@
 	if(..())
 		return
 
-	if(locate(/obj/item/borg/upgrade/expand, R))
+	if(R.hasExpanded)
 		to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
 		return
 
@@ -417,5 +417,6 @@
 	R.anchored = FALSE
 	R.notransform = FALSE
 	R.resize = 2
+	R.hasExpanded = TRUE
 	R.update_transform()
 	return TRUE

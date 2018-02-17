@@ -9,7 +9,7 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
-	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 
@@ -55,10 +55,7 @@
 
 /obj/machinery/door/Initialize()
 	. = ..()
-	if(density)
-		layer = CLOSED_DOOR_LAYER //Above most items if closed
-	else
-		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
+	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(1)
 	GLOB.airlocks += src
@@ -68,6 +65,12 @@
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+
+/obj/machinery/door/proc/set_init_door_layer()
+	if(density)
+		layer = closingLayer
+	else
+		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -255,7 +258,7 @@
 	sleep(5)
 	density = FALSE
 	sleep(5)
-	layer = OPEN_DOOR_LAYER
+	layer = initial(layer)
 	update_icon()
 	set_opacity(0)
 	operating = FALSE

@@ -170,7 +170,6 @@
 	dwidth = 8;
 	height = 9;
 	name = "Mini emergency shuttle";
-	timid = 1;
 	width = 21
 	},
 /turf/open/floor/mineral/titanium/blue,

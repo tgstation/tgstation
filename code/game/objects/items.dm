@@ -244,18 +244,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
-		if(istype(C))
-			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
-				extinguish()
-				to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					C.update_damage_overlays()
-				return
-		else
+		var/can_handle_hot = FALSE
+		if(!istype(C))
+			can_handle_hot = TRUE
+		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
+			can_handle_hot = TRUE
+		else if(RESISTHOT in C.dna.species.species_traits)
+			can_handle_hot = TRUE
+
+		if(can_handle_hot)
 			extinguish()
+			to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
+			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+				C.update_damage_overlays()
+			return
 
 	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
@@ -738,7 +743,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
-	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips)
+	if((item_flags & IN_INVENTORY) && usr.client.prefs.enable_tips && !QDELETED(src))
 		var/timedelay = usr.client.prefs.tip_delay/100
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
@@ -803,9 +808,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return !used
 
 // Plays item's usesound, if any.
-/obj/item/proc/play_tool_sound(atom/target, volume)
+/obj/item/proc/play_tool_sound(atom/target, volume=50)
 	if(target && usesound && volume)
-		playsound(target, usesound, volume, 1)
+		var/played_sound = usesound
+
+		if(islist(usesound))
+			played_sound = pick(usesound)
+
+		playsound(target, played_sound, volume, 1)
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)

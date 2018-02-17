@@ -108,13 +108,13 @@ Class Procs:
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -184,7 +184,7 @@ Class Procs:
 				continue
 			if(isliving(AM))
 				var/mob/living/L = am
-				if(L.buckled)
+				if(L.buckled || L.mob_size >= MOB_SIZE_LARGE)
 					continue
 			target = am
 
@@ -456,21 +456,6 @@ Class Procs:
 /obj/machinery/proc/on_deconstruction()
 	return
 
-// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
-			return TRUE
-		else
-			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
-	else
-		return FALSE
-
-// Hook for html_interface module to unset the active machine when the window is closed by the player.
-/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src)
-		hclient.client.mob.unset_machine()
-
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
@@ -478,7 +463,7 @@ Class Procs:
 /obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
 	if(prob(85) && explosive)
-		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
+		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(prob(50))
 		emp_act(EMP_LIGHT)
 	else
