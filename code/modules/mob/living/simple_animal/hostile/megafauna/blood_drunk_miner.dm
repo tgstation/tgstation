@@ -1,5 +1,5 @@
 #define MINER_DASH_RANGE 4
-#define MEDAL_PREFIX "Blood-drunk Miner"
+
 /*
 
 BLOOD-DRUNK MINER
@@ -43,7 +43,7 @@ Difficulty: Medium
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_MINER
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
