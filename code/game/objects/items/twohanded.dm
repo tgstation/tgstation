@@ -572,7 +572,7 @@
 
 /obj/item/twohanded/required/chainsaw/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', FALSE)
+	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
 
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -599,7 +599,6 @@
 		hitsound = 'sound/weapons/chainsawhit.ogg'
 	else
 		hitsound = "swing_hit"
-		qdel(GetComponent(/datum/component/butchering)) //hard to butcher with a chainsaw that isn't on
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()
