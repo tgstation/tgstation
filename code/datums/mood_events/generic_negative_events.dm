@@ -4,7 +4,7 @@
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
   description = "<span class='boldwarning'>I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow...</span>\n"
-  mood_change = -5
+  mood_change = -8
 
 /datum/mood_event/on_fire
 	description = "<span class='boldwarning'>I'M ON FIRE!!!</span>\n"
@@ -56,6 +56,10 @@
   description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
   mood_change = -8
   timeout = 3000
+
+/datum/mood_event/noshoes
+	 description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
+	 mood_change = -3
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"

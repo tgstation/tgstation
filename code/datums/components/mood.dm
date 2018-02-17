@@ -1,5 +1,6 @@
 /datum/component/mood
-	var/mood
+	var/mood //Real happiness
+	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/owner
@@ -24,9 +25,12 @@
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
+	shown_mood = 0
 	for(var/i in mood_events)
 		var/datum/mood_event/event = mood_events[i]
 		mood += event.mood_change
+		if(!event.hidden)
+			shown_mood += event.mood_change
 
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)
