@@ -463,27 +463,11 @@
 ///////////////////
 
 /mob/living/carbon/proc/handle_adv_hud()
-	if(!adv_health_hud)
-		hud_used.healths.invisibility = 0
-	else
-		hud_used.healths.invisibility = INVISIBILITY_ABSTRACT
 	for(var/X in hud_used.adv_health)
 		var/obj/screen/adv_health/S = X
 		if(adv_health_hud)
 			S.invisibility = 0
-			var/dmg_amt = get_damage_amount(S.dmg_type)
-			var/g = LERP(200, 0, CLAMP(dmg_amt, 0, 75)/75)
-			var/r = -g*0.11+95
-			if(stat == DEAD)
-				S.icon_state = "ded"
-				continue
-			else if(dmg_amt >= 76)
-				S.icon_state = "[S.dmg_type]_crit"
-			else
-				S.icon_state = S.dmg_type
-			S.cut_overlays() //sadly this the the only way i know of to update the color
-			S.color_overlay.color = rgb(r, g, 0)
-			S.add_overlay(S.color_overlay)
+			S.update_icon()
 		else
 			S.invisibility = INVISIBILITY_ABSTRACT
 
