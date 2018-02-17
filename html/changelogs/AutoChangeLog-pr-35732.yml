@@ -1,0 +1,4 @@
+author: "yorii"
+delete-after: True
+changes: 
+  - bugfix: "removes the maintenance panel examination message on poddoors (blast doors)"
