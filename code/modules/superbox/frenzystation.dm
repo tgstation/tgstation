@@ -3,8 +3,6 @@
 /area/space/nearstation/frenzy
 
 /obj/effect/mapping_helpers
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "syndballoon"
 	layer = POINT_LAYER
 
 // ----------------------------------------------------------------------------
