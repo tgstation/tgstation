@@ -463,6 +463,10 @@
 ///////////////////
 
 /mob/living/carbon/proc/handle_adv_hud()
+	if(adv_health_hud)
+		hud_used.healths.invisibility = INVISIBILITY_ABSTRACT
+	else
+		hud_used.healths.invisibility = 0
 	for(var/X in hud_used.adv_health)
 		var/obj/screen/adv_health/S = X
 		if(adv_health_hud)
