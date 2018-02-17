@@ -426,3 +426,10 @@
 	id = "cell_charger"
 	build_path = /obj/item/circuitboard/machine/cell_charger
 	category = list ("Misc. Machinery")
+
+/datum/design/board/dish_drive
+	name = "Machine Design (Dish Drive)"
+	desc = "The circuit board for a dish drive."
+	id = "dish_drive"
+	build_path = /obj/item/circuitboard/machine/dish_drive
+	category = list ("Misc. Machinery")
