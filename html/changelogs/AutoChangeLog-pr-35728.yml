@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "Admins can use the Select Equipment verb on observers. Doing so will
-humanise them and then apply the equipment."
