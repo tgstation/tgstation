@@ -123,3 +123,6 @@
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
+
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+	return

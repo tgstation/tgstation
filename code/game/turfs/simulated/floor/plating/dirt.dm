@@ -10,3 +10,6 @@
 
 /turf/open/floor/plating/dirt/dark
 	icon_state = "greenerdirt"
+
+/turf/open/floor/plating/dirt/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return

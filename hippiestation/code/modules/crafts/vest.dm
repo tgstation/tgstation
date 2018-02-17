@@ -7,7 +7,7 @@
 	item_state = "makeshiftarmor"
 	w_class = 3
 	blood_overlay_type = "armor"
-	armor = list(melee = 30, bullet = 10, laser = 0, energy = 0, bomb = 5, bio = 0, rad = 0)
+	armor = list("melee" = 30, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 5, "bio" = 0, "rad" = 0)
 
 /datum/crafting_recipe/makeshift_armor
 	name = "makeshift armor"

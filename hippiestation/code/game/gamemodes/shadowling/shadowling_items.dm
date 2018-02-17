@@ -12,7 +12,7 @@
 	slowdown = 0
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
-	armor = list(melee = 25, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100)
+	armor = list("melee" = 25, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100)
 	flags_1 = ABSTRACT_1 | NODROP_1 | THICKMATERIAL_1 | STOPSPRESSUREDMAGE_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
