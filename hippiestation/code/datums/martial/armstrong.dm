@@ -32,8 +32,6 @@
 	var/current_level = 1
 	var/level_cap = 30
 
-	var/datum/action/head_slide/head_slide = new/datum/action/head_slide()
-
 /datum/martial_art/armstrong/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.hud_used.combo_object.update_icon(streak, 60)
 	if(findtext(streak,BUSTER_COMBO))
@@ -96,12 +94,9 @@
 		A.hud_used.combo_object.update_icon(streak)
 		Headslide(A,D)
 		return 1
-	switch(streak)
-		if("head_slide")
-			streak = ""
-			head_slide(A,D)
-			return 1
 	return 0
+
+//special effects
 
 /datum/martial_art/armstrong/proc/SloppyAnimate(mob/living/carbon/human/A)
 	set waitfor = FALSE
@@ -113,13 +108,10 @@
 		sleep(1)
 
 /datum/martial_art/armstrong/proc/MachineGunAnimate(mob/living/carbon/human/A)
-	set waitfor = FALSE
-	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-		if(!A)
-			break
-		A.setDir(i)
-		playsound(A.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
-		sleep(2)
+	for(var/i in 1 to 10)
+		playsound(A, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 1, 5)
+		A.do_attack_animation(ATTACK_EFFECT_PUNCH) // note: happens so fast that it's very hard to actually notice
+		sleep(1)
 
 /datum/martial_art/armstrong/proc/Sloppy(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(current_level <= 9)
@@ -140,6 +132,7 @@
 		A.Knockdown(10)
 		D.Knockdown(15)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+		D.throw_at(throw_target, 1, 1)
 		A.throw_at(throw_target, 1, 1)
 		D.visible_message("<span class='danger'>[A] sloppily punts [D] away, and trips!</span>", \
 									"<span class='userdanger'>[A] punts [D] away with a rushed combo!</span>")
@@ -147,6 +140,7 @@
 		A.playsound_local(get_turf(A), 'hippiestation/sound/misc/oof.ogg', 100, FALSE, pressure_affected = FALSE)
 		return
 
+// Actual combos
 
 /datum/martial_art/armstrong/proc/Buster(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(current_level >= 2)
@@ -155,6 +149,7 @@
 									"<span class='userdanger'>[A] knocks down [D] with two strong punches!</span>")
 		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_zipper.ogg', 100, 1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.adjustBruteLoss(8) //Decentish damage. It racks up to 18 if the victim hits a wall.
 		D.Knockdown(20)
 		add_exp(8, A)
@@ -275,6 +270,8 @@
 		add_logs(A, D, "headslide (Armstrong)")
 		return
 
+// Help/Hurt/Grab/Disarm acts
+
 /datum/martial_art/armstrong/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("E",D)
 	if(check_streak(A,D))
@@ -368,6 +365,8 @@
 	add_logs(A, D, "[atk_verb_disarm] (Armstrong)")
 	return 1
 
+// Help verb
+
 /mob/living/carbon/human/proc/armstrong_help()
 	set name = "Recall Teachings"
 	set desc = "Remember how to Armstrong Style."
@@ -376,12 +375,14 @@
 	to_chat(usr, "<b><i>You hear the voice of the hintmaster...</i></b>")
 	to_chat(usr, "<span class='notice'>SLOPPY</span>: Spam Help/Harm intent. Flails around and knocks people around you down. Can't be used after you reach Level 10.")
 	to_chat(usr, "<span class='notice'>BUSTER PUNCHES</span>: Help, Help, Grab. Knocks down and deals fair damage. Requires Level 2.")
-	to_chat(usr, "<span class='notice'>SURPRISE ATTACK</span>: Help, Help, Grab. Knocks down and deals fair damage. Requires Level 3.")
+	to_chat(usr, "<span class='notice'>SURPRISE ATTACK</span>: Disarm, Disarm, Harm. Knocks down and deals fair damage. Requires Level 3.")
 	to_chat(usr, "<span class='notice'>FIREBALL 1</span>: Help Grab Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 5.")
 	to_chat(usr, "<span class='notice'>DROPKICK</span>: Disarm Help Help Harm. A flying double foot press. Requires Level 6.")
 	to_chat(usr, "<span class='notice'>FIREBALL 2</span>: Help Disarm Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 12.")
 	to_chat(usr, "<span class='notice'>HEADSLIDE</span>: Grab Disarm Disarm Grab. A sliding head strike at the opponent's knees. Causes tripping. Requires Level 13.")
 	to_chat(usr, "<span class='notice'>HEADBUTT</span>: Help Harm Grab. A full force slam with your shiny head. Knocks the target out temporarily. Requires Level 15.")
+
+//Scroll necessary for learning the martial art
 
 /obj/item/armstrong_scroll
 	name = "balding scroll"
@@ -406,6 +407,8 @@
 		var/mob/living/carbon/human/H = user
 		H.visible_message("<span class='warning'>[H] stares at the scroll like an idiot!</span>", "<span class='userdanger'>You despereately try to decipher the soggy scroll and fail miserably!</span>")
 
+// How to not suck at the aforementioned martial art.
+
 /obj/item/paper/armstrong_tutorial
 	name = "paper - 'HOW TO NOT SUCK'"
 	info = "Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
@@ -415,6 +418,8 @@
 	You can't use guns either. Guns are for pussies and fishpeople.<br> \
 	<b>Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Punch dead bodies if you have to. Get some experience, or else you're woefully underpowered.<br> \
 	If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
+
+//Level UP and EXP code.
 
 /datum/martial_art/armstrong/proc/do_level_up()
 	switch(current_level)
@@ -447,12 +452,12 @@
 			to_chat(owner, "<span class = 'notice'>You have unlocked Head Slide. To use: Grab Disarm Disarm Grab.</span>")
 		if(15)
 			to_chat(owner, "<span class = 'notice'>You have unlocked Headbutt. To use: Help Harm Grab</span>")
-		if(20)
-			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>")
-			head_slide.Grant(owner)
 		if(30)
 			to_chat(owner, "<span class = 'danger'><b>You can now use Fireball without needing to combo.</b></span>")
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+	/*	if(20)
+			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>")
+			head_slide.Grant(owner) */ //todo: make this a spell - action code is garbage.
 
 /datum/martial_art/armstrong/proc/add_exp(amt, mob/owner)
 	if(current_level == level_cap)
@@ -470,31 +475,3 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	desc = "It's made out of your own hair, now."
 
-/datum/action/head_slide
-	name = "Headslide - A sliding head strike at the opponent's knees. Causes tripping."
-	button_icon_state = "legsweep"
-
-/datum/action/head_slide/Trigger()
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't use [name] while you're incapacitated.</span>")
-		return
-	var/mob/living/carbon/human/H = owner
-	if (H.mind.martial_art.streak == "head_slide")
-		owner.visible_message("<span class='danger'>[owner] assumes a neutral stance.</span>", "<b><i>Your next attack is cleared.</i></b>")
-		H.mind.martial_art.streak = ""
-	else
-		owner.visible_message("<span class='danger'>[owner] prepares their head!</span>", "<b><i>Your next attack will be a Head Slide.</i></b>")
-		H.mind.martial_art.streak = "head_slide"
-
-/datum/martial_art/armstrong/proc/head_slide(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(D.stat || D.IsKnockdown())
-		return 0
-	D.visible_message("<span class='warning'>[A] headslides underneath [D]!</span>", \
-					  	"<span class='userdanger'>[A] headslides into you!</span>")
-	playsound(get_turf(A), 'sound/effects/suitstep1.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
-	D.Knockdown(80)
-	A.Knockdown(5)
-	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-	A.throw_at(throw_target, 3, 3)
-	return 1
