@@ -153,7 +153,6 @@
 /turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
-
 /turf/open/floor/plating/ice/HandleWet()
 	if(wet == TURF_WET_ICE)
 		return
