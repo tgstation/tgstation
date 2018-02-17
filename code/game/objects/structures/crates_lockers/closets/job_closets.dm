@@ -48,6 +48,7 @@
 	new /obj/item/clothing/head/soft/mime(src)
 	new /obj/item/storage/box/mousetraps(src)
 	new /obj/item/storage/box/mousetraps(src)
+	new /obj/item/circuitboard/machine/dish_drive(src)
 	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
