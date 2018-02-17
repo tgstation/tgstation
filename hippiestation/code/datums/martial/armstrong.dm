@@ -432,6 +432,7 @@
 			to_chat(owner, "<span class = 'danger'>You also seem to be growing some facial hair...</span>")
 			if(is_species(owner, /datum/species/human))
 				owner.facial_hair_style = "Broken Man"
+				owner.update_hair() //makes the hair/facial hair change actually happen
 			else
 				if(!istype(owner.wear_mask, /obj/item/clothing/mask/fakemoustache/italian/cursed))
 					if(!owner.doUnEquip(owner.wear_mask))
@@ -446,6 +447,7 @@
 			to_chat(owner, "<span class = 'danger'><b>This great speed requires precision. Use your combos!</b></span>")
 			owner.hair_style = "Bald"
 			owner.facial_hair_style = "Broken Man" //ensures the proper look
+			owner.update_hair() //makes the hair/facial hair change actually happen
 		if(12)
 			to_chat(owner, "<span class = 'notice'>You have unlocked an upgraded Fireball attack. To use: Help Disarm Disarm.</span>")
 		if(13)
