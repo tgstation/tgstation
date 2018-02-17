@@ -1,8 +1,10 @@
+// combo defines
+
 #define BUSTER_COMBO "EEG"
 #define SLOPPY_HARM "HHHH" //spamming GOTNS is not ideal
 #define SLOPPY_HELP "EEEE" //don't think you can circumvent this with other intents either
-#define SLOPPY_GRAB "GGGG"
-#define SLOPPY_DISARM "DDDD"
+#define SLOPPY_GRAB "GGGG" //nor this
+#define SLOPPY_DISARM "DDDD" //definitely not this
 #define FIREBALL_ONE_COMBO "EGD"
 #define DROPKICK_COMBO "DEEH"
 #define SURPRISE_COMBO "DDH"
@@ -10,6 +12,8 @@
 #define FIREBALL_TWO_COMBO "EDD"
 #define HEADBUTT_COMBO "EHG"
 #define HEADSLIDE_COMBO "GDDG"
+
+// rest of the file
 
 /datum/martial_art/proc/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -28,7 +32,6 @@
 	var/current_level = 1
 	var/level_cap = 30
 
-	var/list/available_actions = list()
 	var/datum/action/head_slide/head_slide = new/datum/action/head_slide()
 
 /datum/martial_art/armstrong/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -129,7 +132,7 @@
 		for(var/turf/T in range(1,A))
 			turfs.Add(T)
 		R.cast(turfs)
-		add_exp(4)
+		add_exp(4, A)
 		add_logs(A, D, "sloppily flailed around (Armstrong)")
 		A.playsound_local(get_turf(A), 'hippiestation/sound/effects/fart.ogg', 100, FALSE, pressure_affected = FALSE)
 		return
@@ -154,7 +157,7 @@
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.adjustBruteLoss(8) //Decentish damage. It racks up to 18 if the victim hits a wall.
 		D.Knockdown(20)
-		add_exp(8)
+		add_exp(8, A)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 		D.throw_at(throw_target, 1, 1)
 		return
@@ -170,7 +173,7 @@
 		D.throw_at(throw_target, 2, 4,A)
 		D.adjust_fire_stacks(1)
 		D.IgniteMob()
-		add_exp(8)
+		add_exp(8, A)
 		add_logs(A, D, "fireball-one (Armstrong)")
 		return
 
@@ -182,7 +185,7 @@
 		D.Knockdown(15)
 		D.adjustBruteLoss(12)
 		A.Knockdown(5)
-		add_exp(12)
+		add_exp(12, A)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 		A.throw_at(throw_target, 1, 1)
 		D.visible_message("<span class='danger'>[A] dropkicks [D]!</span>", \
@@ -197,7 +200,7 @@
 		D.Knockdown(80)
 		D.emote("scream")
 		D.adjustBruteLoss(8)
-		add_exp(8)
+		add_exp(8, A)
 		if(D.gender == FEMALE)
 			D.visible_message("<span class='notice'>[A] scares [D] and they sheepishly fall over.</span>", \
 										"<span class='userdanger'>[A] 'surprised' [D]!</span>") // we're not citadel
@@ -218,7 +221,7 @@
 		D.adjustBruteLoss(18) //punch punch punch
 		MachineGunAnimate(A)
 		D.Stun(10)
-		add_exp(12)
+		add_exp(12, A)
 		return
 
 /datum/martial_art/armstrong/proc/FireballTwo(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -236,7 +239,7 @@
 		var/datum/effect_system/explosion/E = new
 		E.set_up(get_turf(D))
 		E.start()
-		add_exp(8)
+		add_exp(8, A)
 		add_logs(A, D, "fireball-two (Armstrong)")
 		return
 
@@ -264,7 +267,7 @@
 		D.Knockdown(80)
 		D.adjustBruteLoss(10)
 		A.Knockdown(5)
-		add_exp(12)
+		add_exp(12, A)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 		A.throw_at(throw_target, 3, 3)
 		D.visible_message("<span class='danger'>[A] headslides underneath [D], tripping them!</span>", \
@@ -401,7 +404,7 @@
 		icon_state = "blankscroll"
 	else
 		var/mob/living/carbon/human/H = user
-		H.visible_message("<span class='warning'>[H] stares at the scroll like an idiot!</span>", "<span class='userdanger'>You despereately try to decypher the soggy scroll and fail miserably!</span>")
+		H.visible_message("<span class='warning'>[H] stares at the scroll like an idiot!</span>", "<span class='userdanger'>You despereately try to decipher the soggy scroll and fail miserably!</span>")
 
 /obj/item/paper/armstrong_tutorial
 	name = "paper - 'HOW TO NOT SUCK'"
@@ -445,13 +448,13 @@
 		if(15)
 			to_chat(owner, "<span class = 'notice'>You have unlocked Headbutt. To use: Help Harm Grab</span>")
 		if(20)
-			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>") //BUGGED - Carbonhell please tell me how to fix.
-			available_actions = list(head_slide)
+			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>")
+			head_slide.Grant(owner)
 		if(30)
 			to_chat(owner, "<span class = 'danger'><b>You can now use Fireball without needing to combo.</b></span>")
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 
-/datum/martial_art/armstrong/proc/add_exp(amt)
+/datum/martial_art/armstrong/proc/add_exp(amt, mob/owner)
 	if(current_level == level_cap)
 		return
 	current_exp += amt
