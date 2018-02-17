@@ -273,7 +273,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aS" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = 7;
 	pixel_y = -6
 	},
@@ -431,7 +431,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -611,7 +612,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -697,9 +699,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "closed";
-	locked = 1;
 	name = "Gateway";
 	req_access_txt = "150"
 	},
@@ -761,7 +762,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -860,7 +862,8 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_y = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1019,11 +1022,11 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cr" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Dormitories"
 	},
 /obj/item/stack/rods,
@@ -1220,7 +1223,8 @@
 	locked = 1;
 	name = "Worn-out APC";
 	pixel_y = -25;
-	req_access = list(150);
+	req_access = null;
+	req_access_txt = "150";
 	start_charge = 0
 	},
 /turf/open/floor/plasteel/red/side{
@@ -1314,7 +1318,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/light{
 	active_power_usage = 0;
@@ -1330,12 +1335,12 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cT" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
 	id_tag = "awaydorm4";
-	locked = 1;
 	name = "Dorm 1";
 	opacity = 0
 	},
@@ -1497,7 +1502,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = -23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -1528,7 +1534,8 @@
 	frequency = 1439;
 	locked = 1;
 	pixel_x = 23;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -1642,22 +1649,23 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "du" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dv" = (
-/obj/item/ore/iron,
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -1708,7 +1716,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dz" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -1802,13 +1810,16 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	opacity = 0;
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1854,7 +1865,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dN" = (
-/obj/item/ore/iron{
+/obj/item/stack/ore/iron{
 	pixel_x = -7;
 	pixel_y = -4
 	},
@@ -2587,11 +2598,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Xenobiology Lab";
 	opacity = 0;
 	req_access_txt = "201"
@@ -3719,11 +3730,11 @@
 /area/awaymission/moonoutpost19/research)
 "hD" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command{
 	density = 0;
 	set_obj_flags = "EMAGGED";
 	icon_state = "open";
-	locked = 1;
 	name = "Research Director's Office";
 	opacity = 0;
 	req_access_txt = "201";
@@ -4001,6 +4012,7 @@
 	req_access_txt = "201";
 	req_one_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
@@ -4927,9 +4939,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5026,9 +5036,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -5186,9 +5194,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5250,9 +5256,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kH" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel{
@@ -5339,9 +5343,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kR" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -5350,9 +5352,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kS" = (
-/obj/machinery/door/firedoor{
-	density = 1;
-	icon_state = "door_closed";
+/obj/machinery/door/firedoor/closed{
 	opacity = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -6107,12 +6107,18 @@
 "mL" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mM" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -6618,10 +6624,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nO" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
-	icon_state = "closed";
 	id_tag = "awaydorm3";
-	locked = 1;
 	name = "Dorm 3"
 	},
 /turf/open/floor/plasteel{
@@ -6815,6 +6820,45 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space)
+"vV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"zZ" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"Mm" = (
+/obj/machinery/door/airlock/medical{
+	id_tag = "";
+	name = "Research Division";
+	req_access_txt = "201";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"Wf" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
 
 (1,1,1) = {"
 aa
@@ -36270,10 +36314,10 @@ jG
 lF
 lF
 no
-mM
+zZ
 nA
 nK
-mM
+Wf
 dM
 ba
 ba
@@ -36514,7 +36558,7 @@ hN
 ie
 hj
 hj
-ie
+Mm
 jy
 jU
 jE
@@ -36527,10 +36571,10 @@ mN
 mg
 mg
 mg
-mM
+zZ
 lM
 lN
-mM
+Wf
 dM
 ba
 ba
@@ -41665,7 +41709,7 @@ hI
 hJ
 hI
 hI
-mM
+vV
 hI
 hI
 nJ

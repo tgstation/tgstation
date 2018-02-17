@@ -202,6 +202,12 @@
 	var/list/entries = list()
 	var/language = /datum/language/common //Initial language, can be changed by HOLORECORD_LANGUAGE entries
 
+/datum/holorecord/proc/set_caller_image(mob/user)
+	var/olddir = user.dir
+	user.setDir(SOUTH)
+	caller_image = getFlatIcon(user)
+	user.setDir(olddir)
+
 /obj/item/disk/holodisk
 	name = "holorecord disk"
 	desc = "Stores recorder holocalls."
@@ -278,7 +284,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-
+		
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman

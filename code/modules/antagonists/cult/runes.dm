@@ -125,16 +125,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 				if(L.stat)
 					continue
 				invokers += L
-		if(invokers.len >= req_cultists)
-			invokers -= user
 			if(allow_excess_invokers)
 				chanters += invokers
 			else
 				shuffle_inplace(invokers)
 				for(var/i in 1 to req_cultists)
-					var/L = pick_n_take(invokers)
-					if(L)
-						chanters += L
+					var/C = pick_n_take(invokers)
+					if(!C)
+						break
+					chanters += C
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
@@ -316,7 +315,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
 
 	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-	if(sacrificial.mind)
+	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)
 		stone.invisibility = 0
@@ -426,22 +425,19 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else
 			var/area/A = get_area(T)
 			if(A.map_name == "Space")
-				actual_selected_rune.handle_portal("space")
+				actual_selected_rune.handle_portal("space", T)
 		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
-/obj/effect/rune/teleport/proc/handle_portal(portal_type)
+/obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
-	if(inner_portal)
-		qdel(inner_portal) //We need fresh effects/animations
-	if(outer_portal)
-		qdel(outer_portal)
+	close_portal() // To avoid stacking descriptions/animations
 	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
-		light_color = RUNE_COLOR_TELEPORT
-		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space!</b>"
+		light_color = color
+		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space.<br><u>The void feels like it's trying to pull you to the [dir2text(get_dir(T, origin))]!</u></b>"
 	else
 		inner_portal.icon_state = "lava"
 		light_color = LIGHT_COLOR_FIRE
@@ -452,6 +448,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
+	qdel(inner_portal)
+	qdel(outer_portal)
 	desc = initial(desc)
 	light_range = 0
 	update_light()
@@ -577,7 +575,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
 		if(LAZYLEN(candidates))
-			var/client/C = pick(candidates)
+			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(0)
@@ -842,9 +840,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	var/choice = alert(user,"You tear open a connection to the spirit realm...",,"Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel")
 	if(choice == "Summon a Cult Ghost")
+		var/area/A = get_area(T)
+		if(A.map_name == "Space" || is_mining_level(T.z))
+			to_chat(user, "<span class='cultitalic'><b>The veil is not weak enough here to manifest spirits, you must be on station!</b></span>")
+			return
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 		var/list/ghosts_on_rune = list()
-		for(var/mob/dead/observer/O in get_turf(src))
+		for(var/mob/dead/observer/O in T)
 			if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
@@ -853,7 +855,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
 		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
-		var/mob/living/carbon/human/cult_ghost/new_human = new(get_turf(src))
+		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor

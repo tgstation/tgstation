@@ -21,10 +21,10 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
 	max_integrity = 50
-	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src,be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
 
 /obj/item/device/electronic_assembly/Initialize()
@@ -83,7 +83,7 @@
 		if(!circuit.removable)
 			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -101,7 +101,7 @@
 		if(circuit.removable)
 			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
@@ -110,7 +110,7 @@
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=assembly-[REF(src)];size=655x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/electronic_assembly/Topic(href, href_list)
 	if(..())
@@ -250,19 +250,23 @@
 	assembly_components |= component
 
 
-/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
+/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user, silent)
 	if(!opened)
-		to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
 		return FALSE
 
 	if(!IC.removable)
-		to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
 		return FALSE
 
-	to_chat(user, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
-	playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
-
 	remove_component(IC)
+	if(!silent)
+		to_chat(user, "<span class='notice'>You pop \the [IC] out of the case, and slide it out.</span>")
+		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
+		user.put_in_hands(IC)
+
 	return TRUE
 
 // Actually removes the component, doesn't perform any checks.
@@ -279,8 +283,8 @@
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
-/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
-	playsound(src, S.usesound, 50, 1)
+/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
 	opened = !opened
 	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
 	update_icon()
@@ -491,7 +495,7 @@
 	name = "electronic drone"
 	icon_state = "setup_drone"
 	desc = "It's a case, for building mobile electronics with."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
 

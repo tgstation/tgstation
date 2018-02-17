@@ -221,6 +221,18 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.current.grant_language(/datum/language/codespeak)
 
+/datum/antagonist/traitor/AI/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/A = mob_override || owner.current
+	if(istype(A))
+		A.hack_software = TRUE
+	
+/datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/A = mob_override || owner.current
+	if(istype(A))
+		A.hack_software = FALSE
+
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
 	if(should_equip)

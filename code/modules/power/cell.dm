@@ -15,7 +15,7 @@
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	grind_results = list("lithium" = 15, "iron" = 5, "silicon" = 5)
-	var/rigged = 0		// true if rigged to explode
+	var/rigged = FALSE	// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
@@ -70,7 +70,7 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/proc/use(amount)
+/obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
@@ -104,7 +104,7 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = reagents.has_reagent("plasma", 5)
+	rigged = !isnull(reagents.has_reagent("plasma", 5)) //has_reagent returns the reagent datum
 	..()
 
 
@@ -117,7 +117,7 @@
 	var/light_impact_range = round(sqrt(charge)/30)
 	var/flash_range = light_impact_range
 	if (light_impact_range==0)
-		rigged = 0
+		rigged = FALSE
 		corrupt()
 		return
 	//explosion(T, 0, 1, 2, 2)
@@ -128,7 +128,7 @@
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
-		rigged = 1 //broken batterys are dangerous
+		rigged = TRUE //broken batterys are dangerous
 
 /obj/item/stock_parts/cell/emp_act(severity)
 	charge -= 1000 / severity
@@ -158,6 +158,10 @@
 		return 0
 
 /* Cell variants*/
+/obj/item/stock_parts/cell/empty/Initialize()
+	. = ..()
+	charge = 0
+
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
@@ -168,6 +172,7 @@
 /obj/item/stock_parts/cell/crap/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
@@ -191,6 +196,7 @@
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -224,6 +230,7 @@
 /obj/item/stock_parts/cell/high/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/super
 	name = "super-capacity power cell"
@@ -236,6 +243,7 @@
 /obj/item/stock_parts/cell/super/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
@@ -248,6 +256,7 @@
 /obj/item/stock_parts/cell/hyper/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/bluespace
 	name = "bluespace power cell"
@@ -261,6 +270,7 @@
 /obj/item/stock_parts/cell/bluespace/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
@@ -314,6 +324,7 @@
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
+	update_icon()
 
 /obj/item/stock_parts/cell/emproof/emp_act(severity)
 	return

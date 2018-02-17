@@ -157,14 +157,20 @@
 
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
-	if(T.reagents)
-		for(var/reagent_id in reagents_add)
-			if(reagent_id == "blood") // Hack to make blood in plants always O-
-				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
-				continue
+	if(!T.reagents)
+		CRASH("[T] has no reagents.")
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
-		return 1
+	for(var/rid in reagents_add)
+		var/amount = 1 + round(potency * reagents_add[rid], 1)
+
+		var/list/data = null
+		if(rid == "blood") // Hack to make blood in plants always O-
+			data = list("blood_type" = "O-")
+		if(rid == "nutriment" || rid == "vitamin")
+			// apple tastes of apple.
+			data = T.tastes
+
+		T.reagents.add_reagent(rid, amount, data)
 
 
 /// Setters procs ///

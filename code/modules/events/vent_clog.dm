@@ -1,8 +1,9 @@
 /datum/round_event_control/vent_clog
 	name = "Clogged Vents"
 	typepath = /datum/round_event/vent_clog
-	weight = 35
-	max_occurrences = 1
+	weight = 25
+	max_occurrences = 0
+	min_players = 50
 
 /datum/round_event/vent_clog
 	announceWhen	= 1
@@ -27,9 +28,9 @@
 		if(vent && vent.loc)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
-			R.add_reagent(get_random_reagent_id(), 1000)
+			R.add_reagent(get_random_reagent_id(), 250)
 
-			var/datum/effect_system/foam_spread/long/foam = new
+			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)
 			foam.start()
 
