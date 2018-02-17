@@ -151,15 +151,11 @@
 		else
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
-		var/obj/item/stack/cable_coil/coil = W
-		if (coil.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
+		if(!W.tool_start_check(user, amount=1))
 			return
 		to_chat(user, "<span class='notice'>You begin to replace the wires...</span>")
-		if(do_after(user, 30, target = src))
-			if(coil.get_amount() < 1)
-				return
-			coil.use(1)
+
+		if(W.use_tool(src, user, 30, volume=50, amount=1))
 			obj_integrity = max_integrity
 			stat &= ~BROKEN
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")

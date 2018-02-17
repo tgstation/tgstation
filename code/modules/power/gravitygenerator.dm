@@ -201,15 +201,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/PS = I
-				if(PS.get_amount() >= 10)
-					PS.use(10)
+				if(I.use_tool(src, user, 0, volume=50, amount=10))
 					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
 					update_icon()
-				else
-					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/wrench))

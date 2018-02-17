@@ -751,13 +751,11 @@
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
 				if(istype(C, /obj/item/stack/sheet/metal))
-					var/obj/item/stack/sheet/metal/S = C
-					if(S.get_amount() < 2)
-						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
+					if(!C.tool_start_check(user, amount=2))
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, 1, target = src))
-						if(!panel_open || !S.use(2))
+					if(C.use_tool(src, user, 20, volume=50, amount=2))
+						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] reinforce \the [src] with metal.</span>",
 											"<span class='notice'>You reinforce \the [src] with metal.</span>")
@@ -765,13 +763,11 @@
 						update_icon()
 					return
 				else if(istype(C, /obj/item/stack/sheet/plasteel))
-					var/obj/item/stack/sheet/plasteel/S = C
-					if(S.get_amount() < 2)
-						to_chat(user, "<span class='warning'>You need at least 2 plasteel sheets to reinforce [src].</span>")
+					if(!C.tool_start_check(user, amount=2))
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, 1, target = src))
-						if(!panel_open || !S.use(2))
+					if(C.use_tool(src, user, 20, volume=50, amount=2))
+						if(!panel_open)
 							return
 						user.visible_message("<span class='notice'>[user] reinforce \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforce \the [src] with plasteel.</span>")

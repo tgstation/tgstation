@@ -184,16 +184,11 @@
 			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = I
-		if(M.get_amount() < 6)
-			to_chat(user, "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>")
+		if(!I.tool_start_check(user, amount=6))
 			return
 		to_chat(user, "<span class='notice'>You begin to apply [I] to [src]...</span>")
-		if(do_after(user, 35, target = src))
-			if(M.get_amount() < 6 || !M)
-				return
+		if(I.use_tool(src, user, 40, volume=50, amount=6))
 			var/obj/item/restraints/legcuffs/bola/S = new /obj/item/restraints/legcuffs/bola
-			M.use(6)
 			user.put_in_hands(S)
 			to_chat(user, "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>")
 			remove_item_from_storage(user)

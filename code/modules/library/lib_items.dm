@@ -68,9 +68,7 @@
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
-				var/obj/item/stack/sheet/mineral/wood/W = I
-				if(W.get_amount() >= 2)
-					W.use(2)
+				if(I.use_tool(src, user, 0, volume=50, amount=2))
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
 					state = 2
 					icon_state = "book-0"

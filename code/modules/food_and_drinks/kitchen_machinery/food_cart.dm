@@ -83,9 +83,7 @@
 			else
 				stored_food[sanitize(S.name)] = 1
 	else if(istype(O, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = O
-		if(G.get_amount() >= 1)
-			G.use(1)
+		if(O.use_tool(src, user, 0, volume=50, amount=1))
 			glasses += 4
 			to_chat(user, "<span class='notice'>[src] accepts a sheet of glass.</span>")
 	else if(istype(O, /obj/item/storage/bag/tray))

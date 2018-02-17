@@ -180,7 +180,7 @@
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
+			new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/electronics/airlock))
@@ -198,7 +198,7 @@
 		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			G.use(10)
-			var/obj/structure/displaycase/display = new(src.loc)
+			var/obj/structure/displaycase/display = new(drop_location())
 			if(electronics)
 				electronics.forceMove(display)
 				display.electronics = electronics
