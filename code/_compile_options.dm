@@ -22,7 +22,9 @@
 
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "_maps/runtimestation.json"
-#endif
+#endiftrash
+pr
+multiple
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 511
@@ -31,7 +33,7 @@
 #error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
 #error You need version 511 or higher
 #endif
-
+with
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
@@ -43,7 +45,7 @@
 
 #ifdef TRAVISBUILDING
 #define UNIT_TESTS
-#endif
+#endifcommits
 
 #ifdef TRAVISTESTING
 #define TESTING
