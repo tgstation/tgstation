@@ -1090,7 +1090,6 @@
 #include "code\modules\antagonists\changeling\changeling.dm"
 #include "code\modules\antagonists\changeling\changeling_power.dm"
 #include "code\modules\antagonists\changeling\powers\absorb.dm"
-#include "code\modules\antagonists\changeling\powers\adrenaline.dm"
 #include "code\modules\antagonists\changeling\powers\augmented_eyesight.dm"
 #include "code\modules\antagonists\changeling\powers\biodegrade.dm"
 #include "code\modules\antagonists\changeling\powers\chameleon_skin.dm"
