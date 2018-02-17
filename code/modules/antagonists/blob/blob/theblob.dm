@@ -21,6 +21,7 @@
 	var/mob/camera/blob/overmind
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
+	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
 		var/area/Ablob = get_area(loc)
@@ -29,7 +30,6 @@
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
-	.= ..()
 	if(atmosblock)
 		air_update_turf(1)
 	ConsumeTile()
