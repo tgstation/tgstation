@@ -11,6 +11,9 @@
 #define HEADBUTT_COMBO "EHG"
 #define HEADSLIDE_COMBO "GDDG"
 
+/datum/martial_art/proc/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return 0
+
 /datum/martial_art/armstrong
 	name = "Armstrong Style"
 	help_verb = /mob/living/carbon/human/proc/armstrong_help

@@ -12,11 +12,6 @@
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/mob/living/carbon/human/owner = null // hippie edit - monk code
 
-//hippie edit - adds help_act as a test
-/datum/martial_art/proc/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	return 0
-//hippie end
-
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
