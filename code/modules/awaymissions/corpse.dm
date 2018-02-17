@@ -181,15 +181,13 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
-<<<<<<< HEAD
-=======
+
 		if(disable_sensors)
 			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
 			var/obj/item/clothing/under/C = H.wear_suit
 			if(C)
 				C.sensor_mode = NO_SENSORS
 
->>>>>>> b8b508456d... Swaps locate for direct assignment
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
