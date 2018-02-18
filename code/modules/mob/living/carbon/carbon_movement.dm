@@ -20,6 +20,9 @@
 	if(stat == SOFT_CRIT)
 		. += SOFTCRIT_ADD_SLOWDOWN
 
+	if(feels_pain() && !has_painkillers() && pain_shock_stage)
+		. += 3
+
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0

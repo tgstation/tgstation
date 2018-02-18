@@ -666,6 +666,8 @@
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 	if(hurtdamage)
+		if(has_trait(TRAIT_NUMB))
+			hurtdamage = max((hurtdamage - 20) / 2, 0) //Make the damage appear smaller than it really is
 		var/severity = 0
 		switch(hurtdamage)
 			if(5 to 15)
@@ -692,7 +694,9 @@
 			. = 1
 			if(!shown_health_amount)
 				shown_health_amount = health
-			if(shown_health_amount >= maxHealth)
+			if(has_trait(TRAIT_NUMB))
+				hud_used.healths.icon_state = "health_numb"
+			else if(shown_health_amount >= maxHealth)
 				hud_used.healths.icon_state = "health0"
 			else if(shown_health_amount > maxHealth*0.8)
 				hud_used.healths.icon_state = "health1"
@@ -724,10 +728,13 @@
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 		else
-			if(health <= HEALTH_THRESHOLD_CRIT)
-				stat = SOFT_CRIT
-			else
-				stat = CONSCIOUS
+			switch(health)
+				if(HEALTH_THRESHOLD_CRIT to HEALTH_THRESHOLD_PRECRIT)
+					stat = PRE_CRIT
+				if(HEALTH_THRESHOLD_PRECRIT to HEALTH_THRESHOLD_FULLCRIT)
+					stat = SOFT_CRIT
+				else
+					stat = CONSCIOUS
 			adjust_blindness(-1)
 		update_canmove()
 	update_damage_hud()
@@ -770,6 +777,9 @@
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
 	restoreEars()
+	pain_level = 0
+	pain_shock_stage = 0
+	remove_trait(TRAIT_NUMB)
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

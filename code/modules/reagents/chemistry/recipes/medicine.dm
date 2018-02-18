@@ -252,3 +252,22 @@
 	results = list("modafinil" = 5)
 	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
 	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
+
+/datum/chemical_reaction/oxycodone
+	name = "Oxycodone"
+	id = "oxycodone"
+	results = list("oxycodone" = 3)
+	required_reagents = list("plasma" = 1, "ethanol" = 1, "tramadol" = 1)
+
+/datum/chemical_reaction/tramadol
+	name = "Tramadol"
+	id = "tramadol"
+	results = list("tramadol" = 3)
+	required_reagents = list("inaprovaline" = 1, "ethanol" = 1, "oxygen" = 1)
+
+
+/datum/chemical_reaction/inaprovaline
+	name = "Inaprovaline"
+	id = "inaprovaline"
+	results = list("inaprovaline" = 3)
+	required_reagents = list("oxygen" = 1, "epinephrine" = 1, "ethanol" = 1)

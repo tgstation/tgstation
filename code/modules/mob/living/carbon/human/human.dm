@@ -213,7 +213,9 @@
 				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
-				usr.emote("scream")
+				if(feels_pain())
+					pain_shock_stage+=10
+					usr.emote("scream")
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
@@ -908,6 +910,28 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
+
+/mob/living/carbon/human/on_drag(newloc, dir)
+	if(bleed_rate && lying && !buckled && isturf(loc) && has_gravity())
+		if(prob(getBruteLoss() / 5) &&  health > HEALTH_THRESHOLD_CRIT)
+			makeTrail(newloc, loc, dir, FALSE) //we don't actually lose blood from this as we want to handle that ourselves
+			if(prob(getBruteLoss()*200/maxHealth))
+				add_splatter_floor(get_turf(src))
+			bleed(rand(bleed_rate*0.75, bleed_rate))
+			visible_message("<span class='warning'>[src]'s wounds are torn wider from being dragged across the floor!</span>")
+		else if(prob(15))
+			bleed(rand(bleed_rate, bleed_rate*1.75))
+			add_splatter_floor(get_turf(src))
+			makeTrail(newloc, loc, dir, FALSE)
+			visible_message("<span class='warning'>[src]s wounds are torn even wider from being dragged!</span>")
+
+/mob/living/carbon/human/feels_pain()
+	if(dna && dna.species && (NOPAIN in dna.species.species_traits))
+		return FALSE
+	if(has_trait(TRAIT_NUMB))
+		return FALSE
+	return ..()
+
 
 /mob/living/carbon/human/species
 	var/race = null

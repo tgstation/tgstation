@@ -268,6 +268,7 @@
 		if(resting)
 			resting = 0
 			update_canmove()
+		reagents.add_reagent("paracetamol", 1) //the power of hugs reduces pain!
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 

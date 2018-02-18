@@ -4,9 +4,10 @@
 
 //mob/var/stat things
 #define CONSCIOUS	0
-#define SOFT_CRIT	1
-#define UNCONSCIOUS	2
-#define DEAD		3
+#define PRE_CRIT	1
+#define SOFT_CRIT	2
+#define UNCONSCIOUS	3
+#define DEAD		4
 
 // bitflags for machine stat variable
 #define BROKEN		1

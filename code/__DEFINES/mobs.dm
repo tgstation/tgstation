@@ -18,6 +18,7 @@
 #define BLOOD_VOLUME_SAFE			475
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
+#define BLOOD_VOLUME_ARREST			155
 #define BLOOD_VOLUME_SURVIVE		122
 
 //Sizes of mobs, used by mob/living/var/mob_size
@@ -206,3 +207,5 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
+
+#define BASE_CARBON_PAIN_RESIST 80 //Amount of arbitrary "pain" that a mob can take before they start going into shock (see: update_pain_level())

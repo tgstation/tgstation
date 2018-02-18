@@ -59,3 +59,7 @@
 	var/next_hallucination = 0
 	var/cpr_time = 1 //CPR cooldown.
 	var/damageoverlaytemp = 0
+
+	var/pain_shock_stage = 0
+	var/pain_level = 0 //Gets overwritten every tick! If you want to add pain "resistance" or constain pain, see update_pain_level()
+	var/pain_numb = 0 // When this is set, the mob isn't affected by shock or pain.
