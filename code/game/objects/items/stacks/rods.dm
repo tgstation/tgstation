@@ -20,24 +20,35 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
-	novariants = TRUE
+	novariants = FALSE
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
 	return BRUTELOSS
-	
+
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
 
 	recipes = GLOB.rod_recipes
 	update_icon()
 
-/obj/item/stack/rods/update_icon()
+/obj/item/stack/rods/icon_amount_update()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
-		icon_state = "rods-[amount]"
-	else
-		icon_state = "rods"
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool))
