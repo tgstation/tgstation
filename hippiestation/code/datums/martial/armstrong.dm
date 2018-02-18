@@ -248,10 +248,11 @@
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.AdjustUnconscious(15)
 		D.adjustBrainLoss(30)
+		add_exp(12, A)
 		var/datum/effect_system/explosion/E = new
 		E.set_up(get_turf(D))
 		E.start()
-		add_logs(A, D, "atomic headbutted (Monkeyman)")
+		add_logs(A, D, "headbutted (Armstrong)")
 		return
 
 /datum/martial_art/armstrong/proc/Headslide(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -282,7 +283,7 @@
 					  "<span class='userdanger'>[A] [atk_verb_help] you!</span>")
 	D.apply_damage(rand(6,13), BRUTE) // lower base damage
 	D.adjustStaminaLoss(rand(6,10)) // but higher stamina damage
-	add_exp(rand(1,3))
+	add_exp(rand(1,3), A)
 	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
 	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
 	if(prob(D.getBruteLoss()) && !D.lying)
@@ -305,7 +306,7 @@
 					  "<span class='userdanger'>[A] [atk_verb_harm] you!</span>")
 	D.apply_damage(rand(8,15), BRUTE) // higher base damage
 	D.adjustStaminaLoss(rand(4,8)) // but lower stamina damage
-	add_exp(rand(1,3))
+	add_exp(rand(1,3), A)
 	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 0, -1)
 	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
 	if(prob(D.getBruteLoss()) && !D.lying)
@@ -330,7 +331,7 @@
 	D.adjustStaminaLoss(rand(4,9)) // left hand stamina damage
 	D.apply_damage(rand(6,12), BRUTE) // right hand brute damage - weakened
 	D.adjustStaminaLoss(rand(3,8)) // right hand stamina damage
-	add_exp(rand(2,4))
+	add_exp(rand(2,4), A)
 	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_zipper.ogg', 50, 0, -1)
 	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
 	if(prob(D.getBruteLoss()) && !D.lying)
@@ -352,7 +353,7 @@
 					  "<span class='userdanger'>[A] [atk_verb_disarm] you!</span>")
 	D.apply_damage(rand(3,5), BRUTE) // weakest brute damage
 	D.adjustStaminaLoss(rand(10,20)) // strongest stamina damage
-	add_exp(rand(2,4))
+	add_exp(rand(2,4), A)
 	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_palmthrust.ogg', 50, 0, -1)
 	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
 	if(prob(D.getBruteLoss()) && !D.lying)
