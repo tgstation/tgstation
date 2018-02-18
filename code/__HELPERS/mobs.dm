@@ -499,10 +499,14 @@ Proc for attack log creation, because really why not
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
-	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
-	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
+	var/static/list/mob_spawn_meancritters // list of possible hostile mobs
+	var/static/list/mob_spawn_nicecritters // and possible friendly mobs
+	var/static/list/mob_spawn_neutralcritters // list of possible neutral mobs
 
-	if(mob_spawn_meancritters.len <= 0 || mob_spawn_nicecritters.len <= 0)
+	if(!mob_spawn_meancritters)
+		mob_spawn_meancritters = list()
+		mob_spawn_nicecritters = list()
+		mob_spawn_neutralcritters = list()
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			switch(initial(SA.gold_core_spawnable))
@@ -510,11 +514,16 @@ Proc for attack log creation, because really why not
 					mob_spawn_meancritters += T
 				if(FRIENDLY_SPAWN)
 					mob_spawn_nicecritters += T
+				if(NEUTRAL_SPAWN)
+					mob_spawn_neutralcritters += T
 
 	var/chosen
-	if(mob_class == FRIENDLY_SPAWN)
-		chosen = pick(mob_spawn_nicecritters)
-	else
-		chosen = pick(mob_spawn_meancritters)
+	switch(mob_class)
+		if(HOSTILE_SPAWN)
+			chosen = pick(mob_spawn_meancritters)
+		if(FRIENDLY_SPAWN)
+			chosen = pick(mob_spawn_nicecritters)
+		if(NEUTRAL_SPAWN)
+			chosen = pick(mob_spawn_neutralcritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C

@@ -485,6 +485,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NO_SPAWN 0
 #define HOSTILE_SPAWN 1
 #define FRIENDLY_SPAWN 2
+#define NEUTRAL_SPAWN 3
 
 //slime core activation type
 #define SLIME_ACTIVATE_MINOR 1
