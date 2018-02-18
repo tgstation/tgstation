@@ -469,7 +469,7 @@
 		current_level++
 		var/next_level = current_level + 1
 		next_level_exp = next_level*25
-		do_level_up(mob/living/carbon/human/owner)
+		do_level_up(owner)
 		to_chat(owner, "<span class = 'notice'><b>You feel more confident in your powers.</b></span>")
 
 /obj/item/clothing/mask/fakemoustache/italian/cursed //for those cheeky aliens who think they can circumvent hair
