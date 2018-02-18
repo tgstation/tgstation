@@ -52441,14 +52441,13 @@
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper)
 "cfK" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
 /obj/machinery/light_switch{
 	pixel_x = 11;
 	pixel_y = 23
+	},
+/obj/vehicle/ridden/wheelchair{
+	icon_state = "wheelchair";
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault,
 /area/medical/sleeper)
@@ -58024,6 +58023,10 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = -28
+	},
+/obj/vehicle/ridden/wheelchair{
+	icon_state = "wheelchair";
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4

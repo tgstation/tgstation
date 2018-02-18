@@ -33472,15 +33472,19 @@
 	},
 /area/medical/sleeper)
 "bFA" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
 /obj/machinery/requests_console{
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_w = 30
+	},
+/obj/vehicle/ridden/wheelchair{
+	icon_state = "wheelchair";
+	dir = 8
+	},
+/obj/vehicle/ridden/wheelchair{
+	icon_state = "wheelchair";
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
