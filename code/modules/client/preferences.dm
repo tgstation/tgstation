@@ -82,7 +82,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/neutral_traits = list()
 	var/list/all_traits = list()
 	var/list/character_traits = list()
-	var/generated_char_traits = FALSE
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -880,6 +879,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return 1
 
 	else if(href_list["preference"] == "trait")
+		if(SSticker.HasRoundStarted() && !isnewplayer(user))
+			to_chat(user, "<span class='danger'>The round has already started. Please wait until next round to set up your traits!</span>")
+			return
 		switch(href_list["task"])
 			if("close")
 				user << browse(null, "window=mob_occupation")
@@ -1404,9 +1406,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
-	if(!generated_char_traits)
-		generated_char_traits = TRUE //usually it would be better to have a check for character_traits.len but that doesn't FUCKING WORK and I don't know why.
-		character_traits = all_traits
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
@@ -1461,5 +1460,5 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 
-	for(var/trait in character_traits)
-		character.add_trait_datum(trait)
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(character, parent)

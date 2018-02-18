@@ -23,3 +23,14 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 		var/datum/trait/T = V
 		traits[initial(T.name)] = T
 		trait_points[initial(T.name)] = initial(T.value)
+
+/datum/controller/subsystem/processing/traits/proc/AssignTraits(mob/living/user, client/cli)
+	if(!isnewplayer(user))
+		GenerateTraits(cli)
+	for(var/V in cli.prefs.character_traits)
+		user.add_trait_datum(V)
+
+/datum/controller/subsystem/processing/traits/proc/GenerateTraits(client/user)
+	if(user.prefs.character_traits.len)
+		return
+	user.prefs.character_traits = user.prefs.all_traits

@@ -2,18 +2,6 @@
 
 
 
-/datum/trait/arachnophobia
-	name = "Arachnophobia"
-	desc = "You have a paralyzing fear of spiders."
-	value = -1
-	medical_record_text = "Patient has a persistent, genuine phobia of arachnids."
-
-/datum/trait/arachnophobia/add()
-	var/mob/living/carbon/human/H = trait_holder
-	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRUE, "spiders")
-
-
-
 /datum/trait/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep, you sleep for a little bit longer."
@@ -29,10 +17,12 @@
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
 	value = -1
-	mob_trait = TRAIT_NEARSIGHT
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
+
+/datum/trait/nearsighted/add()
+	trait_holder.become_nearsighted(ROUNDSTART_TRAIT)
 
 /datum/trait/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = trait_holder
@@ -81,6 +71,7 @@
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	value = -1
+	var/slot_string = "limb"
 
 /datum/trait/prosthetic_limb/on_spawn()
 	var/limb_slot = pick("l_arm", "r_arm", "l_leg", "r_leg")
@@ -90,14 +81,23 @@
 	switch(limb_slot)
 		if("l_arm")
 			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(trait_holder)
+			slot_string = "left arm"
 		if("r_arm")
 			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(trait_holder)
+			slot_string = "right arm"
 		if("l_leg")
 			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(trait_holder)
+			slot_string = "left leg"
 		if("r_leg")
 			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(trait_holder)
+			slot_string = "right leg"
 	prosthetic.replace_limb(H)
 	qdel(old_part)
+	H.regenerate_icons()
+
+/datum/trait/prosthetic_limb/post_add()
+	to_chat(trait_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
 
 
@@ -110,10 +110,7 @@
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
-/datum/trait/insanity/add()
-	addtimer(CALLBACK(src, .proc/disclaimer), 50)
-
-/datum/trait/insanity/process()
+/datum/trait/insanity/on_process()
 	if(trait_holder.reagents.has_reagent("mindbreaker"))
 		trait_holder.hallucination = 0
 		return
@@ -130,7 +127,7 @@
 	else
 		trait_holder.hallucination += rand(10, 50)
 
-/datum/trait/insanity/proc/disclaimer() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
+/datum/trait/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!trait_holder.mind || trait_holder.mind.special_role)
 		return
 	to_chat(trait_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
@@ -149,7 +146,7 @@
 
 /datum/trait/social_anxiety/on_process()
 	var/mob/living/carbon/human/H = trait_holder
-	if(prob(10))
+	if(prob(5))
 		H.stuttering = max(3, H.stuttering)
 	else if(prob(1) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")

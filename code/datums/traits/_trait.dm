@@ -23,16 +23,18 @@
 		trait_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
 	START_PROCESSING(SStraits, src)
 	add()
-	if(!SSticker.HasRoundStarted()) //on roundstart or on latejoin
+	if(!SSticker.HasRoundStarted()) //on roundstart or on latejoin; latejoin code is in new_player.dm
 		on_spawn()
+	addtimer(CALLBACK(src, .proc/post_add), 30)
 
 /datum/trait/Destroy()
 	STOP_PROCESSING(SStraits, src)
-	to_chat(trait_holder, lose_text)
 	remove()
-	trait_holder.roundstart_traits -= src
-	if(mob_trait)
-		trait_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
+	if(trait_holder)
+		to_chat(trait_holder, lose_text)
+		trait_holder.roundstart_traits -= src
+		if(mob_trait)
+			trait_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
 	SStraits.trait_objects -= src
 	return ..()
 
@@ -40,10 +42,12 @@
 /datum/trait/proc/on_spawn() //these should only trigger when the character is being created for the first time, i.e. roundstart/latejoin
 /datum/trait/proc/remove() //special "on remove" effects
 /datum/trait/proc/on_process() //process() has some special checks, so this is the actual process
+/datum/trait/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 
 /datum/trait/process()
-	if(!trait_holder)
+	if(QDELETED(trait_holder))
 		qdel(src)
+		return
 	on_process()
 
 /mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
@@ -52,11 +56,15 @@
 		for(var/V in roundstart_traits)
 			var/datum/trait/T = V
 			dat += T.name
+		if(!dat.len)
+			return "None"
 		return dat.Join(", ")
 	else
 		for(var/V in roundstart_traits)
 			var/datum/trait/T = V
 			dat += T.medical_record_text
+		if(!dat.len)
+			return "None"
 		return dat.Join("<br>")
 
 /*

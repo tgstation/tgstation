@@ -465,15 +465,21 @@
 	return
 
 /obj/structure/closet/proc/dive_into(mob/living/user)
+	var/turf/T1 = get_turf(user)
+	var/turf/T2 = get_turf(src)
 	if(!open() && !opened)
 		togglelock(user, TRUE)
 		if(!open())
 			to_chat(user, "<span class='warning'>It won't budge!</span>")
 			return
-	user.visible_message("<span class='warning'>[user] dives into [src] and slams the door shut behind them!</span>", \
-	"<span class='danger'>You dive into [src]!</span>")
-	user.forceMove(src)
-	user.resting = TRUE //so people can jump into crates without slamming the lid on their head
-	close()
-	user.resting = FALSE
-	togglelock(user)
+	step_towards(user, T2)
+	T1 = get_turf(user)
+	if(T1 == T2)
+		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		if(!close())
+			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
+			user.resting = FALSE
+			return
+		user.resting = FALSE
+		togglelock(user)
+		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
