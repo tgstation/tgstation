@@ -717,7 +717,7 @@
 /obj/item/spellbook/oneuse
 	var/spell = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile //just a placeholder to avoid runtimes if someone spawned the generic
 	var/spellname = "sandbox"
-	var/used = 0
+	var/used = FALSE
 	name = "spellbook of "
 	uses = 1
 	desc = "This template spellbook was never meant for the eyes of man..."
@@ -765,6 +765,9 @@
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	qdel(src)
 
+/obj/item/spellbook/oneuse/fireball/used
+	used = TRUE
+
 /obj/item/spellbook/oneuse/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
 	spellname = "smoke"
@@ -782,6 +785,9 @@
 		if(user.nutrition <= 0)
 			user.nutrition = 0
 
+/obj/item/spellbook/oneuse/smoke/used
+	used = TRUE
+
 
 /obj/item/spellbook/oneuse/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -793,6 +799,9 @@
 	..()
 	to_chat(user,"<span class='warning'>You go blind!</span>")
 	user.blind_eyes(10)
+
+/obj/item/spellbook/oneuse/blind/used
+	used = TRUE
 
 /obj/item/spellbook/oneuse/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
@@ -826,6 +835,9 @@
 	to_chat(user,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	stored_swap = null
 
+/obj/item/spellbook/oneuse/mindswap/used
+	used = TRUE
+
 /obj/item/spellbook/oneuse/forcewall
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall
 	spellname = "forcewall"
@@ -838,6 +850,9 @@
 	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
+/obj/item/spellbook/oneuse/forcewall/used
+	used = TRUE
+
 /obj/item/spellbook/oneuse/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
 	spellname = "knock"
@@ -848,6 +863,9 @@
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
 	user.Knockdown(40)
+
+/obj/item/spellbook/oneuse/knock/used
+	used = TRUE
 
 /obj/item/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -869,6 +887,9 @@
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
 
+/obj/item/spellbook/oneuse/barnyard/used
+	used = TRUE
+
 /obj/item/spellbook/oneuse/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
 	spellname = "charging"
@@ -880,6 +901,9 @@
 	to_chat(user,"<span class='warning'>[src] suddenly feels very warm!</span>")
 	empulse(src, 1, 1)
 
+/obj/item/spellbook/oneuse/charge/used
+	used = TRUE
+
 /obj/item/spellbook/oneuse/summonitem
 	spell = /obj/effect/proc_holder/spell/targeted/summonitem
 	spellname = "instant summons"
@@ -890,6 +914,9 @@
 	..()
 	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
+
+/obj/item/spellbook/oneuse/summonitem/used
+	used = TRUE
 
 /obj/item/spellbook/oneuse/random
 	icon_state = "random_book"

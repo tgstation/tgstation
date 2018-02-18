@@ -581,6 +581,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
+/obj/item/guardiancreator/used
+	used = TRUE
+
 /obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
@@ -592,6 +595,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+
+/obj/item/guardiancreator/tech/used
+	used = TRUE
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
