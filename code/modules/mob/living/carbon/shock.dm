@@ -15,7 +15,7 @@
 	for(var/datum/reagent/R in reagents.reagent_list)
 		pain_level -= R.pain_resistance
 
-	if(slurring) //I'm not sure why this is here.
+	if(slurring) //I'm too drunk to know my pain!
 		pain_level -= 20
 
 	return min(pain_level, 0)

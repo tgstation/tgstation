@@ -213,7 +213,9 @@
 				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
-				usr.emote("scream")
+				if(feels_pain())
+					pain_shock_stage+=10
+					usr.emote("scream")
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
@@ -922,6 +924,13 @@
 			add_splatter_floor(get_turf(src))
 			makeTrail(newloc, loc, dir, FALSE)
 			visible_message("<span class='warning'>[src]s wounds are torn even wider from being dragged!</span>")
+
+/mob/living/carbon/human/feels_pain()
+	if(dna && dna.species && (NOPAIN in dna.species.species_traits))
+		return FALSE
+	if(pain_numb)
+		return FALSE
+	return ..()
 
 
 /mob/living/carbon/human/species

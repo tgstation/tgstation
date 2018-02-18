@@ -374,4 +374,7 @@
 	return ..()
 
 /mob/living/silicon/is_literate()
-	return 1
+	return TRUE
+
+/mob/living/silicon/feels_pain()
+	return FALSE
