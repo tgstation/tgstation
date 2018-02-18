@@ -48,7 +48,6 @@
 		
 /mob/living/simple_animal/pet/cat/clown/Move(atom/newloc, direct)
 	..()
-	if(emagged)
-		if(prob(5))
+	if(emagged && prob(5))
 			visible_message("[name] pukes up a banana hairball!")
 			new /obj/item/grown/bananapeel(get_turf(src))	
