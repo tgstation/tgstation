@@ -508,6 +508,7 @@ Proc for attack log creation, because really why not
 		mob_spawn_nicecritters = list()
 		mob_spawn_neutralcritters = list()
 		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
 			var/goldcorespawns = initial(SA.gold_core_spawnable)
 			if(goldcorespawns & HOSTILE_SPAWN)
 				mob_spawn_meancritters += T
