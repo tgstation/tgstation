@@ -12,6 +12,11 @@
 #define FIREBALL_TWO_COMBO "EDD"
 #define HEADBUTT_COMBO "EHG"
 #define HEADSLIDE_COMBO "GDDG"
+#define CANNONBALL_COMBO "DDG"
+
+// misc. defines
+#define STATUS_EFFECT_HORSE_STANCE /datum/status_effect/horse_stance // define for the horse stance spell
+var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 
 // rest of the file
 
@@ -94,6 +99,11 @@
 		A.hud_used.combo_object.update_icon(streak)
 		Headslide(A,D)
 		return 1
+	if(findtext(streak,CANNONBALL_COMBO))
+		streak = ""
+		A.hud_used.combo_object.update_icon(streak)
+		Cannonball(A,D)
+		return 1
 	return 0
 
 //special effects
@@ -137,7 +147,7 @@
 // Actual combos
 
 /datum/martial_art/armstrong/proc/Buster(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(current_level >= 2)
+	if(current_level >= 2) // Checks Armstrong's current level.
 		add_logs(A, D, "buster punched (Armstrong)")
 		D.visible_message("<span class='danger'>[A] buster punches [D]!</span>", \
 									"<span class='userdanger'>[A] knocks down [D] with two strong punches!</span>")
@@ -145,14 +155,14 @@
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.adjustBruteLoss(8) //Decentish damage. It racks up to 18 if the victim hits a wall.
-		D.Knockdown(20)
+		D.Knockdown(15) //Minimal knockdown, but becomes a potential stunlock if they hit a wall.
 		add_exp(8, A)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 		D.throw_at(throw_target, 1, 1)
 		return
 
 /datum/martial_art/armstrong/proc/FireballOne(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 5)
+	if(current_level >= 5) // Checks Armstrong's current level.
 		D.visible_message("<span class='danger'>[A] blasts [D] with a weak fireball!</span>", \
 									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
 		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
@@ -167,7 +177,7 @@
 		return
 
 /datum/martial_art/armstrong/proc/Dropkick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 6)
+	if(current_level >= 6 && !D.stat && !D.IsKnockdown())
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 1, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -183,7 +193,7 @@
 		return
 
 /datum/martial_art/armstrong/proc/Surprise(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 3)
+	if(current_level >= 3 && !D.stat && !D.IsKnockdown()) // Checks Armstrong's current level, blocks easy stunlocking.
 		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.Knockdown(50)
@@ -192,17 +202,17 @@
 		add_exp(8, A)
 		if(D.gender == FEMALE)
 			D.visible_message("<span class='notice'>[A] scares [D] and they sheepishly fall over.</span>", \
-										"<span class='userdanger'>[A] 'surprised' [D]!</span>") // we're not citadel
+									"<span class='userdanger'>[A] 'surprised' [D]!</span>") // we're not citadel
 			A.say("BOO!")
 		else
 			A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 			D.visible_message("<span class='danger'><b>[A] kicks [D] in the dick!<b></span>", \
-										"<span class='userdanger'>[A] 'surprised' [D]!</span>") // how the attack actually worked in LISA
-		add_logs(A, D, "surprised (Armstrong)")
-		return
+											"<span class='userdanger'>[A] 'surprised' [D]!</span>") // how the attack actually worked in LISA
+			add_logs(A, D, "surprised (Armstrong)")
+			return
 
 /datum/martial_art/armstrong/proc/MachineGun(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(current_level >= 7)
+	if(current_level >= 7) // Checks Armstrong's current level.
 		add_logs(A, D, "Machine Gun Fisted (Armstrong)")
 		D.visible_message("<span class='danger'>[A] unleashes a flurry of punches on [D]!</span>", \
 									"<span class='userdanger'>[A] punches [D] at the speed of a machine gun!</span>")
@@ -214,7 +224,7 @@
 		return
 
 /datum/martial_art/armstrong/proc/FireballTwo(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 12)
+	if(current_level >= 12) // Checks Armstrong's current level.
 		D.visible_message("<span class='danger'>[A] blasts [D] with a fireball!</span>", \
 									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
 		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
@@ -233,12 +243,12 @@
 		return
 
 /datum/martial_art/armstrong/proc/Headbutt(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 15)
+	if(current_level >= 15) // Checks Armstrong's current level.
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
 						  "<span class='userdanger'>[A] headbutts you with atom-shattering strength!</span>")
-		D.apply_damage(18, BRUTE, "head") //same as machine gun, but easier to pull off + a stun.
-		playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 120, 1, -1)
+		D.apply_damage(18, BRUTE, "head") //same as machine gun, but easier to pull off + a stun. a good combo for level 15.
+		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_headbutt.ogg', 80, 0, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.AdjustUnconscious(15)
 		D.adjustBrainLoss(30)
@@ -250,7 +260,7 @@
 		return
 
 /datum/martial_art/armstrong/proc/Headslide(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 13 && !D.stat && !D.IsKnockdown())
+	if(current_level >= 13 && !D.stat && !D.IsKnockdown()) // Checks Armstrong's current level, blocks easy stunlocking.
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D.loc, 'sound/effects/suitstep1.ogg', 50, 1, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -263,6 +273,24 @@
 		D.visible_message("<span class='danger'>[A] headslides underneath [D], tripping them!</span>", \
 									"<span class='userdanger'>[A] headslid into [D]!</span>")
 		add_logs(A, D, "headslide (Armstrong)")
+		return
+
+/datum/martial_art/armstrong/proc/Cannonball(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	if(current_level >= 10)
+		D.visible_message("<span class='danger'>[A] flies into [D] like a cannonball!</span>", \
+									"<span class='userdanger'>[A] slams into [D] with the force of a cannonball!</span>")
+		var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
+		var/list/turfs = list()
+		for(var/turf/T in range(1,A))
+			turfs.Add(T)
+		R.cast(turfs)
+		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+		A.throw_at(throw_target, 1, 1)
+		A.Knockdown(3)
+		D.adjustBruteLoss(10)
+		add_exp(8, A)
+		add_logs(A, D, "cannonballed (Armstrong)")
+		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		return
 
 // Help/Hurt/Grab/Disarm acts
@@ -380,14 +408,18 @@
 	set category = "Armstrong"
 
 	to_chat(usr, "<b><i>You hear the voice of the hintmaster...</i></b>")
+	to_chat(usr, "<span class='notice'><b>COMBOS</b></span>")
 	to_chat(usr, "<span class='notice'>SLOPPY</span>: Spam Help/Harm intent. Flails around and knocks people around you down. Can't be used after you reach Level 10.")
 	to_chat(usr, "<span class='notice'>BUSTER PUNCHES</span>: Help, Help, Grab. Knocks down and deals fair damage. Requires Level 2.")
 	to_chat(usr, "<span class='notice'>SURPRISE ATTACK</span>: Disarm, Disarm, Harm. Knocks down and deals fair damage. Requires Level 3.")
 	to_chat(usr, "<span class='notice'>FIREBALL 1</span>: Help Grab Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 5.")
 	to_chat(usr, "<span class='notice'>DROPKICK</span>: Disarm Help Help Harm. A flying double foot press. Requires Level 6.")
+	to_chat(usr, "<span class='notice'>CANNONBALL</span>: Disarm Disarm Grab. Fly in like a cannonball. Requires Level 10.") //earlier than it is in LISA, but whatever.
 	to_chat(usr, "<span class='notice'>FIREBALL 2</span>: Help Disarm Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 12.")
 	to_chat(usr, "<span class='notice'>HEADSLIDE</span>: Grab Disarm Disarm Grab. A sliding head strike at the opponent's knees. Causes tripping. Requires Level 13.")
 	to_chat(usr, "<span class='notice'>HEADBUTT</span>: Help Harm Grab. A full force slam with your shiny head. Knocks the target out temporarily. Requires Level 15.")
+	to_chat(usr, "<span class='sciradio'><b>SPELLS<b></span>")
+	to_chat(usr, "<span class='sciradio'>Horse Stance: Unlocked at Level 8. Recovers health and stamina rapidly. Can't be used while stunned.</span>")
 
 //Scroll necessary for learning the martial art
 
@@ -418,15 +450,15 @@
 
 /obj/item/paper/armstrong_tutorial
 	name = "paper - 'HOW TO NOT SUCK'"
-	info = "<b>1:</b>Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
-	<b>2:</b> Don't spam one attack. Use combos as much as possible to capitalize on both damage and stuns.<br> \
+	info = "<b>1: </b>Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
+	<b>2: </b> Don't spam one attack. Use combos as much as possible to capitalize on both damage and stuns.<br> \
 	To cycle intents, push F or G. To directly select an intent, press 1, 2, 3, or 4. <br>\
 	Seriously, don't spam attacks. Combos will deal much more damage than mashing random intents.<br> \
 	<b>3:</b>You can't pull people using Ctrl+Click, unless they're dead. We blame the Space Coders for that. Once you start to level up, you won't need to pull people any way.<br> \
 	You can't use guns either. Guns are for pussies and fishpeople.<br> \
-	<b>5:</b>The first combo you unlock, <b><i>Buster Punches</i></b>, is very easy to pull off and very powerful, especially if you can knock someone into a wall. If you need to practice cycling intents, or just want an easy combo, use it! <b> \
+	<b>5: </b>The first combo you unlock, <b><i>Buster Punches</i></b>, is very easy to pull off and very powerful, especially if you can knock someone into a wall. If you need to practice cycling intents, or just want an easy combo, use it! <br> \
 	<b>6: Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Get some experience, or else you're woefully underpowered.<br> \
-	<b>7:></b>If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
+	<b>7: </b>If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
 
 //Level UP and EXP code.
 
@@ -434,8 +466,10 @@
 	switch(current_level)
 		if(2)
 			to_chat(owner, "<span class = 'notice'>You have re-awakened the Buster Punches technique. To use: Help Help Grab</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(3)
 			to_chat(owner, "<span class = 'notice'>You remember the Surprise Attack. To use: Disarm Disarm Harm.</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(5)
 			to_chat(owner, "<span class = 'notice'>You remember how to utilize your emotion, and learned Fireball. To use: Help Grab Disarm</span>")
 			to_chat(owner, "<span class = 'danger'>You also seem to be growing some facial hair...</span>")
@@ -447,25 +481,38 @@
 					if(!owner.doUnEquip(owner.wear_mask))
 						qdel(owner.wear_mask)
 					owner.equip_to_slot_or_del(new /obj/item/clothing/mask/fakemoustache/italian/cursed(owner), slot_wear_mask) //your snowflake race won't save you from hair now
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(6)
-			to_chat(owner, "<span class = 'notice'>You remember how to Dropkick. To use: Disarm Help Help Disarm</span>")
+			to_chat(owner, "<span class = 'notice'>You remember how to Dropkick. To use: Disarm Help Help Harm</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(7)
 			to_chat(owner, "<span class = 'notice'>You learn how to jab at rapid speeds, and unlocked Machine Gun Fist. To use: Help Harm Help Harm</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
+		if(8)
+			to_chat(owner, "<span class = 'notice'>You remember the Horse Stance. Use it to quickly recover health and stamina</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
+			owner.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/horse_stance/)
 		if(10)
 			to_chat(owner, "<span class = 'notice'>You have mastered basic combos. Your attacks are more swift.</span>")
+			to_chat(owner, "<span class = 'notice'>You have also unlocked Cannonball. To use: Disarm Disarm Grab.</span>")
 			to_chat(owner, "<span class = 'danger'><b>This great speed requires precision. Use your combos!</b></span>")
 			owner.hair_style = "Bald"
 			owner.facial_hair_style = "Broken Man" //ensures the proper look
 			owner.update_hair() //makes the hair/facial hair change actually happen
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(12)
 			to_chat(owner, "<span class = 'notice'>You have unlocked an upgraded Fireball attack. To use: Help Disarm Disarm.</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(13)
 			to_chat(owner, "<span class = 'notice'>You have unlocked Head Slide. To use: Grab Disarm Disarm Grab.</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(15)
 			to_chat(owner, "<span class = 'notice'>You have unlocked Headbutt. To use: Help Harm Grab</span>")
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 		if(30)
 			to_chat(owner, "<span class = 'danger'><b>You can now use Fireball without needing to combo.</b></span>")
-			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			owner.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
 	/*	if(20)
 			to_chat(owner, "<span class = 'notice'><b>You can now Headslide without needing to combo.</b></span>")
 			head_slide.Grant(owner) */ //todo: make this a spell - action code is garbage.
@@ -486,3 +533,60 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	desc = "It's made out of your own hair, now."
 
+//Spells and Status Effects
+//Horse Stance Spell
+/obj/effect/proc_holder/spell/targeted/horse_stance/
+	name = "Horse Stance"
+	desc = "Assumes a horse stance. Recovers health and stamina."
+	school = "transmutation"
+	charge_max = 1500 // 2 minutes 30 seconds
+	clothes_req = 0
+	staff_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = -1
+	include_user = 1
+	action_icon = 'hippiestation/icons/mob/actions.dmi'
+	action_icon_state = "horse_stance"
+
+//Horse Stance Status Effect
+/datum/status_effect/horse_stance
+	id = "armstrong_horse_stance"
+	duration = 150 // 15 seconds.
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/horse_stance
+
+/obj/effect/proc_holder/spell/targeted/horse_stance/cast(list/targets,mob/living/user = usr)
+		user.apply_status_effect(STATUS_EFFECT_HORSE_STANCE)
+
+/obj/screen/alert/status_effect/horse_stance
+	name = "Horse Stance"
+	desc = "You assume a Horse Stance. This will slowly heal you and return your Stamina."
+	icon_state = "horse_stance"
+	icon = 'hippiestation/icons/mob/actions.dmi'
+
+/datum/status_effect/horse_stance/on_apply()
+	owner.visible_message("<span class='notice'>[owner] assumes a Horse Stance!</span>", "<span class='notice'>You assume a Horse Stance!</span>")
+	playsound(owner, 'sound/magic/blind.ogg', 50, 1)
+	owner.adjust_fire_stacks(-1)
+	toggle_horse_stance_effects(owner)
+	addtimer(CALLBACK(src, .proc/toggle_horse_stance_effects, owner), 150, TIMER_UNIQUE)
+	return ..()
+
+/datum/status_effect/horse_stance/proc/toggle_horse_stance_effects(var/mob/living/owner) //recycled effect code from monkeyman
+    horse_stance_effects = !horse_stance_effects
+    var/mutable_appearance/horsestance_effect= mutable_appearance('icons/effects/genetics.dmi', "servitude")
+    if(!horse_stance_effects)
+        owner.cut_overlay(horsestance_effect)
+    else
+        owner.add_overlay(horsestance_effect)
+
+/datum/status_effect/horse_stance/tick()
+	owner.adjustBruteLoss(-4)
+	owner.adjustFireLoss(-4)
+	owner.adjust_fire_stacks(-1)
+	owner.adjustStaminaLoss(-3)
+
+/datum/status_effect/horse_stance/on_remove()
+	owner.visible_message("<span class='warning'>[owner] resumes a normal stance!</span>", "<span class='warning'>The Horse Stance ends...</span>")
+	playsound(owner, 'hippiestation/sound/weapons/armstrong_horse.ogg', 75, 1)
