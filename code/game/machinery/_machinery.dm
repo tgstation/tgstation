@@ -401,19 +401,28 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				display_parts(user)
-			for(var/obj/item/stock_parts/A in component_parts)
+			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
 						P = D
 						break
-				for(var/obj/item/stock_parts/B in W.contents)
+				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
-						if(B.rating > A.rating)
-							W.remove_from_storage(B, src)
+						if(B.get_part_rating() > A.get_part_rating())
+							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
+								var/obj/item/stack/SA = A
+								var/obj/item/stack/SB = B
+								var/used_amt = SA.get_amount()
+								if(!SB.use(used_amt))
+									continue //if we don't have the exact amount to replace we don't
+								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
+								component_parts += SN
+							else
+								W.remove_from_storage(B, src)
+								component_parts += B
+								B.moveToNullspace()
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
-							component_parts += B
-							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
