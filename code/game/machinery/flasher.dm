@@ -163,7 +163,7 @@
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench))
-		playsound(src.loc, W.usesound, 100, 1)
+		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")

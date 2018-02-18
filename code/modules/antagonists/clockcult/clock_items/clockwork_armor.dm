@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE
-	armor = list(melee = 50, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 50, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 
 /obj/item/clothing/head/helmet/clockwork/Initialize()
 	. = ..()
@@ -20,17 +20,17 @@
 
 /obj/item/clothing/head/helmet/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		flags_1 |= STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
-		armor = list(melee = 70, bullet = 80, laser = -15, energy = 25, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100)
+		armor = list("melee" = 70, "bullet" = 80, "laser" = -15, "energy" = 25, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		flags_1 |= STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 60, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		flags_1 &= ~STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
@@ -67,7 +67,7 @@
 	cold_protection = CHEST|GROIN|LEGS
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 60, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/Initialize()
@@ -81,17 +81,17 @@
 
 /obj/item/clothing/suit/armor/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		flags_1 |= STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else if(GLOB.ratvar_approaches)
-		armor = list(melee = 70, bullet = 80, laser = -15, energy = 25, bomb = 70, bio = 0, rad = 0, fire = 100, acid = 100)
+		armor = list("melee" = 70, "bullet" = 80, "laser" = -15, "energy" = 25, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		flags_1 |= STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 60, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		flags_1 &= ~STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
@@ -134,7 +134,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 80, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 
 /obj/item/clothing/gloves/clockwork/Initialize()
 	. = ..()
@@ -147,12 +147,12 @@
 
 /obj/item/clothing/gloves/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 		flags_1 |= STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armor = list("melee" = 80, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 		flags_1 &= ~STOPSPRESSUREDMAGE_1
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)

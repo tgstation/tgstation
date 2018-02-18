@@ -9,19 +9,28 @@
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/success = 0
+	var/success = FALSE
 	if(accept_hand)
 		if(!tool)
-			success = 1
+			success = TRUE
+
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))
-			success = 1
-	else
-		for(var/path in implements)
-			if(istype(tool, path))
-				implement_type = path
+			success = TRUE
+
+	else if(tool)
+		for(var/key in implements)
+			var/match = FALSE
+
+			if(ispath(key) && istype(tool, key))
+				match = TRUE
+			else if(tool.tool_behaviour == key)
+				match = TRUE
+
+			if(match)
+				implement_type = key
 				if(tool_check(user, tool))
-					success = 1
+					success = TRUE
 					break
 
 	if(success)

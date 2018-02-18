@@ -71,7 +71,7 @@ then
 else
 	if hash DreamMaker 2>/dev/null
 	then
-		DreamMaker $dmepath.mdme 2>&1 | tee result.log
+		DreamMaker -max_errors 0 $dmepath.mdme 2>&1 | tee result.log
 		retval=$?
 		if ! grep '\- 0 errors, 0 warnings' result.log
 		then

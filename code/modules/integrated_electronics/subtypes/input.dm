@@ -851,8 +851,8 @@
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
-	name = "NTnet scanner"
-	desc = "This can return NTnet IDs of a component inside the given object, if there are any."
+	name = "NTNet scanner"
+	desc = "This can return NTNet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
@@ -865,22 +865,24 @@
 	power_draw_per_use = 1
 
 /obj/item/integrated_circuit/input/ntnetsc/do_work()
-
 	var/atom/AM = get_pin_data_as_type(IC_INPUT, 1, /atom)
-	var/list/processing_list = list(AM)
-	var/datum/component/ntnet_interface/net = null
-	set_pin_data(IC_OUTPUT, 1, null)
-	while(processing_list.len && !net)
-		var/atom/A = processing_list[1]
-		processing_list.Cut(1, 2)
-		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
-		net = A.GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/net
+
+	if(AM)
+		var/list/processing_list = list(AM)
+		while(processing_list.len && !net)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+			//This is also why we don't need to check against assembled as we go along
+			processing_list += A.contents
+			net = A.GetComponent(/datum/component/ntnet_interface)
+
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
 		activate_pin(2)
 	else
+		set_pin_data(IC_OUTPUT, 1, null)
 		activate_pin(3)
 	push_data()
 	return

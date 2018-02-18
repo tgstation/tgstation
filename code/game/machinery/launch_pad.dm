@@ -172,7 +172,6 @@
 		if(!briefcase || !usr.can_hold_items())
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))

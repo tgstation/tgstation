@@ -35,11 +35,11 @@
 #define RDSCREEN_TEXT_NO_SNODE "<div><h3>No Technology Node Selected!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_SDESIGN "<div><h3>No Design Selected!</h3></div><br>"
 
-#define RDSCREEN_UI_LATHE_CHECK if(!linked_lathe) { return RDSCREEN_TEXT_NO_PROTOLATHE }
-#define RDSCREEN_UI_IMPRINTER_CHECK if(!linked_imprinter) { return RDSCREEN_TEXT_NO_IMPRINTER }
-#define RDSCREEN_UI_DECONSTRUCT_CHECK if(!linked_destroy) { return RDSCREEN_TEXT_NO_DECONSTRUCT }
-#define RDSCREEN_UI_TDISK_CHECK if(!t_disk) { return RDSCREEN_TEXT_NO_TDISK }
-#define RDSCREEN_UI_DDISK_CHECK if(!d_disk) { return RDSCREEN_TEXT_NO_DDISK }
+#define RDSCREEN_UI_LATHE_CHECK if(QDELETED(linked_lathe)) { return RDSCREEN_TEXT_NO_PROTOLATHE }
+#define RDSCREEN_UI_IMPRINTER_CHECK if(QDELETED(linked_imprinter)) { return RDSCREEN_TEXT_NO_IMPRINTER }
+#define RDSCREEN_UI_DECONSTRUCT_CHECK if(QDELETED(linked_destroy)) { return RDSCREEN_TEXT_NO_DECONSTRUCT }
+#define RDSCREEN_UI_TDISK_CHECK if(QDELETED(t_disk)) { return RDSCREEN_TEXT_NO_TDISK }
+#define RDSCREEN_UI_DDISK_CHECK if(QDELETED(d_disk)) { return RDSCREEN_TEXT_NO_DDISK }
 #define RDSCREEN_UI_SNODE_CHECK if(!selected_node) { return RDSCREEN_TEXT_NO_SNODE }
 #define RDSCREEN_UI_SDESIGN_CHECK if(!selected_design) { return RDSCREEN_TEXT_NO_SDESIGN }
 
