@@ -424,6 +424,41 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = textlist.Join()
 	..()
 
+//MONKEY
+
+/obj/screen/alert/monkey
+	icon_state = "monkey_1"
+	alerttooltipstyle = "plasmafire"
+
+/obj/screen/alert/monkey/Initialize()
+	. = ..()
+	GLOB.monkey_alerts += src
+
+/obj/screen/alert/monkey/Destroy()
+	GLOB.monkey_alerts -= src
+
+/obj/screen/alert/monkey/MouseEntered(location,control,params)
+	var/monkeys = 0
+	var/leaders = 0
+	var/infected = 0
+	var/list/textlist = list()
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
+	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(L.mind && is_monkey(L.mind))
+			monkeys++
+		if(L.mind && is_monkey_leader(L.mind))
+			leaders++
+		if(ishuman(L) && L.HasDisease(D))
+			infected++
+	QDEL_NULL(D)
+	textlist += "There are currently <b>[leaders]</b> living monkey leaders[leaders > 1 ? "s" : ""].<br>"
+	textlist += "There are currently <b>[monkeys]</b> living infected monkey[monkeys > 1 ? "s" : ""].<br>"
+	textlist += "There are currently <b>[infected]</b> living infected human[infected > 1 ? "s" : ""].<br>"
+	if(SSticker.mode.monkeymode_autocall != -1)
+		textlist += "<b>[DisplayTimeText(SSticker.mode.monkeymode_autocall - world.time)]</b> until CentCom auto-calls the shuttle."
+	desc = textlist.Join()
+	return ..()
+
 //GUARDIANS
 
 /obj/screen/alert/cancharge

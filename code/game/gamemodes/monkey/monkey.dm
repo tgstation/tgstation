@@ -1,6 +1,7 @@
 /datum/game_mode
 	var/list/ape_infectees = list()
 	var/list/ape_leaders = list()
+	var/monkeymode_autocall = -1
 
 /datum/game_mode/monkey
 	name = "monkey"
@@ -9,8 +10,8 @@
 	false_report_weight = 1
 
 	required_players = 20
-	required_enemies = 1
-	recommended_enemies = 1
+	required_enemies = 2
+	recommended_enemies = 3
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -27,7 +28,7 @@
 
 
 /datum/game_mode/monkey/pre_setup()
-	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
+	carriers_to_make = CLAMP(round(num_players()/players_per_carrier, 1), 2, 3)
 
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!antag_candidates.len)
@@ -53,6 +54,8 @@
 		var/datum/antagonist/monkey/M = add_monkey_leader(carriermind, monkey_team)
 		if(M)
 			monkey_team = M.monkey_team
+	monkeymode_autocall = world.time + (rand(45, 60) MINUTES)
+	addtimer(CALLBACK(src, .proc/monkey_callshuttle), monkeymode_autocall)
 	return ..()
 
 /datum/game_mode/monkey/check_finished()
@@ -105,6 +108,23 @@
 /datum/game_mode/monkey/generate_report()
 	return "Reports of an ancient [pick("retrovirus", "flesh eating bacteria", "disease", "magical curse blamed on viruses", "banana blight")] outbreak that turn humans into monkeys has been reported in your quadrant.  Any such infections may be treated with banana juice.  If an outbreak occurs, ensure the station is quarantined to prevent a largescale outbreak at CentCom."
 
+/datum/game_mode/monkey/proc/monkey_callshuttle()
+	switch(SSshuttle.emergency.mode)
+		if(SHUTTLE_CALL)
+			set_security_level(SEC_LEVEL_RED)
+			priority_announce("Advanced M-909 retrovirus confirmed. Jamming all recall frequencies.", "Biohazard Alert")
+			SSshuttle.emergencyNoRecall = TRUE
+		if(SHUTTLE_RECALL)
+			priority_announce("Advanced M-909 retrovirus confirmed. Turning emergency shuttle around.", "Biohazard Alert")
+			SSshuttle.emergency.mode = SHUTTLE_CALL
+			SSshuttle.emergencyNoRecall = TRUE
+			set_security_level(SEC_LEVEL_RED)
+		if(SHUTTLE_IDLE)
+			set_security_level(SEC_LEVEL_RED)
+			priority_announce("Advanced M-909 retrovirus confirmed. Calling emergency shuttle.", "Biohazard Alert")
+			SSshuttle.requestEvac(null, "CENTCOM AUTOCALL: M909 CONFIRMED.")
+			SSshuttle.emergencyNoRecall = TRUE
+
 /proc/add_monkey_leader(datum/mind/monkey_mind)
 	if(is_monkey_leader(monkey_mind))
 		return FALSE
@@ -130,3 +150,10 @@
 /proc/is_monkey(datum/mind/monkey_mind)
 	return monkey_mind && (monkey_mind.has_antag_datum(/datum/antagonist/monkey) || is_monkey_leader(monkey_mind))
 
+/proc/update_monkey_alerts(new_icon_state)
+	for(var/X in GLOB.monkey_alerts)
+		var/obj/screen/alert/monkey/M = X
+		if(!X)
+			continue
+		M.icon_state = new_icon_state
+		M.update_icon()

@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(monkey_alerts)
+
 #define MONKEYS_ESCAPED		1
 #define MONKEYS_LIVED		2
 #define MONKEYS_DIED		3
@@ -27,6 +29,8 @@
 		owner.current.ForceContractDisease(D)
 	else
 		QDEL_NULL(D)
+	owner.current.throw_alert("monkeyinfo", /obj/screen/alert/monkey)
+	update_alert_icons()
 
 /datum/antagonist/monkey/greet()
 	to_chat(owner, "<b>You are a monkey now!</b>")
@@ -36,15 +40,46 @@
 	to_chat(owner, "<b>You can use :k to talk to fellow monkeys!</b>")
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
 
+/datum/antagonist/monkey/proc/update_alert_icons()
+	var/infected_humans = 0
+	var/infected_monkeys = 0
+	var/healthy_humans = 0
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
+	for(var/I in GLOB.carbon_list)
+		var/mob/living/carbon/C = I
+		var/turf/T = C.loc
+		if(!T || !T.z || !is_station_level(T.z))
+			continue
+		if(!C || C.stat == DEAD)
+			continue
+		if(ismonkey(C) && C.HasDisease(D))
+			infected_monkeys++
+		else if(ishuman(C) && C.HasDisease(D))
+			infected_humans++
+		else if(ishuman(C) && !C.HasDisease(D))
+			healthy_humans++
+
+	var/infected_to_healthy = healthy_humans / (infected_monkeys + infected_humans)
+	switch(infected_to_healthy)
+		if(0.751 to INFINITY)
+			update_monkey_alerts("monkey_1")
+		if(0.51 to 0.75)
+			update_monkey_alerts("monkey_2")
+		if(0 to 0.5)
+			update_monkey_alerts("monkey_3")
+
+
+
 /datum/antagonist/monkey/on_removal()
+	owner.current.clear_alert("monkeyinfo")
 	owner.special_role = null
 	SSticker.mode.ape_infectees -= owner
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.viruses
+	var/datum/disease/transformation/jungle_fever/D = locate() in owner.current.viruses
 	if(D)
 		D.remove_virus()
 		qdel(D)
-	
+	update_alert_icons()
 	. = ..()
 
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)

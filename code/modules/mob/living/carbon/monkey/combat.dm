@@ -1,6 +1,7 @@
 
 /mob/living/carbon/monkey
-	var/aggressive=0 // set to 1 using VV for an angry monkey
+	var/aggressive=FALSE // set to 1 using VV for an angry monkey
+	var/human_hating=FALSE
 	var/frustration=0
 	var/pickupTimer=0
 	var/list/enemies = list()
@@ -130,6 +131,9 @@
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+		return TRUE
+
+	if(human_hating && istype(L, /mob/living/carbon/human))
 		return TRUE
 
 	return FALSE

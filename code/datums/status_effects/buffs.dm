@@ -450,3 +450,29 @@
 /datum/status_effect/exercised/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
+
+/datum/status_effect/freedom
+	id = "Freedom!"
+	duration = 250
+	alert_type = null
+
+/datum/status_effect/freedom/tick()
+	owner.adjustBruteLoss(-rand(1, 2.75), FALSE)
+	owner.adjustFireLoss(-rand(1, 2.75), FALSE)
+	owner.adjustOxyLoss(-5)
+
+/datum/status_effect/freedom/on_apply()
+	. = ..()
+	owner.add_trait(TRAIT_SLEEPIMMUNE, STATUS_EFFECT)
+	owner.add_trait(TRAIT_IGNORESLOWDOWN, STATUS_EFFECT)
+	owner.add_trait(TRAIT_PUSHIMMUNE, STATUS_EFFECT)
+	owner.add_trait(TRAIT_SHOCKIMMUNE, STATUS_EFFECT)
+	owner.add_trait(TRAIT_STUNIMMUNE, STATUS_EFFECT)
+
+/datum/status_effect/freedom/on_remove()
+	. = ..()
+	owner.remove_trait(TRAIT_SLEEPIMMUNE, STATUS_EFFECT)
+	owner.remove_trait(TRAIT_IGNORESLOWDOWN, STATUS_EFFECT)
+	owner.remove_trait(TRAIT_PUSHIMMUNE, STATUS_EFFECT)
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, STATUS_EFFECT)
+	owner.remove_trait(TRAIT_STUNIMMUNE, STATUS_EFFECT)
