@@ -341,12 +341,8 @@
 /obj/item/integrated_circuit/output/diagnostic_hud
 	name = "AR interface"
 	desc = "Takes an icon name as an input, and will update the status hud when data is written to it."
-	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'working', 'patrol', 'arrow', 'heart', 'alert', and 'move'. Any input other than that will return the icon to its default state. The danger warning and offline status will appear over any input from this circuit."
+	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert' and 'move'. Any input other than that will return the icon to its default state. The danger warning and offline status will appear over any input from this circuit."
 	var/list/icons = list(
-		"working" = "hudworking",
-		"patrol" = "hudpatrol",
-		"arrow" = "hudcalled",
-		"heart" = "hudsentient",
 		"alert" = "hudalert",
 		"move" = "hudmove"
 		)

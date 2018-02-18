@@ -171,6 +171,11 @@
 			var/obj/item/device/electronic_assembly/E = built
 			E.opened = TRUE
 			E.update_icon()
+			//reupdate diagnostic hud because it was put_in_hands() and not pickup()'ed
+			E.diag_hud_set_circuithealth()
+			E.diag_hud_set_circuitcell()
+			E.diag_hud_set_circuitstat()
+			E.diag_hud_set_circuittracking()
 
 		to_chat(usr, "<span class='notice'>[capitalize(built.name)] printed.</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE)
