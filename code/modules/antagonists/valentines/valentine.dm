@@ -8,6 +8,8 @@
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect
 	protect_objective.owner = owner
 	protect_objective.target = date
+	if(!ishuman(date.current))
+		protect_objective.human_check = FALSE
 	protect_objective.explanation_text = "Protect [date.name], your date."
 	objectives += protect_objective
 	owner.objectives += objectives
