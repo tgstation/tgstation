@@ -270,4 +270,4 @@
 	name = "Inaprovaline"
 	id = "inaprovaline"
 	results = list("inaprovaline" = 3)
-	required_reagents = list("oxygen" = 1, "carbon" = 1, "sugar" = 1)
+	required_reagents = list("oxygen" = 1, "epinephrine" = 1, "ethanol" = 1)
