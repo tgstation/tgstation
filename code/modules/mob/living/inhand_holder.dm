@@ -51,7 +51,7 @@
 */
 /obj/item/clothing/head/mob_holder/dropped()
 	..()
-	if(!held_mob || (held_mob && held_mob.loc != src))//don't release on soft-drops
+	if(!held_mob || (held_mob && held_mob.loc != src) || isturf(loc))//don't release on soft-drops
 		release()
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
