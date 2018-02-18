@@ -129,13 +129,8 @@
 	if ((!(A) || src != A.loc))
 		return
 
-	if(destination_z)
-		var/old_z = A.z
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
-		if (old_z != destination_z)
-			A.onTransitZ(old_z, destination_z)
+	if(destination_z && destination_x && destination_y)
+		A.forceMove(locate(destination_x, destination_y, destination_z))
 
 		if(isliving(A))
 			var/mob/living/L = A
