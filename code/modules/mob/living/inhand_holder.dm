@@ -86,7 +86,7 @@
 	return holder
 
 /mob/living/simple_animal/drone/generate_mob_holder()
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", 'icons/mob/drone.dmi', null, null, TRUE)
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "[visualAppearence]_hat", null, null, null, TRUE)
 	return holder
 
 /mob/living/carbon/monkey/generate_mob_holder()
