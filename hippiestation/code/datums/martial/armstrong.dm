@@ -107,12 +107,6 @@
 		playsound(A.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 35, 1, -1)
 		sleep(1)
 
-/datum/martial_art/armstrong/proc/MachineGunAnimate(mob/living/carbon/human/A)
-	for(var/i in 1 to 10)
-		playsound(A, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 1, 5)
-		A.do_attack_animation(ATTACK_EFFECT_PUNCH) // note: happens so fast that it's very hard to actually notice
-		sleep(1)
-
 /datum/martial_art/armstrong/proc/Sloppy(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(current_level <= 9)
 		A.say("ATATATATATATAT!!")
@@ -192,9 +186,9 @@
 	if(current_level >= 3)
 		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.Knockdown(80)
+		D.Knockdown(50)
 		D.emote("scream")
-		D.adjustBruteLoss(8)
+		D.adjustBruteLoss(5)
 		add_exp(8, A)
 		if(D.gender == FEMALE)
 			D.visible_message("<span class='notice'>[A] scares [D] and they sheepishly fall over.</span>", \
@@ -214,7 +208,7 @@
 									"<span class='userdanger'>[A] punches [D] at the speed of a machine gun!</span>")
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.adjustBruteLoss(18) //punch punch punch
-		MachineGunAnimate(A)
+		SloppyAnimate(A)
 		D.Stun(10)
 		add_exp(12, A)
 		return
@@ -229,7 +223,7 @@
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.throw_at(throw_target, 2, 4,A)
 		D.adjust_fire_stacks(3)
-		D.adjustFireLoss(10)
+		D.adjustFireLoss(8)
 		D.IgniteMob()
 		var/datum/effect_system/explosion/E = new
 		E.set_up(get_turf(D))
@@ -243,7 +237,7 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
 						  "<span class='userdanger'>[A] headbutts you with atom-shattering strength!</span>")
-		D.apply_damage(30, BRUTE, "head")
+		D.apply_damage(18, BRUTE, "head") //same as machine gun, but easier to pull off + a stun.
 		playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 120, 1, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.AdjustUnconscious(15)
@@ -274,97 +268,109 @@
 // Help/Hurt/Grab/Disarm acts
 
 /datum/martial_art/armstrong/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("E",D)
-	if(check_streak(A,D))
+	if(D.stat != DEAD) // Checks if they're dead.
+		add_to_streak("E",D)
+		if(check_streak(A,D))
+			return 1
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		var/atk_verb_help = pick("left punches", "left hooks")
+		D.visible_message("<span class='danger'>[A] [atk_verb_help] [D]!</span>", \
+						  "<span class='userdanger'>[A] [atk_verb_help] you!</span>")
+		D.apply_damage(rand(6,13), BRUTE) // lower base damage
+		D.adjustStaminaLoss(rand(6,10)) // but higher stamina damage
+		add_exp(rand(1,3), A)
+		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
+		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
+		if(prob(D.getBruteLoss()) && !D.lying)
+			D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
+			D.apply_damage(10, BRUTE)
+			D.Knockdown(20)
+		if(current_level >= 10)
+			A.changeNext_move(CLICK_CD_RAPID) //O fortuna
+			.= FALSE
+		add_logs(A, D, "[atk_verb_help] (Armstrong)")
 		return 1
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb_help = pick("left punches", "left hooks")
-	D.visible_message("<span class='danger'>[A] [atk_verb_help] [D]!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb_help] you!</span>")
-	D.apply_damage(rand(6,13), BRUTE) // lower base damage
-	D.adjustStaminaLoss(rand(6,10)) // but higher stamina damage
-	add_exp(rand(1,3), A)
-	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
-	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
-	if(prob(D.getBruteLoss()) && !D.lying)
-		D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
-		D.apply_damage(10, BRUTE)
-		D.Knockdown(20)
-	if(current_level >= 10)
-		A.changeNext_move(CLICK_CD_RAPID) //O fortuna
-		.= FALSE
-	add_logs(A, D, "[atk_verb_help] (Armstrong)")
-	return 1
+	else // Prevents you from comboing dead lads, returns the default behavior.
+		return
 
 /datum/martial_art/armstrong/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("H",D)
-	if(check_streak(A,D))
+	if(D.stat != DEAD) // Checks if they're dead.
+		add_to_streak("H",D)
+		if(check_streak(A,D))
+			return 1
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		var/atk_verb_harm = pick("right punches", "right hooks")
+		D.visible_message("<span class='danger'>[A] [atk_verb_harm] [D]!</span>", \
+						  "<span class='userdanger'>[A] [atk_verb_harm] you!</span>")
+		D.apply_damage(rand(8,15), BRUTE) // higher base damage
+		D.adjustStaminaLoss(rand(4,8)) // but lower stamina damage
+		add_exp(rand(1,3), A)
+		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 0, -1)
+		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
+		if(prob(D.getBruteLoss()) && !D.lying)
+			D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
+			D.apply_damage(10, BRUTE)
+			D.Knockdown(20)
+		if(current_level >= 10)
+			A.changeNext_move(CLICK_CD_RAPID)
+			.= FALSE
+		add_logs(A, D, "[atk_verb_harm] (Armstrong)")
 		return 1
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb_harm = pick("right punches", "right hooks")
-	D.visible_message("<span class='danger'>[A] [atk_verb_harm] [D]!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb_harm] you!</span>")
-	D.apply_damage(rand(8,15), BRUTE) // higher base damage
-	D.adjustStaminaLoss(rand(4,8)) // but lower stamina damage
-	add_exp(rand(1,3), A)
-	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 0, -1)
-	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
-	if(prob(D.getBruteLoss()) && !D.lying)
-		D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
-		D.apply_damage(10, BRUTE)
-		D.Knockdown(20)
-	if(current_level >= 10)
-		A.changeNext_move(CLICK_CD_RAPID)
-		.= FALSE
-	add_logs(A, D, "[atk_verb_harm] (Armstrong)")
-	return 1
+	else // Prevents you from comboing dead lads, returns the default behavior.
+		return
 
 /datum/martial_art/armstrong/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("G",D)
-	if(check_streak(A,D))
+	if(D.stat != DEAD) // Checks if they're dead.
+		add_to_streak("G",D)
+		if(check_streak(A,D))
+			return 1
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		var/atk_verb_grab = pick("zipper punches", "one, two punches")
+		D.visible_message("<span class='danger'>[A] [atk_verb_grab] [D]!</span>", \
+						  "<span class='userdanger'>[A] [atk_verb_grab] you!</span>")
+		D.apply_damage(rand(4,8), BRUTE) // left hand brute damage - weakened
+		D.adjustStaminaLoss(rand(4,9)) // left hand stamina damage
+		D.apply_damage(rand(6,12), BRUTE) // right hand brute damage - weakened
+		D.adjustStaminaLoss(rand(3,8)) // right hand stamina damage
+		add_exp(rand(2,4), A)
+		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_zipper.ogg', 50, 0, -1)
+		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
+		if(prob(D.getBruteLoss()) && !D.lying)
+			D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
+			D.apply_damage(10, BRUTE)
+		if(current_level >= 10)
+			A.changeNext_move(CLICK_CD_RAPID)
+			.= FALSE
+		add_logs(A, D, "[atk_verb_grab] (Armstrong)")
 		return 1
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb_grab = pick("zipper punches", "one, two punches")
-	D.visible_message("<span class='danger'>[A] [atk_verb_grab] [D]!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb_grab] you!</span>")
-	D.apply_damage(rand(4,8), BRUTE) // left hand brute damage - weakened
-	D.adjustStaminaLoss(rand(4,9)) // left hand stamina damage
-	D.apply_damage(rand(6,12), BRUTE) // right hand brute damage - weakened
-	D.adjustStaminaLoss(rand(3,8)) // right hand stamina damage
-	add_exp(rand(2,4), A)
-	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_zipper.ogg', 50, 0, -1)
-	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
-	if(prob(D.getBruteLoss()) && !D.lying)
-		D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
-		D.apply_damage(10, BRUTE)
-	if(current_level >= 10)
-		A.changeNext_move(CLICK_CD_RAPID)
-		.= FALSE
-	add_logs(A, D, "[atk_verb_grab] (Armstrong)")
-	return 1
+	else // Prevents you from comboing dead lads, returns the default behavior.
+		return
 
 /datum/martial_art/armstrong/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	add_to_streak("D",D)
-	if(check_streak(A,D))
+	if(D.stat != DEAD) // Checks if they're dead.
+		add_to_streak("D",D)
+		if(check_streak(A,D))
+			return 1
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		var/atk_verb_disarm = pick("double palm thrusts")
+		D.visible_message("<span class='danger'>[A] [atk_verb_disarm] [D]!</span>", \
+						  "<span class='userdanger'>[A] [atk_verb_disarm] you!</span>")
+		D.apply_damage(rand(3,5), BRUTE) // weakest brute damage
+		D.adjustStaminaLoss(rand(10,20)) // strongest stamina damage
+		add_exp(rand(2,4), A)
+		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_palmthrust.ogg', 50, 0, -1)
+		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
+		if(prob(D.getBruteLoss()) && !D.lying)
+			D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
+			D.apply_damage(10, BRUTE)
+			D.adjustStaminaLoss(10)
+		if(current_level >= 10)
+			A.changeNext_move(CLICK_CD_RAPID)
+			.= FALSE
+		add_logs(A, D, "[atk_verb_disarm] (Armstrong)")
 		return 1
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	var/atk_verb_disarm = pick("double palm thrusts")
-	D.visible_message("<span class='danger'>[A] [atk_verb_disarm] [D]!</span>", \
-					  "<span class='userdanger'>[A] [atk_verb_disarm] you!</span>")
-	D.apply_damage(rand(3,5), BRUTE) // weakest brute damage
-	D.adjustStaminaLoss(rand(10,20)) // strongest stamina damage
-	add_exp(rand(2,4), A)
-	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_palmthrust.ogg', 50, 0, -1)
-	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_combo.ogg', 25, FALSE, pressure_affected = FALSE)
-	if(prob(D.getBruteLoss()) && !D.lying)
-		D.visible_message("<span class='warning'>Critical hit!</span>", "<span class='userdanger'>Critical hit!</span>")
-		D.apply_damage(10, BRUTE)
-		D.adjustStaminaLoss(10)
-	if(current_level >= 10)
-		A.changeNext_move(CLICK_CD_RAPID)
-		.= FALSE
-	add_logs(A, D, "[atk_verb_disarm] (Armstrong)")
-	return 1
+	else // Prevents you from comboing dead lads, returns the default behavior.
+		return
 
 // Help verb
 
@@ -412,13 +418,15 @@
 
 /obj/item/paper/armstrong_tutorial
 	name = "paper - 'HOW TO NOT SUCK'"
-	info = "Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
-	Don't spam one attack. Cycle rapidly through intents or try to use combos as much as possible to capitalize on both brute damage and stamina damage.<br> \
+	info = "<b>1:</b>Activating throw mode gives you a 75% chance to block any melee attacks coming your way. Use it to not die to stunbatons.<br> \
+	<b>2:</b> Don't spam one attack. Use combos as much as possible to capitalize on both damage and stuns.<br> \
 	To cycle intents, push F or G. To directly select an intent, press 1, 2, 3, or 4. <br>\
-	You can't pull people. At all. Don't try to. Punch people as hard as you can, as fast as you can. Once you start to level up, you won't need to pull people any way.<br> \
+	Seriously, don't spam attacks. Combos will deal much more damage than mashing random intents.<br> \
+	<b>3:</b>You can't pull people using Ctrl+Click, unless they're dead. We blame the Space Coders for that. Once you start to level up, you won't need to pull people any way.<br> \
 	You can't use guns either. Guns are for pussies and fishpeople.<br> \
-	<b>Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Punch dead bodies if you have to. Get some experience, or else you're woefully underpowered.<br> \
-	If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
+	<b>5:</b>The first combo you unlock, <b><i>Buster Punches</i></b>, is very easy to pull off and very powerful, especially if you can knock someone into a wall. If you need to practice cycling intents, or just want an easy combo, use it! <b> \
+	<b>6: Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Get some experience, or else you're woefully underpowered.<br> \
+	<b>7:></b>If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
 
 //Level UP and EXP code.
 
