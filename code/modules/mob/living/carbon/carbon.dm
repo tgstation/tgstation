@@ -777,6 +777,9 @@
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
 	restoreEars()
+	pain_level = 0
+	pain_shock_stage = 0
+	pain_numb = 0.1
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

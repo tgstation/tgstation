@@ -8,7 +8,7 @@
 
 	max_integrity = 50
 
-	var/normal_move_delay = 6
+	var/normal_move_delay = 4
 	var/mutable_appearance/wheel_overlay
 
 /obj/vehicle/ridden/wheelchair/Initialize()

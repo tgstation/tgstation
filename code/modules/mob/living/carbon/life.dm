@@ -386,6 +386,9 @@
 	if(hallucination)
 		handle_hallucinations()
 
+	if(pain_numb)
+		pain_numb = max(0, pain_numb - 1)
+
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature

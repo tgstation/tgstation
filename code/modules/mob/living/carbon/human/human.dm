@@ -910,7 +910,7 @@
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
 /mob/living/carbon/human/on_drag(newloc, dir)
-	if(bleed_rate)
+	if(bleed_rate && lying && !buckled && isturf(loc) && has_gravity())
 		if(prob(getBruteLoss() / 5) &&  health > HEALTH_THRESHOLD_CRIT)
 			makeTrail(newloc, loc, dir, FALSE) //we don't actually lose blood from this as we want to handle that ourselves
 			if(prob(getBruteLoss()*200/maxHealth))
