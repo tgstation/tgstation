@@ -24,7 +24,7 @@
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
-		var/area/Ablob = get_area(loc)
+		var/area/Ablob = get_area(src)
 		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
