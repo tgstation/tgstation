@@ -26,12 +26,14 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen/maintenance/PopulateContents()
 	..()
-	for(var/i = 0, i < 5, i++)
+	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/food/condiment/milk(src)
-	for(var/i = 0, i < 5, i++)
+	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/food/condiment/soymilk(src)
-	for(var/i = 0, i < 2, i++)
+	for(var/i in 1 to 3)
 		new /obj/item/storage/fancy/egg_box(src)
+	for(var/i in 1 to rand(2,3))
+		new  /obj/item/donk_bag/large/filled(src)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
 	req_access = list()
