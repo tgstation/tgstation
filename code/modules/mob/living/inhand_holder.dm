@@ -38,20 +38,10 @@
 	if(held_mob)
 		release()
 	return ..()
-/*
-/obj/item/clothing/head/mob_holder/equipped(mob/user, slot)
-	..()
-	if(iscarbon(user))
-		var/mob/living/carbon/c_user = user
-		if(alternate_worn_icon && src==c_user.head)
-			overlays = null
-			icon = alternate_worn_icon
-			icon_state = item_state
-			c_user.head_update(src)
-*/
+
 /obj/item/clothing/head/mob_holder/dropped()
 	..()
-	if(!held_mob || (held_mob && held_mob.loc != src) || isturf(loc))//don't release on soft-drops
+	if(isturf(loc))//don't release on soft-drops
 		release()
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
@@ -97,7 +87,6 @@
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), 'icons/mob/animals_held.dmi', 'icons/mob/animals_held_lh.dmi', 'icons/mob/animals_held_rh.dmi')
 	holder.w_class = 1
 	return holder
-
 
 /mob/living/proc/mob_try_pickup(mob/living/user)
 	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)

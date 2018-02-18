@@ -275,7 +275,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.dropItemToGround(src))
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	pickup(user)
