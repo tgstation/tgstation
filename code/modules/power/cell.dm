@@ -313,7 +313,7 @@
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."
 	maxcharge = 500
-	rating = 2
+	rating = 3
 
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
