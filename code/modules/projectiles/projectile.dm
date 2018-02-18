@@ -65,6 +65,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
+	var/decayedRange
 	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
@@ -85,6 +86,7 @@
 /obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()
+	decayedRange = range
 
 /obj/item/projectile/proc/Range()
 	range--
