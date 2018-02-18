@@ -10,7 +10,6 @@
 	var/help_verb
 	var/no_guns = FALSE
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
-	var/mob/living/carbon/human/owner = null // hippie edit - monk code
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -91,7 +90,6 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
-	owner = H // hippie edit - monk code
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
@@ -104,7 +102,6 @@
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(!istype(H) || !H.mind || H.mind.martial_art != src)
 		return
-	owner = null // hippie edit: monk code
 	on_remove(H)
 	if(base)
 		base.teach(H)

@@ -421,7 +421,7 @@
 
 //Level UP and EXP code.
 
-/datum/martial_art/armstrong/proc/do_level_up()
+/datum/martial_art/armstrong/proc/do_level_up(mob/living/carbon/human/owner)
 	switch(current_level)
 		if(2)
 			to_chat(owner, "<span class = 'notice'>You have re-awakened the Buster Punches technique. To use: Help Help Grab</span>")
@@ -469,7 +469,7 @@
 		current_level++
 		var/next_level = current_level + 1
 		next_level_exp = next_level*25
-		do_level_up()
+		do_level_up(mob/living/carbon/human/owner)
 		to_chat(owner, "<span class = 'notice'><b>You feel more confident in your powers.</b></span>")
 
 /obj/item/clothing/mask/fakemoustache/italian/cursed //for those cheeky aliens who think they can circumvent hair
