@@ -467,7 +467,7 @@
 	on_drag(newloc, old_direction)
 
 /mob/living/proc/on_drag(newloc, dir)
-	if(has_prob(getBruteLoss()*200/maxHealth) && lying && !buckled && isturf(loc) && has_gravity())
+	if(prob(getBruteLoss()*200/maxHealth) && lying && !buckled && isturf(loc) && has_gravity())
 		makeTrail(newloc, loc, dir)
 
 /mob/living/movement_delay(ignorewalk = 0)
