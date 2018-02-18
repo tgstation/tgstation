@@ -1288,7 +1288,6 @@
 /datum/reagent/oxycodone/on_mob_life(var/mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.pain_numb = max(5, C.pain_numb)
 		C.pain_shock_stage -= 3 //We don't FEEL the shock now, but make it go away quick in case we run out of oxycodone.
 		if(!C.IsSleeping() && !C.IsUnconscious() && prob(2))
 			to_chat(M, pick("<span class='numb'>You feel like you're floating...</span>", \
@@ -1300,6 +1299,18 @@
 							"<span class='numb'>Hello?... Is there anybody in there?...</span>", \
 							"<span class='numb'>You feel... comfortably numb.</span>"))
 	. = 1
+	..()
+
+/datum/reagent/oxycodone/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_NUMB, id)
+
+/datum/reagent/oxycodone/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_NUMB, id)
 	..()
 
 /datum/reagent/medicine/tramadol

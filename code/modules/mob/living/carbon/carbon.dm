@@ -666,7 +666,7 @@
 	//Fire and Brute damage overlay (BSSR)
 	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 	if(hurtdamage)
-		if(pain_numb)
+		if(has_trait(TRAIT_NUMB))
 			hurtdamage = max((hurtdamage - 20) / 2, 0) //Make the damage appear smaller than it really is
 		var/severity = 0
 		switch(hurtdamage)
@@ -694,7 +694,7 @@
 			. = 1
 			if(!shown_health_amount)
 				shown_health_amount = health
-			if(pain_numb)
+			if(has_trait(TRAIT_NUMB))
 				hud_used.healths.icon_state = "health_numb"
 			else if(shown_health_amount >= maxHealth)
 				hud_used.healths.icon_state = "health0"
@@ -779,7 +779,7 @@
 	restoreEars()
 	pain_level = 0
 	pain_shock_stage = 0
-	pain_numb = 0.1
+	remove_trait(TRAIT_NUMB)
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

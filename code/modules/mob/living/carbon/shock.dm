@@ -2,8 +2,8 @@
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/update_pain_level()
-	if(pain_numb)
-		return 0
+	if(has_trait(TRAIT_NUMB))
+		return 0 //No this isn't a bool
 
 	pain_level = 					\
 	1	* getOxyLoss() + 		\

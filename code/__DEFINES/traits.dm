@@ -20,6 +20,7 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+#define TRAIT_NUMB				"numb_to_pain"
 
 
 // common trait sources

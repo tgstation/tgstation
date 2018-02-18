@@ -928,7 +928,7 @@
 /mob/living/carbon/human/feels_pain()
 	if(dna && dna.species && (NOPAIN in dna.species.species_traits))
 		return FALSE
-	if(pain_numb)
+	if(has_trait(TRAIT_NUMB))
 		return FALSE
 	return ..()
 
