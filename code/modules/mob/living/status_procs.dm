@@ -228,5 +228,5 @@
 	if(stat == DEAD)
 		return
 	add_trait(TRAIT_FAKEDEATH, source)
-	tod = worldtime2text()
+	tod = station_time_timestamp()
 	update_stat()

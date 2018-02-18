@@ -187,7 +187,7 @@
 	interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(!authenticated) 
+	if(!authenticated)
 		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
@@ -199,7 +199,7 @@
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([worldtime2text()])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

@@ -90,6 +90,8 @@
 	var/failure_timer = 0
 	var/force_update = 0
 	var/emergency_lights = FALSE
+	var/nightshift_lights = FALSE
+	var/last_nightshift_switch = 0
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
@@ -755,6 +757,7 @@
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
+		"nightshiftLights" = nightshift_lights,
 
 		"powerChannels" = list(
 			list(
@@ -856,6 +859,13 @@
 			. = TRUE
 		if("breaker")
 			toggle_breaker()
+			. = TRUE
+		if("toggle_nightshift")
+			if(last_nightshift_switch > world.time + 100)			//don't spam..
+				to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+				return
+			last_nightshift_switch = world.time
+			set_nightshift(!nightshift_lights)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -1303,6 +1313,16 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+
+/obj/machinery/power/apc/proc/set_nightshift(on)
+	set waitfor = FALSE
+	nightshift_lights = on
+	for(var/area/A in area.related)
+		for(var/obj/machinery/light/L in A)
+			if(L.nightshift_allowed)
+				L.nightshift_enabled = nightshift_lights
+				L.update(FALSE)
+			CHECK_TICK
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1

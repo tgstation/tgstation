@@ -159,7 +159,7 @@
 									<br>
 									[GLOB.data_core ? GLOB.data_core.get_manifest(0) : ""]
 									"}
-					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
+					if(!printer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
 						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 						return
 					else

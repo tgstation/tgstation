@@ -131,6 +131,15 @@
 	  </ui-section>
 	</ui-notice>
 	<ui-notice>
+	  <ui-section label='Night Shift Lighting'>
+	    {{#if data.locked && !data.siliconUser}}
+	      <span>{{data.nightshiftLights ? "Enabled" : "Disabled"}}</span>
+	    {{else}}
+	      <ui-button icon='lightbulb-o' action='toggle_nightshift'>{{data.nightshiftLights ? "Enabled" : "Disabled"}}</ui-button>
+	    {{/if}}
+	  </ui-section>
+	</ui-notice>
+	<ui-notice>
 	  <ui-section label='Cover Lock'>
 		{{#if data.locked && !data.siliconUser}}
 		  <span>{{data.coverLocked ? "Engaged" : "Disengaged"}}</span>
