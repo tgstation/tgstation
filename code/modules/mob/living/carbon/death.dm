@@ -12,6 +12,12 @@
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
+	if(adv_health_hud && hud_used && LAZYLEN(hud_used.adv_health))
+		for(var/X in hud_used.adv_health)
+			var/obj/screen/adv_health/S = X
+			S.icon_state = "ded"
+
+
 /mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
 	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)

@@ -27,7 +27,9 @@
 	handle_changeling()
 
 	if(stat != DEAD)
-		return 1
+		if(hud_used && hud_used.healths && LAZYLEN(hud_used.adv_health))
+			handle_adv_hud()
+		return TRUE
 
 ///////////////
 // BREATHING //
@@ -455,6 +457,23 @@
 		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
 			B.damaged_brain = TRUE
+
+///////////////////
+//ADVANCED HEALTH//
+///////////////////
+
+/mob/living/carbon/proc/handle_adv_hud()
+	if(adv_health_hud)
+		hud_used.healths.invisibility = INVISIBILITY_ABSTRACT
+	else
+		hud_used.healths.invisibility = 0
+	for(var/X in hud_used.adv_health)
+		var/obj/screen/adv_health/S = X
+		if(adv_health_hud)
+			S.invisibility = 0
+			S.update_icon()
+		else
+			S.invisibility = INVISIBILITY_ABSTRACT
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//

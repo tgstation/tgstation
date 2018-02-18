@@ -280,6 +280,12 @@
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 
+	for(var/X in subtypesof(/obj/screen/adv_health))
+		var/obj/screen/adv_health/Y = new X()
+		Y.hud = src
+		LAZYADD(adv_health, Y)
+		infodisplay += Y
+
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
 
@@ -308,7 +314,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
-	
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()

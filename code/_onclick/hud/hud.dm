@@ -44,6 +44,8 @@
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
 
+	var/list/obj/screen/adv_health
+
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 
 /datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')
@@ -73,32 +75,18 @@
 	qdel(module_store_icon)
 	module_store_icon = null
 
-	if(static_inventory.len)
-		for(var/thing in static_inventory)
-			qdel(thing)
-		static_inventory.Cut()
-
 	inv_slots.Cut()
 	action_intent = null
 	zone_select = null
 	pull_icon = null
 
-	if(toggleable_inventory.len)
-		for(var/thing in toggleable_inventory)
-			qdel(thing)
-		toggleable_inventory.Cut()
-
-	if(hotkeybuttons.len)
-		for(var/thing in hotkeybuttons)
-			qdel(thing)
-		hotkeybuttons.Cut()
-
 	throw_icon = null
 
-	if(infodisplay.len)
-		for(var/thing in infodisplay)
-			qdel(thing)
-		infodisplay.Cut()
+	QDEL_LIST(static_inventory)
+	QDEL_LIST(toggleable_inventory)
+	QDEL_LIST(hotkeybuttons)
+	QDEL_LIST(infodisplay)
+	QDEL_LIST(adv_health)
 
 	healths = null
 	healthdoll = null

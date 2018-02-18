@@ -57,5 +57,7 @@
 	var/obj/halitem
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
+
+	var/adv_health_hud = FALSE
 	var/cpr_time = 1 //CPR cooldown.
 	var/damageoverlaytemp = 0

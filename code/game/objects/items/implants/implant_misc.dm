@@ -134,3 +134,73 @@
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
 
+/obj/item/implant/health_monitor
+	name = "health monitor implant"
+	activated = FALSE
+	var/obj/item/device/radio/internal_radio
+	var/triggered_in_crit = FALSE
+
+/obj/item/implant/health_monitor/Initialize()
+	. = ..()
+	internal_radio = new/obj/item/device/radio(src)
+	internal_radio.keyslot = new /obj/item/device/encryptionkey/headset_med
+	internal_radio.subspace_transmission = TRUE
+	internal_radio.listening = FALSE
+	internal_radio.broadcasting = FALSE
+	internal_radio.recalculateChannels()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/implant/health_monitor/Destroy()
+	QDEL_NULL(internal_radio)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/implant/health_monitor/removed(source, silent = FALSE, special = FALSE)
+	. = ..()
+	if(. && iscarbon(source))
+		var/mob/living/carbon/C = source
+		C.adv_health_hud = FALSE
+		to_chat(C, "<span class='notice'>You feel less in-tune with your body.</span>")
+
+/obj/item/implant/health_monitor/implant(mob/living/target, mob/user, silent = FALSE)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.adv_health_hud = TRUE
+		to_chat(C, "<span class='notice'>You feel more in-tune with your body.</span>")
+	return ..()
+
+/obj/item/implant/health_monitor/process()
+	if(!imp_in || !iscarbon(imp_in))
+		return
+	var/mob/living/carbon/source = imp_in
+	if(!triggered_in_crit && source.InCritical())
+		triggered_in_crit = TRUE
+		var/area/location = get_area(src)
+		internal_radio.talk_into(src, "Medical emergency! [source] is in critical condition at [location]!", "Medical", (get_spans() + SPAN_ROBOT), get_default_language())
+	else if(!source.InCritical())
+		triggered_in_crit = FALSE
+
+/obj/item/implant/health_monitor/update_icon()
+	if(!imp_in || !iscarbon(imp_in))
+		return
+	var/mob/living/carbon/C = imp_in
+	if(!C.adv_health_hud)
+		C.hud_used.healths.invisibility = 0
+	else
+		C.hud_used.healths.invisibility = INVISIBILITY_ABSTRACT
+		return
+	for(var/X in C.hud_used.adv_health)
+		var/obj/screen/adv_health/S = X
+		var/dmg_amt = C.get_damage_amount(S.dmg_type)
+		var/g = LERP(200, 0, CLAMP(dmg_amt, 0, 75)/75)
+		var/r = -g*0.11+95
+		if(C.stat == DEAD)
+			S.icon_state = "ded"
+			continue
+		else if(dmg_amt >= 76)
+			S.icon_state = "[S.dmg_type]_crit"
+		else
+			S.icon_state = S.dmg_type
+		S.cut_overlays() //sadly this the the only way i know of to update the color
+		S.color_overlay.color = rgb(r, g, 0)
+		S.add_overlay(S.color_overlay)
