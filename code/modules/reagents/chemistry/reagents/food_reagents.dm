@@ -665,9 +665,6 @@
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
-<<<<<<< HEAD
-	..()
-=======
 	..()
 
 /datum/reagent/consumable/clownstears
@@ -677,4 +674,3 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
->>>>>>> e9fe2468c5... Newliquors (#35581)
