@@ -15,29 +15,29 @@
 	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
-	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
 	var/list/stack_overlays
-
-/obj/item/stack/ore/add(amount)
-	var/amount_added = 0
-	while (amount_added < amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
-		var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-		newore.pixel_x = rand(-8,8)
-		newore.pixel_y = rand(-8,8)
-		LAZYADD(stack_overlays, newore)
-		amount_added++
-	return ..()
-
-/obj/item/stack/ore/use(amount)
-	var/newamount = src.amount - amount
-	if (newamount <= ORESTACK_OVERLAYS_MAX)
-		if (LAZYLEN(stack_overlays))
-			stack_overlays.len = newamount-1
-	return ..()
 
 /obj/item/stack/ore/update_icon()
 	. = ..()
-	add_overlay(stack_overlays)
+	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
+	if(difference == 0)
+		return
+	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
+		cut_overlays()
+		if (LAZYLEN(stack_overlays)-difference <= 0)
+			stack_overlays = null;
+		else
+			stack_overlays.len += difference
+	else if(difference > 0)			//amount > stack_overlays, add some.
+		cut_overlays()
+		for(var/i in 1 to difference)
+			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
+			newore.pixel_x = rand(-8,8)
+			newore.pixel_y = rand(-8,8)
+			LAZYADD(stack_overlays, newore)
+	if (stack_overlays)
+		add_overlay(stack_overlays)
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	if(!refined_type)
