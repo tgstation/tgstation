@@ -1317,8 +1317,9 @@
 
 /datum/reagent/medicine/oxycodone/overdose_process(mob/living/M)
 	M.adjustToxLoss(rand(2,5)*REM)
-	if(prob(10))
-		M.vomit()
+	if(prob(10) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vomit()
 	else if(prob(9.5))
 		M.losebreath += rand(1, 3.5)
 	else if(prob(9))
