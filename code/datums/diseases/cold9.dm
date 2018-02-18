@@ -14,7 +14,7 @@
 	..()
 	switch(stage)
 		if(2)
-			affected_mob.bodytemperature -= 10
+			affected_mob.bodytemperature = max(affected_mob.bodytemperature - 10,0)
 			if(prob(1) && prob(10))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				cure()
@@ -28,7 +28,7 @@
 			if(prob(5))
 				to_chat(affected_mob, "<span class='danger'>You feel stiff.</span>")
 		if(3)
-			affected_mob.bodytemperature -= 20
+			affected_mob.bodytemperature = max(affected_mob.bodytemperature - 20,0)
 			if(prob(1))
 				affected_mob.emote("sneeze")
 			if(prob(1))

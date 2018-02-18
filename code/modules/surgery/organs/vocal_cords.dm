@@ -340,7 +340,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature -= (50 * power_multiplier)
+			L.bodytemperature = max(L.bodytemperature - 50 * power_multiplier,0)
 
 	//REPULSE
 	else if((findtext(message, repulse_words)))

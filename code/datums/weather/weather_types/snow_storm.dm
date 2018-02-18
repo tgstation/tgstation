@@ -22,5 +22,5 @@
 
 
 /datum/weather/snow_storm/weather_act(mob/living/L)
-	L.bodytemperature -=(rand(5,15))
+	L.bodytemperature = max(L.bodytemperature - rand(5,15),0)
 
