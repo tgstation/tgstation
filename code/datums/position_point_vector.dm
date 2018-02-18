@@ -129,34 +129,6 @@
 /datum/point/proc/return_py()
 	return MODULUS(y, world.icon_size) - 16 - 1
 
-/datum/point/proc/mapcheck()
-	. = FALSE
-	var/maxx = world.icon_size * world.maxx
-	var/maxy = world.icon_size * world.maxy
-	var/move_zx = 0
-	var/move_zy = 0
-	if(x < 0)
-		x += maxx
-		move_zx -= 1
-	if(y < 0)
-		y += maxy
-		move_zy -= 1
-	if(x > maxx)
-		x -= maxx
-		move_zx += 1
-	if(y > maxy)
-		y -= maxy
-		move_zy += 1
-	var/datum/space_level/S = SSmapping.get_level(z)
-	if(move_zx != 0)
-		var/datum/space_level/L = S.neigbours["[move_zx < 0? WEST : EAST]"]
-		z = L.z_value
-		. = TRUE
-	if(move_zy != 0)
-		var/datum/space_level/L = S.neigbours["[move_zy < 0? SOUTH : NORTH]"]
-		z = L.z_value
-		. = TRUE
-
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
 	var/iteration = 0
@@ -216,8 +188,6 @@
 	iteration++
 	x += mpx * 1
 	y += mpy * 1
-	if(mapcheck())
-		on_z_change()
 
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()
