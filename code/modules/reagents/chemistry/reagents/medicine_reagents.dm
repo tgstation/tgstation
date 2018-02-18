@@ -1317,3 +1317,10 @@
 			C.pain_shock_stage--
 	. = 1
 	..()
+
+/datum/reagent/paracetamol
+	name = "Paracetamol"
+	id = "paracetamol"
+	description = "Most commonly know this as Tylenol, but this chemical is a mild, simple painkiller."
+	color = "#C855DC"
+	pain_resistance = 60
