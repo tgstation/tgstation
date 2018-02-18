@@ -261,7 +261,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS || stat == PRE_CRIT))
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
@@ -456,7 +456,6 @@
 			return 0
 
 	var/old_direction = dir
-	var/turf/T = loc
 	. = ..()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
@@ -465,8 +464,11 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
-	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(newloc, T, old_direction)
+	on_drag(newloc, old_direction)
+
+/mob/living/proc/on_drag(newloc, dir)
+	if(prob(getBruteLoss()*200/maxHealth))
+		makeTrail(newloc, loc, dir)
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = 0
@@ -489,7 +491,7 @@
 			if(MOVE_INTENT_WALK)
 				. += config_walk_delay.value_cache
 
-/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
+/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction, actually_lose_blood = TRUE)
 	if(!has_gravity())
 		return
 	var/blood_exists = FALSE
@@ -501,7 +503,8 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				if(actually_lose_blood)
+					blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
@@ -956,7 +959,7 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat == PRE_CRIT || (stat != SOFT_CRIT || pulledby))) || (has_trait(TRAIT_FAKEDEATH))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
@@ -1079,4 +1082,7 @@
 	if(!do_after(user, 20, target = src))
 		return FALSE
 	mob_pickup(user)
+	return TRUE
+
+/mob/living/proc/feels_pain()
 	return TRUE

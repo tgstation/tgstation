@@ -909,6 +909,21 @@
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
+/mob/living/carbon/human/on_drag(newloc, dir)
+	if(bleed_rate)
+		if(prob(getBruteLoss() / 5) &&  health > HEALTH_THRESHOLD_CRIT)
+			makeTrail(newloc, loc, dir, FALSE) //we don't actually lose blood from this as we want to handle that ourselves
+			if(prob(getBruteLoss()*200/maxHealth))
+				add_splatter_floor(get_turf(src))
+			bleed(rand(bleed_rate*0.75, bleed_rate))
+			visible_message("<span class='warning'>[src]'s wounds are torn wider from being dragged across the floor!</span>")
+		else if(prob(15))
+			bleed(rand(bleed_rate, bleed_rate*1.75))
+			add_splatter_floor(get_turf(src))
+			makeTrail(newloc, loc, dir, FALSE)
+			visible_message("<span class='warning'>[src]s wounds are torn even wider from being dragged!</span>")
+
+
 /mob/living/carbon/human/species
 	var/race = null
 

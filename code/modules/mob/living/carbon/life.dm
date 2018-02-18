@@ -15,10 +15,9 @@
 		handle_blood()
 
 	if(stat != DEAD)
-		handle_brain_damage()
-
-	if(stat != DEAD)
 		handle_liver()
+		handle_shock()
+		handle_brain_damage()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -27,7 +26,7 @@
 	handle_changeling()
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 ///////////////
 // BREATHING //

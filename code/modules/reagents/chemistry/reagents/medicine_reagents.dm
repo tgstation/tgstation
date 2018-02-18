@@ -1274,4 +1274,46 @@
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	. = 1
-  
+
+
+/datum/reagent/medicine/oxycodone
+	name = "Oxycodone"
+	id = "oxycodone"
+	description = "An effective and very addictive painkiller."
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	color = "#C805DC"
+	taste_description = "bitterness"
+	addiction_threshold = 15
+
+/datum/reagent/oxycodone/on_mob_life(var/mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.pain_numb = max(5, C.pain_numb)
+		C.pain_shock_stage -= 3 //We don't FEEL the shock now, but make it go away quick in case we run out of oxycodone.
+		if(!C.IsSleeping() && !C.IsUnconscious() && prob(2))
+			to_chat(M, pick("<span class='numb'>You feel like you're floating...</span>", \
+							"<span class='numb'>You feel a little lightheaded... but it's okay.</span>", \
+							"<span class='numb'>Your face itches a little bit... and it feels so good to scratch it...</span>", \
+							"<span class='numb'>Your whole body buzzes slightly, but it doesn't seem to bother you...</span>", \
+							"<span class='numb'>You feel a little high of energy, and it makes you smile...</span>", \
+							"<span class='numb'>You nod to yourself... it's nothing, it just feels good to nod a little...</span>", \
+							"<span class='numb'>Hello?... Is there anybody in there?...</span>", \
+							"<span class='numb'>You feel... comfortably numb.</span>"))
+	. = 1
+	..()
+
+/datum/reagent/medicine/tramadol
+	name = "Tramadol"
+	id = "tramadol"
+	description = "A simple, yet effective painkiller."
+	color = "#C8A5DC"
+	pain_resistance = 80
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/tramadol/on_mob_life(var/mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.pain_level < BASE_CARBON_PAIN_RESIST) //If we're already recovering from shock, let's speed the process up
+			C.pain_shock_stage--
+	. = 1
+	..()
