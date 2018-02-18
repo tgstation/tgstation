@@ -177,6 +177,11 @@
 
 			// in someones hand
 			else if(ismob(pickupTarget.loc))
+
+				if(istype(pickupTarget,/obj/item/clothing/head/mob_holder/))
+					var/obj/item/clothing/head/mob_holder/h = pickupTarget
+					if(h&&h.held_mob==src) return//dont let them pickpocket themselves
+
 				var/mob/M = pickupTarget.loc
 				if(!pickpocketing)
 					pickpocketing = TRUE

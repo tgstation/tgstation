@@ -1047,33 +1047,3 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
-
-/mob/living/proc/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, (istext(can_be_held) ? can_be_held : ""), null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi')
-	if(!holder) return
-	drop_all_held_items()
-	L.put_in_hands(holder)
-	return
-
-/mob/living/proc/mob_try_pickup(mob/living/user)
-	if(!ishuman(user) || !src.Adjacent(user) || user.incapacitated() || !can_be_held)
-		return FALSE
-	if(user.get_active_held_item())
-		to_chat(user, "<span class='warning'>Your hands are full!</span>")
-		return FALSE
-	if(buckled)
-		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
-		return FALSE
-	visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
-					"<span class='userdanger'>[user] starts picking you up!</span>")
-	if(!do_after(user, 20, target = src))
-		return FALSE
-	visible_message("<span class='warning'>[user] picks up [src]!</span>", \
-					"<span class='userdanger'>[user] picks you up!</span>")
-	to_chat(user, "<span class='notice'>You pick [src] up.</span>")
-	mob_pickup(user)
-	return TRUE
-
-/mob/living/AltClick(mob/user)
-	mob_try_pickup(user)
-	..()
