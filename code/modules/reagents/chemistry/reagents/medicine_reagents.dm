@@ -624,6 +624,7 @@
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	pain_resistance = 35
 	overdose_threshold = 30
 	addiction_threshold = 25
 
@@ -1284,34 +1285,46 @@
 	color = "#C805DC"
 	taste_description = "bitterness"
 	addiction_threshold = 15
+	overdose_threshold = 17.5
 
 /datum/reagent/oxycodone/on_mob_life(var/mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.pain_shock_stage -= 3 //We don't FEEL the shock now, but make it go away quick in case we run out of oxycodone.
 		if(!C.IsSleeping() && !C.IsUnconscious() && prob(2))
-			to_chat(M, pick("<span class='numb'>You feel like you're floating...</span>", \
+			to_chat(M, pick(list("<span class='numb'>You feel like you're floating...</span>", \
 							"<span class='numb'>You feel a little lightheaded... but it's okay.</span>", \
 							"<span class='numb'>Your face itches a little bit... and it feels so good to scratch it...</span>", \
 							"<span class='numb'>Your whole body buzzes slightly, but it doesn't seem to bother you...</span>", \
 							"<span class='numb'>You feel a little high of energy, and it makes you smile...</span>", \
 							"<span class='numb'>You nod to yourself... it's nothing, it just feels good to nod a little...</span>", \
 							"<span class='numb'>Hello?... Is there anybody in there?...</span>", \
-							"<span class='numb'>You feel... comfortably numb.</span>"))
+							"<span class='numb'>You feel... comfortably numb.</span>")))
 	. = 1
 	..()
 
-/datum/reagent/oxycodone/on_mob_add(mob/M)
+/datum/reagent/medicine/oxycodone/on_mob_add(mob/M)
 	..()
 	if(isliving(M))
 		var/mob/living/L = M
 		L.add_trait(TRAIT_NUMB, id)
 
-/datum/reagent/oxycodone/on_mob_delete(mob/M)
+/datum/reagent/medicine/oxycodone/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_NUMB, id)
 	..()
+
+/datum/reagent/medicine/oxycodone/overdose_process(mob/living/M)
+	M.adjustToxLoss(rand(2,5)*REM)
+	if(prob(10))
+		M.vomit()
+	else if(prob(9.5))
+		M.losebreath += rand(1, 3.5)
+	else if(prob(9))
+		M.Stun(100)
+	..()
+	. = 1
 
 /datum/reagent/medicine/tramadol
 	name = "Tramadol"
@@ -1319,9 +1332,11 @@
 	description = "A simple, yet effective painkiller."
 	color = "#C8A5DC"
 	pain_resistance = 80
+	overdose_threshold = 15
+	addiction_threshold = 9
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/tramadol/on_mob_life(var/mob/living/M)
+/datum/reagent/medicine/tramadol/on_mob_life(var/mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.pain_level < BASE_CARBON_PAIN_RESIST) //If we're already recovering from shock, let's speed the process up
@@ -1329,9 +1344,22 @@
 	. = 1
 	..()
 
+/datum/reagent/medicine/tramadol/overdose_process(mob/living/M)
+	if(prob(15))
+		to_chat(M, "<span class='warning'>You ache.</span>")
+	if(prob(85))
+		M.losebreath += rand(0.5,1.5)
+	if(prob(75))
+		M.adjustStaminaLoss(rand(40,75))
+	if(prob(current_cycle*0.05) && iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.set_heartattack(TRUE)
+	..()
+	. = 1
+
 /datum/reagent/paracetamol
 	name = "Paracetamol"
 	id = "paracetamol"
-	description = "Most commonly know this as Tylenol, but this chemical is a mild, simple painkiller."
+	description = "Most commonly know this as acetominiphin, but this chemical is a mild, simple painkiller."
 	color = "#C855DC"
 	pain_resistance = 60

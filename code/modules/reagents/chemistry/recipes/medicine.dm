@@ -264,3 +264,10 @@
 	id = "tramadol"
 	results = list("tramadol" = 3)
 	required_reagents = list("inaprovaline" = 1, "ethanol" = 1, "oxygen" = 1)
+
+
+/datum/chemical_reaction/inaprovaline
+	name = "Inaprovaline"
+	id = "inaprovaline"
+	results = list("inaprovaline" = 3)
+	required_reagents = list("oxygen" = 1, "carbon" = 1, "sugar" = 1)
