@@ -1,4 +1,0 @@
-author: "Kevinz000 and Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Ore stacks will now initialize with proper visuals and no longer show a NO SPRITE text when you gather more than 20 ores to a stack."
