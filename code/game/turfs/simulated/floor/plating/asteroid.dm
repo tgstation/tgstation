@@ -127,6 +127,7 @@
 	var/list/mob_spawn_list
 	var/list/megafauna_spawn_list
 	var/list/flora_spawn_list
+	var/list/terrain_spawn_list
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2
@@ -158,7 +159,8 @@
 		megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
-
+	if (!terrain_spawn_list)
+		terrain_spawn_list = list(/obj/structure/terrain/geyser = 1)
 	if(!has_data)
 		produce_tunnel_from_data()
 	else
@@ -236,7 +238,7 @@
 	if(!sanity)
 		return
 	SpawnFlora(T)
-
+	SpawnTerrain(T)
 	SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
@@ -279,6 +281,15 @@
 				return
 		new randumb(T)
 
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
+	if(prob(2))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		var/randumb = pickweight(terrain_spawn_list)
+		for(var/obj/structure/terrain/F in range(7, T)) //No duplicate terrain features near each other
+			if(istype(F, randumb))
+				return
+		new randumb(T)
 
 
 /turf/open/floor/plating/asteroid/snow
