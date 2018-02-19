@@ -230,19 +230,20 @@
 	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
 	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
+			var/div_slider = slidecolor
 			if(!i["allowed_edit"])
-				slidecolor = "locked"
+				div_slider = "locked"
 			output += {"<li>
-	        				<label class="switch">
-	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""][i["allowed_edit"] ? "" : " disabled=1"]>
-	      							<div class="slider [slidecolor ? "[slidecolor]" : ""]"></div>
-	      								<span>[i["name"]]</span>
-	    						</label>
-	    					</li>"}
+						<label class="switch">
+							<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""][i["allowed_edit"] ? "" : " onclick='return false' onkeydown='return false'"]>
+								<div class="slider [div_slider ? "[div_slider]" : ""]"></div>
+									<span>[i["name"]]</span>
+						</label>
+						</li>"}
 	else
 		for (var/i in values)
 			output += {"<li><input id="name="[i["name"]]"" style="width: 50px" type="[type]" name="[i["name"]]" value="[i["value"]]">
-      <label for="[i["name"]]">[i["name"]]</label></li>"}
+			<label for="[i["name"]]">[i["name"]]</label></li>"}
 	output += {"</ul><div style="text-align:center">
 		<button type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
 
@@ -299,7 +300,6 @@
 		else
 			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
-
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
 			return
