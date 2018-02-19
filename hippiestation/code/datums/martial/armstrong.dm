@@ -439,7 +439,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 		var/mob/living/carbon/human/H = user
 		var/datum/martial_art/armstrong/F = new/datum/martial_art/armstrong(null)
 		F.teach(H)
-		to_chat(H, "<span class='boldannounce'>Examining the scroll teaches you Armstrong Style. The scroll is suddenly doused in alcohol, with the texts washing away.</span>")
+		to_chat(H, "<span class='boldannounce'>Examining the scroll teaches you Armstrong Style. The paper's texts suddenly vanish, with the paper drenched in booze.</span>")
 		used = TRUE
 		desc = "It's completely ruined!"
 		name = "disgusting soggy paper"
