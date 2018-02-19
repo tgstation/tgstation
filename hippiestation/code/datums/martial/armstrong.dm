@@ -163,7 +163,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 
 /datum/martial_art/armstrong/proc/FireballOne(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(current_level >= 5) // Checks Armstrong's current level.
-		D.visible_message("<span class='danger'>[A] blasts [D] with a weak fireball!</span>", \
+		D.visible_message("<span class='danger'>[A] blasts off!</span>", \
 									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
 		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
@@ -225,7 +225,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 
 /datum/martial_art/armstrong/proc/FireballTwo(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(current_level >= 12) // Checks Armstrong's current level.
-		D.visible_message("<span class='danger'>[A] blasts [D] with a fireball!</span>", \
+		D.visible_message("<span class='danger'>[A] blasts off!</span>", \
 									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
 		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
@@ -414,12 +414,14 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	to_chat(usr, "<span class='notice'>SURPRISE ATTACK</span>: Disarm, Disarm, Harm. Knocks down and deals fair damage. Requires Level 3.")
 	to_chat(usr, "<span class='notice'>FIREBALL 1</span>: Help Grab Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 5.")
 	to_chat(usr, "<span class='notice'>DROPKICK</span>: Disarm Help Help Harm. A flying double foot press. Requires Level 6.")
+	to_chat(usr, "<span class='notice'>MACHINE GUN FIST</span>: Help Harm Help Harm. Unleash a flurry of punches.. Requires Level 7.")
 	to_chat(usr, "<span class='notice'>CANNONBALL</span>: Disarm Disarm Grab. Fly in like a cannonball. Requires Level 10.") //earlier than it is in LISA, but whatever.
 	to_chat(usr, "<span class='notice'>FIREBALL 2</span>: Help Disarm Disarm. A blast of flaming emotion. Sets the target on fire. Requires Level 12.")
 	to_chat(usr, "<span class='notice'>HEADSLIDE</span>: Grab Disarm Disarm Grab. A sliding head strike at the opponent's knees. Causes tripping. Requires Level 13.")
 	to_chat(usr, "<span class='notice'>HEADBUTT</span>: Help Harm Grab. A full force slam with your shiny head. Knocks the target out temporarily. Requires Level 15.")
 	to_chat(usr, "<span class='sciradio'><b>SPELLS<b></span>")
-	to_chat(usr, "<span class='sciradio'>Horse Stance: Unlocked at Level 8. Recovers health and stamina rapidly. Can't be used while stunned.</span>")
+	to_chat(usr, "<span class='sciradio'>Horse Stance</span>: Unlocked at Level 8. Recovers health and stamina rapidly.")
+	to_chat(usr, "<span class='sciradio'>Fireball</span>: Unlocked at Level 30. Shoots out a fireball without the need to combo. Can't be used while stunned or handcuffed.")
 
 //Scroll necessary for learning the martial art
 
@@ -500,6 +502,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 			owner.facial_hair_style = "Broken Man" //ensures the proper look
 			owner.update_hair() //makes the hair/facial hair change actually happen
 			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
+			// todo: add status effect that constantly updates the body, forcing you to have the hair/facial hair
 		if(12)
 			to_chat(owner, "<span class = 'notice'>You have unlocked an upgraded Fireball attack. To use: Help Disarm Disarm.</span>")
 			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -524,7 +527,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	if(current_exp >= next_level_exp)
 		current_level++
 		var/next_level = current_level + 1
-		next_level_exp = next_level*25
+		next_level_exp = next_level*30
 		do_level_up(owner)
 		to_chat(owner, "<span class = 'notice'><b>You feel more confident in your powers.</b></span>")
 
@@ -554,16 +557,10 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	id = "armstrong_horse_stance"
 	duration = 150 // 15 seconds.
 	tick_interval = 10
-	alert_type = /obj/screen/alert/status_effect/horse_stance
+	alert_type = null
 
 /obj/effect/proc_holder/spell/targeted/horse_stance/cast(list/targets,mob/living/user = usr)
 		user.apply_status_effect(STATUS_EFFECT_HORSE_STANCE)
-
-/obj/screen/alert/status_effect/horse_stance
-	name = "Horse Stance"
-	desc = "You assume a Horse Stance. This will slowly heal you and return your Stamina."
-	icon_state = "horse_stance"
-	icon = 'hippiestation/icons/mob/actions.dmi'
 
 /datum/status_effect/horse_stance/on_apply()
 	owner.visible_message("<span class='notice'>[owner] assumes a Horse Stance!</span>", "<span class='notice'>You assume a Horse Stance!</span>")
@@ -586,7 +583,9 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	owner.adjustFireLoss(-4)
 	owner.adjust_fire_stacks(-1)
 	owner.adjustStaminaLoss(-3)
+	owner.adjustOxyLoss(-5)
 
 /datum/status_effect/horse_stance/on_remove()
 	owner.visible_message("<span class='warning'>[owner] resumes a normal stance!</span>", "<span class='warning'>The Horse Stance ends...</span>")
 	playsound(owner, 'hippiestation/sound/weapons/armstrong_horse.ogg', 75, 1)
+
