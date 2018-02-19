@@ -33,7 +33,7 @@
 		return src
 
 	var/list/obj/item/item_list = list()
-	item_list |= L.get_equipped_items(TRUE)
+	item_list |= get_equipped_items(TRUE)
 	item_list |= held_items
 	for(var/obj/O in item_list)
 		GET_COMPONENT_FROM(anti_magic, /datum/component/anti_magic, O)
