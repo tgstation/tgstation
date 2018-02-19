@@ -1141,14 +1141,14 @@
 	. = 1
 
 //used for changeling's adrenaline power
-/datum/reagent/medicine/changelingAdrenaline
+/datum/reagent/medicine/changelingadrenaline
 	name = "Changeling Adrenaline"
-	id = "changelingAdrenaline"
+	id = "changelingadrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
+/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustUnconscious(-20, 0)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
@@ -1156,31 +1156,31 @@
 	. = 1
 	..()
 
-/datum/reagent/medicine/changelingAdrenaline/overdose_process(mob/living/M as mob)
+/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
 	. = 1
 	..()
 
-/datum/reagent/medicine/changelingHaste
+/datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
-	id = "changelingHaste"
+	id = "changelinghaste"
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelingHaste/on_mob_add(mob/M)
+/datum/reagent/medicine/changelinghaste/on_mob_add(mob/M)
 	..()
 	if(isliving(M))
 		var/mob/living/L = M
 		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/medicine/changelingHaste/on_mob_delete(mob/M)
+/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
-/datum/reagent/medicine/changelingHaste/on_mob_life(mob/living/M as mob)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/M as mob)
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
