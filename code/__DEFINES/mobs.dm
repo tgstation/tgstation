@@ -60,7 +60,18 @@
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 
+#define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
+#define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
+#define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
+#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
+
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+
+//Surgery Defines
+#define BIOWARE_GENERIC "generic"
+#define BIOWARE_NERVES "nerves"
+#define BIOWARE_CIRCULATION "circulation"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0

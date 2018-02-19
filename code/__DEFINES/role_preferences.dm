@@ -27,6 +27,7 @@
 #define ROLE_BROTHER			"blood brother"
 #define ROLE_SHADOWLING			"shadowling"
 #define ROLE_VAMPIRE			"vampire"
+#define ROLE_BRAINWASHED		"brainwashed victim"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

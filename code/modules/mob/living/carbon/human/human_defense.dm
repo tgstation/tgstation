@@ -29,6 +29,7 @@
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor.getRating(d_type)
+	protection += physiology.armor.getRating(d_type)
 	return protection
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
@@ -457,6 +458,7 @@
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
+	siemens_coeff *= physiology.siemens_coeff
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
