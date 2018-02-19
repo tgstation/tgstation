@@ -2,7 +2,6 @@
 		var/following = null
 
 /datum/admins/associate(client/C)
-	removeMentor(C.ckey) //safety to avoid multiple datums and other weird shit i cannot comprehend
 	..()
 	if(istype(C))
 		C.mentor_datum_set(TRUE)
