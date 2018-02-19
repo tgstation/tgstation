@@ -179,27 +179,28 @@
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
-/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, consider_permanent = FALSE)
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
-		if(istype(BT, brain_trauma_type) && (consider_permanent || !BT.permanent))
+		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
 
 
 //Add a specific trauma
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
 		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-		traumas += new trauma_type(arglist(list(src, permanent) + arguments))
+		traumas += new trauma_type(arglist(list(src, resilience) + arguments))
 	else
 		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
 		traumas += trauma
-		trauma.permanent = permanent
+		if(resilience)
+			trauma.resilience = resilience
 
 //Add a random trauma of a certain subtype
-/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
@@ -208,16 +209,16 @@
 
 	var/trauma_type = pick(possible_traumas)
 	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-	traumas += new trauma_type(src, permanent)
+	traumas += new trauma_type(src, resilience)
 
-//Cure a random trauma of a certain subtype
-/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
-	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type)
-	if(trauma && (cure_permanent || !trauma.permanent))
+//Cure a random trauma of a certain resilience level
+/obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	var/datum/brain_trauma/trauma = has_trauma_type(resilience)
+	if(trauma)
 		qdel(trauma)
 
-/obj/item/organ/brain/proc/cure_all_traumas(cure_permanent = FALSE)
+/obj/item/organ/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
 	for(var/X in traumas)
 		var/datum/brain_trauma/trauma = X
-		if(cure_permanent || !trauma.permanent)
+		if(trauma.resilience <= resilience)
 			qdel(trauma)
