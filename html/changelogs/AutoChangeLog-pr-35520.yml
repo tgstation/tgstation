@@ -1,8 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added three new techweb nodes: Advanced Surgery, Experimental Surgery, and Alien Surgery(requires abductor tech)"
-  - rscadd: "Added several new surgical procedures, which require these techweb nodes. To enable an advanced surgery, print its relative disk from a protolathe, and load it on an Operating Computer. Advanced surgery can only be performed at operating tables."
-  - tweak: "You can now intentionally fail surgical procedures by initiating them with disarm intent instead of help intent."
-  - rscadd: "Brain traumas now have a custom resilience system. Some trauma sources can cause traumas which require more extensive treatment, such as the new Lobotomy surgery."
-  - rscadd: "Traitors can now purchase a Brainwashing Surgery Disk for 5 TC."
