@@ -511,7 +511,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	alert_type = null
 
 /obj/effect/proc_holder/spell/targeted/horse_stance/cast(list/targets,mob/living/user = usr)
-		user.apply_status_effect(STATUS_EFFECT_HORSE_STANCE)
+	user.apply_status_effect(STATUS_EFFECT_HORSE_STANCE)
 
 /datum/status_effect/horse_stance/on_apply()
 	owner.visible_message("<span class='notice'>[owner] assumes a Horse Stance!</span>", "<span class='notice'>You assume a Horse Stance!</span>")
