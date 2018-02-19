@@ -9,7 +9,7 @@
 
 /datum/experiment/destroy/flatten/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
-	E.visible_message("<span class='warning'>[E]'s crushing mechanism slowly and smoothly descends, flattening the [O]!</span>")
+	E.visible_message("<span class='warning'>[E]'s crushing mechanism slowly and smoothly descends, flattening \the [O]!</span>")
 	new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,E))))
 
 /datum/experiment/destroy/deconstruct
