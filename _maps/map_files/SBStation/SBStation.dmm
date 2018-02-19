@@ -20019,8 +20019,10 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "aUE" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/sign/plaques/golden{
+	desc = "A plaque signed by Boznar Rodriguez, the chief designer and mapper of SBStation. Special thanks to SpaceManiac for constantly keeping things running smoothly with updates and code changes. AutoFrenzy for organizing and administrating weekly games. And the SuperBox community, for supporting SBStation and Space Station 13 and keeping the project alive.";
+	name = "SBStation Commemorative Plaque";
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -24889,6 +24891,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"dGS" = (
+/obj/machinery/light{
+	light_color = "#d1dfff"
+	},
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
 "dKZ" = (
 /obj/structure/rack,
 /obj/item/shovel,
@@ -25473,9 +25481,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/maintenance/solars/starboard/aft)
-"hYP" = (
-/turf/open/space/basic,
-/area/quartermaster/storage)
 "icL" = (
 /obj/machinery/conveyor{
 	id = "trash"
@@ -26546,6 +26551,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"qow" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/securearea{
+	name = "\improper STAY CLEAR HEAVY MACHINERY";
+	pixel_y = 32
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qox" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
@@ -50359,8 +50372,8 @@ ayP
 axI
 adP
 adP
-aaa
-aaa
+aac
+aac
 aaa
 aaa
 aaa
@@ -51387,6 +51400,8 @@ ayR
 axJ
 adP
 adP
+aac
+aac
 aaa
 aaa
 aaa
@@ -51396,11 +51411,9 @@ aaa
 aaa
 aaa
 aaa
+aZc
 aaa
-aaa
-aaa
-aaa
-aaa
+aZc
 aaa
 aaa
 aaa
@@ -51655,9 +51668,9 @@ aaa
 aaa
 aaa
 aaa
+aZc
 aaa
-aaa
-aaa
+aZc
 aaa
 aaa
 aaa
@@ -51904,17 +51917,17 @@ nKr
 nKr
 nKr
 nKr
+adP
+adP
+adP
 nKr
 nKr
 nKr
 nKr
+nKr
+adP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -52165,13 +52178,13 @@ adP
 adP
 adP
 adP
+adP
+adP
+adP
+adP
+adP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -52411,6 +52424,13 @@ vOP
 qox
 ayV
 aaa
+aZc
+aZc
+aZc
+aZc
+aZc
+aZc
+aZc
 aaa
 aaa
 aaa
@@ -52419,16 +52439,9 @@ aaa
 aaa
 aaa
 aaa
+adP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -52683,9 +52696,9 @@ aaa
 aaa
 aaa
 aaa
-bdE
+nKr
 aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -52940,9 +52953,9 @@ aaa
 aaa
 aaa
 aaa
+nKr
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -53197,9 +53210,9 @@ aaa
 aaa
 aaa
 aaa
+nKr
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -53454,9 +53467,9 @@ aaa
 aaa
 aaa
 aaa
+nKr
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -53711,9 +53724,9 @@ aaa
 aaa
 aaa
 aaa
+nKr
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -53952,7 +53965,7 @@ ayV
 hyr
 vyE
 ayV
-hYP
+aaa
 axU
 aFS
 aGX
@@ -53968,9 +53981,9 @@ aaa
 aaa
 aaa
 aaa
+nKr
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -54225,9 +54238,9 @@ aOy
 aaa
 aaa
 aaa
+adP
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -54475,16 +54488,16 @@ beK
 aKn
 axU
 aaa
-aaa
-aaa
+aZc
+aZc
 aLU
 aOz
 aLU
+aZc
+aZc
+adP
 aaa
-aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -54732,16 +54745,16 @@ aJl
 tIr
 axU
 aNE
-aad
+adP
 adP
 aLU
 lAl
 aLU
-aad
+adP
+adP
+adP
 aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -54995,10 +55008,10 @@ aLU
 beL
 aLU
 aLU
+adP
+adP
 aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -55253,9 +55266,9 @@ aMS
 hME
 aNE
 aaa
+adP
 aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -55509,10 +55522,10 @@ aNH
 aNH
 iqI
 aNE
+adP
+adP
 aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 nKr
@@ -55766,10 +55779,10 @@ aNG
 aOC
 aPl
 aNE
+adP
+adP
 aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -56023,10 +56036,10 @@ aNH
 aOD
 dbX
 aNE
+adP
+adP
 aaa
-aaa
-aaa
-aaa
+adP
 aaa
 aaa
 aaa
@@ -56280,11 +56293,11 @@ eQJ
 xIl
 xZF
 aNE
+adP
+adP
 aaa
-aaa
-aaa
-aaa
-aaa
+adP
+adP
 aaa
 aaa
 aaa
@@ -56541,7 +56554,7 @@ rJt
 rJt
 wOt
 rJt
-aaa
+qow
 aaa
 aaa
 aaa
@@ -56798,7 +56811,7 @@ bRI
 icL
 uzP
 rJt
-aaa
+adP
 aaa
 aaa
 aaa
@@ -57055,7 +57068,7 @@ dqB
 rJt
 tfe
 rJt
-aaa
+adP
 aaa
 aaa
 aaa
@@ -57312,7 +57325,7 @@ bjT
 uKt
 bjT
 rJt
-aaa
+adP
 aaa
 aaa
 aaa
@@ -57569,7 +57582,7 @@ bjT
 bjT
 bjT
 rJt
-aaa
+adP
 aaa
 aaa
 aWN
@@ -59881,7 +59894,7 @@ aTk
 aRu
 aSP
 xVO
-aTT
+dGS
 aVx
 aSP
 aWv
