@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "fixed ghost spawners showing up in the spawner menu when you can't use them"
