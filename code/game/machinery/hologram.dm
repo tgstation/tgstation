@@ -344,7 +344,7 @@ Possible to do for anyone motivated enough:
 				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
 				ringing = TRUE
 
-	SetLightsAndPower()
+	update_icon()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
