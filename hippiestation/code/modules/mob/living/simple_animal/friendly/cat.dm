@@ -23,3 +23,32 @@
 	explosion(loc, 0, 2, 4, flame_range = 6)
 	visible_message("<span class='arning'>Runtime has encountered a fatal error.</span>")
 	gib()
+
+/mob/living/simple_animal/pet/cat/clown
+	name = "Honkers"
+	desc = "A goofy little clown cat."
+	var/emagged = FALSE
+	icon = 'hippiestation/icons/mob/pets.dmi'
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
+	var/static/meows = list("hippiestation/sound/creatures/clownCatHonk.ogg", "hippiestation/sound/creatures/clownCatHonk2.ogg","hippiestation/sound/creatures/clownCatHonk3.ogg")
+	speak = list("Meow!", "Honk!", "Haaaa....", "Hink!")
+	speak_chance = 15
+	emote_see = list("shakes its head.", "shivers.", "does a gag.", "clowns around.")
+
+/mob/living/simple_animal/pet/cat/clown/handle_automated_speech(override)
+	if(override || prob(speak_chance))
+		visible_message("[name] lets out a honk!")
+		playsound(src, pick(meows), 100)
+
+/mob/living/simple_animal/pet/cat/clown/emag_act(mob/user)
+	emagged = TRUE
+	do_sparks(8, FALSE, loc)
+		
+/mob/living/simple_animal/pet/cat/clown/Move(atom/newloc, direct)
+	..()
+	if(emagged && prob(5))
+		visible_message("[name] pukes up a banana hairball!")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 200, 1)
+		new /obj/item/grown/bananapeel(get_turf(src))	
