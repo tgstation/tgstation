@@ -453,6 +453,32 @@
 	else
 		..()
 
+/datum/reagent/toxin/calciseptine //no, i'm not doing neurotoxin3
+	name = "calciseptine"
+	id = "calciseptine"
+	description = "A special kind of neurotoxin produced by snakes that will paralyse the victim after some time, and can not be metabolised without chems."
+	reagent_state = LIQUID
+	color = "#bfd16e"
+	metabolization_rate = 0
+	toxpwr = 0
+	var/actual_toxpwr = 1
+	var/progress = 1
+	taste_description = "rotting fleshy bitterness"
+
+/datum/reagent/toxin/calciseptine/on_mob_life(mob/living/carbon/C)
+	switch(current_cycle)
+		if(1 to 25)
+			if(prob(15))
+				to_chat(C, "You feel horrendously weak!")
+		if(26 to 39)
+			if(prob(15))
+				to_chat(C, "<span class='danger'>You feel your muscles locking up!</span>")
+		if(40)
+			C.gain_trauma(/datum/brain_trauma/severe/paralysis, FALSE) //80 seconds
+		if(41 to INFINITY)
+			C.adjustToxLoss(actual_toxpwr*REM, 0)
+	return ..()
+
 /datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"

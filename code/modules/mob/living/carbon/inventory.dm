@@ -111,7 +111,7 @@
 			update_inv_neck(I)
 	else if(I == handcuffed)
 		handcuffed = null
-		if(buckled && buckled.buckle_requires_restraints)
+		if(buckled && buckled.buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()
@@ -139,4 +139,3 @@
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()
-

@@ -3,7 +3,7 @@
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
-	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_restrictions = NONE //Bitflag that can have various restrictions to buckling, for example, preventing you from unbuckling yourself
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
@@ -40,11 +40,23 @@
 	if(!istype(M))
 		return FALSE
 
+	if((buckle_restrictions & CANT_BUCKLE_SELF) && M == usr && !force)
+		to_chat(usr, "<span class='warning'>You are unable to buckle yourself to [src]!</span>")
+		return FALSE
+
+	if((buckle_restrictions & CANT_BUCKLE_OTHER) && M != usr && !force)
+		to_chat(usr, "<span class='warning'>You are unable to buckle [M] to [src]!</span>")
+		return FALSE
+
+	if((buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT) && !M.restrained())
+		return FALSE
+
 	if(check_loc && M.loc != loc)
 		return FALSE
 
-	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
+	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || M == src)
 		return FALSE
+
 	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
@@ -81,6 +93,15 @@
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
+
+		if((buckle_restrictions & CANT_UNBUCKLE_SELF) && buckled_mob == usr && !force)
+			to_chat(usr, "<span class='danger'>You are unable to free yourself from [src]!</span>")
+			return FALSE
+
+		if((buckle_restrictions & CANT_BUCKLE_OTHER) && buckled_mob != usr && !force)
+			to_chat(usr, "<span class='warning'>You are unable to free [buckled_mob] from [src]!</span>")
+			return FALSE
+
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()

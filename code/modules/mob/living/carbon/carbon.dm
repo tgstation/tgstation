@@ -332,7 +332,7 @@
 	if (handcuffed)
 		var/obj/item/W = handcuffed
 		handcuffed = null
-		if (buckled && buckled.buckle_requires_restraints)
+		if (buckled && buckled.buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT)
 			buckled.unbuckle_mob(src)
 		update_handcuffed()
 		if (client)
@@ -374,7 +374,7 @@
 			handcuffed.forceMove(drop_location())
 			handcuffed.dropped(src)
 			handcuffed = null
-			if(buckled && buckled.buckle_requires_restraints)
+			if(buckled && buckled.buckle_restrictions & BUCKLE_REQUIRES_RESTRAINT)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
 			return
