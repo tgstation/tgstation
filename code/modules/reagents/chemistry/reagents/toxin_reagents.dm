@@ -909,6 +909,12 @@
 	toxpwr = 0
 	taste_description = "stillness"
 
+/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+	L.add_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_EMOTEMUTE, id)
+
 /datum/reagent/kindleium //works like if you get hit by kindle
 	name = "Kindleium"
 	id = "kindleium"
@@ -937,3 +943,5 @@
 	M.flash_act(1, 1)
 	if(iscultist(M))
 		M.adjustFireLoss(15)
+
+
