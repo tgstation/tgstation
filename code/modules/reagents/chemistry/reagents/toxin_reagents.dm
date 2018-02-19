@@ -291,10 +291,10 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed
-	name = "Delayed Chloral Hydrate"
+/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
+	name = "Chloral Hydrate"
 	id = "chloralhydratedelayed"
-	description = "A slower-acting, non-lethal variant of Chloral Hydrate."
+	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
