@@ -19,7 +19,6 @@
 	var/list/stack_overlays
 
 /obj/item/stack/ore/update_icon()
-	. = ..()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
 	if(difference == 0)
 		return
