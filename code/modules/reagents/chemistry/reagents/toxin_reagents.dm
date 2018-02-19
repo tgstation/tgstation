@@ -908,3 +908,32 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/kindleium //works like if you get hit by kindle
+	name = "Kindleium"
+	id = "kindleium"
+	description = "Supposedly refined from the remains of a fallen god."
+	color = "#FFFF00" // rgb: 255, 255, 0
+	taste_description = "spinning gears"
+	toxpwr = 0 //NO HURT, ONLY STUN
+
+/datum/reagent/toxin/kindleium/on_mob_add(mob/living/M)
+	kindle(M)
+
+/datum/reagent/toxin/kindleium/on_mob_life(mob/living/M)
+	kindle(M)
+
+/datum/reagent/toxin/kindleium/on_mob_delete(mob/living/M)
+	if(M.has_status_effect(STATUS_EFFECT_KINDLE))
+		M.remove_status_effect(STATUS_EFFECT_KINDLE)
+
+/datum/reagent/toxin/kindleium/kindle(M)
+	if(!(M.has_status_effect(STATUS_EFFECT_KINDLE)) && prob(5))
+	playsound(M, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
+	M.visible_message("<span class='warning'>[M]'s eyes blaze with brilliant light!</span>", \
+	"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+	M.Knockdown(15)
+	M.apply_status_effect(STATUS_EFFECT_KINDLE)
+	M.flash_act(1, 1)
+	if(iscultist(M))
+		M.adjustFireLoss(15)
