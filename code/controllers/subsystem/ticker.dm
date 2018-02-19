@@ -32,6 +32,8 @@ SUBSYSTEM_DEF(ticker)
 	SCRIPTURE_SCRIPT = FALSE, \
 	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
+	var/list/first_death = list()			//contains info about the first player to die; ckey, name, location, and last words
+
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
