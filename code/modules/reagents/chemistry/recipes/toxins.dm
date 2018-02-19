@@ -111,5 +111,5 @@
 /datum/chemical_reaction/mimesbane
 	name = "Mime's Bane"
 	id = "mimesbane"
-	results = list("mimesbane" = 2)
-	required_reagents = list("mutetoxin" = 1, "nothing" = 1)
+	results = list("mimesbane" = 3)
+	required_reagents = list("radium" = 1, "mutetoxin" = 1, "nothing" = 1)
