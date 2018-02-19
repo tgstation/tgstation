@@ -39,72 +39,31 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 
 /datum/martial_art/armstrong/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.hud_used.combo_object.update_icon(streak, 60)
-	if(findtext(streak,BUSTER_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	if(findtext(streak,BUSTER_COMBO) && current_level >= 2)
 		Buster(A,D)
-		return 1
-	if(findtext(streak,SLOPPY_HARM)) //more like this CODE is sloppy
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,SLOPPY_HARM) || findtext (streak,SLOPPY_HELP) || findtext(streak,SLOPPY_DISARM) || findtext(streak,SLOPPY_GRAB)) // they all funnel into the same combo
 		Sloppy(A,D)
-		return 1
-	if(findtext(streak,SLOPPY_HELP))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
-		Sloppy(A,D)
-		return 1
-	if(findtext(streak,SLOPPY_DISARM))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
-		Sloppy(A,D)
-		return 1
-	if(findtext(streak,SLOPPY_GRAB))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
-		Sloppy(A,D)
-		return 1
-	if(findtext(streak,FIREBALL_ONE_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,FIREBALL_ONE_COMBO) && current_level >= 5)
 		FireballOne(A,D)
-		return 1
-	if(findtext(streak,DROPKICK_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,DROPKICK_COMBO) && current_level >= 6)
 		Dropkick(A,D)
-		return 1
-	if(findtext(streak,SURPRISE_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,SURPRISE_COMBO) && current_level >= 3)
 		Surprise(A,D)
-		return 1
-	if(findtext(streak,MACHINE_GUN_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,MACHINE_GUN_COMBO) && current_level >= 7)
 		MachineGun(A,D)
-		return 1
-	if(findtext(streak,FIREBALL_TWO_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,FIREBALL_TWO_COMBO) && current_level >= 12)
 		FireballTwo(A,D)
-		return 1
-	if(findtext(streak,HEADBUTT_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,HEADBUTT_COMBO) && current_level >= 15)
 		Headbutt(A,D)
-		return 1
-	if(findtext(streak,HEADSLIDE_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,HEADSLIDE_COMBO) && current_level >= 13)
 		Headslide(A,D)
-		return 1
-	if(findtext(streak,CANNONBALL_COMBO))
-		streak = ""
-		A.hud_used.combo_object.update_icon(streak)
+	else if(findtext(streak,CANNONBALL_COMBO) && current_level >= 10)
 		Cannonball(A,D)
-		return 1
-	return 0
+	else
+		return 0
+	streak = ""
+	A.hud_used.combo_object.update_icon(streak)
+	return 1
 
 //special effects
 
@@ -118,7 +77,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 		sleep(1)
 
 /datum/martial_art/armstrong/proc/Sloppy(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level <= 9)
+	if(current_level <= 9) // level check due to differences once you reach level 10
 		A.say("ATATATATATATAT!!")
 		SloppyAnimate(A)
 		D.visible_message("<span class='danger'>[A] sloppily flails around, striking [D]!</span>", \
@@ -147,53 +106,50 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 // Actual combos
 
 /datum/martial_art/armstrong/proc/Buster(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(current_level >= 2) // Checks Armstrong's current level.
-		add_logs(A, D, "buster punched (Armstrong)")
-		D.visible_message("<span class='danger'>[A] buster punches [D]!</span>", \
-									"<span class='userdanger'>[A] knocks down [D] with two strong punches!</span>")
-		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_zipper.ogg', 100, 1)
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		D.adjustBruteLoss(8) //Decentish damage. It racks up to 18 if the victim hits a wall.
-		D.Knockdown(15) //Minimal knockdown, but becomes a potential stunlock if they hit a wall.
-		add_exp(8, A)
-		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-		D.throw_at(throw_target, 1, 1)
-		return
+	add_logs(A, D, "buster punched (Armstrong)")
+	D.visible_message("<span class='danger'>[A] buster punches [D]!</span>", \
+								"<span class='userdanger'>[A] knocks down [D] with two strong punches!</span>")
+	playsound(D.loc, 'hippiestation/sound/weapons/armstrong_zipper.ogg', 100, 1)
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	D.adjustBruteLoss(8) //Decentish damage. It racks up to 18 if the victim hits a wall.
+	D.Knockdown(15) //Minimal knockdown, but becomes a potential stunlock if they hit a wall.
+	add_exp(8, A)
+	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+	D.throw_at(throw_target, 1, 1)
+	return
 
 /datum/martial_art/armstrong/proc/FireballOne(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 5) // Checks Armstrong's current level.
-		D.visible_message("<span class='danger'>[A] blasts off!</span>", \
-									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
-		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
-		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-		playsound(get_turf(A), 'sound/magic/fireball.ogg', 25, 1)
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.throw_at(throw_target, 2, 4,A)
-		D.adjust_fire_stacks(1)
-		D.IgniteMob()
-		add_exp(8, A)
-		add_logs(A, D, "fireball-one (Armstrong)")
-		return
+	D.visible_message("<span class='danger'>[A] blasts off!</span>", \
+								"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+	playsound(get_turf(A), 'sound/magic/fireball.ogg', 25, 1)
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	D.throw_at(throw_target, 2, 4,A)
+	D.adjust_fire_stacks(1)
+	D.IgniteMob()
+	add_exp(8, A)
+	add_logs(A, D, "fireball-one (Armstrong)")
+	return
 
 /datum/martial_art/armstrong/proc/Dropkick(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 6 && !D.stat && !D.IsKnockdown())
-		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 1, -1)
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.Knockdown(15)
-		D.adjustBruteLoss(12)
-		A.Knockdown(5)
-		add_exp(12, A)
-		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-		A.throw_at(throw_target, 1, 1)
-		D.visible_message("<span class='danger'>[A] dropkicks [D]!</span>", \
-									"<span class='userdanger'>[A] dropkicked [D]!</span>")
-		add_logs(A, D, "dropkicked (Armstrong)")
-		return
+	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+	playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 50, 1, -1)
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	D.Knockdown(15)
+	D.adjustBruteLoss(12)
+	A.Knockdown(5)
+	add_exp(12, A)
+	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+	A.throw_at(throw_target, 1, 1)
+	D.visible_message("<span class='danger'>[A] dropkicks [D]!</span>", \
+								"<span class='userdanger'>[A] dropkicked [D]!</span>")
+	add_logs(A, D, "dropkicked (Armstrong)")
+	return
 
 /datum/martial_art/armstrong/proc/Surprise(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 3 && !D.stat && !D.IsKnockdown()) // Checks Armstrong's current level, blocks easy stunlocking.
+	if(!D.stat && !D.IsKnockdown()) // Blocks easy stunlocking.
 		playsound(D.loc, 'hippiestation/sound/weapons/armstrong_punch.ogg', 75, 0, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
 		D.Knockdown(50)
@@ -212,55 +168,52 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 			return
 
 /datum/martial_art/armstrong/proc/MachineGun(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(current_level >= 7) // Checks Armstrong's current level.
-		add_logs(A, D, "Machine Gun Fisted (Armstrong)")
-		D.visible_message("<span class='danger'>[A] unleashes a flurry of punches on [D]!</span>", \
-									"<span class='userdanger'>[A] punches [D] at the speed of a machine gun!</span>")
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.adjustBruteLoss(18) //punch punch punch
-		SloppyAnimate(A)
-		D.Stun(10)
-		add_exp(12, A)
-		return
+	add_logs(A, D, "Machine Gun Fisted (Armstrong)")
+	D.visible_message("<span class='danger'>[A] unleashes a flurry of punches on [D]!</span>", \
+								"<span class='userdanger'>[A] punches [D] at the speed of a machine gun!</span>")
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	D.adjustBruteLoss(18) //punch punch punch
+	SloppyAnimate(A)
+	D.Stun(10)
+	add_exp(12, A)
+	return
 
 /datum/martial_art/armstrong/proc/FireballTwo(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 12) // Checks Armstrong's current level.
-		D.visible_message("<span class='danger'>[A] blasts off!</span>", \
-									"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
-		playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
-		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-		playsound(get_turf(A), 'sound/magic/fireball.ogg', 25, 1)
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.throw_at(throw_target, 2, 4,A)
-		D.adjust_fire_stacks(3)
-		D.adjustFireLoss(8)
-		D.IgniteMob()
-		var/datum/effect_system/explosion/E = new
-		E.set_up(get_turf(D))
-		E.start()
-		add_exp(8, A)
-		add_logs(A, D, "fireball-two (Armstrong)")
-		return
+	D.visible_message("<span class='danger'>[A] blasts off!</span>", \
+								"<span class='userdanger'>[A] blasted [D] with a weak fireball!</span>")
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+	playsound(get_turf(A), 'sound/magic/fireball.ogg', 25, 1)
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	D.throw_at(throw_target, 2, 4,A)
+	D.adjust_fire_stacks(3)
+	D.adjustFireLoss(8)
+	D.IgniteMob()
+	var/datum/effect_system/explosion/E = new
+	E.set_up(get_turf(D))
+	E.start()
+	add_exp(8, A)
+	add_logs(A, D, "fireball-two (Armstrong)")
+	return
 
 /datum/martial_art/armstrong/proc/Headbutt(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 15) // Checks Armstrong's current level.
-		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
-						  "<span class='userdanger'>[A] headbutts you with atom-shattering strength!</span>")
-		D.apply_damage(18, BRUTE, "head") //same as machine gun, but easier to pull off + a stun. a good combo for level 15.
-		playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_headbutt.ogg', 80, 0, -1)
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		D.AdjustUnconscious(15)
-		D.adjustBrainLoss(30)
-		add_exp(12, A)
-		var/datum/effect_system/explosion/E = new
-		E.set_up(get_turf(D))
-		E.start()
-		add_logs(A, D, "headbutted (Armstrong)")
-		return
+	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	D.visible_message("<span class='warning'>[A] headbutts [D]!</span>", \
+					  "<span class='userdanger'>[A] headbutts you with atom-shattering strength!</span>")
+	D.apply_damage(18, BRUTE, "head") //same as machine gun, but easier to pull off + a stun. a good combo for level 15.
+	playsound(get_turf(D), 'hippiestation/sound/weapons/armstrong_headbutt.ogg', 80, 0, -1)
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	D.AdjustUnconscious(15)
+	D.adjustBrainLoss(30)
+	add_exp(12, A)
+	var/datum/effect_system/explosion/E = new
+	E.set_up(get_turf(D))
+	E.start()
+	add_logs(A, D, "headbutted (Armstrong)")
+	return
 
 /datum/martial_art/armstrong/proc/Headslide(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 13 && !D.stat && !D.IsKnockdown()) // Checks Armstrong's current level, blocks easy stunlocking.
+	if(!D.stat && !D.IsKnockdown()) // Blocks easy stunlocking.
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D.loc, 'sound/effects/suitstep1.ogg', 50, 1, -1)
 		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -276,22 +229,21 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 		return
 
 /datum/martial_art/armstrong/proc/Cannonball(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(current_level >= 10)
-		D.visible_message("<span class='danger'>[A] flies into [D] like a cannonball!</span>", \
-									"<span class='userdanger'>[A] slams into [D] with the force of a cannonball!</span>")
-		var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
-		var/list/turfs = list()
-		for(var/turf/T in range(1,A))
-			turfs.Add(T)
-		R.cast(turfs)
-		var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
-		A.throw_at(throw_target, 1, 1)
-		A.Knockdown(3)
-		D.adjustBruteLoss(10)
-		add_exp(8, A)
-		add_logs(A, D, "cannonballed (Armstrong)")
-		A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
-		return
+	D.visible_message("<span class='danger'>[A] flies into [D] like a cannonball!</span>", \
+								"<span class='userdanger'>[A] slams into [D] with the force of a cannonball!</span>")
+	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
+	var/list/turfs = list()
+	for(var/turf/T in range(1,A))
+		turfs.Add(T)
+	R.cast(turfs)
+	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
+	A.throw_at(throw_target, 1, 1)
+	A.Knockdown(3)
+	D.adjustBruteLoss(10)
+	add_exp(8, A)
+	add_logs(A, D, "cannonballed (Armstrong)")
+	A.playsound_local(get_turf(A), 'hippiestation/sound/weapons/armstrong_success.ogg', 50, FALSE, pressure_affected = FALSE)
+	return
 
 // Help/Hurt/Grab/Disarm acts
 
@@ -502,7 +454,6 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 			owner.facial_hair_style = "Broken Man" //ensures the proper look
 			owner.update_hair() //makes the hair/facial hair change actually happen
 			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
-			// todo: add status effect that constantly updates the body, forcing you to have the hair/facial hair
 		if(12)
 			to_chat(owner, "<span class = 'notice'>You have unlocked an upgraded Fireball attack. To use: Help Disarm Disarm.</span>")
 			owner.playsound_local(get_turf(owner), 'hippiestation/sound/weapons/armstrong_newcombo.ogg', 50, FALSE, pressure_affected = FALSE)
@@ -527,9 +478,9 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	if(current_exp >= next_level_exp)
 		current_level++
 		var/next_level = current_level + 1
-		next_level_exp = next_level*30
+		next_level_exp = next_level*35
 		do_level_up(owner)
-		to_chat(owner, "<span class = 'notice'><b>You feel more confident in your powers.</b></span>")
+		to_chat(owner, "<span class = 'notice'><b>You level up! Your new level is [current_level].</b></span>")
 
 /obj/item/clothing/mask/fakemoustache/italian/cursed //for those cheeky aliens who think they can circumvent hair
 	flags_1 = NODROP_1 | DROPDEL_1 | MASKINTERNALS_1
