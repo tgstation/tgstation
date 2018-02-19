@@ -123,6 +123,24 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	recipes = GLOB.metal_recipes
 	return ..()
 
+/obj/item/stack/sheet/metal/icon_amount_update()
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
+
 /obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -157,6 +175,24 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plasteel_recipes
 	return ..()
+
+/obj/item/stack/sheet/plasteel/icon_amount_update()
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/sheet/plasteel/twenty
 	amount = 20
@@ -203,12 +239,29 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
-	novariants = TRUE
 	grind_results = list("carbon" = 20)
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.wood_recipes
 	return ..()
+
+/obj/item/stack/sheet/mineral/wood/icon_amount_update()
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50

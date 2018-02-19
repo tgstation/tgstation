@@ -40,6 +40,24 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	recipes = GLOB.glass_recipes
 	return ..()
 
+/obj/item/stack/sheet/glass/icon_amount_update()
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
+
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -160,6 +178,24 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.reinforced_glass_recipes
 	return ..()
+
+/obj/item/stack/sheet/rglass/icon_amount_update()
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
 
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/plasma/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
