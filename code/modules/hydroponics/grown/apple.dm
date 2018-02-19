@@ -48,7 +48,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/apple/gold
 	maturation = 10
 	production = 10
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/apple/poisoned) //too much greed can poison you or something I dunno
 	reagents_add = list("gold" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 40 // Alchemy!
 
