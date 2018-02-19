@@ -230,12 +230,12 @@
 /obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	if(prob(33))
-		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRUE)
+		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_LOBOTOMY)
 	else
 		if(prob(20))
-			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 		else
-			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /obj/item/organ/heart/gland/spiderman
 	cooldown_low = 450

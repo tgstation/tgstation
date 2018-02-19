@@ -397,7 +397,7 @@
 	if(..())
 		return
 
-	if(locate(/obj/item/borg/upgrade/expand, R))
+	if(R.hasExpanded)
 		to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
 		return
 
@@ -417,5 +417,50 @@
 	R.anchored = FALSE
 	R.notransform = FALSE
 	R.resize = 2
+	R.hasExpanded = TRUE
 	R.update_transform()
+	return TRUE
+
+/obj/item/borg/upgrade/rped
+	name = "engineering cyborg RPED"
+	desc = "A rapid part exchange device for the engineering cyborg."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "borgrped"
+	require_module = TRUE
+	module_type = /obj/item/robot_module/engineering
+
+/obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
+	if(RPED)
+		to_chat(usr, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
+		return FALSE
+
+	RPED = new(R.module)
+	R.module.basic_modules += RPED
+	R.module.add_module(RPED, FALSE, TRUE)
+	return TRUE
+
+/obj/item/borg/upgrade/pinpointer
+	name = "medical cyborg crew pinpointer"
+	desc = "A crew pinpointer module for the medical cyborg."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "pinpointer_crew"
+	require_module = TRUE
+	module_type = /obj/item/robot_module/medical
+
+/obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/obj/item/pinpointer/crew/PP = locate() in R
+	if(PP)
+		to_chat(usr, "<span class='warning'>This unit is already equipped with a pinpointer module.</span>")
+		return FALSE
+
+	PP = new(R.module)
+	R.module.basic_modules += PP
+	R.module.add_module(PP, FALSE, TRUE)
 	return TRUE

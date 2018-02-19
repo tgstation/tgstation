@@ -143,11 +143,14 @@
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
-		if(!cardtext)
+		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
 		name = cardtext
 		buffertext = cardtext

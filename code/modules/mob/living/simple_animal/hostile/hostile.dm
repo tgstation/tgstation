@@ -324,14 +324,18 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)

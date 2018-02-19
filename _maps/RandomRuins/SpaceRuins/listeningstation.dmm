@@ -104,8 +104,10 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
@@ -120,8 +122,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},

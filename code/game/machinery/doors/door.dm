@@ -9,7 +9,7 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
-	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 
@@ -33,6 +33,7 @@
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
+	var/poddoor = FALSE
 
 /obj/machinery/door/examine(mob/user)
 	..()
@@ -41,7 +42,8 @@
 			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
 		else
 			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
-	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
+	if(!poddoor)
+		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
 
 /obj/machinery/door/check_access(access)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)

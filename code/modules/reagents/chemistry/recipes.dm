@@ -9,7 +9,6 @@
 	var/required_container = null // the exact container path required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
 
-	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
@@ -35,6 +34,7 @@
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
 		message_admins(message, 0, 1)
+		log_game("[reaction_name] chemical mob spawn reaction occuring at [COORD(T)]([get_area_name(T)]) carried by [M]([M.ckey]) with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 

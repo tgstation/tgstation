@@ -83,17 +83,6 @@
 			assembly.set_light(0)
 	power_draw_idle = light_toggled ? light_brightness * 2 : 0
 
-/obj/item/integrated_circuit/output/light/advanced/update_lighting()
-	var/new_color = get_pin_data(IC_INPUT, 1)
-	var/brightness = get_pin_data(IC_INPUT, 2)
-
-	if(new_color && isnum(brightness))
-		brightness = CLAMP(brightness, 0, 6)
-		light_rgb = new_color
-		light_brightness = brightness
-
-	..()
-
 /obj/item/integrated_circuit/output/light/power_fail() // Turns off the flashlight if there's no power left.
 	light_toggled = FALSE
 	update_lighting()
@@ -112,6 +101,17 @@
 
 /obj/item/integrated_circuit/output/light/advanced/on_data_written()
 	update_lighting()
+
+/obj/item/integrated_circuit/output/light/advanced/update_lighting()
+	var/new_color = get_pin_data(IC_INPUT, 1)
+	var/brightness = get_pin_data(IC_INPUT, 2)
+
+	if(new_color && isnum(brightness))
+		brightness = CLAMP(brightness, 0, 6)
+		light_rgb = new_color
+		light_brightness = brightness
+
+	..()
 
 /obj/item/integrated_circuit/output/sound
 	name = "speaker circuit"
