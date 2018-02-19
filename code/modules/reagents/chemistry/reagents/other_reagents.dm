@@ -695,6 +695,18 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 
+/datum/reagent/hydrogen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))
+		return 0
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("hydrogen=[reac_volume/2];TEMP=[temp]")
+
+/datum/reagent/hydrogen/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("hydrogen=[reac_volume/2];TEMP=[temp]")
+	return
+
 /datum/reagent/potassium
 	name = "Potassium"
 	id = "potassium"
@@ -1778,7 +1790,7 @@
 	id = "synthpax"
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-  
+
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"

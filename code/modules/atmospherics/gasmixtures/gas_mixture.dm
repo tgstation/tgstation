@@ -27,12 +27,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/list/reaction_results_archived
 
 /datum/gas_mixture/New(volume)
 	gases = new
 	if (!isnull(volume))
 		src.volume = volume
 	reaction_results = new
+	reaction_results_archived = new
 
 //listmos procs
 //use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
@@ -412,6 +414,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = NO_REACTION
 
+	reaction_results_archived = reaction_results
 	reaction_results = new
 
 	var/list/cached_gases = gases

@@ -21,6 +21,9 @@
 #define STIMULUM_SECOND_RISE				0.0009
 #define STIMULUM_ABSOLUTE_DROP				0.00000335
 #define REACTION_OPPRESSION_THRESHOLD		5
+#define HYDROGEN_LOWER_TEMPERATURE			300+T0C	//Temperature required to sustain hydrogen ignition
+#define HYDROGEN_UPPER_TEMPERATURE			1700+T0C
+#define HYDROGEN_DETONATION_THRESHOLD		5		//Amount of moles required to detonate critical hydrogen
 	//Plasma fusion properties
 #define PLASMA_BINDING_ENERGY				3000000
 #define MAX_CATALYST_EFFICENCY				9
@@ -359,6 +362,70 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
 
+/datum/gas_reaction/waterformation
+	priority = 7
+	name = "Hydrogen Cracking"
+	id = "waterformation"
+
+/datum/gas_reaction/waterformation/init_reqs()
+	min_requirements = list(
+		/datum/gas/hydrogen = 10)
+
+/datum/gas_reaction/waterformation/react(datum/gas_mixture/air, turf/open/location)
+	var/old_heat_capacity = air.heat_capacity()
+	var/temperature = air.temperature
+	var/list/cached_results = air.reaction_results
+	var/list/cached_last_results = air.reaction_results_archived
+	var/list/cached_gases = air.gases
+	air.assert_gases(/datum/gas/water_vapor,/datum/gas/oxygen)
+
+	if(air.temperature < HYDROGEN_LOWER_TEMPERATURE) //TODO, gas mix might affect this but idk
+		return NO_REACTION
+
+	if(cached_last_results[id] >= 0) //Synth water vapor
+		if(cached_gases[/datum/gas/oxygen][MOLES] < HYDROGEN_DETONATION_THRESHOLD && air.temperature > HYDROGEN_LOWER_TEMPERATURE && cached_last_results[id] > 0)
+			cached_results[id] = -cached_last_results[id] //We turn critical here
+			return REACTING
+
+		var/total_moles = air.total_moles()
+		var/moles_impurities = total_moles-(cached_gases[/datum/gas/hydrogen][MOLES]+cached_gases[/datum/gas/oxygen][MOLES]+cached_gases[/datum/gas/water_vapor][MOLES])
+		var/water_formed = min(cached_gases[/datum/gas/hydrogen][MOLES],cached_gases[/datum/gas/oxygen][MOLES]*2) * (moles_impurities/total_moles) //Impurities slow hydrogen combustion. TODO: heat/pressure should probably speed this up
+		var/energy_released = water_formed*FIRE_HYDROGEN_ENERGY_RELEASED
+		cached_gases[/datum/gas/hydrogen][MOLES] = max(cached_gases[/datum/gas/hydrogen][MOLES] - water_formed,0)
+		cached_gases[/datum/gas/oxygen][MOLES] = max(cached_gases[/datum/gas/oxygen][MOLES] - water_formed/2,0)
+		cached_gases[/datum/gas/water_vapor][MOLES] += water_formed
+		cached_results[id] = cached_last_results[id] + water_formed //Crit value is total amount of water converted
+
+		if(energy_released > 0)
+			var/new_heat_capacity = air.heat_capacity()
+			if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+				air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
+			return REACTING
+	else //We're already critical
+		if(air.temperature < HYDROGEN_LOWER_TEMPERATURE) //We're subcritical again
+			return NO_REACTION
+
+		cached_results[id] = cached_last_results[id]
+		if(cached_gases[/datum/gas/oxygen][MOLES] > HYDROGEN_DETONATION_THRESHOLD)
+			var/ignition_moles = min(cached_gases[/datum/gas/hydrogen][MOLES],cached_gases[/datum/gas/oxygen][MOLES]*2)
+			cached_results[id] += ignition_moles
+			if(cached_results[id] >= 0)
+				cached_gases[/datum/gas/hydrogen][MOLES] = max(cached_gases[/datum/gas/hydrogen][MOLES] - ignition_moles,0)
+				cached_gases[/datum/gas/oxygen][MOLES] = max(cached_gases[/datum/gas/oxygen][MOLES] - ignition_moles/2,0)
+				cached_gases[/datum/gas/water_vapor][MOLES] += ignition_moles
+				if(istype(location))
+					explosion(location,0,0,2,adminlog = FALSE,flame_range = 2) //If we log this oranges will yell at me
+				else
+					var/energy_released = ignition_moles*FIRE_HYDROGEN_ENERGY_RELEASED
+					var/new_heat_capacity = air.heat_capacity()
+					if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+						air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
+
+				cached_results[id] = 0
+
+		return REACTING
+
+
 #undef OXYGEN_BURN_RATE_BASE
 #undef PLASMA_BURN_RATE_DELTA
 #undef PLASMA_UPPER_TEMPERATURE
@@ -366,6 +433,7 @@
 #undef PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO
 #undef PLASMA_OXYGEN_FULLBURN
 #undef FIRE_CARBON_ENERGY_RELEASED
+#undef FIRE_HYDROGEN_ENERGY_RELEASED
 #undef FIRE_PLASMA_ENERGY_RELEASED
 #undef WATER_VAPOR_FREEZE
 #undef NITRYL_FORMATION_ENERGY
@@ -377,6 +445,9 @@
 #undef STIMULUM_SECOND_RISE
 #undef STIMULUM_ABSOLUTE_DROP
 #undef REACTION_OPPRESSION_THRESHOLD
+#undef HYDROGEN_LOWER_TEMPERATURE
+#undef HYDROGEN_UPPER_TEMPERATURE
+#undef HYDROGEN_DETONATION_THRESHOLD
 #undef PLASMA_BINDING_ENERGY
 #undef MAX_CATALYST_EFFICENCY
 #undef PLASMA_FUSED_COEFFICENT
