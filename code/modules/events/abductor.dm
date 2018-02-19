@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/ghost_role/abductor
 	weight = 10
 	max_occurrences = 1
+	earliest_start = 15 MINUTES
 	min_players = 20
 	gamemode_blacklist = list("nuclear","wizard","revolution")
 
@@ -23,7 +24,7 @@
 	var/datum/team/abductor_team/T = new
 	if(T.team_number > ABDUCTOR_MAX_TEAMS)
 		return MAP_ERROR
-	
+
 	log_game("[scientist.mind.key] (ckey) has been selected as [T.name] abductor scientist.")
 	log_game("[agent.mind.key] (ckey) has been selected as [T.name] abductor agent.")
 

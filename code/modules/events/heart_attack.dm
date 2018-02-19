@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/heart_attack
 	weight = 20
 	max_occurrences = 2
-	earliest_start = 12000
+	earliest_start = 24 MINUTES
 	min_players = 40 // To avoid shafting lowpop
 
 /datum/round_event/heart_attack/start()
