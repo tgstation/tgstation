@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "New blob tiles are no longer invincible after their blob's death."
-  - bugfix: "Blob nodes no longer produce blob tiles even after the blob's death."
