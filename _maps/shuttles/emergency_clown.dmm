@@ -191,8 +191,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Snappop(tm)!";
-	timid = 1
+	name = "Snappop(tm)!"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
