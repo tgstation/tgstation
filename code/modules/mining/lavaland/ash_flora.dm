@@ -222,7 +222,6 @@
 				A.initialize_custom_food(src, S, user)
 	else
 		. = ..()
-	return
 
 //what you can craft with these things
 /datum/crafting_recipe/mushroom_bowl
