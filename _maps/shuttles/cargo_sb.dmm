@@ -9,7 +9,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "d" = (
