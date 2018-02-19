@@ -31,6 +31,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	block_chance = 75
 	deflection_chance = 50
 	allow_temp_override = FALSE
+// vars by iamgoofball - the guy who wrote monk code
 	var/current_exp = 1
 	var/next_level_exp = 5
 	var/static/exp_slope = 10.5
@@ -414,7 +415,7 @@ var/horse_stance_effects = FALSE // ensures the horse stance gains it effect
 	<b>6: Go loud</b>. Don't sit on your hands waiting for the perfect target, just go punch people. Get some experience, or else you're woefully underpowered.<br> \
 	<b>7: </b>If you don't use hotkey mode, please use the rest of this paper to write your last will and testament:<br>"
 
-//Level UP and EXP code.
+//Level UP and EXP code, made by Iamgoofball.
 
 /datum/martial_art/armstrong/proc/do_level_up(mob/living/carbon/human/owner)
 	switch(current_level)
