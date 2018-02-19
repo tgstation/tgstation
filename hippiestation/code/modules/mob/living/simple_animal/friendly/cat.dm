@@ -50,4 +50,5 @@
 	..()
 	if(emagged && prob(5))
 		visible_message("[name] pukes up a banana hairball!")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 200, 1)
 		new /obj/item/grown/bananapeel(get_turf(src))	
