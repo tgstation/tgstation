@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 1 //Very rare
 	max_occurrences = 1
-	earliest_start = 15000 //30mins
+	earliest_start = 30 MINUTES
 	min_players = 20
 
 
