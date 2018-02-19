@@ -37,7 +37,6 @@
 
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 			return FALSE
 		else
 			return TRUE
@@ -226,7 +225,6 @@
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)

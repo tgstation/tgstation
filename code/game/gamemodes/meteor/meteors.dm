@@ -164,14 +164,10 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/ex_act()
 	return
 
-#define METEOR_MEDAL "Your Life Before Your Eyes"
-
 /obj/effect/meteor/examine(mob/user)
 	if(!admin_spawned && isliving(user))
-		UnlockMedal(METEOR_MEDAL,user.client)
+		SSmedals.UnlockMedal(MEDAL_METEOR, user.client)
 	..()
-
-#undef METEOR_MEDAL
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)

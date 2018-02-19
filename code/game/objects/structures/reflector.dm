@@ -72,6 +72,8 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
+	P.range = P.decayedRange
+	P.decayedRange = max(P.decayedRange--, 0)
 	return -1
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
@@ -161,7 +163,6 @@
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!isnull(new_angle))
 		setAngle(SIMPLIFY_DEGREES(new_angle))

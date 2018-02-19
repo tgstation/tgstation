@@ -15,7 +15,7 @@
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	grind_results = list("lithium" = 15, "iron" = 5, "silicon" = 5)
-	var/rigged = 0		// true if rigged to explode
+	var/rigged = FALSE	// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
@@ -104,7 +104,7 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = reagents.has_reagent("plasma", 5)
+	rigged = !isnull(reagents.has_reagent("plasma", 5)) //has_reagent returns the reagent datum
 	..()
 
 
@@ -117,7 +117,7 @@
 	var/light_impact_range = round(sqrt(charge)/30)
 	var/flash_range = light_impact_range
 	if (light_impact_range==0)
-		rigged = 0
+		rigged = FALSE
 		corrupt()
 		return
 	//explosion(T, 0, 1, 2, 2)
@@ -128,7 +128,7 @@
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
-		rigged = 1 //broken batterys are dangerous
+		rigged = TRUE //broken batterys are dangerous
 
 /obj/item/stock_parts/cell/emp_act(severity)
 	charge -= 1000 / severity

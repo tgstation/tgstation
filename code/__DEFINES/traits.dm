@@ -1,6 +1,7 @@
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
+#define TRAIT_EMOTEMUTE			"emotemute"
 #define TRAIT_DEAF				"deaf"
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"

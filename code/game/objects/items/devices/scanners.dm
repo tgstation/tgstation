@@ -161,7 +161,16 @@ GAS ANALYZER
 		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
 			for(var/datum/brain_trauma/B in C.get_traumas())
-				trauma_text += B.scan_desc
+				var/trauma_desc = ""
+				switch(B.resilience)
+					if(TRAUMA_RESILIENCE_SURGERY)
+						trauma_desc += "severe "
+					if(TRAUMA_RESILIENCE_LOBOTOMY)
+						trauma_desc += "deep-rooted "
+					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+						trauma_desc += "permanent "
+				trauma_desc += B.scan_desc
+				trauma_text += trauma_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
