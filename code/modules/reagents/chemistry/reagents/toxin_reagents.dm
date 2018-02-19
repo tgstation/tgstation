@@ -292,9 +292,9 @@
 	..()
 
 /datum/reagent/toxin/chloralhydratedelayed
-	name = "Chloral Hydrate"
-	id = "chloralhydrate2"
-	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
+	name = "Delayed Chloral Hydrate"
+	id = "chloralhydratedelayed"
+	description = "A slower-acting, non-lethal variant of Chloral Hydrate."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
@@ -309,9 +309,9 @@
 			M.Sleeping(40, 0)
 	..()
 
-/datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
+/datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
-	id = "beer2"
+	id = "fakebeer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -320,7 +320,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
-/datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
