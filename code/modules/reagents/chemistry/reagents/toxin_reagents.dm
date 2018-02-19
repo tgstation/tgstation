@@ -908,3 +908,9 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+	L.add_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_EMOTEMUTE, id)

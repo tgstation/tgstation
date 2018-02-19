@@ -14,7 +14,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
 	var/safety = TRUE //if you can zap people with the defibs on harm mode
@@ -292,6 +292,30 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
+	var/datum/component/mobhook
+
+/obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
+	. = ..()
+	if(req_defib)
+		if (mobhook && mobhook.parent != user)
+			QDEL_NULL(mobhook)
+		if (!mobhook)
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/check_range))
+
+/obj/item/twohanded/shockpaddles/Moved()
+	. = ..()
+	check_range()
+
+/obj/item/twohanded/shockpaddles/proc/check_range()
+	if(!in_range(src,defib))
+		var/mob/living/L = loc
+		if(istype(L))
+			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
+			L.temporarilyRemoveItemFromInventory(src,TRUE)
+		else
+			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
+			snap_back()
+
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
 		return
@@ -331,15 +355,22 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
+	if (mobhook)
+		QDEL_NULL(mobhook)
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
-		defib.on = 0
-		forceMove(defib)
-		defib.update_icon()
+		snap_back()
 	return unwield(user)
+
+/obj/item/twohanded/shockpaddles/proc/snap_back()
+	if(!defib)
+		return
+	defib.on = FALSE
+	forceMove(defib)
+	defib.update_icon()
 
 /obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
 	if(!req_defib)

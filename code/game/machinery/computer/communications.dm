@@ -366,7 +366,7 @@
 			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
 				aistate = STATE_MESSAGELIST
 			aicurrmsg.answered = answer
-			log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+			log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
 			if(aicurrmsg.answer_callback)
 				aicurrmsg.answer_callback.Invoke()
 			aistate = STATE_VIEWMESSAGE

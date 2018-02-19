@@ -6,7 +6,7 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
 	var/locked = TRUE
 	var/open = FALSE
 	max_integrity = 150
@@ -30,10 +30,8 @@
 				return
 
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, I.usesound, 40, 1)
-			if(I.use_tool(src, user, 40, amount=2))
+			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else

@@ -57,6 +57,7 @@
 /obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user))
 		anchored = !anchored
+		density = !density
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
 		if(!anchored)
 			icon_state = "[initial(icon_state)]_off"
@@ -122,9 +123,11 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
+	var/choice 
 	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
 		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
+	else
+		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Shielded Robe")

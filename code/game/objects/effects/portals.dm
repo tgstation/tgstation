@@ -147,7 +147,7 @@
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!ismecha(M) && M.anchored && !allow_anchored)
+	if(!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored)
 		return
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")

@@ -104,7 +104,7 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	armor = list("melee" = 10, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE
@@ -135,8 +135,8 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
 
-/obj/item/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	toggle_mode(user)
 

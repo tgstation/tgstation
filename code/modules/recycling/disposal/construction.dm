@@ -155,7 +155,7 @@
 			anchored = TRUE
 			density = initial(pipe_type.density)
 			to_chat(user, "<span class='notice'>You attach the [pipename] to the underfloor.</span>")
-		playsound(src, I.usesound, 100, 1)
+		I.play_tool_sound(src, 100)
 		update_icon()
 
 	else if(istype(I, /obj/item/weldingtool))

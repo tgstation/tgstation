@@ -56,8 +56,7 @@
 		updateUsrDialog()
 	else if(istype(P, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
-		playsound(loc, P.usesound, 50, 1)
-		if(do_after(user, 20, target = src))
+		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)

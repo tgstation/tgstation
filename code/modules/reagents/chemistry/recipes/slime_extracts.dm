@@ -505,6 +505,17 @@
 	BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
 	..()
 
+/datum/chemical_reaction/slime/slimeradio
+	name = "Slime Radio"
+	id = "m_radio"
+	required_reagents = list("water" = 1)
+	required_container = /obj/item/slime_extract/bluespace
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/slimepotion/slimeradio(get_turf(holder.my_atom))
+	..()
+
 //Cerulean
 /datum/chemical_reaction/slime/slimepsteroid2
 	name = "Slime Steroid 2"
@@ -598,9 +609,33 @@
 	required_other = 1
 	required_container = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder)
-	var/mob/living/simple_animal/slime/random/S = new (get_turf(holder.my_atom))
-	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder, created_volume)
+	if(created_volume >= 5)
+		var/obj/item/grenade/clusterbuster/slime/S = new (holder.my_atom.loc)
+		S.visible_message("<span class='danger'>Infused with plasma, the core begins to expand uncontrollably!</span>")
+		S.icon_state = "[S.base_state]_active"
+		S.active = TRUE
+		addtimer(CALLBACK(S, /obj/item/grenade.proc/prime), rand(15,60))
+		qdel(holder.my_atom) //deleto
+	else
+		var/mob/living/simple_animal/slime/random/S = new (holder.my_atom.loc)
+		S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+	..()
+
+/datum/chemical_reaction/slime/slimebomb
+	name = "Clusterblorble"
+	id = "slimebomb"
+	required_reagents = list("slimejelly" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, created_volume)
+	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (holder.my_atom.loc)
+	S.visible_message("<span class='danger'>Infused with slime jelly, the core begins to expand uncontrollably!</span>")
+	S.icon_state = "[S.base_state]_active"
+	S.active = TRUE
+	addtimer(CALLBACK(S, /obj/item/grenade.proc/prime), rand(15,60))
+	qdel(holder.my_atom) //deleto
 	..()
 
 /datum/chemical_reaction/slime/slime_transfer

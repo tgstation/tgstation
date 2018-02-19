@@ -93,9 +93,8 @@
 
 				user.visible_message("[user] disassembles the windoor assembly.",
 					"<span class='notice'>You start to disassemble the windoor assembly...</span>")
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
-				if(W.use_tool(src, user, 40))
+				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, "<span class='notice'>You disassemble the windoor assembly.</span>")
 					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 					RG.add_fingerprint(user)
@@ -205,7 +204,7 @@
 			else if(istype(W, /obj/item/electronics/airlock))
 				if(!user.transferItemToLoc(W, src))
 					return
-				playsound(loc, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				user.visible_message("[user] installs the electronics into the airlock assembly.",
 					"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 

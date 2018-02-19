@@ -112,11 +112,11 @@
 	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
 			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)

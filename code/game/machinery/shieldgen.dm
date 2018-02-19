@@ -144,7 +144,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
-		playsound(src.loc, W.usesound, 100, 1)
+		W.play_tool_sound(src, 100)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
@@ -170,11 +170,11 @@
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = TRUE
 		else if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")

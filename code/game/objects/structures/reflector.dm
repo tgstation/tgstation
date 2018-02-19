@@ -72,6 +72,8 @@
 
 /obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
+	P.range = P.decayedRange
+	P.decayedRange = max(P.decayedRange--, 0)
 	return -1
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
@@ -81,7 +83,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
-		playsound(src, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(istype(W, /obj/item/wrench))
@@ -160,16 +162,14 @@
 		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
 		return FALSE
 	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!isnull(new_angle))
 		setAngle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else if(finished)
 		rotate(user)

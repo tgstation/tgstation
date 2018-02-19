@@ -212,10 +212,10 @@
 		anchored = !anchored
 		if(anchored)
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 		else
 			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))

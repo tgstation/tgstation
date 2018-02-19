@@ -111,8 +111,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	port_direction = 2;
-	width = 5;
-	timid = 1
+	width = 5
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
@@ -127,7 +126,8 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access = list(28)
+	req_access = null;
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)

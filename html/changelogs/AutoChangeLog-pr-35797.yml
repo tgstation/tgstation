@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "Fixed paper bins not catching fire properly"

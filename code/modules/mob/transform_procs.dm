@@ -78,9 +78,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -238,9 +235,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -334,6 +328,7 @@
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		if(sloc.primary_ai)
+			LAZYCLEARLIST(landmark_loc)
 			landmark_loc += sloc.loc
 			break
 		landmark_loc += sloc.loc
@@ -343,8 +338,8 @@
 			landmark_loc += sloc.loc
 
 	if(!landmark_loc.len)
-		message_admins("[src] cannot be made an AI as there are no valid spawn points. Yell at a mapper!")
-		return
+		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
+		landmark_loc += loc
 
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)

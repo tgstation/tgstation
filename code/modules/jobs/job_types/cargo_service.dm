@@ -195,6 +195,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(/obj/item/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -215,14 +216,8 @@ Cook
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
 	H.equip_to_slot_or_del(I,slot_in_backpack)
-
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-
-	H.dna.add_mutation(ITALIAN)
-
+	var/datum/martial_art/cqc/under_siege/justacook = new
+	justacook.teach(H)
 
 /*
 Botanist

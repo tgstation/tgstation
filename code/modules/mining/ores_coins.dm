@@ -11,11 +11,12 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
+	item_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
-	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
 	var/list/stack_overlays
 
 /obj/item/stack/ore/add(amount)
@@ -52,6 +53,7 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
+	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -60,6 +62,7 @@
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
+	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
@@ -68,6 +71,7 @@
 /obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
+	item_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
@@ -104,11 +108,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
+	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
+	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
@@ -122,6 +128,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
+	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
@@ -129,6 +136,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
+	icon_state = "Gold ore"
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
@@ -138,6 +146,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
+	item_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
@@ -146,6 +155,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "Bananium ore"
+	item_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -154,6 +164,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
+	item_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -163,6 +174,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
+	item_state = "slag"
 	singular_name = "slag chunk"
 
 /obj/item/twohanded/required/gibtonite
@@ -198,7 +210,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			wires.interact(user)
 			return
 
-	if(istype(I, /obj/item/pickaxe) || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
 		GibtoniteReaction(user)
 		return
 	if(primed)

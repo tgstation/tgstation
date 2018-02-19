@@ -185,10 +185,8 @@
 				return
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			playsound(src, I.usesound, 40, 1)
-			if(I.use_tool(src, user, 40))
+			if(I.use_tool(src, user, 40, volume=50))
 				obj_integrity = max_integrity
-				playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -197,7 +195,7 @@
 
 	if(!(flags_1&NODECONSTRUCT_1))
 		if(istype(I, /obj/item/screwdriver))
-			playsound(src, I.usesound, 75, 1)
+			I.play_tool_sound(src, 75)
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
 					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
@@ -222,14 +220,14 @@
 
 		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
-			playsound(src, I.usesound, 75, 1)
+			I.play_tool_sound(src, 75)
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
 
 		else if(istype(I, /obj/item/wrench) && !anchored)
-			playsound(src, I.usesound, 75, 1)
+			I.play_tool_sound(src, 75)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
@@ -562,7 +560,7 @@
 	canSmoothWith = null
 	explosion_block = 3
 	level = 3
-	glass_type = /obj/item/stack/sheet/rglass
+	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
 
 /obj/structure/window/shuttle/narsie_act()
@@ -570,6 +568,9 @@
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
+
+/obj/structure/window/shuttle/unanchored
+	anchored = FALSE
 
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
@@ -588,8 +589,11 @@
 	canSmoothWith = null
 	explosion_block = 3
 	level = 3
-	glass_type = /obj/item/stack/sheet/rglass
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
+
+/obj/structure/window/plastitanium/unanchored
+	anchored = FALSE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"

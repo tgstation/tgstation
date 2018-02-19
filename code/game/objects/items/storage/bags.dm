@@ -404,7 +404,6 @@
 	storage_slots = 50
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
-	preposition = "in"
 	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	resistance_flags = FLAMMABLE
 
@@ -420,6 +419,5 @@
 	storage_slots = 25
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
-	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube)
 	resistance_flags = FLAMMABLE
