@@ -15623,7 +15623,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
@@ -15634,7 +15634,7 @@
 	},
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
@@ -15651,7 +15651,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
@@ -27009,7 +27009,7 @@
 /area/maintenance/port)
 "tIr" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
