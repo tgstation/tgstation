@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>You can Alt-click the tray to deactivate the alarm.</span>")
+	to_chat(user, "<span class='notice'>Alt-click [src] to [beeper ? "disable" : "enable"] the alarm.</span>")
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
