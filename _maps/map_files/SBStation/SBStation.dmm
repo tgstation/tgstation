@@ -8435,8 +8435,10 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aue" = (
-/obj/machinery/deepfryer{
-	dir = 1
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -8451,10 +8453,8 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 5
+/obj/machinery/deepfryer{
+	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -15616,7 +15616,9 @@
 /area/hallway/secondary/exit)
 "aKl" = (
 /obj/machinery/conveyor{
+	backwards = 8;
 	dir = 8;
+	forwards = 4;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15630,7 +15632,9 @@
 /area/quartermaster/storage)
 "aKm" = (
 /obj/machinery/conveyor{
+	backwards = 8;
 	dir = 8;
+	forwards = 4;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15641,7 +15645,9 @@
 /area/quartermaster/storage)
 "aKn" = (
 /obj/machinery/conveyor{
+	backwards = 8;
 	dir = 8;
+	forwards = 4;
 	id = "cargoload"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -16782,7 +16788,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "aMY" = (
 /obj/structure/filingcabinet,
@@ -16995,7 +17001,7 @@
 /obj/machinery/conveyor{
 	id = "mail"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "aNL" = (
 /obj/machinery/light{
@@ -17328,7 +17334,7 @@
 /obj/machinery/conveyor{
 	id = "mail"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "aOI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -17900,7 +17906,7 @@
 	id = "mail"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "aQe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -18213,7 +18219,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "aQM" = (
 /obj/structure/cable/white{
@@ -18229,12 +18235,10 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/structure/closet/firecloset,
-/obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/port/aft)
 "aQO" = (
 /obj/structure/cable/white{
@@ -24884,12 +24888,10 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dxG" = (
-/obj/structure/closet/toolcloset,
-/obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/port/aft)
 "dGS" = (
 /obj/machinery/light{
@@ -25030,6 +25032,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "eQE" = (
@@ -25223,6 +25229,9 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "guy" = (
@@ -25527,13 +25536,14 @@
 /turf/closed/wall,
 /area/crew_quarters/dorms)
 "ipT" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "trash"
-	},
 /obj/structure/sign/warning/securearea{
 	name = "\improper STAY CLEAR HEAVY MACHINERY";
 	pixel_y = 32
+	},
+/obj/machinery/conveyor{
+	dir = 5;
+	id = "garbage";
+	movedir = 2
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25559,11 +25569,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/disposaloutlet{
-	dir = 8
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "trash"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25637,6 +25645,16 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "jfq" = (
@@ -26194,7 +26212,7 @@
 "off" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/disposal";
-	dir = 4;
+	dir = 8;
 	name = "Disposal APC";
 	pixel_x = -24;
 	pixel_y = 0
@@ -26578,7 +26596,7 @@
 "qre" = (
 /obj/machinery/power/apc{
 	areastring = "/area/security/courtroom";
-	dir = 2;
+	dir = 1;
 	name = "Courtroom APC";
 	pixel_x = 0;
 	pixel_y = 24
@@ -26658,6 +26676,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
+"qSL" = (
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "qSY" = (
 /obj/machinery/conveyor{
 	id = "trash"
@@ -26813,7 +26841,7 @@
 /obj/machinery/conveyor{
 	id = "mail"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "rFM" = (
 /obj/structure/cable/white{
@@ -26992,7 +27020,9 @@
 /area/maintenance/port)
 "tIr" = (
 /obj/machinery/conveyor{
+	backwards = 8;
 	dir = 8;
+	forwards = 4;
 	id = "cargoload"
 	},
 /turf/open/floor/plasteel,
@@ -27126,6 +27156,9 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "uDh" = (
@@ -27424,7 +27457,7 @@
 	name = "disposal bay door"
 	},
 /obj/structure/fans/tiny,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "wOW" = (
 /obj/structure/disposalpipe/segment,
@@ -57574,7 +57607,7 @@ drO
 iZF
 tKo
 msz
-kNd
+qSL
 vad
 bjT
 bjT
