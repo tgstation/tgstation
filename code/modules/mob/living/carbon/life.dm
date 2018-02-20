@@ -408,7 +408,7 @@
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
-		if(liver.damage >= 100)
+		if(liver.damage >= liver.maxHealth)
 			liver.failing = TRUE
 			liver_failure()
 	else
