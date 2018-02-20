@@ -25345,6 +25345,9 @@
 	name = "Starboard Quarter Solar Control";
 	track = 0
 	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "hlv" = (
@@ -25455,6 +25458,9 @@
 	id = "auxsolareast";
 	name = "Starboard Bow Solar Control";
 	track = 0
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
@@ -25887,6 +25893,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/quartermaster/storage)
+"lbz" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "lnr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26311,6 +26326,15 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"oEB" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "oFh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -71461,7 +71485,7 @@ hTc
 oiq
 efU
 sRW
-efU
+oEB
 mec
 hlv
 nib
@@ -73302,7 +73326,7 @@ aNy
 wHU
 piK
 bMm
-rif
+lbz
 nyo
 rif
 hIF
