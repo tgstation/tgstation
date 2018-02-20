@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "The round-end report now shows information about the first person to die in that round."

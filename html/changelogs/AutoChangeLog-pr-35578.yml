@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Admins may now spawn a debug circuit printer that can always print circuits, and has infinite metal."
-  - bugfix: "Buttons, number pads, and text pads in integrated circuits now correctly show their labels."
-  - bugfix: "Integrated hypo-injectors can now correctly draw blood."
-  - tweak: "The circuit analyzer output has been slightly tweaked and includes usage instructions."

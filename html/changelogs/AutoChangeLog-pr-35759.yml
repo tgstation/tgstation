@@ -1,8 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Added the dish drive. This machine, the future in plate disposal, can be researched from techwebs (Biological Processing) and built with a standard machine frame using two matter bins, a micro manipulator, and a glass sheet."
-  - rscadd: "A circuit board for the dish drive can be found in the chef's and bartender's wardrobes."
-  - rscadd: "You can hit a dish drive with any dish (like a plate or drinking glass), and the dish drive will convert it from matter to energy, allowing it to store an infinite amount of dishes. You can also interact with it to get things back from it."
-  - rscadd: "Dish drives also have an automatic \"suction\" function that sucks in all loose dishes within four tiles. This can be toggled by activating its circuit board in-hand."
-  - rscadd: "Dish drives automatically beam their stored dishes into any disposal unit that it can see within seven tiles every minute. You can toggle this by alt-clicking its circuit board."

@@ -1,4 +1,0 @@
-author: "NTnet circuit fix"
-delete-after: True
-changes: 
-  - bugfix: "Now NTnet circuits can recieve sender adress properly.Also, now messages could be sended to multiple recepiens."
