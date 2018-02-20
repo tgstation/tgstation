@@ -407,12 +407,9 @@
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
-	if(liver)
-		if(liver.damage >= 100)
-			liver.failing = TRUE
-			liver_failure()
-		else
-			liver.failing = FALSE
+	if(liver && liver.damage >= 100)
+		liver.failing = TRUE
+		liver_failure()
 	else
 		liver_failure()
 
