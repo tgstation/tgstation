@@ -1119,8 +1119,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(M.health <= 0)
 		M.adjustBruteLoss(-7, 0)
 		M.adjustFireLoss(-7, 0)
-		M.adjustToxLoss(-7, 0)
-		M.adjustOxyLoss(-7, 0)
 		M.adjustCloneLoss(-7, 0)
 		. = 1
 	return ..() || .
