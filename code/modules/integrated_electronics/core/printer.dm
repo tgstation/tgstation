@@ -34,7 +34,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into \the [src]. </span>")
 		upgraded = TRUE
-		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -44,7 +43,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install \the [O] into \the [src]. </span>")
 		can_clone = TRUE
-		qdel(O)
 		interact(user)
 		return TRUE
 

@@ -25,6 +25,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 0
+	ext_cooldown = 1
 	var/mode = FALSE
 
 	var/stun_projectile = null		//stun mode projectile type
@@ -57,7 +58,7 @@
 		if(gun_properties["shot_delay"])
 			cooldown_per_use = gun_properties["shot_delay"]*10
 		if(cooldown_per_use<30)
-			cooldown_per_use = 40
+			cooldown_per_use = 30
 		if(gun_properties["reqpower"])
 			power_draw_per_use = gun_properties["reqpower"]
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
@@ -139,6 +140,8 @@
 	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 20
+	cooldown_per_use = 10
+	ext_cooldown = 1
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list()
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
@@ -171,6 +174,7 @@
 					Beware: Once primed there is no aborting the process!"
 	icon_state = "grenade"
 	complexity = 30
+	cooldown_per_use = 10
 	inputs = list("detonation time" = IC_PINTYPE_NUMBER)
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
@@ -241,6 +245,7 @@
 	icon_state = "plant_m"
 	extended_desc = "The circuit accepts a reference to a hydroponic tray in an adjacent tile. \
 	Mode(0- harvest, 1-uproot weeds, 2-uproot plant) determinies action."
+	cooldown_per_use = 10
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 10
 	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
@@ -300,7 +305,7 @@
 	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
-
+	cooldown_per_use = 5
 	complexity = 10
 	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
 	outputs = list("first" = IC_PINTYPE_REF, "last" = IC_PINTYPE_REF, "amount" = IC_PINTYPE_NUMBER,"contents" = IC_PINTYPE_LIST)
@@ -362,13 +367,14 @@
 	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release. 1 for pull."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
-
+	cooldown_per_use = 5
 	complexity = 10
 	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX)
 	outputs = list("is pulling" = IC_PINTYPE_BOOLEAN)
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
+	ext_cooldown = 1
 	var/max_grab = GRAB_PASSIVE
 
 /obj/item/integrated_circuit/manipulation/claw/do_work()
@@ -403,6 +409,8 @@
 	complexity = 15
 	w_class = WEIGHT_CLASS_SMALL
 	size = 2
+	cooldown_per_use = 10
+	ext_cooldown = 1
 	inputs = list(
 		"target X rel" = IC_PINTYPE_NUMBER,
 		"target Y rel" = IC_PINTYPE_NUMBER,

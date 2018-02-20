@@ -3,6 +3,7 @@
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
+	cooldown_per_use = 10
 	var/volume = 0
 
 /obj/item/integrated_circuit/reagent/Initialize()
@@ -21,7 +22,7 @@
 	icon_state = "smoke"
 	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
 	into the smoke clouds when activated. The reagents are consumed when smoke is made."
-
+	ext_cooldown = 1
 	container_type = OPENCONTAINER
 	volume = 100
 
@@ -281,6 +282,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/reagent/storage
+	cooldown_per_use = 1
 	name = "reagent storage"
 	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u."
 	icon_state = "reagent_storage"
@@ -335,6 +337,7 @@
 	desc = "This is reagent grinder. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
+	ext_cooldown = 1
 	inputs = list(
 		"target" = IC_PINTYPE_REF,
 		)
@@ -382,6 +385,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	desc = "This is reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
+	ext_cooldown = 1
 	inputs = list(
 		"target" = IC_PINTYPE_REF,
 		)

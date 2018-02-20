@@ -526,7 +526,7 @@
 	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
-
+	cooldown_per_use = 5
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
@@ -596,6 +596,7 @@
 	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
 	complexity = 4
+	cooldown_per_use = 5
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,

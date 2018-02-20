@@ -97,7 +97,8 @@
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/volume = 60
-	var/list/fuel = list("plasma" = 10000, "welding_fuel" = 3000, "carbon" = 2000, "ethanol" = 2000, "nutriment" = 1600, "blood" = 1000)
+	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol" = 10000, "nutriment" = 8000)
+	var/multi = 1
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
@@ -115,7 +116,16 @@
 /obj/item/integrated_circuit/passive/power/chemical_cell/make_energy()
 	if(assembly)
 		if(assembly.battery)
+			var/bp = 5000
+			if(reagents.get_reagent_amount("blood")) //only it's powerful enough to power the station(c)
+				var/datum/reagent/blood/B = locate() in reagents.reagent_list
+				if(B && B.data["cloneable"])
+					var/mob/M = B.data["donor"]
+					if(M && M.stat != DEAD && M.client)
+						bp = 500000
+				if(reagents.remove_reagent("blood", 1))
+					assembly.give_power("blood")
 			for(var/I in fuel)
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 					if(reagents.remove_reagent(I, 1))
-						assembly.give_power(fuel[I])
+						assembly.give_power(fuel[I]*multi)
