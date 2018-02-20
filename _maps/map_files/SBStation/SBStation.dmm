@@ -17271,12 +17271,12 @@
 "aOy" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 2;
-	height = 4;
+	dwidth = 3;
+	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
 	roundstart_template = /datum/map_template/shuttle/mining/sb;
-	width = 5
+	width = 7
 	},
 /turf/open/space/basic,
 /area/space)
@@ -25692,6 +25692,7 @@
 /area/maintenance/starboard/fore)
 "jyg" = (
 /obj/machinery/status_display{
+	layer = 3.3;
 	name = "cargo display";
 	pixel_x = 32;
 	supply_display = 1
@@ -27169,6 +27170,12 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad"
 	},
+/obj/machinery/status_display{
+	name = "cargo display";
+	pixel_x = -32;
+	pixel_y = 0;
+	supply_display = 1
+	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
 "uyx" = (
@@ -27659,6 +27666,12 @@
 	dir = 4;
 	name = "Mining Dock APC";
 	pixel_x = 26
+	},
+/obj/machinery/status_display{
+	name = "cargo display";
+	pixel_x = 0;
+	pixel_y = -32;
+	supply_display = 1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
