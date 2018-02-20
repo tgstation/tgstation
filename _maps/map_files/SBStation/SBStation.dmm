@@ -15615,12 +15615,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aKl" = (
-/obj/machinery/conveyor{
-	backwards = 8;
-	dir = 8;
-	forwards = 4;
-	id = "cargoload"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -15628,28 +15622,24 @@
 	id = "cargoload";
 	name = "supply dock loading door"
 	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aKm" = (
-/obj/machinery/conveyor{
-	backwards = 8;
-	dir = 8;
-	forwards = 4;
-	id = "cargoload"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/structure/plasticflaps,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aKn" = (
-/obj/machinery/conveyor{
-	backwards = 8;
-	dir = 8;
-	forwards = 4;
-	id = "cargoload"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -15659,6 +15649,10 @@
 	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -24712,12 +24706,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/lawoffice)
-"bRI" = (
-/obj/machinery/conveyor{
-	id = "trash"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "cdg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -24863,8 +24851,8 @@
 /area/maintenance/solars/starboard/fore)
 "dqB" = (
 /obj/machinery/mineral/stacking_unit_console{
-	dir = 2;
-	machinedir = 8
+	dir = 4;
+	machinedir = 1
 	},
 /turf/closed/wall,
 /area/maintenance/disposal)
@@ -25491,12 +25479,13 @@
 /turf/open/space,
 /area/maintenance/solars/starboard/aft)
 "icL" = (
-/obj/machinery/conveyor{
-	id = "trash"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Disposal Exit";
 	name = "disposal exit vent"
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25536,14 +25525,9 @@
 /turf/closed/wall,
 /area/crew_quarters/dorms)
 "ipT" = (
-/obj/structure/sign/warning/securearea{
-	name = "\improper STAY CLEAR HEAVY MACHINERY";
-	pixel_y = 32
-	},
 /obj/machinery/conveyor{
 	dir = 5;
-	id = "garbage";
-	movedir = 2
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25566,13 +25550,15 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "ixx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/structure/sign/warning/securearea{
+	name = "\improper STAY CLEAR HEAVY MACHINERY";
+	pixel_y = 32
 	},
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "trash"
+	dir = 4;
+	id = "garbage"
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "iEL" = (
@@ -25614,12 +25600,12 @@
 /turf/closed/wall,
 /area/security/detectives_office)
 "jaK" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "trash"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25672,11 +25658,12 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/medical/genetics)
 "jmc" = (
-/obj/machinery/conveyor{
-	id = "trash"
-	},
 /obj/structure/sign/warning/vacuum{
 	pixel_x = -32
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26147,11 +26134,12 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/maintenance/solars/starboard/fore)
 "nGZ" = (
-/obj/machinery/conveyor{
-	id = "trash"
-	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26247,6 +26235,14 @@
 "ojy" = (
 /turf/closed/wall,
 /area/maintenance/department/electrical)
+"ojz" = (
+/obj/machinery/conveyor_switch/oneway{
+	convdir = -1;
+	id = "garbage";
+	name = "disposal conveyor"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "oqg" = (
 /obj/structure/table,
 /obj/item/storage/box,
@@ -26270,9 +26266,12 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
 "osE" = (
+/obj/machinery/recycler{
+	eat_dir = 4
+	},
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "trash"
+	dir = 4;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26521,15 +26520,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"qeV" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "trash"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "qfO" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -26684,14 +26674,13 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "qSY" = (
 /obj/machinery/conveyor{
-	id = "trash"
-	},
-/obj/machinery/recycler{
-	eat_dir = 1
+	dir = 1;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -27020,10 +27009,8 @@
 /area/maintenance/port)
 "tIr" = (
 /obj/machinery/conveyor{
-	backwards = 8;
-	dir = 8;
-	forwards = 4;
-	id = "cargoload"
+	dir = 4;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -27122,8 +27109,7 @@
 /area/quartermaster/miningdock)
 "uqG" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
-	id = "cargoload"
+	id = "QMLoad2"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
@@ -56840,7 +56826,7 @@ ipT
 qSY
 nGZ
 jmc
-bRI
+qSY
 icL
 uzP
 rJt
@@ -57351,12 +57337,12 @@ aQd
 aQL
 fil
 ixx
-qeV
+pAW
 bjT
 bjT
 bjT
 uKt
-bjT
+ojz
 rJt
 adP
 aaa
