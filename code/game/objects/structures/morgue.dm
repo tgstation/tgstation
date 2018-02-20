@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
  */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in until someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
 	var/beeper = TRUE
@@ -150,6 +150,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
 	..()
+
+/obj/structure/bodycontainer/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>You can Alt-click the tray to deactivate the alarm.</span>")
 
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
