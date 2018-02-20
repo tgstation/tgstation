@@ -13,7 +13,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	//socks
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	//lizard bodyparts (blizzard intensifies)
+	//bodypart accessories (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, GLOB.animated_tails_list_lizard)
@@ -29,7 +29,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
-	//moffs
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 
