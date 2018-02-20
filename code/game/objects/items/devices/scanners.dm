@@ -325,7 +325,7 @@ GAS ANALYZER
 	advanced = TRUE
 
 /obj/item/device/analyzer
-	desc = "A hand-held environmental scanner which reports current gas levels."
+	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
@@ -339,6 +339,9 @@ GAS ANALYZER
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+	var/cooldown = FALSE
+	var/cooldown_time = 250
+	var/accuracy // 0 is the best accuracy.
 
 /obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -403,6 +406,69 @@ GAS ANALYZER
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
+/obj/item/device/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+	..()
+
+	if(user.canUseTopic(src))
+		var/turf/T = get_turf(user)
+		if(!T)
+			return
+
+		playsound(src, 'sound/effects/pop.ogg', 100)
+		if(cooldown)
+			to_chat(user, "<span class='warning'>[src]'s barometer function is prepraring itself.</span>")
+			return
+
+		var/area/user_area = T.loc
+		var/datum/weather/ongoing_weather = null
+		for(var/V in SSweather.processing)
+			var/datum/weather/W = V
+			if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
+				ongoing_weather = W
+				break
+
+		if(ongoing_weather)
+			if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
+				to_chat(user, "<span class='warning'>[src] can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
+				return
+
+			var/time = butchertime((ongoing_weather.next_hit_time - world.time)/10)
+			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [round(time)] seconds.</span>")
+			if(ongoing_weather.aesthetic)
+				to_chat(user, "<span class='warning'>[src] says that the next storm will breeze on by.</span>")
+		else if(user_area.outdoors)
+			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
+			var/fixed = next_hit ? next_hit - world.time : -1
+			if(fixed < 0)
+				to_chat(user, "<span class='warning'>[src] was unable to trace any weather patterns.</span>")
+			else
+				fixed = butchertime(round(fixed / 10))
+				to_chat(user, "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>")
+		else
+			to_chat(user, "<span class='warning'>[src]'s barometer function won't work indoors!</span>")
+		cooldown = TRUE
+		addtimer(src, /obj/item/device/analyzer/proc/ping, cooldown_time)
+
+/obj/item/device/analyzer/proc/ping()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		to_chat(L, "<span class='notice'>[src] is ready!</span>")
+	playsound(src, 'sound/machines/click.ogg', 100)
+	cooldown = FALSE
+
+/obj/item/device/analyzer/proc/butchertime(amount)
+	if(!amount)
+		return
+	if(accuracy)
+		var/time = amount
+		var/inaccurate = round(accuracy*(1/3))
+		if(prob(50))
+			time -= inaccurate
+		if(prob(50))
+			time += inaccurate
+		return time
+	else
+		return amount
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
