@@ -333,14 +333,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature += (50 * power_multiplier)
+			L.adjust_bodytemperature(50 * power_multiplier)
 
 	//COLD
 	else if((findtext(message, cold_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature = max(L.bodytemperature - 50 * power_multiplier,0)
+			L.adjust_bodytemperature(-50 * power_multiplier)
 
 	//REPULSE
 	else if((findtext(message, repulse_words)))

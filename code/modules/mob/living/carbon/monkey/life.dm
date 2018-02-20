@@ -65,13 +65,13 @@
 	var/loc_temp = get_temperature(environment)
 
 	if(stat != DEAD)
-		bodytemperature += natural_bodytemperature_stabilization()
+		adjust_bodytemperature(natural_bodytemperature_stabilization())
 
 	if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
 		if(loc_temp < bodytemperature)
-			bodytemperature += max((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
 		else
-			bodytemperature += min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+			adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -161,5 +161,5 @@
 			if(!(I.resistance_flags & FIRE_PROOF))
 				I.take_damage(fire_stacks, BURN, "fire", 0)
 
-		bodytemperature += BODYTEMP_HEATING_MAX
+		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 
