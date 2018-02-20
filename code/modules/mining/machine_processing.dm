@@ -7,7 +7,7 @@
 	var/output_dir = SOUTH
 
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
-	S.forceMove(loc)
+	S.forceMove(drop_location())
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		S.forceMove(T)
