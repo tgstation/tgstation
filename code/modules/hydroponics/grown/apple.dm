@@ -13,7 +13,7 @@
 	icon_grow = "apple-grow"
 	icon_dead = "apple-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/apple/gold)
+	mutatelist = list(/obj/item/seeds/apple/gold, /obj/item/seeds/apple/poisoned)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/apple
@@ -31,8 +31,8 @@
 /obj/item/seeds/apple/poisoned
 	product = /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
 	mutatelist = list()
-	reagents_add = list("zombiepowder" = 0.5, "vitamin" = 0.04, "nutriment" = 0.1)
-	rarity = 50 // Source of cyanide, and hard (almost impossible) to obtain normally.
+	reagents_add = list("zombiepowder" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
+	rarity = 50 // Source of zombie powder, and hard (almost impossible) to obtain normally.
 
 /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
 	seed = /obj/item/seeds/apple/poisoned
