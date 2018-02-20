@@ -244,32 +244,33 @@
 		dish_quants[S.name] = 1
 	sortList(dish_quants)
 
-/obj/machinery/vending/attackby(obj/item/W, mob/user, params)
+/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
+	if(!component_parts)
+		return FALSE
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
 	if(panel_open)
-		if(default_unfasten_wrench(user, W, time = 60))
-			return
+		default_unfasten_wrench(user, I, time = 60)
+	return TRUE
 
-	if(component_parts)
-		if(default_deconstruction_crowbar(W))
-			return
-
-	if(istype(W, /obj/item/screwdriver))
-		if(anchored)
-			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
-			cut_overlays()
-			if(panel_open)
-				add_overlay("[initial(icon_state)]-panel")
-			W.play_tool_sound(src)
-			updateUsrDialog()
-		else
-			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
-		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/wirecutters))
+/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
+	if(anchored)
+		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
+		cut_overlays()
 		if(panel_open)
-			attack_hand(user)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
+	else
+		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
+	return TRUE
+
+/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
 		return
-	else if(istype(W, /obj/item/coin))
+	else if(istype(I, /obj/item/coin))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
@@ -279,32 +280,32 @@
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(I, src))
 			return
-		coin = W
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		coin = I
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, /obj/item/stack/spacecash))
+	else if(istype(I, /obj/item/stack/spacecash))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
 		if(bill)
 			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
 			return
-		var/obj/item/stack/S = W
+		var/obj/item/stack/S = I
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
 			return
 		S.use(1)
-		bill = new S.type(src,1)
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		bill = new S.type(src, 1)
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, refill_canister) && refill_canister != null)
+	else if(istype(I, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = W
+			var/obj/item/vending_refill/canister = I
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else

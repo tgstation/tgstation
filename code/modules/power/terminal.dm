@@ -74,9 +74,6 @@
 		to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 		qdel(src)
 
-
-/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/wirecutters))
-		dismantle(user, W)
-	else
-		return ..()
+/obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
+	dismantle(user, I)
+	return TRUE
