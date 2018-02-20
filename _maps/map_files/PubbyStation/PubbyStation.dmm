@@ -35550,7 +35550,7 @@
 /area/science/mineral_storeroom)
 "bIO" = (
 /obj/structure/window/reinforced,
-/obj/machinery/doppler_array{
+/obj/machinery/doppler_array/research/science{
 	dir = 2
 	},
 /obj/effect/turf_decal/bot{

@@ -70582,7 +70582,7 @@
 /turf/open/floor/plasteel/vault,
 /area/chapel/main)
 "cQB" = (
-/obj/machinery/doppler_array{
+/obj/machinery/doppler_array/research/science{
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
