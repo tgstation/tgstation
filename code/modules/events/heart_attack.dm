@@ -20,4 +20,6 @@
 		var/mob/living/carbon/C = pickweight(heart_attack_contestants)
 		var/datum/disease/D = new /datum/disease/heart_failure
 		C.ForceContractDisease(D)
-		notify_ghosts("[C] is beginning to have a heart attack!", enter_link="<a href=?src=[REF(C)];orbit=1>(Click to orbit)</a>", source=C, action=NOTIFY_ORBIT)
+		notify_ghosts("[C] is beginning to have a heart attack!",
+			enter_link="<a href=?src=[REF(C)];orbit=1>(Click to orbit)</a>",
+			source=C, action=NOTIFY_ORBIT)
