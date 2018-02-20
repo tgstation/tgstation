@@ -8,6 +8,7 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
 	dextrous = 1
+	held_items = list(null, null)
 	environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
