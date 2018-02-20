@@ -350,7 +350,9 @@
 /obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
-	illustration = "donk_kit"
+	icon_state = "donkpocketbox"
+	illustration=null
+	can_hold = list(/obj/item/reagent_containers/food/snacks/donkpocket)
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
