@@ -16,6 +16,8 @@
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting)
+			return
 		if(affecting.status != BODYPART_ORGANIC)
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
