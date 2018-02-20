@@ -89,7 +89,7 @@ field_generator power level display
 
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
