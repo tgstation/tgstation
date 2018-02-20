@@ -18,7 +18,7 @@
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
-	var/cable = 1
+	var/cable = 3
 	var/list/debris = list()
 
 /obj/machinery/door/window/New(loc, set_dir)
