@@ -20,6 +20,11 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
+	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
+	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
+	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
@@ -32,13 +37,28 @@
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
+	//sets up diagnostic hud view
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
 	check_pulling()
+
+	//updates diagnostic hud
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -127,6 +147,7 @@
 			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
+			diag_hud_set_circuitstat() //update diagnostic hud
 
 	if(href_list["component"])
 		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in assembly_components
@@ -169,6 +190,22 @@
 				assembly_components.Insert(current_pos, component)
 
 	interact(usr) // To refresh the UI.
+
+/obj/item/device/electronic_assembly/pickup(mob/living/user)
+	. = ..()
+	//update diagnostic hud when picked up, true is used to force the hud to be hidden
+	diag_hud_set_circuithealth(TRUE)
+	diag_hud_set_circuitcell(TRUE)
+	diag_hud_set_circuitstat(TRUE)
+	diag_hud_set_circuittracking(TRUE)
+
+/obj/item/device/electronic_assembly/dropped(mob/user)
+	. = ..()
+	//update diagnostic hud when dropped
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
 
 /obj/item/device/electronic_assembly/proc/rename()
 	var/mob/M = usr
@@ -232,6 +269,9 @@
 	if((total_complexity + IC.complexity) > max_complexity)
 		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since this setup's too complicated for the case.</span>")
 		return FALSE
+	if((allowed_circuit_action_flags & IC.action_flags) != IC.action_flags)
+		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since the case doesn't support the circuit type.</span>")
+		return FALSE
 
 	if(!user.transferItemToLoc(IC, src))
 		return FALSE
@@ -248,6 +288,16 @@
 	component.forceMove(get_object())
 	component.assembly = src
 	assembly_components |= component
+
+	//increment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits += 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits += 1;
+
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
 
 
 /obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user, silent)
@@ -275,6 +325,16 @@
 	component.forceMove(drop_location())
 	component.assembly = null
 	assembly_components.Remove(component)
+
+	//decriment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits -= 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits -= 1;
+
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
 
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
@@ -313,6 +373,7 @@
 		user.transferItemToLoc(I, loc)
 		cell.forceMove(src)
 		battery = cell
+		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
 		interact(user)
@@ -498,6 +559,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
+	allowed_circuit_action_flags = IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE

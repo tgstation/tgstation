@@ -1,0 +1,8 @@
+author: "AverageJoe82"
+delete-after: True
+changes: 
+  - rscadd: "Circuits integrity, charge, and overall circuit composition is displayed on diagnostic huds. If the assembly has dangerous circuits then the status icon will display exclamation points, if the assembly can communicate with something far away a wifi icon will appear next to the status icon, and if the circuit can not operate the status icon will display an 'X'."
+  - rscadd: "AR interface circuit which can modify the status icon if it is not displaying the exclamation points or the 'X'."
+  - tweak: "Locomotive circuits can no longer be added to assemblies that can't use them."
+  - spellcheck: "Fixed a typo in the grenade primer description."
+  - code_imp: "Added flags to circuits that help group subsets of circuits and regulate them."

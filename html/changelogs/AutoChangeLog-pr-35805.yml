@@ -1,0 +1,5 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "fixed walls under doors breaking to space"
+  - tweak: "changed doors to no longer spawn on top of walls"

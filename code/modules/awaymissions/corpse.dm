@@ -54,6 +54,8 @@
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
+	if(!LAZYLEN(spawners))
+		LAZYREMOVE(GLOB.mob_spawners,name)
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
