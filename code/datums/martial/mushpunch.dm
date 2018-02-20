@@ -17,6 +17,7 @@
 		if(atk_verb)
 			add_logs(A, D, "[atk_verb] (Mushroom Punch)")
 		return 1
+	return 0
 
 /obj/item/mushpunch
 	name = "mysterious mushroom"

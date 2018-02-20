@@ -30,9 +30,14 @@
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.faction |= "mushroom"
-	mush = new(null)
-	mush.teach(C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(!H.dna.features["caps"])
+			H.dna.features["caps"] = "Round"
+			handle_mutant_bodyparts(H)
+		H.faction |= "mushroom"
+		mush = new(null)
+		mush.teach(H)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
