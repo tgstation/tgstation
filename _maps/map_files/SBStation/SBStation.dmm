@@ -12652,7 +12652,6 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/stamp/denied{
@@ -12661,6 +12660,9 @@
 	},
 /obj/item/stamp,
 /obj/item/pen,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -13428,8 +13430,8 @@
 	},
 /area/hallway/secondary/exit)
 "aFe" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/closed/wall,
 /area/quartermaster/storage)
@@ -16342,10 +16344,10 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aLX" = (
@@ -16744,10 +16746,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aMU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/landmark/start/shaft_miner,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "aMV" = (
@@ -24896,9 +24898,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -25159,6 +25158,9 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25689,6 +25691,7 @@
 	supply_display = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "jIY" = (
@@ -25888,6 +25891,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/disposal)
 "lqP" = (
@@ -25895,6 +25899,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -25961,6 +25966,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"mgK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/quartermaster/miningdock)
 "mji" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/solars/starboard/aft";
@@ -26273,6 +26284,7 @@
 	dir = 4;
 	id = "garbage"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "oCx" = (
@@ -26518,6 +26530,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "qfO" = (
@@ -26803,6 +26816,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "rBW" = (
@@ -26917,6 +26931,11 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"sDG" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "sMT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26928,6 +26947,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
 "sRW" = (
@@ -27007,6 +27027,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"tDt" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "tIr" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -27051,6 +27081,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"tYl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/maintenance/disposal)
 "tYK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -56046,7 +56080,7 @@ vCr
 aLW
 qcn
 jyg
-tYK
+sDG
 sRS
 rBa
 lqP
@@ -56566,7 +56600,7 @@ kWC
 xZo
 jcd
 aNE
-aNE
+mgK
 aNE
 aNE
 rJt
@@ -56823,7 +56857,7 @@ wtA
 tSf
 bug
 ipT
-qSY
+tDt
 nGZ
 jmc
 qSY
@@ -57077,7 +57111,7 @@ aGb
 aIg
 aNJ
 aFe
-rJt
+tYl
 lnr
 osE
 fFK
