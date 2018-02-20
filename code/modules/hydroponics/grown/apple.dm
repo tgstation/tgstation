@@ -31,7 +31,7 @@
 /obj/item/seeds/apple/poisoned
 	product = /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
 	mutatelist = list()
-	reagents_add = list("zombiepowder" = 0.5, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("kindleium" = 0.5, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 50 // Source of cyanide, and hard (almost impossible) to obtain normally.
 
 /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
@@ -48,7 +48,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/apple/gold
 	maturation = 10
 	production = 10
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/apple/poisoned) //too much greed can poison you or something I dunno
 	reagents_add = list("gold" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 40 // Alchemy!
 
