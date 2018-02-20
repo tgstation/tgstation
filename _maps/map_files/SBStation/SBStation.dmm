@@ -15624,7 +15624,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -15635,7 +15635,7 @@
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -15652,7 +15652,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -27010,7 +27010,7 @@
 "tIr" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -27109,7 +27109,7 @@
 /area/quartermaster/miningdock)
 "uqG" = (
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
