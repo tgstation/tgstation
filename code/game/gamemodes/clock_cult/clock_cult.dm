@@ -130,6 +130,7 @@ Credit where due:
 	required_enemies = 4
 	recommended_enemies = 4
 	enemy_minimum_age = 14
+	round_ends_with_antag_death = TRUE
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	announce_span = "brass"
