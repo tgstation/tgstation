@@ -291,7 +291,7 @@
 	description = "Determining whether reversing the polarity will actually help in a given situation."
 	prereq_ids = list("emp_basic")
 	design_ids = list("ultra_micro_laser")
-	research_cost = 5000
+	research_cost = 3000
 	export_price = 5000
 
 /datum/techweb_node/emp_super
@@ -300,7 +300,7 @@
 	description = "Even better electromagnetic technology."
 	prereq_ids = list("emp_adv")
 	design_ids = list("quadultra_micro_laser")
-	research_cost = 5000
+	research_cost = 3000
 	export_price = 5000
 
 /////////////////////////Clown tech/////////////////////////
