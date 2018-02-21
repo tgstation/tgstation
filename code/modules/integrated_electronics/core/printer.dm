@@ -21,6 +21,8 @@
 /obj/item/device/integrated_circuit_printer/debug //translation: "integrated_circuit_printer/local_server"
 	name = "debug circuit printer"
 	debug = TRUE
+	upgraded = TRUE
+	can_clone = TRUE
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/device/integrated_circuit_printer/Initialize()

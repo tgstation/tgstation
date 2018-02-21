@@ -337,7 +337,6 @@
 	desc = "This is reagent grinder. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
-	ext_cooldown = 1
 	inputs = list(
 		"target" = IC_PINTYPE_REF,
 		)
@@ -385,7 +384,6 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	desc = "This is reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
-	ext_cooldown = 1
 	inputs = list(
 		"target" = IC_PINTYPE_REF,
 		)

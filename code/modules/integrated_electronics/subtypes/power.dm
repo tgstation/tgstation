@@ -49,7 +49,8 @@
 		if(A.Adjacent(B))
 			if(AM.loc != assembly)
 				transfer_amount *= 0.8 // Losses due to distance.
-
+			var/list/U=A.GetAllContents(/obj/item/integrated_circuit/power/transmitter)
+			transfer_amount *= 1 / U.len
 			set_pin_data(IC_OUTPUT, 1, cell.charge)
 			set_pin_data(IC_OUTPUT, 2, cell.maxcharge)
 			set_pin_data(IC_OUTPUT, 3, cell.percent())
@@ -62,7 +63,6 @@
 				if(istype(AM, /obj/item))
 					var/obj/item/I = AM
 					I.update_icon()
-
 				return TRUE
 	else
 		set_pin_data(IC_OUTPUT, 1, null)

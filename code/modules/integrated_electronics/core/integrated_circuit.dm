@@ -303,10 +303,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return FALSE // Not enough power.
 
 /obj/item/integrated_circuit/proc/check_then_do_work(ord,var/ignore_power = FALSE)
-	if(world.time <= next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
+	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
 		return FALSE
-
-	if(assembly && (world.time <= assembly.ext_next_use)) 	// Some circuits have external cooldown, to protect from spam.
+	if(assembly && ext_cooldown && (world.time < assembly.ext_next_use)) 	// Some circuits have external cooldown, to protect from spam.
 		return FALSE
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
