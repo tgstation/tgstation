@@ -1110,8 +1110,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "hearty_punch"
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
 	color = rgb(140, 0, 0)
-	boozepwr = 10
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	boozepwr = 90
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	taste_description = "bravado in the face of disaster"
 	glass_icon_state = "hearty_punch"
 	glass_name = "Hearty Punch"
@@ -1119,11 +1119,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
 	if(M.health <= 0)
-		M.adjustBruteLoss(-7, 0)
-		M.adjustFireLoss(-7, 0)
-		M.adjustToxLoss(-7, 0)
-		M.adjustOxyLoss(-7, 0)
-		M.adjustCloneLoss(-7, 0)
+		M.adjustBruteLoss(-3, 0)
+		M.adjustFireLoss(-3, 0)
+		M.adjustCloneLoss(-5, 0)
+		M.adjustOxyLoss(-4, 0)
+		M.adjustToxLoss(-3, 0)
 		. = 1
 	return ..() || .
 
