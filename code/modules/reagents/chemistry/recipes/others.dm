@@ -69,6 +69,24 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
+/datum/chemical_reaction/brasssolidification
+	name = "Solid Brass"
+	id = "solidbrass"
+	required_reagents = list("frostoil" = 5, "brass" = 20)
+	mob_react = FALSE
+
+/datum/chemical_reaction/brasssolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/tile/brass(location)
+
+/datum/chemical_reaction/brassdecomposition //makes up for the fact that you can't grind brass into teslium
+	name = "Brass Decomposition"
+	id = "brassdecomposition"
+	results = list("teslium" = 3, "iron" = 1)
+	required_reagents = list("brass" = 4)
+	required_temp = 400
+
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"

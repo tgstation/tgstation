@@ -392,17 +392,11 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15)
+	grind_results = list("brass" = 20)
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
-
-/obj/item/stack/tile/brass/attack_self(mob/living/user)
-	if(!is_servant_of_ratvar(user))
-		to_chat(user, "<span class='danger'>[src] seems far too fragile and rigid to build with.</span>") //haha that's because it's actually replicant alloy you DUMMY
-		return
-	..()
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes

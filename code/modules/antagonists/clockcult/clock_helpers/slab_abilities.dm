@@ -180,25 +180,28 @@
 /obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
-			return
-		var/obj/O = L.null_rod_check()
-		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
-		if(O)
-			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \
-			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
-			L.adjustFireLoss(5)
-			L.Stun(40)
-			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
-		else
-			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
-			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
-			if(iscultist(L))
-				L.adjustFireLoss(15)
+		L.kindle()
 	..()
+	
+/mob/living/proc/kindle() //I HAVE NO IDEA WHAT I'M DOING
+	if(is_servant_of_ratvar(src) || stat || has_status_effect(STATUS_EFFECT_KINDLE))
+		return
+	var/obj/O = null_rod_check()
+	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
+	if(O)
+		visible_message("<span class='warning'>[src]'s eyes flare with dim light as they stumble!</span>", \
+		"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
+		adjustFireLoss(5)
+		Stun(40)
+		playsound(src, 'sound/weapons/sear.ogg', 50, TRUE)
+	else
+		visible_message("<span class='warning'>[src]'s eyes blaze with brilliant light!</span>", \
+		"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+		Knockdown(15)
+		apply_status_effect(STATUS_EFFECT_KINDLE)
+		flash_act(1, 1)
+		if(iscultist(src))
+			adjustFireLoss(15)
 
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard
