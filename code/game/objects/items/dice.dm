@@ -6,7 +6,7 @@
 
 /obj/item/storage/pill_bottle/dice/Initialize()
 	. = ..()
-	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
+	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100","fluorite")
 	if(special_die == "1")
 		new /obj/item/dice/d1(src)
 	if(special_die == "2")
@@ -29,6 +29,8 @@
 		new /obj/item/dice/fourdd6(src)
 	if(special_die == "100")
 		new /obj/item/dice/d100(src)
+	if(special_die == "fluorite")
+		new /obj/item/dice/fluorite/one_use(src)
 
 /obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -131,7 +133,7 @@
 	name = "d100"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 	sides = 100
 
 /obj/item/dice/d100/update_icon()
@@ -156,6 +158,66 @@
 
 /obj/item/dice/fourdd6/update_icon()
 	return
+
+/obj/item/dice/fluorite
+	name = "Fluorite Octet"
+	desc = "Rolling the dice will execute a wide range of highly unpredictable effects." //Spider8itch, ::::)
+	icon_state = "fluorite"
+	sides = 8
+	can_be_rigged = FALSE
+	var/reusable = TRUE
+	var/used = FALSE
+
+/obj/item/dice/fluorite/one_use
+	reusable = FALSE
+
+/obj/item/dice/fluorite/diceroll(mob/user)
+	..()
+	if(!used)
+		if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+			to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
+			return
+		if(rigged)
+			eff3ct(user,rigged)
+		else
+			eff3ct(user,result)
+
+/obj/item/dice/fluorite/proc/eff3ct(mob/living/carbon/human/user, roll)
+	if(!reusable)
+		used = TRUE
+	visible_message("<span class='userdanger'>[src] glows magically!</span>")
+	switch(roll)
+		if(1)
+			//Death
+			user.death()
+			playsound(src,'sound/hallucinations/wail.ogg', 40,1)
+		if(2)
+			//Swarm of creatures
+			for(var/direction in GLOB.alldirs)
+				var/turf/T = get_turf(src)
+				new /mob/living/simple_animal/hostile/netherworld(get_step(T,direction))
+				playsound(src,'sound/magic/castsummon.ogg', 40,1)
+		if(3)
+			//Destroy Equipment
+			for(var/obj/item/B in user)
+				if(istype(B, /obj/item/implant))
+					continue
+				qdel(B)
+		if(4)
+			//Random Explosion
+			explosion(loc, rand(-1, 5), rand(0, 5), rand(0, 5), flame_range = rand(0, 5))
+		if(5)
+			//Healing
+			user.revive(full_heal = 1, admin_revive = 1)
+		if(6)
+			//Deadly firearms
+			new /obj/item/gun/ballistic/revolver(get_turf(src))
+		if(7)
+			new /obj/item/stack/telecrystal
+		if(8)
+			//BR8K
+			new /obj/item/card/id/captains_spare(get_turf(src))
+			playsound(src,'sound/effects/clockcult_gateway_active.ogg', 40,1)
 
 /obj/item/dice/attack_self(mob/user)
 	diceroll(user)
