@@ -9574,10 +9574,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "awI" = (
-/obj/machinery/door/window/northleft{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/westright{
 	name = "Containment Pen";
 	req_access_txt = "55"
 	},
@@ -23675,10 +23672,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/machinery/door/window{
-	base_state = "rightsecure";
-	dir = 2;
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/southright{
 	name = "Primary AI Core Access";
 	req_access_txt = "16"
 	},
@@ -27439,9 +27433,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "wtA" = (
-/obj/machinery/door/window/eastleft{
-	dir = 1;
-	icon_state = "right";
+/obj/machinery/door/window/northright{
 	name = "Mail";
 	req_access_txt = "50"
 	},
