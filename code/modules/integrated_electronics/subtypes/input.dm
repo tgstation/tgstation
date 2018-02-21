@@ -18,7 +18,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/input/button/ask_for_input(mob/user) //Bit misleading name for this specific use.
-	to_chat(user, "<span class='notice'>You press the button labeled '[src]'.</span>")
+	to_chat(user, "<span class='notice'>You press the button labeled '[displayed_name]'.</span>")
 	activate_pin(1)
 
 /obj/item/integrated_circuit/input/toggle_button
@@ -36,7 +36,7 @@
 	set_pin_data(IC_OUTPUT, 1, !get_pin_data(IC_OUTPUT, 1))
 	push_data()
 	activate_pin(1)
-	to_chat(user, "<span class='notice'>You toggle the button labeled '[src]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
+	to_chat(user, "<span class='notice'>You toggle the button labeled '[displayed_name]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
 
 /obj/item/integrated_circuit/input/numberpad
 	name = "number pad"
@@ -51,7 +51,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/numberpad/ask_for_input(mob/user)
-	var/new_input = input(user, "Enter a number, please.","Number pad") as null|num
+	var/new_input = input(user, "Enter a number, please.",displayed_name) as null|num
 	if(isnum(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = stripped_input(user, "Enter some words, please.","Text pad")
+	var/new_input = stripped_input(user, "Enter some words, please.",displayed_name)
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -523,6 +523,7 @@
 		"on signal sent" = IC_PINTYPE_PULSE_OUT,
 		"on signal received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
@@ -591,11 +592,12 @@
 	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol."
 	extended_desc = "Data can be send or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
-	will pulse whatever's connected to it. Pulsing the first activation pin will send a message."
+	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
+	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
 	complexity = 4
 	inputs = list(
-		"target NTNet address"	= IC_PINTYPE_STRING,
+		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
 		"secondary text"		= IC_PINTYPE_STRING,
 		"passkey"				= IC_PINTYPE_STRING,							//No this isn't a real passkey encryption scheme but that's why you keep your nodes secure so no one can find it out!
@@ -604,17 +606,20 @@
 		"address received"			= IC_PINTYPE_STRING,
 		"data received"				= IC_PINTYPE_STRING,
 		"secondary text received"	= IC_PINTYPE_STRING,
-		"passkey"				= IC_PINTYPE_STRING
+		"passkey"					= IC_PINTYPE_STRING
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_per_use = 50
 	var/datum/ntnet_connection/exonet = null
+	var/address
 
 /obj/item/integrated_circuit/input/ntnet_packet/Initialize()
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
-	desc += "<br>This circuit's NTNet hardware address is: [net.hardware_id]"
+	address = net.hardware_id
+	desc += "<br>This circuit's NTNet hardware address is: [address]"
 
 /obj/item/integrated_circuit/input/ntnet_packet/do_work()
 	var/target_address = get_pin_data(IC_INPUT, 1)
@@ -623,14 +628,15 @@
 	var/key = get_pin_data(IC_INPUT, 4)
 
 	var/datum/netdata/data = new
-	data.recipient_ids += target_address
+	data.recipient_ids = splittext(target_address, ";")
+	data.sender_id = address
 	data.plaintext_data = message
 	data.plaintext_data_secondary = text
 	data.plaintext_passkey = key
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
-	set_pin_data(IC_OUTPUT, 1, length(data.recipient_ids) >= 1? data.recipient_ids[1] : null)
+	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
 	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
 	set_pin_data(IC_OUTPUT, 4, data.plaintext_passkey)
