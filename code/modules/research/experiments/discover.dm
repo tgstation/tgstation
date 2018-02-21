@@ -1,5 +1,6 @@
 /datum/experiment_type/discover
 	name = "Analyse"
+	//If relics turn out to be too powerful you can lock Discover behind some other experiment
 
 /datum/experiment/discover
 	weight = 800

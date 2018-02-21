@@ -9,10 +9,12 @@
 /datum/relic_effect
 	var/list/firstname
 	var/list/lastname
-	var/list/hint
+	var/physical_part
+	var/hint
 	var/weight
 	var/free = FALSE //Using this doesn't consume charge/trigger cooldown
 	var/list/hogged_signals = list()
+	var/list/added_effects = list() //effect types needed for this effect, effectively adds it after
 
 /datum/relic_effect/proc/init()
 

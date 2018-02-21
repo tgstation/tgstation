@@ -22,12 +22,12 @@
 
 /datum/relic_effect/cost/recharge_cell/apply_to_component(obj/item/A,datum/component/relic/comp)
 	comp.charges = 0
-	comp.RegisterSignal(COMSIG_PARENT_ATTACKBY, CALLBACK(src, .proc/recharge, A))
+	comp.add_attackby(CALLBACK(src, .proc/recharge, A))
 
 /datum/relic_effect/cost/recharge_cell/proc/recharge(obj/item/A, obj/item/stock_parts/cell/B, mob/living/attacker)
-	var/datum/component/relic/comp = A.GetComponent(/datum/component/relic)
 	if(!istype(B))
 		return
+	var/datum/component/relic/comp = A.GetComponent(/datum/component/relic)
 	if(!B.charge)
 		to_chat(attacker,"<span class='notice'>/the [B] is empty!</span>")
 		return

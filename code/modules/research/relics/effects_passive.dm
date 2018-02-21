@@ -137,12 +137,20 @@
 /datum/relic_effect/stock_part/apply(obj/item/stock_parts/A)
 	A.rating = rating
 
+/datum/relic_effect/reagents
+	weight = 20
+
+/datum/relic_effect/reagents/apply(obj/item/A)
+	if(!A.reagents)
+		A.create_reagents(pick(20,50,100,200))
+
 /datum/relic_effect/reagents/no_react
 	weight = 20
 	hint = list("Its insides are stabilized by highly sophisticated technology.")
 	firstname = list("statis","cryo","nanofrost","hyperfreeze","modulated","temporal","stabilized")
 
 /datum/relic_effect/reagents/no_react/apply(obj/item/A)
+	..()
 	if(A.reagents)
 		A.reagents.set_reacting(FALSE)
 
@@ -159,6 +167,7 @@
 		volume = volume ** rand(2,4)
 
 /datum/relic_effect/reagents/big_beaker/apply(obj/item/A)
+	..()
 	if(!A.reagents)
 		return
 	A.reagents.maximum_volume = volume
@@ -173,6 +182,7 @@
 	for(var/count in 1 to times)
 		A.reagents.add_reagent(get_random_reagent_id(),rand(1,round(A.reagents.maximum_volume / times)))
 
+//Supermatter for experimentor reaction.
 /datum/relic_effect/passive/supermatter
 	firstname = list("supermatter")
 	hogged_signals = list(COMSIG_ITEM_EQUIPPED,COMSIG_PARENT_ATTACKBY)
@@ -199,6 +209,7 @@
 		to_chat(user, "<span class='notice'>As it touches \the [A], \the [W] bursts into dust!</span>")
 		qdel(W)
 
+//Sellable for lodsofemone at cargo
 /datum/relic_effect/passive/loadsadosh
 	weight = 20
 	hint = list("The on-board appraisal routine has run out of memory while processing this object.")
@@ -217,12 +228,15 @@
 	if(!export_datum)
 		export_datum = new()
 		export_datum.unit_name = A.name
+		export_datum.cost = value
+		export_datum.init_cost = value
 		GLOB.exports_list += export_datum
 	export_datum.specific_relics += A
 	export_datum.init_cost = value
 
 /datum/export/relic
 	cost = 100
+	k_elasticity = 0
 	var/list/specific_relics
 
 /datum/export/relic/applies_to(obj/O, contr = 0, emag = 0)
