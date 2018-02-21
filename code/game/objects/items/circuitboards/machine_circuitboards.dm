@@ -718,28 +718,3 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)
-
-/obj/item/circuitboard/machine/dish_drive
-	name = "Dish Drive (Machine Board)"
-	build_path = /obj/machinery/dish_drive
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/matter_bin = 2)
-	var/suction = TRUE
-	var/transmit = TRUE
-
-/obj/item/circuitboard/machine/dish_drive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
-	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
-
-/obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
-	suction = !suction
-	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
-
-/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
-	if(!user.Adjacent(src))
-		return
-	transmit = !transmit
-	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")

@@ -964,7 +964,7 @@
 					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 					if(!isnull(angle))
 						A.transform = M.Turn(angle)
-
+			
 			href_list["datumrefresh"] = href_list["modtransform"]
 
 		else if(href_list["rotatedatum"])
@@ -1006,6 +1006,7 @@
 
 			var/list/traumas = subtypesof(/datum/brain_trauma)
 			var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+			var/permanent = alert("Do you want to make the trauma unhealable?", "Permanently Traumatize", "Yes", "No")
 			if(!usr)
 				return
 			if(QDELETED(C))
@@ -1013,7 +1014,7 @@
 				return
 
 			if(result)
-				C.gain_trauma(result)
+				C.gain_trauma(result, permanent)
 
 			href_list["datumrefresh"] = href_list["givetrauma"]
 
@@ -1026,7 +1027,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			C.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_ABSOLUTE)
+			C.cure_all_traumas(TRUE, TRUE)
 
 			href_list["datumrefresh"] = href_list["curetraumas"]
 

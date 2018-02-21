@@ -1059,19 +1059,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.movement_type & FLYING)
 		flight = 1
 
-	if(H.has_gravity())
-		gravity = TRUE
-
-	if(!flightpack && gravity)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
+	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
 		if(H.has_trait(TRAIT_GOTTAGOFAST))
 			. -= 1
 		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
 		. += speedmod
-		. += H.physiology.speed_mod
 
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
+
+	if(H.has_gravity())
+		gravity = 1
 
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back
@@ -1386,7 +1385,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	var/hit_percent = (100-(blocked+armor))/100
-	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || hit_percent <= 0)
 		return 0
 
@@ -1404,27 +1402,27 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(damage * hit_percent * brutemod * H.physiology.brute_mod, 0))
+				if(BP.receive_damage(damage * hit_percent * brutemod, 0))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
-				H.adjustBruteLoss(damage * hit_percent * brutemod * H.physiology.brute_mod)
+				H.adjustBruteLoss(damage * hit_percent * brutemod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent * burnmod * H.physiology.burn_mod))
+				if(BP.receive_damage(0, damage * hit_percent * burnmod))
 					H.update_damage_overlays()
 			else
-				H.adjustFireLoss(damage * hit_percent * burnmod * H.physiology.burn_mod)
+				H.adjustFireLoss(damage * hit_percent* burnmod)
 		if(TOX)
-			H.adjustToxLoss(damage * hit_percent * H.physiology.tox_mod)
+			H.adjustToxLoss(damage * hit_percent)
 		if(OXY)
-			H.adjustOxyLoss(damage * hit_percent * H.physiology.oxy_mod)
+			H.adjustOxyLoss(damage * hit_percent)
 		if(CLONE)
-			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
+			H.adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
+			H.adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
-			H.adjustBrainLoss(damage * hit_percent * H.physiology.brain_mod)
+			H.adjustBrainLoss(damage * hit_percent)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
@@ -1492,7 +1490,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					burn_damage = HEAT_DAMAGE_LEVEL_3
 				else
 					burn_damage = HEAT_DAMAGE_LEVEL_2
-		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
+		burn_damage *= heatmod
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
@@ -1500,13 +1498,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
 			if(120 to 200)
 				H.throw_alert("temp", /obj/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
 			else
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 
 	else
 		H.clear_alert("temp")
@@ -1516,7 +1514,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(RESISTPRESSURE in species_traits))
-				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod)
+				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else
 				H.clear_alert("pressure")
@@ -1530,7 +1528,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in species_traits))
 				H.clear_alert("pressure")
 			else
-				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
+				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 //////////
@@ -1618,7 +1616,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
-	. = stunmod * H.physiology.stun_mod * amount
+	. = stunmod * amount
 
 //////////////
 //Space Move//

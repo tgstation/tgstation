@@ -338,7 +338,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining
 	name = "mining ID"
-	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"

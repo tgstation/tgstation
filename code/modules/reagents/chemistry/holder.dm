@@ -39,7 +39,7 @@
 				GLOB.chemical_reactions_list[id] = list()
 			GLOB.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
-
+.
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents

@@ -3,7 +3,6 @@
 //They cannot be cured with chemicals, and require brain surgery to solve.
 
 /datum/brain_trauma/severe
-	resilience = TRAUMA_RESILIENCE_SURGERY
 
 /datum/brain_trauma/severe/mute
 	name = "Mutism"

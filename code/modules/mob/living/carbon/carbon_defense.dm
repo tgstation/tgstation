@@ -121,9 +121,9 @@
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		if(user.a_intent == INTENT_HELP)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, user.a_intent))
+				if(S.next_step(user))
 					return 1
 	return 0
 

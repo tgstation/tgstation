@@ -26,6 +26,11 @@
 		bin_pen = P
 		update_icon()
 
+/obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
+	if(!total_paper)
+		return
+	..()
+
 /obj/item/paper_bin/Destroy()
 	if(papers)
 		for(var/i in papers)

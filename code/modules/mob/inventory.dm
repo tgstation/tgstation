@@ -162,8 +162,6 @@
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
-	if(hand_index > held_items.len)
-		return FALSE
 	if(!put_in_hand_check(I))
 		return FALSE
 	if(!has_hand_for_held_index(hand_index))

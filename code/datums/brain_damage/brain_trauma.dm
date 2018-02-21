@@ -10,13 +10,12 @@
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
 	var/can_gain = TRUE //can this be gained through random traumas?
-	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
+	var/permanent = FALSE //can this be cured?
 
-/datum/brain_trauma/New(obj/item/organ/brain/B, _resilience)
+/datum/brain_trauma/New(obj/item/organ/brain/B, _permanent)
 	brain = B
 	owner = B.owner
-	if(_resilience)
-		resilience = _resilience
+	permanent = _permanent
 	if(owner)
 		on_gain()
 

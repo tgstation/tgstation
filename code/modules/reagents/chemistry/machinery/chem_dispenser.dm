@@ -419,10 +419,7 @@
 		"cognac",
 		"ale",
 		"absinthe",
-		"hcider",
-		"creme_de_menthe",
-		"creme_de_cacao",
-		"triple_sec"
+		"hcider"
 	)
 	emagged_reagents = list(
 		"ethanol",

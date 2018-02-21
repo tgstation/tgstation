@@ -98,7 +98,6 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
-	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
