@@ -14,7 +14,7 @@
 														/area/crew_quarters/bar))
 
 /datum/martial_art/cqc/under_siege
-	name = "Culinary School Training"
+	name = "Close Quarters Cooking"
 	just_a_cook = TRUE
 
 /datum/martial_art/cqc/proc/drop_restraining()

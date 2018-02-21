@@ -37,7 +37,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggplant/eggy
-	name = "Egg-plant"
+	name = "egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
 	trash = /obj/item/reagent_containers/food/snacks/egg

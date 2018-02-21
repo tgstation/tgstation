@@ -47,10 +47,12 @@
 /turf/template_noop,
 /area/template_noop)
 "aj" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	id_tag = "caravanpirate_bolt_port";
-	locked = 1
+	id_tag = "caravanpirate_bolt_port"
 	},
 /obj/docking_port/stationary{
 	dir = 2;
@@ -525,6 +527,9 @@
 	normalspeed = 0;
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "bb" = (
@@ -689,10 +694,12 @@
 	},
 /area/shuttle/caravan/pirate)
 "dK" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	id_tag = "caravanpirate_bolt_port";
-	locked = 1
+	id_tag = "caravanpirate_bolt_port"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -1497,18 +1504,22 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "fD" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	id_tag = "caravanpirate_bolt_starboard";
-	locked = 1
+	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "fF" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	id_tag = "caravanpirate_bolt_starboard";
-	locked = 1
+	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -1715,9 +1726,9 @@
 /area/shuttle/caravan/freighter3)
 "gc" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gd" = (
@@ -1794,10 +1805,12 @@
 /turf/open/floor/plasteel/vault/airless,
 /area/shuttle/caravan/freighter1)
 "gn" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
-	id_tag = "caravantrade1_bolt";
-	locked = 1
+	id_tag = "caravantrade1_bolt"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter1)
@@ -2155,9 +2168,9 @@
 "hs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "ht" = (
@@ -3268,6 +3281,7 @@
 	timid = 0;
 	width = 15
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "ks" = (
@@ -3407,9 +3421,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate2)
 "kG" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate1_bolt";
-	locked = 1;
 	name = "External Airlock";
 	normalspeed = 0;
 	req_access_txt = "150"
@@ -3555,9 +3569,9 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "kT" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate2_bolt";
-	locked = 1;
 	name = "External Airlock";
 	normalspeed = 0;
 	req_access_txt = "150"
@@ -3586,10 +3600,12 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate2)
 "kU" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	id_tag = "caravantrade1_bolt";
-	locked = 1
+	id_tag = "caravantrade1_bolt"
 	},
 /obj/docking_port/stationary{
 	dir = 2;
@@ -3669,6 +3685,9 @@
 	name = "Ready Room";
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -3680,11 +3699,14 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "ld" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
 	id_tag = "caravansyndicate3_bolt_bridge";
-	locked = 1;
 	name = "Bridge";
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3890,6 +3912,25 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
+"vE" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/freighter3)
+"GL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/freighter2)
 
 (1,1,1) = {"
 aa
@@ -6523,7 +6564,7 @@ bg
 jv
 jN
 kb
-hs
+GL
 aa
 aa
 aa
@@ -8236,7 +8277,7 @@ aO
 if
 iF
 je
-gc
+vE
 aa
 aa
 aa

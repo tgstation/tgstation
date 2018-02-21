@@ -7,4 +7,4 @@
 	slot_flags = SLOT_BELT
 
 /obj/item/device/sensor_device/attack_self(mob/user)
-	GLOB.crewmonitor.show(user) //Proc already exists, just had to call it
+	GLOB.crewmonitor.show(user,src) //Proc already exists, just had to call it

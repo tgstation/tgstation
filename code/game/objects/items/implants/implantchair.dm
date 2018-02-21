@@ -179,17 +179,16 @@
 
 /obj/machinery/implantchair/brainwash/implant_action(mob/living/C,mob/user)
 	if(!istype(C) || !C.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
-		return 0
+		return FALSE
 	if(custom)
 		if(!user || !user.Adjacent(src))
-			return 0
+			return FALSE
 		objective = stripped_input(usr,"What order do you want to imprint on [C]?","Enter the order","",120)
 		message_admins("[key_name_admin(user)] set brainwash machine objective to '[objective]'.")
 		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
-	var/datum/objective/custom_objective = new/datum/objective(objective)
-	custom_objective.owner = C.mind
-	C.mind.objectives += custom_objective
-	C.mind.announce_objectives()
+	if(C.isloyal())
+		return FALSE
+	brainwash(C, objective)
 	message_admins("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
-	return 1
+	return TRUE
