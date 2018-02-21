@@ -1108,17 +1108,28 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"
-	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
+	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. A potent, spiced alcohol."
 	color = rgb(140, 0, 0)
-	boozepwr = 10
+	boozepwr = 50
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	taste_description = "bravado in the face of disaster"
 	glass_icon_state = "hearty_punch"
 	glass_name = "Hearty Punch"
 	glass_desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
+	var/active = FALSE
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
-	if(M.health <= 0)
+	if(!active & M.health <= 0)
+		active = TRUE
+		M.visible_message("<span class='warning'>[M.name] collapses, but [M.p_they()] look like they're determined to get back up.</span>",
+			"<span class='warning'>You fall over, but hear a soothing, gruff voice urging you back on your feet.</span>")
+	if(active & M.health >= 50)
+		M.visible_message("<span class='warning'>[M.name] starts to get back up and dust [M.p_them()]self off.</span>",
+			"<span class='notice'>You start to get back up and brush yourself off, feeling better.</span>")
+		M.reagents.del_reagent("hearty_punch")
+
+	if(active)
+		M.Knockdown(60, TRUE, FALSE)
 		M.adjustBruteLoss(-7, 0)
 		M.adjustFireLoss(-7, 0)
 		M.adjustToxLoss(-7, 0)
@@ -1126,6 +1137,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustCloneLoss(-7, 0)
 		. = 1
 	return ..() || .
+
+/datum/reagent/consumable/ethanol/hearty_punch/on_mob_delete(mob/living/M)
+	if(active)
+		active = FALSE
+	..()
 
 /datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
 	name = "Bacchus' Blessing"
