@@ -262,8 +262,6 @@ Versioning
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	var/brute = L.getBruteLoss()
-	var/fire = L.getFireLoss()
 	var/area/placeofdeath = get_area(L)
 	var/sqlname = sanitizeSQL(L.real_name)
 	var/sqlkey = sanitizeSQL(L.ckey)
@@ -272,8 +270,8 @@ Versioning
 	var/sqlpod = sanitizeSQL(placeofdeath.name)
 	var/laname = sanitizeSQL(L.lastattacker)
 	var/lakey = sanitizeSQL(L.lastattackerckey)
-	var/sqlbrute = sanitizeSQL(brute)
-	var/sqlfire = sanitizeSQL(fire)
+	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
+	var/sqlfire = sanitizeSQL(L.getFireLoss())
 	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
 	var/sqloxy = sanitizeSQL(L.getOxyLoss())
 	var/sqltox = sanitizeSQL(L.getToxLoss())
@@ -285,13 +283,13 @@ Versioning
 	var/last_words = sanitizeSQL(L.last_words)
 	var/suicide = sanitizeSQL(L.suiciding)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	if(!suicide && !first_death.len) //some of the things in here are not SQL-sanitized because they're only stored locally, and sanitized versions do not appear to show correctly
+	if(!suicide && !first_death.len)
 		first_death["name"] = L.name
 		first_death["role"] = null
 		if(L.mind.assigned_role)
 			first_death["role"] = L.mind.assigned_role
 		first_death["area"] = "[get_area_name(L, TRUE)] [COORD(L)]"
-		first_death["damage"] = "<font color='#FF5555'>[brute]</font>/<font color='orange'>[fire]</font>/<font color='lightgreen'>[L.toxloss]</font>/<font color='lightblue'>[L.oxyloss]</font>/<font color='pink'>[L.cloneloss]</font>"
+		first_death["damage"] = "<font color='#FF5555'>[sqlbrute]</font>/<font color='orange'>[sqlfire]</font>/<font color='lightgreen'>[sqltox]</font>/<font color='lightblue'>[sqloxy]</font>/<font color='pink'>[sqlclone]</font>"
 		first_death["last_words"] = L.last_words
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	query_report_death.Execute()
