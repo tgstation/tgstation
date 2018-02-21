@@ -28,6 +28,7 @@
 	var/max_headrevs = 3
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
+	var/end_when_heads_dead = TRUE
 
 ///////////////////////////
 //Announces the game type//
@@ -135,7 +136,7 @@
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
-	if(finished != 0)
+	if(finished != 0 && end_when_heads_dead)
 		return TRUE
 	else
 		return ..()
@@ -190,3 +191,8 @@
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
 		who then follow their orders without question and work towards dethroning departmental leaders. Watch for behavior such as this with caution. If the crew attempts a mutiny, you and \
 		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Central Command."
+
+/datum/game_mode/revolution/extended
+	name = "extended_revolution"
+	config_tag = "extended_revolution"
+	end_when_heads_dead = FALSE
