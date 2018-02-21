@@ -1,5 +1,3 @@
-
-
 SUBSYSTEM_DEF(pathfinder)
 	name = "pathfinder"
 	init_order = INIT_ORDER_PATH
@@ -10,15 +8,12 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/flow
 	var/static/space_type_cache
 
-
 /datum/controller/subsystem/pathfinder/Initialize()
 	space_type_cache = typecacheof(/turf/open/space)
 	run = 0
 	free = 1
 	flow = new()
 	flow.len=lcount
-
-
 
 /datum/controller/subsystem/pathfinder/proc/getfree(atom/M)
 	if(run < lcount)
