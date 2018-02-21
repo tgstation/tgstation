@@ -410,15 +410,16 @@ GAS ANALYZER
 	..()
 
 	if(user.canUseTopic(src))
+
+		if(cooldown)
+			to_chat(user, "<span class='warning'>[src]'s barometer function is prepraring itself.</span>")
+			return
+
 		var/turf/T = get_turf(user)
 		if(!T)
 			return
 
 		playsound(src, 'sound/effects/pop.ogg', 100)
-		if(cooldown)
-			to_chat(user, "<span class='warning'>[src]'s barometer function is prepraring itself.</span>")
-			return
-
 		var/area/user_area = T.loc
 		var/datum/weather/ongoing_weather = null
 		for(var/V in SSweather.processing)
