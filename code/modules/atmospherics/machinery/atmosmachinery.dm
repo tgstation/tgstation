@@ -188,7 +188,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
-		return TRUE
+		return ..()
 
 	var/turf/T = get_turf(src)
 	if (level==1 && isturf(T) && T.intact)

@@ -33,16 +33,18 @@
 			var/obj/item/borg/upgrade/modkit/M = A
 			to_chat(user, "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>")
 
+/obj/item/gun/energy/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(modkits.len)
+		to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
+		I.play_tool_sound(src, 100)
+		for(var/obj/item/borg/upgrade/modkit/M in modkits)
+			M.uninstall(src)
+	else
+		to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
+
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/crowbar))
-		if(modkits.len)
-			to_chat(user, "<span class='notice'>You pry the modifications out.</span>")
-			I.play_tool_sound(src, 100)
-			for(var/obj/item/borg/upgrade/modkit/M in modkits)
-				M.uninstall(src)
-		else
-			to_chat(user, "<span class='notice'>There are no modifications currently installed.</span>")
-	else if(istype(I, /obj/item/borg/upgrade/modkit))
+	if(istype(I, /obj/item/borg/upgrade/modkit))
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
@@ -70,6 +72,12 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	max_mod_capacity = 80
+
+/obj/item/gun/energy/kinetic_accelerator/minebot
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	overheat_time = 20
+	holds_charge = TRUE
+	unique_frequency = TRUE
 
 /obj/item/gun/energy/kinetic_accelerator/Initialize()
 	. = ..()
@@ -222,6 +230,8 @@
 	var/maximum_of_type = 1
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
+	var/minebot_upgrade = TRUE
+	var/minebot_exclusive = FALSE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	..()
@@ -242,6 +252,13 @@
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
+	if(minebot_upgrade)
+		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
+			to_chat(user, "<span class='notice'>The modkit you're trying to install is only rated for minebot use.</span>")
+			return FALSE
+	else if(istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
+		to_chat(user, "<span class='notice'>The modkit you're trying to install is not rated for minebot use.</span>")
+		return FALSE
 	if(denied_type)
 		var/number_of_denied = 0
 		for(var/A in KA.get_modkits())
@@ -301,8 +318,9 @@
 //Cooldown
 /obj/item/borg/upgrade/modkit/cooldown
 	name = "cooldown decrease"
-	desc = "Decreases the cooldown of a kinetic accelerator."
+	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 2.5
+	minebot_upgrade = FALSE
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = ..()
@@ -312,6 +330,17 @@
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
 	KA.overheat_time += modifier
 	..()
+
+/obj/item/borg/upgrade/modkit/cooldown/minebot
+	name = "minebot cooldown decrease"
+	desc = "Decreases the cooldown of a kinetic accelerator. Only rated for minebot use."
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
+	modifier = 10
+	cost = 0
+	minebot_upgrade = TRUE
+	minebot_exclusive = TRUE
 
 
 //AoE blasts
@@ -372,6 +401,12 @@
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
 	modifier = 0.2
+
+//Minebot passthrough
+/obj/item/borg/upgrade/modkit/minebot_passthrough
+	name = "minebot passthrough"
+	desc = "Causes kinetic accelerator shots to pass through minebots."
+	cost = 0
 
 //Tendril-unique modules
 /obj/item/borg/upgrade/modkit/cooldown/repeater
