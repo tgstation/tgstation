@@ -52,9 +52,9 @@
 /obj/item/device/integrated_circuit_printer/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/disk/integrated_circuit/upgrade/advanced))
 		if(upgraded)
-			to_chat(user, "<span class='warning'>\The [src] already has this upgrade. </span>")
+			to_chat(user, "<span class='warning'>[src] already has this upgrade. </span>")
 			return TRUE
-		to_chat(user, "<span class='notice'>You install \the [O] into \the [src]. </span>")
+		to_chat(user, "<span class='notice'>You install [O] into [src]. </span>")
 		upgraded = TRUE
 		qdel(O)
 		interact(user)
@@ -62,9 +62,9 @@
 
 	if(istype(O, /obj/item/disk/integrated_circuit/upgrade/clone))
 		if(fast_clone)
-			to_chat(user, "<span class='warning'>\The [src] already has this upgrade. </span>")
+			to_chat(user, "<span class='warning'>[src] already has this upgrade. </span>")
 			return TRUE
-		to_chat(user, "<span class='notice'>You install \the [O] into \the [src]. Circuit cloning will now be instant. </span>")
+		to_chat(user, "<span class='notice'>You install [O] into [src]. Circuit cloning will now be instant. </span>")
 		fast_clone = TRUE
 		qdel(O)
 		interact(user)
@@ -279,7 +279,7 @@
 					clone_countdown = cloning_time
 					to_chat(usr, "<span class='notice'>You begin printing a custom assembly. This will take approximately [round(cloning_time / 60, 0.1)] minute(s). You can still print \
 					off normal parts during this time.</span>")
-					playsound(get_turf(src), 'sound/items/poster_being_created.ogg', 50, TRUE)
+					playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 					START_PROCESSING(SSprocessing, src)
 
 			if("cancel")

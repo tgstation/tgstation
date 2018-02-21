@@ -71,7 +71,7 @@
 	desc = "This disk allows for integrated circuit printers to print advanced circuitry designs."
 	id = "icupgadv"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 5000, MAT_METAL = 5000)
+	materials = list(MAT_GLASS = 10000, MAT_METAL = 10000)
 	build_path = /obj/item/disk/integrated_circuit/upgrade/advanced
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -81,7 +81,7 @@
 	desc = "This disk allows for integrated circuit printers to clone designs instantaneously."
 	id = "icupgclo"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 5000, MAT_METAL = 5000)
+	materials = list(MAT_GLASS = 10000, MAT_METAL = 10000)
 	build_path = /obj/item/disk/integrated_circuit/upgrade/clone
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
