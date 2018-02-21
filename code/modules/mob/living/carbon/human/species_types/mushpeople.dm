@@ -1,8 +1,8 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
 	id = "mush"
-	mutant_bodyparts = list("caps", "tail_human", "ears", "wings")
-	default_features = list("caps" = "Round", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutant_bodyparts = list("caps")
+	default_features = list("caps" = "Round")
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color
