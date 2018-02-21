@@ -33,6 +33,9 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ai" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
 "aj" = (
@@ -283,6 +286,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+/area/ruin/space/has_grav/turretedoutpost)
+"Nu" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
 
 (1,1,1) = {"
@@ -710,8 +720,8 @@ ab
 ab
 ac
 ad
-ai
-ai
+Nu
+Nu
 ad
 ac
 ac
