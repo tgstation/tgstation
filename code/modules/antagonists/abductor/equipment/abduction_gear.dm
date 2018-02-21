@@ -316,7 +316,6 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/obj/item/organ/heart/gland/G = C.getorganslot("heart")
-		var/obj/O = C.get_item_by_slot(slot_head)
 		if(!istype(G))
 			to_chat(user, "<span class='warning'>Your target does not have an experimental gland!</span>")
 			return
@@ -339,7 +338,7 @@
 		if(QDELETED(G))
 			return
 
-		if(istype(O, /obj/item/clothing/head/foilhat))
+		if(istype(C.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
 			return
 
@@ -515,12 +514,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	add_logs(user, L, "stunned")
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	var/obj/O = L.get_item_by_slot(slot_head)
 	if(L.incapacitated(TRUE, TRUE))
-		if(istype(O, /obj/item/clothing/head/foilhat))
+		if(istype(L.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but their [O.name] protected them!</span>", \
-								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your [O.name] deflects most of it!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but their headgear protected them!</span>", \
+								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
 			L.drowsyness += 2
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
@@ -529,10 +527,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
-		if(istype(O, /obj/item/clothing/head/foilhat))
+		if(istype(L.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but their [O.name] completely protected them!</span>", \
-								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your [O.name] deflects the effects!</span>")
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but their headgear completely protected them!</span>", \
+								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
 			return
 		L.drowsyness += 1
 		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
