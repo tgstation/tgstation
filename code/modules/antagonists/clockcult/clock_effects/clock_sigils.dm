@@ -126,8 +126,7 @@
 	var/end_time = world.time+convert_time
 	while(world.time < end_time && get_turf(L) == get_turf(src))
 		stoplag(1)
-	var/max_servants = SSticker.mode.servants_of_ratvar.len >= GLOB.max_clockwork_servants
-	if(get_turf(L) != get_turf(src) || max_servants)
+	if(get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
 		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
