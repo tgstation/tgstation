@@ -301,16 +301,16 @@
 				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
+				if(on)
+					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+					glowybit.alpha = CLAMP(light_power*255, 110, 255)
+					add_overlay(glowybit)
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-	if(on && !emergency_mode)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-		glowybit.alpha = CLAMP(light_power*255, 110, 255)
-		add_overlay(glowybit)
 	return
 
 // update the icon_state and luminosity of the light depending on its state
