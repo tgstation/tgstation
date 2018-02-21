@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
+	transferlog += ("<b>[station_time_timestamp()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))

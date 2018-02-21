@@ -5,7 +5,6 @@
 	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
 	max_occurrences = 1
-	earliest_start = 12000 //Meant to mix things up early-game.
 	min_players = 5
 
 
