@@ -111,7 +111,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list("pico_mani", "super_matter_bin")
-	research_cost = 10000
+	research_cost = 7500
 	export_price = 5000
 
 /datum/techweb_node/adv_power
