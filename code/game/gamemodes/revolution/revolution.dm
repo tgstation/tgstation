@@ -203,7 +203,6 @@
 	end_when_heads_dead = FALSE
 	var/endtime = null
 	var/fuckingdone = FALSE
-	end_when_heads_dead = FALSE
 
 /datum/game_mode/revolution/speedy/pre_setup()
 	endtime = world.time + 20 MINUTES
